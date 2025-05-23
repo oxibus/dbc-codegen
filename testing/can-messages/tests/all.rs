@@ -1,7 +1,7 @@
 #![allow(clippy::float_cmp)]
 
 use can_messages::{
-    Amet, Bar, BarThree, CanError, Foo, LargerIntsWithOffsets, MsgExtendedId, MultiplexTest,
+    Amet, Bar, BarThree, CanError, Float32Test, Foo, LargerIntsWithOffsets, MsgExtendedId, MultiplexTest,
     MultiplexTestMultiplexorIndex, MultiplexTestMultiplexorM0, NegativeFactorTest,
     TruncatedBeSignal, TruncatedLeSignal,
 };
@@ -133,6 +133,16 @@ fn offset_integers() {
             message_id: Id::Standard(StandardId::new(1338).unwrap())
         })
     );
+}
+
+#[test]
+fn floats() {
+    let m = Float32Test::new(42.0, 42.0).unwrap();
+
+    dbg!(m.raw());
+    assert_eq!(m.raw(), b"\x42\x28\x00\x00\x00\x00\x28\x42");
+    assert_eq!(m.float32_big_endian_raw(), 42.0);
+    assert_eq!(m.float32_little_endian_raw(), 42.0);
 }
 
 #[test]
