@@ -20,7 +20,7 @@ struct Cli {
 
 fn main() {
     let args = Cli::parse();
-    let dbc_file = std::fs::read(&args.dbc_path).unwrap_or_else(|e| {
+    let dbc_file = std::fs::read_to_string(&args.dbc_path).unwrap_or_else(|e| {
         eprintln!("could not read `{}`: {}", args.dbc_path.display(), e);
         exit(exitcode::NOINPUT);
     });

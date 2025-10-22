@@ -8,7 +8,7 @@ use std::{
 
 fn main() -> Result<()> {
     let out_file = "src/messages.rs";
-    let dbc_file = fs::read("../dbc-examples/example.dbc")?;
+    let dbc_file = fs::read_to_string("../dbc-examples/example.dbc")?;
     let mut out = BufWriter::new(File::create(out_file)?);
     println!("cargo:rerun-if-changed=../dbc-examples/example.dbc");
     println!("cargo:rerun-if-changed=../../src");
