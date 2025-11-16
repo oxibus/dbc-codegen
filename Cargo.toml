@@ -12,13 +12,13 @@ license = "MIT OR Apache-2.0"
 readme = "README.md"
 repository = "https://github.com/technocreatives/dbc-codegen"
 homepage = "https://github.com/technocreatives/dbc-codegen"
-rust-version = "1.78.0"
+rust-version = "1.81.0"
 
 [features]
 std = []
 
 [dependencies]
-can-dbc = "7.0.0"
+can-dbc = "8.0.0"
 anyhow = "1.0.68"
 heck = "0.4.0"
 typed-builder = "0.18.0"
