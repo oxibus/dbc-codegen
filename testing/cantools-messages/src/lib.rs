@@ -39,9 +39,9 @@ fn pack_message_signed_negative() {
     let current = unsafe { example_foo_current_encode(-3.0 * 0.0625) };
     let voltage = unsafe { example_foo_voltage_encode(0.000976562) };
 
-    let foo = example_foo_t { current, voltage };
+    let val = example_foo_t { current, voltage };
     let mut buffer: [u8; 4] = [0; 4];
-    unsafe { example_foo_pack(buffer.as_mut_ptr(), &foo, buffer.len()) };
+    unsafe { example_foo_pack(buffer.as_mut_ptr(), &val, buffer.len()) };
     assert_eq!(dbc_codegen_foo.raw(), &buffer);
 }
 
@@ -51,9 +51,9 @@ fn pack_message_signed_positive() {
     let current = unsafe { example_foo_current_encode(0.0625) };
     let voltage = unsafe { example_foo_voltage_encode(0.000976562) };
 
-    let foo = example_foo_t { current, voltage };
+    let val = example_foo_t { current, voltage };
     let mut buffer: [u8; 4] = [0; 4];
-    unsafe { example_foo_pack(buffer.as_mut_ptr(), &foo, buffer.len()) };
+    unsafe { example_foo_pack(buffer.as_mut_ptr(), &val, buffer.len()) };
     assert_eq!(dbc_codegen_foo.raw(), &buffer);
 }
 
