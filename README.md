@@ -1,5 +1,13 @@
 # CAN DBC code generator for Rust
 
+[![GitHub repo](https://img.shields.io/badge/github-oxibus/dbc--codegen-8da0cb?logo=github)](https://github.com/oxibus/dbc-codegen)
+[![crates.io version](https://img.shields.io/crates/v/dbc-codegen)](https://crates.io/crates/dbc-codegen)
+[![crate usage](https://img.shields.io/crates/d/dbc-codegen)](https://crates.io/crates/dbc-codegen)
+[![docs.rs status](https://img.shields.io/docsrs/dbc-codegen)](https://docs.rs/dbc-codegen)
+[![crates.io license](https://img.shields.io/crates/l/dbc-codegen)](https://github.com/oxibus/dbc-codegen)
+[![CI build status](https://github.com/oxibus/dbc-codegen/actions/workflows/ci.yml/badge.svg)](https://github.com/oxibus/dbc-codegen/actions)
+[![Codecov](https://img.shields.io/codecov/c/github/oxibus/dbc-codegen)](https://app.codecov.io/gh/oxibus/dbc-codegen)
+
 Generates Rust messages from a `dbc` file.
 
 ⚠️ This is experimental - use with caution. ⚠️
