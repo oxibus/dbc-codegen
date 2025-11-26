@@ -19,13 +19,13 @@ std = []
 
 [dependencies]
 can-dbc = "8.0.0"
-anyhow = "1.0.68"
-heck = "0.4.0"
-typed-builder = "0.18.0"
+anyhow = "1.0.100"
+heck = "0.5.0"
+typed-builder = "0.23.2"
 embedded-can = "0.4.1"
 
 [dev-dependencies]
-defmt = "0.3.8"
+defmt = "1.0.1"
 
 [workspace]
 members = [
