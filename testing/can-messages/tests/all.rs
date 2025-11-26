@@ -1,4 +1,8 @@
-#![allow(clippy::float_cmp, clippy::excessive_precision, clippy::unreadable_literal)]
+#![allow(
+    clippy::float_cmp,
+    clippy::excessive_precision,
+    clippy::unreadable_literal
+)]
 
 use can_messages::{
     Amet, Bar, BarThree, CanError, Foo, LargerIntsWithOffsets, MsgExtendedId, MultiplexTest,

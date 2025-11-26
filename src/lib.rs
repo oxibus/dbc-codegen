@@ -1459,11 +1459,7 @@ fn render_multiplexor_enums(
         config.impl_serde.fmt_attr(&mut w, "derive(Serialize)")?;
         config.impl_serde.fmt_attr(&mut w, "derive(Deserialize)")?;
         writeln!(w, r"#[derive(Default)]")?;
-        writeln!(
-            w,
-            "pub struct {struct_name} {{ raw: [u8; {}] }}",
-            msg.size
-        )?;
+        writeln!(w, "pub struct {struct_name} {{ raw: [u8; {}] }}", msg.size)?;
         writeln!(w)?;
 
         writeln!(w, "impl {struct_name} {{")?;
