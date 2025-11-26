@@ -1,5 +1,6 @@
-use can_messages as messages;
 use std::convert::TryFrom;
+
+use can_messages as messages;
 
 #[test]
 fn simple_byte_aligned_message() {

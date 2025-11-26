@@ -1,10 +1,9 @@
+use std::fs::{self, File};
+use std::io::{BufWriter, Write};
+use std::process::Command;
+
 use anyhow::Result;
 use dbc_codegen::{Config, FeatureConfig};
-use std::{
-    fs::{self, File},
-    io::{BufWriter, Write},
-    process::Command,
-};
 
 fn main() -> Result<()> {
     let out_file = "src/messages.rs";

@@ -26,16 +26,15 @@
 #![deny(missing_docs)]
 #![deny(clippy::arithmetic_side_effects)]
 
+use std::cmp::{max, min};
+use std::collections::{BTreeMap, BTreeSet};
+use std::fmt::Display;
+use std::io::{self, BufWriter, Write};
+
 use anyhow::{anyhow, ensure, Context, Result};
 use can_dbc::{Dbc, Message, MultiplexIndicator, Signal, ValDescription, ValueDescription};
 use heck::{ToPascalCase, ToSnakeCase};
 use pad::PadAdapter;
-use std::cmp::{max, min};
-use std::{
-    collections::{BTreeMap, BTreeSet},
-    fmt::Display,
-    io::{self, BufWriter, Write},
-};
 use typed_builder::TypedBuilder;
 
 mod includes;
@@ -1675,8 +1674,9 @@ impl FeatureConfig<'_> {
 
 #[cfg(test)]
 mod tests {
-    use crate::{get_range_of_values, range_to_rust_int, signal_params_to_rust_int};
     use can_dbc::ValueType::{Signed, Unsigned};
+
+    use crate::{get_range_of_values, range_to_rust_int, signal_params_to_rust_int};
 
     #[test]
     fn test_range_of_values() {

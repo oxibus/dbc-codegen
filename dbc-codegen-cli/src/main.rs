@@ -1,7 +1,9 @@
+use std::fs::File;
+use std::path::PathBuf;
+use std::process::exit;
+
 use clap::Parser;
 use dbc_codegen::Config;
-use std::fs::File;
-use std::{path::PathBuf, process::exit};
 
 /// Generate Rust `struct`s from a `dbc` file.
 #[derive(Debug, Parser)]
