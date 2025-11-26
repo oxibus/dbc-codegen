@@ -39,7 +39,7 @@ Or put something like this into your `build.rs` file:
 fn main() {
     let dbc_path = "../dbc-examples/example.dbc";
     let dbc_file = std::fs::read(dbc_path).unwrap();
-    println!("cargo:rerun-if-changed={}", dbc_path);
+    println!("cargo:rerun-if-changed={dbc_path}");
 
     let config = Config::builder()
         .dbc_name("example.dbc")

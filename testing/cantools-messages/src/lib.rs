@@ -1,10 +1,12 @@
 #![allow(non_upper_case_globals)]
 #![allow(non_camel_case_types)]
 #![allow(non_snake_case)]
+#![allow(clippy::unreadable_literal)]
 
 #[cfg(test)]
 #[allow(dead_code)]
 #[allow(rustdoc::broken_intra_doc_links)]
+#[allow(clippy::pedantic)]
 mod msg_bindings {
     include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
 }
@@ -29,7 +31,7 @@ fn pack_message() {
         type_,
     };
     let mut buffer: [u8; 8] = [0; 8];
-    unsafe { example_bar_pack(buffer.as_mut_ptr(), &bar, buffer.len()) };
+    unsafe { example_bar_pack(buffer.as_mut_ptr(), &raw const bar, buffer.len()) };
     assert_eq!(dbc_codegen_bar.raw(), &buffer);
 }
 
@@ -41,7 +43,7 @@ fn pack_message_signed_negative() {
 
     let val = example_foo_t { current, voltage };
     let mut buffer: [u8; 4] = [0; 4];
-    unsafe { example_foo_pack(buffer.as_mut_ptr(), &val, buffer.len()) };
+    unsafe { example_foo_pack(buffer.as_mut_ptr(), &raw const val, buffer.len()) };
     assert_eq!(dbc_codegen_foo.raw(), &buffer);
 }
 
@@ -53,7 +55,7 @@ fn pack_message_signed_positive() {
 
     let val = example_foo_t { current, voltage };
     let mut buffer: [u8; 4] = [0; 4];
-    unsafe { example_foo_pack(buffer.as_mut_ptr(), &val, buffer.len()) };
+    unsafe { example_foo_pack(buffer.as_mut_ptr(), &raw const val, buffer.len()) };
     assert_eq!(dbc_codegen_foo.raw(), &buffer);
 }
 
@@ -64,7 +66,7 @@ fn pack_big_endian_signal_with_start_bit_zero() {
 
     let dolor = example_dolor_t { one_float };
     let mut buffer: [u8; 8] = [0; 8];
-    unsafe { example_dolor_pack(buffer.as_mut_ptr(), &dolor, buffer.len()) };
+    unsafe { example_dolor_pack(buffer.as_mut_ptr(), &raw const dolor, buffer.len()) };
     assert_eq!(dbc_codegen_bar.raw(), &buffer);
 }
 
@@ -89,11 +91,13 @@ fn pack_message_containing_multiplexed_signals() {
         multiplexor,
         unmultiplexed_signal,
         multiplexed_signal_zero_a,
-        multiplexed_signal_zero_b,
         multiplexed_signal_one_a,
+        multiplexed_signal_zero_b,
         multiplexed_signal_one_b,
     };
     let mut buffer: [u8; 8] = [0; 8];
-    unsafe { example_multiplex_test_pack(buffer.as_mut_ptr(), &multiplex_test, buffer.len()) };
+    unsafe {
+        example_multiplex_test_pack(buffer.as_mut_ptr(), &raw const multiplex_test, buffer.len())
+    };
     assert_eq!(dbc_codegen_multiplex_test.raw(), &buffer);
 }

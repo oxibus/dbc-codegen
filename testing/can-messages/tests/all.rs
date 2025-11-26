@@ -1,4 +1,4 @@
-#![allow(clippy::float_cmp, clippy::excessive_precision)]
+#![allow(clippy::float_cmp, clippy::excessive_precision, clippy::unreadable_literal)]
 
 use can_messages::{
     Amet, Bar, BarThree, CanError, Foo, LargerIntsWithOffsets, MsgExtendedId, MultiplexTest,
@@ -139,7 +139,7 @@ fn offset_integers() {
 #[cfg(feature = "debug")]
 fn debug_impl() {
     let result = Bar::new(1, 2.0, 3, 3, true).unwrap();
-    let dbg = format!("{:?}", result);
+    let dbg = format!("{result:?}");
     assert_eq!(&dbg, "Bar([5, 94, 0, 64, 0, 0, 0, 0])");
 }
 
@@ -147,7 +147,7 @@ fn debug_impl() {
 #[cfg(feature = "debug")]
 fn debug_alternative_impl() {
     let result = Bar::new(1, 2.0, 3, 3, true).unwrap();
-    let dbg = format!("{:#?}", result);
+    let dbg = format!("{result:#?}");
     assert_eq!(
         &dbg,
         "Bar {\n    one: 1,\n    two: 1.9499999,\n    three: Onest,\n    four: Onest,\n    xtype: X1on,\n}"
@@ -175,7 +175,7 @@ fn test_min_max_doesnt_confuse_width() {
         NegativeFactorTest::WIDTH_MORE_THAN_MIN_MAX_MAX,
         2_i16,
         "This signal should be i16 even though the min/max only needs i8."
-    )
+    );
 }
 
 #[test]
@@ -183,7 +183,7 @@ fn test_standard_id() {
     assert_eq!(
         Foo::MESSAGE_ID,
         Id::Standard(StandardId::new(0x100).unwrap())
-    )
+    );
 }
 
 #[test]
@@ -191,5 +191,5 @@ fn test_extended_id() {
     assert_eq!(
         MsgExtendedId::MESSAGE_ID,
         Id::Extended(ExtendedId::new(0x1234).unwrap())
-    )
+    );
 }
