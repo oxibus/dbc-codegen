@@ -18,6 +18,7 @@
 use arbitrary::{Arbitrary, Unstructured};
 use bitvec::prelude::*;
 use core::ops::BitOr;
+use defmt::Format;
 use embedded_can::{ExtendedId, Id, StandardId};
 
 /// All messages
@@ -108,7 +109,7 @@ impl Foo {
 
     /// Construct new Foo from values
     pub fn new(voltage: f32, current: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 4] };
+        let mut res = Self { raw: [0x00; 4] };
         res.set_voltage(voltage)?;
         res.set_current(current)?;
         Ok(res)
@@ -317,7 +318,7 @@ impl Bar {
 
     /// Construct new Bar from values
     pub fn new(one: u8, two: f32, three: u8, four: u8, xtype: bool) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_one(one)?;
         res.set_two(two)?;
         res.set_three(three)?;
@@ -739,7 +740,7 @@ impl X4wd {
 
     /// Construct new _4WD from values
     pub fn new(x4drive: u8) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_x4drive(x4drive)?;
         Ok(res)
     }
@@ -925,7 +926,7 @@ impl Amet {
 
     /// Construct new Amet from values
     pub fn new(one: u8, two: f32, three: u8, four: u8, five: bool) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_one(one)?;
         res.set_two(two)?;
         res.set_three(three)?;
@@ -1264,7 +1265,7 @@ impl Dolor {
 
     /// Construct new Dolor from values
     pub fn new(one_float: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_one_float(one_float)?;
         Ok(res)
     }
@@ -1447,7 +1448,7 @@ impl MultiplexTest {
 
     /// Construct new MultiplexTest from values
     pub fn new(multiplexor: u8, unmultiplexed_signal: u8) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_multiplexor(multiplexor)?;
         res.set_unmultiplexed_signal(unmultiplexed_signal)?;
         Ok(res)
@@ -1889,7 +1890,7 @@ impl IntegerFactorOffset {
         byte_with_negative_offset: i16,
         byte_with_negative_min: i16,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_byte_with_offset(byte_with_offset)?;
         res.set_byte_with_factor(byte_with_factor)?;
         res.set_byte_with_both(byte_with_both)?;
@@ -2256,7 +2257,7 @@ impl NegativeFactorTest {
         unsigned_negative_factor_signal: i32,
         width_more_than_min_max: i16,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 4] };
+        let mut res = Self { raw: [0x00; 4] };
         res.set_unsigned_negative_factor_signal(unsigned_negative_factor_signal)?;
         res.set_width_more_than_min_max(width_more_than_min_max)?;
         Ok(res)
@@ -2470,7 +2471,7 @@ impl LargerIntsWithOffsets {
 
     /// Construct new LargerIntsWithOffsets from values
     pub fn new(twelve: i16, sixteen: i32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_twelve(twelve)?;
         res.set_sixteen(sixteen)?;
         Ok(res)
@@ -2682,7 +2683,7 @@ impl MsgWithoutSignals {
 
     /// Construct new MsgWithoutSignals from values
     pub fn new() -> Result<Self, CanError> {
-        let res = Self { raw: [0u8; 8] };
+        let res = Self { raw: [0x00; 8] };
         Ok(res)
     }
 
@@ -2784,7 +2785,7 @@ impl TruncatedBeSignal {
 
     /// Construct new TruncatedBeSignal from values
     pub fn new(foo: i16) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_foo(foo)?;
         Ok(res)
     }
@@ -2937,7 +2938,7 @@ impl TruncatedLeSignal {
 
     /// Construct new TruncatedLeSignal from values
     pub fn new(foo: i16) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_foo(foo)?;
         Ok(res)
     }
@@ -3090,7 +3091,7 @@ impl MsgExtendedId {
 
     /// Construct new MsgExtendedId from values
     pub fn new(dummy: u8) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_dummy(dummy)?;
         Ok(res)
     }

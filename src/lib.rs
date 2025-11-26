@@ -72,6 +72,10 @@ pub struct Config<'a> {
     #[builder(default)]
     pub impl_serde: FeatureConfig<'a>,
 
+    /// Optional: `impl defmt::Format` for generated types.. Default: `Never`.
+    #[builder(default)]
+    pub impl_defmt: FeatureConfig<'a>,
+
     /// Optional: `impl Error` for generated error type. Default: `Never`.
     ///
     /// Note: this feature depends on `std`.
@@ -89,6 +93,10 @@ pub struct Config<'a> {
     /// Optional: Allow dead code in the generated module. Default: `false`.
     #[builder(default)]
     pub allow_dead_code: bool,
+
+    /// Optional: Padding value used; set all unused bits to 1 if true else 0. Default: `false`.
+    #[builder(default)]
+    pub padding_value: bool,
 }
 
 /// Configuration for including features in the codegenerator.
@@ -155,6 +163,10 @@ pub fn codegen(config: Config<'_>, out: impl Write) -> Result<()> {
 
     config.impl_arbitrary.fmt_cfg(&mut w, |w| {
         writeln!(w, "use arbitrary::{{Arbitrary, Unstructured}};")
+    })?;
+
+    config.impl_defmt.fmt_cfg(&mut w, |w| {
+        writeln!(w, "use defmt::Format;")
     })?;
 
     config.impl_serde.fmt_cfg(&mut w, |w| {
@@ -265,6 +277,7 @@ fn render_message(mut w: impl Write, config: &Config<'_>, msg: &Message, dbc: &D
     writeln!(w, "#[derive(Clone, Copy)]")?;
     config.impl_serde.fmt_attr(&mut w, "derive(Serialize)")?;
     config.impl_serde.fmt_attr(&mut w, "derive(Deserialize)")?;
+    config.impl_serde.fmt_attr(&mut w, "derive(defmt::Format)")?;
     writeln!(w, "pub struct {} {{", type_name(msg.message_name()))?;
     {
         let mut w = PadAdapter::wrap(&mut w);
@@ -352,8 +365,9 @@ fn render_message(mut w: impl Write, config: &Config<'_>, msg: &Message, dbc: &D
             let mut w = PadAdapter::wrap(&mut w);
             writeln!(
                 &mut w,
-                "let {}res = Self {{ raw: [0u8; {}] }};",
+                "let {}res = Self {{ raw: [{}; {}] }};",
                 if msg.signals().is_empty() { "" } else { "mut " },
+                if config.padding_value { "0xFF" } else { "0x00" },
                 msg.message_size()
             )?;
             for signal in msg.signals().iter() {
@@ -998,6 +1012,7 @@ fn write_enum(
         .fmt_attr(&mut w, "derive(defmt::Format)")?;
     config.impl_serde.fmt_attr(&mut w, "derive(Serialize)")?;
     config.impl_serde.fmt_attr(&mut w, "derive(Deserialize)")?;
+    config.impl_defmt.fmt_attr(&mut w, "derive(defmt::Format)")?;
     writeln!(w, "pub enum {} {{", type_name)?;
     {
         let mut w = PadAdapter::wrap(&mut w);
@@ -1475,6 +1490,7 @@ fn render_multiplexor_enums(
         .fmt_attr(&mut w, "derive(defmt::Format)")?;
     config.impl_serde.fmt_attr(&mut w, "derive(Serialize)")?;
     config.impl_serde.fmt_attr(&mut w, "derive(Deserialize)")?;
+    config.impl_defmt.fmt_attr(&mut w, "derive(defmt::Format)")?;
     writeln!(
         w,
         "pub enum {} {{",
@@ -1505,6 +1521,7 @@ fn render_multiplexor_enums(
             .fmt_attr(&mut w, "derive(defmt::Format)")?;
         config.impl_serde.fmt_attr(&mut w, "derive(Serialize)")?;
         config.impl_serde.fmt_attr(&mut w, "derive(Deserialize)")?;
+        config.impl_defmt.fmt_attr(&mut w, "derive(defmt::Format)")?;
         writeln!(w, r##"#[derive(Default)]"##)?;
         writeln!(
             w,
