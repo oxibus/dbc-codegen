@@ -5,6 +5,6 @@ authors = ["Pascal Hertleif <pascal@technocreatives.com>"]
 edition = "2021"
 
 [dependencies]
-approx = "0.4"
+approx = "0.5"
 can-messages = { path = "../can-messages" }
 embedded-can = "0.4.1"
