@@ -27,7 +27,10 @@
 #![deny(clippy::arithmetic_side_effects)]
 
 use anyhow::{anyhow, ensure, Context, Result};
-use can_dbc::{Message, MultiplexIndicator, Signal, ValDescription, ValueDescription, DBC};
+use can_dbc::{
+    Message, MultiplexIndicator, Signal, SignalExtendedValueType, ValDescription, ValueDescription,
+    DBC,
+};
 use heck::{ToPascalCase, ToSnakeCase};
 use pad::PadAdapter;
 use std::cmp::{max, min};
@@ -297,12 +300,14 @@ fn render_message(mut w: impl Write, config: &Config<'_>, msg: &Message, dbc: &D
         )?;
         writeln!(w)?;
 
-        for signal in msg
-            .signals()
-            .iter()
-            .filter(|sig| signal_to_rust_type(sig) != "bool")
-        {
-            let typ = signal_to_rust_type(signal);
+        for signal in msg.signals().iter().filter(|sig| {
+            let extended_signal_value_type =
+                dbc.extended_value_type_for_signal(*msg.message_id(), sig.name());
+            signal_to_rust_type(sig, extended_signal_value_type) != "bool"
+        }) {
+            let extended_signal_value_type =
+                dbc.extended_value_type_for_signal(*msg.message_id(), signal.name());
+            let typ = signal_to_rust_type(signal, extended_signal_value_type);
             writeln!(
                 &mut w,
                 "pub const {sig}_MIN: {typ} = {min}_{typ};",
@@ -333,10 +338,12 @@ fn render_message(mut w: impl Write, config: &Config<'_>, msg: &Message, dbc: &D
                 if *signal.multiplexer_indicator() == MultiplexIndicator::Plain
                     || *signal.multiplexer_indicator() == MultiplexIndicator::Multiplexor
                 {
+                    let extended_signal_value_type =
+                        dbc.extended_value_type_for_signal(*msg.message_id(), signal.name());
                     Some(format!(
                         "{}: {}",
                         field_name(signal.name()),
-                        signal_to_rust_type(signal)
+                        signal_to_rust_type(signal, extended_signal_value_type)
                     ))
                 } else {
                     None
@@ -388,7 +395,7 @@ fn render_message(mut w: impl Write, config: &Config<'_>, msg: &Message, dbc: &D
                 MultiplexIndicator::Plain => render_signal(&mut w, config, signal, dbc, msg)
                     .with_context(|| format!("write signal impl `{}`", signal.name()))?,
                 MultiplexIndicator::Multiplexor => {
-                    render_multiplexor_signal(&mut w, config, signal, msg)?
+                    render_multiplexor_signal(&mut w, config, signal, dbc, msg)?
                 }
                 MultiplexIndicator::MultiplexedSignal(_) => {}
                 MultiplexIndicator::MultiplexorAndMultiplexedSignal(_) => {}
@@ -439,7 +446,7 @@ fn render_message(mut w: impl Write, config: &Config<'_>, msg: &Message, dbc: &D
 
     render_defmt_impl(&mut w, config, msg)?;
 
-    render_arbitrary(&mut w, config, msg)?;
+    render_arbitrary(&mut w, config, dbc, msg)?;
 
     let enums_for_this_message = dbc.value_descriptions().iter().filter_map(|x| {
         if let ValueDescription::Signal {
@@ -458,7 +465,7 @@ fn render_message(mut w: impl Write, config: &Config<'_>, msg: &Message, dbc: &D
         }
     });
     for (signal, variants) in enums_for_this_message {
-        write_enum(&mut w, config, signal, msg, variants.as_slice())?;
+        write_enum(&mut w, config, signal, msg, dbc, variants.as_slice())?;
     }
 
     let multiplexor_signal = msg
@@ -480,6 +487,9 @@ fn render_signal(
     dbc: &DBC,
     msg: &Message,
 ) -> Result<()> {
+    let extended_signal_value_type =
+        dbc.extended_value_type_for_signal(*msg.message_id(), signal.name());
+
     writeln!(w, "/// {}", signal.name())?;
     if let Some(comment) = dbc.signal_comment(*msg.message_id(), signal.name()) {
         writeln!(w, "///")?;
@@ -503,11 +513,12 @@ fn render_signal(
             type_name,
         )?;
         {
-            let match_on_raw_type = match signal_to_rust_type(signal).as_str() {
-                "bool" => |x: f64| format!("{}", x),
-                // "f32" => |x: f64| format!("x if approx_eq!(f32, x, {}_f32, ulps = 2)", x),
-                _ => |x: f64| format!("{}", x),
-            };
+            let match_on_raw_type =
+                match signal_to_rust_type(signal, extended_signal_value_type).as_str() {
+                    "bool" => |x: f64| format!("{}", x),
+                    // "f32" => |x: f64| format!("x if approx_eq!(f32, x, {}_f32, ulps = 2)", x),
+                    _ => |x: f64| format!("{}", x),
+                };
             let mut w = PadAdapter::wrap(&mut w);
             let read_fn = match signal.byte_order() {
                 can_dbc::ByteOrder::LittleEndian => {
@@ -563,7 +574,7 @@ fn render_signal(
             w,
             "pub fn {}(&self) -> {} {{",
             field_name(signal.name()),
-            signal_to_rust_type(signal)
+            signal_to_rust_type(signal, extended_signal_value_type)
         )?;
         {
             let mut w = PadAdapter::wrap(&mut w);
@@ -586,16 +597,17 @@ fn render_signal(
         w,
         "pub fn {}_raw(&self) -> {} {{",
         field_name(signal.name()),
-        signal_to_rust_type(signal)
+        signal_to_rust_type(signal, extended_signal_value_type)
     )?;
     {
         let mut w = PadAdapter::wrap(&mut w);
-        signal_from_payload(&mut w, signal, msg).context("signal from payload")?;
+        signal_from_payload(&mut w, signal, extended_signal_value_type, msg)
+            .context("signal from payload")?;
     }
     writeln!(&mut w, "}}")?;
     writeln!(w)?;
 
-    render_set_signal(&mut w, config, signal, msg)?;
+    render_set_signal(&mut w, config, signal, extended_signal_value_type, msg)?;
 
     Ok(())
 }
@@ -604,6 +616,7 @@ fn render_set_signal(
     mut w: impl Write,
     config: &Config<'_>,
     signal: &Signal,
+    extended_signal_value_type: Option<&SignalExtendedValueType>,
     msg: &Message,
 ) -> Result<()> {
     writeln!(&mut w, "/// Set value of {}", signal.name())?;
@@ -622,7 +635,7 @@ fn render_set_signal(
         "{}fn set_{}(&mut self, value: {}) -> Result<(), CanError> {{",
         visibility,
         field_name(signal.name()),
-        signal_to_rust_type(signal)
+        signal_to_rust_type(signal, extended_signal_value_type)
     )?;
 
     {
@@ -637,7 +650,7 @@ fn render_set_signal(
                 writeln!(
                     w,
                     r##"if value < {min}_{typ} || {max}_{typ} < value {{"##,
-                    typ = signal_to_rust_type(signal),
+                    typ = signal_to_rust_type(signal, extended_signal_value_type),
                     min = signal.min(),
                     max = signal.max(),
                 )?;
@@ -652,7 +665,8 @@ fn render_set_signal(
                 writeln!(w, r"}}")?;
             }
         }
-        signal_to_payload(&mut w, signal, msg).context("signal to payload")?;
+        signal_to_payload(&mut w, signal, extended_signal_value_type, msg)
+            .context("signal to payload")?;
     }
 
     writeln!(&mut w, "}}")?;
@@ -701,8 +715,12 @@ fn render_multiplexor_signal(
     mut w: impl Write,
     config: &Config<'_>,
     signal: &Signal,
+    dbc: &DBC,
     msg: &Message,
 ) -> Result<()> {
+    let extended_signal_value_type =
+        dbc.extended_value_type_for_signal(*msg.message_id(), signal.name());
+
     writeln!(w, "/// Get raw value of {}", signal.name())?;
     writeln!(w, "///")?;
     writeln!(w, "/// - Start bit: {}", signal.start_bit)?;
@@ -716,11 +734,12 @@ fn render_multiplexor_signal(
         w,
         "pub fn {}_raw(&self) -> {} {{",
         field_name(signal.name()),
-        signal_to_rust_type(signal)
+        signal_to_rust_type(signal, extended_signal_value_type)
     )?;
     {
         let mut w = PadAdapter::wrap(&mut w);
-        signal_from_payload(&mut w, signal, msg).context("signal from payload")?;
+        signal_from_payload(&mut w, signal, extended_signal_value_type, msg)
+            .context("signal from payload")?;
     }
     writeln!(&mut w, "}}")?;
     writeln!(w)?;
@@ -773,7 +792,7 @@ fn render_multiplexor_signal(
     }
     writeln!(w, "}}")?;
 
-    render_set_signal(&mut w, config, signal, msg)?;
+    render_set_signal(&mut w, config, signal, extended_signal_value_type, msg)?;
 
     let mut multiplexed_signals = BTreeMap::new();
     for signal in msg.signals() {
@@ -847,9 +866,34 @@ fn le_start_end_bit(signal: &Signal, msg: &Message) -> Result<(u64, u64)> {
     Ok((start_bit, end_bit))
 }
 
-fn signal_from_payload(mut w: impl Write, signal: &Signal, msg: &Message) -> Result<()> {
-    let read_fn = match signal.byte_order() {
-        can_dbc::ByteOrder::LittleEndian => {
+fn signal_from_payload(
+    mut w: impl Write,
+    signal: &Signal,
+    extended_signal_value_type: Option<&SignalExtendedValueType>,
+    msg: &Message,
+) -> Result<()> {
+    let read_fn = match (signal.byte_order(), extended_signal_value_type) {
+        (can_dbc::ByteOrder::LittleEndian, Some(SignalExtendedValueType::IEEEfloat32Bit)) => {
+            let (start_bit, end_bit) = le_start_end_bit(signal, msg)?;
+
+            format!(
+                "f32::from_bits(self.raw.view_bits::<Lsb0>()[{start}..{end}].load_le::<{typ}>())",
+                typ = "u32",
+                start = start_bit,
+                end = end_bit,
+            )
+        }
+        (can_dbc::ByteOrder::BigEndian, Some(SignalExtendedValueType::IEEEfloat32Bit)) => {
+            let (start_bit, end_bit) = be_start_end_bit(signal, msg)?;
+
+            format!(
+                "f32::from_bits(self.raw.view_bits::<Msb0>()[{start}..{end}].load_be::<{typ}>())",
+                typ = "u32",
+                start = start_bit,
+                end = end_bit,
+            )
+        }
+        (can_dbc::ByteOrder::LittleEndian, _) => {
             let (start_bit, end_bit) = le_start_end_bit(signal, msg)?;
 
             format!(
@@ -859,7 +903,7 @@ fn signal_from_payload(mut w: impl Write, signal: &Signal, msg: &Message) -> Res
                 end = end_bit,
             )
         }
-        can_dbc::ByteOrder::BigEndian => {
+        (can_dbc::ByteOrder::BigEndian, _) => {
             let (start_bit, end_bit) = be_start_end_bit(signal, msg)?;
 
             format!(
@@ -876,6 +920,10 @@ fn signal_from_payload(mut w: impl Write, signal: &Signal, msg: &Message) -> Res
 
     if signal.signal_size == 1 {
         writeln!(&mut w, "signal == 1")?;
+    } else if let Some(SignalExtendedValueType::IEEEfloat32Bit) = extended_signal_value_type {
+        writeln!(&mut w, "let factor = {}_f32;", signal.factor)?;
+        writeln!(&mut w, "let offset = {}_f32;", signal.offset)?;
+        writeln!(&mut w, "(signal as f32) * factor + offset")?;
     } else if signal_is_float_in_rust(signal) {
         // Scaling is always done on floats
         writeln!(&mut w, "let factor = {}_f32;", signal.factor)?;
@@ -909,7 +957,12 @@ fn signal_from_payload(mut w: impl Write, signal: &Signal, msg: &Message) -> Res
     Ok(())
 }
 
-fn signal_to_payload(mut w: impl Write, signal: &Signal, msg: &Message) -> Result<()> {
+fn signal_to_payload(
+    mut w: impl Write,
+    signal: &Signal,
+    extended_signal_value_type: Option<&SignalExtendedValueType>,
+    msg: &Message,
+) -> Result<()> {
     if signal.signal_size == 1 {
         // Map boolean to byte so we can pack it
         writeln!(&mut w, "let value = value as u8;")?;
@@ -922,6 +975,11 @@ fn signal_to_payload(mut w: impl Write, signal: &Signal, msg: &Message) -> Resul
             "let value = ((value - offset) / factor) as {};",
             signal_to_rust_int(signal)
         )?;
+        writeln!(&mut w)?;
+    } else if let Some(SignalExtendedValueType::IEEEfloat32Bit) = extended_signal_value_type {
+        writeln!(&mut w, "let factor = {}_f32;", signal.factor)?;
+        writeln!(&mut w, "let offset = {}_f32;", signal.offset)?;
+        writeln!(&mut w, "let value = (value - offset) / factor;")?;
         writeln!(&mut w)?;
     } else {
         writeln!(&mut w, "let factor = {};", signal.factor)?;
@@ -985,10 +1043,13 @@ fn write_enum(
     config: &Config<'_>,
     signal: &Signal,
     msg: &Message,
+    dbc: &DBC,
     variants: &[ValDescription],
 ) -> Result<()> {
     let type_name = enum_name(msg, signal);
-    let signal_rust_type = signal_to_rust_type(signal);
+    let extended_signal_value_type =
+        dbc.extended_value_type_for_signal(*msg.message_id(), signal.name());
+    let signal_rust_type = signal_to_rust_type(signal, extended_signal_value_type);
 
     writeln!(w, "/// Defined values for {}", signal.name())?;
     writeln!(w, "#[derive(Clone, Copy, PartialEq)]")?;
@@ -1011,11 +1072,12 @@ fn write_enum(
 
     writeln!(w, "impl From<{type_name}> for {signal_rust_type} {{")?;
     {
-        let match_on_raw_type = match signal_to_rust_type(signal).as_str() {
-            "bool" => |x: f64| format!("{}", (x as i64) == 1),
-            "f32" => |x: f64| format!("{}_f32", x),
-            _ => |x: f64| format!("{}", x as i64),
-        };
+        let match_on_raw_type =
+            match signal_to_rust_type(signal, extended_signal_value_type).as_str() {
+                "bool" => |x: f64| format!("{}", (x as i64) == 1),
+                "f32" => |x: f64| format!("{}_f32", x),
+                _ => |x: f64| format!("{}", x as i64),
+            };
 
         let mut w = PadAdapter::wrap(&mut w);
         writeln!(w, "fn from(val: {type_name}) -> {signal_rust_type} {{")?;
@@ -1208,9 +1270,14 @@ fn signal_is_float_in_rust(signal: &Signal) -> bool {
     signal.offset.fract() != 0.0 || signal.factor.fract() != 0.0
 }
 
-fn signal_to_rust_type(signal: &Signal) -> String {
+fn signal_to_rust_type(
+    signal: &Signal,
+    extended_signal_value_type: Option<&SignalExtendedValueType>,
+) -> String {
     if signal.signal_size == 1 {
         String::from("bool")
+    } else if let Some(SignalExtendedValueType::IEEEfloat32Bit) = extended_signal_value_type {
+        String::from("f32")
     } else if signal_is_float_in_rust(signal) {
         // If there is any scaling needed, go for float
         String::from("f32")
@@ -1533,7 +1600,7 @@ fn render_multiplexor_enums(
     Ok(())
 }
 
-fn render_arbitrary(mut w: impl Write, config: &Config<'_>, msg: &Message) -> Result<()> {
+fn render_arbitrary(mut w: impl Write, config: &Config<'_>, dbc: &DBC, msg: &Message) -> Result<()> {
     match &config.impl_arbitrary {
         FeatureConfig::Always => {}
         FeatureConfig::Gated(gate) => writeln!(w, r##"#[cfg(feature = {gate:?})]"##)?,
@@ -1564,11 +1631,12 @@ fn render_arbitrary(mut w: impl Write, config: &Config<'_>, msg: &Message) -> Re
             let mut w = PadAdapter::wrap(&mut w);
 
             for signal in filtered_signals.iter() {
+                let extended_value_type_for_signal = dbc.extended_value_type_for_signal(*msg.message_id(), signal.name());
                 writeln!(
                     w,
                     "let {field_name} = {arbitrary_value};",
                     field_name = field_name(signal.name()),
-                    arbitrary_value = signal_to_arbitrary(signal),
+                    arbitrary_value = signal_to_arbitrary(signal, extended_value_type_for_signal),
                 )?;
             }
 
@@ -1634,9 +1702,15 @@ fn render_arbitrary_helpers(mut w: impl Write, config: &Config<'_>) -> io::Resul
     Ok(())
 }
 
-fn signal_to_arbitrary(signal: &Signal) -> String {
+fn signal_to_arbitrary(signal: &Signal, extended_value_type_for_signal: Option<&SignalExtendedValueType>) -> String {
     if signal.signal_size == 1 {
         "u.int_in_range(0..=1)? == 1".to_string()
+    } else if let Some(SignalExtendedValueType::IEEEfloat32Bit) = extended_value_type_for_signal {
+        format!(
+            "u.float_in_range({min}_f32..={max}_f32)?",
+            min = signal.min(),
+            max = signal.max()
+        )
     } else if signal_is_float_in_rust(signal) {
         format!(
             "u.float_in_range({min}_f32..={max}_f32)?",

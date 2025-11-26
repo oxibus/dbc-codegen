@@ -37,6 +37,8 @@ pub enum Messages {
     MultiplexTest(MultiplexTest),
     /// IntegerFactorOffset
     IntegerFactorOffset(IntegerFactorOffset),
+    /// Float32Test
+    Float32Test(Float32Test),
     /// NegativeFactorTest
     NegativeFactorTest(NegativeFactorTest),
     /// LargerIntsWithOffsets
@@ -65,6 +67,7 @@ impl Messages {
             IntegerFactorOffset::MESSAGE_ID => {
                 Messages::IntegerFactorOffset(IntegerFactorOffset::try_from(payload)?)
             }
+            Float32Test::MESSAGE_ID => Messages::Float32Test(Float32Test::try_from(payload)?),
             NegativeFactorTest::MESSAGE_ID => {
                 Messages::NegativeFactorTest(NegativeFactorTest::try_from(payload)?)
             }
@@ -2229,6 +2232,213 @@ impl<'a> Arbitrary<'a> for IntegerFactorOffset {
             byte_with_negative_min,
         )
         .map_err(|_| arbitrary::Error::IncorrectFormat)
+    }
+}
+
+/// Float32Test
+///
+/// - Standard ID: 600 (0x258)
+/// - Size: 8 bytes
+/// - Transmitter: Ipsum
+#[derive(Clone, Copy)]
+pub struct Float32Test {
+    raw: [u8; 8],
+}
+
+impl Float32Test {
+    pub const MESSAGE_ID: embedded_can::Id =
+        Id::Standard(unsafe { StandardId::new_unchecked(0x258) });
+
+    pub const FLOAT32_BIG_ENDIAN_MIN: f32 = -100_f32;
+    pub const FLOAT32_BIG_ENDIAN_MAX: f32 = 100_f32;
+    pub const FLOAT32_LITTLE_ENDIAN_MIN: f32 = -100_f32;
+    pub const FLOAT32_LITTLE_ENDIAN_MAX: f32 = 100_f32;
+
+    /// Construct new Float32Test from values
+    pub fn new(float32_big_endian: f32, float32_little_endian: f32) -> Result<Self, CanError> {
+        let mut res = Self { raw: [0u8; 8] };
+        res.set_float32_big_endian(float32_big_endian)?;
+        res.set_float32_little_endian(float32_little_endian)?;
+        Ok(res)
+    }
+
+    /// Access message payload raw value
+    pub fn raw(&self) -> &[u8; 8] {
+        &self.raw
+    }
+
+    /// Float32BigEndian
+    ///
+    /// - Min: -100
+    /// - Max: 100
+    /// - Unit: ""
+    /// - Receivers: DBG
+    #[inline(always)]
+    pub fn float32_big_endian(&self) -> f32 {
+        self.float32_big_endian_raw()
+    }
+
+    /// Get raw value of Float32BigEndian
+    ///
+    /// - Start bit: 7
+    /// - Signal size: 32 bits
+    /// - Factor: 1
+    /// - Offset: 0
+    /// - Byte order: BigEndian
+    /// - Value type: Signed
+    #[inline(always)]
+    pub fn float32_big_endian_raw(&self) -> f32 {
+        let signal = f32::from_bits(self.raw.view_bits::<Msb0>()[0..32].load_be::<u32>());
+
+        let factor = 1_f32;
+        let offset = 0_f32;
+        (signal as f32) * factor + offset
+    }
+
+    /// Set value of Float32BigEndian
+    #[inline(always)]
+    pub fn set_float32_big_endian(&mut self, value: f32) -> Result<(), CanError> {
+        if value < -100_f32 || 100_f32 < value {
+            return Err(CanError::ParameterOutOfRange {
+                message_id: Float32Test::MESSAGE_ID,
+            });
+        }
+        let factor = 1_f32;
+        let offset = 0_f32;
+        let value = (value - offset) / factor;
+
+        let value = u32::from_ne_bytes(value.to_ne_bytes());
+        self.raw.view_bits_mut::<Msb0>()[0..32].store_be(value);
+        Ok(())
+    }
+
+    /// Float32LittleEndian
+    ///
+    /// - Min: -100
+    /// - Max: 100
+    /// - Unit: ""
+    /// - Receivers: DBG
+    #[inline(always)]
+    pub fn float32_little_endian(&self) -> f32 {
+        self.float32_little_endian_raw()
+    }
+
+    /// Get raw value of Float32LittleEndian
+    ///
+    /// - Start bit: 32
+    /// - Signal size: 32 bits
+    /// - Factor: 1
+    /// - Offset: 0
+    /// - Byte order: LittleEndian
+    /// - Value type: Signed
+    #[inline(always)]
+    pub fn float32_little_endian_raw(&self) -> f32 {
+        let signal = f32::from_bits(self.raw.view_bits::<Lsb0>()[32..64].load_le::<u32>());
+
+        let factor = 1_f32;
+        let offset = 0_f32;
+        (signal as f32) * factor + offset
+    }
+
+    /// Set value of Float32LittleEndian
+    #[inline(always)]
+    pub fn set_float32_little_endian(&mut self, value: f32) -> Result<(), CanError> {
+        if value < -100_f32 || 100_f32 < value {
+            return Err(CanError::ParameterOutOfRange {
+                message_id: Float32Test::MESSAGE_ID,
+            });
+        }
+        let factor = 1_f32;
+        let offset = 0_f32;
+        let value = (value - offset) / factor;
+
+        let value = u32::from_ne_bytes(value.to_ne_bytes());
+        self.raw.view_bits_mut::<Lsb0>()[32..64].store_le(value);
+        Ok(())
+    }
+}
+
+impl core::convert::TryFrom<&[u8]> for Float32Test {
+    type Error = CanError;
+
+    #[inline(always)]
+    fn try_from(payload: &[u8]) -> Result<Self, Self::Error> {
+        if payload.len() != 8 {
+            return Err(CanError::InvalidPayloadSize);
+        }
+        let mut raw = [0u8; 8];
+        raw.copy_from_slice(&payload[..8]);
+        Ok(Self { raw })
+    }
+}
+
+impl embedded_can::Frame for Float32Test {
+    fn new(id: impl Into<Id>, data: &[u8]) -> Option<Self> {
+        if id.into() != Self::MESSAGE_ID {
+            None
+        } else {
+            data.try_into().ok()
+        }
+    }
+
+    fn new_remote(_id: impl Into<Id>, _dlc: usize) -> Option<Self> {
+        unimplemented!()
+    }
+
+    fn is_extended(&self) -> bool {
+        match self.id() {
+            Id::Standard(_) => false,
+            Id::Extended(_) => true,
+        }
+    }
+
+    fn is_remote_frame(&self) -> bool {
+        false
+    }
+
+    fn id(&self) -> Id {
+        Self::MESSAGE_ID
+    }
+
+    fn dlc(&self) -> usize {
+        self.raw.len()
+    }
+
+    fn data(&self) -> &[u8] {
+        &self.raw
+    }
+}
+impl core::fmt::Debug for Float32Test {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        if f.alternate() {
+            f.debug_struct("Float32Test")
+                .field("float32_big_endian", &self.float32_big_endian())
+                .field("float32_little_endian", &self.float32_little_endian())
+                .finish()
+        } else {
+            f.debug_tuple("Float32Test").field(&self.raw).finish()
+        }
+    }
+}
+
+impl defmt::Format for Float32Test {
+    fn format(&self, f: defmt::Formatter) {
+        defmt::write!(
+            f,
+            "Float32Test {{ Float32BigEndian={:?} Float32LittleEndian={:?} }}",
+            self.float32_big_endian(),
+            self.float32_little_endian(),
+        );
+    }
+}
+
+#[cfg(feature = "arb")]
+impl<'a> Arbitrary<'a> for Float32Test {
+    fn arbitrary(u: &mut Unstructured<'a>) -> Result<Self, arbitrary::Error> {
+        let float32_big_endian = u.float_in_range(-100_f32..=100_f32)?;
+        let float32_little_endian = u.float_in_range(-100_f32..=100_f32)?;
+        Float32Test::new(float32_big_endian, float32_little_endian)
+            .map_err(|_| arbitrary::Error::IncorrectFormat)
     }
 }
 
