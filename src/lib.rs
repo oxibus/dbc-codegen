@@ -84,10 +84,6 @@ pub struct Config<'a> {
     /// Optional: Validate min and max values in generated signal setters. Default: `Always`
     #[builder(default = FeatureConfig::Always)]
     pub check_ranges: FeatureConfig<'a>,
-
-    /// Optional: Allow dead code in the generated module. Default: `false`.
-    #[builder(default)]
-    pub allow_dead_code: bool,
 }
 
 /// Configuration for including features in the codegenerator.
@@ -122,31 +118,13 @@ pub fn codegen(config: Config<'_>, out: impl Write) -> Result<()> {
     let mut w = BufWriter::new(out);
 
     writeln!(&mut w, "// Generated code!")?;
+    writeln!(&mut w, "//")?;
     writeln!(
         &mut w,
-        "#![allow(unused_comparisons, unreachable_patterns, unused_imports)]"
-    )?;
-    if config.allow_dead_code {
-        writeln!(&mut w, "#![allow(dead_code)]")?;
-    }
-    writeln!(&mut w, "#![allow(clippy::let_and_return, clippy::eq_op)]")?;
-    writeln!(
-        &mut w,
-        "#![allow(clippy::useless_conversion, clippy::unnecessary_cast)]"
-    )?;
-    writeln!(
-        &mut w,
-        "#![allow(clippy::excessive_precision, clippy::manual_range_contains, clippy::absurd_extreme_comparisons, clippy::too_many_arguments)]"
-    )?;
-    writeln!(&mut w, "#![deny(clippy::arithmetic_side_effects)]")?;
-    writeln!(&mut w)?;
-    writeln!(
-        &mut w,
-        "//! Message definitions from file `{:?}`",
+        "// Message definitions from file `{}`",
         config.dbc_name
     )?;
-    writeln!(&mut w, "//!")?;
-    writeln!(&mut w, "//! - Version: `{:?}`", dbc.version)?;
+    writeln!(&mut w, "// Version: {}", dbc.version.0)?;
     writeln!(&mut w)?;
     writeln!(&mut w, "use core::ops::BitOr;")?;
     writeln!(&mut w, "use bitvec::prelude::*;")?;
@@ -1543,7 +1521,7 @@ fn render_error(mut w: impl Write, config: &Config<'_>) -> io::Result<()> {
     w.write_all(include_bytes!("./includes/errors.rs"))?;
 
     config.impl_error.fmt_cfg(w, |w| {
-        writeln!(w, "impl std::error::Error for CanError {{}}")
+        writeln!(w, "impl core::error::Error for CanError {{}}")
     })
 }
 
