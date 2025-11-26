@@ -1,4 +1,4 @@
-#![allow(clippy::float_cmp)]
+#![allow(clippy::float_cmp, clippy::excessive_precision)]
 
 use can_messages::{
     Amet, Bar, BarThree, CanError, Foo, LargerIntsWithOffsets, MsgExtendedId, MultiplexTest,
@@ -57,7 +57,7 @@ fn pack_unpack_message2() {
     assert_eq!(result.two_raw(), 0.39);
     assert_eq!(result.three_raw(), 3);
     assert_eq!(result.four_raw(), 3);
-    assert_eq!(result.five_raw(), true);
+    assert!(result.five_raw());
 }
 
 #[test]

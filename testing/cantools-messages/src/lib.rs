@@ -2,7 +2,15 @@
 #![allow(non_camel_case_types)]
 #![allow(non_snake_case)]
 
-include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
+#[cfg(test)]
+#[allow(dead_code)]
+#[allow(rustdoc::broken_intra_doc_links)]
+mod msg_bindings {
+    include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
+}
+
+#[cfg(test)]
+use msg_bindings::*;
 
 #[test]
 fn pack_message() {

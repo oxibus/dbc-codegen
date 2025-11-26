@@ -1169,9 +1169,9 @@ fn signal_to_rust_int(signal: &Signal) -> String {
     };
 
     let size = match signal.size {
-        ..=8 => "8",
-        ..=16 => "16",
-        ..=32 => "32",
+        n if n <= 8 => "8",
+        n if n <= 16 => "16",
+        n if n <= 32 => "32",
         _ => "64",
     };
 
