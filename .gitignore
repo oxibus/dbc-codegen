@@ -8,5 +8,5 @@ temp/
 tmp/
 venv/
 
-# This is a library, no lock
-Cargo.lock
+# FIXME: This is a library, we may consider removing the lock file
+#Cargo.lock
