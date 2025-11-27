@@ -16,6 +16,7 @@ rust-version = "1.81.0"
 
 [features]
 std = []
+strict = []  # For CI builds, fails on warnings
 
 [dependencies]
 can-dbc = "8.0.0"

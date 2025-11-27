@@ -24,6 +24,7 @@
 //! ```
 
 #![deny(missing_docs)]
+#![cfg_attr(feature = "strict", deny(warnings))]
 #![deny(clippy::arithmetic_side_effects)]
 
 use std::cmp::{max, min};
