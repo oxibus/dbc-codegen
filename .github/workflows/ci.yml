@@ -51,9 +51,9 @@ jobs:
           key: ${{ runner.os }}-cargo-build-target-${{ hashFiles('**/Cargo.lock') }}
 
       - name: Build
-        run: cargo build --all --verbose
+        run: cargo build --workspace --all-features --all-targets --verbose
       - name: Tests
-        run: cargo test --all --verbose
+        run: cargo test --workspace --all-features --all-targets --verbose
 
       - name: Install Rust targets we use for embedded
         run: rustup target install thumbv7em-none-eabihf
@@ -64,4 +64,4 @@ jobs:
         run: rustup component add clippy
       - name: Annotate commit with clippy warnings
         if: startsWith(matrix.os, 'ubuntu')
-        run: cargo clippy --all --all-features
+        run: cargo clippy --workspace --all-features --all-targets
