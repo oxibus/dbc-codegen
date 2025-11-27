@@ -305,6 +305,7 @@ dependencies = [
  "defmt",
  "embedded-can",
  "heck",
+ "memchr",
  "typed-builder",
 ]
 
