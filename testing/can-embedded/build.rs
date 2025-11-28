@@ -1,5 +1,6 @@
 use std::env::var;
 use std::fs::{read_to_string, write};
+use std::path::PathBuf;
 
 use anyhow::Result;
 use dbc_codegen::{Config, FeatureConfig};
@@ -25,7 +26,7 @@ fn main() -> Result<()> {
     let mut out = Vec::new();
     dbc_codegen::codegen(config, &mut out)?;
     write(
-        format!("{}/messages.rs", var("OUT_DIR").unwrap()),
+        PathBuf::from(var("OUT_DIR")?).join("messages.rs"),
         String::from_utf8(out)?,
     )?;
 
