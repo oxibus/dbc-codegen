@@ -41,6 +41,16 @@ mod includes;
 mod keywords;
 mod pad;
 
+static ALLOW_DEADCODE: &str = "#[allow(dead_code)]";
+static ALLOW_LINTS: &str = r"#[allow(
+    clippy::absurd_extreme_comparisons,
+    clippy::excessive_precision,
+    clippy::manual_range_contains,
+    clippy::unnecessary_cast,
+    clippy::useless_conversion,
+    unused_comparisons,
+)]";
+
 /// Code generator configuration. See module-level docs for an example.
 #[derive(TypedBuilder)]
 #[non_exhaustive]
@@ -84,6 +94,10 @@ pub struct Config<'a> {
     /// Optional: Validate min and max values in generated signal setters. Default: `Always`
     #[builder(default = FeatureConfig::Always)]
     pub check_ranges: FeatureConfig<'a>,
+
+    /// Optional: Allow dead code in the generated module. Default: `false`.
+    #[builder(default)]
+    pub allow_dead_code: bool,
 }
 
 /// Configuration for including features in the codegenerator.
@@ -168,6 +182,10 @@ fn render_dbc(mut w: impl Write, config: &Config<'_>, dbc: &Dbc) -> Result<()> {
 
 fn render_root_enum(mut w: impl Write, dbc: &Dbc, config: &Config<'_>) -> Result<()> {
     writeln!(w, "/// All messages")?;
+    writeln!(w, "{ALLOW_LINTS}")?;
+    if config.allow_dead_code {
+        writeln!(&mut w, "{ALLOW_DEADCODE}")?;
+    }
     writeln!(w, "#[derive(Clone)]")?;
     config.impl_debug.fmt_attr(&mut w, "derive(Debug)")?;
     config
@@ -186,6 +204,10 @@ fn render_root_enum(mut w: impl Write, dbc: &Dbc, config: &Config<'_>) -> Result
     writeln!(&mut w, "}}")?;
     writeln!(&mut w)?;
 
+    writeln!(w, "{ALLOW_LINTS}")?;
+    if config.allow_dead_code {
+        writeln!(&mut w, "{ALLOW_DEADCODE}")?;
+    }
     writeln!(w, "impl Messages {{")?;
     {
         let mut w = PadAdapter::wrap(&mut w);
@@ -253,6 +275,10 @@ fn render_message(mut w: impl Write, config: &Config<'_>, msg: &Message, dbc: &D
     writeln!(w, "}}")?;
     writeln!(w)?;
 
+    writeln!(w, "{ALLOW_LINTS}")?;
+    if config.allow_dead_code {
+        writeln!(&mut w, "{ALLOW_DEADCODE}")?;
+    }
     writeln!(w, "impl {} {{", type_name(&msg.name))?;
     {
         let mut w = PadAdapter::wrap(&mut w);
@@ -932,6 +958,10 @@ fn write_enum(
     let signal_rust_type = signal_to_rust_type(signal);
 
     writeln!(w, "/// Defined values for {}", signal.name)?;
+    writeln!(w, "{ALLOW_LINTS}")?;
+    if config.allow_dead_code {
+        writeln!(&mut w, "{ALLOW_DEADCODE}")?;
+    }
     writeln!(w, "#[derive(Clone, Copy, PartialEq)]")?;
     config.impl_debug.fmt_attr(&mut w, "derive(Debug)")?;
     config
@@ -1399,6 +1429,10 @@ fn render_multiplexor_enums(
     }
 
     writeln!(w, "/// Defined values for multiplexed signal {}", msg.name)?;
+    writeln!(w, "{ALLOW_LINTS}")?;
+    if config.allow_dead_code {
+        writeln!(&mut w, "{ALLOW_DEADCODE}")?;
+    }
 
     config.impl_debug.fmt_attr(&mut w, "derive(Debug)")?;
     config
@@ -1430,6 +1464,10 @@ fn render_multiplexor_enums(
     for (switch_index, multiplexed_signals) in &multiplexed_signals {
         let struct_name = multiplexed_enum_variant_name(msg, multiplexor_signal, *switch_index)?;
 
+        writeln!(w, "{ALLOW_LINTS}")?;
+        if config.allow_dead_code {
+            writeln!(&mut w, "{ALLOW_DEADCODE}")?;
+        }
         config.impl_debug.fmt_attr(&mut w, "derive(Debug)")?;
         config
             .impl_defmt
@@ -1440,6 +1478,10 @@ fn render_multiplexor_enums(
         writeln!(w, "pub struct {struct_name} {{ raw: [u8; {}] }}", msg.size)?;
         writeln!(w)?;
 
+        writeln!(w, "{ALLOW_LINTS}")?;
+        if config.allow_dead_code {
+            writeln!(&mut w, "{ALLOW_DEADCODE}")?;
+        }
         writeln!(w, "impl {struct_name} {{")?;
 
         writeln!(
@@ -1466,6 +1508,10 @@ fn render_arbitrary(mut w: impl Write, config: &Config<'_>, msg: &Message) -> Re
         FeatureConfig::Never => return Ok(()),
     }
 
+    writeln!(w, "{ALLOW_LINTS}")?;
+    if config.allow_dead_code {
+        writeln!(&mut w, "{ALLOW_DEADCODE}")?;
+    }
     writeln!(
         w,
         "impl<'a> Arbitrary<'a> for {typ} {{",

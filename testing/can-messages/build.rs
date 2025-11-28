@@ -14,6 +14,7 @@ fn main() -> Result<()> {
         .dbc_name("example.dbc")
         .dbc_content(&dbc_file)
         .debug_prints(true)
+        .allow_dead_code(true)
         .impl_debug(FeatureConfig::Always)
         .impl_defmt(FeatureConfig::Always)
         .impl_error(FeatureConfig::Gated("std"))
