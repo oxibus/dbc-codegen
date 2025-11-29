@@ -50,23 +50,36 @@ fn main() {
         //.check_ranges(FeatureConfig::Never)                // or look below for an example.
         .build();
 
-    let mut out = std::io::BufWriter::new(std::fs::File::create("src/messages.rs").unwrap());
+    let mut out = Vec::new();
     dbc_codegen::codegen(config, &mut out).expect("dbc-codegen failed");
+    write(
+        PathBuf::from(var("OUT_DIR").unwrap()).join("messages.rs"),
+        String::from_utf8(out).unwrap(),
+    ).unwrap();
 }
 ```
 
 ## Using generated Rust code
 
-dbc-codegen generates a Rust file that is expected to be in a cargo project.
+dbc-codegen generates a Rust file that is usually placed into the `OUT_DIR` directory.
 Here is an example [`testing/can-messages/Cargo.toml`](testing/can-messages/Cargo.toml) which defines dependencies and features that are used in generated message file.
 
 ### Project setup
 
-To use the code, add `mod messages` to your `lib.rs` (or `main.rs`).
+To use the code, add this code to your `lib.rs` (or `main.rs`):
+
+```rust,ignore
+// Import the generated code.
+mod messages {
+    include!(concat!(env!("OUT_DIR"), "/messages.rs"));
+}
+```
+
 You will most likely want to interact with the generated `Messages` enum, and call `Messages::from_can_message(id, &payload)`.
 
 Note: The generated code contains a lot of documentation.
 Give it a try:
+
 ```bash
 cargo doc --open
 ```
@@ -84,7 +97,7 @@ The generator config has the following flags that control what code gets generat
 
 These implementations can be enabled, disabled, or placed behind feature guards, like so:
 
-```rust
+```rust,ignore
 Config::builder()
     // this will generate Debug implementations
     .impl_debug(FeatureConfig::Always)
@@ -106,7 +119,7 @@ If some field name starts with a non-alphabetic character or is a Rust keyword t
 
 For example:
 
-```
+```dbc
 VAL_ 512 Five 0 "0Off" 1 "1On" 2 "2Oner" 3 "3Onest";
 ```
 
@@ -128,9 +141,9 @@ pub enum BarFive {
 SG_ Type : 30|1@0+ (1,0) [0|1] "boolean" Dolor
 ```
 
-…conflicts with the Rust keyword `type`. Therefore we prefix it with `x`:
+…conflicts with the Rust keyword `type`. Therefore, we prefix it with `x`:
 
-```rust
+```rust,ignore
 pub fn xtype(&self) -> BarType {
     match self.xtype_raw() {
         false => BarType::X0off,
