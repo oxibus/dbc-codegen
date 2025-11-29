@@ -140,7 +140,6 @@ fn offset_integers() {
 }
 
 #[test]
-#[cfg(feature = "debug")]
 fn debug_impl() {
     let result = Bar::new(1, 2.0, 3, 3, true).unwrap();
     let dbg = format!("{result:?}");
@@ -148,7 +147,6 @@ fn debug_impl() {
 }
 
 #[test]
-#[cfg(feature = "debug")]
 fn debug_alternative_impl() {
     let result = Bar::new(1, 2.0, 3, 3, true).unwrap();
     let dbg = format!("{result:#?}");

@@ -4,17 +4,17 @@ version = "0.1.0"
 authors = ["Pascal Hertleif <pascal@technocreatives.com>"]
 edition = "2021"
 
-[dependencies]
-bitvec = { version = "1.0", default-features = false }
-arbitrary = { version = "1.4", optional = true }
-embedded-can = "0.4.1"
-defmt = "1.0.1"
-
-[build-dependencies]
-anyhow = "1.0"
-dbc-codegen = { path = "../../" }
-
 [features]
 default = ["arb", "std"]
 arb = ["arbitrary"]
 std = []
+
+[dependencies]
+arbitrary = { version = "1.4", optional = true }
+bitvec = { version = "1.0", default-features = false }
+defmt = "1.0.1"
+embedded-can = "0.4.1"
+
+[build-dependencies]
+anyhow = "1.0"
+dbc-codegen = { path = "../.." }

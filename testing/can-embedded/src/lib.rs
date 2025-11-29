@@ -1,6 +1,6 @@
 #![no_std]
 
-#[rustfmt::skip]
-#[allow(clippy::pedantic)]
-#[allow(clippy::disallowed_names)]
-pub mod messages;
+#[expect(clippy::disallowed_names)]
+mod messages {
+    include!(concat!(env!("OUT_DIR"), "/messages.rs"));
+}
