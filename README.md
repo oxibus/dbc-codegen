@@ -96,7 +96,7 @@ The generator config has the following flags that control what code gets generat
 - `impl_debug`: enables `#[derive(Debug)]` for messages.
 - `impl_arbitrary`: enables implementation of [`Arbitrary`](https://docs.rs/arbitrary/1.0.0/arbitrary/trait.Arbitrary.html) trait.
   Also requires you to add `arbitrary` crate (version 1.x) as a dependency of the crate.
-- `impl_error`: Implements `std::error::Error` for `CanError`. This makes it easy to use crates like `anyhow` for error handling.
+- `impl_error`: Implements `core::error::Error` for `CanError`. This makes it easy to use crates like `anyhow` for error handling.
 - `check_ranges`: adds range checks in signal setters. (Enabled by default)
 
 These implementations can be enabled, disabled, or placed behind feature guards, like so:
