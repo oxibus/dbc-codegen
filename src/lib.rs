@@ -1,30 +1,11 @@
-//! CAN DBC code generator for Rust
-//!
-//! DBC files are descriptions of CAN frames.
-//! See [this post](https://www.kvaser.com/developer-blog/an-introduction-j1939-and-dbc-files/)
-//! for an introduction.
-//!
-//! # Usage
-//!
-//! Create a [Config] and pass it to [codegen] along with the contents of a DBC-file.
-//! See [Config] docs for a complete list of options.
-//!
-//! ```
-//! use dbc_codegen::{codegen, Config, FeatureConfig};
-//!
-//! let config = Config::builder()
-//!     .dbc_name("example.dbc")
-//!     .dbc_content(include_str!("../testing/dbc-examples/example.dbc"))
-//!     //.impl_arbitrary(FeatureConfig::Gated("arbitrary")) // optional
-//!     //.impl_debug(FeatureConfig::Always)                 // optional
-//!     .build();
-//!
-//! let mut out = Vec::<u8>::new();
-//! codegen(config, &mut out).unwrap();
-//! ```
-
 #![deny(missing_docs)]
 #![deny(clippy::arithmetic_side_effects)]
+#![allow(clippy::needless_doctest_main)]
+#![cfg_attr(feature = "std", doc = include_str!("../README.md"))]
+#![cfg_attr(
+    not(feature = "std"),
+    doc = "Documentation is only available with the `std` feature."
+)]
 
 use std::cmp::{max, min};
 use std::collections::{BTreeMap, BTreeSet};

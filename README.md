@@ -8,7 +8,10 @@
 [![CI build status](https://github.com/oxibus/dbc-codegen/actions/workflows/ci.yml/badge.svg)](https://github.com/oxibus/dbc-codegen/actions)
 [![Codecov](https://img.shields.io/codecov/c/github/oxibus/dbc-codegen)](https://app.codecov.io/gh/oxibus/dbc-codegen)
 
-Generates Rust messages from a `dbc` file.
+Generates Rust messages from a `dbc` file. DBC files are descriptions of CAN frames.
+See [this post](https://www.kvaser.com/developer-blog/an-introduction-j1939-and-dbc-files/)
+for an introduction.
+
 
 ⚠️ This is experimental - use with caution. ⚠️
 
@@ -33,27 +36,32 @@ Generate `messages.rs` from `example.dbc` using the CLI:
 dbc-codegen testing/dbc-examples/example.dbc dir/where/messages_rs/file/is/written
 ```
 
-Or put something like this into your `build.rs` file:
+Or put something like this into your `build.rs` file. Create a `Config` and pass it to `codegen` along with the contents of a DBC-file. See `Config` docs for a complete list of options.
 
-```rust
+
+```rust,no_run
+use std::env;
+use std::path::PathBuf;
+use std::fs;
+
+use dbc_codegen::{codegen, Config, FeatureConfig};
+
 fn main() {
     let dbc_path = "../dbc-examples/example.dbc";
-    let dbc_file = std::fs::read(dbc_path).unwrap();
+    let dbc_file = fs::read_to_string(dbc_path).unwrap();
     println!("cargo:rerun-if-changed={dbc_path}");
 
     let config = Config::builder()
         .dbc_name("example.dbc")
-        .dbc_content(&dbc_file)
-        //.allow_dead_code(true) // Don't emit warnings if not all generated code is used
-        //.impl_arbitrary(FeatureConfig::Gated("arbitrary")) // Optional impls.
-        //.impl_debug(FeatureConfig::Always)                 // See rustdoc for more,
-        //.check_ranges(FeatureConfig::Never)                // or look below for an example.
+        .dbc_content(include_str!("../testing/dbc-examples/example.dbc"))
+        //.impl_arbitrary(FeatureConfig::Gated("arbitrary")) // optional
+        //.impl_debug(FeatureConfig::Always)                 // optional
         .build();
 
-    let mut out = Vec::new();
+    let mut out = Vec::<u8>::new();
     dbc_codegen::codegen(config, &mut out).expect("dbc-codegen failed");
-    write(
-        PathBuf::from(var("OUT_DIR").unwrap()).join("messages.rs"),
+    fs::write(
+        PathBuf::from(env::var("OUT_DIR").unwrap()).join("messages.rs"),
         String::from_utf8(out).unwrap(),
     ).unwrap();
 }
@@ -89,15 +97,16 @@ cargo doc --open
 The generator config has the following flags that control what code gets generated:
 
 - `impl_debug`: enables `#[derive(Debug)]` for messages.
-- `impl_arbitrary`: enables implementation of [`Arbitrary`] trait.
+- `impl_arbitrary`: enables implementation of [`Arbitrary`](https://docs.rs/arbitrary/1.0.0/arbitrary/trait.Arbitrary.html) trait.
   Also requires you to add `arbitrary` crate (version 1.x) as a dependency of the crate.
-  [`Arbitrary`]: https://docs.rs/arbitrary/1.0.0/arbitrary/trait.Arbitrary.html
 - `impl_error`: Implements `std::error::Error` for `CanError`. This makes it easy to use crates like `anyhow` for error handling.
 - `check_ranges`: adds range checks in signal setters. (Enabled by default)
 
 These implementations can be enabled, disabled, or placed behind feature guards, like so:
 
-```rust,ignore
+```rust,no_run
+use dbc_codegen::{Config, FeatureConfig};
+
 Config::builder()
     // this will generate Debug implementations
     .impl_debug(FeatureConfig::Always)
@@ -106,7 +115,7 @@ Config::builder()
     .impl_error(FeatureConfig::Gated("std"))
 
     // this will disable range checks
-    .check_ranges(FeatureConfig::Never)
+    .check_ranges(FeatureConfig::Never);
 ```
 
 ### no_std
@@ -137,7 +146,7 @@ pub enum BarFive {
 
 `Type` here:
 
-```
+```dbc
 SG_ Type : 30|1@0+ (1,0) [0|1] "boolean" Dolor
 ```
 

@@ -22,3 +22,4 @@ dbc-codegen = { version = "0.3", path = ".." }
 [[bin]]
 name = "dbc-codegen"
 path = "src/main.rs"
+doc = false
