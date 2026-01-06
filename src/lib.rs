@@ -40,7 +40,7 @@ pub struct Config<'a> {
     /// Name of the dbc-file. Used for generated docs only.
     pub dbc_name: &'a str,
 
-    /// Raw bytes of a dbc-file.
+    /// Content of a dbc-file as a UTF-8 string. Use [can_dbc::decode_cp1252] or other encodings if needed.
     pub dbc_content: &'a str,
 
     /// Optional: Print debug info to stdout while generating code. Default: `false`.
