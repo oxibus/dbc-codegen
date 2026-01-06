@@ -49,6 +49,7 @@ static ALLOW_LINTS: &str = r"#[allow(
     clippy::unnecessary_cast,
     clippy::useless_conversion,
     unused_comparisons,
+    unused_imports,
 )]";
 
 /// Code generator configuration. See module-level docs for an example.
