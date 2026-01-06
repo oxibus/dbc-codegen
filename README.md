@@ -12,9 +12,6 @@ Generates Rust messages from a `dbc` file. DBC files are descriptions of CAN fra
 See [this post](https://www.kvaser.com/developer-blog/an-introduction-j1939-and-dbc-files/)
 for an introduction.
 
-
-⚠️ This is experimental - use with caution. ⚠️
-
 ## Installation
 
 Install published version using [cargo](https://doc.rust-lang.org/cargo/getting-started/installation.html):
