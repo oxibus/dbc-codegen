@@ -100,7 +100,7 @@ pub enum FeatureConfig<'a> {
 
 /// Write Rust structs matching DBC input description to `out` buffer
 pub fn codegen(config: Config<'_>, out: impl Write) -> Result<()> {
-    let dbc = can_dbc::Dbc::try_from(config.dbc_content).map_err(|e| {
+    let dbc = Dbc::try_from(config.dbc_content).map_err(|e| {
         let msg = "Could not parse dbc file";
         if config.debug_prints {
             anyhow!("{msg}: {e:#?}")
@@ -168,9 +168,7 @@ fn render_dbc(mut w: impl Write, config: &Config<'_>, dbc: &Dbc) -> Result<()> {
 fn render_root_enum(mut w: impl Write, dbc: &Dbc, config: &Config<'_>) -> Result<()> {
     writeln!(w, "/// All messages")?;
     writeln!(w, "{ALLOW_LINTS}")?;
-    if config.allow_dead_code {
-        writeln!(&mut w, "{ALLOW_DEADCODE}")?;
-    }
+    config.write_allow_dead_code(&mut w)?;
     writeln!(w, "#[derive(Clone)]")?;
     config.impl_debug.fmt_attr(&mut w, "derive(Debug)")?;
     config
@@ -190,9 +188,7 @@ fn render_root_enum(mut w: impl Write, dbc: &Dbc, config: &Config<'_>) -> Result
     writeln!(&mut w)?;
 
     writeln!(w, "{ALLOW_LINTS}")?;
-    if config.allow_dead_code {
-        writeln!(&mut w, "{ALLOW_DEADCODE}")?;
-    }
+    config.write_allow_dead_code(&mut w)?;
     writeln!(w, "impl Messages {{")?;
     {
         let mut w = PadAdapter::wrap(&mut w);
@@ -261,9 +257,7 @@ fn render_message(mut w: impl Write, config: &Config<'_>, msg: &Message, dbc: &D
     writeln!(w)?;
 
     writeln!(w, "{ALLOW_LINTS}")?;
-    if config.allow_dead_code {
-        writeln!(&mut w, "{ALLOW_DEADCODE}")?;
-    }
+    config.write_allow_dead_code(&mut w)?;
     writeln!(w, "impl {} {{", type_name(&msg.name))?;
     {
         let mut w = PadAdapter::wrap(&mut w);
@@ -944,9 +938,7 @@ fn write_enum(
 
     writeln!(w, "/// Defined values for {}", signal.name)?;
     writeln!(w, "{ALLOW_LINTS}")?;
-    if config.allow_dead_code {
-        writeln!(&mut w, "{ALLOW_DEADCODE}")?;
-    }
+    config.write_allow_dead_code(&mut w)?;
     writeln!(w, "#[derive(Clone, Copy, PartialEq)]")?;
     config.impl_debug.fmt_attr(&mut w, "derive(Debug)")?;
     config
@@ -1253,7 +1245,7 @@ fn render_embedded_can_frame(
     w: &mut impl Write,
     config: &Config<'_>,
     msg: &Message,
-) -> Result<(), std::io::Error> {
+) -> io::Result<()> {
     config.impl_embedded_can_frame.fmt_cfg(w, |w| {
         writeln!(
             w,
@@ -1415,9 +1407,7 @@ fn render_multiplexor_enums(
 
     writeln!(w, "/// Defined values for multiplexed signal {}", msg.name)?;
     writeln!(w, "{ALLOW_LINTS}")?;
-    if config.allow_dead_code {
-        writeln!(&mut w, "{ALLOW_DEADCODE}")?;
-    }
+    config.write_allow_dead_code(&mut w)?;
 
     config.impl_debug.fmt_attr(&mut w, "derive(Debug)")?;
     config
@@ -1450,9 +1440,7 @@ fn render_multiplexor_enums(
         let struct_name = multiplexed_enum_variant_name(msg, multiplexor_signal, *switch_index)?;
 
         writeln!(w, "{ALLOW_LINTS}")?;
-        if config.allow_dead_code {
-            writeln!(&mut w, "{ALLOW_DEADCODE}")?;
-        }
+        config.write_allow_dead_code(&mut w)?;
         config.impl_debug.fmt_attr(&mut w, "derive(Debug)")?;
         config
             .impl_defmt
@@ -1464,9 +1452,7 @@ fn render_multiplexor_enums(
         writeln!(w)?;
 
         writeln!(w, "{ALLOW_LINTS}")?;
-        if config.allow_dead_code {
-            writeln!(&mut w, "{ALLOW_DEADCODE}")?;
-        }
+        config.write_allow_dead_code(&mut w)?;
         writeln!(w, "impl {struct_name} {{")?;
 
         writeln!(
@@ -1494,9 +1480,7 @@ fn render_arbitrary(mut w: impl Write, config: &Config<'_>, msg: &Message) -> Re
     }
 
     writeln!(w, "{ALLOW_LINTS}")?;
-    if config.allow_dead_code {
-        writeln!(&mut w, "{ALLOW_DEADCODE}")?;
-    }
+    config.write_allow_dead_code(&mut w)?;
     writeln!(
         w,
         "impl<'a> Arbitrary<'a> for {typ} {{",
@@ -1558,6 +1542,7 @@ fn render_error(mut w: impl Write, config: &Config<'_>) -> io::Result<()> {
 
 fn render_arbitrary_helpers(mut w: impl Write, config: &Config<'_>) -> io::Result<()> {
     config.impl_arbitrary.fmt_cfg(&mut w, |w| {
+        config.write_allow_dead_code(w)?;
         writeln!(w, "trait UnstructuredFloatExt {{")?;
         writeln!(w, "    fn float_in_range(&mut self, range: core::ops::RangeInclusive<f32>) -> arbitrary::Result<f32>;")?;
         writeln!(w, "}}")?;
@@ -1616,6 +1601,16 @@ fn get_relevant_messages(dbc: &Dbc) -> impl Iterator<Item = &Message> {
 fn message_ignored(message: &Message) -> bool {
     // DBC internal message containing signals unassigned to any real message
     message.name == "VECTOR__INDEPENDENT_SIG_MSG"
+}
+
+impl Config<'_> {
+    fn write_allow_dead_code(&self, w: &mut impl Write) -> io::Result<()> {
+        if self.allow_dead_code {
+            writeln!(w, "{ALLOW_DEADCODE}")
+        } else {
+            Ok(())
+        }
+    }
 }
 
 impl FeatureConfig<'_> {
