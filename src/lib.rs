@@ -30,7 +30,7 @@ static ALLOW_LINTS: &str = r"#[allow(
     clippy::unnecessary_cast,
     clippy::useless_conversion,
     unused_comparisons,
-    unused_imports,
+    unused_variables,
 )]";
 
 /// Code generator configuration. See module-level docs for an example.
@@ -122,8 +122,11 @@ pub fn codegen(config: Config<'_>, out: impl Write) -> Result<()> {
     )?;
     writeln!(&mut w, "// Version: {}", dbc.version.0)?;
     writeln!(&mut w)?;
+    writeln!(&mut w, "#[allow(unused_imports)]")?;
     writeln!(&mut w, "use core::ops::BitOr;")?;
+    writeln!(&mut w, "#[allow(unused_imports)]")?;
     writeln!(&mut w, "use bitvec::prelude::*;")?;
+    writeln!(&mut w, "#[allow(unused_imports)]")?;
     writeln!(&mut w, "use embedded_can::{{Id, StandardId, ExtendedId}};")?;
 
     config.impl_arbitrary.fmt_cfg(&mut w, |w| {
