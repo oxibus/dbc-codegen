@@ -1,39 +1,37 @@
 [package]
 name = "dbc-codegen"
 version = "0.3.0"
+description = "CAN DBC code-gen for embedded Rust"
 authors = [
     "Pascal Hertleif <pascal@technocreatives.com>",
     "Marcel Buesing <buesing.marcel@googlemail.com>",
     "Andres Vahter <andres@vahter.me>",
 ]
 edition = "2021"
-description = "CAN DBC code-gen for embedded Rust"
 license = "MIT OR Apache-2.0"
-readme = "README.md"
-repository = "https://github.com/technocreatives/dbc-codegen"
-homepage = "https://github.com/technocreatives/dbc-codegen"
+repository = "https://github.com/oxibus/dbc-codegen"
 rust-version = "1.81.0"
 
 [features]
 std = []
 
 [dependencies]
-can-dbc = "8.0.0"
 anyhow = "1.0.100"
+can-dbc = "8.0.0"
+embedded-can = "0.4.1"
 heck = "0.5.0"
 typed-builder = "0.23.2"
-embedded-can = "0.4.1"
 
 [workspace]
 members = [
     ".",
     "dbc-codegen-cli",
-    "testing/rust-integration",
     "testing/can-embedded",
     "testing/can-messages",
     "testing/cantools-messages",
+    "testing/rust-integration",
 ]
 
-# Indicates features that docs.rs should enable when building documentation.
 [package.metadata.docs.rs]
+# Indicates features that docs.rs should enable when building documentation.
 features = ["std"]
