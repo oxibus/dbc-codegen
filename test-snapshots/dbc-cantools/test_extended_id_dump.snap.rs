@@ -1,7 +1,7 @@
 // Generated code!
 //
 // Message definitions from file `test_extended_id_dump`
-// Version: 
+// Version:
 
 #[allow(unused_imports)]
 use core::ops::BitOr;
@@ -41,7 +41,7 @@ impl Messages {
     /// Read message from CAN frame
     #[inline(never)]
     pub fn from_can_message(id: Id, payload: &[u8]) -> Result<Self, CanError> {
-        
+
         let res = match id {
             SomeFrame::MESSAGE_ID => Messages::SomeFrame(SomeFrame::try_from(payload)?),
             SomeExtFrame::MESSAGE_ID => Messages::SomeExtFrame(SomeExtFrame::try_from(payload)?),
@@ -71,22 +71,22 @@ pub struct SomeFrame {
 )]
 impl SomeFrame {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0x100)});
-    
+
     pub const SOME_DIFFERENT_SIG_MIN: i8 = 0_i8;
     pub const SOME_DIFFERENT_SIG_MAX: i8 = 0_i8;
-    
+
     /// Construct new SomeFrame from values
     pub fn new(some_different_sig: i8) -> Result<Self, CanError> {
         let mut res = Self { raw: [0u8; 8] };
         res.set_some_different_sig(some_different_sig)?;
         Ok(res)
     }
-    
+
     /// Access message payload raw value
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    
+
     /// SomeDifferentSig
     ///
     /// - Min: 0
@@ -97,7 +97,7 @@ impl SomeFrame {
     pub fn some_different_sig(&self) -> i8 {
         self.some_different_sig_raw()
     }
-    
+
     /// Get raw value of SomeDifferentSig
     ///
     /// - Start bit: 0
@@ -109,12 +109,12 @@ impl SomeFrame {
     #[inline(always)]
     pub fn some_different_sig_raw(&self) -> i8 {
         let signal = self.raw.view_bits::<Lsb0>()[0..8].load_le::<i8>();
-        
+
         let factor = 1;
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    
+
     /// Set value of SomeDifferentSig
     #[inline(always)]
     pub fn set_some_different_sig(&mut self, value: i8) -> Result<(), CanError> {
@@ -125,17 +125,17 @@ impl SomeFrame {
         let value = value.checked_sub(0)
             .ok_or(CanError::ParameterOutOfRange { message_id: SomeFrame::MESSAGE_ID })?;
         let value = (value / factor) as i8;
-        
+
         let value = u8::from_ne_bytes(value.to_ne_bytes());
         self.raw.view_bits_mut::<Lsb0>()[0..8].store_le(value);
         Ok(())
     }
-    
+
 }
 
 impl core::convert::TryFrom<&[u8]> for SomeFrame {
     type Error = CanError;
-    
+
     #[inline(always)]
     fn try_from(payload: &[u8]) -> Result<Self, Self::Error> {
         if payload.len() != 8 { return Err(CanError::InvalidPayloadSize); }
@@ -202,22 +202,22 @@ pub struct SomeExtFrame {
 )]
 impl SomeExtFrame {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe { ExtendedId::new_unchecked(0x1c2a2a2a)});
-    
+
     pub const SOME_SIG_MIN: i8 = 0_i8;
     pub const SOME_SIG_MAX: i8 = 0_i8;
-    
+
     /// Construct new SomeExtFrame from values
     pub fn new(some_sig: i8) -> Result<Self, CanError> {
         let mut res = Self { raw: [0u8; 8] };
         res.set_some_sig(some_sig)?;
         Ok(res)
     }
-    
+
     /// Access message payload raw value
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    
+
     /// SomeSig
     ///
     /// - Min: 0
@@ -228,7 +228,7 @@ impl SomeExtFrame {
     pub fn some_sig(&self) -> i8 {
         self.some_sig_raw()
     }
-    
+
     /// Get raw value of SomeSig
     ///
     /// - Start bit: 0
@@ -240,12 +240,12 @@ impl SomeExtFrame {
     #[inline(always)]
     pub fn some_sig_raw(&self) -> i8 {
         let signal = self.raw.view_bits::<Lsb0>()[0..8].load_le::<i8>();
-        
+
         let factor = 1;
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    
+
     /// Set value of SomeSig
     #[inline(always)]
     pub fn set_some_sig(&mut self, value: i8) -> Result<(), CanError> {
@@ -256,17 +256,17 @@ impl SomeExtFrame {
         let value = value.checked_sub(0)
             .ok_or(CanError::ParameterOutOfRange { message_id: SomeExtFrame::MESSAGE_ID })?;
         let value = (value / factor) as i8;
-        
+
         let value = u8::from_ne_bytes(value.to_ne_bytes());
         self.raw.view_bits_mut::<Lsb0>()[0..8].store_le(value);
         Ok(())
     }
-    
+
 }
 
 impl core::convert::TryFrom<&[u8]> for SomeExtFrame {
     type Error = CanError;
-    
+
     #[inline(always)]
     fn try_from(payload: &[u8]) -> Result<Self, Self::Error> {
         if payload.len() != 8 { return Err(CanError::InvalidPayloadSize); }
@@ -343,4 +343,3 @@ impl core::fmt::Display for CanError {
         write!(f, "{self:?}")
     }
 }
-

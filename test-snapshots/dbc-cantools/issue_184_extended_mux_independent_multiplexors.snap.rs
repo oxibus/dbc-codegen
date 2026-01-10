@@ -1,7 +1,7 @@
 // Generated code!
 //
 // Message definitions from file `issue_184_extended_mux_independent_multiplexors`
-// Version: 
+// Version:
 
 #[allow(unused_imports)]
 use core::ops::BitOr;
@@ -39,7 +39,7 @@ impl Messages {
     /// Read message from CAN frame
     #[inline(never)]
     pub fn from_can_message(id: Id, payload: &[u8]) -> Result<Self, CanError> {
-        
+
         let res = match id {
             ExtMuxIndepMultiplexors::MESSAGE_ID => Messages::ExtMuxIndepMultiplexors(ExtMuxIndepMultiplexors::try_from(payload)?),
             id => return Err(CanError::UnknownMessageId(id)),
@@ -68,7 +68,7 @@ pub struct ExtMuxIndepMultiplexors {
 )]
 impl ExtMuxIndepMultiplexors {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe { ExtendedId::new_unchecked(0x2)});
-    
+
     pub const MUXED_B_2_MIN: i8 = 0_i8;
     pub const MUXED_B_2_MAX: i8 = 0_i8;
     pub const MUXED_B_1_MIN: i8 = 0_i8;
@@ -81,7 +81,7 @@ impl ExtMuxIndepMultiplexors {
     pub const MUXED_A_0_MAX: i8 = 0_i8;
     pub const MUX_A_MIN: i8 = 0_i8;
     pub const MUX_A_MAX: i8 = 0_i8;
-    
+
     /// Construct new ext_MUX_indep_multiplexors from values
     pub fn new(mux_b: i8, mux_a: i8) -> Result<Self, CanError> {
         let mut res = Self { raw: [0u8; 8] };
@@ -89,12 +89,12 @@ impl ExtMuxIndepMultiplexors {
         res.set_mux_a(mux_a)?;
         Ok(res)
     }
-    
+
     /// Access message payload raw value
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    
+
     /// Get raw value of MUX_B
     ///
     /// - Start bit: 16
@@ -106,12 +106,12 @@ impl ExtMuxIndepMultiplexors {
     #[inline(always)]
     pub fn mux_b_raw(&self) -> i8 {
         let signal = self.raw.view_bits::<Lsb0>()[16..24].load_le::<i8>();
-        
+
         let factor = 1;
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    
+
     pub fn mux_b(&mut self) -> Result<ExtMuxIndepMultiplexorsMuxBIndex, CanError> {
         match self.mux_b_raw() {
             0 => Ok(ExtMuxIndepMultiplexorsMuxBIndex::M0(ExtMuxIndepMultiplexorsMuxBM0{ raw: self.raw })),
@@ -130,12 +130,12 @@ impl ExtMuxIndepMultiplexors {
         let value = value.checked_sub(0)
             .ok_or(CanError::ParameterOutOfRange { message_id: ExtMuxIndepMultiplexors::MESSAGE_ID })?;
         let value = (value / factor) as i8;
-        
+
         let value = u8::from_ne_bytes(value.to_ne_bytes());
         self.raw.view_bits_mut::<Lsb0>()[16..24].store_le(value);
         Ok(())
     }
-    
+
     /// Set value of MUX_B
     #[inline(always)]
     pub fn set_m0(&mut self, value: ExtMuxIndepMultiplexorsMuxBM0) -> Result<(), CanError> {
@@ -145,7 +145,7 @@ impl ExtMuxIndepMultiplexors {
         self.set_mux_b(0)?;
         Ok(())
     }
-    
+
     /// Set value of MUX_B
     #[inline(always)]
     pub fn set_m1(&mut self, value: ExtMuxIndepMultiplexorsMuxBM1) -> Result<(), CanError> {
@@ -155,7 +155,7 @@ impl ExtMuxIndepMultiplexors {
         self.set_mux_b(1)?;
         Ok(())
     }
-    
+
     /// Set value of MUX_B
     #[inline(always)]
     pub fn set_m2(&mut self, value: ExtMuxIndepMultiplexorsMuxBM2) -> Result<(), CanError> {
@@ -165,7 +165,7 @@ impl ExtMuxIndepMultiplexors {
         self.set_mux_b(2)?;
         Ok(())
     }
-    
+
     /// Get raw value of MUX_A
     ///
     /// - Start bit: 0
@@ -177,12 +177,12 @@ impl ExtMuxIndepMultiplexors {
     #[inline(always)]
     pub fn mux_a_raw(&self) -> i8 {
         let signal = self.raw.view_bits::<Lsb0>()[0..8].load_le::<i8>();
-        
+
         let factor = 1;
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    
+
     pub fn mux_a(&mut self) -> Result<ExtMuxIndepMultiplexorsMuxAIndex, CanError> {
         match self.mux_a_raw() {
             0 => Ok(ExtMuxIndepMultiplexorsMuxAIndex::M0(ExtMuxIndepMultiplexorsMuxAM0{ raw: self.raw })),
@@ -201,12 +201,12 @@ impl ExtMuxIndepMultiplexors {
         let value = value.checked_sub(0)
             .ok_or(CanError::ParameterOutOfRange { message_id: ExtMuxIndepMultiplexors::MESSAGE_ID })?;
         let value = (value / factor) as i8;
-        
+
         let value = u8::from_ne_bytes(value.to_ne_bytes());
         self.raw.view_bits_mut::<Lsb0>()[0..8].store_le(value);
         Ok(())
     }
-    
+
     /// Set value of MUX_A
     #[inline(always)]
     pub fn set_m0(&mut self, value: ExtMuxIndepMultiplexorsMuxAM0) -> Result<(), CanError> {
@@ -216,7 +216,7 @@ impl ExtMuxIndepMultiplexors {
         self.set_mux_a(0)?;
         Ok(())
     }
-    
+
     /// Set value of MUX_A
     #[inline(always)]
     pub fn set_m1(&mut self, value: ExtMuxIndepMultiplexorsMuxAM1) -> Result<(), CanError> {
@@ -226,7 +226,7 @@ impl ExtMuxIndepMultiplexors {
         self.set_mux_a(1)?;
         Ok(())
     }
-    
+
     /// Set value of MUX_A
     #[inline(always)]
     pub fn set_m2(&mut self, value: ExtMuxIndepMultiplexorsMuxAM2) -> Result<(), CanError> {
@@ -236,12 +236,12 @@ impl ExtMuxIndepMultiplexors {
         self.set_mux_a(2)?;
         Ok(())
     }
-    
+
 }
 
 impl core::convert::TryFrom<&[u8]> for ExtMuxIndepMultiplexors {
     type Error = CanError;
-    
+
     #[inline(always)]
     fn try_from(payload: &[u8]) -> Result<Self, Self::Error> {
         if payload.len() != 8 { return Err(CanError::InvalidPayloadSize); }
@@ -348,7 +348,7 @@ pub fn muxed_a_0(&self) -> i8 {
 #[inline(always)]
 pub fn muxed_a_0_raw(&self) -> i8 {
     let signal = self.raw.view_bits::<Lsb0>()[8..16].load_le::<i8>();
-    
+
     let factor = 1;
     let signal = signal as i8;
     i8::from(signal).saturating_mul(factor).saturating_add(0)
@@ -364,7 +364,7 @@ pub fn set_muxed_a_0(&mut self, value: i8) -> Result<(), CanError> {
     let value = value.checked_sub(0)
         .ok_or(CanError::ParameterOutOfRange { message_id: ExtMuxIndepMultiplexors::MESSAGE_ID })?;
     let value = (value / factor) as i8;
-    
+
     let value = u8::from_ne_bytes(value.to_ne_bytes());
     self.raw.view_bits_mut::<Lsb0>()[8..16].store_le(value);
     Ok(())
@@ -417,7 +417,7 @@ pub fn muxed_b_1(&self) -> i8 {
 #[inline(always)]
 pub fn muxed_b_1_raw(&self) -> i8 {
     let signal = self.raw.view_bits::<Lsb0>()[24..32].load_le::<i8>();
-    
+
     let factor = 1;
     let signal = signal as i8;
     i8::from(signal).saturating_mul(factor).saturating_add(0)
@@ -433,7 +433,7 @@ pub fn set_muxed_b_1(&mut self, value: i8) -> Result<(), CanError> {
     let value = value.checked_sub(0)
         .ok_or(CanError::ParameterOutOfRange { message_id: ExtMuxIndepMultiplexors::MESSAGE_ID })?;
     let value = (value / factor) as i8;
-    
+
     let value = u8::from_ne_bytes(value.to_ne_bytes());
     self.raw.view_bits_mut::<Lsb0>()[24..32].store_le(value);
     Ok(())
@@ -461,7 +461,7 @@ pub fn muxed_a_1(&self) -> i8 {
 #[inline(always)]
 pub fn muxed_a_1_raw(&self) -> i8 {
     let signal = self.raw.view_bits::<Lsb0>()[8..16].load_le::<i8>();
-    
+
     let factor = 1;
     let signal = signal as i8;
     i8::from(signal).saturating_mul(factor).saturating_add(0)
@@ -477,7 +477,7 @@ pub fn set_muxed_a_1(&mut self, value: i8) -> Result<(), CanError> {
     let value = value.checked_sub(0)
         .ok_or(CanError::ParameterOutOfRange { message_id: ExtMuxIndepMultiplexors::MESSAGE_ID })?;
     let value = (value / factor) as i8;
-    
+
     let value = u8::from_ne_bytes(value.to_ne_bytes());
     self.raw.view_bits_mut::<Lsb0>()[8..16].store_le(value);
     Ok(())
@@ -530,7 +530,7 @@ pub fn muxed_b_2(&self) -> i8 {
 #[inline(always)]
 pub fn muxed_b_2_raw(&self) -> i8 {
     let signal = self.raw.view_bits::<Lsb0>()[24..32].load_le::<i8>();
-    
+
     let factor = 1;
     let signal = signal as i8;
     i8::from(signal).saturating_mul(factor).saturating_add(0)
@@ -546,7 +546,7 @@ pub fn set_muxed_b_2(&mut self, value: i8) -> Result<(), CanError> {
     let value = value.checked_sub(0)
         .ok_or(CanError::ParameterOutOfRange { message_id: ExtMuxIndepMultiplexors::MESSAGE_ID })?;
     let value = (value / factor) as i8;
-    
+
     let value = u8::from_ne_bytes(value.to_ne_bytes());
     self.raw.view_bits_mut::<Lsb0>()[24..32].store_le(value);
     Ok(())
@@ -585,4 +585,3 @@ impl core::fmt::Display for CanError {
         write!(f, "{self:?}")
     }
 }
-

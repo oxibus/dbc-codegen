@@ -1,7 +1,7 @@
 // Generated code!
 //
 // Message definitions from file `add_two_dbc_files_1`
-// Version: 
+// Version:
 
 #[allow(unused_imports)]
 use core::ops::BitOr;
@@ -41,7 +41,7 @@ impl Messages {
     /// Read message from CAN frame
     #[inline(never)]
     pub fn from_can_message(id: Id, payload: &[u8]) -> Result<Self, CanError> {
-        
+
         let res = match id {
             M1::MESSAGE_ID => Messages::M1(M1::try_from(payload)?),
             M2::MESSAGE_ID => Messages::M2(M2::try_from(payload)?),
@@ -72,24 +72,24 @@ pub struct M1 {
 )]
 impl M1 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0x1)});
-    
-    
+
+
     /// Construct new M1 from values
     pub fn new() -> Result<Self, CanError> {
         let res = Self { raw: [0u8; 8] };
         Ok(res)
     }
-    
+
     /// Access message payload raw value
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    
+
 }
 
 impl core::convert::TryFrom<&[u8]> for M1 {
     type Error = CanError;
-    
+
     #[inline(always)]
     fn try_from(payload: &[u8]) -> Result<Self, Self::Error> {
         if payload.len() != 8 { return Err(CanError::InvalidPayloadSize); }
@@ -157,24 +157,24 @@ pub struct M2 {
 )]
 impl M2 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0x2)});
-    
-    
+
+
     /// Construct new M2 from values
     pub fn new() -> Result<Self, CanError> {
         let res = Self { raw: [0u8; 8] };
         Ok(res)
     }
-    
+
     /// Access message payload raw value
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    
+
 }
 
 impl core::convert::TryFrom<&[u8]> for M2 {
     type Error = CanError;
-    
+
     #[inline(always)]
     fn try_from(payload: &[u8]) -> Result<Self, Self::Error> {
         if payload.len() != 8 { return Err(CanError::InvalidPayloadSize); }
@@ -251,4 +251,3 @@ impl core::fmt::Display for CanError {
         write!(f, "{self:?}")
     }
 }
-

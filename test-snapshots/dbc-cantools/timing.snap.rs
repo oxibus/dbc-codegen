@@ -41,7 +41,7 @@ impl Messages {
     /// Read message from CAN frame
     #[inline(never)]
     pub fn from_can_message(id: Id, payload: &[u8]) -> Result<Self, CanError> {
-        
+
         let res = match id {
             Foo::MESSAGE_ID => Messages::Foo(Foo::try_from(payload)?),
             Bar::MESSAGE_ID => Messages::Bar(Bar::try_from(payload)?),
@@ -72,22 +72,22 @@ pub struct Foo {
 )]
 impl Foo {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0x1)});
-    
+
     pub const FOO_MIN: f32 = 229.53_f32;
     pub const FOO_MAX: f32 = 270.47_f32;
-    
+
     /// Construct new Foo from values
     pub fn new(foo: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0u8; 8] };
         res.set_foo(foo)?;
         Ok(res)
     }
-    
+
     /// Access message payload raw value
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    
+
     /// Foo
     ///
     /// - Min: 229.53
@@ -98,7 +98,7 @@ impl Foo {
     pub fn foo(&self) -> f32 {
         self.foo_raw()
     }
-    
+
     /// Get raw value of Foo
     ///
     /// - Start bit: 0
@@ -110,12 +110,12 @@ impl Foo {
     #[inline(always)]
     pub fn foo_raw(&self) -> f32 {
         let signal = self.raw.view_bits::<Msb0>()[7..19].load_be::<i16>();
-        
+
         let factor = 0.01_f32;
         let offset = 250_f32;
         (signal as f32) * factor + offset
     }
-    
+
     /// Set value of Foo
     #[inline(always)]
     pub fn set_foo(&mut self, value: f32) -> Result<(), CanError> {
@@ -125,17 +125,17 @@ impl Foo {
         let factor = 0.01_f32;
         let offset = 250_f32;
         let value = ((value - offset) / factor) as i16;
-        
+
         let value = u16::from_ne_bytes(value.to_ne_bytes());
         self.raw.view_bits_mut::<Msb0>()[7..19].store_be(value);
         Ok(())
     }
-    
+
 }
 
 impl core::convert::TryFrom<&[u8]> for Foo {
     type Error = CanError;
-    
+
     #[inline(always)]
     fn try_from(payload: &[u8]) -> Result<Self, Self::Error> {
         if payload.len() != 8 { return Err(CanError::InvalidPayloadSize); }
@@ -203,22 +203,22 @@ pub struct Bar {
 )]
 impl Bar {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0x2)});
-    
+
     pub const FOO_MIN: f32 = 229.53_f32;
     pub const FOO_MAX: f32 = 270.47_f32;
-    
+
     /// Construct new Bar from values
     pub fn new(foo: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0u8; 8] };
         res.set_foo(foo)?;
         Ok(res)
     }
-    
+
     /// Access message payload raw value
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    
+
     /// Foo
     ///
     /// - Min: 229.53
@@ -229,7 +229,7 @@ impl Bar {
     pub fn foo(&self) -> f32 {
         self.foo_raw()
     }
-    
+
     /// Get raw value of Foo
     ///
     /// - Start bit: 0
@@ -241,12 +241,12 @@ impl Bar {
     #[inline(always)]
     pub fn foo_raw(&self) -> f32 {
         let signal = self.raw.view_bits::<Msb0>()[7..19].load_be::<i16>();
-        
+
         let factor = 0.01_f32;
         let offset = 250_f32;
         (signal as f32) * factor + offset
     }
-    
+
     /// Set value of Foo
     #[inline(always)]
     pub fn set_foo(&mut self, value: f32) -> Result<(), CanError> {
@@ -256,17 +256,17 @@ impl Bar {
         let factor = 0.01_f32;
         let offset = 250_f32;
         let value = ((value - offset) / factor) as i16;
-        
+
         let value = u16::from_ne_bytes(value.to_ne_bytes());
         self.raw.view_bits_mut::<Msb0>()[7..19].store_be(value);
         Ok(())
     }
-    
+
 }
 
 impl core::convert::TryFrom<&[u8]> for Bar {
     type Error = CanError;
-    
+
     #[inline(always)]
     fn try_from(payload: &[u8]) -> Result<Self, Self::Error> {
         if payload.len() != 8 { return Err(CanError::InvalidPayloadSize); }
@@ -343,4 +343,3 @@ impl core::fmt::Display for CanError {
         write!(f, "{self:?}")
     }
 }
-

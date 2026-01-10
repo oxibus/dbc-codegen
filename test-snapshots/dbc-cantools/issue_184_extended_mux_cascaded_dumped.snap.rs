@@ -1,7 +1,7 @@
 // Generated code!
 //
 // Message definitions from file `issue_184_extended_mux_cascaded_dumped`
-// Version: 
+// Version:
 
 #[allow(unused_imports)]
 use core::ops::BitOr;
@@ -39,7 +39,7 @@ impl Messages {
     /// Read message from CAN frame
     #[inline(never)]
     pub fn from_can_message(id: Id, payload: &[u8]) -> Result<Self, CanError> {
-        
+
         let res = match id {
             ExtMuxCascaded::MESSAGE_ID => Messages::ExtMuxCascaded(ExtMuxCascaded::try_from(payload)?),
             id => return Err(CanError::UnknownMessageId(id)),
@@ -68,7 +68,7 @@ pub struct ExtMuxCascaded {
 )]
 impl ExtMuxCascaded {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe { ExtendedId::new_unchecked(0x1)});
-    
+
     pub const MUXED_B_1_MIN: i8 = 0_i8;
     pub const MUXED_B_1_MAX: i8 = 0_i8;
     pub const MUXED_B_0_MIN: i8 = 0_i8;
@@ -79,7 +79,7 @@ impl ExtMuxCascaded {
     pub const MUXED_A_2_MUX_B_MAX: i8 = 0_i8;
     pub const MUX_A_MIN: i8 = 0_i8;
     pub const MUX_A_MAX: i8 = 0_i8;
-    
+
     /// Construct new ext_MUX_cascaded from values
     pub fn new(muxed_a_2_mux_b: i8, mux_a: i8) -> Result<Self, CanError> {
         let mut res = Self { raw: [0u8; 8] };
@@ -87,12 +87,12 @@ impl ExtMuxCascaded {
         res.set_mux_a(mux_a)?;
         Ok(res)
     }
-    
+
     /// Access message payload raw value
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    
+
     /// Get raw value of muxed_A_2_MUX_B
     ///
     /// - Start bit: 8
@@ -104,12 +104,12 @@ impl ExtMuxCascaded {
     #[inline(always)]
     pub fn muxed_a_2_mux_b_raw(&self) -> i8 {
         let signal = self.raw.view_bits::<Lsb0>()[8..16].load_le::<i8>();
-        
+
         let factor = 1;
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    
+
     pub fn muxed_a_2_mux_b(&mut self) -> Result<ExtMuxCascadedMuxedA2MuxBIndex, CanError> {
         match self.muxed_a_2_mux_b_raw() {
             0 => Ok(ExtMuxCascadedMuxedA2MuxBIndex::M0(ExtMuxCascadedMuxedA2MuxBM0{ raw: self.raw })),
@@ -127,12 +127,12 @@ impl ExtMuxCascaded {
         let value = value.checked_sub(0)
             .ok_or(CanError::ParameterOutOfRange { message_id: ExtMuxCascaded::MESSAGE_ID })?;
         let value = (value / factor) as i8;
-        
+
         let value = u8::from_ne_bytes(value.to_ne_bytes());
         self.raw.view_bits_mut::<Lsb0>()[8..16].store_le(value);
         Ok(())
     }
-    
+
     /// Set value of muxed_A_2_MUX_B
     #[inline(always)]
     pub fn set_m0(&mut self, value: ExtMuxCascadedMuxedA2MuxBM0) -> Result<(), CanError> {
@@ -142,7 +142,7 @@ impl ExtMuxCascaded {
         self.set_muxed_a_2_mux_b(0)?;
         Ok(())
     }
-    
+
     /// Set value of muxed_A_2_MUX_B
     #[inline(always)]
     pub fn set_m1(&mut self, value: ExtMuxCascadedMuxedA2MuxBM1) -> Result<(), CanError> {
@@ -152,7 +152,7 @@ impl ExtMuxCascaded {
         self.set_muxed_a_2_mux_b(1)?;
         Ok(())
     }
-    
+
     /// Get raw value of MUX_A
     ///
     /// - Start bit: 0
@@ -164,12 +164,12 @@ impl ExtMuxCascaded {
     #[inline(always)]
     pub fn mux_a_raw(&self) -> i8 {
         let signal = self.raw.view_bits::<Lsb0>()[0..8].load_le::<i8>();
-        
+
         let factor = 1;
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    
+
     pub fn mux_a(&mut self) -> Result<ExtMuxCascadedMuxAIndex, CanError> {
         match self.mux_a_raw() {
             0 => Ok(ExtMuxCascadedMuxAIndex::M0(ExtMuxCascadedMuxAM0{ raw: self.raw })),
@@ -187,12 +187,12 @@ impl ExtMuxCascaded {
         let value = value.checked_sub(0)
             .ok_or(CanError::ParameterOutOfRange { message_id: ExtMuxCascaded::MESSAGE_ID })?;
         let value = (value / factor) as i8;
-        
+
         let value = u8::from_ne_bytes(value.to_ne_bytes());
         self.raw.view_bits_mut::<Lsb0>()[0..8].store_le(value);
         Ok(())
     }
-    
+
     /// Set value of MUX_A
     #[inline(always)]
     pub fn set_m0(&mut self, value: ExtMuxCascadedMuxAM0) -> Result<(), CanError> {
@@ -202,7 +202,7 @@ impl ExtMuxCascaded {
         self.set_mux_a(0)?;
         Ok(())
     }
-    
+
     /// Set value of MUX_A
     #[inline(always)]
     pub fn set_m1(&mut self, value: ExtMuxCascadedMuxAM1) -> Result<(), CanError> {
@@ -212,12 +212,12 @@ impl ExtMuxCascaded {
         self.set_mux_a(1)?;
         Ok(())
     }
-    
+
 }
 
 impl core::convert::TryFrom<&[u8]> for ExtMuxCascaded {
     type Error = CanError;
-    
+
     #[inline(always)]
     fn try_from(payload: &[u8]) -> Result<Self, Self::Error> {
         if payload.len() != 8 { return Err(CanError::InvalidPayloadSize); }
@@ -323,7 +323,7 @@ pub fn muxed_b_0(&self) -> i8 {
 #[inline(always)]
 pub fn muxed_b_0_raw(&self) -> i8 {
     let signal = self.raw.view_bits::<Lsb0>()[16..24].load_le::<i8>();
-    
+
     let factor = 1;
     let signal = signal as i8;
     i8::from(signal).saturating_mul(factor).saturating_add(0)
@@ -339,7 +339,7 @@ pub fn set_muxed_b_0(&mut self, value: i8) -> Result<(), CanError> {
     let value = value.checked_sub(0)
         .ok_or(CanError::ParameterOutOfRange { message_id: ExtMuxCascaded::MESSAGE_ID })?;
     let value = (value / factor) as i8;
-    
+
     let value = u8::from_ne_bytes(value.to_ne_bytes());
     self.raw.view_bits_mut::<Lsb0>()[16..24].store_le(value);
     Ok(())
@@ -392,7 +392,7 @@ pub fn muxed_b_1(&self) -> i8 {
 #[inline(always)]
 pub fn muxed_b_1_raw(&self) -> i8 {
     let signal = self.raw.view_bits::<Lsb0>()[24..32].load_le::<i8>();
-    
+
     let factor = 1;
     let signal = signal as i8;
     i8::from(signal).saturating_mul(factor).saturating_add(0)
@@ -408,7 +408,7 @@ pub fn set_muxed_b_1(&mut self, value: i8) -> Result<(), CanError> {
     let value = value.checked_sub(0)
         .ok_or(CanError::ParameterOutOfRange { message_id: ExtMuxCascaded::MESSAGE_ID })?;
     let value = (value / factor) as i8;
-    
+
     let value = u8::from_ne_bytes(value.to_ne_bytes());
     self.raw.view_bits_mut::<Lsb0>()[24..32].store_le(value);
     Ok(())
@@ -436,7 +436,7 @@ pub fn muxed_a_1(&self) -> i8 {
 #[inline(always)]
 pub fn muxed_a_1_raw(&self) -> i8 {
     let signal = self.raw.view_bits::<Lsb0>()[8..16].load_le::<i8>();
-    
+
     let factor = 1;
     let signal = signal as i8;
     i8::from(signal).saturating_mul(factor).saturating_add(0)
@@ -452,7 +452,7 @@ pub fn set_muxed_a_1(&mut self, value: i8) -> Result<(), CanError> {
     let value = value.checked_sub(0)
         .ok_or(CanError::ParameterOutOfRange { message_id: ExtMuxCascaded::MESSAGE_ID })?;
     let value = (value / factor) as i8;
-    
+
     let value = u8::from_ne_bytes(value.to_ne_bytes());
     self.raw.view_bits_mut::<Lsb0>()[8..16].store_le(value);
     Ok(())
@@ -491,4 +491,3 @@ impl core::fmt::Display for CanError {
         write!(f, "{self:?}")
     }
 }
-

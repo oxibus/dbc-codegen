@@ -1,7 +1,7 @@
 // Generated code!
 //
 // Message definitions from file `big_numbers`
-// Version: 
+// Version:
 
 #[allow(unused_imports)]
 use core::ops::BitOr;
@@ -41,7 +41,7 @@ impl Messages {
     /// Read message from CAN frame
     #[inline(never)]
     pub fn from_can_message(id: Id, payload: &[u8]) -> Result<Self, CanError> {
-        
+
         let res = match id {
             TheMessage::MESSAGE_ID => Messages::TheMessage(TheMessage::try_from(payload)?),
             TheOtherMessage::MESSAGE_ID => Messages::TheOtherMessage(TheOtherMessage::try_from(payload)?),
@@ -71,22 +71,22 @@ pub struct TheMessage {
 )]
 impl TheMessage {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe { ExtendedId::new_unchecked(0x39)});
-    
+
     pub const THE_SIGNAL_MIN: i8 = 0_i8;
     pub const THE_SIGNAL_MAX: i8 = 0_i8;
-    
+
     /// Construct new TheMessage from values
     pub fn new(the_signal: i8) -> Result<Self, CanError> {
         let mut res = Self { raw: [0u8; 8] };
         res.set_the_signal(the_signal)?;
         Ok(res)
     }
-    
+
     /// Access message payload raw value
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    
+
     /// TheSignal
     ///
     /// - Min: 0
@@ -97,7 +97,7 @@ impl TheMessage {
     pub fn the_signal(&self) -> i8 {
         self.the_signal_raw()
     }
-    
+
     /// Get raw value of TheSignal
     ///
     /// - Start bit: 0
@@ -109,12 +109,12 @@ impl TheMessage {
     #[inline(always)]
     pub fn the_signal_raw(&self) -> i8 {
         let signal = self.raw.view_bits::<Lsb0>()[0..8].load_le::<i8>();
-        
+
         let factor = 1;
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    
+
     /// Set value of TheSignal
     #[inline(always)]
     pub fn set_the_signal(&mut self, value: i8) -> Result<(), CanError> {
@@ -125,17 +125,17 @@ impl TheMessage {
         let value = value.checked_sub(0)
             .ok_or(CanError::ParameterOutOfRange { message_id: TheMessage::MESSAGE_ID })?;
         let value = (value / factor) as i8;
-        
+
         let value = u8::from_ne_bytes(value.to_ne_bytes());
         self.raw.view_bits_mut::<Lsb0>()[0..8].store_le(value);
         Ok(())
     }
-    
+
 }
 
 impl core::convert::TryFrom<&[u8]> for TheMessage {
     type Error = CanError;
-    
+
     #[inline(always)]
     fn try_from(payload: &[u8]) -> Result<Self, Self::Error> {
         if payload.len() != 8 { return Err(CanError::InvalidPayloadSize); }
@@ -202,22 +202,22 @@ pub struct TheOtherMessage {
 )]
 impl TheOtherMessage {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0x2a)});
-    
+
     pub const THE_SIGNAL_MIN: i8 = 0_i8;
     pub const THE_SIGNAL_MAX: i8 = 0_i8;
-    
+
     /// Construct new TheOtherMessage from values
     pub fn new(the_signal: i8) -> Result<Self, CanError> {
         let mut res = Self { raw: [0u8; 8] };
         res.set_the_signal(the_signal)?;
         Ok(res)
     }
-    
+
     /// Access message payload raw value
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    
+
     /// TheSignal
     ///
     /// - Min: 0
@@ -228,7 +228,7 @@ impl TheOtherMessage {
     pub fn the_signal(&self) -> i8 {
         self.the_signal_raw()
     }
-    
+
     /// Get raw value of TheSignal
     ///
     /// - Start bit: 0
@@ -240,12 +240,12 @@ impl TheOtherMessage {
     #[inline(always)]
     pub fn the_signal_raw(&self) -> i8 {
         let signal = self.raw.view_bits::<Lsb0>()[0..8].load_le::<i8>();
-        
+
         let factor = 1;
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    
+
     /// Set value of TheSignal
     #[inline(always)]
     pub fn set_the_signal(&mut self, value: i8) -> Result<(), CanError> {
@@ -256,17 +256,17 @@ impl TheOtherMessage {
         let value = value.checked_sub(0)
             .ok_or(CanError::ParameterOutOfRange { message_id: TheOtherMessage::MESSAGE_ID })?;
         let value = (value / factor) as i8;
-        
+
         let value = u8::from_ne_bytes(value.to_ne_bytes());
         self.raw.view_bits_mut::<Lsb0>()[0..8].store_le(value);
         Ok(())
     }
-    
+
 }
 
 impl core::convert::TryFrom<&[u8]> for TheOtherMessage {
     type Error = CanError;
-    
+
     #[inline(always)]
     fn try_from(payload: &[u8]) -> Result<Self, Self::Error> {
         if payload.len() != 8 { return Err(CanError::InvalidPayloadSize); }
@@ -343,4 +343,3 @@ impl core::fmt::Display for CanError {
         write!(f, "{self:?}")
     }
 }
-

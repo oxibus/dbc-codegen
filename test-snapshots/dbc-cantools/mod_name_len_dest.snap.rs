@@ -1,7 +1,7 @@
 // Generated code!
 //
 // Message definitions from file `mod_name_len_dest`
-// Version: 
+// Version:
 
 #[allow(unused_imports)]
 use core::ops::BitOr;
@@ -39,7 +39,7 @@ impl Messages {
     /// Read message from CAN frame
     #[inline(never)]
     pub fn from_can_message(id: Id, payload: &[u8]) -> Result<Self, CanError> {
-        
+
         let res = match id {
             MsgNowShort::MESSAGE_ID => Messages::MsgNowShort(MsgNowShort::try_from(payload)?),
             id => return Err(CanError::UnknownMessageId(id)),
@@ -69,22 +69,22 @@ pub struct MsgNowShort {
 )]
 impl MsgNowShort {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0x1)});
-    
+
     pub const SIG_NOW_SHORT_MIN: u8 = 0_u8;
     pub const SIG_NOW_SHORT_MAX: u8 = 0_u8;
-    
+
     /// Construct new msg_now_short from values
     pub fn new(sig_now_short: u8) -> Result<Self, CanError> {
         let mut res = Self { raw: [0u8; 8] };
         res.set_sig_now_short(sig_now_short)?;
         Ok(res)
     }
-    
+
     /// Access message payload raw value
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    
+
     /// sig_now_short
     ///
     /// - Min: 0
@@ -95,7 +95,7 @@ impl MsgNowShort {
     pub fn sig_now_short(&self) -> u8 {
         self.sig_now_short_raw()
     }
-    
+
     /// Get raw value of sig_now_short
     ///
     /// - Start bit: 1
@@ -107,11 +107,11 @@ impl MsgNowShort {
     #[inline(always)]
     pub fn sig_now_short_raw(&self) -> u8 {
         let signal = self.raw.view_bits::<Lsb0>()[1..9].load_le::<u8>();
-        
+
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    
+
     /// Set value of sig_now_short
     #[inline(always)]
     pub fn set_sig_now_short(&mut self, value: u8) -> Result<(), CanError> {
@@ -122,16 +122,16 @@ impl MsgNowShort {
         let value = value.checked_sub(0)
             .ok_or(CanError::ParameterOutOfRange { message_id: MsgNowShort::MESSAGE_ID })?;
         let value = (value / factor) as u8;
-        
+
         self.raw.view_bits_mut::<Lsb0>()[1..9].store_le(value);
         Ok(())
     }
-    
+
 }
 
 impl core::convert::TryFrom<&[u8]> for MsgNowShort {
     type Error = CanError;
-    
+
     #[inline(always)]
     fn try_from(payload: &[u8]) -> Result<Self, Self::Error> {
         if payload.len() != 8 { return Err(CanError::InvalidPayloadSize); }
@@ -208,4 +208,3 @@ impl core::fmt::Display for CanError {
         write!(f, "{self:?}")
     }
 }
-
