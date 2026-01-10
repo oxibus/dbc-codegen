@@ -417,8 +417,8 @@ fn render_message(mut w: impl Write, config: &Config<'_>, msg: &Message, dbc: &D
             if *message_id != msg.id {
                 return None;
             }
-            let signal = dbc.signal_by_name(*message_id, name).unwrap();
-            Some((signal, value_descriptions))
+            dbc.signal_by_name(*message_id, name)
+                .map(|v| (v, value_descriptions))
         } else {
             None
         }

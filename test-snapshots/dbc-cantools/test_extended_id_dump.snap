@@ -1,0 +1,5 @@
+---
+source: tests/snapshots.rs
+extension: rs
+snapshot_kind: binary
+---
