@@ -1,6 +1,7 @@
 #![cfg(feature = "std")]
 
 use std::borrow::Cow;
+use std::io::{Error, ErrorKind};
 use std::path::{Path, PathBuf};
 use std::{env, fs};
 
@@ -68,10 +69,17 @@ fn get_test_info(path: &Path) -> Option<(PathBuf, &'static TestConfig)> {
 fn test_if_submodules_are_present() {
     for test in TEST_DIRS {
         let dir = Path::new("./tests/fixtures").join(test.test_root);
-        fs::read_dir(&dir).unwrap_or_else(|e| {
-            let dir_display = dir.display();
-            panic!(
-                "
+        fs::read_dir(&dir)
+            .and_then(|v| {
+                v.into_iter()
+                    .next()
+                    .map(|_| ())
+                    .ok_or_else(|| Error::new(ErrorKind::NotFound, "No files or dirs found"))
+            })
+            .unwrap_or_else(|e| {
+                let dir_display = dir.display();
+                panic!(
+                    "
 --------------------------------------------------------------------------
 Error reading dbc test files from   {dir_display}
 {e}
@@ -79,8 +87,8 @@ Make sure git submodules are up to date by running
     git submodule update --init --recursive
 --------------------------------------------------------------------------
 "
-            )
-        });
+                )
+            });
     }
 }
 
