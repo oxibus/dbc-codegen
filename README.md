@@ -115,9 +115,9 @@ Config::builder()
     .check_ranges(FeatureConfig::Never);
 ```
 
-### no_std
+### `no_std`
 
-The generated code is no_std compatible, unless you enable `impl_error`.
+The generated code is `no_std` compatible, unless you enable `impl_error`.
 
 ### Field/variant rename rules
 
