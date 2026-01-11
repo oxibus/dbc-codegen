@@ -471,23 +471,17 @@ fn render_signal(
             let mut w = PadAdapter::wrap(&mut w);
             let read_fn = match signal.byte_order {
                 can_dbc::ByteOrder::LittleEndian => {
-                    let (start_bit, end_bit) = le_start_end_bit(signal, msg)?;
-
+                    let (start, end) = le_start_end_bit(signal, msg)?;
                     format!(
                         "self.raw.view_bits::<Lsb0>()[{start}..{end}].load_le::<{typ}>()",
                         typ = signal_to_rust_uint(signal),
-                        start = start_bit,
-                        end = end_bit,
                     )
                 }
                 can_dbc::ByteOrder::BigEndian => {
-                    let (start_bit, end_bit) = be_start_end_bit(signal, msg)?;
-
+                    let (start, end) = be_start_end_bit(signal, msg)?;
                     format!(
                         "self.raw.view_bits::<Msb0>()[{start}..{end}].load_be::<{typ}>()",
                         typ = signal_to_rust_uint(signal),
-                        start = start_bit,
-                        end = end_bit
                     )
                 }
             };
@@ -786,23 +780,17 @@ fn le_start_end_bit(signal: &Signal, msg: &Message) -> Result<(u64, u64)> {
 fn signal_from_payload(mut w: impl Write, signal: &Signal, msg: &Message) -> Result<()> {
     let read_fn = match signal.byte_order {
         can_dbc::ByteOrder::LittleEndian => {
-            let (start_bit, end_bit) = le_start_end_bit(signal, msg)?;
-
+            let (start, end) = le_start_end_bit(signal, msg)?;
             format!(
                 "self.raw.view_bits::<Lsb0>()[{start}..{end}].load_le::<{typ}>()",
                 typ = signal_to_rust_int(signal),
-                start = start_bit,
-                end = end_bit,
             )
         }
         can_dbc::ByteOrder::BigEndian => {
-            let (start_bit, end_bit) = be_start_end_bit(signal, msg)?;
-
+            let (start, end) = be_start_end_bit(signal, msg)?;
             format!(
                 "self.raw.view_bits::<Msb0>()[{start}..{end}].load_be::<{typ}>()",
                 typ = signal_to_rust_int(signal),
-                start = start_bit,
-                end = end_bit
             )
         }
     };
@@ -888,17 +876,17 @@ fn signal_to_payload(mut w: impl Write, signal: &Signal, msg: &Message) -> Resul
 
     match signal.byte_order {
         can_dbc::ByteOrder::LittleEndian => {
-            let (start_bit, end_bit) = le_start_end_bit(signal, msg)?;
+            let (start, end) = le_start_end_bit(signal, msg)?;
             writeln!(
                 &mut w,
-                r"self.raw.view_bits_mut::<Lsb0>()[{start_bit}..{end_bit}].store_le(value);",
+                r"self.raw.view_bits_mut::<Lsb0>()[{start}..{end}].store_le(value);",
             )?;
         }
         can_dbc::ByteOrder::BigEndian => {
-            let (start_bit, end_bit) = be_start_end_bit(signal, msg)?;
+            let (start, end) = be_start_end_bit(signal, msg)?;
             writeln!(
                 &mut w,
-                r"self.raw.view_bits_mut::<Msb0>()[{start_bit}..{end_bit}].store_be(value);",
+                r"self.raw.view_bits_mut::<Msb0>()[{start}..{end}].store_be(value);",
             )?;
         }
     }
