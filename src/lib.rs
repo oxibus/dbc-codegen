@@ -464,9 +464,9 @@ fn render_signal(
         )?;
         {
             let match_on_raw_type = match signal_to_rust_type(signal).as_str() {
-                "bool" => |x: f64| format!("{x}"),
-                // "f32" => |x: f64| format!("x if approx_eq!(f32, x, {x}_f32, ulps = 2)"),
-                _ => |x: f64| format!("{x}"),
+                "bool" => |x: i64| format!("{x}"),
+                // "f32" => |x: i64| format!("x if approx_eq!(f32, x, {x}_f32, ulps = 2)"),
+                _ => |x: i64| format!("{x}"),
             };
             let mut w = PadAdapter::wrap(&mut w);
             let read_fn = match signal.byte_order {
@@ -492,7 +492,7 @@ fn render_signal(
             {
                 let mut w = PadAdapter::wrap(&mut w);
                 for variant in variants {
-                    let literal = match_on_raw_type(variant.id as f64);
+                    let literal = match_on_raw_type(variant.id);
                     writeln!(
                         w,
                         "{literal} => {type_name}::{},",
@@ -929,9 +929,9 @@ fn write_enum(
     writeln!(w, "impl From<{type_name}> for {signal_rust_type} {{")?;
     {
         let match_on_raw_type = match signal_to_rust_type(signal).as_str() {
-            "bool" => |x: f64| format!("{}", (x as i64) == 1),
-            "f32" => |x: f64| format!("{x}_f32"),
-            _ => |x: f64| format!("{}", x as i64),
+            "bool" => |x: i64| format!("{}", (x) == 1),
+            "f32" => |x: i64| format!("{x}_f32"),
+            _ => |x: i64| format!("{}", x),
         };
 
         let mut w = PadAdapter::wrap(&mut w);
@@ -943,7 +943,7 @@ fn write_enum(
             {
                 let mut w = PadAdapter::wrap(&mut w);
                 for variant in variants {
-                    let literal = match_on_raw_type(variant.id as f64);
+                    let literal = match_on_raw_type(variant.id);
                     writeln!(
                         &mut w,
                         "{type_name}::{} => {literal},",
