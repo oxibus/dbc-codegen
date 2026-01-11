@@ -1,7 +1,7 @@
 // Generated code!
 //
 // Message definitions from file `BU_BO_REL_`
-// Version:
+// Version: 
 
 #[allow(unused_imports)]
 use core::ops::BitOr;
@@ -39,7 +39,7 @@ impl Messages {
     /// Read message from CAN frame
     #[inline(never)]
     pub fn from_can_message(id: Id, payload: &[u8]) -> Result<Self, CanError> {
-
+        
         let res = match id {
             Control::MESSAGE_ID => Messages::Control(Control::try_from(payload)?),
             id => return Err(CanError::UnknownMessageId(id)),
@@ -69,22 +69,22 @@ pub struct Control {
 )]
 impl Control {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0x1)});
-
+    
     pub const STATE_MIN: u8 = 0_u8;
     pub const STATE_MAX: u8 = 100_u8;
-
+    
     /// Construct new CONTROL from values
     pub fn new(state: u8) -> Result<Self, CanError> {
         let mut res = Self { raw: [0u8; 7] };
         res.set_state(state)?;
         Ok(res)
     }
-
+    
     /// Access message payload raw value
     pub fn raw(&self) -> &[u8; 7] {
         &self.raw
     }
-
+    
     /// state
     ///
     /// - Min: 0
@@ -94,13 +94,13 @@ impl Control {
     #[inline(always)]
     pub fn state(&self) -> ControlState {
         let signal = self.raw.view_bits::<Lsb0>()[0..8].load_le::<u8>();
-
+        
         match signal {
             255 => ControlState::Invalid,
             _ => ControlState::_Other(self.state_raw()),
         }
     }
-
+    
     /// Get raw value of state
     ///
     /// - Start bit: 0
@@ -112,11 +112,11 @@ impl Control {
     #[inline(always)]
     pub fn state_raw(&self) -> u8 {
         let signal = self.raw.view_bits::<Lsb0>()[0..8].load_le::<u8>();
-
+        
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-
+    
     /// Set value of state
     #[inline(always)]
     pub fn set_state(&mut self, value: u8) -> Result<(), CanError> {
@@ -127,16 +127,16 @@ impl Control {
         let value = value.checked_sub(0)
             .ok_or(CanError::ParameterOutOfRange { message_id: Control::MESSAGE_ID })?;
         let value = (value / factor) as u8;
-
+        
         self.raw.view_bits_mut::<Lsb0>()[0..8].store_le(value);
         Ok(())
     }
-
+    
 }
 
 impl core::convert::TryFrom<&[u8]> for Control {
     type Error = CanError;
-
+    
     #[inline(always)]
     fn try_from(payload: &[u8]) -> Result<Self, Self::Error> {
         if payload.len() != 7 { return Err(CanError::InvalidPayloadSize); }
@@ -238,3 +238,4 @@ impl core::fmt::Display for CanError {
         write!(f, "{self:?}")
     }
 }
+

@@ -39,7 +39,7 @@ impl Messages {
     /// Read message from CAN frame
     #[inline(never)]
     pub fn from_can_message(id: Id, payload: &[u8]) -> Result<Self, CanError> {
-
+        
         let res = match id {
             EmvStati::MESSAGE_ID => Messages::EmvStati(EmvStati::try_from(payload)?),
             id => return Err(CanError::UnknownMessageId(id)),
@@ -69,8 +69,8 @@ pub struct EmvStati {
 )]
 impl EmvStati {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0x222)});
-
-
+    
+    
     /// Construct new EMV_Stati from values
     pub fn new(emv_aktion_status_5: bool, emv_aktion_status_4: bool, emv_aktion_status_3: bool, emv_aktion_status_2: bool, emv_aktion_status_1: bool) -> Result<Self, CanError> {
         let mut res = Self { raw: [0u8; 8] };
@@ -81,12 +81,12 @@ impl EmvStati {
         res.set_emv_aktion_status_1(emv_aktion_status_1)?;
         Ok(res)
     }
-
+    
     /// Access message payload raw value
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-
+    
     /// EMV_Aktion_Status_5
     ///
     /// - Min: 0
@@ -97,7 +97,7 @@ impl EmvStati {
     pub fn emv_aktion_status_5(&self) -> bool {
         self.emv_aktion_status_5_raw()
     }
-
+    
     /// Get raw value of EMV_Aktion_Status_5
     ///
     /// - Start bit: 4
@@ -109,10 +109,10 @@ impl EmvStati {
     #[inline(always)]
     pub fn emv_aktion_status_5_raw(&self) -> bool {
         let signal = self.raw.view_bits::<Lsb0>()[4..5].load_le::<u8>();
-
+        
         signal == 1
     }
-
+    
     /// Set value of EMV_Aktion_Status_5
     #[inline(always)]
     pub fn set_emv_aktion_status_5(&mut self, value: bool) -> Result<(), CanError> {
@@ -120,7 +120,7 @@ impl EmvStati {
         self.raw.view_bits_mut::<Lsb0>()[4..5].store_le(value);
         Ok(())
     }
-
+    
     /// EMV_Aktion_Status_4
     ///
     /// - Min: 0
@@ -131,7 +131,7 @@ impl EmvStati {
     pub fn emv_aktion_status_4(&self) -> bool {
         self.emv_aktion_status_4_raw()
     }
-
+    
     /// Get raw value of EMV_Aktion_Status_4
     ///
     /// - Start bit: 3
@@ -143,10 +143,10 @@ impl EmvStati {
     #[inline(always)]
     pub fn emv_aktion_status_4_raw(&self) -> bool {
         let signal = self.raw.view_bits::<Lsb0>()[3..4].load_le::<u8>();
-
+        
         signal == 1
     }
-
+    
     /// Set value of EMV_Aktion_Status_4
     #[inline(always)]
     pub fn set_emv_aktion_status_4(&mut self, value: bool) -> Result<(), CanError> {
@@ -154,7 +154,7 @@ impl EmvStati {
         self.raw.view_bits_mut::<Lsb0>()[3..4].store_le(value);
         Ok(())
     }
-
+    
     /// EMV_Aktion_Status_3
     ///
     /// - Min: 0
@@ -165,7 +165,7 @@ impl EmvStati {
     pub fn emv_aktion_status_3(&self) -> bool {
         self.emv_aktion_status_3_raw()
     }
-
+    
     /// Get raw value of EMV_Aktion_Status_3
     ///
     /// - Start bit: 2
@@ -177,10 +177,10 @@ impl EmvStati {
     #[inline(always)]
     pub fn emv_aktion_status_3_raw(&self) -> bool {
         let signal = self.raw.view_bits::<Lsb0>()[2..3].load_le::<u8>();
-
+        
         signal == 1
     }
-
+    
     /// Set value of EMV_Aktion_Status_3
     #[inline(always)]
     pub fn set_emv_aktion_status_3(&mut self, value: bool) -> Result<(), CanError> {
@@ -188,7 +188,7 @@ impl EmvStati {
         self.raw.view_bits_mut::<Lsb0>()[2..3].store_le(value);
         Ok(())
     }
-
+    
     /// EMV_Aktion_Status_2
     ///
     /// - Min: 0
@@ -199,7 +199,7 @@ impl EmvStati {
     pub fn emv_aktion_status_2(&self) -> bool {
         self.emv_aktion_status_2_raw()
     }
-
+    
     /// Get raw value of EMV_Aktion_Status_2
     ///
     /// - Start bit: 6
@@ -211,10 +211,10 @@ impl EmvStati {
     #[inline(always)]
     pub fn emv_aktion_status_2_raw(&self) -> bool {
         let signal = self.raw.view_bits::<Lsb0>()[6..7].load_le::<u8>();
-
+        
         signal == 1
     }
-
+    
     /// Set value of EMV_Aktion_Status_2
     #[inline(always)]
     pub fn set_emv_aktion_status_2(&mut self, value: bool) -> Result<(), CanError> {
@@ -222,7 +222,7 @@ impl EmvStati {
         self.raw.view_bits_mut::<Lsb0>()[6..7].store_le(value);
         Ok(())
     }
-
+    
     /// EMV_Aktion_Status_1
     ///
     /// - Min: 0
@@ -233,7 +233,7 @@ impl EmvStati {
     pub fn emv_aktion_status_1(&self) -> bool {
         self.emv_aktion_status_1_raw()
     }
-
+    
     /// Get raw value of EMV_Aktion_Status_1
     ///
     /// - Start bit: 5
@@ -245,10 +245,10 @@ impl EmvStati {
     #[inline(always)]
     pub fn emv_aktion_status_1_raw(&self) -> bool {
         let signal = self.raw.view_bits::<Lsb0>()[5..6].load_le::<u8>();
-
+        
         signal == 1
     }
-
+    
     /// Set value of EMV_Aktion_Status_1
     #[inline(always)]
     pub fn set_emv_aktion_status_1(&mut self, value: bool) -> Result<(), CanError> {
@@ -256,12 +256,12 @@ impl EmvStati {
         self.raw.view_bits_mut::<Lsb0>()[5..6].store_le(value);
         Ok(())
     }
-
+    
 }
 
 impl core::convert::TryFrom<&[u8]> for EmvStati {
     type Error = CanError;
-
+    
     #[inline(always)]
     fn try_from(payload: &[u8]) -> Result<Self, Self::Error> {
         if payload.len() != 8 { return Err(CanError::InvalidPayloadSize); }
@@ -338,3 +338,4 @@ impl core::fmt::Display for CanError {
         write!(f, "{self:?}")
     }
 }
+

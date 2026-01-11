@@ -1,7 +1,7 @@
 // Generated code!
 //
 // Message definitions from file `issue_62`
-// Version:
+// Version: 
 
 #[allow(unused_imports)]
 use core::ops::BitOr;
@@ -37,7 +37,7 @@ impl Messages {
     /// Read message from CAN frame
     #[inline(never)]
     pub fn from_can_message(id: Id, payload: &[u8]) -> Result<Self, CanError> {
-
+        
         let res = match id {
             id => return Err(CanError::UnknownMessageId(id)),
         };
@@ -75,3 +75,4 @@ impl core::fmt::Display for CanError {
         write!(f, "{self:?}")
     }
 }
+

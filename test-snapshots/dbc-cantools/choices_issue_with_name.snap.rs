@@ -1,7 +1,7 @@
 // Generated code!
 //
 // Message definitions from file `choices_issue_with_name`
-// Version:
+// Version: 
 
 #[allow(unused_imports)]
 use core::ops::BitOr;
@@ -39,7 +39,7 @@ impl Messages {
     /// Read message from CAN frame
     #[inline(never)]
     pub fn from_can_message(id: Id, payload: &[u8]) -> Result<Self, CanError> {
-
+        
         let res = match id {
             TestMessage::MESSAGE_ID => Messages::TestMessage(TestMessage::try_from(payload)?),
             id => return Err(CanError::UnknownMessageId(id)),
@@ -68,20 +68,20 @@ pub struct TestMessage {
 )]
 impl TestMessage {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe { ExtendedId::new_unchecked(0x90000)});
-
-
+    
+    
     /// Construct new TestMessage from values
     pub fn new(signal_with_choices: bool) -> Result<Self, CanError> {
         let mut res = Self { raw: [0u8; 1] };
         res.set_signal_with_choices(signal_with_choices)?;
         Ok(res)
     }
-
+    
     /// Access message payload raw value
     pub fn raw(&self) -> &[u8; 1] {
         &self.raw
     }
-
+    
     /// SignalWithChoices
     ///
     /// - Min: 0
@@ -91,14 +91,14 @@ impl TestMessage {
     #[inline(always)]
     pub fn signal_with_choices(&self) -> TestMessageSignalWithChoices {
         let signal = self.raw.view_bits::<Lsb0>()[0..1].load_le::<u8>();
-
+        
         match signal {
             1 => TestMessageSignalWithChoices::SignalWithChoicesCmdRespOk,
             0 => TestMessageSignalWithChoices::SignalWithChoicesCmdRespErr,
             _ => TestMessageSignalWithChoices::_Other(self.signal_with_choices_raw()),
         }
     }
-
+    
     /// Get raw value of SignalWithChoices
     ///
     /// - Start bit: 0
@@ -110,10 +110,10 @@ impl TestMessage {
     #[inline(always)]
     pub fn signal_with_choices_raw(&self) -> bool {
         let signal = self.raw.view_bits::<Lsb0>()[0..1].load_le::<u8>();
-
+        
         signal == 1
     }
-
+    
     /// Set value of SignalWithChoices
     #[inline(always)]
     pub fn set_signal_with_choices(&mut self, value: bool) -> Result<(), CanError> {
@@ -121,12 +121,12 @@ impl TestMessage {
         self.raw.view_bits_mut::<Lsb0>()[0..1].store_le(value);
         Ok(())
     }
-
+    
 }
 
 impl core::convert::TryFrom<&[u8]> for TestMessage {
     type Error = CanError;
-
+    
     #[inline(always)]
     fn try_from(payload: &[u8]) -> Result<Self, Self::Error> {
         if payload.len() != 1 { return Err(CanError::InvalidPayloadSize); }
@@ -230,3 +230,4 @@ impl core::fmt::Display for CanError {
         write!(f, "{self:?}")
     }
 }
+

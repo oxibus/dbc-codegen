@@ -1,7 +1,7 @@
 // Generated code!
 //
 // Message definitions from file `issue_207_sig_plus`
-// Version:
+// Version: 
 
 #[allow(unused_imports)]
 use core::ops::BitOr;
@@ -39,7 +39,7 @@ impl Messages {
     /// Read message from CAN frame
     #[inline(never)]
     pub fn from_can_message(id: Id, payload: &[u8]) -> Result<Self, CanError> {
-
+        
         let res = match id {
             MyMsg::MESSAGE_ID => Messages::MyMsg(MyMsg::try_from(payload)?),
             id => return Err(CanError::UnknownMessageId(id)),
@@ -68,12 +68,12 @@ pub struct MyMsg {
 )]
 impl MyMsg {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0x1)});
-
+    
     pub const MY_EXTRA_SIG_WITH_PLUS_MIN: i16 = -128_i16;
     pub const MY_EXTRA_SIG_WITH_PLUS_MAX: i16 = 127_i16;
     pub const MY_NORMAL_SIG_MIN: i16 = -128_i16;
     pub const MY_NORMAL_SIG_MAX: i16 = 127_i16;
-
+    
     /// Construct new myMsg from values
     pub fn new(my_extra_sig_with_plus: i16, my_normal_sig: i16) -> Result<Self, CanError> {
         let mut res = Self { raw: [0u8; 8] };
@@ -81,12 +81,12 @@ impl MyMsg {
         res.set_my_normal_sig(my_normal_sig)?;
         Ok(res)
     }
-
+    
     /// Access message payload raw value
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-
+    
     /// myExtraSigWithPlus
     ///
     /// - Min: -128
@@ -97,7 +97,7 @@ impl MyMsg {
     pub fn my_extra_sig_with_plus(&self) -> i16 {
         self.my_extra_sig_with_plus_raw()
     }
-
+    
     /// Get raw value of myExtraSigWithPlus
     ///
     /// - Start bit: 8
@@ -109,11 +109,11 @@ impl MyMsg {
     #[inline(always)]
     pub fn my_extra_sig_with_plus_raw(&self) -> i16 {
         let signal = self.raw.view_bits::<Lsb0>()[8..16].load_le::<i8>();
-
+        
         let factor = 1;
         i16::from(signal).saturating_mul(factor).saturating_sub(128)
     }
-
+    
     /// Set value of myExtraSigWithPlus
     #[inline(always)]
     pub fn set_my_extra_sig_with_plus(&mut self, value: i16) -> Result<(), CanError> {
@@ -124,12 +124,12 @@ impl MyMsg {
         let value = value.checked_add(128)
             .ok_or(CanError::ParameterOutOfRange { message_id: MyMsg::MESSAGE_ID })?;
         let value = (value / factor) as i8;
-
+        
         let value = u8::from_ne_bytes(value.to_ne_bytes());
         self.raw.view_bits_mut::<Lsb0>()[8..16].store_le(value);
         Ok(())
     }
-
+    
     /// myNormalSig
     ///
     /// - Min: -128
@@ -140,7 +140,7 @@ impl MyMsg {
     pub fn my_normal_sig(&self) -> i16 {
         self.my_normal_sig_raw()
     }
-
+    
     /// Get raw value of myNormalSig
     ///
     /// - Start bit: 0
@@ -152,11 +152,11 @@ impl MyMsg {
     #[inline(always)]
     pub fn my_normal_sig_raw(&self) -> i16 {
         let signal = self.raw.view_bits::<Lsb0>()[0..8].load_le::<i8>();
-
+        
         let factor = 1;
         i16::from(signal).saturating_mul(factor).saturating_sub(128)
     }
-
+    
     /// Set value of myNormalSig
     #[inline(always)]
     pub fn set_my_normal_sig(&mut self, value: i16) -> Result<(), CanError> {
@@ -167,17 +167,17 @@ impl MyMsg {
         let value = value.checked_add(128)
             .ok_or(CanError::ParameterOutOfRange { message_id: MyMsg::MESSAGE_ID })?;
         let value = (value / factor) as i8;
-
+        
         let value = u8::from_ne_bytes(value.to_ne_bytes());
         self.raw.view_bits_mut::<Lsb0>()[0..8].store_le(value);
         Ok(())
     }
-
+    
 }
 
 impl core::convert::TryFrom<&[u8]> for MyMsg {
     type Error = CanError;
-
+    
     #[inline(always)]
     fn try_from(payload: &[u8]) -> Result<Self, Self::Error> {
         if payload.len() != 8 { return Err(CanError::InvalidPayloadSize); }
@@ -254,3 +254,4 @@ impl core::fmt::Display for CanError {
         write!(f, "{self:?}")
     }
 }
+

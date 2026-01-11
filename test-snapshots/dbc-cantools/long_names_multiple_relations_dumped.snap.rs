@@ -1,7 +1,7 @@
 // Generated code!
 //
 // Message definitions from file `long_names_multiple_relations_dumped`
-// Version:
+// Version: 
 
 #[allow(unused_imports)]
 use core::ops::BitOr;
@@ -53,7 +53,7 @@ impl Messages {
     /// Read message from CAN frame
     #[inline(never)]
     pub fn from_can_message(id: Id, payload: &[u8]) -> Result<Self, CanError> {
-
+        
         let res = match id {
             MsgLongName5678912345678912::MESSAGE_ID => Messages::MsgLongName5678912345678912(MsgLongName5678912345678912::try_from(payload)?),
             TxTwice::MESSAGE_ID => Messages::TxTwice(TxTwice::try_from(payload)?),
@@ -89,14 +89,14 @@ pub struct MsgLongName5678912345678912 {
 )]
 impl MsgLongName5678912345678912 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0x55)});
-
+    
     pub const RX_TWICE_SHORT_MIN: i32 = 0_i32;
     pub const RX_TWICE_SHORT_MAX: i32 = 0_i32;
     pub const RX_TWICE_11111111111111111111111_MIN: i8 = 0_i8;
     pub const RX_TWICE_11111111111111111111111_MAX: i8 = 0_i8;
     pub const SIG_USED_TWICE_EFGH_ABCDEFGHI_AB_MIN: i8 = 0_i8;
     pub const SIG_USED_TWICE_EFGH_ABCDEFGHI_AB_MAX: i8 = 0_i8;
-
+    
     /// Construct new Msg_Long_Name_56789_123456789_12 from values
     pub fn new(rx_twice_short: i32, rx_twice_11111111111111111111111: i8, sig_used_twice_efgh_abcdefghi_ab: i8) -> Result<Self, CanError> {
         let mut res = Self { raw: [0u8; 8] };
@@ -105,12 +105,12 @@ impl MsgLongName5678912345678912 {
         res.set_sig_used_twice_efgh_abcdefghi_ab(sig_used_twice_efgh_abcdefghi_ab)?;
         Ok(res)
     }
-
+    
     /// Access message payload raw value
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-
+    
     /// rx_twice_short
     ///
     /// - Min: 0
@@ -121,7 +121,7 @@ impl MsgLongName5678912345678912 {
     pub fn rx_twice_short(&self) -> i32 {
         self.rx_twice_short_raw()
     }
-
+    
     /// Get raw value of rx_twice_short
     ///
     /// - Start bit: 16
@@ -133,12 +133,12 @@ impl MsgLongName5678912345678912 {
     #[inline(always)]
     pub fn rx_twice_short_raw(&self) -> i32 {
         let signal = self.raw.view_bits::<Lsb0>()[16..34].load_le::<i32>();
-
+        
         let factor = 1;
         let signal = signal as i32;
         i32::from(signal).saturating_mul(factor).saturating_add(0)
     }
-
+    
     /// Set value of rx_twice_short
     #[inline(always)]
     pub fn set_rx_twice_short(&mut self, value: i32) -> Result<(), CanError> {
@@ -149,12 +149,12 @@ impl MsgLongName5678912345678912 {
         let value = value.checked_sub(0)
             .ok_or(CanError::ParameterOutOfRange { message_id: MsgLongName5678912345678912::MESSAGE_ID })?;
         let value = (value / factor) as i32;
-
+        
         let value = u32::from_ne_bytes(value.to_ne_bytes());
         self.raw.view_bits_mut::<Lsb0>()[16..34].store_le(value);
         Ok(())
     }
-
+    
     /// rx_twice_11111111111111111111111
     ///
     /// - Min: 0
@@ -165,7 +165,7 @@ impl MsgLongName5678912345678912 {
     pub fn rx_twice_11111111111111111111111(&self) -> i8 {
         self.rx_twice_11111111111111111111111_raw()
     }
-
+    
     /// Get raw value of rx_twice_11111111111111111111111
     ///
     /// - Start bit: 8
@@ -177,12 +177,12 @@ impl MsgLongName5678912345678912 {
     #[inline(always)]
     pub fn rx_twice_11111111111111111111111_raw(&self) -> i8 {
         let signal = self.raw.view_bits::<Lsb0>()[8..16].load_le::<i8>();
-
+        
         let factor = 1;
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-
+    
     /// Set value of rx_twice_11111111111111111111111
     #[inline(always)]
     pub fn set_rx_twice_11111111111111111111111(&mut self, value: i8) -> Result<(), CanError> {
@@ -193,12 +193,12 @@ impl MsgLongName5678912345678912 {
         let value = value.checked_sub(0)
             .ok_or(CanError::ParameterOutOfRange { message_id: MsgLongName5678912345678912::MESSAGE_ID })?;
         let value = (value / factor) as i8;
-
+        
         let value = u8::from_ne_bytes(value.to_ne_bytes());
         self.raw.view_bits_mut::<Lsb0>()[8..16].store_le(value);
         Ok(())
     }
-
+    
     /// Sig_used_twice_efgh_abcdefghi_ab
     ///
     /// - Min: 0
@@ -209,7 +209,7 @@ impl MsgLongName5678912345678912 {
     pub fn sig_used_twice_efgh_abcdefghi_ab(&self) -> i8 {
         self.sig_used_twice_efgh_abcdefghi_ab_raw()
     }
-
+    
     /// Get raw value of Sig_used_twice_efgh_abcdefghi_ab
     ///
     /// - Start bit: 0
@@ -221,12 +221,12 @@ impl MsgLongName5678912345678912 {
     #[inline(always)]
     pub fn sig_used_twice_efgh_abcdefghi_ab_raw(&self) -> i8 {
         let signal = self.raw.view_bits::<Lsb0>()[0..6].load_le::<i8>();
-
+        
         let factor = 1;
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-
+    
     /// Set value of Sig_used_twice_efgh_abcdefghi_ab
     #[inline(always)]
     pub fn set_sig_used_twice_efgh_abcdefghi_ab(&mut self, value: i8) -> Result<(), CanError> {
@@ -237,17 +237,17 @@ impl MsgLongName5678912345678912 {
         let value = value.checked_sub(0)
             .ok_or(CanError::ParameterOutOfRange { message_id: MsgLongName5678912345678912::MESSAGE_ID })?;
         let value = (value / factor) as i8;
-
+        
         let value = u8::from_ne_bytes(value.to_ne_bytes());
         self.raw.view_bits_mut::<Lsb0>()[0..6].store_le(value);
         Ok(())
     }
-
+    
 }
 
 impl core::convert::TryFrom<&[u8]> for MsgLongName5678912345678912 {
     type Error = CanError;
-
+    
     #[inline(always)]
     fn try_from(payload: &[u8]) -> Result<Self, Self::Error> {
         if payload.len() != 8 { return Err(CanError::InvalidPayloadSize); }
@@ -315,12 +315,12 @@ pub struct TxTwice {
 )]
 impl TxTwice {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0x6)});
-
+    
     pub const RX_TWICE_LONG_YYYYYYYYYYYYYYYYYY_MIN: i8 = 0_i8;
     pub const RX_TWICE_LONG_YYYYYYYYYYYYYYYYYY_MAX: i8 = 0_i8;
     pub const RX_TWICE_SHORT_MIN: i8 = 0_i8;
     pub const RX_TWICE_SHORT_MAX: i8 = 0_i8;
-
+    
     /// Construct new TX_twice from values
     pub fn new(rx_twice_long_yyyyyyyyyyyyyyyyyy: i8, rx_twice_short: i8) -> Result<Self, CanError> {
         let mut res = Self { raw: [0u8; 2] };
@@ -328,12 +328,12 @@ impl TxTwice {
         res.set_rx_twice_short(rx_twice_short)?;
         Ok(res)
     }
-
+    
     /// Access message payload raw value
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-
+    
     /// rx_twice_long_yyyyyyyyyyyyyyyyyy
     ///
     /// - Min: 0
@@ -344,7 +344,7 @@ impl TxTwice {
     pub fn rx_twice_long_yyyyyyyyyyyyyyyyyy(&self) -> i8 {
         self.rx_twice_long_yyyyyyyyyyyyyyyyyy_raw()
     }
-
+    
     /// Get raw value of rx_twice_long_yyyyyyyyyyyyyyyyyy
     ///
     /// - Start bit: 8
@@ -356,12 +356,12 @@ impl TxTwice {
     #[inline(always)]
     pub fn rx_twice_long_yyyyyyyyyyyyyyyyyy_raw(&self) -> i8 {
         let signal = self.raw.view_bits::<Lsb0>()[8..16].load_le::<i8>();
-
+        
         let factor = 1;
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-
+    
     /// Set value of rx_twice_long_yyyyyyyyyyyyyyyyyy
     #[inline(always)]
     pub fn set_rx_twice_long_yyyyyyyyyyyyyyyyyy(&mut self, value: i8) -> Result<(), CanError> {
@@ -372,12 +372,12 @@ impl TxTwice {
         let value = value.checked_sub(0)
             .ok_or(CanError::ParameterOutOfRange { message_id: TxTwice::MESSAGE_ID })?;
         let value = (value / factor) as i8;
-
+        
         let value = u8::from_ne_bytes(value.to_ne_bytes());
         self.raw.view_bits_mut::<Lsb0>()[8..16].store_le(value);
         Ok(())
     }
-
+    
     /// rx_twice_short
     ///
     /// - Min: 0
@@ -388,7 +388,7 @@ impl TxTwice {
     pub fn rx_twice_short(&self) -> i8 {
         self.rx_twice_short_raw()
     }
-
+    
     /// Get raw value of rx_twice_short
     ///
     /// - Start bit: 0
@@ -400,12 +400,12 @@ impl TxTwice {
     #[inline(always)]
     pub fn rx_twice_short_raw(&self) -> i8 {
         let signal = self.raw.view_bits::<Lsb0>()[0..8].load_le::<i8>();
-
+        
         let factor = 1;
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-
+    
     /// Set value of rx_twice_short
     #[inline(always)]
     pub fn set_rx_twice_short(&mut self, value: i8) -> Result<(), CanError> {
@@ -416,17 +416,17 @@ impl TxTwice {
         let value = value.checked_sub(0)
             .ok_or(CanError::ParameterOutOfRange { message_id: TxTwice::MESSAGE_ID })?;
         let value = (value / factor) as i8;
-
+        
         let value = u8::from_ne_bytes(value.to_ne_bytes());
         self.raw.view_bits_mut::<Lsb0>()[0..8].store_le(value);
         Ok(())
     }
-
+    
 }
 
 impl core::convert::TryFrom<&[u8]> for TxTwice {
     type Error = CanError;
-
+    
     #[inline(always)]
     fn try_from(payload: &[u8]) -> Result<Self, Self::Error> {
         if payload.len() != 2 { return Err(CanError::InvalidPayloadSize); }
@@ -494,22 +494,22 @@ pub struct RxTx1 {
 )]
 impl RxTx1 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0x5)});
-
+    
     pub const SIG_USED_TWICE_EFGH_ABCDEFG_0000_MIN: i16 = 0_i16;
     pub const SIG_USED_TWICE_EFGH_ABCDEFG_0000_MAX: i16 = 0_i16;
-
+    
     /// Construct new RX_TX_1 from values
     pub fn new(sig_used_twice_efgh_abcdefg_0000: i16) -> Result<Self, CanError> {
         let mut res = Self { raw: [0u8; 8] };
         res.set_sig_used_twice_efgh_abcdefg_0000(sig_used_twice_efgh_abcdefg_0000)?;
         Ok(res)
     }
-
+    
     /// Access message payload raw value
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-
+    
     /// Sig_used_twice_efgh_abcdefg_0000
     ///
     /// - Min: 0
@@ -520,7 +520,7 @@ impl RxTx1 {
     pub fn sig_used_twice_efgh_abcdefg_0000(&self) -> i16 {
         self.sig_used_twice_efgh_abcdefg_0000_raw()
     }
-
+    
     /// Get raw value of Sig_used_twice_efgh_abcdefg_0000
     ///
     /// - Start bit: 0
@@ -532,12 +532,12 @@ impl RxTx1 {
     #[inline(always)]
     pub fn sig_used_twice_efgh_abcdefg_0000_raw(&self) -> i16 {
         let signal = self.raw.view_bits::<Lsb0>()[0..9].load_le::<i16>();
-
+        
         let factor = 1;
         let signal = signal as i16;
         i16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-
+    
     /// Set value of Sig_used_twice_efgh_abcdefg_0000
     #[inline(always)]
     pub fn set_sig_used_twice_efgh_abcdefg_0000(&mut self, value: i16) -> Result<(), CanError> {
@@ -548,17 +548,17 @@ impl RxTx1 {
         let value = value.checked_sub(0)
             .ok_or(CanError::ParameterOutOfRange { message_id: RxTx1::MESSAGE_ID })?;
         let value = (value / factor) as i16;
-
+        
         let value = u16::from_ne_bytes(value.to_ne_bytes());
         self.raw.view_bits_mut::<Lsb0>()[0..9].store_le(value);
         Ok(())
     }
-
+    
 }
 
 impl core::convert::TryFrom<&[u8]> for RxTx1 {
     type Error = CanError;
-
+    
     #[inline(always)]
     fn try_from(payload: &[u8]) -> Result<Self, Self::Error> {
         if payload.len() != 8 { return Err(CanError::InvalidPayloadSize); }
@@ -625,24 +625,24 @@ pub struct MsgCaseTest {
 )]
 impl MsgCaseTest {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0x4)});
-
-
+    
+    
     /// Construct new MSG_CASE_TEST from values
     pub fn new() -> Result<Self, CanError> {
         let res = Self { raw: [0u8; 8] };
         Ok(res)
     }
-
+    
     /// Access message payload raw value
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-
+    
 }
 
 impl core::convert::TryFrom<&[u8]> for MsgCaseTest {
     type Error = CanError;
-
+    
     #[inline(always)]
     fn try_from(payload: &[u8]) -> Result<Self, Self::Error> {
         if payload.len() != 8 { return Err(CanError::InvalidPayloadSize); }
@@ -709,24 +709,24 @@ pub struct MsgCaseTest {
 )]
 impl MsgCaseTest {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0x3)});
-
-
+    
+    
     /// Construct new msg_case_test from values
     pub fn new() -> Result<Self, CanError> {
         let res = Self { raw: [0u8; 8] };
         Ok(res)
     }
-
+    
     /// Access message payload raw value
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-
+    
 }
 
 impl core::convert::TryFrom<&[u8]> for MsgCaseTest {
     type Error = CanError;
-
+    
     #[inline(always)]
     fn try_from(payload: &[u8]) -> Result<Self, Self::Error> {
         if payload.len() != 8 { return Err(CanError::InvalidPayloadSize); }
@@ -793,14 +793,14 @@ pub struct MsgWithValueTableSigs {
 )]
 impl MsgWithValueTableSigs {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0x2)});
-
+    
     pub const SIG_WITH_SHORT_VAL_TABLE_MIN: i8 = 0_i8;
     pub const SIG_WITH_SHORT_VAL_TABLE_MAX: i8 = 0_i8;
     pub const SIG_WITH_LONG_VAL_TABLE_2_MIN: i8 = 0_i8;
     pub const SIG_WITH_LONG_VAL_TABLE_2_MAX: i8 = 0_i8;
     pub const SIG_WITH_LONG_VAL_TABLE_1_MIN: i8 = 0_i8;
     pub const SIG_WITH_LONG_VAL_TABLE_1_MAX: i8 = 0_i8;
-
+    
     /// Construct new Msg_with_value_table_sigs from values
     pub fn new(sig_with_short_val_table: i8, sig_with_long_val_table_2: i8, sig_with_long_val_table_1: i8) -> Result<Self, CanError> {
         let mut res = Self { raw: [0u8; 3] };
@@ -809,12 +809,12 @@ impl MsgWithValueTableSigs {
         res.set_sig_with_long_val_table_1(sig_with_long_val_table_1)?;
         Ok(res)
     }
-
+    
     /// Access message payload raw value
     pub fn raw(&self) -> &[u8; 3] {
         &self.raw
     }
-
+    
     /// Sig_with_short_val_table
     ///
     /// - Min: 0
@@ -824,14 +824,14 @@ impl MsgWithValueTableSigs {
     #[inline(always)]
     pub fn sig_with_short_val_table(&self) -> MsgWithValueTableSigsSigWithShortValTable {
         let signal = self.raw.view_bits::<Lsb0>()[16..24].load_le::<u8>();
-
+        
         match signal {
             1 => MsgWithValueTableSigsSigWithShortValTable::VeryLongLongLongDescriptionForTheValue0x1,
             0 => MsgWithValueTableSigsSigWithShortValTable::VeryLongLongLongDescriptionForTheValue0x0,
             _ => MsgWithValueTableSigsSigWithShortValTable::_Other(self.sig_with_short_val_table_raw()),
         }
     }
-
+    
     /// Get raw value of Sig_with_short_val_table
     ///
     /// - Start bit: 16
@@ -843,12 +843,12 @@ impl MsgWithValueTableSigs {
     #[inline(always)]
     pub fn sig_with_short_val_table_raw(&self) -> i8 {
         let signal = self.raw.view_bits::<Lsb0>()[16..24].load_le::<i8>();
-
+        
         let factor = 1;
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-
+    
     /// Set value of Sig_with_short_val_table
     #[inline(always)]
     pub fn set_sig_with_short_val_table(&mut self, value: i8) -> Result<(), CanError> {
@@ -859,12 +859,12 @@ impl MsgWithValueTableSigs {
         let value = value.checked_sub(0)
             .ok_or(CanError::ParameterOutOfRange { message_id: MsgWithValueTableSigs::MESSAGE_ID })?;
         let value = (value / factor) as i8;
-
+        
         let value = u8::from_ne_bytes(value.to_ne_bytes());
         self.raw.view_bits_mut::<Lsb0>()[16..24].store_le(value);
         Ok(())
     }
-
+    
     /// Sig_with_long_val_table_2
     ///
     /// - Min: 0
@@ -874,7 +874,7 @@ impl MsgWithValueTableSigs {
     #[inline(always)]
     pub fn sig_with_long_val_table_2(&self) -> MsgWithValueTableSigsSigWithLongValTable2 {
         let signal = self.raw.view_bits::<Lsb0>()[8..16].load_le::<u8>();
-
+        
         match signal {
             13 => MsgWithValueTableSigsSigWithLongValTable2::Value0xD,
             12 => MsgWithValueTableSigsSigWithLongValTable2::Dvalue0xC,
@@ -893,7 +893,7 @@ impl MsgWithValueTableSigs {
             _ => MsgWithValueTableSigsSigWithLongValTable2::_Other(self.sig_with_long_val_table_2_raw()),
         }
     }
-
+    
     /// Get raw value of Sig_with_long_val_table_2
     ///
     /// - Start bit: 8
@@ -905,12 +905,12 @@ impl MsgWithValueTableSigs {
     #[inline(always)]
     pub fn sig_with_long_val_table_2_raw(&self) -> i8 {
         let signal = self.raw.view_bits::<Lsb0>()[8..16].load_le::<i8>();
-
+        
         let factor = 1;
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-
+    
     /// Set value of Sig_with_long_val_table_2
     #[inline(always)]
     pub fn set_sig_with_long_val_table_2(&mut self, value: i8) -> Result<(), CanError> {
@@ -921,12 +921,12 @@ impl MsgWithValueTableSigs {
         let value = value.checked_sub(0)
             .ok_or(CanError::ParameterOutOfRange { message_id: MsgWithValueTableSigs::MESSAGE_ID })?;
         let value = (value / factor) as i8;
-
+        
         let value = u8::from_ne_bytes(value.to_ne_bytes());
         self.raw.view_bits_mut::<Lsb0>()[8..16].store_le(value);
         Ok(())
     }
-
+    
     /// Sig_with_long_val_table_1
     ///
     /// - Min: 0
@@ -936,7 +936,7 @@ impl MsgWithValueTableSigs {
     #[inline(always)]
     pub fn sig_with_long_val_table_1(&self) -> MsgWithValueTableSigsSigWithLongValTable1 {
         let signal = self.raw.view_bits::<Lsb0>()[0..8].load_le::<u8>();
-
+        
         match signal {
             3 => MsgWithValueTableSigsSigWithLongValTable1::DescriptionForTheValue0x3,
             2 => MsgWithValueTableSigsSigWithLongValTable1::DescriptionForTheValue0x2,
@@ -945,7 +945,7 @@ impl MsgWithValueTableSigs {
             _ => MsgWithValueTableSigsSigWithLongValTable1::_Other(self.sig_with_long_val_table_1_raw()),
         }
     }
-
+    
     /// Get raw value of Sig_with_long_val_table_1
     ///
     /// - Start bit: 0
@@ -957,12 +957,12 @@ impl MsgWithValueTableSigs {
     #[inline(always)]
     pub fn sig_with_long_val_table_1_raw(&self) -> i8 {
         let signal = self.raw.view_bits::<Lsb0>()[0..8].load_le::<i8>();
-
+        
         let factor = 1;
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-
+    
     /// Set value of Sig_with_long_val_table_1
     #[inline(always)]
     pub fn set_sig_with_long_val_table_1(&mut self, value: i8) -> Result<(), CanError> {
@@ -973,17 +973,17 @@ impl MsgWithValueTableSigs {
         let value = value.checked_sub(0)
             .ok_or(CanError::ParameterOutOfRange { message_id: MsgWithValueTableSigs::MESSAGE_ID })?;
         let value = (value / factor) as i8;
-
+        
         let value = u8::from_ne_bytes(value.to_ne_bytes());
         self.raw.view_bits_mut::<Lsb0>()[0..8].store_le(value);
         Ok(())
     }
-
+    
 }
 
 impl core::convert::TryFrom<&[u8]> for MsgWithValueTableSigs {
     type Error = CanError;
-
+    
     #[inline(always)]
     fn try_from(payload: &[u8]) -> Result<Self, Self::Error> {
         if payload.len() != 3 { return Err(CanError::InvalidPayloadSize); }
@@ -1159,12 +1159,12 @@ pub struct MsgLongName5678912345670000 {
 )]
 impl MsgLongName5678912345670000 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0x1)});
-
+    
     pub const RX_TWICE_11111111111111111111111_MIN: i8 = 0_i8;
     pub const RX_TWICE_11111111111111111111111_MAX: i8 = 0_i8;
     pub const SIG_USED_TWICE_EFGH_ABCDEFG_0001_MIN: i8 = 0_i8;
     pub const SIG_USED_TWICE_EFGH_ABCDEFG_0001_MAX: i8 = 0_i8;
-
+    
     /// Construct new Msg_Long_Name_56789_1234567_0000 from values
     pub fn new(rx_twice_11111111111111111111111: i8, sig_used_twice_efgh_abcdefg_0001: i8) -> Result<Self, CanError> {
         let mut res = Self { raw: [0u8; 8] };
@@ -1172,12 +1172,12 @@ impl MsgLongName5678912345670000 {
         res.set_sig_used_twice_efgh_abcdefg_0001(sig_used_twice_efgh_abcdefg_0001)?;
         Ok(res)
     }
-
+    
     /// Access message payload raw value
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-
+    
     /// rx_twice_11111111111111111111111
     ///
     /// - Min: 0
@@ -1188,7 +1188,7 @@ impl MsgLongName5678912345670000 {
     pub fn rx_twice_11111111111111111111111(&self) -> i8 {
         self.rx_twice_11111111111111111111111_raw()
     }
-
+    
     /// Get raw value of rx_twice_11111111111111111111111
     ///
     /// - Start bit: 8
@@ -1200,12 +1200,12 @@ impl MsgLongName5678912345670000 {
     #[inline(always)]
     pub fn rx_twice_11111111111111111111111_raw(&self) -> i8 {
         let signal = self.raw.view_bits::<Lsb0>()[8..10].load_le::<i8>();
-
+        
         let factor = 1;
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-
+    
     /// Set value of rx_twice_11111111111111111111111
     #[inline(always)]
     pub fn set_rx_twice_11111111111111111111111(&mut self, value: i8) -> Result<(), CanError> {
@@ -1216,12 +1216,12 @@ impl MsgLongName5678912345670000 {
         let value = value.checked_sub(0)
             .ok_or(CanError::ParameterOutOfRange { message_id: MsgLongName5678912345670000::MESSAGE_ID })?;
         let value = (value / factor) as i8;
-
+        
         let value = u8::from_ne_bytes(value.to_ne_bytes());
         self.raw.view_bits_mut::<Lsb0>()[8..10].store_le(value);
         Ok(())
     }
-
+    
     /// Sig_used_twice_efgh_abcdefg_0001
     ///
     /// - Min: 0
@@ -1232,7 +1232,7 @@ impl MsgLongName5678912345670000 {
     pub fn sig_used_twice_efgh_abcdefg_0001(&self) -> i8 {
         self.sig_used_twice_efgh_abcdefg_0001_raw()
     }
-
+    
     /// Get raw value of Sig_used_twice_efgh_abcdefg_0001
     ///
     /// - Start bit: 0
@@ -1244,12 +1244,12 @@ impl MsgLongName5678912345670000 {
     #[inline(always)]
     pub fn sig_used_twice_efgh_abcdefg_0001_raw(&self) -> i8 {
         let signal = self.raw.view_bits::<Lsb0>()[0..8].load_le::<i8>();
-
+        
         let factor = 1;
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-
+    
     /// Set value of Sig_used_twice_efgh_abcdefg_0001
     #[inline(always)]
     pub fn set_sig_used_twice_efgh_abcdefg_0001(&mut self, value: i8) -> Result<(), CanError> {
@@ -1260,17 +1260,17 @@ impl MsgLongName5678912345670000 {
         let value = value.checked_sub(0)
             .ok_or(CanError::ParameterOutOfRange { message_id: MsgLongName5678912345670000::MESSAGE_ID })?;
         let value = (value / factor) as i8;
-
+        
         let value = u8::from_ne_bytes(value.to_ne_bytes());
         self.raw.view_bits_mut::<Lsb0>()[0..8].store_le(value);
         Ok(())
     }
-
+    
 }
 
 impl core::convert::TryFrom<&[u8]> for MsgLongName5678912345670000 {
     type Error = CanError;
-
+    
     #[inline(always)]
     fn try_from(payload: &[u8]) -> Result<Self, Self::Error> {
         if payload.len() != 8 { return Err(CanError::InvalidPayloadSize); }
@@ -1337,12 +1337,12 @@ pub struct MsgLongName5678912345670001 {
 )]
 impl MsgLongName5678912345670001 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0x0)});
-
+    
     pub const RX_TWICE_SHORT_MIN: i8 = 0_i8;
     pub const RX_TWICE_SHORT_MAX: i8 = 0_i8;
     pub const SIG_USED_TWICE_EFGH_ABCDEFG_0002_MIN: i8 = 0_i8;
     pub const SIG_USED_TWICE_EFGH_ABCDEFG_0002_MAX: i8 = 0_i8;
-
+    
     /// Construct new Msg_Long_Name_56789_1234567_0001 from values
     pub fn new(rx_twice_short: i8, sig_used_twice_efgh_abcdefg_0002: i8) -> Result<Self, CanError> {
         let mut res = Self { raw: [0u8; 8] };
@@ -1350,12 +1350,12 @@ impl MsgLongName5678912345670001 {
         res.set_sig_used_twice_efgh_abcdefg_0002(sig_used_twice_efgh_abcdefg_0002)?;
         Ok(res)
     }
-
+    
     /// Access message payload raw value
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-
+    
     /// rx_twice_short
     ///
     /// - Min: 0
@@ -1366,7 +1366,7 @@ impl MsgLongName5678912345670001 {
     pub fn rx_twice_short(&self) -> i8 {
         self.rx_twice_short_raw()
     }
-
+    
     /// Get raw value of rx_twice_short
     ///
     /// - Start bit: 8
@@ -1378,12 +1378,12 @@ impl MsgLongName5678912345670001 {
     #[inline(always)]
     pub fn rx_twice_short_raw(&self) -> i8 {
         let signal = self.raw.view_bits::<Lsb0>()[8..16].load_le::<i8>();
-
+        
         let factor = 1;
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-
+    
     /// Set value of rx_twice_short
     #[inline(always)]
     pub fn set_rx_twice_short(&mut self, value: i8) -> Result<(), CanError> {
@@ -1394,12 +1394,12 @@ impl MsgLongName5678912345670001 {
         let value = value.checked_sub(0)
             .ok_or(CanError::ParameterOutOfRange { message_id: MsgLongName5678912345670001::MESSAGE_ID })?;
         let value = (value / factor) as i8;
-
+        
         let value = u8::from_ne_bytes(value.to_ne_bytes());
         self.raw.view_bits_mut::<Lsb0>()[8..16].store_le(value);
         Ok(())
     }
-
+    
     /// Sig_used_twice_efgh_abcdefg_0002
     ///
     /// - Min: 0
@@ -1410,7 +1410,7 @@ impl MsgLongName5678912345670001 {
     pub fn sig_used_twice_efgh_abcdefg_0002(&self) -> i8 {
         self.sig_used_twice_efgh_abcdefg_0002_raw()
     }
-
+    
     /// Get raw value of Sig_used_twice_efgh_abcdefg_0002
     ///
     /// - Start bit: 0
@@ -1422,12 +1422,12 @@ impl MsgLongName5678912345670001 {
     #[inline(always)]
     pub fn sig_used_twice_efgh_abcdefg_0002_raw(&self) -> i8 {
         let signal = self.raw.view_bits::<Lsb0>()[0..6].load_le::<i8>();
-
+        
         let factor = 1;
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-
+    
     /// Set value of Sig_used_twice_efgh_abcdefg_0002
     #[inline(always)]
     pub fn set_sig_used_twice_efgh_abcdefg_0002(&mut self, value: i8) -> Result<(), CanError> {
@@ -1438,17 +1438,17 @@ impl MsgLongName5678912345670001 {
         let value = value.checked_sub(0)
             .ok_or(CanError::ParameterOutOfRange { message_id: MsgLongName5678912345670001::MESSAGE_ID })?;
         let value = (value / factor) as i8;
-
+        
         let value = u8::from_ne_bytes(value.to_ne_bytes());
         self.raw.view_bits_mut::<Lsb0>()[0..6].store_le(value);
         Ok(())
     }
-
+    
 }
 
 impl core::convert::TryFrom<&[u8]> for MsgLongName5678912345670001 {
     type Error = CanError;
-
+    
     #[inline(always)]
     fn try_from(payload: &[u8]) -> Result<Self, Self::Error> {
         if payload.len() != 8 { return Err(CanError::InvalidPayloadSize); }
@@ -1525,3 +1525,4 @@ impl core::fmt::Display for CanError {
         write!(f, "{self:?}")
     }
 }
+

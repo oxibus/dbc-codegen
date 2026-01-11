@@ -6,6 +6,7 @@ use std::{env, fs};
 
 use insta::{assert_binary_snapshot, assert_debug_snapshot, with_settings};
 use test_each_file::test_each_path;
+use walkdir::WalkDir;
 
 struct TestConfig {
     test_root: &'static str,
@@ -21,15 +22,15 @@ static TEST_DIRS: &[TestConfig] = &[
         use_cp1251: true,
         create_snapshot: true,
     },
-    // TestConfig {
-    //     test_root: "opendbc/opendbc/dbc",
-    //     snapshot_suffix: "opendbc",
-    //     use_cp1251: false,
-    //     create_snapshot: false,
-    // },
+    TestConfig {
+        test_root: "opendbc/opendbc/dbc",
+        snapshot_suffix: "opendbc",
+        use_cp1251: false,
+        create_snapshot: false,
+    },
 ];
 
-// test_each_path! { for ["dbc"] in "./tests/fixtures/opendbc/opendbc/dbc" as dbc => parse_one_file }
+test_each_path! { for ["dbc"] in "./tests/fixtures/opendbc/opendbc/dbc" as dbc => parse_one_file }
 test_each_path! { for ["dbc"] in "./tests/fixtures/shared-test-files" as shared => parse_one_file }
 // upper case extension
 test_each_path! { for ["DBC"] in "./tests/fixtures/shared-test-files" as shared2 => parse_one_file }
@@ -114,31 +115,27 @@ fn parse_one_file([path]: [&Path; 1]) {
         .dbc_content(&buffer)
         .build();
 
-    let create_snapshot =
-        env::var("SKIP_INSTA").is_err() && (create_snapshot || env::var("FORCE_INSTA").is_ok());
-
     let mut out = Vec::<u8>::new();
     if let Err(e) = dbc_codegen::codegen(config, &mut out) {
-        if create_snapshot {
-            with_settings! {
-                {
-                    omit_expression => true,
-                    snapshot_path => snapshot_path,
-                    prepend_module_to_snapshot => false
-                },
-                {
-                    assert_debug_snapshot!(file_name, e);
-                }
+        with_settings! {
+            {
+                omit_expression => true,
+                snapshot_path => snapshot_path,
+                prepend_module_to_snapshot => false
+            },
+            {
+                let file_name = format!("!error___{file_name}");
+                assert_debug_snapshot!(file_name, e);
             }
-            return;
-        } else {
-            panic!("{e}");
         }
+        return;
     }
 
     match String::from_utf8(out) {
         Ok(result) => {
-            if create_snapshot {
+            if env::var("SKIP_INSTA").is_err()
+                && (create_snapshot || env::var("FORCE_INSTA").is_ok())
+            {
                 with_settings! {
                     {
                         omit_expression => true,
@@ -155,21 +152,51 @@ fn parse_one_file([path]: [&Path; 1]) {
     }
 }
 
-#[test]
-#[ignore = "Run manually to verify that generated code compiles"]
-fn compile_test() {
-    let t = trybuild::TestCases::new();
-    t.pass("test-snapshots/canpy/*.rs");
-    t.pass("test-snapshots/dbc-cantools/*.rs");
+static BAD_TESTS: &[&str] = &[
+    "bus_comment_bare.snap.rs",
+    "bus_comment_bare_out.snap.rs",
+    "choices.snap.rs",
+    "cp1252.snap.rs",
+    "empty_choice.snap.rs",
+    "empty_ns.snap.rs",
+    "issue_184_extended_mux_cascaded.snap.rs",
+    "issue_184_extended_mux_cascaded_dumped.snap.rs",
+    "issue_184_extended_mux_independent_multiplexors.snap.rs",
+    "issue_184_extended_mux_independent_multiplexors_dumped.snap.rs",
+    "issue_184_extended_mux_multiple_values.snap.rs",
+    "issue_184_extended_mux_multiple_values_dumped.snap.rs",
+    "issue_199.snap.rs",
+    "issue_199_extended.snap.rs",
+    "issue_62.snap.rs",
+    "long_names_multiple_relations.snap.rs",
+    "long_names_multiple_relations_dumped.snap.rs",
+    "multiplex_2.snap.rs",
+    "multiplex_2_dumped.snap.rs",
+    "padding_bit_order.snap.rs",
+    "signed.snap.rs",
+    "vehicle.snap.rs",
+];
 
-    // // iterate over all *.rs files one by one
-    // for entry in fs::read_dir("test-snapshots/dbc-cantools").unwrap() {
-    //     let path = entry.unwrap().path();
-    //     if path.extension().unwrap_or_default() != "rs" {
-    //         continue;
-    //     }
-    //     if path.file_stem() == Some(std::ffi::OsStr::new("mod")) {
-    //         continue;
-    //     }
-    // }
+#[test]
+fn compile_test() {
+    env::set_var("CARGO_ENCODED_RUSTFLAGS", "--deny=warnings");
+    let t = trybuild::TestCases::new();
+
+    // Once all tests are fixed, switch to this:
+    // t.pass("test-snapshots/**/*.rs");
+
+    for entry in WalkDir::new("test-snapshots")
+        .into_iter()
+        .filter_map(Result::ok)
+    {
+        let path = entry.path();
+        if path.extension().and_then(|s| s.to_str()) != Some("rs") {
+            continue;
+        }
+        if BAD_TESTS.iter().any(|bad| path.ends_with(bad)) {
+            t.compile_fail(path);
+        } else {
+            t.pass(path);
+        }
+    }
 }

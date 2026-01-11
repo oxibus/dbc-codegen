@@ -1,7 +1,7 @@
 // Generated code!
 //
 // Message definitions from file `choices`
-// Version:
+// Version: 
 
 #[allow(unused_imports)]
 use core::ops::BitOr;
@@ -39,7 +39,7 @@ impl Messages {
     /// Read message from CAN frame
     #[inline(never)]
     pub fn from_can_message(id: Id, payload: &[u8]) -> Result<Self, CanError> {
-
+        
         let res = match id {
             Foo::MESSAGE_ID => Messages::Foo(Foo::try_from(payload)?),
             id => return Err(CanError::UnknownMessageId(id)),
@@ -68,22 +68,22 @@ pub struct Foo {
 )]
 impl Foo {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0x0)});
-
+    
     pub const FOO_MIN: i8 = -128_i8;
     pub const FOO_MAX: i8 = 127_i8;
-
+    
     /// Construct new Foo from values
     pub fn new(foo: i8) -> Result<Self, CanError> {
         let mut res = Self { raw: [0u8; 8] };
         res.set_foo(foo)?;
         Ok(res)
     }
-
+    
     /// Access message payload raw value
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-
+    
     /// Foo
     ///
     /// - Min: -128
@@ -93,7 +93,7 @@ impl Foo {
     #[inline(always)]
     pub fn foo(&self) -> FooFoo {
         let signal = self.raw.view_bits::<Lsb0>()[0..8].load_le::<u8>();
-
+        
         match signal {
             6 => FooFoo::Reserved,
             5 => FooFoo::Reserved,
@@ -106,7 +106,7 @@ impl Foo {
             _ => FooFoo::_Other(self.foo_raw()),
         }
     }
-
+    
     /// Get raw value of Foo
     ///
     /// - Start bit: 0
@@ -118,12 +118,12 @@ impl Foo {
     #[inline(always)]
     pub fn foo_raw(&self) -> i8 {
         let signal = self.raw.view_bits::<Lsb0>()[0..8].load_le::<i8>();
-
+        
         let factor = 1;
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-
+    
     /// Set value of Foo
     #[inline(always)]
     pub fn set_foo(&mut self, value: i8) -> Result<(), CanError> {
@@ -134,17 +134,17 @@ impl Foo {
         let value = value.checked_sub(0)
             .ok_or(CanError::ParameterOutOfRange { message_id: Foo::MESSAGE_ID })?;
         let value = (value / factor) as i8;
-
+        
         let value = u8::from_ne_bytes(value.to_ne_bytes());
         self.raw.view_bits_mut::<Lsb0>()[0..8].store_le(value);
         Ok(())
     }
-
+    
 }
 
 impl core::convert::TryFrom<&[u8]> for Foo {
     type Error = CanError;
-
+    
     #[inline(always)]
     fn try_from(payload: &[u8]) -> Result<Self, Self::Error> {
         if payload.len() != 8 { return Err(CanError::InvalidPayloadSize); }
@@ -260,3 +260,4 @@ impl core::fmt::Display for CanError {
         write!(f, "{self:?}")
     }
 }
+

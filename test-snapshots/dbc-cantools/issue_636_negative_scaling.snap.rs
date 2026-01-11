@@ -39,7 +39,7 @@ impl Messages {
     /// Read message from CAN frame
     #[inline(never)]
     pub fn from_can_message(id: Id, payload: &[u8]) -> Result<Self, CanError> {
-
+        
         let res = match id {
             ExampleMessage::MESSAGE_ID => Messages::ExampleMessage(ExampleMessage::try_from(payload)?),
             id => return Err(CanError::UnknownMessageId(id)),
@@ -71,22 +71,22 @@ pub struct ExampleMessage {
 )]
 impl ExampleMessage {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0x1f0)});
-
+    
     pub const TEMPERATURE_MIN: f32 = 4070_f32;
     pub const TEMPERATURE_MAX: f32 = 4100_f32;
-
+    
     /// Construct new ExampleMessage from values
     pub fn new(temperature: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0u8; 2] };
         res.set_temperature(temperature)?;
         Ok(res)
     }
-
+    
     /// Access message payload raw value
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-
+    
     /// Temperature
     ///
     /// - Min: 4070
@@ -96,14 +96,14 @@ impl ExampleMessage {
     #[inline(always)]
     pub fn temperature(&self) -> ExampleMessageTemperature {
         let signal = self.raw.view_bits::<Msb0>()[4..16].load_be::<u16>();
-
+        
         match signal {
             4095 => ExampleMessageTemperature::Error,
             4094 => ExampleMessageTemperature::Init,
             _ => ExampleMessageTemperature::_Other(self.temperature_raw()),
         }
     }
-
+    
     /// Get raw value of Temperature
     ///
     /// - Start bit: 3
@@ -115,12 +115,12 @@ impl ExampleMessage {
     #[inline(always)]
     pub fn temperature_raw(&self) -> f32 {
         let signal = self.raw.view_bits::<Msb0>()[4..16].load_be::<u16>();
-
+        
         let factor = -0.01_f32;
         let offset = 4100_f32;
         (signal as f32) * factor + offset
     }
-
+    
     /// Set value of Temperature
     #[inline(always)]
     pub fn set_temperature(&mut self, value: f32) -> Result<(), CanError> {
@@ -130,16 +130,16 @@ impl ExampleMessage {
         let factor = -0.01_f32;
         let offset = 4100_f32;
         let value = ((value - offset) / factor) as u16;
-
+        
         self.raw.view_bits_mut::<Msb0>()[4..16].store_be(value);
         Ok(())
     }
-
+    
 }
 
 impl core::convert::TryFrom<&[u8]> for ExampleMessage {
     type Error = CanError;
-
+    
     #[inline(always)]
     fn try_from(payload: &[u8]) -> Result<Self, Self::Error> {
         if payload.len() != 2 { return Err(CanError::InvalidPayloadSize); }
@@ -243,3 +243,4 @@ impl core::fmt::Display for CanError {
         write!(f, "{self:?}")
     }
 }
+

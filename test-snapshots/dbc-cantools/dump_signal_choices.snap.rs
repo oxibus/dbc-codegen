@@ -39,7 +39,7 @@ impl Messages {
     /// Read message from CAN frame
     #[inline(never)]
     pub fn from_can_message(id: Id, payload: &[u8]) -> Result<Self, CanError> {
-
+        
         let res = match id {
             Message0::MESSAGE_ID => Messages::Message0(Message0::try_from(payload)?),
             id => return Err(CanError::UnknownMessageId(id)),
@@ -69,12 +69,12 @@ pub struct Message0 {
 )]
 impl Message0 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0x400)});
-
+    
     pub const FOO_SIGNAL_MIN: u8 = 0_u8;
     pub const FOO_SIGNAL_MAX: u8 = 0_u8;
     pub const BAR_SIGNAL_MIN: u8 = 0_u8;
     pub const BAR_SIGNAL_MAX: u8 = 0_u8;
-
+    
     /// Construct new Message0 from values
     pub fn new(foo_signal: u8, bar_signal: u8) -> Result<Self, CanError> {
         let mut res = Self { raw: [0u8; 8] };
@@ -82,12 +82,12 @@ impl Message0 {
         res.set_bar_signal(bar_signal)?;
         Ok(res)
     }
-
+    
     /// Access message payload raw value
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-
+    
     /// FooSignal
     ///
     /// - Min: 0
@@ -97,7 +97,7 @@ impl Message0 {
     #[inline(always)]
     pub fn foo_signal(&self) -> Message0FooSignal {
         let signal = self.raw.view_bits::<Lsb0>()[0..2].load_le::<u8>();
-
+        
         match signal {
             0 => Message0FooSignal::FooA,
             1 => Message0FooSignal::FooB,
@@ -106,7 +106,7 @@ impl Message0 {
             _ => Message0FooSignal::_Other(self.foo_signal_raw()),
         }
     }
-
+    
     /// Get raw value of FooSignal
     ///
     /// - Start bit: 0
@@ -118,11 +118,11 @@ impl Message0 {
     #[inline(always)]
     pub fn foo_signal_raw(&self) -> u8 {
         let signal = self.raw.view_bits::<Lsb0>()[0..2].load_le::<u8>();
-
+        
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-
+    
     /// Set value of FooSignal
     #[inline(always)]
     pub fn set_foo_signal(&mut self, value: u8) -> Result<(), CanError> {
@@ -133,11 +133,11 @@ impl Message0 {
         let value = value.checked_sub(0)
             .ok_or(CanError::ParameterOutOfRange { message_id: Message0::MESSAGE_ID })?;
         let value = (value / factor) as u8;
-
+        
         self.raw.view_bits_mut::<Lsb0>()[0..2].store_le(value);
         Ok(())
     }
-
+    
     /// BarSignal
     ///
     /// - Min: 0
@@ -147,7 +147,7 @@ impl Message0 {
     #[inline(always)]
     pub fn bar_signal(&self) -> Message0BarSignal {
         let signal = self.raw.view_bits::<Lsb0>()[2..5].load_le::<u8>();
-
+        
         match signal {
             0 => Message0BarSignal::BarA,
             1 => Message0BarSignal::BarB,
@@ -160,7 +160,7 @@ impl Message0 {
             _ => Message0BarSignal::_Other(self.bar_signal_raw()),
         }
     }
-
+    
     /// Get raw value of BarSignal
     ///
     /// - Start bit: 2
@@ -172,11 +172,11 @@ impl Message0 {
     #[inline(always)]
     pub fn bar_signal_raw(&self) -> u8 {
         let signal = self.raw.view_bits::<Lsb0>()[2..5].load_le::<u8>();
-
+        
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-
+    
     /// Set value of BarSignal
     #[inline(always)]
     pub fn set_bar_signal(&mut self, value: u8) -> Result<(), CanError> {
@@ -187,16 +187,16 @@ impl Message0 {
         let value = value.checked_sub(0)
             .ok_or(CanError::ParameterOutOfRange { message_id: Message0::MESSAGE_ID })?;
         let value = (value / factor) as u8;
-
+        
         self.raw.view_bits_mut::<Lsb0>()[2..5].store_le(value);
         Ok(())
     }
-
+    
 }
 
 impl core::convert::TryFrom<&[u8]> for Message0 {
     type Error = CanError;
-
+    
     #[inline(always)]
     fn try_from(payload: &[u8]) -> Result<Self, Self::Error> {
         if payload.len() != 8 { return Err(CanError::InvalidPayloadSize); }
@@ -343,3 +343,4 @@ impl core::fmt::Display for CanError {
         write!(f, "{self:?}")
     }
 }
+

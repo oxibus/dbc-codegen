@@ -1,7 +1,7 @@
 // Generated code!
 //
 // Message definitions from file `multiplex_dumped`
-// Version:
+// Version: 
 
 #[allow(unused_imports)]
 use core::ops::BitOr;
@@ -39,7 +39,7 @@ impl Messages {
     /// Read message from CAN frame
     #[inline(never)]
     pub fn from_can_message(id: Id, payload: &[u8]) -> Result<Self, CanError> {
-
+        
         let res = match id {
             Message1::MESSAGE_ID => Messages::Message1(Message1::try_from(payload)?),
             id => return Err(CanError::UnknownMessageId(id)),
@@ -68,22 +68,22 @@ pub struct Message1 {
 )]
 impl Message1 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe { ExtendedId::new_unchecked(0x123456)});
-
+    
     pub const MULTIPLEXOR_MIN: u8 = 0_u8;
     pub const MULTIPLEXOR_MAX: u8 = 0_u8;
-
+    
     /// Construct new Message1 from values
     pub fn new(multiplexor: u8) -> Result<Self, CanError> {
         let mut res = Self { raw: [0u8; 8] };
         res.set_multiplexor(multiplexor)?;
         Ok(res)
     }
-
+    
     /// Access message payload raw value
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-
+    
     /// Get raw value of Multiplexor
     ///
     /// - Start bit: 2
@@ -95,11 +95,11 @@ impl Message1 {
     #[inline(always)]
     pub fn multiplexor_raw(&self) -> u8 {
         let signal = self.raw.view_bits::<Lsb0>()[2..8].load_le::<u8>();
-
+        
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-
+    
     pub fn multiplexor(&mut self) -> Result<Message1MultiplexorIndex, CanError> {
         match self.multiplexor_raw() {
             8 => Ok(Message1MultiplexorIndex::M8(Message1MultiplexorM8{ raw: self.raw })),
@@ -117,11 +117,11 @@ impl Message1 {
         let value = value.checked_sub(0)
             .ok_or(CanError::ParameterOutOfRange { message_id: Message1::MESSAGE_ID })?;
         let value = (value / factor) as u8;
-
+        
         self.raw.view_bits_mut::<Lsb0>()[2..8].store_le(value);
         Ok(())
     }
-
+    
     /// Set value of Multiplexor
     #[inline(always)]
     pub fn set_m8(&mut self, value: Message1MultiplexorM8) -> Result<(), CanError> {
@@ -131,7 +131,7 @@ impl Message1 {
         self.set_multiplexor(8)?;
         Ok(())
     }
-
+    
     /// Set value of Multiplexor
     #[inline(always)]
     pub fn set_m24(&mut self, value: Message1MultiplexorM24) -> Result<(), CanError> {
@@ -141,12 +141,12 @@ impl Message1 {
         self.set_multiplexor(24)?;
         Ok(())
     }
-
+    
 }
 
 impl core::convert::TryFrom<&[u8]> for Message1 {
     type Error = CanError;
-
+    
     #[inline(always)]
     fn try_from(payload: &[u8]) -> Result<Self, Self::Error> {
         if payload.len() != 8 { return Err(CanError::InvalidPayloadSize); }
@@ -252,7 +252,7 @@ pub fn bit_l(&self) -> bool {
 #[inline(always)]
 pub fn bit_l_raw(&self) -> bool {
     let signal = self.raw.view_bits::<Lsb0>()[24..25].load_le::<u8>();
-
+    
     signal == 1
 }
 
@@ -286,7 +286,7 @@ pub fn bit_g(&self) -> bool {
 #[inline(always)]
 pub fn bit_g_raw(&self) -> bool {
     let signal = self.raw.view_bits::<Lsb0>()[23..24].load_le::<u8>();
-
+    
     signal == 1
 }
 
@@ -320,7 +320,7 @@ pub fn bit_c(&self) -> bool {
 #[inline(always)]
 pub fn bit_c_raw(&self) -> bool {
     let signal = self.raw.view_bits::<Lsb0>()[19..20].load_le::<u8>();
-
+    
     signal == 1
 }
 
@@ -354,7 +354,7 @@ pub fn bit_j(&self) -> bool {
 #[inline(always)]
 pub fn bit_j_raw(&self) -> bool {
     let signal = self.raw.view_bits::<Lsb0>()[18..19].load_le::<u8>();
-
+    
     signal == 1
 }
 
@@ -413,7 +413,7 @@ pub fn bit_f(&self) -> bool {
 #[inline(always)]
 pub fn bit_f_raw(&self) -> bool {
     let signal = self.raw.view_bits::<Lsb0>()[39..40].load_le::<u8>();
-
+    
     signal == 1
 }
 
@@ -447,7 +447,7 @@ pub fn bit_h(&self) -> bool {
 #[inline(always)]
 pub fn bit_h_raw(&self) -> bool {
     let signal = self.raw.view_bits::<Lsb0>()[38..39].load_le::<u8>();
-
+    
     signal == 1
 }
 
@@ -481,7 +481,7 @@ pub fn bit_b(&self) -> bool {
 #[inline(always)]
 pub fn bit_b_raw(&self) -> bool {
     let signal = self.raw.view_bits::<Lsb0>()[33..34].load_le::<u8>();
-
+    
     signal == 1
 }
 
@@ -515,7 +515,7 @@ pub fn bit_d(&self) -> bool {
 #[inline(always)]
 pub fn bit_d_raw(&self) -> bool {
     let signal = self.raw.view_bits::<Lsb0>()[32..33].load_le::<u8>();
-
+    
     signal == 1
 }
 
@@ -549,7 +549,7 @@ pub fn bit_e(&self) -> bool {
 #[inline(always)]
 pub fn bit_e_raw(&self) -> bool {
     let signal = self.raw.view_bits::<Lsb0>()[29..30].load_le::<u8>();
-
+    
     signal == 1
 }
 
@@ -583,7 +583,7 @@ pub fn bit_k(&self) -> bool {
 #[inline(always)]
 pub fn bit_k_raw(&self) -> bool {
     let signal = self.raw.view_bits::<Lsb0>()[28..29].load_le::<u8>();
-
+    
     signal == 1
 }
 
@@ -617,7 +617,7 @@ pub fn bit_a(&self) -> bool {
 #[inline(always)]
 pub fn bit_a_raw(&self) -> bool {
     let signal = self.raw.view_bits::<Lsb0>()[26..27].load_le::<u8>();
-
+    
     signal == 1
 }
 
@@ -662,3 +662,4 @@ impl core::fmt::Display for CanError {
         write!(f, "{self:?}")
     }
 }
+

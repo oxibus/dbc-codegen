@@ -1,7 +1,7 @@
 // Generated code!
 //
 // Message definitions from file `test_multiplex_dump`
-// Version:
+// Version: 
 
 #[allow(unused_imports)]
 use core::ops::BitOr;
@@ -39,7 +39,7 @@ impl Messages {
     /// Read message from CAN frame
     #[inline(never)]
     pub fn from_can_message(id: Id, payload: &[u8]) -> Result<Self, CanError> {
-
+        
         let res = match id {
             MuxedFrame::MESSAGE_ID => Messages::MuxedFrame(MuxedFrame::try_from(payload)?),
             id => return Err(CanError::UnknownMessageId(id)),
@@ -68,14 +68,14 @@ pub struct MuxedFrame {
 )]
 impl MuxedFrame {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0x100)});
-
+    
     pub const UNMULTIPLEXED_SIG_MIN: i8 = 0_i8;
     pub const UNMULTIPLEXED_SIG_MAX: i8 = 0_i8;
     pub const MULTIPLEXED_SIG_MIN: i8 = 0_i8;
     pub const MULTIPLEXED_SIG_MAX: i8 = 0_i8;
     pub const MULTIPLEXOR_SIG_MIN: u8 = 0_u8;
     pub const MULTIPLEXOR_SIG_MAX: u8 = 0_u8;
-
+    
     /// Construct new MuxedFrame from values
     pub fn new(unmultiplexed_sig: i8, multiplexor_sig: u8) -> Result<Self, CanError> {
         let mut res = Self { raw: [0u8; 8] };
@@ -83,12 +83,12 @@ impl MuxedFrame {
         res.set_multiplexor_sig(multiplexor_sig)?;
         Ok(res)
     }
-
+    
     /// Access message payload raw value
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-
+    
     /// UnmultiplexedSig
     ///
     /// - Min: 0
@@ -99,7 +99,7 @@ impl MuxedFrame {
     pub fn unmultiplexed_sig(&self) -> i8 {
         self.unmultiplexed_sig_raw()
     }
-
+    
     /// Get raw value of UnmultiplexedSig
     ///
     /// - Start bit: 16
@@ -111,12 +111,12 @@ impl MuxedFrame {
     #[inline(always)]
     pub fn unmultiplexed_sig_raw(&self) -> i8 {
         let signal = self.raw.view_bits::<Lsb0>()[16..24].load_le::<i8>();
-
+        
         let factor = 1;
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-
+    
     /// Set value of UnmultiplexedSig
     #[inline(always)]
     pub fn set_unmultiplexed_sig(&mut self, value: i8) -> Result<(), CanError> {
@@ -127,12 +127,12 @@ impl MuxedFrame {
         let value = value.checked_sub(0)
             .ok_or(CanError::ParameterOutOfRange { message_id: MuxedFrame::MESSAGE_ID })?;
         let value = (value / factor) as i8;
-
+        
         let value = u8::from_ne_bytes(value.to_ne_bytes());
         self.raw.view_bits_mut::<Lsb0>()[16..24].store_le(value);
         Ok(())
     }
-
+    
     /// Get raw value of MultiplexorSig
     ///
     /// - Start bit: 0
@@ -144,11 +144,11 @@ impl MuxedFrame {
     #[inline(always)]
     pub fn multiplexor_sig_raw(&self) -> u8 {
         let signal = self.raw.view_bits::<Lsb0>()[0..8].load_le::<u8>();
-
+        
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-
+    
     pub fn multiplexor_sig(&mut self) -> Result<MuxedFrameMultiplexorSigIndex, CanError> {
         match self.multiplexor_sig_raw() {
             42 => Ok(MuxedFrameMultiplexorSigIndex::M42(MuxedFrameMultiplexorSigM42{ raw: self.raw })),
@@ -165,11 +165,11 @@ impl MuxedFrame {
         let value = value.checked_sub(0)
             .ok_or(CanError::ParameterOutOfRange { message_id: MuxedFrame::MESSAGE_ID })?;
         let value = (value / factor) as u8;
-
+        
         self.raw.view_bits_mut::<Lsb0>()[0..8].store_le(value);
         Ok(())
     }
-
+    
     /// Set value of MultiplexorSig
     #[inline(always)]
     pub fn set_m42(&mut self, value: MuxedFrameMultiplexorSigM42) -> Result<(), CanError> {
@@ -179,12 +179,12 @@ impl MuxedFrame {
         self.set_multiplexor_sig(42)?;
         Ok(())
     }
-
+    
 }
 
 impl core::convert::TryFrom<&[u8]> for MuxedFrame {
     type Error = CanError;
-
+    
     #[inline(always)]
     fn try_from(payload: &[u8]) -> Result<Self, Self::Error> {
         if payload.len() != 8 { return Err(CanError::InvalidPayloadSize); }
@@ -289,7 +289,7 @@ pub fn multiplexed_sig(&self) -> i8 {
 #[inline(always)]
 pub fn multiplexed_sig_raw(&self) -> i8 {
     let signal = self.raw.view_bits::<Lsb0>()[8..16].load_le::<i8>();
-
+    
     let factor = 1;
     let signal = signal as i8;
     i8::from(signal).saturating_mul(factor).saturating_add(0)
@@ -305,7 +305,7 @@ pub fn set_multiplexed_sig(&mut self, value: i8) -> Result<(), CanError> {
     let value = value.checked_sub(0)
         .ok_or(CanError::ParameterOutOfRange { message_id: MuxedFrame::MESSAGE_ID })?;
     let value = (value / factor) as i8;
-
+    
     let value = u8::from_ne_bytes(value.to_ne_bytes());
     self.raw.view_bits_mut::<Lsb0>()[8..16].store_le(value);
     Ok(())
@@ -344,3 +344,4 @@ impl core::fmt::Display for CanError {
         write!(f, "{self:?}")
     }
 }
+

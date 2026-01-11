@@ -1,7 +1,7 @@
 // Generated code!
 //
 // Message definitions from file `empty_choice`
-// Version:
+// Version: 
 
 #[allow(unused_imports)]
 use core::ops::BitOr;
@@ -39,7 +39,7 @@ impl Messages {
     /// Read message from CAN frame
     #[inline(never)]
     pub fn from_can_message(id: Id, payload: &[u8]) -> Result<Self, CanError> {
-
+        
         let res = match id {
             ExampleMessage::MESSAGE_ID => Messages::ExampleMessage(ExampleMessage::try_from(payload)?),
             id => return Err(CanError::UnknownMessageId(id)),
@@ -69,14 +69,14 @@ pub struct ExampleMessage {
 )]
 impl ExampleMessage {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0xa)});
-
+    
     pub const NO_CHOICE_MIN: i8 = 0_i8;
     pub const NO_CHOICE_MAX: i8 = 0_i8;
     pub const EMPTY_CHOICE_MIN: i8 = 0_i8;
     pub const EMPTY_CHOICE_MAX: i8 = 0_i8;
     pub const NON_EMPTY_CHOICE_MIN: i8 = 0_i8;
     pub const NON_EMPTY_CHOICE_MAX: i8 = 0_i8;
-
+    
     /// Construct new example_message from values
     pub fn new(no_choice: i8, empty_choice: i8, non_empty_choice: i8) -> Result<Self, CanError> {
         let mut res = Self { raw: [0u8; 3] };
@@ -85,12 +85,12 @@ impl ExampleMessage {
         res.set_non_empty_choice(non_empty_choice)?;
         Ok(res)
     }
-
+    
     /// Access message payload raw value
     pub fn raw(&self) -> &[u8; 3] {
         &self.raw
     }
-
+    
     /// no_choice
     ///
     /// - Min: 0
@@ -101,7 +101,7 @@ impl ExampleMessage {
     pub fn no_choice(&self) -> i8 {
         self.no_choice_raw()
     }
-
+    
     /// Get raw value of no_choice
     ///
     /// - Start bit: 16
@@ -113,12 +113,12 @@ impl ExampleMessage {
     #[inline(always)]
     pub fn no_choice_raw(&self) -> i8 {
         let signal = self.raw.view_bits::<Lsb0>()[16..24].load_le::<i8>();
-
+        
         let factor = 1;
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-
+    
     /// Set value of no_choice
     #[inline(always)]
     pub fn set_no_choice(&mut self, value: i8) -> Result<(), CanError> {
@@ -129,12 +129,12 @@ impl ExampleMessage {
         let value = value.checked_sub(0)
             .ok_or(CanError::ParameterOutOfRange { message_id: ExampleMessage::MESSAGE_ID })?;
         let value = (value / factor) as i8;
-
+        
         let value = u8::from_ne_bytes(value.to_ne_bytes());
         self.raw.view_bits_mut::<Lsb0>()[16..24].store_le(value);
         Ok(())
     }
-
+    
     /// empty_choice
     ///
     /// - Min: 0
@@ -144,12 +144,12 @@ impl ExampleMessage {
     #[inline(always)]
     pub fn empty_choice(&self) -> ExampleMessageEmptyChoice {
         let signal = self.raw.view_bits::<Lsb0>()[8..16].load_le::<u8>();
-
+        
         match signal {
             _ => ExampleMessageEmptyChoice::_Other(self.empty_choice_raw()),
         }
     }
-
+    
     /// Get raw value of empty_choice
     ///
     /// - Start bit: 8
@@ -161,12 +161,12 @@ impl ExampleMessage {
     #[inline(always)]
     pub fn empty_choice_raw(&self) -> i8 {
         let signal = self.raw.view_bits::<Lsb0>()[8..16].load_le::<i8>();
-
+        
         let factor = 1;
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-
+    
     /// Set value of empty_choice
     #[inline(always)]
     pub fn set_empty_choice(&mut self, value: i8) -> Result<(), CanError> {
@@ -177,12 +177,12 @@ impl ExampleMessage {
         let value = value.checked_sub(0)
             .ok_or(CanError::ParameterOutOfRange { message_id: ExampleMessage::MESSAGE_ID })?;
         let value = (value / factor) as i8;
-
+        
         let value = u8::from_ne_bytes(value.to_ne_bytes());
         self.raw.view_bits_mut::<Lsb0>()[8..16].store_le(value);
         Ok(())
     }
-
+    
     /// non_empty_choice
     ///
     /// - Min: 0
@@ -192,14 +192,14 @@ impl ExampleMessage {
     #[inline(always)]
     pub fn non_empty_choice(&self) -> ExampleMessageNonEmptyChoice {
         let signal = self.raw.view_bits::<Lsb0>()[0..8].load_le::<u8>();
-
+        
         match signal {
             255 => ExampleMessageNonEmptyChoice::NotAvailable,
             254 => ExampleMessageNonEmptyChoice::Error,
             _ => ExampleMessageNonEmptyChoice::_Other(self.non_empty_choice_raw()),
         }
     }
-
+    
     /// Get raw value of non_empty_choice
     ///
     /// - Start bit: 0
@@ -211,12 +211,12 @@ impl ExampleMessage {
     #[inline(always)]
     pub fn non_empty_choice_raw(&self) -> i8 {
         let signal = self.raw.view_bits::<Lsb0>()[0..8].load_le::<i8>();
-
+        
         let factor = 1;
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-
+    
     /// Set value of non_empty_choice
     #[inline(always)]
     pub fn set_non_empty_choice(&mut self, value: i8) -> Result<(), CanError> {
@@ -227,17 +227,17 @@ impl ExampleMessage {
         let value = value.checked_sub(0)
             .ok_or(CanError::ParameterOutOfRange { message_id: ExampleMessage::MESSAGE_ID })?;
         let value = (value / factor) as i8;
-
+        
         let value = u8::from_ne_bytes(value.to_ne_bytes());
         self.raw.view_bits_mut::<Lsb0>()[0..8].store_le(value);
         Ok(())
     }
-
+    
 }
 
 impl core::convert::TryFrom<&[u8]> for ExampleMessage {
     type Error = CanError;
-
+    
     #[inline(always)]
     fn try_from(payload: &[u8]) -> Result<Self, Self::Error> {
         if payload.len() != 3 { return Err(CanError::InvalidPayloadSize); }
@@ -364,3 +364,4 @@ impl core::fmt::Display for CanError {
         write!(f, "{self:?}")
     }
 }
+

@@ -39,7 +39,7 @@ impl Messages {
     /// Read message from CAN frame
     #[inline(never)]
     pub fn from_can_message(id: Id, payload: &[u8]) -> Result<Self, CanError> {
-
+        
         let res = match id {
             ExampleMessage::MESSAGE_ID => Messages::ExampleMessage(ExampleMessage::try_from(payload)?),
             id => return Err(CanError::UnknownMessageId(id)),
@@ -71,12 +71,12 @@ pub struct ExampleMessage {
 )]
 impl ExampleMessage {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0x1f0)});
-
+    
     pub const TEMPERATURE_MIN: f32 = 229.52_f32;
     pub const TEMPERATURE_MAX: f32 = 270.47_f32;
     pub const AVERAGE_RADIUS_MIN: f32 = 0_f32;
     pub const AVERAGE_RADIUS_MAX: f32 = 5_f32;
-
+    
     /// Construct new ExampleMessage from values
     pub fn new(temperature: f32, average_radius: f32, enable: bool) -> Result<Self, CanError> {
         let mut res = Self { raw: [0u8; 8] };
@@ -85,12 +85,12 @@ impl ExampleMessage {
         res.set_enable(enable)?;
         Ok(res)
     }
-
+    
     /// Access message payload raw value
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-
+    
     /// Temperature
     ///
     /// Temperature with a really long and complicated comment that probably require many many lines in a decently wide terminal
@@ -103,7 +103,7 @@ impl ExampleMessage {
     pub fn temperature(&self) -> f32 {
         self.temperature_raw()
     }
-
+    
     /// Get raw value of Temperature
     ///
     /// - Start bit: 0
@@ -115,12 +115,12 @@ impl ExampleMessage {
     #[inline(always)]
     pub fn temperature_raw(&self) -> f32 {
         let signal = self.raw.view_bits::<Msb0>()[7..19].load_be::<i16>();
-
+        
         let factor = 0.01_f32;
         let offset = 250_f32;
         (signal as f32) * factor + offset
     }
-
+    
     /// Set value of Temperature
     #[inline(always)]
     pub fn set_temperature(&mut self, value: f32) -> Result<(), CanError> {
@@ -130,12 +130,12 @@ impl ExampleMessage {
         let factor = 0.01_f32;
         let offset = 250_f32;
         let value = ((value - offset) / factor) as i16;
-
+        
         let value = u16::from_ne_bytes(value.to_ne_bytes());
         self.raw.view_bits_mut::<Msb0>()[7..19].store_be(value);
         Ok(())
     }
-
+    
     /// AverageRadius
     ///
     /// AverageRadius signal comment
@@ -148,7 +148,7 @@ impl ExampleMessage {
     pub fn average_radius(&self) -> f32 {
         self.average_radius_raw()
     }
-
+    
     /// Get raw value of AverageRadius
     ///
     /// - Start bit: 6
@@ -160,12 +160,12 @@ impl ExampleMessage {
     #[inline(always)]
     pub fn average_radius_raw(&self) -> f32 {
         let signal = self.raw.view_bits::<Msb0>()[1..7].load_be::<u8>();
-
+        
         let factor = 0.1_f32;
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-
+    
     /// Set value of AverageRadius
     #[inline(always)]
     pub fn set_average_radius(&mut self, value: f32) -> Result<(), CanError> {
@@ -175,11 +175,11 @@ impl ExampleMessage {
         let factor = 0.1_f32;
         let offset = 0_f32;
         let value = ((value - offset) / factor) as u8;
-
+        
         self.raw.view_bits_mut::<Msb0>()[1..7].store_be(value);
         Ok(())
     }
-
+    
     /// Enable
     ///
     /// Enable signal comment
@@ -191,14 +191,14 @@ impl ExampleMessage {
     #[inline(always)]
     pub fn enable(&self) -> ExampleMessageEnable {
         let signal = self.raw.view_bits::<Msb0>()[0..1].load_be::<u8>();
-
+        
         match signal {
             0 => ExampleMessageEnable::Disabled,
             1 => ExampleMessageEnable::Enabled,
             _ => ExampleMessageEnable::_Other(self.enable_raw()),
         }
     }
-
+    
     /// Get raw value of Enable
     ///
     /// - Start bit: 7
@@ -210,10 +210,10 @@ impl ExampleMessage {
     #[inline(always)]
     pub fn enable_raw(&self) -> bool {
         let signal = self.raw.view_bits::<Msb0>()[0..1].load_be::<u8>();
-
+        
         signal == 1
     }
-
+    
     /// Set value of Enable
     #[inline(always)]
     pub fn set_enable(&mut self, value: bool) -> Result<(), CanError> {
@@ -221,12 +221,12 @@ impl ExampleMessage {
         self.raw.view_bits_mut::<Msb0>()[0..1].store_be(value);
         Ok(())
     }
-
+    
 }
 
 impl core::convert::TryFrom<&[u8]> for ExampleMessage {
     type Error = CanError;
-
+    
     #[inline(always)]
     fn try_from(payload: &[u8]) -> Result<Self, Self::Error> {
         if payload.len() != 8 { return Err(CanError::InvalidPayloadSize); }
@@ -330,3 +330,4 @@ impl core::fmt::Display for CanError {
         write!(f, "{self:?}")
     }
 }
+

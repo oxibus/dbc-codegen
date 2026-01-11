@@ -1,7 +1,7 @@
 // Generated code!
 //
 // Message definitions from file `long_names`
-// Version:
+// Version: 
 
 #[allow(unused_imports)]
 use core::ops::BitOr;
@@ -57,7 +57,7 @@ impl Messages {
     /// Read message from CAN frame
     #[inline(never)]
     pub fn from_can_message(id: Id, payload: &[u8]) -> Result<Self, CanError> {
-
+        
         let res = match id {
             Ss123456789012345678901234587890::MESSAGE_ID => Messages::Ss123456789012345678901234587890(Ss123456789012345678901234587890::try_from(payload)?),
             Ss12345678901234567890123450000::MESSAGE_ID => Messages::Ss12345678901234567890123450000(Ss12345678901234567890123450000::try_from(payload)?),
@@ -95,24 +95,24 @@ pub struct Ss123456789012345678901234587890 {
 )]
 impl Ss123456789012345678901234587890 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0x9)});
-
-
+    
+    
     /// Construct new SS123456789012345678901234587890 from values
     pub fn new() -> Result<Self, CanError> {
         let res = Self { raw: [0u8; 8] };
         Ok(res)
     }
-
+    
     /// Access message payload raw value
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-
+    
 }
 
 impl core::convert::TryFrom<&[u8]> for Ss123456789012345678901234587890 {
     type Error = CanError;
-
+    
     #[inline(always)]
     fn try_from(payload: &[u8]) -> Result<Self, Self::Error> {
         if payload.len() != 8 { return Err(CanError::InvalidPayloadSize); }
@@ -179,24 +179,24 @@ pub struct Ss12345678901234567890123450000 {
 )]
 impl Ss12345678901234567890123450000 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0x8)});
-
-
+    
+    
     /// Construct new SS1234567890123456789012345_0000 from values
     pub fn new() -> Result<Self, CanError> {
         let res = Self { raw: [0u8; 8] };
         Ok(res)
     }
-
+    
     /// Access message payload raw value
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-
+    
 }
 
 impl core::convert::TryFrom<&[u8]> for Ss12345678901234567890123450000 {
     type Error = CanError;
-
+    
     #[inline(always)]
     fn try_from(payload: &[u8]) -> Result<Self, Self::Error> {
         if payload.len() != 8 { return Err(CanError::InvalidPayloadSize); }
@@ -263,24 +263,24 @@ pub struct Ss12345678901234567890123450001 {
 )]
 impl Ss12345678901234567890123450001 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0x7)});
-
-
+    
+    
     /// Construct new SS1234567890123456789012345_0001 from values
     pub fn new() -> Result<Self, CanError> {
         let res = Self { raw: [0u8; 8] };
         Ok(res)
     }
-
+    
     /// Access message payload raw value
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-
+    
 }
 
 impl core::convert::TryFrom<&[u8]> for Ss12345678901234567890123450001 {
     type Error = CanError;
-
+    
     #[inline(always)]
     fn try_from(payload: &[u8]) -> Result<Self, Self::Error> {
         if payload.len() != 8 { return Err(CanError::InvalidPayloadSize); }
@@ -347,24 +347,24 @@ pub struct Ss123456789012345678901234577890 {
 )]
 impl Ss123456789012345678901234577890 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0x6)});
-
-
+    
+    
     /// Construct new SS123456789012345678901234577890 from values
     pub fn new() -> Result<Self, CanError> {
         let res = Self { raw: [0u8; 8] };
         Ok(res)
     }
-
+    
     /// Access message payload raw value
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-
+    
 }
 
 impl core::convert::TryFrom<&[u8]> for Ss123456789012345678901234577890 {
     type Error = CanError;
-
+    
     #[inline(always)]
     fn try_from(payload: &[u8]) -> Result<Self, Self::Error> {
         if payload.len() != 8 { return Err(CanError::InvalidPayloadSize); }
@@ -431,24 +431,24 @@ pub struct Ss123456789012345678901234567890 {
 )]
 impl Ss123456789012345678901234567890 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0x5)});
-
-
+    
+    
     /// Construct new SS123456789012345678901234567890 from values
     pub fn new() -> Result<Self, CanError> {
         let res = Self { raw: [0u8; 8] };
         Ok(res)
     }
-
+    
     /// Access message payload raw value
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-
+    
 }
 
 impl core::convert::TryFrom<&[u8]> for Ss123456789012345678901234567890 {
     type Error = CanError;
-
+    
     #[inline(always)]
     fn try_from(payload: &[u8]) -> Result<Self, Self::Error> {
         if payload.len() != 8 { return Err(CanError::InvalidPayloadSize); }
@@ -515,22 +515,22 @@ pub struct S1234567890123456789012345678901 {
 )]
 impl S1234567890123456789012345678901 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0x4)});
-
+    
     pub const SS123456789012345678901234567890_MIN: i8 = 0_i8;
     pub const SS123456789012345678901234567890_MAX: i8 = 0_i8;
-
+    
     /// Construct new S1234567890123456789012345678901 from values
     pub fn new(ss123456789012345678901234567890: i8) -> Result<Self, CanError> {
         let mut res = Self { raw: [0u8; 8] };
         res.set_ss123456789012345678901234567890(ss123456789012345678901234567890)?;
         Ok(res)
     }
-
+    
     /// Access message payload raw value
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-
+    
     /// SS123456789012345678901234567890
     ///
     /// - Min: 0
@@ -541,7 +541,7 @@ impl S1234567890123456789012345678901 {
     pub fn ss123456789012345678901234567890(&self) -> i8 {
         self.ss123456789012345678901234567890_raw()
     }
-
+    
     /// Get raw value of SS123456789012345678901234567890
     ///
     /// - Start bit: 0
@@ -553,12 +553,12 @@ impl S1234567890123456789012345678901 {
     #[inline(always)]
     pub fn ss123456789012345678901234567890_raw(&self) -> i8 {
         let signal = self.raw.view_bits::<Lsb0>()[0..8].load_le::<i8>();
-
+        
         let factor = 1;
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-
+    
     /// Set value of SS123456789012345678901234567890
     #[inline(always)]
     pub fn set_ss123456789012345678901234567890(&mut self, value: i8) -> Result<(), CanError> {
@@ -569,17 +569,17 @@ impl S1234567890123456789012345678901 {
         let value = value.checked_sub(0)
             .ok_or(CanError::ParameterOutOfRange { message_id: S1234567890123456789012345678901::MESSAGE_ID })?;
         let value = (value / factor) as i8;
-
+        
         let value = u8::from_ne_bytes(value.to_ne_bytes());
         self.raw.view_bits_mut::<Lsb0>()[0..8].store_le(value);
         Ok(())
     }
-
+    
 }
 
 impl core::convert::TryFrom<&[u8]> for S1234567890123456789012345678901 {
     type Error = CanError;
-
+    
     #[inline(always)]
     fn try_from(payload: &[u8]) -> Result<Self, Self::Error> {
         if payload.len() != 8 { return Err(CanError::InvalidPayloadSize); }
@@ -646,22 +646,22 @@ pub struct M123456789012345678901234560000 {
 )]
 impl M123456789012345678901234560000 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0x0)});
-
+    
     pub const SSS12345678901234567890123456789_MIN: i8 = 0_i8;
     pub const SSS12345678901234567890123456789_MAX: i8 = 0_i8;
-
+    
     /// Construct new M12345678901234567890123456_0000 from values
     pub fn new(sss12345678901234567890123456789: i8) -> Result<Self, CanError> {
         let mut res = Self { raw: [0u8; 8] };
         res.set_sss12345678901234567890123456789(sss12345678901234567890123456789)?;
         Ok(res)
     }
-
+    
     /// Access message payload raw value
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-
+    
     /// SSS12345678901234567890123456789
     ///
     /// - Min: 0
@@ -672,7 +672,7 @@ impl M123456789012345678901234560000 {
     pub fn sss12345678901234567890123456789(&self) -> i8 {
         self.sss12345678901234567890123456789_raw()
     }
-
+    
     /// Get raw value of SSS12345678901234567890123456789
     ///
     /// - Start bit: 0
@@ -684,12 +684,12 @@ impl M123456789012345678901234560000 {
     #[inline(always)]
     pub fn sss12345678901234567890123456789_raw(&self) -> i8 {
         let signal = self.raw.view_bits::<Lsb0>()[0..8].load_le::<i8>();
-
+        
         let factor = 1;
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-
+    
     /// Set value of SSS12345678901234567890123456789
     #[inline(always)]
     pub fn set_sss12345678901234567890123456789(&mut self, value: i8) -> Result<(), CanError> {
@@ -700,17 +700,17 @@ impl M123456789012345678901234560000 {
         let value = value.checked_sub(0)
             .ok_or(CanError::ParameterOutOfRange { message_id: M123456789012345678901234560000::MESSAGE_ID })?;
         let value = (value / factor) as i8;
-
+        
         let value = u8::from_ne_bytes(value.to_ne_bytes());
         self.raw.view_bits_mut::<Lsb0>()[0..8].store_le(value);
         Ok(())
     }
-
+    
 }
 
 impl core::convert::TryFrom<&[u8]> for M123456789012345678901234560000 {
     type Error = CanError;
-
+    
     #[inline(always)]
     fn try_from(payload: &[u8]) -> Result<Self, Self::Error> {
         if payload.len() != 8 { return Err(CanError::InvalidPayloadSize); }
@@ -778,7 +778,7 @@ pub struct M1234567890123456789012345678901 {
 )]
 impl M1234567890123456789012345678901 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0x1)});
-
+    
     pub const SS1234567890123456789012345_0000_MIN: i8 = 0_i8;
     pub const SS1234567890123456789012345_0000_MAX: i8 = 0_i8;
     pub const SS1234567890123456789012345_0001_MIN: i8 = 0_i8;
@@ -789,7 +789,7 @@ impl M1234567890123456789012345678901 {
     pub const S12345678901234567890123456_0000_MAX: i8 = 0_i8;
     pub const S1234567890123456789012345678901_MIN: i8 = 0_i8;
     pub const S1234567890123456789012345678901_MAX: i8 = 0_i8;
-
+    
     /// Construct new M1234567890123456789012345678901 from values
     pub fn new(ss1234567890123456789012345_0000: i8, ss1234567890123456789012345_0001: i8, ss1234567890123456789012345_0002: i8, s12345678901234567890123456_0000: i8, s1234567890123456789012345678901: i8) -> Result<Self, CanError> {
         let mut res = Self { raw: [0u8; 8] };
@@ -800,12 +800,12 @@ impl M1234567890123456789012345678901 {
         res.set_s1234567890123456789012345678901(s1234567890123456789012345678901)?;
         Ok(res)
     }
-
+    
     /// Access message payload raw value
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-
+    
     /// SS1234567890123456789012345_0000
     ///
     /// - Min: 0
@@ -816,7 +816,7 @@ impl M1234567890123456789012345678901 {
     pub fn ss1234567890123456789012345_0000(&self) -> i8 {
         self.ss1234567890123456789012345_0000_raw()
     }
-
+    
     /// Get raw value of SS1234567890123456789012345_0000
     ///
     /// - Start bit: 32
@@ -828,12 +828,12 @@ impl M1234567890123456789012345678901 {
     #[inline(always)]
     pub fn ss1234567890123456789012345_0000_raw(&self) -> i8 {
         let signal = self.raw.view_bits::<Lsb0>()[32..40].load_le::<i8>();
-
+        
         let factor = 1;
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-
+    
     /// Set value of SS1234567890123456789012345_0000
     #[inline(always)]
     pub fn set_ss1234567890123456789012345_0000(&mut self, value: i8) -> Result<(), CanError> {
@@ -844,12 +844,12 @@ impl M1234567890123456789012345678901 {
         let value = value.checked_sub(0)
             .ok_or(CanError::ParameterOutOfRange { message_id: M1234567890123456789012345678901::MESSAGE_ID })?;
         let value = (value / factor) as i8;
-
+        
         let value = u8::from_ne_bytes(value.to_ne_bytes());
         self.raw.view_bits_mut::<Lsb0>()[32..40].store_le(value);
         Ok(())
     }
-
+    
     /// SS1234567890123456789012345_0001
     ///
     /// - Min: 0
@@ -860,7 +860,7 @@ impl M1234567890123456789012345678901 {
     pub fn ss1234567890123456789012345_0001(&self) -> i8 {
         self.ss1234567890123456789012345_0001_raw()
     }
-
+    
     /// Get raw value of SS1234567890123456789012345_0001
     ///
     /// - Start bit: 24
@@ -872,12 +872,12 @@ impl M1234567890123456789012345678901 {
     #[inline(always)]
     pub fn ss1234567890123456789012345_0001_raw(&self) -> i8 {
         let signal = self.raw.view_bits::<Lsb0>()[24..32].load_le::<i8>();
-
+        
         let factor = 1;
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-
+    
     /// Set value of SS1234567890123456789012345_0001
     #[inline(always)]
     pub fn set_ss1234567890123456789012345_0001(&mut self, value: i8) -> Result<(), CanError> {
@@ -888,12 +888,12 @@ impl M1234567890123456789012345678901 {
         let value = value.checked_sub(0)
             .ok_or(CanError::ParameterOutOfRange { message_id: M1234567890123456789012345678901::MESSAGE_ID })?;
         let value = (value / factor) as i8;
-
+        
         let value = u8::from_ne_bytes(value.to_ne_bytes());
         self.raw.view_bits_mut::<Lsb0>()[24..32].store_le(value);
         Ok(())
     }
-
+    
     /// SS1234567890123456789012345_0002
     ///
     /// - Min: 0
@@ -904,7 +904,7 @@ impl M1234567890123456789012345678901 {
     pub fn ss1234567890123456789012345_0002(&self) -> i8 {
         self.ss1234567890123456789012345_0002_raw()
     }
-
+    
     /// Get raw value of SS1234567890123456789012345_0002
     ///
     /// - Start bit: 16
@@ -916,12 +916,12 @@ impl M1234567890123456789012345678901 {
     #[inline(always)]
     pub fn ss1234567890123456789012345_0002_raw(&self) -> i8 {
         let signal = self.raw.view_bits::<Lsb0>()[16..24].load_le::<i8>();
-
+        
         let factor = 1;
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-
+    
     /// Set value of SS1234567890123456789012345_0002
     #[inline(always)]
     pub fn set_ss1234567890123456789012345_0002(&mut self, value: i8) -> Result<(), CanError> {
@@ -932,12 +932,12 @@ impl M1234567890123456789012345678901 {
         let value = value.checked_sub(0)
             .ok_or(CanError::ParameterOutOfRange { message_id: M1234567890123456789012345678901::MESSAGE_ID })?;
         let value = (value / factor) as i8;
-
+        
         let value = u8::from_ne_bytes(value.to_ne_bytes());
         self.raw.view_bits_mut::<Lsb0>()[16..24].store_le(value);
         Ok(())
     }
-
+    
     /// S12345678901234567890123456_0000
     ///
     /// - Min: 0
@@ -948,7 +948,7 @@ impl M1234567890123456789012345678901 {
     pub fn s12345678901234567890123456_0000(&self) -> i8 {
         self.s12345678901234567890123456_0000_raw()
     }
-
+    
     /// Get raw value of S12345678901234567890123456_0000
     ///
     /// - Start bit: 8
@@ -960,12 +960,12 @@ impl M1234567890123456789012345678901 {
     #[inline(always)]
     pub fn s12345678901234567890123456_0000_raw(&self) -> i8 {
         let signal = self.raw.view_bits::<Lsb0>()[8..16].load_le::<i8>();
-
+        
         let factor = 1;
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-
+    
     /// Set value of S12345678901234567890123456_0000
     #[inline(always)]
     pub fn set_s12345678901234567890123456_0000(&mut self, value: i8) -> Result<(), CanError> {
@@ -976,12 +976,12 @@ impl M1234567890123456789012345678901 {
         let value = value.checked_sub(0)
             .ok_or(CanError::ParameterOutOfRange { message_id: M1234567890123456789012345678901::MESSAGE_ID })?;
         let value = (value / factor) as i8;
-
+        
         let value = u8::from_ne_bytes(value.to_ne_bytes());
         self.raw.view_bits_mut::<Lsb0>()[8..16].store_le(value);
         Ok(())
     }
-
+    
     /// S1234567890123456789012345678901
     ///
     /// - Min: 0
@@ -992,7 +992,7 @@ impl M1234567890123456789012345678901 {
     pub fn s1234567890123456789012345678901(&self) -> i8 {
         self.s1234567890123456789012345678901_raw()
     }
-
+    
     /// Get raw value of S1234567890123456789012345678901
     ///
     /// - Start bit: 0
@@ -1004,12 +1004,12 @@ impl M1234567890123456789012345678901 {
     #[inline(always)]
     pub fn s1234567890123456789012345678901_raw(&self) -> i8 {
         let signal = self.raw.view_bits::<Lsb0>()[0..8].load_le::<i8>();
-
+        
         let factor = 1;
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-
+    
     /// Set value of S1234567890123456789012345678901
     #[inline(always)]
     pub fn set_s1234567890123456789012345678901(&mut self, value: i8) -> Result<(), CanError> {
@@ -1020,17 +1020,17 @@ impl M1234567890123456789012345678901 {
         let value = value.checked_sub(0)
             .ok_or(CanError::ParameterOutOfRange { message_id: M1234567890123456789012345678901::MESSAGE_ID })?;
         let value = (value / factor) as i8;
-
+        
         let value = u8::from_ne_bytes(value.to_ne_bytes());
         self.raw.view_bits_mut::<Lsb0>()[0..8].store_le(value);
         Ok(())
     }
-
+    
 }
 
 impl core::convert::TryFrom<&[u8]> for M1234567890123456789012345678901 {
     type Error = CanError;
-
+    
     #[inline(always)]
     fn try_from(payload: &[u8]) -> Result<Self, Self::Error> {
         if payload.len() != 8 { return Err(CanError::InvalidPayloadSize); }
@@ -1098,7 +1098,7 @@ pub struct M123456789012345678901234560001 {
 )]
 impl M123456789012345678901234560001 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0x2)});
-
+    
     pub const SS1234567890123456789012345_0003_MIN: i8 = 0_i8;
     pub const SS1234567890123456789012345_0003_MAX: i8 = 0_i8;
     pub const SS1234567890123456789012345_0004_MIN: i8 = 0_i8;
@@ -1107,7 +1107,7 @@ impl M123456789012345678901234560001 {
     pub const S12345678901234567890123456_0001_MAX: i8 = 0_i8;
     pub const S12345678901234567890123456_0002_MIN: i8 = 0_i8;
     pub const S12345678901234567890123456_0002_MAX: i8 = 0_i8;
-
+    
     /// Construct new M12345678901234567890123456_0001 from values
     pub fn new(ss1234567890123456789012345_0003: i8, ss1234567890123456789012345_0004: i8, s12345678901234567890123456_0001: i8, s12345678901234567890123456_0002: i8) -> Result<Self, CanError> {
         let mut res = Self { raw: [0u8; 8] };
@@ -1117,12 +1117,12 @@ impl M123456789012345678901234560001 {
         res.set_s12345678901234567890123456_0002(s12345678901234567890123456_0002)?;
         Ok(res)
     }
-
+    
     /// Access message payload raw value
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-
+    
     /// SS1234567890123456789012345_0003
     ///
     /// - Min: 0
@@ -1133,7 +1133,7 @@ impl M123456789012345678901234560001 {
     pub fn ss1234567890123456789012345_0003(&self) -> i8 {
         self.ss1234567890123456789012345_0003_raw()
     }
-
+    
     /// Get raw value of SS1234567890123456789012345_0003
     ///
     /// - Start bit: 24
@@ -1145,12 +1145,12 @@ impl M123456789012345678901234560001 {
     #[inline(always)]
     pub fn ss1234567890123456789012345_0003_raw(&self) -> i8 {
         let signal = self.raw.view_bits::<Lsb0>()[24..32].load_le::<i8>();
-
+        
         let factor = 1;
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-
+    
     /// Set value of SS1234567890123456789012345_0003
     #[inline(always)]
     pub fn set_ss1234567890123456789012345_0003(&mut self, value: i8) -> Result<(), CanError> {
@@ -1161,12 +1161,12 @@ impl M123456789012345678901234560001 {
         let value = value.checked_sub(0)
             .ok_or(CanError::ParameterOutOfRange { message_id: M123456789012345678901234560001::MESSAGE_ID })?;
         let value = (value / factor) as i8;
-
+        
         let value = u8::from_ne_bytes(value.to_ne_bytes());
         self.raw.view_bits_mut::<Lsb0>()[24..32].store_le(value);
         Ok(())
     }
-
+    
     /// SS1234567890123456789012345_0004
     ///
     /// - Min: 0
@@ -1177,7 +1177,7 @@ impl M123456789012345678901234560001 {
     pub fn ss1234567890123456789012345_0004(&self) -> i8 {
         self.ss1234567890123456789012345_0004_raw()
     }
-
+    
     /// Get raw value of SS1234567890123456789012345_0004
     ///
     /// - Start bit: 16
@@ -1189,12 +1189,12 @@ impl M123456789012345678901234560001 {
     #[inline(always)]
     pub fn ss1234567890123456789012345_0004_raw(&self) -> i8 {
         let signal = self.raw.view_bits::<Lsb0>()[16..24].load_le::<i8>();
-
+        
         let factor = 1;
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-
+    
     /// Set value of SS1234567890123456789012345_0004
     #[inline(always)]
     pub fn set_ss1234567890123456789012345_0004(&mut self, value: i8) -> Result<(), CanError> {
@@ -1205,12 +1205,12 @@ impl M123456789012345678901234560001 {
         let value = value.checked_sub(0)
             .ok_or(CanError::ParameterOutOfRange { message_id: M123456789012345678901234560001::MESSAGE_ID })?;
         let value = (value / factor) as i8;
-
+        
         let value = u8::from_ne_bytes(value.to_ne_bytes());
         self.raw.view_bits_mut::<Lsb0>()[16..24].store_le(value);
         Ok(())
     }
-
+    
     /// S12345678901234567890123456_0001
     ///
     /// - Min: 0
@@ -1221,7 +1221,7 @@ impl M123456789012345678901234560001 {
     pub fn s12345678901234567890123456_0001(&self) -> i8 {
         self.s12345678901234567890123456_0001_raw()
     }
-
+    
     /// Get raw value of S12345678901234567890123456_0001
     ///
     /// - Start bit: 8
@@ -1233,12 +1233,12 @@ impl M123456789012345678901234560001 {
     #[inline(always)]
     pub fn s12345678901234567890123456_0001_raw(&self) -> i8 {
         let signal = self.raw.view_bits::<Lsb0>()[8..16].load_le::<i8>();
-
+        
         let factor = 1;
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-
+    
     /// Set value of S12345678901234567890123456_0001
     #[inline(always)]
     pub fn set_s12345678901234567890123456_0001(&mut self, value: i8) -> Result<(), CanError> {
@@ -1249,12 +1249,12 @@ impl M123456789012345678901234560001 {
         let value = value.checked_sub(0)
             .ok_or(CanError::ParameterOutOfRange { message_id: M123456789012345678901234560001::MESSAGE_ID })?;
         let value = (value / factor) as i8;
-
+        
         let value = u8::from_ne_bytes(value.to_ne_bytes());
         self.raw.view_bits_mut::<Lsb0>()[8..16].store_le(value);
         Ok(())
     }
-
+    
     /// S12345678901234567890123456_0002
     ///
     /// - Min: 0
@@ -1265,7 +1265,7 @@ impl M123456789012345678901234560001 {
     pub fn s12345678901234567890123456_0002(&self) -> i8 {
         self.s12345678901234567890123456_0002_raw()
     }
-
+    
     /// Get raw value of S12345678901234567890123456_0002
     ///
     /// - Start bit: 0
@@ -1277,12 +1277,12 @@ impl M123456789012345678901234560001 {
     #[inline(always)]
     pub fn s12345678901234567890123456_0002_raw(&self) -> i8 {
         let signal = self.raw.view_bits::<Lsb0>()[0..8].load_le::<i8>();
-
+        
         let factor = 1;
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-
+    
     /// Set value of S12345678901234567890123456_0002
     #[inline(always)]
     pub fn set_s12345678901234567890123456_0002(&mut self, value: i8) -> Result<(), CanError> {
@@ -1293,17 +1293,17 @@ impl M123456789012345678901234560001 {
         let value = value.checked_sub(0)
             .ok_or(CanError::ParameterOutOfRange { message_id: M123456789012345678901234560001::MESSAGE_ID })?;
         let value = (value / factor) as i8;
-
+        
         let value = u8::from_ne_bytes(value.to_ne_bytes());
         self.raw.view_bits_mut::<Lsb0>()[0..8].store_le(value);
         Ok(())
     }
-
+    
 }
 
 impl core::convert::TryFrom<&[u8]> for M123456789012345678901234560001 {
     type Error = CanError;
-
+    
     #[inline(always)]
     fn try_from(payload: &[u8]) -> Result<Self, Self::Error> {
         if payload.len() != 8 { return Err(CanError::InvalidPayloadSize); }
@@ -1370,12 +1370,12 @@ pub struct Mm123456789012345678901234567890 {
 )]
 impl Mm123456789012345678901234567890 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0x3)});
-
+    
     pub const SSS123456789012345678901234_0000_MIN: i8 = 0_i8;
     pub const SSS123456789012345678901234_0000_MAX: i8 = 0_i8;
     pub const SS1234567890123456789012345_0005_MIN: i8 = 0_i8;
     pub const SS1234567890123456789012345_0005_MAX: i8 = 0_i8;
-
+    
     /// Construct new MM123456789012345678901234567890 from values
     pub fn new(sss123456789012345678901234_0000: i8, ss1234567890123456789012345_0005: i8) -> Result<Self, CanError> {
         let mut res = Self { raw: [0u8; 8] };
@@ -1383,12 +1383,12 @@ impl Mm123456789012345678901234567890 {
         res.set_ss1234567890123456789012345_0005(ss1234567890123456789012345_0005)?;
         Ok(res)
     }
-
+    
     /// Access message payload raw value
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-
+    
     /// SSS123456789012345678901234_0000
     ///
     /// - Min: 0
@@ -1399,7 +1399,7 @@ impl Mm123456789012345678901234567890 {
     pub fn sss123456789012345678901234_0000(&self) -> i8 {
         self.sss123456789012345678901234_0000_raw()
     }
-
+    
     /// Get raw value of SSS123456789012345678901234_0000
     ///
     /// - Start bit: 8
@@ -1411,12 +1411,12 @@ impl Mm123456789012345678901234567890 {
     #[inline(always)]
     pub fn sss123456789012345678901234_0000_raw(&self) -> i8 {
         let signal = self.raw.view_bits::<Lsb0>()[8..16].load_le::<i8>();
-
+        
         let factor = 1;
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-
+    
     /// Set value of SSS123456789012345678901234_0000
     #[inline(always)]
     pub fn set_sss123456789012345678901234_0000(&mut self, value: i8) -> Result<(), CanError> {
@@ -1427,12 +1427,12 @@ impl Mm123456789012345678901234567890 {
         let value = value.checked_sub(0)
             .ok_or(CanError::ParameterOutOfRange { message_id: Mm123456789012345678901234567890::MESSAGE_ID })?;
         let value = (value / factor) as i8;
-
+        
         let value = u8::from_ne_bytes(value.to_ne_bytes());
         self.raw.view_bits_mut::<Lsb0>()[8..16].store_le(value);
         Ok(())
     }
-
+    
     /// SS1234567890123456789012345_0005
     ///
     /// - Min: 0
@@ -1443,7 +1443,7 @@ impl Mm123456789012345678901234567890 {
     pub fn ss1234567890123456789012345_0005(&self) -> i8 {
         self.ss1234567890123456789012345_0005_raw()
     }
-
+    
     /// Get raw value of SS1234567890123456789012345_0005
     ///
     /// - Start bit: 0
@@ -1455,12 +1455,12 @@ impl Mm123456789012345678901234567890 {
     #[inline(always)]
     pub fn ss1234567890123456789012345_0005_raw(&self) -> i8 {
         let signal = self.raw.view_bits::<Lsb0>()[0..8].load_le::<i8>();
-
+        
         let factor = 1;
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-
+    
     /// Set value of SS1234567890123456789012345_0005
     #[inline(always)]
     pub fn set_ss1234567890123456789012345_0005(&mut self, value: i8) -> Result<(), CanError> {
@@ -1471,17 +1471,17 @@ impl Mm123456789012345678901234567890 {
         let value = value.checked_sub(0)
             .ok_or(CanError::ParameterOutOfRange { message_id: Mm123456789012345678901234567890::MESSAGE_ID })?;
         let value = (value / factor) as i8;
-
+        
         let value = u8::from_ne_bytes(value.to_ne_bytes());
         self.raw.view_bits_mut::<Lsb0>()[0..8].store_le(value);
         Ok(())
     }
-
+    
 }
 
 impl core::convert::TryFrom<&[u8]> for Mm123456789012345678901234567890 {
     type Error = CanError;
-
+    
     #[inline(always)]
     fn try_from(payload: &[u8]) -> Result<Self, Self::Error> {
         if payload.len() != 8 { return Err(CanError::InvalidPayloadSize); }
@@ -1558,3 +1558,4 @@ impl core::fmt::Display for CanError {
         write!(f, "{self:?}")
     }
 }
+
