@@ -1,5 +1,6 @@
 #[allow(dead_code)]
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
+//#[extra_derives]
 pub enum CanError {
     UnknownMessageId(embedded_can::Id),
     /// Signal parameter is not within the range
