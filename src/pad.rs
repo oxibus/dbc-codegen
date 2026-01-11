@@ -25,6 +25,7 @@ impl Write for PadAdapter<'_> {
                 self.buf.write_all(b"    ")?;
             }
 
+            #[allow(clippy::map_unwrap_or)]
             let split = s
                 .iter()
                 .position(|&v| v == b'\n')

@@ -7,6 +7,8 @@ authors = [
     "Marcel Buesing <buesing.marcel@googlemail.com>",
     "Andres Vahter <andres@vahter.me>",
 ]
+keywords = ["dbc", "can", "automotive", "codegen", "embedded"]
+categories = ["embedded", "code-generation", "automotive"]
 edition = "2021"
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/oxibus/dbc-codegen"
@@ -21,6 +23,18 @@ can-dbc = "8.0.0"
 embedded-can = "0.4.1"
 heck = "0.5.0"
 typed-builder = "0.23.2"
+
+[lints.rust]
+unsafe_code = "forbid"
+unused_qualifications = "warn"
+
+[lints.clippy]
+cargo = { level = "warn", priority = -1 }
+pedantic = { level = "warn", priority = -1 }
+cast_possible_truncation = "allow"
+cast_precision_loss = "allow"
+missing_errors_doc = "allow"
+too_many_lines = "allow"
 
 [workspace]
 members = [

@@ -3,6 +3,7 @@ name = "can-messages"
 version = "0.1.0"
 authors = ["Pascal Hertleif <pascal@technocreatives.com>"]
 edition = "2021"
+publish = false
 
 [features]
 default = ["arb", "std"]

@@ -3,6 +3,7 @@ name = "read_candump"
 version = "0.1.0"
 authors = ["Pascal Hertleif <pascal@technocreatives.com>"]
 edition = "2021"
+publish = false
 
 [dependencies]
 approx = "0.5"
