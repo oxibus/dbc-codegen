@@ -18,9 +18,12 @@ export RUST_BACKTRACE := env('RUST_BACKTRACE', if ci_mode == '1' {'1'} else {'0'
 @_default:
     {{just}} --list
 
-# Run integration tests and save its output as the new expected output
+# Run integration tests and save its output as the new expected output. Skips compile_test.
 bless *args:  (cargo-install 'cargo-insta')
-    cargo insta test --accept --unreferenced=delete --all-features {{args}}
+    cargo insta test --accept --unreferenced=delete --all-features {{args}} -- --skip compile_test
+
+bless-compile-test:
+    TRYBUILD=overwrite cargo test --all-features -- --test compile_test
 
 bless-all:  (cargo-install 'cargo-insta')
     rm -rf tests/snapshots
