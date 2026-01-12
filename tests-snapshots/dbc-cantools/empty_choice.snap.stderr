@@ -1,0 +1,18 @@
+error: literal out of range for `i8`
+   --> tests-snapshots/dbc-cantools/empty_choice.snap.rs:329:59
+    |
+329 |             ExampleMessageNonEmptyChoice::NotAvailable => 255,
+    |                                                           ^^^
+    |
+    = note: the literal `255` does not fit into the type `i8` whose range is `-128..=127`
+    = help: consider using the type `u8` instead
+    = note: `#[deny(overflowing_literals)]` on by default
+
+error: literal out of range for `i8`
+   --> tests-snapshots/dbc-cantools/empty_choice.snap.rs:330:52
+    |
+330 |             ExampleMessageNonEmptyChoice::Error => 254,
+    |                                                    ^^^
+    |
+    = note: the literal `254` does not fit into the type `i8` whose range is `-128..=127`
+    = help: consider using the type `u8` instead

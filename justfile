@@ -18,16 +18,21 @@ export RUST_BACKTRACE := env('RUST_BACKTRACE', if ci_mode == '1' {'1'} else {'0'
 @_default:
     {{just}} --list
 
-# Run integration tests and save its output as the new expected output. Skips compile_test.
-bless *args:  (cargo-install 'cargo-insta')
-    cargo insta test --accept --unreferenced=delete --all-features {{args}} -- --skip compile_test
+# Run all tests and save its output as the new expected output.
+bless: bless-generate bless-compile
 
-bless-compile-test:
+# Run code generation tests and save its output as the new expected output
+bless-generate:  (cargo-install 'cargo-insta')
+    cargo insta test --accept --include-ignored --unreferenced=delete --all-features -- --skip compile_test
+
+# Compile generated code tests and save its output as the new expected output
+bless-compile:
     TRYBUILD=overwrite cargo test --all-features -- --test compile_test
 
-bless-all:  (cargo-install 'cargo-insta')
-    rm -rf tests/snapshots
-    FORCE_INSTA=1 {{just}} bless
+# Generate all snapshots, including forced (.gitignore-d) ones
+bless-generate-all:
+    rm -rf tests-snapshots
+    FORCE_INSTA=1 {{just}} bless-generate
 
 # Build the project
 build:
@@ -41,7 +46,7 @@ build-diagram:
 # Quick compile without building a binary
 check:
     cargo check --workspace --all-features --all-targets
-    cargo check --all-targets --no-default-features --workspace
+    cargo check --workspace --no-default-features --all-targets
 
 # Generate code coverage report to upload to codecov.io
 ci-coverage: env-info && \
@@ -53,7 +58,12 @@ ci-coverage: env-info && \
 ci-test: env-info test-fmt check clippy test test-doc deny && assert-git-is-clean
 
 # Run minimal subset of tests to ensure compatibility with MSRV
-ci-test-msrv: env-info check test
+ci-test-msrv:
+    if [ ! -f Cargo.lock.bak ]; then  mv Cargo.lock Cargo.lock.bak ; fi
+    cp Cargo.lock.msrv Cargo.lock
+    {{just}} env-info check test
+    rm Cargo.lock
+    mv Cargo.lock.bak Cargo.lock
 
 # Clean all build artifacts
 clean:
@@ -108,7 +118,19 @@ get-msrv package=main_crate:  (get-crate-field 'rust_version' package)
 
 # Find the minimum supported Rust version (MSRV) using cargo-msrv extension, and update Cargo.toml
 msrv:  (cargo-install 'cargo-msrv')
-    cargo msrv find --write-msrv --ignore-lockfile --all-features
+    cargo msrv find --write-msrv --all-features -- {{just}} ci-test-msrv
+
+# Initialize Cargo.lock file with minimal versions of dependencies.
+msrv-init:  (cargo-install 'cargo-minimal-versions')
+    rm -f Cargo.lock.msrv Cargo.lock
+    @if ! cargo minimal-versions check --workspace ; then \
+        echo "ERROR: Could not generate minimal Cargo.lock.msrv" ;\
+        echo "       fix the lock file with 'cargo update ... --precise ...'" ;\
+        echo "       make sure it passes 'just check' " ;\
+        echo "       once done, rename Cargo.lock to Cargo.lock.msrv" ;\
+        exit 1 ;\
+    fi
+    mv Cargo.lock Cargo.lock.msrv
 
 # Run cargo-release
 release *args='':  (cargo-install 'release-plz')
@@ -122,6 +144,10 @@ semver *args:  (cargo-install 'cargo-semver-checks')
 test:
     cargo test --workspace --all-features --all-targets
     cargo test --doc --workspace --all-features
+
+# Run all tests with insta forced mode - generating ignored snapshots
+test-all:
+    FORCE_INSTA=1 {{just}} test
 
 # Test documentation generation
 test-doc:  (docs '')
