@@ -62,10 +62,9 @@ impl Test {
         }
     }
     fn snapshot_path(&self, is_error: bool) -> Option<PathBuf> {
-        (if is_error || self.config.create_snapshot {
+        (if is_error || self.config.create_snapshot || env::var("FORCE_INSTA").is_ok() {
+            // forced content ignored in .gitignored should still go to normal snapshots
             Some("../tests-snapshots")
-        } else if env::var("FORCE_INSTA").is_ok() {
-            Some("../tests-snapshots") // some content is .gitignored
         } else {
             None
         })

@@ -305,7 +305,7 @@ fn render_message(mut w: impl Write, config: &Config<'_>, msg: &Message, dbc: &D
                     Some(format!(
                         "{}: {}",
                         field_name(&signal.name),
-                        signal_to_rust_type(signal)
+                        signal_to_rust_type(signal),
                     ))
                 } else {
                     None
@@ -878,15 +878,15 @@ fn signal_to_payload(mut w: impl Write, signal: &Signal, msg: &Message) -> Resul
         can_dbc::ByteOrder::LittleEndian => {
             let (start, end) = le_start_end_bit(signal, msg)?;
             writeln!(
-                &mut w,
-                r"self.raw.view_bits_mut::<Lsb0>()[{start}..{end}].store_le(value);",
+                w,
+                r"self.raw.view_bits_mut::<Lsb0>()[{start}..{end}].store_le(value);"
             )?;
         }
         can_dbc::ByteOrder::BigEndian => {
             let (start, end) = be_start_end_bit(signal, msg)?;
             writeln!(
-                &mut w,
-                r"self.raw.view_bits_mut::<Msb0>()[{start}..{end}].store_be(value);",
+                w,
+                r"self.raw.view_bits_mut::<Msb0>()[{start}..{end}].store_be(value);"
             )?;
         }
     }
@@ -929,9 +929,9 @@ fn write_enum(
     writeln!(w, "impl From<{type_name}> for {signal_rust_type} {{")?;
     {
         let match_on_raw_type = match signal_to_rust_type(signal).as_str() {
-            "bool" => |x: i64| format!("{}", (x) == 1),
+            "bool" => |x: i64| format!("{}", x == 1),
             "f32" => |x: i64| format!("{x}_f32"),
-            _ => |x: i64| format!("{}", x),
+            _ => |x: i64| format!("{x}"),
         };
 
         let mut w = PadAdapter::wrap(&mut w);
@@ -945,7 +945,7 @@ fn write_enum(
                 for variant in variants {
                     let literal = match_on_raw_type(variant.id);
                     writeln!(
-                        &mut w,
+                        w,
                         "{type_name}::{} => {literal},",
                         enum_variant_name(&variant.description),
                     )?;
@@ -979,7 +979,7 @@ fn scaled_signal_to_rust_int(signal: &Signal) -> String {
 
     let err = format!(
         "Signal {} could not be represented as a Rust integer",
-        signal.name
+        signal.name,
     );
     signal_params_to_rust_int(
         signal.value_type,
@@ -1163,7 +1163,7 @@ fn enum_name(msg: &Message, signal: &Signal) -> String {
     format!(
         "{}{}",
         enum_variant_name(&msg.name),
-        signal_name.to_pascal_case()
+        signal_name.to_pascal_case(),
     )
 }
 
@@ -1182,7 +1182,7 @@ fn multiplex_enum_name(msg: &Message, multiplexor: &Signal) -> Result<String> {
     Ok(format!(
         "{}{}Index",
         msg.name.to_pascal_case(),
-        multiplexor.name.to_pascal_case()
+        multiplexor.name.to_pascal_case(),
     ))
 }
 
@@ -1548,13 +1548,13 @@ fn signal_to_arbitrary(signal: &Signal) -> String {
         format!(
             "u.float_in_range({min}_f32..={max}_f32)?",
             min = signal.min,
-            max = signal.max
+            max = signal.max,
         )
     } else {
         format!(
             "u.int_in_range({min}..={max})?",
             min = signal.min,
-            max = signal.max
+            max = signal.max,
         )
     }
 }
