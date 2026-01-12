@@ -25,18 +25,16 @@ impl Write for PadAdapter<'_> {
                 self.buf.write_all(b"    ")?;
             }
 
-            #[allow(clippy::map_unwrap_or)]
-            let split = s
-                .iter()
-                .position(|&v| v == b'\n')
-                .map(|pos| {
+            let split = match s.iter().position(|&v| v == b'\n') {
+                Some(pos) => {
                     self.on_newline = true;
                     pos.checked_add(1).unwrap()
-                })
-                .unwrap_or_else(|| {
+                }
+                None => {
                     self.on_newline = false;
                     s.len()
-                });
+                }
+            };
             self.buf.write_all(&s[..split])?;
             s = &s[split..];
         }
