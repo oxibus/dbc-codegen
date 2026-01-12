@@ -5,8 +5,8 @@ use std::io::{Error, ErrorKind};
 use std::path::{Path, PathBuf};
 use std::{env, fs};
 
+use can_dbc::decode_cp1252;
 use insta::{assert_binary_snapshot, assert_debug_snapshot, with_settings};
-use can_dbc::{decode_cp1252};
 use test_each_file::test_each_path;
 use walkdir::WalkDir;
 
@@ -192,7 +192,6 @@ static BAD_TESTS: &[&str] = &[
     "padding_bit_order.snap.rs",
     "signed.snap.rs",
     "vehicle.snap.rs",
-
     //
     "FORD_CADS.snap.rs",
     "bmw_e9x_e8x.snap.rs",
@@ -223,31 +222,31 @@ static BAD_TESTS: &[&str] = &[
     "vw_mlb.snap.rs",
     "vw_mqb.snap.rs",
     "vw_mqbevo.snap.rs",
-    /* generator/chrysler */"_stellantis_common.snap.rs",
-    /* generator/gm */"gm_global_a_powertrain.snap.rs",
-    /* generator/honda */"_bosch_2018.snap.rs",
-    /* generator/honda */"_bosch_radar_acc.snap.rs",
-    /* generator/honda */"_gearbox_common.snap.rs",
-    /* generator/honda */"_honda_common.snap.rs",
-    /* generator/honda */"_nidec_common.snap.rs",
-    /* generator/honda */"_nidec_scm_group_a.snap.rs",
-    /* generator/honda */"_nidec_scm_group_b.snap.rs",
-    /* generator/honda */"_steering_control_b.snap.rs",
-    /* generator/honda */"acura_ilx_2016_can.snap.rs",
-    /* generator/honda */"acura_rdx_2020_can.snap.rs",
-    /* generator/honda */"honda_civic_hatchback_ex_2017_can.snap.rs",
-    /* generator/honda */"honda_common_canfd.snap.rs",
-    /* generator/honda */"honda_crv_touring_2016_can.snap.rs",
-    /* generator/honda */"honda_odyssey_exl_2018.snap.rs",
-    /* generator/hyundai */"hyundai_canfd.snap.rs",
-    /* generator/nissan */"_nissan_common.snap.rs",
-    /* generator/nissan */"nissan_leaf_2018.snap.rs",
-    /* generator/nissan */"nissan_x_trail_2017.snap.rs",
-    /* generator/subaru */"_subaru_global.snap.rs",
-    /* generator/subaru */"_subaru_preglobal_2015.snap.rs",
-    /* generator/toyota */"_toyota_2017.snap.rs",
-    /* generator/toyota */"_toyota_adas_standard.snap.rs",
-    /* generator/toyota */"toyota_secoc_pt.snap.rs",
+    /* generator/chrysler */ "_stellantis_common.snap.rs",
+    /* generator/gm */ "gm_global_a_powertrain.snap.rs",
+    /* generator/honda */ "_bosch_2018.snap.rs",
+    /* generator/honda */ "_bosch_radar_acc.snap.rs",
+    /* generator/honda */ "_gearbox_common.snap.rs",
+    /* generator/honda */ "_honda_common.snap.rs",
+    /* generator/honda */ "_nidec_common.snap.rs",
+    /* generator/honda */ "_nidec_scm_group_a.snap.rs",
+    /* generator/honda */ "_nidec_scm_group_b.snap.rs",
+    /* generator/honda */ "_steering_control_b.snap.rs",
+    /* generator/honda */ "acura_ilx_2016_can.snap.rs",
+    /* generator/honda */ "acura_rdx_2020_can.snap.rs",
+    /* generator/honda */ "honda_civic_hatchback_ex_2017_can.snap.rs",
+    /* generator/honda */ "honda_common_canfd.snap.rs",
+    /* generator/honda */ "honda_crv_touring_2016_can.snap.rs",
+    /* generator/honda */ "honda_odyssey_exl_2018.snap.rs",
+    /* generator/hyundai */ "hyundai_canfd.snap.rs",
+    /* generator/nissan */ "_nissan_common.snap.rs",
+    /* generator/nissan */ "nissan_leaf_2018.snap.rs",
+    /* generator/nissan */ "nissan_x_trail_2017.snap.rs",
+    /* generator/subaru */ "_subaru_global.snap.rs",
+    /* generator/subaru */ "_subaru_preglobal_2015.snap.rs",
+    /* generator/toyota */ "_toyota_2017.snap.rs",
+    /* generator/toyota */ "_toyota_adas_standard.snap.rs",
+    /* generator/toyota */ "toyota_secoc_pt.snap.rs",
 ];
 
 #[test]

@@ -8,6 +8,12 @@ authors = [
     "Andres Vahter <andres@vahter.me>",
 ]
 edition = "2021"
+exclude = [
+    "fuzz/*",
+    "testing/*",
+    "tests/*",
+    "tests-snapshots/*",
+]
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/oxibus/dbc-codegen"
 rust-version = "1.81.0"
