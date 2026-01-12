@@ -7,6 +7,7 @@ authors = [
     "Marcel Buesing <buesing.marcel@googlemail.com>",
     "Andres Vahter <andres@vahter.me>",
 ]
+categories = ["embedded", "code-generation", "automotive"]
 edition = "2021"
 exclude = [
     "fuzz/*",
@@ -14,6 +15,7 @@ exclude = [
     "tests/*",
     "tests-snapshots/*",
 ]
+keywords = ["dbc", "can", "automotive", "codegen", "embedded"]
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/oxibus/dbc-codegen"
 rust-version = "1.81.0"
@@ -34,6 +36,18 @@ insta = "1.46.0"
 test_each_file = "0.3.6"
 trybuild = "1.0.114"
 walkdir = "2.5.0"
+
+[lints.rust]
+unsafe_code = "forbid"
+unused_qualifications = "warn"
+
+[lints.clippy]
+cargo = { level = "warn", priority = -1 }
+pedantic = { level = "warn", priority = -1 }
+cast_possible_truncation = "allow"
+cast_precision_loss = "allow"
+missing_errors_doc = "allow"
+too_many_lines = "allow"
 
 [workspace]
 members = [
