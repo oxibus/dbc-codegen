@@ -1,0 +1,11 @@
+error[E0277]: the trait bound `u16: From<i8>` is not satisfied
+   --> tests-snapshots/dbc-cantools/issue_184_extended_mux_multiple_values_dumped.snap.rs:115:134
+    |
+115 | ...s::MESSAGE_ID, multiplexor: multiplexor.into() }),
+    |                                            ^^^^ the trait `From<i8>` is not implemented for `u16`
+    |
+    = help: the following other types implement trait `From<T>`:
+              `u16` implements `From<Char>`
+              `u16` implements `From<bool>`
+              `u16` implements `From<u8>`
+    = note: required for `i8` to implement `Into<u16>`

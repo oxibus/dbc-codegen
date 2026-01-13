@@ -1,3 +1,6 @@
 #![no_std]
 
-pub mod messages;
+#[expect(clippy::disallowed_names)]
+mod messages {
+    include!(concat!(env!("OUT_DIR"), "/messages.rs"));
+}

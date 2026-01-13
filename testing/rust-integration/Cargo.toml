@@ -3,8 +3,9 @@ name = "read_candump"
 version = "0.1.0"
 authors = ["Pascal Hertleif <pascal@technocreatives.com>"]
 edition = "2021"
+publish = false
 
 [dependencies]
-approx = "0.4"
+approx = "0.5"
 can-messages = { path = "../can-messages" }
 embedded-can = "0.4.1"

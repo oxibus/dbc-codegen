@@ -1,0 +1,79 @@
+error[E0428]: the name `Reserved` is defined multiple times
+   --> tests-snapshots/dbc-cantools/choices.snap.rs:206:5
+    |
+205 |     Reserved,
+    |     -------- previous definition of the type `Reserved` here
+206 |     Reserved,
+    |     ^^^^^^^^ `Reserved` redefined here
+    |
+    = note: `Reserved` must be defined only once in the type namespace of this enum
+
+error[E0428]: the name `Unused` is defined multiple times
+   --> tests-snapshots/dbc-cantools/choices.snap.rs:209:5
+    |
+208 |     Unused,
+    |     ------ previous definition of the type `Unused` here
+209 |     Unused,
+    |     ^^^^^^ `Unused` redefined here
+    |
+    = note: `Unused` must be defined only once in the type namespace of this enum
+
+error[E0277]: the trait bound `u8: Neg` is not satisfied
+   --> tests-snapshots/dbc-cantools/choices.snap.rs:105:13
+    |
+105 |             -5 => FooFoo::ANegativeValue,
+    |             ^^ the trait `Neg` is not implemented for `u8`
+    |
+    = help: the following other types implement trait `Neg`:
+              &f128
+              &f16
+              &f32
+              &f64
+              &i128
+              &i16
+              &i32
+              &i64
+            and $N others
+
+error: unreachable pattern
+   --> tests-snapshots/dbc-cantools/choices.snap.rs:220:13
+    |
+219 |             FooFoo::Reserved => 6,
+    |             ---------------- matches all the relevant values
+220 |             FooFoo::Reserved => 5,
+    |             ^^^^^^^^^^^^^^^^ no value can reach this
+    |
+    = note: `-D unreachable-patterns` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(unreachable_patterns)]`
+
+error: unreachable pattern
+   --> tests-snapshots/dbc-cantools/choices.snap.rs:223:13
+    |
+222 |             FooFoo::Unused => 3,
+    |             -------------- matches all the relevant values
+223 |             FooFoo::Unused => 2,
+    |             ^^^^^^^^^^^^^^ no value can reach this
+
+error[E0004]: non-exhaustive patterns: `FooFoo::Reserved` and `FooFoo::Unused` not covered
+   --> tests-snapshots/dbc-cantools/choices.snap.rs:218:15
+    |
+218 |         match val {
+    |               ^^^ patterns `FooFoo::Reserved` and `FooFoo::Unused` not covered
+    |
+note: `FooFoo` defined here
+   --> tests-snapshots/dbc-cantools/choices.snap.rs:204:10
+    |
+204 | pub enum FooFoo {
+    |          ^^^^^^
+205 |     Reserved,
+206 |     Reserved,
+    |     -------- not covered
+...
+209 |     Unused,
+    |     ------ not covered
+    = note: the matched value is of type `FooFoo`
+help: ensure that all possible cases are being handled by adding a match arm with a wildcard pattern, a match arm with multiple or-patterns as shown, or multiple match arms
+    |
+227 ~             FooFoo::_Other(x) => x,
+228 ~             FooFoo::Reserved | FooFoo::Unused => todo!(),
+    |

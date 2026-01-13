@@ -1,0 +1,32 @@
+error: literal out of range for `u64`
+   --> tests-snapshots/dbc-cantools/padding_bit_order.snap.rs:796:28
+    |
+796 |     pub const L_MAX: u64 = 18446744073709552000_u64;
+    |                            ^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: the literal `18446744073709552000_u64` does not fit into the type `u64` whose range is `0..=18446744073709551615`
+    = note: `#[deny(overflowing_literals)]` on by default
+
+error: literal out of range for `u64`
+   --> tests-snapshots/dbc-cantools/padding_bit_order.snap.rs:840:29
+    |
+840 |         if value < 0_u64 || 18446744073709552000_u64 < value {
+    |                             ^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: the literal `18446744073709552000_u64` does not fit into the type `u64` whose range is `0..=18446744073709551615`
+
+error: literal out of range for `u64`
+   --> tests-snapshots/dbc-cantools/padding_bit_order.snap.rs:926:28
+    |
+926 |     pub const M_MAX: u64 = 18446744073709552000_u64;
+    |                            ^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: the literal `18446744073709552000_u64` does not fit into the type `u64` whose range is `0..=18446744073709551615`
+
+error: literal out of range for `u64`
+   --> tests-snapshots/dbc-cantools/padding_bit_order.snap.rs:970:29
+    |
+970 |         if value < 0_u64 || 18446744073709552000_u64 < value {
+    |                             ^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: the literal `18446744073709552000_u64` does not fit into the type `u64` whose range is `0..=18446744073709551615`

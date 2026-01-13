@@ -1,8 +1,16 @@
 # CAN DBC code generator for Rust
 
-Generates Rust messages from a `dbc` file.
+[![GitHub repo](https://img.shields.io/badge/github-oxibus/dbc--codegen-8da0cb?logo=github)](https://github.com/oxibus/dbc-codegen)
+[![crates.io version](https://img.shields.io/crates/v/dbc-codegen)](https://crates.io/crates/dbc-codegen)
+[![crate usage](https://img.shields.io/crates/d/dbc-codegen)](https://crates.io/crates/dbc-codegen)
+[![docs.rs status](https://img.shields.io/docsrs/dbc-codegen)](https://docs.rs/dbc-codegen)
+[![crates.io license](https://img.shields.io/crates/l/dbc-codegen)](https://github.com/oxibus/dbc-codegen)
+[![CI build status](https://github.com/oxibus/dbc-codegen/actions/workflows/ci.yml/badge.svg)](https://github.com/oxibus/dbc-codegen/actions)
+[![Codecov](https://img.shields.io/codecov/c/github/oxibus/dbc-codegen)](https://app.codecov.io/gh/oxibus/dbc-codegen)
 
-⚠️ This is experimental - use with caution. ⚠️
+Generates Rust messages from a `dbc` file. DBC files are descriptions of CAN frames.
+See [this post](https://www.kvaser.com/developer-blog/an-introduction-j1939-and-dbc-files/)
+for an introduction.
 
 ## Installation
 
@@ -25,40 +33,58 @@ Generate `messages.rs` from `example.dbc` using the CLI:
 dbc-codegen testing/dbc-examples/example.dbc dir/where/messages_rs/file/is/written
 ```
 
-Or put something like this into your `build.rs` file:
+Or put something like this into your `build.rs` file. Create a `Config` and pass it to `codegen` along with the contents of a DBC-file. See `Config` docs for a complete list of options.
 
-```rust
+
+```rust,no_run
+use std::env;
+use std::path::PathBuf;
+use std::fs;
+
+use dbc_codegen::{codegen, Config, FeatureConfig};
+
 fn main() {
     let dbc_path = "../dbc-examples/example.dbc";
-    let dbc_file = std::fs::read(dbc_path).unwrap();
-    println!("cargo:rerun-if-changed={}", dbc_path);
+    let dbc_file = fs::read_to_string(dbc_path).unwrap();
+    println!("cargo:rerun-if-changed={dbc_path}");
 
     let config = Config::builder()
         .dbc_name("example.dbc")
         .dbc_content(&dbc_file)
-        //.allow_dead_code(true) // Don't emit warnings if not all generated code is used
-        //.impl_arbitrary(FeatureConfig::Gated("arbitrary")) // Optional impls.
-        //.impl_debug(FeatureConfig::Always)                 // See rustdoc for more,
-        //.check_ranges(FeatureConfig::Never)                // or look below for an example.
+        //.impl_arbitrary(FeatureConfig::Gated("arbitrary")) // optional
+        //.impl_debug(FeatureConfig::Always)                 // optional
         .build();
 
-    let mut out = std::io::BufWriter::new(std::fs::File::create("src/messages.rs").unwrap());
+    let mut out = Vec::<u8>::new();
     dbc_codegen::codegen(config, &mut out).expect("dbc-codegen failed");
+    fs::write(
+        PathBuf::from(env::var("OUT_DIR").unwrap()).join("messages.rs"),
+        String::from_utf8(out).unwrap(),
+    ).unwrap();
 }
 ```
 
 ## Using generated Rust code
 
-dbc-codegen generates a Rust file that is expected to be in a cargo project.
+dbc-codegen generates a Rust file that is usually placed into the `OUT_DIR` directory.
 Here is an example [`testing/can-messages/Cargo.toml`](testing/can-messages/Cargo.toml) which defines dependencies and features that are used in generated message file.
 
 ### Project setup
 
-To use the code, add `mod messages` to your `lib.rs` (or `main.rs`).
+To use the code, add this code to your `lib.rs` (or `main.rs`):
+
+```rust,ignore
+// Import the generated code.
+mod messages {
+    include!(concat!(env!("OUT_DIR"), "/messages.rs"));
+}
+```
+
 You will most likely want to interact with the generated `Messages` enum, and call `Messages::from_can_message(id, &payload)`.
 
 Note: The generated code contains a lot of documentation.
 Give it a try:
+
 ```bash
 cargo doc --open
 ```
@@ -68,15 +94,16 @@ cargo doc --open
 The generator config has the following flags that control what code gets generated:
 
 - `impl_debug`: enables `#[derive(Debug)]` for messages.
-- `impl_arbitrary`: enables implementation of [`Arbitrary`] trait.
+- `impl_arbitrary`: enables implementation of [`Arbitrary`](https://docs.rs/arbitrary/1.0.0/arbitrary/trait.Arbitrary.html) trait.
   Also requires you to add `arbitrary` crate (version 1.x) as a dependency of the crate.
-  [`Arbitrary`]: https://docs.rs/arbitrary/1.0.0/arbitrary/trait.Arbitrary.html
-- `impl_error`: Implements `std::error::Error` for `CanError`. This makes it easy to use crates like `anyhow` for error handling.
+- `impl_error`: Implements `core::error::Error` for `CanError`. This makes it easy to use crates like `anyhow` for error handling.
 - `check_ranges`: adds range checks in signal setters. (Enabled by default)
 
 These implementations can be enabled, disabled, or placed behind feature guards, like so:
 
-```rust
+```rust,no_run
+use dbc_codegen::{Config, FeatureConfig};
+
 Config::builder()
     // this will generate Debug implementations
     .impl_debug(FeatureConfig::Always)
@@ -85,12 +112,12 @@ Config::builder()
     .impl_error(FeatureConfig::Gated("std"))
 
     // this will disable range checks
-    .check_ranges(FeatureConfig::Never)
+    .check_ranges(FeatureConfig::Never);
 ```
 
-### no_std
+### `no_std`
 
-The generated code is no_std compatible, unless you enable `impl_error`.
+The generated code is `no_std` compatible, unless you enable `impl_error`.
 
 ### Field/variant rename rules
 
@@ -98,7 +125,7 @@ If some field name starts with a non-alphabetic character or is a Rust keyword t
 
 For example:
 
-```
+```dbc
 VAL_ 512 Five 0 "0Off" 1 "1On" 2 "2Oner" 3 "3Onest";
 ```
 
@@ -116,13 +143,13 @@ pub enum BarFive {
 
 `Type` here:
 
-```
+```dbc
 SG_ Type : 30|1@0+ (1,0) [0|1] "boolean" Dolor
 ```
 
-…conflicts with the Rust keyword `type`. Therefore we prefix it with `x`:
+…conflicts with the Rust keyword `type`. Therefore, we prefix it with `x`:
 
-```rust
+```rust,ignore
 pub fn xtype(&self) -> BarType {
     match self.xtype_raw() {
         false => BarType::X0off,
@@ -133,6 +160,9 @@ pub fn xtype(&self) -> BarType {
 ```
 
 ## Development
+* This project is easier to develop with [just](https://just.systems/man/en/), a modern alternative to `make`.
+* To get a list of available commands, run `just`.
+* To run tests, use `just test`.
 
 ### lorri for Nix
 
@@ -146,14 +176,13 @@ ln -s envrc.lorri .envrc
 
 Licensed under either of
 
- - Apache License, Version 2.0, ([LICENSE-APACHE](LICENSE-APACHE) or http://www.apache.org/licenses/LICENSE-2.0)
- - MIT license ([LICENSE-MIT](LICENSE-MIT) or http://opensource.org/licenses/MIT)
-
-at your option.
+* Apache License, Version 2.0 ([LICENSE-APACHE](LICENSE-APACHE) or <https://www.apache.org/licenses/LICENSE-2.0>)
+* MIT license ([LICENSE-MIT](LICENSE-MIT) or <https://opensource.org/licenses/MIT>)
+  at your option.
 
 ### Contribution
 
 Unless you explicitly state otherwise, any contribution intentionally
-submitted for inclusion in the work by you, as defined in the Apache-2.0
-license, shall be dual licensed as above, without any additional terms or
-conditions.
+submitted for inclusion in the work by you, as defined in the
+Apache-2.0 license, shall be dual-licensed as above, without any
+additional terms or conditions.

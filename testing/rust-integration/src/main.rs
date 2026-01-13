@@ -5,9 +5,9 @@ fn main() {
     let input = std::env::args()
         .nth(1)
         .expect("first cli arg should be candump file (`candump vcan0 -l`)");
-    let file = std::fs::read_to_string(&input).unwrap();
+    let file = std::fs::read_to_string(input).unwrap();
     for line in file.lines() {
-        let data = line.split(' ').last().unwrap();
+        let data = line.split(' ').next_back().unwrap();
         let (id, payload) = {
             let mut s = data.split('#');
             let id = s.next().unwrap();

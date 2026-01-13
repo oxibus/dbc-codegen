@@ -1,0 +1,13 @@
+error: unreachable expression
+  --> tests-snapshots/dbc-cantools/empty_ns.snap.rs:44:9
+   |
+41 |           let res = match id {
+   |  ___________________-
+42 | |             id => return Err(CanError::UnknownMessageId(id)),
+43 | |         };
+   | |_________- any code following this `match` expression is unreachable, as all arms diverge
+44 |           Ok(res)
+   |           ^^^^^^^ unreachable expression
+   |
+   = note: `-D unreachable-code` implied by `-D warnings`
+   = help: to override `-D warnings` add `#[allow(unreachable_code)]`

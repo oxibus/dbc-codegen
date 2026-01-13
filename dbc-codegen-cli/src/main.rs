@@ -1,7 +1,9 @@
+use std::fs::File;
+use std::path::PathBuf;
+use std::process::exit;
+
 use clap::Parser;
 use dbc_codegen::Config;
-use std::fs::File;
-use std::{path::PathBuf, process::exit};
 
 /// Generate Rust `struct`s from a `dbc` file.
 #[derive(Debug, Parser)]
@@ -20,8 +22,8 @@ struct Cli {
 
 fn main() {
     let args = Cli::parse();
-    let dbc_file = std::fs::read(&args.dbc_path).unwrap_or_else(|e| {
-        eprintln!("could not read `{}`: {}", args.dbc_path.display(), e);
+    let dbc_file = std::fs::read_to_string(&args.dbc_path).unwrap_or_else(|e| {
+        eprintln!("could not read `{}`: {e}", args.dbc_path.display());
         exit(exitcode::NOINPUT);
     });
     let dbc_file_name = args
@@ -41,9 +43,8 @@ fn main() {
     let messages_path = args.out_path.join("messages.rs");
     let mut messages_code = File::create(messages_path).unwrap_or_else(|e| {
         eprintln!(
-            "Could not create `messages.rs` file in {}: {:?}",
+            "Could not create `messages.rs` file in {}: {e:?}",
             args.out_path.display(),
-            e
         );
         exit(exitcode::CANTCREAT);
     });
@@ -55,10 +56,10 @@ fn main() {
         .build();
 
     dbc_codegen::codegen(config, &mut messages_code).unwrap_or_else(|e| {
-        eprintln!("could not convert `{}`: {}", args.dbc_path.display(), e);
+        eprintln!("could not convert `{}`: {e}", args.dbc_path.display());
         if args.debug {
-            eprintln!("details: {:?}", e);
+            eprintln!("details: {e:?}");
         }
         exit(exitcode::NOINPUT)
-    })
+    });
 }

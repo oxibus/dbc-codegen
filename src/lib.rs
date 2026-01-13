@@ -1,46 +1,37 @@
-//! CAN DBC code generator for Rust
-//!
-//! DBC files are descriptions of CAN frames.
-//! See [this post](https://www.kvaser.com/developer-blog/an-introduction-j1939-and-dbc-files/)
-//! for an introduction.
-//!
-//! # Usage
-//!
-//! Create a [Config] and pass it to [codegen] along with the contents of a DBC-file.
-//! See [Config] docs for a complete list of options.
-//!
-//! ```
-//! use dbc_codegen::{codegen, Config, FeatureConfig};
-//!
-//! let config = Config::builder()
-//!     .dbc_name("example.dbc")
-//!     .dbc_content(include_bytes!("../testing/dbc-examples/example.dbc"))
-//!     //.impl_arbitrary(FeatureConfig::Gated("arbitrary")) // optional
-//!     //.impl_debug(FeatureConfig::Always)                 // optional
-//!     .build();
-//!
-//! let mut out = Vec::<u8>::new();
-//! codegen(config, &mut out).unwrap();
-//! ```
-
 #![deny(missing_docs)]
 #![deny(clippy::arithmetic_side_effects)]
+#![allow(clippy::needless_doctest_main)]
+#![cfg_attr(feature = "std", doc = include_str!("../README.md"))]
+#![cfg_attr(
+    not(feature = "std"),
+    doc = "Documentation is only available with the `std` feature."
+)]
+
+use std::cmp::{max, min};
+use std::collections::{BTreeMap, BTreeSet};
+use std::fmt::Display;
+use std::io::{self, BufWriter, Write};
 
 use anyhow::{anyhow, ensure, Context, Result};
-use can_dbc::{Message, MultiplexIndicator, Signal, ValDescription, ValueDescription, DBC};
+use can_dbc::{Dbc, Message, MultiplexIndicator, Signal, ValDescription, ValueDescription};
 use heck::{ToPascalCase, ToSnakeCase};
 use pad::PadAdapter;
-use std::cmp::{max, min};
-use std::{
-    collections::{BTreeMap, BTreeSet},
-    fmt::Display,
-    io::{self, BufWriter, Write},
-};
 use typed_builder::TypedBuilder;
 
 mod includes;
 mod keywords;
 mod pad;
+
+static ALLOW_DEADCODE: &str = "#[allow(dead_code)]";
+static ALLOW_LINTS: &str = r"#[allow(
+    clippy::absurd_extreme_comparisons,
+    clippy::excessive_precision,
+    clippy::manual_range_contains,
+    clippy::unnecessary_cast,
+    clippy::useless_conversion,
+    unused_comparisons,
+    unused_variables,
+)]";
 
 /// Code generator configuration. See module-level docs for an example.
 #[derive(TypedBuilder)]
@@ -49,8 +40,8 @@ pub struct Config<'a> {
     /// Name of the dbc-file. Used for generated docs only.
     pub dbc_name: &'a str,
 
-    /// Raw bytes of a dbc-file.
-    pub dbc_content: &'a [u8],
+    /// Content of a dbc-file as a UTF-8 string. Use [`can_dbc::decode_cp1252`] or other encodings if needed.
+    pub dbc_content: &'a str,
 
     /// Optional: Print debug info to stdout while generating code. Default: `false`.
     #[builder(default)]
@@ -91,7 +82,7 @@ pub struct Config<'a> {
     pub allow_dead_code: bool,
 }
 
-/// Configuration for including features in the codegenerator.
+/// Configuration for including features in the code generator.
 ///
 /// e.g. [Debug] impls for generated types.
 #[derive(Default)]
@@ -108,50 +99,32 @@ pub enum FeatureConfig<'a> {
 }
 
 /// Write Rust structs matching DBC input description to `out` buffer
+#[allow(clippy::needless_pass_by_value)] // consider fixing
 pub fn codegen(config: Config<'_>, out: impl Write) -> Result<()> {
-    let dbc = can_dbc::DBC::from_slice(config.dbc_content).map_err(|e| {
+    let dbc = Dbc::try_from(config.dbc_content).map_err(|e| {
         let msg = "Could not parse dbc file";
         if config.debug_prints {
-            anyhow!("{}: {:#?}", msg, e)
+            anyhow!("{msg}: {e:#?}")
         } else {
-            anyhow!("{}", msg)
+            anyhow!("{msg}")
         }
     })?;
     if config.debug_prints {
-        eprintln!("{:#?}", dbc);
+        eprintln!("{dbc:#?}");
     }
     let mut w = BufWriter::new(out);
 
-    writeln!(&mut w, "// Generated code!")?;
-    writeln!(
-        &mut w,
-        "#![allow(unused_comparisons, unreachable_patterns, unused_imports)]"
-    )?;
-    if config.allow_dead_code {
-        writeln!(&mut w, "#![allow(dead_code)]")?;
-    }
-    writeln!(&mut w, "#![allow(clippy::let_and_return, clippy::eq_op)]")?;
-    writeln!(
-        &mut w,
-        "#![allow(clippy::useless_conversion, clippy::unnecessary_cast)]"
-    )?;
-    writeln!(
-        &mut w,
-        "#![allow(clippy::excessive_precision, clippy::manual_range_contains, clippy::absurd_extreme_comparisons, clippy::too_many_arguments)]"
-    )?;
-    writeln!(&mut w, "#![deny(clippy::arithmetic_side_effects)]")?;
-    writeln!(&mut w)?;
-    writeln!(
-        &mut w,
-        "//! Message definitions from file `{:?}`",
-        config.dbc_name
-    )?;
-    writeln!(&mut w, "//!")?;
-    writeln!(&mut w, "//! - Version: `{:?}`", dbc.version())?;
-    writeln!(&mut w)?;
-    writeln!(&mut w, "use core::ops::BitOr;")?;
-    writeln!(&mut w, "use bitvec::prelude::*;")?;
-    writeln!(&mut w, "use embedded_can::{{Id, StandardId, ExtendedId}};")?;
+    writeln!(w, "// Generated code!")?;
+    writeln!(w, "//")?;
+    writeln!(w, "// Message definitions from file `{}`", config.dbc_name)?;
+    writeln!(w, "// Version: {}", dbc.version.0)?;
+    writeln!(w)?;
+    writeln!(w, "#[allow(unused_imports)]")?;
+    writeln!(w, "use core::ops::BitOr;")?;
+    writeln!(w, "#[allow(unused_imports)]")?;
+    writeln!(w, "use bitvec::prelude::*;")?;
+    writeln!(w, "#[allow(unused_imports)]")?;
+    writeln!(w, "use embedded_can::{{Id, StandardId, ExtendedId}};")?;
 
     config.impl_arbitrary.fmt_cfg(&mut w, |w| {
         writeln!(w, "use arbitrary::{{Arbitrary, Unstructured}};")
@@ -161,36 +134,38 @@ pub fn codegen(config: Config<'_>, out: impl Write) -> Result<()> {
         writeln!(w, "use serde::{{Serialize, Deserialize}};")
     })?;
 
-    writeln!(&mut w)?;
+    writeln!(w)?;
 
     render_dbc(&mut w, &config, &dbc).context("could not generate Rust code")?;
 
-    writeln!(&mut w)?;
-    writeln!(&mut w, "/// This is just to make testing easier")?;
-    writeln!(&mut w, "#[allow(dead_code)]")?;
-    writeln!(&mut w, "fn main() {{}}")?;
-    writeln!(&mut w)?;
+    writeln!(w)?;
+    writeln!(w, "/// This is just to make testing easier")?;
+    writeln!(w, "#[allow(dead_code)]")?;
+    writeln!(w, "fn main() {{}}")?;
+    writeln!(w)?;
     render_error(&mut w, &config)?;
     render_arbitrary_helpers(&mut w, &config)?;
-    writeln!(&mut w)?;
+    writeln!(w)?;
 
     Ok(())
 }
 
-fn render_dbc(mut w: impl Write, config: &Config<'_>, dbc: &DBC) -> Result<()> {
+fn render_dbc(mut w: impl Write, config: &Config<'_>, dbc: &Dbc) -> Result<()> {
     render_root_enum(&mut w, dbc, config)?;
 
     for msg in get_relevant_messages(dbc) {
         render_message(&mut w, config, msg, dbc)
-            .with_context(|| format!("write message `{}`", msg.message_name()))?;
+            .with_context(|| format!("write message `{}`", msg.name))?;
         writeln!(w)?;
     }
 
     Ok(())
 }
 
-fn render_root_enum(mut w: impl Write, dbc: &DBC, config: &Config<'_>) -> Result<()> {
+fn render_root_enum(mut w: impl Write, dbc: &Dbc, config: &Config<'_>) -> Result<()> {
     writeln!(w, "/// All messages")?;
+    writeln!(w, "{ALLOW_LINTS}")?;
+    config.write_allow_dead_code(&mut w)?;
     writeln!(w, "#[derive(Clone)]")?;
     config.impl_debug.fmt_attr(&mut w, "derive(Debug)")?;
     config
@@ -202,141 +177,135 @@ fn render_root_enum(mut w: impl Write, dbc: &DBC, config: &Config<'_>) -> Result
     {
         let mut w = PadAdapter::wrap(&mut w);
         for msg in get_relevant_messages(dbc) {
-            writeln!(w, "/// {}", msg.message_name())?;
-            writeln!(w, "{0}({0}),", type_name(msg.message_name()))?;
+            writeln!(w, "/// {}", msg.name)?;
+            writeln!(w, "{0}({0}),", type_name(&msg.name))?;
         }
     }
-    writeln!(&mut w, "}}")?;
-    writeln!(&mut w)?;
+    writeln!(w, "}}")?;
+    writeln!(w)?;
 
+    writeln!(w, "{ALLOW_LINTS}")?;
+    config.write_allow_dead_code(&mut w)?;
     writeln!(w, "impl Messages {{")?;
     {
         let mut w = PadAdapter::wrap(&mut w);
-        writeln!(&mut w, "/// Read message from CAN frame")?;
+        writeln!(w, "/// Read message from CAN frame")?;
         writeln!(w, "#[inline(never)]")?;
         writeln!(
-            &mut w,
+            w,
             "pub fn from_can_message(id: Id, payload: &[u8]) -> Result<Self, CanError> {{",
         )?;
         {
             let mut w = PadAdapter::wrap(&mut w);
-            writeln!(&mut w)?;
-            writeln!(&mut w, "let res = match id {{")?;
+            writeln!(w)?;
+            writeln!(w, "let res = match id {{")?;
             {
                 let mut w = PadAdapter::wrap(&mut w);
                 for msg in get_relevant_messages(dbc) {
                     writeln!(
                         w,
                         "{0}::MESSAGE_ID => Messages::{0}({0}::try_from(payload)?),",
-                        type_name(msg.message_name())
+                        type_name(&msg.name)
                     )?;
                 }
-                writeln!(w, r#"id => return Err(CanError::UnknownMessageId(id)),"#)?;
+                writeln!(w, r"id => return Err(CanError::UnknownMessageId(id)),")?;
             }
-            writeln!(&mut w, "}};")?;
-            writeln!(&mut w, "Ok(res)")?;
+            writeln!(w, "}};")?;
+            writeln!(w, "Ok(res)")?;
         }
 
-        writeln!(&mut w, "}}")?;
+        writeln!(w, "}}")?;
     }
-    writeln!(&mut w, "}}")?;
-    writeln!(&mut w)?;
+    writeln!(w, "}}")?;
+    writeln!(w)?;
 
     Ok(())
 }
 
-fn render_message(mut w: impl Write, config: &Config<'_>, msg: &Message, dbc: &DBC) -> Result<()> {
-    writeln!(w, "/// {}", msg.message_name())?;
+fn render_message(mut w: impl Write, config: &Config<'_>, msg: &Message, dbc: &Dbc) -> Result<()> {
+    writeln!(w, "/// {}", msg.name)?;
     writeln!(w, "///")?;
-    match msg.message_id() {
-        can_dbc::MessageId::Standard(id) => writeln!(w, "/// - Standard ID: {0} (0x{0:x})", id),
-        can_dbc::MessageId::Extended(id) => writeln!(w, "/// - Extended ID: {0} (0x{0:x})", id),
+    match msg.id {
+        can_dbc::MessageId::Standard(id) => writeln!(w, "/// - Standard ID: {id} (0x{id:x})"),
+        can_dbc::MessageId::Extended(id) => writeln!(w, "/// - Extended ID: {id} (0x{id:x})"),
     }?;
-    writeln!(w, "/// - Size: {} bytes", msg.message_size())?;
-    if let can_dbc::Transmitter::NodeName(transmitter) = msg.transmitter() {
-        writeln!(w, "/// - Transmitter: {}", transmitter)?;
+    writeln!(w, "/// - Size: {} bytes", msg.size)?;
+    if let can_dbc::Transmitter::NodeName(transmitter) = &msg.transmitter {
+        writeln!(w, "/// - Transmitter: {transmitter}")?;
     }
-    if let Some(comment) = dbc.message_comment(*msg.message_id()) {
+    if let Some(comment) = dbc.message_comment(msg.id) {
         writeln!(w, "///")?;
         for line in comment.trim().lines() {
-            writeln!(w, "/// {}", line)?;
+            writeln!(w, "/// {line}")?;
         }
     }
     writeln!(w, "#[derive(Clone, Copy)]")?;
     config.impl_serde.fmt_attr(&mut w, "derive(Serialize)")?;
     config.impl_serde.fmt_attr(&mut w, "derive(Deserialize)")?;
-    writeln!(w, "pub struct {} {{", type_name(msg.message_name()))?;
+    writeln!(w, "pub struct {} {{", type_name(&msg.name))?;
     {
         let mut w = PadAdapter::wrap(&mut w);
         config
             .impl_serde
             .fmt_attr(&mut w, "serde(with = \"serde_bytes\")")?;
-        writeln!(w, "raw: [u8; {}],", msg.message_size())?;
+        writeln!(w, "raw: [u8; {}],", msg.size)?;
     }
     writeln!(w, "}}")?;
     writeln!(w)?;
 
-    writeln!(w, "impl {} {{", type_name(msg.message_name()))?;
+    writeln!(w, "{ALLOW_LINTS}")?;
+    config.write_allow_dead_code(&mut w)?;
+    writeln!(w, "impl {} {{", type_name(&msg.name))?;
     {
         let mut w = PadAdapter::wrap(&mut w);
 
         writeln!(
-            &mut w,
+            w,
             "pub const MESSAGE_ID: embedded_can::Id = {};",
-            match msg.message_id() {
+            match msg.id {
                 // use StandardId::new().unwrap() once const_option is stable
-                can_dbc::MessageId::Standard(id) => format!(
-                    "Id::Standard(unsafe {{ StandardId::new_unchecked({0:#x})}})",
-                    id
-                ),
-                can_dbc::MessageId::Extended(id) => format!(
-                    "Id::Extended(unsafe {{ ExtendedId::new_unchecked({0:#x})}})",
-                    id
-                ),
+                can_dbc::MessageId::Standard(id) =>
+                    format!("Id::Standard(unsafe {{ StandardId::new_unchecked({id:#x})}})"),
+                can_dbc::MessageId::Extended(id) =>
+                    format!("Id::Extended(unsafe {{ ExtendedId::new_unchecked({id:#x})}})"),
             }
         )?;
         writeln!(w)?;
 
         for signal in msg
-            .signals()
+            .signals
             .iter()
             .filter(|sig| signal_to_rust_type(sig) != "bool")
         {
             let typ = signal_to_rust_type(signal);
             writeln!(
-                &mut w,
+                w,
                 "pub const {sig}_MIN: {typ} = {min}_{typ};",
-                sig = field_name(signal.name()).to_uppercase(),
-                typ = typ,
+                sig = field_name(&signal.name).to_uppercase(),
                 min = signal.min,
             )?;
 
             writeln!(
-                &mut w,
+                w,
                 "pub const {sig}_MAX: {typ} = {max}_{typ};",
-                sig = field_name(signal.name()).to_uppercase(),
-                typ = typ,
+                sig = field_name(&signal.name).to_uppercase(),
                 max = signal.max,
             )?;
         }
         writeln!(w)?;
 
-        writeln!(
-            &mut w,
-            "/// Construct new {} from values",
-            msg.message_name()
-        )?;
+        writeln!(w, "/// Construct new {} from values", msg.name)?;
         let args: Vec<String> = msg
-            .signals()
+            .signals
             .iter()
             .filter_map(|signal| {
-                if *signal.multiplexer_indicator() == MultiplexIndicator::Plain
-                    || *signal.multiplexer_indicator() == MultiplexIndicator::Multiplexor
+                if signal.multiplexer_indicator == MultiplexIndicator::Plain
+                    || signal.multiplexer_indicator == MultiplexIndicator::Multiplexor
                 {
                     Some(format!(
                         "{}: {}",
-                        field_name(signal.name()),
-                        signal_to_rust_type(signal)
+                        field_name(&signal.name),
+                        signal_to_rust_type(signal),
                     ))
                 } else {
                     None
@@ -344,54 +313,50 @@ fn render_message(mut w: impl Write, config: &Config<'_>, msg: &Message, dbc: &D
             })
             .collect();
         writeln!(
-            &mut w,
+            w,
             "pub fn new({}) -> Result<Self, CanError> {{",
             args.join(", ")
         )?;
         {
             let mut w = PadAdapter::wrap(&mut w);
             writeln!(
-                &mut w,
+                w,
                 "let {}res = Self {{ raw: [0u8; {}] }};",
-                if msg.signals().is_empty() { "" } else { "mut " },
-                msg.message_size()
+                if msg.signals.is_empty() { "" } else { "mut " },
+                msg.size
             )?;
-            for signal in msg.signals().iter() {
-                if *signal.multiplexer_indicator() == MultiplexIndicator::Plain {
-                    writeln!(&mut w, "res.set_{0}({0})?;", field_name(signal.name()))?;
+            for signal in &msg.signals {
+                if signal.multiplexer_indicator == MultiplexIndicator::Plain {
+                    writeln!(w, "res.set_{0}({0})?;", field_name(&signal.name))?;
                 }
 
-                if *signal.multiplexer_indicator() == MultiplexIndicator::Multiplexor {
-                    writeln!(&mut w, "res.set_{0}({0})?;", field_name(signal.name()))?;
+                if signal.multiplexer_indicator == MultiplexIndicator::Multiplexor {
+                    writeln!(w, "res.set_{0}({0})?;", field_name(&signal.name))?;
                 }
             }
-            writeln!(&mut w, "Ok(res)")?;
+            writeln!(w, "Ok(res)")?;
         }
-        writeln!(&mut w, "}}")?;
+        writeln!(w, "}}")?;
         writeln!(w)?;
 
-        writeln!(&mut w, "/// Access message payload raw value")?;
-        writeln!(
-            &mut w,
-            "pub fn raw(&self) -> &[u8; {}] {{",
-            msg.message_size()
-        )?;
+        writeln!(w, "/// Access message payload raw value")?;
+        writeln!(w, "pub fn raw(&self) -> &[u8; {}] {{", msg.size)?;
         {
             let mut w = PadAdapter::wrap(&mut w);
-            writeln!(&mut w, "&self.raw")?;
+            writeln!(w, "&self.raw")?;
         }
-        writeln!(&mut w, "}}")?;
+        writeln!(w, "}}")?;
         writeln!(w)?;
 
-        for signal in msg.signals().iter() {
-            match signal.multiplexer_indicator() {
+        for signal in &msg.signals {
+            match signal.multiplexer_indicator {
                 MultiplexIndicator::Plain => render_signal(&mut w, config, signal, dbc, msg)
-                    .with_context(|| format!("write signal impl `{}`", signal.name()))?,
+                    .with_context(|| format!("write signal impl `{}`", signal.name))?,
                 MultiplexIndicator::Multiplexor => {
-                    render_multiplexor_signal(&mut w, config, signal, msg)?
+                    render_multiplexor_signal(&mut w, config, signal, msg)?;
                 }
-                MultiplexIndicator::MultiplexedSignal(_) => {}
-                MultiplexIndicator::MultiplexorAndMultiplexedSignal(_) => {}
+                MultiplexIndicator::MultiplexedSignal(_)
+                | MultiplexIndicator::MultiplexorAndMultiplexedSignal(_) => {}
             }
         }
     }
@@ -402,33 +367,29 @@ fn render_message(mut w: impl Write, config: &Config<'_>, msg: &Message, dbc: &D
     writeln!(
         w,
         "impl core::convert::TryFrom<&[u8]> for {} {{",
-        type_name(msg.message_name())
+        type_name(&msg.name)
     )?;
     {
         let mut w = PadAdapter::wrap(&mut w);
-        writeln!(&mut w, "type Error = CanError;")?;
+        writeln!(w, "type Error = CanError;")?;
         writeln!(w)?;
         writeln!(w, "#[inline(always)]")?;
         writeln!(
-            &mut w,
+            w,
             "fn try_from(payload: &[u8]) -> Result<Self, Self::Error> {{"
         )?;
         {
             let mut w = PadAdapter::wrap(&mut w);
             writeln!(
-                &mut w,
-                r#"if payload.len() != {} {{ return Err(CanError::InvalidPayloadSize); }}"#,
-                msg.message_size()
+                w,
+                r"if payload.len() != {} {{ return Err(CanError::InvalidPayloadSize); }}",
+                msg.size
             )?;
-            writeln!(&mut w, "let mut raw = [0u8; {}];", msg.message_size())?;
-            writeln!(
-                &mut w,
-                "raw.copy_from_slice(&payload[..{}]);",
-                msg.message_size()
-            )?;
-            writeln!(&mut w, "Ok(Self {{ raw }})")?;
+            writeln!(w, "let mut raw = [0u8; {}];", msg.size)?;
+            writeln!(w, "raw.copy_from_slice(&payload[..{}]);", msg.size)?;
+            writeln!(w, "Ok(Self {{ raw }})")?;
         }
-        writeln!(&mut w, "}}")?;
+        writeln!(w, "}}")?;
     }
     writeln!(w, "}}")?;
     writeln!(w)?;
@@ -441,18 +402,18 @@ fn render_message(mut w: impl Write, config: &Config<'_>, msg: &Message, dbc: &D
 
     render_arbitrary(&mut w, config, msg)?;
 
-    let enums_for_this_message = dbc.value_descriptions().iter().filter_map(|x| {
+    let enums_for_this_message = dbc.value_descriptions.iter().filter_map(|x| {
         if let ValueDescription::Signal {
             message_id,
-            signal_name,
+            name,
             value_descriptions,
         } = x
         {
-            if message_id != msg.message_id() {
+            if *message_id != msg.id {
                 return None;
             }
-            let signal = dbc.signal_by_name(*message_id, signal_name).unwrap();
-            Some((signal, value_descriptions))
+            dbc.signal_by_name(*message_id, name)
+                .map(|v| (v, value_descriptions))
         } else {
             None
         }
@@ -462,9 +423,9 @@ fn render_message(mut w: impl Write, config: &Config<'_>, msg: &Message, dbc: &D
     }
 
     let multiplexor_signal = msg
-        .signals()
+        .signals
         .iter()
-        .find(|s| *s.multiplexer_indicator() == MultiplexIndicator::Multiplexor);
+        .find(|s| s.multiplexer_indicator == MultiplexIndicator::Multiplexor);
 
     if let Some(multiplexor_signal) = multiplexor_signal {
         render_multiplexor_enums(w, config, dbc, msg, multiplexor_signal)?;
@@ -477,122 +438,112 @@ fn render_signal(
     mut w: impl Write,
     config: &Config<'_>,
     signal: &Signal,
-    dbc: &DBC,
+    dbc: &Dbc,
     msg: &Message,
 ) -> Result<()> {
-    writeln!(w, "/// {}", signal.name())?;
-    if let Some(comment) = dbc.signal_comment(*msg.message_id(), signal.name()) {
+    writeln!(w, "/// {}", signal.name)?;
+    if let Some(comment) = dbc.signal_comment(msg.id, &signal.name) {
         writeln!(w, "///")?;
         for line in comment.trim().lines() {
-            writeln!(w, "/// {}", line)?;
+            writeln!(w, "/// {line}")?;
         }
     }
     writeln!(w, "///")?;
     writeln!(w, "/// - Min: {}", signal.min)?;
     writeln!(w, "/// - Max: {}", signal.max)?;
-    writeln!(w, "/// - Unit: {:?}", signal.unit())?;
-    writeln!(w, "/// - Receivers: {}", signal.receivers().join(", "))?;
+    writeln!(w, "/// - Unit: {:?}", signal.unit)?;
+    writeln!(w, "/// - Receivers: {}", signal.receivers.join(", "))?;
     writeln!(w, "#[inline(always)]")?;
-    if let Some(variants) = dbc.value_descriptions_for_signal(*msg.message_id(), signal.name()) {
+    if let Some(variants) = dbc.value_descriptions_for_signal(msg.id, &signal.name) {
         let type_name = enum_name(msg, signal);
 
         writeln!(
             w,
-            "pub fn {}(&self) -> {} {{",
-            field_name(signal.name()),
-            type_name,
+            "pub fn {}(&self) -> {type_name} {{",
+            field_name(&signal.name),
         )?;
         {
             let match_on_raw_type = match signal_to_rust_type(signal).as_str() {
-                "bool" => |x: f64| format!("{}", x),
-                // "f32" => |x: f64| format!("x if approx_eq!(f32, x, {}_f32, ulps = 2)", x),
-                _ => |x: f64| format!("{}", x),
+                "bool" => |x: i64| format!("{x}"),
+                // "f32" => |x: i64| format!("x if approx_eq!(f32, x, {x}_f32, ulps = 2)"),
+                _ => |x: i64| format!("{x}"),
             };
             let mut w = PadAdapter::wrap(&mut w);
-            let read_fn = match signal.byte_order() {
+            let read_fn = match signal.byte_order {
                 can_dbc::ByteOrder::LittleEndian => {
-                    let (start_bit, end_bit) = le_start_end_bit(signal, msg)?;
-
+                    let (start, end) = le_start_end_bit(signal, msg)?;
                     format!(
                         "self.raw.view_bits::<Lsb0>()[{start}..{end}].load_le::<{typ}>()",
                         typ = signal_to_rust_uint(signal),
-                        start = start_bit,
-                        end = end_bit,
                     )
                 }
                 can_dbc::ByteOrder::BigEndian => {
-                    let (start_bit, end_bit) = be_start_end_bit(signal, msg)?;
-
+                    let (start, end) = be_start_end_bit(signal, msg)?;
                     format!(
                         "self.raw.view_bits::<Msb0>()[{start}..{end}].load_be::<{typ}>()",
                         typ = signal_to_rust_uint(signal),
-                        start = start_bit,
-                        end = end_bit
                     )
                 }
             };
 
-            writeln!(&mut w, r#"let signal = {};"#, read_fn)?;
-            writeln!(&mut w)?;
-            writeln!(&mut w, "match signal {{")?;
+            writeln!(w, r"let signal = {read_fn};")?;
+            writeln!(w)?;
+            writeln!(w, "match signal {{")?;
             {
                 let mut w = PadAdapter::wrap(&mut w);
                 for variant in variants {
-                    let literal = match_on_raw_type(*variant.a());
+                    let literal = match_on_raw_type(variant.id);
                     writeln!(
-                        &mut w,
-                        "{} => {}::{},",
-                        literal,
-                        type_name,
-                        enum_variant_name(variant.b())
+                        w,
+                        "{literal} => {type_name}::{},",
+                        enum_variant_name(&variant.description)
                     )?;
                 }
                 writeln!(
-                    &mut w,
-                    "_ => {}::_Other(self.{}_raw()),",
-                    type_name,
-                    field_name(signal.name())
+                    w,
+                    "_ => {type_name}::_Other(self.{}_raw()),",
+                    field_name(&signal.name)
                 )?;
             }
-            writeln!(&mut w, "}}")?;
+            writeln!(w, "}}")?;
         }
-        writeln!(&mut w, "}}")?;
+        writeln!(w, "}}")?;
         writeln!(w)?;
     } else {
         writeln!(
             w,
             "pub fn {}(&self) -> {} {{",
-            field_name(signal.name()),
+            field_name(&signal.name),
             signal_to_rust_type(signal)
         )?;
         {
             let mut w = PadAdapter::wrap(&mut w);
-            writeln!(&mut w, "self.{}_raw()", field_name(signal.name()))?;
+            writeln!(w, "self.{}_raw()", field_name(&signal.name))?;
         }
-        writeln!(&mut w, "}}")?;
+        writeln!(w, "}}")?;
         writeln!(w)?;
     }
 
-    writeln!(w, "/// Get raw value of {}", signal.name())?;
+    writeln!(w, "/// Get raw value of {}", signal.name)?;
     writeln!(w, "///")?;
     writeln!(w, "/// - Start bit: {}", signal.start_bit)?;
-    writeln!(w, "/// - Signal size: {} bits", signal.signal_size)?;
+    writeln!(w, "/// - Signal size: {} bits", signal.size)?;
     writeln!(w, "/// - Factor: {}", signal.factor)?;
     writeln!(w, "/// - Offset: {}", signal.offset)?;
-    writeln!(w, "/// - Byte order: {:?}", signal.byte_order())?;
-    writeln!(w, "/// - Value type: {:?}", signal.value_type())?;
+    writeln!(w, "/// - Byte order: {:?}", signal.byte_order)?;
+    writeln!(w, "/// - Value type: {:?}", signal.value_type)?;
     writeln!(w, "#[inline(always)]")?;
     writeln!(
         w,
         "pub fn {}_raw(&self) -> {} {{",
-        field_name(signal.name()),
+        field_name(&signal.name),
         signal_to_rust_type(signal)
     )?;
     {
         let mut w = PadAdapter::wrap(&mut w);
         signal_from_payload(&mut w, signal, msg).context("signal from payload")?;
     }
-    writeln!(&mut w, "}}")?;
+    writeln!(w, "}}")?;
     writeln!(w)?;
 
     render_set_signal(&mut w, config, signal, msg)?;
@@ -606,12 +557,12 @@ fn render_set_signal(
     signal: &Signal,
     msg: &Message,
 ) -> Result<()> {
-    writeln!(&mut w, "/// Set value of {}", signal.name())?;
+    writeln!(w, "/// Set value of {}", signal.name)?;
     writeln!(w, "#[inline(always)]")?;
 
-    // To avoid accidentially changing the multiplexor value without changing
+    // To avoid accidentally changing the multiplexor value without changing
     // the signals accordingly this fn is kept private for multiplexors.
-    let visibility = if *signal.multiplexer_indicator() == MultiplexIndicator::Multiplexor {
+    let visibility = if signal.multiplexer_indicator == MultiplexIndicator::Multiplexor {
         ""
     } else {
         "pub "
@@ -619,34 +570,33 @@ fn render_set_signal(
 
     writeln!(
         w,
-        "{}fn set_{}(&mut self, value: {}) -> Result<(), CanError> {{",
-        visibility,
-        field_name(signal.name()),
+        "{visibility}fn set_{}(&mut self, value: {}) -> Result<(), CanError> {{",
+        field_name(&signal.name),
         signal_to_rust_type(signal)
     )?;
 
     {
         let mut w = PadAdapter::wrap(&mut w);
 
-        if signal.signal_size != 1 {
+        if signal.size != 1 {
             if let FeatureConfig::Gated(gate) = config.check_ranges {
-                writeln!(w, r##"#[cfg(feature = {gate:?})]"##)?;
+                writeln!(w, r"#[cfg(feature = {gate:?})]")?;
             }
 
             if let FeatureConfig::Gated(..) | FeatureConfig::Always = config.check_ranges {
                 writeln!(
                     w,
-                    r##"if value < {min}_{typ} || {max}_{typ} < value {{"##,
+                    r"if value < {min}_{typ} || {max}_{typ} < value {{",
                     typ = signal_to_rust_type(signal),
-                    min = signal.min(),
-                    max = signal.max(),
+                    min = signal.min,
+                    max = signal.max,
                 )?;
                 {
                     let mut w = PadAdapter::wrap(&mut w);
                     writeln!(
                         w,
-                        r##"return Err(CanError::ParameterOutOfRange {{ message_id: {}::MESSAGE_ID }});"##,
-                        type_name(msg.message_name())
+                        r"return Err(CanError::ParameterOutOfRange {{ message_id: {}::MESSAGE_ID }});",
+                        type_name(&msg.name)
                     )?;
                 }
                 writeln!(w, r"}}")?;
@@ -655,7 +605,7 @@ fn render_set_signal(
         signal_to_payload(&mut w, signal, msg).context("signal to payload")?;
     }
 
-    writeln!(&mut w, "}}")?;
+    writeln!(w, "}}")?;
     writeln!(w)?;
 
     Ok(())
@@ -667,7 +617,7 @@ fn render_set_signal_multiplexer(
     msg: &Message,
     switch_index: u64,
 ) -> Result<()> {
-    writeln!(&mut w, "/// Set value of {}", multiplexor.name())?;
+    writeln!(w, "/// Set value of {}", multiplexor.name)?;
     writeln!(w, "#[inline(always)]")?;
     writeln!(
         w,
@@ -679,19 +629,18 @@ fn render_set_signal_multiplexer(
     {
         let mut w = PadAdapter::wrap(&mut w);
 
-        writeln!(&mut w, "let b0 = BitArray::<_, LocalBits>::new(self.raw);")?;
-        writeln!(&mut w, "let b1 = BitArray::<_, LocalBits>::new(value.raw);")?;
-        writeln!(&mut w, "self.raw = b0.bitor(b1).into_inner();")?;
+        writeln!(w, "let b0 = BitArray::<_, LocalBits>::new(self.raw);")?;
+        writeln!(w, "let b1 = BitArray::<_, LocalBits>::new(value.raw);")?;
+        writeln!(w, "self.raw = b0.bitor(b1).into_inner();")?;
         writeln!(
-            &mut w,
-            "self.set_{}({})?;",
-            field_name(multiplexor.name()),
-            switch_index
+            w,
+            "self.set_{}({switch_index})?;",
+            field_name(&multiplexor.name),
         )?;
-        writeln!(&mut w, "Ok(())",)?;
+        writeln!(w, "Ok(())",)?;
     }
 
-    writeln!(&mut w, "}}")?;
+    writeln!(w, "}}")?;
     writeln!(w)?;
 
     Ok(())
@@ -703,57 +652,57 @@ fn render_multiplexor_signal(
     signal: &Signal,
     msg: &Message,
 ) -> Result<()> {
-    writeln!(w, "/// Get raw value of {}", signal.name())?;
+    writeln!(w, "/// Get raw value of {}", signal.name)?;
     writeln!(w, "///")?;
     writeln!(w, "/// - Start bit: {}", signal.start_bit)?;
-    writeln!(w, "/// - Signal size: {} bits", signal.signal_size)?;
+    writeln!(w, "/// - Signal size: {} bits", signal.size)?;
     writeln!(w, "/// - Factor: {}", signal.factor)?;
     writeln!(w, "/// - Offset: {}", signal.offset)?;
-    writeln!(w, "/// - Byte order: {:?}", signal.byte_order())?;
-    writeln!(w, "/// - Value type: {:?}", signal.value_type())?;
+    writeln!(w, "/// - Byte order: {:?}", signal.byte_order)?;
+    writeln!(w, "/// - Value type: {:?}", signal.value_type)?;
     writeln!(w, "#[inline(always)]")?;
     writeln!(
         w,
         "pub fn {}_raw(&self) -> {} {{",
-        field_name(signal.name()),
+        field_name(&signal.name),
         signal_to_rust_type(signal)
     )?;
     {
         let mut w = PadAdapter::wrap(&mut w);
         signal_from_payload(&mut w, signal, msg).context("signal from payload")?;
     }
-    writeln!(&mut w, "}}")?;
+    writeln!(w, "}}")?;
     writeln!(w)?;
 
     writeln!(
         w,
         "pub fn {}(&mut self) -> Result<{}, CanError> {{",
-        field_name(signal.name()),
+        field_name(&signal.name),
         multiplex_enum_name(msg, signal)?
     )?;
 
     let multiplexer_indexes: BTreeSet<u64> = msg
-        .signals()
+        .signals
         .iter()
         .filter_map(|s| {
-            if let MultiplexIndicator::MultiplexedSignal(index) = s.multiplexer_indicator() {
+            if let MultiplexIndicator::MultiplexedSignal(index) = &s.multiplexer_indicator {
                 Some(index)
             } else {
                 None
             }
         })
-        .cloned()
+        .copied()
         .collect();
 
     {
         let mut w = PadAdapter::wrap(&mut w);
-        writeln!(&mut w, "match self.{}_raw() {{", field_name(signal.name()))?;
+        writeln!(w, "match self.{}_raw() {{", field_name(&signal.name))?;
 
         {
             let mut w = PadAdapter::wrap(&mut w);
-            for multiplexer_index in multiplexer_indexes.iter() {
+            for multiplexer_index in &multiplexer_indexes {
                 writeln!(
-                    &mut w,
+                    w,
                     "{idx} => Ok({enum_name}::{multiplexed_wrapper_name}({multiplexed_name}{{ raw: self.raw }})),",
                     idx = multiplexer_index,
                     enum_name = multiplex_enum_name(msg, signal)?,
@@ -763,9 +712,9 @@ fn render_multiplexor_signal(
                 )?;
             }
             writeln!(
-                &mut w,
+                w,
                 "multiplexor => Err(CanError::InvalidMultiplexor {{ message_id: {}::MESSAGE_ID, multiplexor: multiplexor.into() }}),",
-                type_name(msg.message_name())
+                type_name(&msg.name)
             )?;
         }
 
@@ -774,17 +723,6 @@ fn render_multiplexor_signal(
     writeln!(w, "}}")?;
 
     render_set_signal(&mut w, config, signal, msg)?;
-
-    let mut multiplexed_signals = BTreeMap::new();
-    for signal in msg.signals() {
-        if let MultiplexIndicator::MultiplexedSignal(switch_index) = signal.multiplexer_indicator()
-        {
-            multiplexed_signals
-                .entry(switch_index)
-                .and_modify(|v: &mut Vec<&Signal>| v.push(signal))
-                .or_insert_with(|| vec![signal]);
-        }
-    }
 
     for switch_index in multiplexer_indexes {
         render_set_signal_multiplexer(&mut w, signal, msg, switch_index)?;
@@ -804,104 +742,89 @@ fn be_start_end_bit(signal: &Signal, msg: &Message) -> Result<(u64, u64)> {
 
     let start_bit = x.checked_add(y).context(err)?;
     let end_bit = start_bit
-        .checked_add(signal.signal_size)
+        .checked_add(signal.size)
         .context("calculating last bit position")?;
 
-    let msg_bits = msg.message_size().checked_mul(8).unwrap();
+    let msg_bits = msg.size.checked_mul(8).unwrap();
 
     ensure!(
         start_bit <= msg_bits,
-        "signal starts at {}, but message is only {} bits",
-        start_bit,
-        msg_bits
+        "signal starts at {start_bit}, but message is only {msg_bits} bits"
     );
     ensure!(
         end_bit <= msg_bits,
-        "signal ends at {}, but message is only {} bits",
-        end_bit,
-        msg_bits
+        "signal ends at {end_bit}, but message is only {msg_bits} bits"
     );
     Ok((start_bit, end_bit))
 }
 
 fn le_start_end_bit(signal: &Signal, msg: &Message) -> Result<(u64, u64)> {
-    let msg_bits = msg.message_size().checked_mul(8).unwrap();
+    let msg_bits = msg.size.checked_mul(8).unwrap();
     let start_bit = signal.start_bit;
     ensure!(
         start_bit <= msg_bits,
-        "signal starts at {}, but message is only {} bits",
-        start_bit,
-        msg_bits
+        "signal starts at {start_bit}, but message is only {msg_bits} bits"
     );
 
     let end_bit = signal
         .start_bit
-        .checked_add(signal.signal_size)
+        .checked_add(signal.size)
         .context("overflow calculating last bit position")?;
     ensure!(
         end_bit <= msg_bits,
-        "signal ends at {}, but message is only {} bits",
-        end_bit,
-        msg_bits
+        "signal ends at {end_bit}, but message is only {msg_bits} bits"
     );
     Ok((start_bit, end_bit))
 }
 
 fn signal_from_payload(mut w: impl Write, signal: &Signal, msg: &Message) -> Result<()> {
-    let read_fn = match signal.byte_order() {
+    let read_fn = match signal.byte_order {
         can_dbc::ByteOrder::LittleEndian => {
-            let (start_bit, end_bit) = le_start_end_bit(signal, msg)?;
-
+            let (start, end) = le_start_end_bit(signal, msg)?;
             format!(
                 "self.raw.view_bits::<Lsb0>()[{start}..{end}].load_le::<{typ}>()",
                 typ = signal_to_rust_int(signal),
-                start = start_bit,
-                end = end_bit,
             )
         }
         can_dbc::ByteOrder::BigEndian => {
-            let (start_bit, end_bit) = be_start_end_bit(signal, msg)?;
-
+            let (start, end) = be_start_end_bit(signal, msg)?;
             format!(
                 "self.raw.view_bits::<Msb0>()[{start}..{end}].load_be::<{typ}>()",
                 typ = signal_to_rust_int(signal),
-                start = start_bit,
-                end = end_bit
             )
         }
     };
 
-    writeln!(&mut w, r#"let signal = {};"#, read_fn)?;
-    writeln!(&mut w)?;
+    writeln!(w, r"let signal = {read_fn};")?;
+    writeln!(w)?;
 
-    if signal.signal_size == 1 {
-        writeln!(&mut w, "signal == 1")?;
+    if signal.size == 1 {
+        writeln!(w, "signal == 1")?;
     } else if signal_is_float_in_rust(signal) {
         // Scaling is always done on floats
-        writeln!(&mut w, "let factor = {}_f32;", signal.factor)?;
-        writeln!(&mut w, "let offset = {}_f32;", signal.offset)?;
-        writeln!(&mut w, "(signal as f32) * factor + offset")?;
+        writeln!(w, "let factor = {}_f32;", signal.factor)?;
+        writeln!(w, "let offset = {}_f32;", signal.offset)?;
+        writeln!(w, "(signal as f32) * factor + offset")?;
     } else {
-        writeln!(&mut w, "let factor = {};", signal.factor)?;
+        writeln!(w, "let factor = {};", signal.factor)?;
         let scaled_type = scaled_signal_to_rust_int(signal);
 
         if scaled_type == signal_to_rust_uint(signal).replace('u', "i") {
             // Can't do iNN::from(uNN) if they both fit in the same integer type,
             // so cast first
-            writeln!(&mut w, "let signal = signal as {};", scaled_type)?;
+            writeln!(w, "let signal = signal as {scaled_type};")?;
         }
 
         if signal.offset >= 0.0 {
             writeln!(
-                &mut w,
-                "{}::from(signal).saturating_mul(factor).saturating_add({})",
-                scaled_type, signal.offset,
+                w,
+                "{scaled_type}::from(signal).saturating_mul(factor).saturating_add({})",
+                signal.offset,
             )?;
         } else {
             writeln!(
-                &mut w,
-                "{}::from(signal).saturating_mul(factor).saturating_sub({})",
-                scaled_type,
+                w,
+                "{scaled_type}::from(signal).saturating_mul(factor).saturating_sub({})",
                 signal.offset.abs(),
             )?;
         }
@@ -910,73 +833,65 @@ fn signal_from_payload(mut w: impl Write, signal: &Signal, msg: &Message) -> Res
 }
 
 fn signal_to_payload(mut w: impl Write, signal: &Signal, msg: &Message) -> Result<()> {
-    if signal.signal_size == 1 {
+    if signal.size == 1 {
         // Map boolean to byte so we can pack it
-        writeln!(&mut w, "let value = value as u8;")?;
+        writeln!(w, "let value = value as u8;")?;
     } else if signal_is_float_in_rust(signal) {
         // Massage value into an int
-        writeln!(&mut w, "let factor = {}_f32;", signal.factor)?;
-        writeln!(&mut w, "let offset = {}_f32;", signal.offset)?;
+        writeln!(w, "let factor = {}_f32;", signal.factor)?;
+        writeln!(w, "let offset = {}_f32;", signal.offset)?;
         writeln!(
-            &mut w,
+            w,
             "let value = ((value - offset) / factor) as {};",
             signal_to_rust_int(signal)
         )?;
-        writeln!(&mut w)?;
+        writeln!(w)?;
     } else {
-        writeln!(&mut w, "let factor = {};", signal.factor)?;
+        writeln!(w, "let factor = {};", signal.factor)?;
         if signal.offset >= 0.0 {
-            writeln!(&mut w, "let value = value.checked_sub({})", signal.offset)?;
+            writeln!(w, "let value = value.checked_sub({})", signal.offset)?;
         } else {
-            writeln!(
-                &mut w,
-                "let value = value.checked_add({})",
-                signal.offset.abs()
-            )?;
+            writeln!(w, "let value = value.checked_add({})", signal.offset.abs())?;
         }
         writeln!(
-            &mut w,
+            w,
             "    .ok_or(CanError::ParameterOutOfRange {{ message_id: {}::MESSAGE_ID }})?;",
-            type_name(msg.message_name())
+            type_name(&msg.name)
         )?;
         writeln!(
-            &mut w,
+            w,
             "let value = (value / factor) as {};",
             signal_to_rust_int(signal)
         )?;
-        writeln!(&mut w)?;
+        writeln!(w)?;
     }
 
-    if *signal.value_type() == can_dbc::ValueType::Signed {
+    if signal.value_type == can_dbc::ValueType::Signed {
         writeln!(
-            &mut w,
+            w,
             "let value = {}::from_ne_bytes(value.to_ne_bytes());",
             signal_to_rust_uint(signal)
         )?;
-    };
+    }
 
-    match signal.byte_order() {
+    match signal.byte_order {
         can_dbc::ByteOrder::LittleEndian => {
-            let (start_bit, end_bit) = le_start_end_bit(signal, msg)?;
+            let (start, end) = le_start_end_bit(signal, msg)?;
             writeln!(
-                &mut w,
-                r#"self.raw.view_bits_mut::<Lsb0>()[{start_bit}..{end_bit}].store_le(value);"#,
-                start_bit = start_bit,
-                end_bit = end_bit,
+                w,
+                r"self.raw.view_bits_mut::<Lsb0>()[{start}..{end}].store_le(value);"
             )?;
         }
         can_dbc::ByteOrder::BigEndian => {
-            let (start_bit, end_bit) = be_start_end_bit(signal, msg)?;
+            let (start, end) = be_start_end_bit(signal, msg)?;
             writeln!(
-                &mut w,
-                r#"self.raw.view_bits_mut::<Msb0>()[{start_bit}..{end_bit}].store_be(value);"#,
-                start_bit = start_bit,
-                end_bit = end_bit,
+                w,
+                r"self.raw.view_bits_mut::<Msb0>()[{start}..{end}].store_be(value);"
             )?;
         }
-    };
+    }
 
-    writeln!(&mut w, "Ok(())")?;
+    writeln!(w, "Ok(())")?;
     Ok(())
 }
 
@@ -990,7 +905,9 @@ fn write_enum(
     let type_name = enum_name(msg, signal);
     let signal_rust_type = signal_to_rust_type(signal);
 
-    writeln!(w, "/// Defined values for {}", signal.name())?;
+    writeln!(w, "/// Defined values for {}", signal.name)?;
+    writeln!(w, "{ALLOW_LINTS}")?;
+    config.write_allow_dead_code(&mut w)?;
     writeln!(w, "#[derive(Clone, Copy, PartialEq)]")?;
     config.impl_debug.fmt_attr(&mut w, "derive(Debug)")?;
     config
@@ -998,13 +915,13 @@ fn write_enum(
         .fmt_attr(&mut w, "derive(defmt::Format)")?;
     config.impl_serde.fmt_attr(&mut w, "derive(Serialize)")?;
     config.impl_serde.fmt_attr(&mut w, "derive(Deserialize)")?;
-    writeln!(w, "pub enum {} {{", type_name)?;
+    writeln!(w, "pub enum {type_name} {{")?;
     {
         let mut w = PadAdapter::wrap(&mut w);
         for variant in variants {
-            writeln!(w, "{},", enum_variant_name(variant.b()))?;
+            writeln!(w, "{},", enum_variant_name(&variant.description))?;
         }
-        writeln!(w, "_Other({}),", signal_rust_type)?;
+        writeln!(w, "_Other({signal_rust_type}),")?;
     }
     writeln!(w, "}}")?;
     writeln!(w)?;
@@ -1012,9 +929,9 @@ fn write_enum(
     writeln!(w, "impl From<{type_name}> for {signal_rust_type} {{")?;
     {
         let match_on_raw_type = match signal_to_rust_type(signal).as_str() {
-            "bool" => |x: f64| format!("{}", (x as i64) == 1),
-            "f32" => |x: f64| format!("{}_f32", x),
-            _ => |x: f64| format!("{}", x as i64),
+            "bool" => |x: i64| format!("{}", x == 1),
+            "f32" => |x: i64| format!("{x}_f32"),
+            _ => |x: i64| format!("{x}"),
         };
 
         let mut w = PadAdapter::wrap(&mut w);
@@ -1022,20 +939,18 @@ fn write_enum(
         {
             let mut w = PadAdapter::wrap(&mut w);
 
-            writeln!(&mut w, "match val {{")?;
+            writeln!(w, "match val {{")?;
             {
                 let mut w = PadAdapter::wrap(&mut w);
                 for variant in variants {
-                    let literal = match_on_raw_type(*variant.a());
+                    let literal = match_on_raw_type(variant.id);
                     writeln!(
-                        &mut w,
-                        "{}::{} => {},",
-                        type_name,
-                        enum_variant_name(variant.b()),
-                        literal,
+                        w,
+                        "{type_name}::{} => {literal},",
+                        enum_variant_name(&variant.description),
                     )?;
                 }
-                writeln!(&mut w, "{}::_Other(x) => x,", type_name,)?;
+                writeln!(w, "{type_name}::_Other(x) => x,",)?;
             }
             writeln!(w, "}}")?;
         }
@@ -1064,11 +979,11 @@ fn scaled_signal_to_rust_int(signal: &Signal) -> String {
 
     let err = format!(
         "Signal {} could not be represented as a Rust integer",
-        &signal.name()
+        signal.name,
     );
     signal_params_to_rust_int(
-        *signal.value_type(),
-        signal.signal_size as u32,
+        signal.value_type,
+        signal.size as u32,
         signal.factor as i64,
         signal.offset as i64,
     )
@@ -1176,15 +1091,15 @@ fn range_to_rust_int(low: i128, high: i128) -> String {
 
 /// Determine the smallest rust integer that can fit the raw signal values.
 fn signal_to_rust_int(signal: &Signal) -> String {
-    let sign = match signal.value_type() {
+    let sign = match signal.value_type {
         can_dbc::ValueType::Signed => "i",
         can_dbc::ValueType::Unsigned => "u",
     };
 
-    let size = match signal.signal_size() {
-        ..=8 => "8",
-        ..=16 => "16",
-        ..=32 => "32",
+    let size = match signal.size {
+        n if n <= 8 => "8",
+        n if n <= 16 => "16",
+        n if n <= 32 => "32",
         _ => "64",
     };
 
@@ -1193,14 +1108,14 @@ fn signal_to_rust_int(signal: &Signal) -> String {
 
 /// Determine the smallest unsigned rust integer with no fewer bits than the signal.
 fn signal_to_rust_uint(signal: &Signal) -> String {
-    let size = match *signal.signal_size() {
+    let size = match signal.size {
         n if n <= 8 => "8",
         n if n <= 16 => "16",
         n if n <= 32 => "32",
         _ => "64",
     };
 
-    format!("u{}", size)
+    format!("u{size}")
 }
 
 #[allow(clippy::float_cmp)]
@@ -1209,7 +1124,7 @@ fn signal_is_float_in_rust(signal: &Signal) -> bool {
 }
 
 fn signal_to_rust_type(signal: &Signal) -> String {
-    if signal.signal_size == 1 {
+    if signal.size == 1 {
         String::from("bool")
     } else if signal_is_float_in_rust(signal) {
         // If there is any scaling needed, go for float
@@ -1219,60 +1134,55 @@ fn signal_to_rust_type(signal: &Signal) -> String {
     }
 }
 
-fn type_name(x: &str) -> String {
+fn sanitize_name(x: &str, prefix: &str, to_case: fn(&str) -> String) -> String {
     if keywords::is_keyword(x) || !x.starts_with(|c: char| c.is_ascii_alphabetic()) {
-        format!("X{}", x.to_pascal_case())
+        format!("{prefix}{}", to_case(x))
     } else {
-        x.to_pascal_case()
+        to_case(x)
     }
 }
 
+fn type_name(x: &str) -> String {
+    sanitize_name(x, "X", ToPascalCase::to_pascal_case)
+}
+
+fn enum_variant_name(x: &str) -> String {
+    type_name(x) // enum variant and type encoding are identical
+}
+
 fn field_name(x: &str) -> String {
-    if keywords::is_keyword(x) || !x.starts_with(|c: char| c.is_ascii_alphabetic()) {
-        format!("x{}", x.to_snake_case())
-    } else {
-        x.to_snake_case()
-    }
+    sanitize_name(x, "x", ToSnakeCase::to_snake_case)
 }
 
 fn enum_name(msg: &Message, signal: &Signal) -> String {
     // this turns signal `_4DRIVE` into `4drive`
     let signal_name = signal
-        .name()
+        .name
         .trim_start_matches(|c: char| c.is_ascii_punctuation());
 
     format!(
         "{}{}",
-        enum_variant_name(msg.message_name()),
-        signal_name.to_pascal_case()
+        enum_variant_name(&msg.name),
+        signal_name.to_pascal_case(),
     )
 }
 
-fn enum_variant_name(x: &str) -> String {
-    if keywords::is_keyword(x) || !x.starts_with(|c: char| c.is_ascii_alphabetic()) {
-        format!("X{}", x.to_pascal_case())
-    } else {
-        x.to_pascal_case()
-    }
-}
-
 fn multiplexed_enum_variant_wrapper_name(switch_index: u64) -> String {
-    format!("M{}", switch_index)
+    format!("M{switch_index}")
 }
 
 fn multiplex_enum_name(msg: &Message, multiplexor: &Signal) -> Result<String> {
     ensure!(
         matches!(
-            multiplexor.multiplexer_indicator(),
+            multiplexor.multiplexer_indicator,
             MultiplexIndicator::Multiplexor
         ),
-        "signal {:?} is not the multiplexor",
-        multiplexor
+        "signal {multiplexor:?} is not the multiplexor"
     );
     Ok(format!(
         "{}{}Index",
-        msg.message_name().to_pascal_case(),
-        multiplexor.name().to_pascal_case()
+        msg.name.to_pascal_case(),
+        multiplexor.name.to_pascal_case(),
     ))
 }
 
@@ -1283,18 +1193,16 @@ fn multiplexed_enum_variant_name(
 ) -> Result<String> {
     ensure!(
         matches!(
-            multiplexor.multiplexer_indicator(),
+            multiplexor.multiplexer_indicator,
             MultiplexIndicator::Multiplexor
         ),
-        "signal {:?} is not the multiplexor",
-        multiplexor
+        "signal {multiplexor:?} is not the multiplexor"
     );
 
     Ok(format!(
-        "{}{}M{}",
-        msg.message_name().to_pascal_case(),
-        multiplexor.name().to_pascal_case(),
-        switch_index
+        "{}{}M{switch_index}",
+        msg.name.to_pascal_case(),
+        multiplexor.name.to_pascal_case(),
     ))
 }
 
@@ -1302,7 +1210,7 @@ fn render_embedded_can_frame(
     w: &mut impl Write,
     config: &Config<'_>,
     msg: &Message,
-) -> Result<(), std::io::Error> {
+) -> io::Result<()> {
     config.impl_embedded_can_frame.fmt_cfg(w, |w| {
         writeln!(
             w,
@@ -1343,7 +1251,7 @@ impl embedded_can::Frame for {0} {{
         &self.raw
     }}
 }}",
-            type_name(msg.message_name())
+            type_name(&msg.name)
         )
     })
 }
@@ -1351,12 +1259,12 @@ impl embedded_can::Frame for {0} {{
 fn render_debug_impl(mut w: impl Write, config: &Config<'_>, msg: &Message) -> Result<()> {
     match &config.impl_debug {
         FeatureConfig::Always => {}
-        FeatureConfig::Gated(gate) => writeln!(w, r##"#[cfg(feature = {gate:?})]"##)?,
+        FeatureConfig::Gated(gate) => writeln!(w, r"#[cfg(feature = {gate:?})]")?,
         FeatureConfig::Never => return Ok(()),
     }
 
-    let typ = type_name(msg.message_name());
-    writeln!(w, r##"impl core::fmt::Debug for {} {{"##, typ)?;
+    let typ = type_name(&msg.name);
+    writeln!(w, r"impl core::fmt::Debug for {typ} {{")?;
     {
         let mut w = PadAdapter::wrap(&mut w);
         writeln!(
@@ -1365,28 +1273,28 @@ fn render_debug_impl(mut w: impl Write, config: &Config<'_>, msg: &Message) -> R
         )?;
         {
             let mut w = PadAdapter::wrap(&mut w);
-            writeln!(w, r#"if f.alternate() {{"#)?;
+            writeln!(w, r"if f.alternate() {{")?;
             {
                 let mut w = PadAdapter::wrap(&mut w);
-                writeln!(w, r#"f.debug_struct("{}")"#, typ)?;
+                writeln!(w, r#"f.debug_struct("{typ}")"#)?;
                 {
                     let mut w = PadAdapter::wrap(&mut w);
-                    for signal in msg.signals() {
-                        if *signal.multiplexer_indicator() == MultiplexIndicator::Plain {
+                    for signal in &msg.signals {
+                        if signal.multiplexer_indicator == MultiplexIndicator::Plain {
                             writeln!(
                                 w,
                                 r#".field("{field_name}", &self.{field_name}())"#,
-                                field_name = field_name(signal.name()),
+                                field_name = field_name(&signal.name),
                             )?;
                         }
                     }
                 }
-                writeln!(w, r#".finish()"#)?;
+                writeln!(w, r".finish()")?;
             }
-            writeln!(w, r#"}} else {{"#)?;
+            writeln!(w, r"}} else {{")?;
             {
                 let mut w = PadAdapter::wrap(&mut w);
-                writeln!(w, r#"f.debug_tuple("{}").field(&self.raw).finish()"#, typ)?;
+                writeln!(w, r#"f.debug_tuple("{typ}").field(&self.raw).finish()"#)?;
             }
             writeln!(w, "}}")?;
         }
@@ -1400,36 +1308,36 @@ fn render_debug_impl(mut w: impl Write, config: &Config<'_>, msg: &Message) -> R
 fn render_defmt_impl(mut w: impl Write, config: &Config<'_>, msg: &Message) -> Result<()> {
     match &config.impl_defmt {
         FeatureConfig::Always => {}
-        FeatureConfig::Gated(gate) => writeln!(w, r##"#[cfg(feature = {gate:?})]"##)?,
+        FeatureConfig::Gated(gate) => writeln!(w, r"#[cfg(feature = {gate:?})]")?,
         FeatureConfig::Never => return Ok(()),
     }
 
-    let typ = type_name(msg.message_name());
-    writeln!(w, r##"impl defmt::Format for {} {{"##, typ)?;
+    let typ = type_name(&msg.name);
+    writeln!(w, r"impl defmt::Format for {typ} {{")?;
     {
         let mut w = PadAdapter::wrap(&mut w);
         writeln!(w, "fn format(&self, f: defmt::Formatter) {{")?;
         {
             let mut w = PadAdapter::wrap(&mut w);
-            writeln!(w, r#"defmt::write!(f,"#)?;
+            writeln!(w, r"defmt::write!(f,")?;
             {
                 let mut w = PadAdapter::wrap(&mut w);
-                write!(w, r#""{} {{{{"#, typ)?;
+                write!(w, r#""{typ} {{{{"#)?;
                 {
-                    for signal in msg.signals() {
-                        if *signal.multiplexer_indicator() == MultiplexIndicator::Plain {
-                            write!(w, r#" {}={{:?}}"#, signal.name(),)?;
+                    for signal in &msg.signals {
+                        if signal.multiplexer_indicator == MultiplexIndicator::Plain {
+                            write!(w, r" {}={{:?}}", signal.name)?;
                         }
                     }
                 }
                 writeln!(w, r#" }}}}","#)?;
 
-                for signal in msg.signals() {
-                    if *signal.multiplexer_indicator() == MultiplexIndicator::Plain {
-                        writeln!(w, "self.{}(),", field_name(signal.name()))?;
+                for signal in &msg.signals {
+                    if signal.multiplexer_indicator == MultiplexIndicator::Plain {
+                        writeln!(w, "self.{}(),", field_name(&signal.name))?;
                     }
                 }
-                writeln!(w, r#");"#)?;
+                writeln!(w, r");")?;
             }
             writeln!(w, "}}")?;
         }
@@ -1442,32 +1350,29 @@ fn render_defmt_impl(mut w: impl Write, config: &Config<'_>, msg: &Message) -> R
 fn render_multiplexor_enums(
     mut w: impl Write,
     config: &Config<'_>,
-    dbc: &DBC,
+    dbc: &Dbc,
     msg: &Message,
     multiplexor_signal: &Signal,
 ) -> Result<()> {
     ensure!(
-        *multiplexor_signal.multiplexer_indicator() == MultiplexIndicator::Multiplexor,
+        multiplexor_signal.multiplexer_indicator == MultiplexIndicator::Multiplexor,
         "signal {} is not the multiplexor",
-        multiplexor_signal.name(),
+        multiplexor_signal.name,
     );
 
     let mut multiplexed_signals = BTreeMap::new();
-    for signal in msg.signals() {
-        if let MultiplexIndicator::MultiplexedSignal(switch_index) = signal.multiplexer_indicator()
-        {
+    for signal in &msg.signals {
+        if let MultiplexIndicator::MultiplexedSignal(switch_index) = signal.multiplexer_indicator {
             multiplexed_signals
                 .entry(switch_index)
                 .and_modify(|v: &mut Vec<&Signal>| v.push(signal))
-                .or_insert_with(|| vec![signal]);
+                .or_insert_with(|| vec![&signal]);
         }
     }
 
-    writeln!(
-        w,
-        "/// Defined values for multiplexed signal {}",
-        msg.message_name()
-    )?;
+    writeln!(w, "/// Defined values for multiplexed signal {}", msg.name)?;
+    writeln!(w, "{ALLOW_LINTS}")?;
+    config.write_allow_dead_code(&mut w)?;
 
     config.impl_debug.fmt_attr(&mut w, "derive(Debug)")?;
     config
@@ -1483,43 +1388,42 @@ fn render_multiplexor_enums(
 
     {
         let mut w = PadAdapter::wrap(&mut w);
-        for (switch_index, _multiplexed_signals) in multiplexed_signals.iter() {
+        for switch_index in multiplexed_signals.keys() {
             writeln!(
                 w,
                 "{multiplexed_wrapper_name}({multiplexed_name}),",
-                multiplexed_wrapper_name = multiplexed_enum_variant_wrapper_name(**switch_index),
+                multiplexed_wrapper_name = multiplexed_enum_variant_wrapper_name(*switch_index),
                 multiplexed_name =
-                    multiplexed_enum_variant_name(msg, multiplexor_signal, **switch_index)?
+                    multiplexed_enum_variant_name(msg, multiplexor_signal, *switch_index)?
             )?;
         }
     }
     writeln!(w, "}}")?;
     writeln!(w)?;
 
-    for (switch_index, multiplexed_signals) in multiplexed_signals.iter() {
-        let struct_name = multiplexed_enum_variant_name(msg, multiplexor_signal, **switch_index)?;
+    for (switch_index, multiplexed_signals) in &multiplexed_signals {
+        let struct_name = multiplexed_enum_variant_name(msg, multiplexor_signal, *switch_index)?;
 
+        writeln!(w, "{ALLOW_LINTS}")?;
+        config.write_allow_dead_code(&mut w)?;
         config.impl_debug.fmt_attr(&mut w, "derive(Debug)")?;
         config
             .impl_defmt
             .fmt_attr(&mut w, "derive(defmt::Format)")?;
         config.impl_serde.fmt_attr(&mut w, "derive(Serialize)")?;
         config.impl_serde.fmt_attr(&mut w, "derive(Deserialize)")?;
-        writeln!(w, r##"#[derive(Default)]"##)?;
-        writeln!(
-            w,
-            "pub struct {} {{ raw: [u8; {}] }}",
-            struct_name,
-            msg.message_size()
-        )?;
+        writeln!(w, r"#[derive(Default)]")?;
+        writeln!(w, "pub struct {struct_name} {{ raw: [u8; {}] }}", msg.size)?;
         writeln!(w)?;
 
-        writeln!(w, "impl {} {{", struct_name)?;
+        writeln!(w, "{ALLOW_LINTS}")?;
+        config.write_allow_dead_code(&mut w)?;
+        writeln!(w, "impl {struct_name} {{")?;
 
         writeln!(
             w,
             "pub fn new() -> Self {{ Self {{ raw: [0u8; {}] }} }}",
-            msg.message_size()
+            msg.size
         )?;
 
         for signal in multiplexed_signals {
@@ -1536,22 +1440,24 @@ fn render_multiplexor_enums(
 fn render_arbitrary(mut w: impl Write, config: &Config<'_>, msg: &Message) -> Result<()> {
     match &config.impl_arbitrary {
         FeatureConfig::Always => {}
-        FeatureConfig::Gated(gate) => writeln!(w, r##"#[cfg(feature = {gate:?})]"##)?,
+        FeatureConfig::Gated(gate) => writeln!(w, r"#[cfg(feature = {gate:?})]")?,
         FeatureConfig::Never => return Ok(()),
     }
 
+    writeln!(w, "{ALLOW_LINTS}")?;
+    config.write_allow_dead_code(&mut w)?;
     writeln!(
         w,
         "impl<'a> Arbitrary<'a> for {typ} {{",
-        typ = type_name(msg.message_name())
+        typ = type_name(&msg.name)
     )?;
     {
         let filtered_signals: Vec<&Signal> = msg
-            .signals()
+            .signals
             .iter()
             .filter(|signal| {
-                *signal.multiplexer_indicator() == MultiplexIndicator::Plain
-                    || *signal.multiplexer_indicator() == MultiplexIndicator::Multiplexor
+                signal.multiplexer_indicator == MultiplexIndicator::Plain
+                    || signal.multiplexer_indicator == MultiplexIndicator::Multiplexor
             })
             .collect();
         let mut w = PadAdapter::wrap(&mut w);
@@ -1563,24 +1469,24 @@ fn render_arbitrary(mut w: impl Write, config: &Config<'_>, msg: &Message) -> Re
         {
             let mut w = PadAdapter::wrap(&mut w);
 
-            for signal in filtered_signals.iter() {
+            for signal in &filtered_signals {
                 writeln!(
                     w,
                     "let {field_name} = {arbitrary_value};",
-                    field_name = field_name(signal.name()),
+                    field_name = field_name(&signal.name),
                     arbitrary_value = signal_to_arbitrary(signal),
                 )?;
             }
 
             let args: Vec<String> = filtered_signals
                 .iter()
-                .map(|signal| field_name(signal.name()))
+                .map(|signal| field_name(&signal.name))
                 .collect();
 
             writeln!(
                 w,
                 "{typ}::new({args}).map_err(|_| arbitrary::Error::IncorrectFormat)",
-                typ = type_name(msg.message_name()),
+                typ = type_name(&msg.name),
                 args = args.join(",")
             )?;
         }
@@ -1603,12 +1509,13 @@ fn render_error(mut w: impl Write, config: &Config<'_>) -> io::Result<()> {
     }
 
     config.impl_error.fmt_cfg(w, |w| {
-        writeln!(w, "impl std::error::Error for CanError {{}}")
+        writeln!(w, "impl core::error::Error for CanError {{}}")
     })
 }
 
 fn render_arbitrary_helpers(mut w: impl Write, config: &Config<'_>) -> io::Result<()> {
     config.impl_arbitrary.fmt_cfg(&mut w, |w| {
+        config.write_allow_dead_code(w)?;
         writeln!(w, "trait UnstructuredFloatExt {{")?;
         writeln!(w, "    fn float_in_range(&mut self, range: core::ops::RangeInclusive<f32>) -> arbitrary::Result<f32>;")?;
         writeln!(w, "}}")?;
@@ -1643,30 +1550,40 @@ fn render_arbitrary_helpers(mut w: impl Write, config: &Config<'_>) -> io::Resul
 }
 
 fn signal_to_arbitrary(signal: &Signal) -> String {
-    if signal.signal_size == 1 {
+    if signal.size == 1 {
         "u.int_in_range(0..=1)? == 1".to_string()
     } else if signal_is_float_in_rust(signal) {
         format!(
             "u.float_in_range({min}_f32..={max}_f32)?",
-            min = signal.min(),
-            max = signal.max()
+            min = signal.min,
+            max = signal.max,
         )
     } else {
         format!(
             "u.int_in_range({min}..={max})?",
-            min = signal.min(),
-            max = signal.max()
+            min = signal.min,
+            max = signal.max,
         )
     }
 }
 
-fn get_relevant_messages(dbc: &DBC) -> impl Iterator<Item = &Message> {
-    dbc.messages().iter().filter(|m| !message_ignored(m))
+fn get_relevant_messages(dbc: &Dbc) -> impl Iterator<Item = &Message> {
+    dbc.messages.iter().filter(|m| !message_ignored(m))
 }
 
 fn message_ignored(message: &Message) -> bool {
     // DBC internal message containing signals unassigned to any real message
-    message.message_name() == "VECTOR__INDEPENDENT_SIG_MSG"
+    message.name == "VECTOR__INDEPENDENT_SIG_MSG"
+}
+
+impl Config<'_> {
+    fn write_allow_dead_code(&self, w: &mut impl Write) -> io::Result<()> {
+        if self.allow_dead_code {
+            writeln!(w, "{ALLOW_DEADCODE}")
+        } else {
+            Ok(())
+        }
+    }
 }
 
 impl FeatureConfig<'_> {
@@ -1702,15 +1619,16 @@ impl FeatureConfig<'_> {
 
 #[cfg(test)]
 mod tests {
-    use crate::{get_range_of_values, range_to_rust_int, signal_params_to_rust_int};
     use can_dbc::ValueType::{Signed, Unsigned};
+
+    use crate::{get_range_of_values, range_to_rust_int, signal_params_to_rust_int};
 
     #[test]
     fn test_range_of_values() {
         assert_eq!(get_range_of_values(Unsigned, 4, 1, 0), Some((0, 15)));
         assert_eq!(
             get_range_of_values(Unsigned, 32, -1, 0),
-            Some((-(u32::MAX as i128), 0))
+            Some((-i128::from(u32::MAX), 0))
         );
         assert_eq!(
             get_range_of_values(Unsigned, 12, 1, -1000),

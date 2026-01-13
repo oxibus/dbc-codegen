@@ -1,0 +1,114 @@
+error[E0412]: cannot find type `ExtMuxCascadedMuxAIndex` in this scope
+   --> tests-snapshots/dbc-cantools/issue_184_extended_mux_cascaded_dumped.snap.rs:173:39
+    |
+173 |     pub fn mux_a(&mut self) -> Result<ExtMuxCascadedMuxAIndex, CanError> {
+    |                                       ^^^^^^^^^^^^^^^^^^^^^^^
+...
+276 | pub enum ExtMuxCascadedMuxedA2MuxBIndex {
+    | --------------------------------------- similarly named enum `ExtMuxCascadedMuxedA2MuxBIndex` defined here
+    |
+help: an enum with a similar name exists
+    |
+173 -     pub fn mux_a(&mut self) -> Result<ExtMuxCascadedMuxAIndex, CanError> {
+173 +     pub fn mux_a(&mut self) -> Result<ExtMuxCascadedMuxedA2MuxBIndex, CanError> {
+    |
+help: you might be missing a type parameter
+    |
+ 69 | impl<ExtMuxCascadedMuxAIndex> ExtMuxCascaded {
+    |     +++++++++++++++++++++++++
+
+error[E0422]: cannot find struct, variant or union type `ExtMuxCascadedMuxAM0` in this scope
+   --> tests-snapshots/dbc-cantools/issue_184_extended_mux_cascaded_dumped.snap.rs:175:49
+    |
+ 56 | pub struct ExtMuxCascaded {
+    | ------------------------- similarly named struct `ExtMuxCascaded` defined here
+...
+175 |             0 => Ok(ExtMuxCascadedMuxAIndex::M0(ExtMuxCascadedMuxAM0{ raw: self.raw })),
+    |                                                 ^^^^^^^^^^^^^^^^^^^^ help: a struct with a similar name exists: `ExtMuxCascaded`
+
+error[E0422]: cannot find struct, variant or union type `ExtMuxCascadedMuxAM1` in this scope
+   --> tests-snapshots/dbc-cantools/issue_184_extended_mux_cascaded_dumped.snap.rs:176:49
+    |
+ 56 | pub struct ExtMuxCascaded {
+    | ------------------------- similarly named struct `ExtMuxCascaded` defined here
+...
+176 |             1 => Ok(ExtMuxCascadedMuxAIndex::M1(ExtMuxCascadedMuxAM1{ raw: self.raw })),
+    |                                                 ^^^^^^^^^^^^^^^^^^^^ help: a struct with a similar name exists: `ExtMuxCascaded`
+
+error[E0412]: cannot find type `ExtMuxCascadedMuxAM0` in this scope
+   --> tests-snapshots/dbc-cantools/issue_184_extended_mux_cascaded_dumped.snap.rs:198:37
+    |
+ 56 | pub struct ExtMuxCascaded {
+    | ------------------------- similarly named struct `ExtMuxCascaded` defined here
+...
+198 |     pub fn set_m0(&mut self, value: ExtMuxCascadedMuxAM0) -> Result<(), CanError> {
+    |                                     ^^^^^^^^^^^^^^^^^^^^ help: a struct with a similar name exists: `ExtMuxCascaded`
+
+error[E0412]: cannot find type `ExtMuxCascadedMuxAM1` in this scope
+   --> tests-snapshots/dbc-cantools/issue_184_extended_mux_cascaded_dumped.snap.rs:208:37
+    |
+ 56 | pub struct ExtMuxCascaded {
+    | ------------------------- similarly named struct `ExtMuxCascaded` defined here
+...
+208 |     pub fn set_m1(&mut self, value: ExtMuxCascadedMuxAM1) -> Result<(), CanError> {
+    |                                     ^^^^^^^^^^^^^^^^^^^^ help: a struct with a similar name exists: `ExtMuxCascaded`
+
+error[E0592]: duplicate definitions with name `set_m0`
+   --> tests-snapshots/dbc-cantools/issue_184_extended_mux_cascaded_dumped.snap.rs:198:5
+    |
+138 |     pub fn set_m0(&mut self, value: ExtMuxCascadedMuxedA2MuxBM0) -> Result<(), CanError> {
+    |     ------------------------------------------------------------------------------------ other definition for `set_m0`
+...
+198 |     pub fn set_m0(&mut self, value: ExtMuxCascadedMuxAM0) -> Result<(), CanError> {
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ duplicate definitions for `set_m0`
+
+error[E0592]: duplicate definitions with name `set_m1`
+   --> tests-snapshots/dbc-cantools/issue_184_extended_mux_cascaded_dumped.snap.rs:208:5
+    |
+148 |     pub fn set_m1(&mut self, value: ExtMuxCascadedMuxedA2MuxBM1) -> Result<(), CanError> {
+    |     ------------------------------------------------------------------------------------ other definition for `set_m1`
+...
+208 |     pub fn set_m1(&mut self, value: ExtMuxCascadedMuxAM1) -> Result<(), CanError> {
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ duplicate definitions for `set_m1`
+
+error[E0277]: the trait bound `u16: From<i8>` is not satisfied
+   --> tests-snapshots/dbc-cantools/issue_184_extended_mux_cascaded_dumped.snap.rs:117:128
+    |
+117 |             multiplexor => Err(CanError::InvalidMultiplexor { message_id: ExtMuxCascaded::MESSAGE_ID, multiplexor: multiplexor.into() }),
+    |                                                                                                                                ^^^^ the trait `From<i8>` is not implemented for `u16`
+    |
+    = help: the following other types implement trait `From<T>`:
+              `u16` implements `From<Char>`
+              `u16` implements `From<bool>`
+              `u16` implements `From<u8>`
+    = note: required for `i8` to implement `Into<u16>`
+
+error[E0433]: failed to resolve: use of undeclared type `ExtMuxCascadedMuxAIndex`
+   --> tests-snapshots/dbc-cantools/issue_184_extended_mux_cascaded_dumped.snap.rs:175:21
+    |
+175 |             0 => Ok(ExtMuxCascadedMuxAIndex::M0(ExtMuxCascadedMuxAM0{ raw: self.raw })),
+    |                     ^^^^^^^^^^^^^^^^^^^^^^^
+    |                     |
+    |                     use of undeclared type `ExtMuxCascadedMuxAIndex`
+    |                     help: an enum with a similar name exists: `ExtMuxCascadedMuxedA2MuxBIndex`
+
+error[E0433]: failed to resolve: use of undeclared type `ExtMuxCascadedMuxAIndex`
+   --> tests-snapshots/dbc-cantools/issue_184_extended_mux_cascaded_dumped.snap.rs:176:21
+    |
+176 |             1 => Ok(ExtMuxCascadedMuxAIndex::M1(ExtMuxCascadedMuxAM1{ raw: self.raw })),
+    |                     ^^^^^^^^^^^^^^^^^^^^^^^
+    |                     |
+    |                     use of undeclared type `ExtMuxCascadedMuxAIndex`
+    |                     help: an enum with a similar name exists: `ExtMuxCascadedMuxedA2MuxBIndex`
+
+error[E0277]: the trait bound `u16: From<i8>` is not satisfied
+   --> tests-snapshots/dbc-cantools/issue_184_extended_mux_cascaded_dumped.snap.rs:177:128
+    |
+177 |             multiplexor => Err(CanError::InvalidMultiplexor { message_id: ExtMuxCascaded::MESSAGE_ID, multiplexor: multiplexor.into() }),
+    |                                                                                                                                ^^^^ the trait `From<i8>` is not implemented for `u16`
+    |
+    = help: the following other types implement trait `From<T>`:
+              `u16` implements `From<Char>`
+              `u16` implements `From<bool>`
+              `u16` implements `From<u8>`
+    = note: required for `i8` to implement `Into<u16>`

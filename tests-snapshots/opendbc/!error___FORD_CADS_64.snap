@@ -1,0 +1,4 @@
+---
+source: tests/snapshots.rs
+---
+"could not generate Rust code"

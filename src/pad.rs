@@ -25,8 +25,8 @@ impl Write for PadAdapter<'_> {
                 self.buf.write_all(b"    ")?;
             }
 
-            let split = match s.iter().enumerate().find(|(_, byte)| **byte == b'\n') {
-                Some((pos, _)) => {
+            let split = match s.iter().position(|&v| v == b'\n') {
+                Some(pos) => {
                     self.on_newline = true;
                     pos.checked_add(1).unwrap()
                 }

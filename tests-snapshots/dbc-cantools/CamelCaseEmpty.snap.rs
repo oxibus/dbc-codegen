@@ -1,0 +1,166 @@
+// Generated code!
+//
+// Message definitions from file `CamelCaseEmpty`
+// Version: 
+
+#[allow(unused_imports)]
+use core::ops::BitOr;
+#[allow(unused_imports)]
+use bitvec::prelude::*;
+#[allow(unused_imports)]
+use embedded_can::{Id, StandardId, ExtendedId};
+
+/// All messages
+#[allow(
+    clippy::absurd_extreme_comparisons,
+    clippy::excessive_precision,
+    clippy::manual_range_contains,
+    clippy::unnecessary_cast,
+    clippy::useless_conversion,
+    unused_comparisons,
+    unused_variables,
+)]
+#[derive(Clone)]
+pub enum Messages {
+    /// Message1
+    Message1(Message1),
+}
+
+#[allow(
+    clippy::absurd_extreme_comparisons,
+    clippy::excessive_precision,
+    clippy::manual_range_contains,
+    clippy::unnecessary_cast,
+    clippy::useless_conversion,
+    unused_comparisons,
+    unused_variables,
+)]
+impl Messages {
+    /// Read message from CAN frame
+    #[inline(never)]
+    pub fn from_can_message(id: Id, payload: &[u8]) -> Result<Self, CanError> {
+        
+        let res = match id {
+            Message1::MESSAGE_ID => Messages::Message1(Message1::try_from(payload)?),
+            id => return Err(CanError::UnknownMessageId(id)),
+        };
+        Ok(res)
+    }
+}
+
+/// Message1
+///
+/// - Standard ID: 1024 (0x400)
+/// - Size: 5 bytes
+/// - Transmitter: TestNode
+#[derive(Clone, Copy)]
+pub struct Message1 {
+    raw: [u8; 5],
+}
+
+#[allow(
+    clippy::absurd_extreme_comparisons,
+    clippy::excessive_precision,
+    clippy::manual_range_contains,
+    clippy::unnecessary_cast,
+    clippy::useless_conversion,
+    unused_comparisons,
+    unused_variables,
+)]
+impl Message1 {
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0x400)});
+    
+    
+    /// Construct new Message1 from values
+    pub fn new() -> Result<Self, CanError> {
+        let res = Self { raw: [0u8; 5] };
+        Ok(res)
+    }
+    
+    /// Access message payload raw value
+    pub fn raw(&self) -> &[u8; 5] {
+        &self.raw
+    }
+    
+}
+
+impl core::convert::TryFrom<&[u8]> for Message1 {
+    type Error = CanError;
+    
+    #[inline(always)]
+    fn try_from(payload: &[u8]) -> Result<Self, Self::Error> {
+        if payload.len() != 5 { return Err(CanError::InvalidPayloadSize); }
+        let mut raw = [0u8; 5];
+        raw.copy_from_slice(&payload[..5]);
+        Ok(Self { raw })
+    }
+}
+
+impl embedded_can::Frame for Message1 {
+    fn new(id: impl Into<Id>, data: &[u8]) -> Option<Self> {
+        if id.into() != Self::MESSAGE_ID {
+            None
+        } else {
+            data.try_into().ok()
+        }
+    }
+
+    fn new_remote(_id: impl Into<Id>, _dlc: usize) -> Option<Self> {
+        unimplemented!()
+    }
+
+    fn is_extended(&self) -> bool {
+        match self.id() {
+            Id::Standard(_) => false,
+            Id::Extended(_) => true,
+        }
+    }
+
+    fn is_remote_frame(&self) -> bool {
+        false
+    }
+
+    fn id(&self) -> Id {
+        Self::MESSAGE_ID
+    }
+
+    fn dlc(&self) -> usize {
+        self.raw.len()
+    }
+
+    fn data(&self) -> &[u8] {
+        &self.raw
+    }
+}
+
+
+/// This is just to make testing easier
+#[allow(dead_code)]
+fn main() {}
+
+#[allow(dead_code)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum CanError {
+    UnknownMessageId(embedded_can::Id),
+    /// Signal parameter is not within the range
+    /// defined in the dbc
+    ParameterOutOfRange {
+        /// dbc message id
+        message_id: embedded_can::Id,
+    },
+    InvalidPayloadSize,
+    /// Multiplexor value not defined in the dbc
+    InvalidMultiplexor {
+        /// dbc message id
+        message_id: embedded_can::Id,
+        /// Multiplexor value not defined in the dbc
+        multiplexor: u16,
+    },
+}
+
+impl core::fmt::Display for CanError {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        write!(f, "{self:?}")
+    }
+}
+
