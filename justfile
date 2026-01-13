@@ -53,6 +53,11 @@ check:
     cargo check --workspace --all-features --all-targets
     cargo check --workspace --no-default-features --all-targets
 
+check-msrv:  (rustup-add-target 'thumbv7em-none-eabihf')
+    cargo check --all-features
+    cargo check --no-default-features
+    cargo check --package can-embedded --target thumbv7em-none-eabihf --no-default-features
+
 # Generate code coverage report to upload to codecov.io
 ci-coverage: env-info && \
             (coverage '--codecov --output-path target/llvm-cov/codecov.info')
@@ -66,7 +71,7 @@ ci-test: env-info test-fmt build build-thumbv7em-none-eabihf clippy test test-do
 ci-test-msrv:
     if [ ! -f Cargo.lock.bak ]; then  mv Cargo.lock Cargo.lock.bak ; fi
     cp Cargo.lock.msrv Cargo.lock
-    {{just}} env-info build build-thumbv7em-none-eabihf
+    {{just}} env-info check-msrv
     rm Cargo.lock
     mv Cargo.lock.bak Cargo.lock
 
@@ -128,7 +133,7 @@ msrv:  (cargo-install 'cargo-msrv')
 # Initialize Cargo.lock file with minimal versions of dependencies.
 msrv-init:  (cargo-install 'cargo-minimal-versions')
     rm -f Cargo.lock.msrv Cargo.lock
-    @if ! cargo minimal-versions check --workspace ; then \
+    @if ! cargo minimal-versions check ; then \
         echo "ERROR: Could not generate minimal Cargo.lock.msrv" ;\
         echo "       fix the lock file with 'cargo update ... --precise ...'" ;\
         echo "       make sure it passes 'just check' " ;\
