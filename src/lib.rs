@@ -150,11 +150,11 @@ pub fn codegen(config: Config<'_>, out: impl Write) -> Result<()> {
     Ok(())
 }
 
-fn render_dbc(mut w: impl Write, config: &Config<'_>, dbc: &Dbc) -> Result<()> {
-    render_root_enum(&mut w, dbc, config)?;
+fn render_dbc(w: &mut impl Write, config: &Config<'_>, dbc: &Dbc) -> Result<()> {
+    render_root_enum(w, dbc, config)?;
 
     for msg in get_relevant_messages(dbc) {
-        render_message(&mut w, config, msg, dbc)
+        render_message(w, config, msg, dbc)
             .with_context(|| format!("write message `{}`", msg.name))?;
         writeln!(w)?;
     }
@@ -162,20 +162,18 @@ fn render_dbc(mut w: impl Write, config: &Config<'_>, dbc: &Dbc) -> Result<()> {
     Ok(())
 }
 
-fn render_root_enum(mut w: impl Write, dbc: &Dbc, config: &Config<'_>) -> Result<()> {
+fn render_root_enum(w: &mut impl Write, dbc: &Dbc, config: &Config<'_>) -> Result<()> {
     writeln!(w, "/// All messages")?;
     writeln!(w, "{ALLOW_LINTS}")?;
-    config.write_allow_dead_code(&mut w)?;
+    config.write_allow_dead_code(w)?;
     writeln!(w, "#[derive(Clone)]")?;
-    config.impl_debug.fmt_attr(&mut w, "derive(Debug)")?;
-    config
-        .impl_defmt
-        .fmt_attr(&mut w, "derive(defmt::Format)")?;
-    config.impl_serde.fmt_attr(&mut w, "derive(Serialize)")?;
-    config.impl_serde.fmt_attr(&mut w, "derive(Deserialize)")?;
+    config.impl_debug.fmt_attr(w, "derive(Debug)")?;
+    config.impl_defmt.fmt_attr(w, "derive(defmt::Format)")?;
+    config.impl_serde.fmt_attr(w, "derive(Serialize)")?;
+    config.impl_serde.fmt_attr(w, "derive(Deserialize)")?;
     writeln!(w, "pub enum Messages {{")?;
     {
-        let mut w = PadAdapter::wrap(&mut w);
+        let mut w = PadAdapter::wrap(w);
         for msg in get_relevant_messages(dbc) {
             writeln!(w, "/// {}", msg.name)?;
             writeln!(w, "{0}({0}),", type_name(&msg.name))?;
@@ -185,16 +183,17 @@ fn render_root_enum(mut w: impl Write, dbc: &Dbc, config: &Config<'_>) -> Result
     writeln!(w)?;
 
     writeln!(w, "{ALLOW_LINTS}")?;
-    config.write_allow_dead_code(&mut w)?;
+    config.write_allow_dead_code(w)?;
     writeln!(w, "impl Messages {{")?;
     {
-        let mut w = PadAdapter::wrap(&mut w);
+        let mut w = PadAdapter::wrap(w);
         writeln!(w, "/// Read message from CAN frame")?;
         writeln!(w, "#[inline(never)]")?;
         writeln!(
             w,
-            "pub fn from_can_message(id: Id, payload: &[u8]) -> Result<Self, CanError> {{",
+            "pub fn from_can_message(id: Id, payload: &[u8]) -> Result<Self, CanError> {{"
         )?;
+
         {
             let mut w = PadAdapter::wrap(&mut w);
             writeln!(w)?;
@@ -222,7 +221,7 @@ fn render_root_enum(mut w: impl Write, dbc: &Dbc, config: &Config<'_>) -> Result
     Ok(())
 }
 
-fn render_message(mut w: impl Write, config: &Config<'_>, msg: &Message, dbc: &Dbc) -> Result<()> {
+fn render_message(w: &mut impl Write, config: &Config<'_>, msg: &Message, dbc: &Dbc) -> Result<()> {
     writeln!(w, "/// {}", msg.name)?;
     writeln!(w, "///")?;
     match msg.id {
@@ -240,11 +239,11 @@ fn render_message(mut w: impl Write, config: &Config<'_>, msg: &Message, dbc: &D
         }
     }
     writeln!(w, "#[derive(Clone, Copy)]")?;
-    config.impl_serde.fmt_attr(&mut w, "derive(Serialize)")?;
-    config.impl_serde.fmt_attr(&mut w, "derive(Deserialize)")?;
+    config.impl_serde.fmt_attr(w, "derive(Serialize)")?;
+    config.impl_serde.fmt_attr(w, "derive(Deserialize)")?;
     writeln!(w, "pub struct {} {{", type_name(&msg.name))?;
     {
-        let mut w = PadAdapter::wrap(&mut w);
+        let mut w = PadAdapter::wrap(w);
         config
             .impl_serde
             .fmt_attr(&mut w, "serde(with = \"serde_bytes\")")?;
@@ -254,10 +253,10 @@ fn render_message(mut w: impl Write, config: &Config<'_>, msg: &Message, dbc: &D
     writeln!(w)?;
 
     writeln!(w, "{ALLOW_LINTS}")?;
-    config.write_allow_dead_code(&mut w)?;
+    config.write_allow_dead_code(w)?;
     writeln!(w, "impl {} {{", type_name(&msg.name))?;
     {
-        let mut w = PadAdapter::wrap(&mut w);
+        let mut w = PadAdapter::wrap(w);
 
         writeln!(
             w,
@@ -278,19 +277,11 @@ fn render_message(mut w: impl Write, config: &Config<'_>, msg: &Message, dbc: &D
             .filter(|sig| signal_to_rust_type(sig) != "bool")
         {
             let typ = signal_to_rust_type(signal);
-            writeln!(
-                w,
-                "pub const {sig}_MIN: {typ} = {min}_{typ};",
-                sig = field_name(&signal.name).to_uppercase(),
-                min = signal.min,
-            )?;
-
-            writeln!(
-                w,
-                "pub const {sig}_MAX: {typ} = {max}_{typ};",
-                sig = field_name(&signal.name).to_uppercase(),
-                max = signal.max,
-            )?;
+            let sig = field_name(&signal.name).to_uppercase();
+            let min = signal.min;
+            let max = signal.max;
+            writeln!(w, "pub const {sig}_MIN: {typ} = {min}_{typ};")?;
+            writeln!(w, "pub const {sig}_MAX: {typ} = {max}_{typ};")?;
         }
         writeln!(w)?;
 
@@ -323,7 +314,7 @@ fn render_message(mut w: impl Write, config: &Config<'_>, msg: &Message, dbc: &D
                 w,
                 "let {}res = Self {{ raw: [0u8; {}] }};",
                 if msg.signals.is_empty() { "" } else { "mut " },
-                msg.size
+                msg.size,
             )?;
             for signal in &msg.signals {
                 if signal.multiplexer_indicator == MultiplexIndicator::Plain {
@@ -364,26 +355,23 @@ fn render_message(mut w: impl Write, config: &Config<'_>, msg: &Message, dbc: &D
     writeln!(w, "}}")?;
     writeln!(w)?;
 
-    writeln!(
-        w,
-        "impl core::convert::TryFrom<&[u8]> for {} {{",
-        type_name(&msg.name)
-    )?;
+    let typ = type_name(&msg.name);
+    writeln!(w, "impl core::convert::TryFrom<&[u8]> for {typ} {{")?;
     {
-        let mut w = PadAdapter::wrap(&mut w);
+        let mut w = PadAdapter::wrap(w);
         writeln!(w, "type Error = CanError;")?;
         writeln!(w)?;
         writeln!(w, "#[inline(always)]")?;
         writeln!(
             w,
-            "fn try_from(payload: &[u8]) -> Result<Self, Self::Error> {{"
+            "fn try_from(payload: &[u8]) -> Result<Self, Self::Error> {{",
         )?;
         {
             let mut w = PadAdapter::wrap(&mut w);
             writeln!(
                 w,
                 r"if payload.len() != {} {{ return Err(CanError::InvalidPayloadSize); }}",
-                msg.size
+                msg.size,
             )?;
             writeln!(w, "let mut raw = [0u8; {}];", msg.size)?;
             writeln!(w, "raw.copy_from_slice(&payload[..{}]);", msg.size)?;
@@ -394,13 +382,10 @@ fn render_message(mut w: impl Write, config: &Config<'_>, msg: &Message, dbc: &D
     writeln!(w, "}}")?;
     writeln!(w)?;
 
-    render_embedded_can_frame(&mut w, config, msg)?;
-
-    render_debug_impl(&mut w, config, msg)?;
-
-    render_defmt_impl(&mut w, config, msg)?;
-
-    render_arbitrary(&mut w, config, msg)?;
+    render_embedded_can_frame(w, config, msg)?;
+    render_debug_impl(w, config, msg)?;
+    render_defmt_impl(w, config, msg)?;
+    render_arbitrary(w, config, msg)?;
 
     let enums_for_this_message = dbc.value_descriptions.iter().filter_map(|x| {
         if let ValueDescription::Signal {
@@ -419,7 +404,7 @@ fn render_message(mut w: impl Write, config: &Config<'_>, msg: &Message, dbc: &D
         }
     });
     for (signal, variants) in enums_for_this_message {
-        write_enum(&mut w, config, signal, msg, variants.as_slice())?;
+        write_enum(w, config, signal, msg, variants.as_slice())?;
     }
 
     let multiplexor_signal = msg
@@ -435,7 +420,7 @@ fn render_message(mut w: impl Write, config: &Config<'_>, msg: &Message, dbc: &D
 }
 
 fn render_signal(
-    mut w: impl Write,
+    w: &mut impl Write,
     config: &Config<'_>,
     signal: &Signal,
     dbc: &Dbc,
@@ -468,7 +453,7 @@ fn render_signal(
                 // "f32" => |x: i64| format!("x if approx_eq!(f32, x, {x}_f32, ulps = 2)"),
                 _ => |x: i64| format!("{x}"),
             };
-            let mut w = PadAdapter::wrap(&mut w);
+            let mut w = PadAdapter::wrap(w);
             let read_fn = match signal.byte_order {
                 can_dbc::ByteOrder::LittleEndian => {
                     let (start, end) = le_start_end_bit(signal, msg)?;
@@ -493,17 +478,11 @@ fn render_signal(
                 let mut w = PadAdapter::wrap(&mut w);
                 for variant in variants {
                     let literal = match_on_raw_type(variant.id);
-                    writeln!(
-                        w,
-                        "{literal} => {type_name}::{},",
-                        enum_variant_name(&variant.description)
-                    )?;
+                    let variant_name = enum_variant_name(&variant.description);
+                    writeln!(w, "{literal} => {type_name}::{variant_name},")?;
                 }
-                writeln!(
-                    w,
-                    "_ => {type_name}::_Other(self.{}_raw()),",
-                    field_name(&signal.name)
-                )?;
+                let field_name = field_name(&signal.name);
+                writeln!(w, "_ => {type_name}::_Other(self.{field_name}_raw()),")?;
             }
             writeln!(w, "}}")?;
         }
@@ -517,7 +496,7 @@ fn render_signal(
             signal_to_rust_type(signal)
         )?;
         {
-            let mut w = PadAdapter::wrap(&mut w);
+            let mut w = PadAdapter::wrap(w);
             writeln!(w, "self.{}_raw()", field_name(&signal.name))?;
         }
         writeln!(w, "}}")?;
@@ -540,19 +519,19 @@ fn render_signal(
         signal_to_rust_type(signal)
     )?;
     {
-        let mut w = PadAdapter::wrap(&mut w);
+        let mut w = PadAdapter::wrap(w);
         signal_from_payload(&mut w, signal, msg).context("signal from payload")?;
     }
     writeln!(w, "}}")?;
     writeln!(w)?;
 
-    render_set_signal(&mut w, config, signal, msg)?;
+    render_set_signal(w, config, signal, msg)?;
 
     Ok(())
 }
 
 fn render_set_signal(
-    mut w: impl Write,
+    w: &mut impl Write,
     config: &Config<'_>,
     signal: &Signal,
     msg: &Message,
@@ -576,7 +555,7 @@ fn render_set_signal(
     )?;
 
     {
-        let mut w = PadAdapter::wrap(&mut w);
+        let mut w = PadAdapter::wrap(w);
 
         if signal.size != 1 {
             if let FeatureConfig::Gated(gate) = config.check_ranges {
@@ -584,21 +563,20 @@ fn render_set_signal(
             }
 
             if let FeatureConfig::Gated(..) | FeatureConfig::Always = config.check_ranges {
-                writeln!(
-                    w,
-                    r"if value < {min}_{typ} || {max}_{typ} < value {{",
-                    typ = signal_to_rust_type(signal),
-                    min = signal.min,
-                    max = signal.max,
-                )?;
+                let typ = signal_to_rust_type(signal);
+                let min = signal.min;
+                let max = signal.max;
+                writeln!(w, r"if value < {min}_{typ} || {max}_{typ} < value {{")?;
+
                 {
                     let mut w = PadAdapter::wrap(&mut w);
+                    let typ = type_name(&msg.name);
                     writeln!(
                         w,
-                        r"return Err(CanError::ParameterOutOfRange {{ message_id: {}::MESSAGE_ID }});",
-                        type_name(&msg.name)
+                        r"return Err(CanError::ParameterOutOfRange {{ message_id: {typ}::MESSAGE_ID }});",
                     )?;
                 }
+
                 writeln!(w, r"}}")?;
             }
         }
@@ -612,7 +590,7 @@ fn render_set_signal(
 }
 
 fn render_set_signal_multiplexer(
-    mut w: impl Write,
+    w: &mut impl Write,
     multiplexor: &Signal,
     msg: &Message,
     switch_index: u64,
@@ -627,17 +605,14 @@ fn render_set_signal_multiplexer(
     )?;
 
     {
-        let mut w = PadAdapter::wrap(&mut w);
+        let mut w = PadAdapter::wrap(w);
 
         writeln!(w, "let b0 = BitArray::<_, LocalBits>::new(self.raw);")?;
         writeln!(w, "let b1 = BitArray::<_, LocalBits>::new(value.raw);")?;
         writeln!(w, "self.raw = b0.bitor(b1).into_inner();")?;
-        writeln!(
-            w,
-            "self.set_{}({switch_index})?;",
-            field_name(&multiplexor.name),
-        )?;
-        writeln!(w, "Ok(())",)?;
+        let field_name = field_name(&multiplexor.name);
+        writeln!(w, "self.set_{field_name}({switch_index})?;")?;
+        writeln!(w, "Ok(())")?;
     }
 
     writeln!(w, "}}")?;
@@ -647,7 +622,7 @@ fn render_set_signal_multiplexer(
 }
 
 fn render_multiplexor_signal(
-    mut w: impl Write,
+    w: &mut impl Write,
     config: &Config<'_>,
     signal: &Signal,
     msg: &Message,
@@ -668,7 +643,7 @@ fn render_multiplexor_signal(
         signal_to_rust_type(signal)
     )?;
     {
-        let mut w = PadAdapter::wrap(&mut w);
+        let mut w = PadAdapter::wrap(w);
         signal_from_payload(&mut w, signal, msg).context("signal from payload")?;
     }
     writeln!(w, "}}")?;
@@ -678,7 +653,7 @@ fn render_multiplexor_signal(
         w,
         "pub fn {}(&mut self) -> Result<{}, CanError> {{",
         field_name(&signal.name),
-        multiplex_enum_name(msg, signal)?
+        multiplex_enum_name(msg, signal)?,
     )?;
 
     let multiplexer_indexes: BTreeSet<u64> = msg
@@ -695,7 +670,7 @@ fn render_multiplexor_signal(
         .collect();
 
     {
-        let mut w = PadAdapter::wrap(&mut w);
+        let mut w = PadAdapter::wrap(w);
         writeln!(w, "match self.{}_raw() {{", field_name(&signal.name))?;
 
         {
@@ -708,13 +683,13 @@ fn render_multiplexor_signal(
                     enum_name = multiplex_enum_name(msg, signal)?,
                     multiplexed_wrapper_name = multiplexed_enum_variant_wrapper_name(*multiplexer_index),
                     multiplexed_name =
-                        multiplexed_enum_variant_name(msg, signal, *multiplexer_index)?
+                        multiplexed_enum_variant_name(msg, signal, *multiplexer_index)?,
                 )?;
             }
             writeln!(
                 w,
                 "multiplexor => Err(CanError::InvalidMultiplexor {{ message_id: {}::MESSAGE_ID, multiplexor: multiplexor.into() }}),",
-                type_name(&msg.name)
+                type_name(&msg.name),
             )?;
         }
 
@@ -722,10 +697,10 @@ fn render_multiplexor_signal(
     }
     writeln!(w, "}}")?;
 
-    render_set_signal(&mut w, config, signal, msg)?;
+    render_set_signal(w, config, signal, msg)?;
 
     for switch_index in multiplexer_indexes {
-        render_set_signal_multiplexer(&mut w, signal, msg, switch_index)?;
+        render_set_signal_multiplexer(w, signal, msg, switch_index)?;
     }
 
     Ok(())
@@ -749,11 +724,11 @@ fn be_start_end_bit(signal: &Signal, msg: &Message) -> Result<(u64, u64)> {
 
     ensure!(
         start_bit <= msg_bits,
-        "signal starts at {start_bit}, but message is only {msg_bits} bits"
+        "signal starts at {start_bit}, but message is only {msg_bits} bits",
     );
     ensure!(
         end_bit <= msg_bits,
-        "signal ends at {end_bit}, but message is only {msg_bits} bits"
+        "signal ends at {end_bit}, but message is only {msg_bits} bits",
     );
     Ok((start_bit, end_bit))
 }
@@ -763,7 +738,7 @@ fn le_start_end_bit(signal: &Signal, msg: &Message) -> Result<(u64, u64)> {
     let start_bit = signal.start_bit;
     ensure!(
         start_bit <= msg_bits,
-        "signal starts at {start_bit}, but message is only {msg_bits} bits"
+        "signal starts at {start_bit}, but message is only {msg_bits} bits",
     );
 
     let end_bit = signal
@@ -772,12 +747,12 @@ fn le_start_end_bit(signal: &Signal, msg: &Message) -> Result<(u64, u64)> {
         .context("overflow calculating last bit position")?;
     ensure!(
         end_bit <= msg_bits,
-        "signal ends at {end_bit}, but message is only {msg_bits} bits"
+        "signal ends at {end_bit}, but message is only {msg_bits} bits",
     );
     Ok((start_bit, end_bit))
 }
 
-fn signal_from_payload(mut w: impl Write, signal: &Signal, msg: &Message) -> Result<()> {
+fn signal_from_payload(w: &mut impl Write, signal: &Signal, msg: &Message) -> Result<()> {
     let read_fn = match signal.byte_order {
         can_dbc::ByteOrder::LittleEndian => {
             let (start, end) = le_start_end_bit(signal, msg)?;
@@ -832,7 +807,7 @@ fn signal_from_payload(mut w: impl Write, signal: &Signal, msg: &Message) -> Res
     Ok(())
 }
 
-fn signal_to_payload(mut w: impl Write, signal: &Signal, msg: &Message) -> Result<()> {
+fn signal_to_payload(w: &mut impl Write, signal: &Signal, msg: &Message) -> Result<()> {
     if signal.size == 1 {
         // Map boolean to byte so we can pack it
         writeln!(w, "let value = value as u8;")?;
@@ -856,7 +831,7 @@ fn signal_to_payload(mut w: impl Write, signal: &Signal, msg: &Message) -> Resul
         writeln!(
             w,
             "    .ok_or(CanError::ParameterOutOfRange {{ message_id: {}::MESSAGE_ID }})?;",
-            type_name(&msg.name)
+            type_name(&msg.name),
         )?;
         writeln!(
             w,
@@ -879,14 +854,14 @@ fn signal_to_payload(mut w: impl Write, signal: &Signal, msg: &Message) -> Resul
             let (start, end) = le_start_end_bit(signal, msg)?;
             writeln!(
                 w,
-                r"self.raw.view_bits_mut::<Lsb0>()[{start}..{end}].store_le(value);"
+                r"self.raw.view_bits_mut::<Lsb0>()[{start}..{end}].store_le(value);",
             )?;
         }
         can_dbc::ByteOrder::BigEndian => {
             let (start, end) = be_start_end_bit(signal, msg)?;
             writeln!(
                 w,
-                r"self.raw.view_bits_mut::<Msb0>()[{start}..{end}].store_be(value);"
+                r"self.raw.view_bits_mut::<Msb0>()[{start}..{end}].store_be(value);",
             )?;
         }
     }
@@ -896,7 +871,7 @@ fn signal_to_payload(mut w: impl Write, signal: &Signal, msg: &Message) -> Resul
 }
 
 fn write_enum(
-    mut w: impl Write,
+    w: &mut impl Write,
     config: &Config<'_>,
     signal: &Signal,
     msg: &Message,
@@ -907,17 +882,15 @@ fn write_enum(
 
     writeln!(w, "/// Defined values for {}", signal.name)?;
     writeln!(w, "{ALLOW_LINTS}")?;
-    config.write_allow_dead_code(&mut w)?;
+    config.write_allow_dead_code(w)?;
     writeln!(w, "#[derive(Clone, Copy, PartialEq)]")?;
-    config.impl_debug.fmt_attr(&mut w, "derive(Debug)")?;
-    config
-        .impl_defmt
-        .fmt_attr(&mut w, "derive(defmt::Format)")?;
-    config.impl_serde.fmt_attr(&mut w, "derive(Serialize)")?;
-    config.impl_serde.fmt_attr(&mut w, "derive(Deserialize)")?;
+    config.impl_debug.fmt_attr(w, "derive(Debug)")?;
+    config.impl_defmt.fmt_attr(w, "derive(defmt::Format)")?;
+    config.impl_serde.fmt_attr(w, "derive(Serialize)")?;
+    config.impl_serde.fmt_attr(w, "derive(Deserialize)")?;
     writeln!(w, "pub enum {type_name} {{")?;
     {
-        let mut w = PadAdapter::wrap(&mut w);
+        let mut w = PadAdapter::wrap(w);
         for variant in variants {
             writeln!(w, "{},", enum_variant_name(&variant.description))?;
         }
@@ -934,7 +907,7 @@ fn write_enum(
             _ => |x: i64| format!("{x}"),
         };
 
-        let mut w = PadAdapter::wrap(&mut w);
+        let mut w = PadAdapter::wrap(w);
         writeln!(w, "fn from(val: {type_name}) -> {signal_rust_type} {{")?;
         {
             let mut w = PadAdapter::wrap(&mut w);
@@ -950,7 +923,7 @@ fn write_enum(
                         enum_variant_name(&variant.description),
                     )?;
                 }
-                writeln!(w, "{type_name}::_Other(x) => x,",)?;
+                writeln!(w, "{type_name}::_Other(x) => x,")?;
             }
             writeln!(w, "}}")?;
         }
@@ -1175,9 +1148,9 @@ fn multiplex_enum_name(msg: &Message, multiplexor: &Signal) -> Result<String> {
     ensure!(
         matches!(
             multiplexor.multiplexer_indicator,
-            MultiplexIndicator::Multiplexor
+            MultiplexIndicator::Multiplexor,
         ),
-        "signal {multiplexor:?} is not the multiplexor"
+        "signal {multiplexor:?} is not the multiplexor",
     );
     Ok(format!(
         "{}{}Index",
@@ -1194,9 +1167,9 @@ fn multiplexed_enum_variant_name(
     ensure!(
         matches!(
             multiplexor.multiplexer_indicator,
-            MultiplexIndicator::Multiplexor
+            MultiplexIndicator::Multiplexor,
         ),
-        "signal {multiplexor:?} is not the multiplexor"
+        "signal {multiplexor:?} is not the multiplexor",
     );
 
     Ok(format!(
@@ -1256,7 +1229,7 @@ impl embedded_can::Frame for {0} {{
     })
 }
 
-fn render_debug_impl(mut w: impl Write, config: &Config<'_>, msg: &Message) -> Result<()> {
+fn render_debug_impl(w: &mut impl Write, config: &Config<'_>, msg: &Message) -> Result<()> {
     match &config.impl_debug {
         FeatureConfig::Always => {}
         FeatureConfig::Gated(gate) => writeln!(w, r"#[cfg(feature = {gate:?})]")?,
@@ -1266,10 +1239,10 @@ fn render_debug_impl(mut w: impl Write, config: &Config<'_>, msg: &Message) -> R
     let typ = type_name(&msg.name);
     writeln!(w, r"impl core::fmt::Debug for {typ} {{")?;
     {
-        let mut w = PadAdapter::wrap(&mut w);
+        let mut w = PadAdapter::wrap(w);
         writeln!(
             w,
-            "fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {{"
+            "fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {{",
         )?;
         {
             let mut w = PadAdapter::wrap(&mut w);
@@ -1305,7 +1278,7 @@ fn render_debug_impl(mut w: impl Write, config: &Config<'_>, msg: &Message) -> R
     Ok(())
 }
 
-fn render_defmt_impl(mut w: impl Write, config: &Config<'_>, msg: &Message) -> Result<()> {
+fn render_defmt_impl(w: &mut impl Write, config: &Config<'_>, msg: &Message) -> Result<()> {
     match &config.impl_defmt {
         FeatureConfig::Always => {}
         FeatureConfig::Gated(gate) => writeln!(w, r"#[cfg(feature = {gate:?})]")?,
@@ -1315,7 +1288,7 @@ fn render_defmt_impl(mut w: impl Write, config: &Config<'_>, msg: &Message) -> R
     let typ = type_name(&msg.name);
     writeln!(w, r"impl defmt::Format for {typ} {{")?;
     {
-        let mut w = PadAdapter::wrap(&mut w);
+        let mut w = PadAdapter::wrap(w);
         writeln!(w, "fn format(&self, f: defmt::Formatter) {{")?;
         {
             let mut w = PadAdapter::wrap(&mut w);
@@ -1348,7 +1321,7 @@ fn render_defmt_impl(mut w: impl Write, config: &Config<'_>, msg: &Message) -> R
 }
 
 fn render_multiplexor_enums(
-    mut w: impl Write,
+    w: &mut impl Write,
     config: &Config<'_>,
     dbc: &Dbc,
     msg: &Message,
@@ -1372,29 +1345,25 @@ fn render_multiplexor_enums(
 
     writeln!(w, "/// Defined values for multiplexed signal {}", msg.name)?;
     writeln!(w, "{ALLOW_LINTS}")?;
-    config.write_allow_dead_code(&mut w)?;
+    config.write_allow_dead_code(w)?;
 
-    config.impl_debug.fmt_attr(&mut w, "derive(Debug)")?;
-    config
-        .impl_defmt
-        .fmt_attr(&mut w, "derive(defmt::Format)")?;
-    config.impl_serde.fmt_attr(&mut w, "derive(Serialize)")?;
-    config.impl_serde.fmt_attr(&mut w, "derive(Deserialize)")?;
-    writeln!(
-        w,
-        "pub enum {} {{",
-        multiplex_enum_name(msg, multiplexor_signal)?
-    )?;
+    config.impl_debug.fmt_attr(w, "derive(Debug)")?;
+    config.impl_defmt.fmt_attr(w, "derive(defmt::Format)")?;
+    config.impl_serde.fmt_attr(w, "derive(Serialize)")?;
+    config.impl_serde.fmt_attr(w, "derive(Deserialize)")?;
+
+    let enum_name = multiplex_enum_name(msg, multiplexor_signal)?;
+    writeln!(w, "pub enum {enum_name} {{")?;
 
     {
-        let mut w = PadAdapter::wrap(&mut w);
+        let mut w = PadAdapter::wrap(w);
         for switch_index in multiplexed_signals.keys() {
             writeln!(
                 w,
                 "{multiplexed_wrapper_name}({multiplexed_name}),",
                 multiplexed_wrapper_name = multiplexed_enum_variant_wrapper_name(*switch_index),
                 multiplexed_name =
-                    multiplexed_enum_variant_name(msg, multiplexor_signal, *switch_index)?
+                    multiplexed_enum_variant_name(msg, multiplexor_signal, *switch_index)?,
             )?;
         }
     }
@@ -1405,19 +1374,17 @@ fn render_multiplexor_enums(
         let struct_name = multiplexed_enum_variant_name(msg, multiplexor_signal, *switch_index)?;
 
         writeln!(w, "{ALLOW_LINTS}")?;
-        config.write_allow_dead_code(&mut w)?;
-        config.impl_debug.fmt_attr(&mut w, "derive(Debug)")?;
-        config
-            .impl_defmt
-            .fmt_attr(&mut w, "derive(defmt::Format)")?;
-        config.impl_serde.fmt_attr(&mut w, "derive(Serialize)")?;
-        config.impl_serde.fmt_attr(&mut w, "derive(Deserialize)")?;
+        config.write_allow_dead_code(w)?;
+        config.impl_debug.fmt_attr(w, "derive(Debug)")?;
+        config.impl_defmt.fmt_attr(w, "derive(defmt::Format)")?;
+        config.impl_serde.fmt_attr(w, "derive(Serialize)")?;
+        config.impl_serde.fmt_attr(w, "derive(Deserialize)")?;
         writeln!(w, r"#[derive(Default)]")?;
         writeln!(w, "pub struct {struct_name} {{ raw: [u8; {}] }}", msg.size)?;
         writeln!(w)?;
 
         writeln!(w, "{ALLOW_LINTS}")?;
-        config.write_allow_dead_code(&mut w)?;
+        config.write_allow_dead_code(w)?;
         writeln!(w, "impl {struct_name} {{")?;
 
         writeln!(
@@ -1427,7 +1394,7 @@ fn render_multiplexor_enums(
         )?;
 
         for signal in multiplexed_signals {
-            render_signal(&mut w, config, signal, dbc, msg)?;
+            render_signal(w, config, signal, dbc, msg)?;
         }
 
         writeln!(w, "}}")?;
@@ -1437,7 +1404,7 @@ fn render_multiplexor_enums(
     Ok(())
 }
 
-fn render_arbitrary(mut w: impl Write, config: &Config<'_>, msg: &Message) -> Result<()> {
+fn render_arbitrary(w: &mut impl Write, config: &Config<'_>, msg: &Message) -> Result<()> {
     match &config.impl_arbitrary {
         FeatureConfig::Always => {}
         FeatureConfig::Gated(gate) => writeln!(w, r"#[cfg(feature = {gate:?})]")?,
@@ -1445,12 +1412,9 @@ fn render_arbitrary(mut w: impl Write, config: &Config<'_>, msg: &Message) -> Re
     }
 
     writeln!(w, "{ALLOW_LINTS}")?;
-    config.write_allow_dead_code(&mut w)?;
-    writeln!(
-        w,
-        "impl<'a> Arbitrary<'a> for {typ} {{",
-        typ = type_name(&msg.name)
-    )?;
+    config.write_allow_dead_code(w)?;
+    let typ = type_name(&msg.name);
+    writeln!(w, "impl<'a> Arbitrary<'a> for {typ} {{")?;
     {
         let filtered_signals: Vec<&Signal> = msg
             .signals
@@ -1460,7 +1424,7 @@ fn render_arbitrary(mut w: impl Write, config: &Config<'_>, msg: &Message) -> Re
                     || signal.multiplexer_indicator == MultiplexIndicator::Multiplexor
             })
             .collect();
-        let mut w = PadAdapter::wrap(&mut w);
+        let mut w = PadAdapter::wrap(w);
         writeln!(
             w,
             "fn arbitrary({}u: &mut Unstructured<'a>) -> Result<Self, arbitrary::Error> {{",
@@ -1497,7 +1461,7 @@ fn render_arbitrary(mut w: impl Write, config: &Config<'_>, msg: &Message) -> Re
     Ok(())
 }
 
-fn render_error(mut w: impl Write, config: &Config<'_>) -> io::Result<()> {
+fn render_error(w: &mut impl Write, config: &Config<'_>) -> io::Result<()> {
     w.write_all(include_bytes!("./includes/errors.rs"))?;
 
     config.impl_error.fmt_cfg(w, |w| {
@@ -1505,8 +1469,8 @@ fn render_error(mut w: impl Write, config: &Config<'_>) -> io::Result<()> {
     })
 }
 
-fn render_arbitrary_helpers(mut w: impl Write, config: &Config<'_>) -> io::Result<()> {
-    config.impl_arbitrary.fmt_cfg(&mut w, |w| {
+fn render_arbitrary_helpers(w: &mut impl Write, config: &Config<'_>) -> io::Result<()> {
+    config.impl_arbitrary.fmt_cfg(&mut *w, |w| {
         config.write_allow_dead_code(w)?;
         writeln!(w, "trait UnstructuredFloatExt {{")?;
         writeln!(w, "    fn float_in_range(&mut self, range: core::ops::RangeInclusive<f32>) -> arbitrary::Result<f32>;")?;
@@ -1514,24 +1478,15 @@ fn render_arbitrary_helpers(mut w: impl Write, config: &Config<'_>) -> io::Resul
         writeln!(w)
     })?;
 
-    config.impl_arbitrary.fmt_cfg(&mut w, |w| {
-        writeln!(
-            w,
-            "impl UnstructuredFloatExt for arbitrary::Unstructured<'_> {{"
-        )?;
+    config.impl_arbitrary.fmt_cfg(w, |w| {
+        writeln!(w, "impl UnstructuredFloatExt for arbitrary::Unstructured<'_> {{")?;
         writeln!(w, "    fn float_in_range(&mut self, range: core::ops::RangeInclusive<f32>) -> arbitrary::Result<f32> {{")?;
         writeln!(w, "        let min = range.start();")?;
         writeln!(w, "        let max = range.end();")?;
         writeln!(w, "        let steps = u32::MAX;")?;
         writeln!(w, "        let factor = (max - min) / (steps as f32);")?;
-        writeln!(
-            w,
-            "        let random_int: u32 = self.int_in_range(0..=steps)?;"
-        )?;
-        writeln!(
-            w,
-            "        let random = min + factor * (random_int as f32);"
-        )?;
+        writeln!(w, "        let random_int: u32 = self.int_in_range(0..=steps)?;")?;
+        writeln!(w, "        let random = min + factor * (random_int as f32);")?;
         writeln!(w, "        Ok(random)")?;
         writeln!(w, "    }}")?;
         writeln!(w, "}}")?;
@@ -1545,17 +1500,13 @@ fn signal_to_arbitrary(signal: &Signal) -> String {
     if signal.size == 1 {
         "u.int_in_range(0..=1)? == 1".to_string()
     } else if signal_is_float_in_rust(signal) {
-        format!(
-            "u.float_in_range({min}_f32..={max}_f32)?",
-            min = signal.min,
-            max = signal.max,
-        )
+        let min = signal.min;
+        let max = signal.max;
+        format!("u.float_in_range({min}_f32..={max}_f32)?",)
     } else {
-        format!(
-            "u.int_in_range({min}..={max})?",
-            min = signal.min,
-            max = signal.max,
-        )
+        let min = signal.min;
+        let max = signal.max;
+        format!("u.int_in_range({min}..={max})?",)
     }
 }
 
@@ -1579,7 +1530,7 @@ impl Config<'_> {
 }
 
 impl FeatureConfig<'_> {
-    fn fmt_attr(&self, mut w: impl Write, attr: impl Display) -> io::Result<()> {
+    fn fmt_attr(&self, w: &mut impl Write, attr: impl Display) -> io::Result<()> {
         match self {
             FeatureConfig::Always => writeln!(w, "#[{attr}]"),
             FeatureConfig::Gated(gate) => writeln!(w, "#[cfg_attr(feature = {gate:?}, {attr})]"),
@@ -1587,11 +1538,7 @@ impl FeatureConfig<'_> {
         }
     }
 
-    fn fmt_cfg<W: Write>(
-        &self,
-        mut w: W,
-        f: impl FnOnce(&mut W) -> io::Result<()>,
-    ) -> io::Result<()> {
+    fn fmt_cfg<W: Write>(&self, mut w: W, f: impl FnOnce(W) -> io::Result<()>) -> io::Result<()> {
         match self {
             // If config is Never, return immediately without calling `f`
             FeatureConfig::Never => return Ok(()),
@@ -1605,7 +1552,7 @@ impl FeatureConfig<'_> {
             FeatureConfig::Always => {}
         }
 
-        f(&mut w)
+        f(w)
     }
 }
 
@@ -1633,7 +1580,7 @@ mod tests {
         assert_eq!(
             get_range_of_values(Signed, 0, 1, 0),
             None,
-            "0 bit signal should be invalid"
+            "0 bit signal should be invalid",
         );
     }
 
@@ -1656,12 +1603,12 @@ mod tests {
         assert_eq!(signal_params_to_rust_int(Signed, 63, 1, 0).unwrap(), "i64");
         assert_eq!(
             signal_params_to_rust_int(Unsigned, 64, -1, 0).unwrap(),
-            "i128"
+            "i128",
         );
         assert_eq!(
             signal_params_to_rust_int(Unsigned, 65, 1, 0),
             None,
-            "This shouldn't be valid in a DBC, it's more than 64 bits"
+            "This shouldn't be valid in a DBC, it's more than 64 bits",
         );
     }
 }
