@@ -1498,7 +1498,15 @@ fn render_arbitrary(mut w: impl Write, config: &Config<'_>, msg: &Message) -> Re
 }
 
 fn render_error(mut w: impl Write, config: &Config<'_>) -> io::Result<()> {
-    w.write_all(include_bytes!("./includes/errors.rs"))?;
+    let template = include_str!("./includes/errors.rs");
+
+    for (i, text) in template.split("//#[extra_derives]").enumerate() {
+        if i > 0 {
+            config.impl_defmt.fmt_attr(&mut w, "derive(defmt::Format)")?;
+            config.impl_serde.fmt_attr(&mut w, "derive(serde::Deserialize, serde::Serialize)")?;
+        }
+        w.write_all(text.as_bytes())?;
+    }
 
     config.impl_error.fmt_cfg(w, |w| {
         writeln!(w, "impl core::error::Error for CanError {{}}")
