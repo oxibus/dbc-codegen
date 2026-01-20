@@ -1,4 +1,16 @@
 ---
 source: tests/snapshots.rs
 ---
-"could not generate Rust code"
+Error {
+    context: "could not generate Rust code",
+    source: Error {
+        context: "write message `Message1`",
+        source: Error {
+            context: "write signal impl `Signal1`",
+            source: Error {
+                context: "signal from payload",
+                source: "signal ends at 9, but message is only 8 bits",
+            },
+        },
+    },
+}

@@ -74,12 +74,11 @@ impl Test {
                 .join(&self.path)
         })
     }
-    fn file_name(&self, is_error: bool) -> String {
-        if is_error {
-            format!("!error___{}", self.file_name)
-        } else {
-            format!("{}.rs", self.file_name)
-        }
+    fn file_name(&self) -> String {
+        format!("{}.rs", self.file_name)
+    }
+    fn err_file_name(&self) -> String {
+        format!("!error___{}", self.file_name)
     }
 }
 
@@ -157,8 +156,8 @@ fn parse_one_file([path]: [&Path; 1]) {
             },
             {
                 match result {
-                    Ok(v) => assert_binary_snapshot!(&test.file_name(is_err), v.as_bytes().to_vec()),
-                    Err(e) => assert_debug_snapshot!(test.file_name(is_err), e.to_string()),
+                    Ok(v) => assert_binary_snapshot!(&test.file_name(), v.as_bytes().to_vec()),
+                    Err(e) => assert_debug_snapshot!(test.err_file_name(), e),
                 }
             }
         }

@@ -1,4 +1,16 @@
 ---
 source: tests/snapshots.rs
 ---
-"could not generate Rust code"
+Error {
+    context: "could not generate Rust code",
+    source: Error {
+        context: "write message `HVAC`",
+        source: Error {
+            context: "write signal impl `NEW_SIGNAL_4`",
+            source: Error {
+                context: "signal from payload",
+                source: "signal ends at 68, but message is only 64 bits",
+            },
+        },
+    },
+}
