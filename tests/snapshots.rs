@@ -168,12 +168,8 @@ fn parse_one_file([path]: [&Path; 1]) {
 
 static BAD_TESTS: &[&str] = &[
     //
-    "bus_comment_bare.snap.rs",
-    "bus_comment_bare_out.snap.rs",
     "choices.snap.rs",
-    "cp1252.snap.rs",
     "empty_choice.snap.rs",
-    "empty_ns.snap.rs",
     "issue_184_extended_mux_cascaded.snap.rs",
     "issue_184_extended_mux_cascaded_dumped.snap.rs",
     "issue_184_extended_mux_independent_multiplexors.snap.rs",
@@ -182,7 +178,6 @@ static BAD_TESTS: &[&str] = &[
     "issue_184_extended_mux_multiple_values_dumped.snap.rs",
     "issue_199.snap.rs",
     "issue_199_extended.snap.rs",
-    "issue_62.snap.rs",
     "long_names_multiple_relations.snap.rs",
     "long_names_multiple_relations_dumped.snap.rs",
     "multiplex_2.snap.rs",

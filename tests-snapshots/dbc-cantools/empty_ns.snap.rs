@@ -37,11 +37,7 @@ impl Messages {
     /// Read message from CAN frame
     #[inline(never)]
     pub fn from_can_message(id: Id, payload: &[u8]) -> Result<Self, CanError> {
-        
-        let res = match id {
-            id => return Err(CanError::UnknownMessageId(id)),
-        };
-        Ok(res)
+        Err(CanError::UnknownMessageId(id))
     }
 }
 

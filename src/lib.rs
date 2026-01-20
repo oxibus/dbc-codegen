@@ -196,21 +196,26 @@ fn render_root_enum(w: &mut impl Write, dbc: &Dbc, config: &Config<'_>) -> Resul
 
         {
             let mut w = PadAdapter::wrap(&mut w);
-            writeln!(w)?;
-            writeln!(w, "let res = match id {{")?;
-            {
-                let mut w = PadAdapter::wrap(&mut w);
-                for msg in get_relevant_messages(dbc) {
-                    writeln!(
-                        w,
-                        "{0}::MESSAGE_ID => Messages::{0}({0}::try_from(payload)?),",
-                        type_name(&msg.name)
-                    )?;
+            let messages: Vec<_> = get_relevant_messages(dbc).collect();
+            if messages.is_empty() {
+                writeln!(w, "Err(CanError::UnknownMessageId(id))")?;
+            } else {
+                writeln!(w)?;
+                writeln!(w, "let res = match id {{")?;
+                {
+                    let mut w = PadAdapter::wrap(&mut w);
+                    for msg in messages {
+                        writeln!(
+                            w,
+                            "{0}::MESSAGE_ID => Messages::{0}({0}::try_from(payload)?),",
+                            type_name(&msg.name)
+                        )?;
+                    }
+                    writeln!(w, r"id => return Err(CanError::UnknownMessageId(id)),")?;
                 }
-                writeln!(w, r"id => return Err(CanError::UnknownMessageId(id)),")?;
+                writeln!(w, "}};")?;
+                writeln!(w, "Ok(res)")?;
             }
-            writeln!(w, "}};")?;
-            writeln!(w, "Ok(res)")?;
         }
 
         writeln!(w, "}}")?;
