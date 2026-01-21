@@ -92,14 +92,14 @@ impl Foo {
     /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn foo(&self) -> FooFoo {
-        let signal = self.raw.view_bits::<Lsb0>()[0..8].load_le::<u8>();
+        let signal = self.raw.view_bits::<Lsb0>()[0..8].load_le::<i8>();
         
         match signal {
-            6 => FooFoo::Reserved,
-            5 => FooFoo::Reserved,
+            6 => FooFoo::Reserved(6),
+            5 => FooFoo::Reserved(5),
             4 => FooFoo::Unused2,
-            3 => FooFoo::Unused,
-            2 => FooFoo::Unused,
+            3 => FooFoo::Unused(3),
+            2 => FooFoo::Unused(2),
             1 => FooFoo::XÄ,
             0 => FooFoo::WithSpace,
             -5 => FooFoo::ANegativeValue,
@@ -202,11 +202,9 @@ impl embedded_can::Frame for Foo {
 )]
 #[derive(Clone, Copy, PartialEq)]
 pub enum FooFoo {
-    Reserved,
-    Reserved,
+    Reserved(i8),
     Unused2,
-    Unused,
-    Unused,
+    Unused(i8),
     XÄ,
     WithSpace,
     ANegativeValue,
@@ -216,11 +214,9 @@ pub enum FooFoo {
 impl From<FooFoo> for i8 {
     fn from(val: FooFoo) -> i8 {
         match val {
-            FooFoo::Reserved => 6,
-            FooFoo::Reserved => 5,
+            FooFoo::Reserved(v) => v,
             FooFoo::Unused2 => 4,
-            FooFoo::Unused => 3,
-            FooFoo::Unused => 2,
+            FooFoo::Unused(v) => v,
             FooFoo::XÄ => 1,
             FooFoo::WithSpace => 0,
             FooFoo::ANegativeValue => -5,

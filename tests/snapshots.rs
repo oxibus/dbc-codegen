@@ -168,7 +168,6 @@ fn parse_one_file([path]: [&Path; 1]) {
 
 static BAD_TESTS: &[&str] = &[
     //
-    "choices.snap.rs",
     "empty_choice.snap.rs",
     "issue_184_extended_mux_cascaded.snap.rs",
     "issue_184_extended_mux_cascaded_dumped.snap.rs",
@@ -184,7 +183,6 @@ static BAD_TESTS: &[&str] = &[
     "multiplex_2_dumped.snap.rs",
     "padding_bit_order.snap.rs",
     "signed.snap.rs",
-    "vehicle.snap.rs",
     //
     "FORD_CADS.snap.rs",
     "bmw_e9x_e8x.snap.rs",
@@ -268,4 +266,30 @@ fn compile_test() {
             t.pass(path);
         }
     }
+}
+
+#[test]
+#[ignore = "Manual test, run with `just test-manual`"]
+fn single_file_manual_test() {
+    let test_path = Path::new("tests/fixtures/shared-test-files/dbc-cantools/choices.dbc");
+    let test = get_test_info(test_path);
+    let buffer = fs::read(test_path).unwrap();
+    let buffer = test.decode(&buffer);
+
+    let config = dbc_codegen::Config::builder()
+        .dbc_name(&test.file_name)
+        .dbc_content(&buffer)
+        .build();
+    let mut out = Vec::<u8>::new();
+    dbc_codegen::codegen(config, &mut out).unwrap();
+    let output = String::from_utf8(out).unwrap();
+
+    let out_path = PathBuf::from("./target/manual");
+    fs::create_dir_all(&out_path).unwrap();
+    let out_path = out_path.join("manual_test_output.rs");
+    fs::write(&out_path, output).unwrap();
+
+    env::set_var("CARGO_ENCODED_RUSTFLAGS", "--deny=warnings");
+    let t = trybuild::TestCases::new();
+    t.pass(out_path);
 }

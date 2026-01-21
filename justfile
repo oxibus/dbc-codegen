@@ -169,6 +169,10 @@ test-doc:  (docs '')
 test-fmt:
     cargo fmt --all -- --check
 
+# Run single manual test, usually used for debugging
+test-manual:
+    cargo test --all-features -- --ignored single_file_manual_test
+
 # Find unused dependencies. Uses `cargo-udeps`
 udeps:  (cargo-install 'cargo-udeps')
     cargo +nightly udeps --workspace --all-features --all-targets

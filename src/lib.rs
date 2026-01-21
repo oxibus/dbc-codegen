@@ -8,12 +8,15 @@
 )]
 
 use std::cmp::{max, min};
-use std::collections::{BTreeMap, BTreeSet};
+use std::collections::{BTreeMap, BTreeSet, HashMap};
 use std::fmt::Display;
 use std::io::{self, BufWriter, Write};
 
 use anyhow::{anyhow, ensure, Context, Result};
-use can_dbc::{Dbc, Message, MultiplexIndicator, Signal, ValDescription, ValueDescription};
+use can_dbc::MultiplexIndicator::{
+    MultiplexedSignal, Multiplexor, MultiplexorAndMultiplexedSignal, Plain,
+};
+use can_dbc::{Dbc, Message, Signal, ValDescription, ValueDescription};
 use heck::{ToPascalCase, ToSnakeCase};
 use pad::PadAdapter;
 use typed_builder::TypedBuilder;
@@ -295,8 +298,8 @@ fn render_message(w: &mut impl Write, config: &Config<'_>, msg: &Message, dbc: &
             .signals
             .iter()
             .filter_map(|signal| {
-                if signal.multiplexer_indicator == MultiplexIndicator::Plain
-                    || signal.multiplexer_indicator == MultiplexIndicator::Multiplexor
+                if signal.multiplexer_indicator == Plain
+                    || signal.multiplexer_indicator == Multiplexor
                 {
                     Some(format!(
                         "{}: {}",
@@ -322,11 +325,7 @@ fn render_message(w: &mut impl Write, config: &Config<'_>, msg: &Message, dbc: &
                 msg.size,
             )?;
             for signal in &msg.signals {
-                if signal.multiplexer_indicator == MultiplexIndicator::Plain {
-                    writeln!(w, "res.set_{0}({0})?;", field_name(&signal.name))?;
-                }
-
-                if signal.multiplexer_indicator == MultiplexIndicator::Multiplexor {
+                if matches!(signal.multiplexer_indicator, Plain | Multiplexor) {
                     writeln!(w, "res.set_{0}({0})?;", field_name(&signal.name))?;
                 }
             }
@@ -346,13 +345,12 @@ fn render_message(w: &mut impl Write, config: &Config<'_>, msg: &Message, dbc: &
 
         for signal in &msg.signals {
             match signal.multiplexer_indicator {
-                MultiplexIndicator::Plain => render_signal(&mut w, config, signal, dbc, msg)
+                Plain => render_signal(&mut w, config, signal, dbc, msg)
                     .with_context(|| format!("write signal impl `{}`", signal.name))?,
-                MultiplexIndicator::Multiplexor => {
+                Multiplexor => {
                     render_multiplexor_signal(&mut w, config, signal, msg)?;
                 }
-                MultiplexIndicator::MultiplexedSignal(_)
-                | MultiplexIndicator::MultiplexorAndMultiplexedSignal(_) => {}
+                MultiplexedSignal(_) | MultiplexorAndMultiplexedSignal(_) => {}
             }
         }
     }
@@ -415,7 +413,7 @@ fn render_message(w: &mut impl Write, config: &Config<'_>, msg: &Message, dbc: &
     let multiplexor_signal = msg
         .signals
         .iter()
-        .find(|s| s.multiplexer_indicator == MultiplexIndicator::Multiplexor);
+        .find(|s| s.multiplexer_indicator == Multiplexor);
 
     if let Some(multiplexor_signal) = multiplexor_signal {
         render_multiplexor_enums(w, config, dbc, msg, multiplexor_signal)?;
@@ -444,35 +442,32 @@ fn render_signal(
     writeln!(w, "/// - Unit: {:?}", signal.unit)?;
     writeln!(w, "/// - Receivers: {}", signal.receivers.join(", "))?;
     writeln!(w, "#[inline(always)]")?;
+    let fn_name = field_name(&signal.name);
     if let Some(variants) = dbc.value_descriptions_for_signal(msg.id, &signal.name) {
         let type_name = enum_name(msg, signal);
+        let signal_rust_type = signal_to_rust_type(signal);
+        let variant_infos = generate_variant_info(variants, &signal_rust_type);
 
-        writeln!(
-            w,
-            "pub fn {}(&self) -> {type_name} {{",
-            field_name(&signal.name),
-        )?;
+        writeln!(w, "pub fn {fn_name}(&self) -> {type_name} {{",)?;
         {
-            let match_on_raw_type = match signal_to_rust_type(signal).as_str() {
-                "bool" => |x: i64| format!("{x}"),
-                // "f32" => |x: i64| format!("x if approx_eq!(f32, x, {x}_f32, ulps = 2)"),
-                _ => |x: i64| format!("{x}"),
-            };
             let mut w = PadAdapter::wrap(w);
+
+            // Use signed type for loading when signal is signed and has negative values
+            let has_negative_values = variants.iter().any(|v| v.id < 0);
+            let typ = if signal.value_type == can_dbc::ValueType::Signed && has_negative_values {
+                signal_rust_type
+            } else {
+                signal_to_rust_uint(signal)
+            };
+
             let read_fn = match signal.byte_order {
                 can_dbc::ByteOrder::LittleEndian => {
                     let (start, end) = le_start_end_bit(signal, msg)?;
-                    format!(
-                        "self.raw.view_bits::<Lsb0>()[{start}..{end}].load_le::<{typ}>()",
-                        typ = signal_to_rust_uint(signal),
-                    )
+                    format!("self.raw.view_bits::<Lsb0>()[{start}..{end}].load_le::<{typ}>()")
                 }
                 can_dbc::ByteOrder::BigEndian => {
                     let (start, end) = be_start_end_bit(signal, msg)?;
-                    format!(
-                        "self.raw.view_bits::<Msb0>()[{start}..{end}].load_be::<{typ}>()",
-                        typ = signal_to_rust_uint(signal),
-                    )
+                    format!("self.raw.view_bits::<Msb0>()[{start}..{end}].load_be::<{typ}>()")
                 }
             };
 
@@ -481,13 +476,19 @@ fn render_signal(
             writeln!(w, "match signal {{")?;
             {
                 let mut w = PadAdapter::wrap(&mut w);
-                for variant in variants {
-                    let literal = match_on_raw_type(variant.id);
-                    let variant_name = enum_variant_name(&variant.description);
-                    writeln!(w, "{literal} => {type_name}::{variant_name},")?;
+                for info in &variant_infos {
+                    let literal = info.value;
+                    let variant = &info.base_name;
+                    match info.dup_type {
+                        DuplicateType::Unique => {
+                            writeln!(w, "{literal} => {type_name}::{variant},")?;
+                        }
+                        DuplicateType::FirstDuplicate | DuplicateType::Duplicate => {
+                            writeln!(w, "{literal} => {type_name}::{variant}({literal}),")?;
+                        }
+                    }
                 }
-                let field_name = field_name(&signal.name);
-                writeln!(w, "_ => {type_name}::_Other(self.{field_name}_raw()),")?;
+                writeln!(w, "_ => {type_name}::_Other(self.{fn_name}_raw()),")?;
             }
             writeln!(w, "}}")?;
         }
@@ -496,13 +497,12 @@ fn render_signal(
     } else {
         writeln!(
             w,
-            "pub fn {}(&self) -> {} {{",
-            field_name(&signal.name),
+            "pub fn {fn_name}(&self) -> {} {{",
             signal_to_rust_type(signal)
         )?;
         {
             let mut w = PadAdapter::wrap(w);
-            writeln!(w, "self.{}_raw()", field_name(&signal.name))?;
+            writeln!(w, "self.{fn_name}_raw()")?;
         }
         writeln!(w, "}}")?;
         writeln!(w)?;
@@ -519,8 +519,7 @@ fn render_signal(
     writeln!(w, "#[inline(always)]")?;
     writeln!(
         w,
-        "pub fn {}_raw(&self) -> {} {{",
-        field_name(&signal.name),
+        "pub fn {fn_name}_raw(&self) -> {} {{",
         signal_to_rust_type(signal)
     )?;
     {
@@ -546,7 +545,7 @@ fn render_set_signal(
 
     // To avoid accidentally changing the multiplexor value without changing
     // the signals accordingly this fn is kept private for multiplexors.
-    let visibility = if signal.multiplexer_indicator == MultiplexIndicator::Multiplexor {
+    let visibility = if signal.multiplexer_indicator == Multiplexor {
         ""
     } else {
         "pub "
@@ -665,7 +664,7 @@ fn render_multiplexor_signal(
         .signals
         .iter()
         .filter_map(|s| {
-            if let MultiplexIndicator::MultiplexedSignal(index) = &s.multiplexer_indicator {
+            if let MultiplexedSignal(index) = &s.multiplexer_indicator {
                 Some(index)
             } else {
                 None
@@ -885,6 +884,9 @@ fn write_enum(
     let type_name = enum_name(msg, signal);
     let signal_rust_type = signal_to_rust_type(signal);
 
+    // Generate variant info to handle duplicates with tuple variants
+    let variant_infos = generate_variant_info(variants, &signal_rust_type);
+
     writeln!(w, "/// Defined values for {}", signal.name)?;
     writeln!(w, "{ALLOW_LINTS}")?;
     config.write_allow_dead_code(w)?;
@@ -896,8 +898,13 @@ fn write_enum(
     writeln!(w, "pub enum {type_name} {{")?;
     {
         let mut w = PadAdapter::wrap(w);
-        for variant in variants {
-            writeln!(w, "{},", enum_variant_name(&variant.description))?;
+        for info in &variant_infos {
+            let variant = &info.base_name;
+            match info.dup_type {
+                DuplicateType::Unique => writeln!(w, "{variant},")?,
+                DuplicateType::FirstDuplicate => writeln!(w, "{variant}({}),", info.value_type)?,
+                DuplicateType::Duplicate => {}
+            }
         }
         writeln!(w, "_Other({signal_rust_type}),")?;
     }
@@ -916,17 +923,20 @@ fn write_enum(
         writeln!(w, "fn from(val: {type_name}) -> {signal_rust_type} {{")?;
         {
             let mut w = PadAdapter::wrap(&mut w);
-
             writeln!(w, "match val {{")?;
             {
                 let mut w = PadAdapter::wrap(&mut w);
-                for variant in variants {
-                    let literal = match_on_raw_type(variant.id);
-                    writeln!(
-                        w,
-                        "{type_name}::{} => {literal},",
-                        enum_variant_name(&variant.description),
-                    )?;
+                for info in &variant_infos {
+                    match info.dup_type {
+                        DuplicateType::Unique => {
+                            let literal = match_on_raw_type(info.value);
+                            writeln!(w, "{type_name}::{} => {literal},", info.base_name)?;
+                        }
+                        DuplicateType::FirstDuplicate => {
+                            writeln!(w, "{type_name}::{}(v) => v,", info.base_name)?;
+                        }
+                        DuplicateType::Duplicate => {}
+                    }
                 }
                 writeln!(w, "{type_name}::_Other(x) => x,")?;
             }
@@ -978,11 +988,8 @@ fn signal_params_to_rust_int(
     if signal_size > 64 {
         return None;
     }
-    let range = get_range_of_values(sign, signal_size, factor, offset);
-    match range {
-        Some((low, high)) => Some(range_to_rust_int(low, high)),
-        _ => None,
-    }
+    get_range_of_values(sign, signal_size, factor, offset)
+        .map(|(low, high)| range_to_rust_int(low, high))
 }
 
 /// Using the signal's parameters, find the range of values that it spans.
@@ -995,24 +1002,22 @@ fn get_range_of_values(
     if signal_size == 0 {
         return None;
     }
-    let low;
-    let high;
-    match sign {
-        can_dbc::ValueType::Signed => {
-            low = 1i128
+    let (low, high) = match sign {
+        can_dbc::ValueType::Signed => (
+            1i128
                 .checked_shl(signal_size.saturating_sub(1))
-                .and_then(|n| n.checked_mul(-1));
-            high = 1i128
+                .and_then(|n| n.checked_mul(-1)),
+            1i128
                 .checked_shl(signal_size.saturating_sub(1))
-                .and_then(|n| n.checked_sub(1));
-        }
-        can_dbc::ValueType::Unsigned => {
-            low = Some(0);
-            high = 1i128
+                .and_then(|n| n.checked_sub(1)),
+        ),
+        can_dbc::ValueType::Unsigned => (
+            Some(0),
+            1i128
                 .checked_shl(signal_size)
-                .and_then(|n| n.checked_sub(1));
-        }
-    }
+                .and_then(|n| n.checked_sub(1)),
+        ),
+    };
     let range1 = apply_factor_and_offset(low, factor, offset);
     let range2 = apply_factor_and_offset(high, factor, offset);
     match (range1, range2) {
@@ -1028,7 +1033,7 @@ fn apply_factor_and_offset(input: Option<i128>, factor: i64, offset: i64) -> Opt
 }
 
 /// Determine the smallest Rust integer type that can fit the range of values
-/// Only values derived from 64 bit integers are supported, i.e. the range [-2^64-1, 2^64-1]
+/// Only values derived from 64-bit integers are supported, i.e. the range [-2^64-1, 2^64-1]
 fn range_to_rust_int(low: i128, high: i128) -> String {
     let lower_bound: u8;
     let upper_bound: u8;
@@ -1067,33 +1072,28 @@ fn range_to_rust_int(low: i128, high: i128) -> String {
     format!("{sign}{size}")
 }
 
+/// Bit-width suffix for Rust int types (8, 16, 32, 64).
+fn signal_bit_size_suffix(size: u32) -> &'static str {
+    match size {
+        n if n <= 8 => "8",
+        n if n <= 16 => "16",
+        n if n <= 32 => "32",
+        _ => "64",
+    }
+}
+
 /// Determine the smallest rust integer that can fit the raw signal values.
 fn signal_to_rust_int(signal: &Signal) -> String {
     let sign = match signal.value_type {
         can_dbc::ValueType::Signed => "i",
         can_dbc::ValueType::Unsigned => "u",
     };
-
-    let size = match signal.size {
-        n if n <= 8 => "8",
-        n if n <= 16 => "16",
-        n if n <= 32 => "32",
-        _ => "64",
-    };
-
-    format!("{sign}{size}")
+    format!("{sign}{}", signal_bit_size_suffix(signal.size as u32))
 }
 
 /// Determine the smallest unsigned rust integer with no fewer bits than the signal.
 fn signal_to_rust_uint(signal: &Signal) -> String {
-    let size = match signal.size {
-        n if n <= 8 => "8",
-        n if n <= 16 => "16",
-        n if n <= 32 => "32",
-        _ => "64",
-    };
-
-    format!("u{size}")
+    format!("u{}", signal_bit_size_suffix(signal.size as u32))
 }
 
 #[allow(clippy::float_cmp)]
@@ -1128,6 +1128,60 @@ fn enum_variant_name(x: &str) -> String {
     type_name(x) // enum variant and type encoding are identical
 }
 
+enum DuplicateType {
+    Unique,
+    FirstDuplicate,
+    Duplicate,
+}
+
+/// Variant info for enum generation
+struct VariantInfo {
+    base_name: String,
+    value: i64,
+    dup_type: DuplicateType,
+    value_type: String,
+}
+
+/// Generate variant info for enum generation.
+/// For duplicates, uses tuple variants like `Reserved(u8)` instead of separate variants.
+fn generate_variant_info(variants: &[ValDescription], signal_rust_type: &str) -> Vec<VariantInfo> {
+    // First pass: count occurrences of each base name
+    let mut name_counts: HashMap<String, usize> = HashMap::new();
+    for variant in variants {
+        let base_name = enum_variant_name(&variant.description);
+        name_counts
+            .entry(base_name)
+            .and_modify(|c| *c = c.saturating_add(1))
+            .or_insert(1);
+    }
+
+    // Second pass: generate variant info
+    let mut variant_infos = Vec::new();
+    let mut seen_names: HashMap<String, usize> = HashMap::new();
+    for variant in variants {
+        let base_name = enum_variant_name(&variant.description);
+        let count = name_counts.get(&base_name).copied().unwrap_or(0);
+        let seen_count = seen_names.entry(base_name.clone()).or_insert(0);
+        *seen_count = (*seen_count).saturating_add(1);
+
+        let dup_type = if count == 1 {
+            DuplicateType::Unique
+        } else if *seen_count == 1 {
+            DuplicateType::FirstDuplicate
+        } else {
+            DuplicateType::Duplicate
+        };
+
+        variant_infos.push(VariantInfo {
+            base_name,
+            value: variant.id,
+            dup_type,
+            value_type: signal_rust_type.to_string(),
+        });
+    }
+    variant_infos
+}
+
 fn field_name(x: &str) -> String {
     sanitize_name(x, "x", ToSnakeCase::to_snake_case)
 }
@@ -1151,10 +1205,7 @@ fn multiplexed_enum_variant_wrapper_name(switch_index: u64) -> String {
 
 fn multiplex_enum_name(msg: &Message, multiplexor: &Signal) -> Result<String> {
     ensure!(
-        matches!(
-            multiplexor.multiplexer_indicator,
-            MultiplexIndicator::Multiplexor,
-        ),
+        matches!(multiplexor.multiplexer_indicator, Multiplexor,),
         "signal {multiplexor:?} is not the multiplexor",
     );
     Ok(format!(
@@ -1170,10 +1221,7 @@ fn multiplexed_enum_variant_name(
     switch_index: u64,
 ) -> Result<String> {
     ensure!(
-        matches!(
-            multiplexor.multiplexer_indicator,
-            MultiplexIndicator::Multiplexor,
-        ),
+        matches!(multiplexor.multiplexer_indicator, Multiplexor,),
         "signal {multiplexor:?} is not the multiplexor",
     );
 
@@ -1258,7 +1306,7 @@ fn render_debug_impl(w: &mut impl Write, config: &Config<'_>, msg: &Message) -> 
                 {
                     let mut w = PadAdapter::wrap(&mut w);
                     for signal in &msg.signals {
-                        if signal.multiplexer_indicator == MultiplexIndicator::Plain {
+                        if signal.multiplexer_indicator == Plain {
                             writeln!(
                                 w,
                                 r#".field("{field_name}", &self.{field_name}())"#,
@@ -1303,7 +1351,7 @@ fn render_defmt_impl(w: &mut impl Write, config: &Config<'_>, msg: &Message) -> 
                 write!(w, r#""{typ} {{{{"#)?;
                 {
                     for signal in &msg.signals {
-                        if signal.multiplexer_indicator == MultiplexIndicator::Plain {
+                        if signal.multiplexer_indicator == Plain {
                             write!(w, r" {}={{:?}}", signal.name)?;
                         }
                     }
@@ -1311,7 +1359,7 @@ fn render_defmt_impl(w: &mut impl Write, config: &Config<'_>, msg: &Message) -> 
                 writeln!(w, r#" }}}}","#)?;
 
                 for signal in &msg.signals {
-                    if signal.multiplexer_indicator == MultiplexIndicator::Plain {
+                    if signal.multiplexer_indicator == Plain {
                         writeln!(w, "self.{}(),", field_name(&signal.name))?;
                     }
                 }
@@ -1333,14 +1381,14 @@ fn render_multiplexor_enums(
     multiplexor_signal: &Signal,
 ) -> Result<()> {
     ensure!(
-        multiplexor_signal.multiplexer_indicator == MultiplexIndicator::Multiplexor,
+        multiplexor_signal.multiplexer_indicator == Multiplexor,
         "signal {} is not the multiplexor",
         multiplexor_signal.name,
     );
 
     let mut multiplexed_signals = BTreeMap::new();
     for signal in &msg.signals {
-        if let MultiplexIndicator::MultiplexedSignal(switch_index) = signal.multiplexer_indicator {
+        if let MultiplexedSignal(switch_index) = signal.multiplexer_indicator {
             multiplexed_signals
                 .entry(switch_index)
                 .and_modify(|v: &mut Vec<&Signal>| v.push(signal))
@@ -1425,8 +1473,7 @@ fn render_arbitrary(w: &mut impl Write, config: &Config<'_>, msg: &Message) -> R
             .signals
             .iter()
             .filter(|signal| {
-                signal.multiplexer_indicator == MultiplexIndicator::Plain
-                    || signal.multiplexer_indicator == MultiplexIndicator::Multiplexor
+                signal.multiplexer_indicator == Plain || signal.multiplexer_indicator == Multiplexor
             })
             .collect();
         let mut w = PadAdapter::wrap(w);
