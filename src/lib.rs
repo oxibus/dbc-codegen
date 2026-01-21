@@ -779,7 +779,12 @@ fn signal_from_payload(w: &mut impl Write, signal: &Signal, msg: &Message) -> Re
     writeln!(w)?;
 
     if signal.size == 1 {
-        writeln!(w, "signal == 1")?;
+        // inverted bit signal
+        if signal.factor == -1.0 && signal.offset == 1.0 {
+            writeln!(w, "signal == 0")?;
+        } else {
+            writeln!(w, "signal == 1")?;
+        }
     } else if signal_is_float_in_rust(signal) {
         // Scaling is always done on floats
         writeln!(w, "let factor = {}_f32;", signal.factor)?;
