@@ -1,5 +1,5 @@
 use std::env::var;
-use std::fs::{read_to_string, write};
+use std::fs::read_to_string;
 use std::path::PathBuf;
 
 use anyhow::Result;
@@ -11,7 +11,9 @@ fn main() -> Result<()> {
     println!("cargo:rerun-if-changed=../../src");
     println!("cargo:rerun-if-changed=../can-embedded/src");
 
-    let config = Config::builder()
+    let path = PathBuf::from(var("OUT_DIR")?).join("messages.rs");
+
+    Config::builder()
         .dbc_name("example.dbc")
         .dbc_content(&dbc_file)
         .debug_prints(true)
@@ -21,14 +23,6 @@ fn main() -> Result<()> {
         .impl_error(FeatureConfig::Gated("std"))
         .impl_arbitrary(FeatureConfig::Gated("arb"))
         .check_ranges(FeatureConfig::Always)
-        .build();
-
-    let mut out = Vec::new();
-    dbc_codegen::codegen(config, &mut out)?;
-    write(
-        PathBuf::from(var("OUT_DIR")?).join("messages.rs"),
-        String::from_utf8(out)?,
-    )?;
-
-    Ok(())
+        .build()
+        .write_to_file(path)
 }

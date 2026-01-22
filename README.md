@@ -37,30 +37,27 @@ Or put something like this into your `build.rs` file. Create a `Config` and pass
 
 
 ```rust,no_run
-use std::env;
+use std::env::var;
 use std::path::PathBuf;
-use std::fs;
+use std::fs::read_to_string;
 
-use dbc_codegen::{codegen, Config, FeatureConfig};
+use dbc_codegen::{Config, FeatureConfig};
 
 fn main() {
     let dbc_path = "../dbc-examples/example.dbc";
-    let dbc_file = fs::read_to_string(dbc_path).unwrap();
+    let dbc_file = read_to_string(dbc_path).unwrap();
     println!("cargo:rerun-if-changed={dbc_path}");
 
-    let config = Config::builder()
+    let path = PathBuf::from(var("OUT_DIR").unwrap()).join("messages.rs");
+
+    Config::builder()
         .dbc_name("example.dbc")
         .dbc_content(&dbc_file)
         //.impl_arbitrary(FeatureConfig::Gated("arbitrary")) // optional
         //.impl_debug(FeatureConfig::Always)                 // optional
-        .build();
-
-    let mut out = Vec::<u8>::new();
-    dbc_codegen::codegen(config, &mut out).expect("dbc-codegen failed");
-    fs::write(
-        PathBuf::from(env::var("OUT_DIR").unwrap()).join("messages.rs"),
-        String::from_utf8(out).unwrap(),
-    ).unwrap();
+        .build()
+        .write_to_file(path)
+        .unwrap();
 }
 ```
 

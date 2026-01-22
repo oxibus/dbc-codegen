@@ -10,7 +10,9 @@
 use std::cmp::{max, min};
 use std::collections::{BTreeMap, BTreeSet, HashMap};
 use std::fmt::Display;
+use std::fs::OpenOptions;
 use std::io::{self, BufWriter, Write};
+use std::path::Path;
 
 use anyhow::{anyhow, ensure, Context, Result};
 use can_dbc::MultiplexIndicator::{
@@ -102,8 +104,7 @@ pub enum FeatureConfig<'a> {
 }
 
 /// Write Rust structs matching DBC input description to `out` buffer
-#[allow(clippy::needless_pass_by_value)] // consider fixing
-pub fn codegen(config: Config<'_>, out: impl Write) -> Result<()> {
+fn codegen(config: &Config<'_>, out: impl Write) -> Result<()> {
     let dbc = Dbc::try_from(config.dbc_content).map_err(|e| {
         let msg = "Could not parse dbc file";
         if config.debug_prints {
@@ -139,15 +140,15 @@ pub fn codegen(config: Config<'_>, out: impl Write) -> Result<()> {
 
     writeln!(w)?;
 
-    render_dbc(&mut w, &config, &dbc).context("could not generate Rust code")?;
+    render_dbc(&mut w, config, &dbc).context("could not generate Rust code")?;
 
     writeln!(w)?;
     writeln!(w, "/// This is just to make testing easier")?;
     writeln!(w, "#[allow(dead_code)]")?;
     writeln!(w, "fn main() {{}}")?;
     writeln!(w)?;
-    render_error(&mut w, &config)?;
-    render_arbitrary_helpers(&mut w, &config)?;
+    render_error(&mut w, config)?;
+    render_arbitrary_helpers(&mut w, config)?;
     writeln!(w)?;
 
     Ok(())
@@ -1566,6 +1567,29 @@ fn message_ignored(message: &Message) -> bool {
 }
 
 impl Config<'_> {
+    /// Generate Rust structs matching DBC input description and return as String
+    pub fn generate(self) -> Result<String> {
+        let mut out = Vec::new();
+        self.write(&mut out)?;
+        Ok(String::from_utf8(out)?)
+    }
+
+    /// Generate Rust structs matching DBC input description and write to `out`
+    pub fn write(self, out: impl Write) -> Result<()> {
+        codegen(&self, out)
+    }
+
+    /// Generate Rust structs matching DBC input description and write to file at `path`
+    pub fn write_to_file<P: AsRef<Path>>(self, path: P) -> Result<()> {
+        let file = OpenOptions::new()
+            .write(true)
+            .truncate(true)
+            .create(true)
+            .open(path.as_ref())?;
+
+        self.write(file)
+    }
+
     fn write_allow_dead_code(&self, w: &mut impl Write) -> io::Result<()> {
         if self.allow_dead_code {
             writeln!(w, "{ALLOW_DEADCODE}")
