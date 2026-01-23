@@ -59,10 +59,10 @@ error[E0119]: conflicting implementations of trait `Frame` for type `MsgCaseTest
 error[E0592]: duplicate definitions with name `MESSAGE_ID`
    --> tests-snapshots/dbc-cantools/long_names_multiple_relations.snap.rs:627:5
     |
-627 |     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0x4)});
+627 |     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0x...
     |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ duplicate definitions for `MESSAGE_ID`
 ...
-711 |     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0x3)});
+711 |     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0x...
     |     -------------------------------------- other definition for `MESSAGE_ID`
 
 error[E0592]: duplicate definitions with name `new`
@@ -92,12 +92,12 @@ error[E0034]: multiple applicable items in scope
 note: candidate #1 is defined in an impl for the type `MsgCaseTest`
    --> tests-snapshots/dbc-cantools/long_names_multiple_relations.snap.rs:627:5
     |
-627 |     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0x4)});
+627 |     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0x...
     |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 note: candidate #2 is defined in an impl for the type `MsgCaseTest`
    --> tests-snapshots/dbc-cantools/long_names_multiple_relations.snap.rs:711:5
     |
-711 |     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0x3)});
+711 |     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0x...
     |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 error[E0034]: multiple applicable items in scope
@@ -109,12 +109,12 @@ error[E0034]: multiple applicable items in scope
 note: candidate #1 is defined in an impl for the type `MsgCaseTest`
    --> tests-snapshots/dbc-cantools/long_names_multiple_relations.snap.rs:627:5
     |
-627 |     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0x4)});
+627 |     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0x...
     |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 note: candidate #2 is defined in an impl for the type `MsgCaseTest`
    --> tests-snapshots/dbc-cantools/long_names_multiple_relations.snap.rs:711:5
     |
-711 |     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0x3)});
+711 |     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0x...
     |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 error[E0034]: multiple applicable items in scope
@@ -126,12 +126,12 @@ error[E0034]: multiple applicable items in scope
 note: candidate #1 is defined in an impl for the type `MsgCaseTest`
    --> tests-snapshots/dbc-cantools/long_names_multiple_relations.snap.rs:627:5
     |
-627 |     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0x4)});
+627 |     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0x...
     |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 note: candidate #2 is defined in an impl for the type `MsgCaseTest`
    --> tests-snapshots/dbc-cantools/long_names_multiple_relations.snap.rs:711:5
     |
-711 |     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0x3)});
+711 |     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0x...
     |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 error[E0034]: multiple applicable items in scope
@@ -143,12 +143,12 @@ error[E0034]: multiple applicable items in scope
 note: candidate #1 is defined in an impl for the type `MsgCaseTest`
    --> tests-snapshots/dbc-cantools/long_names_multiple_relations.snap.rs:627:5
     |
-627 |     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0x4)});
+627 |     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0x...
     |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 note: candidate #2 is defined in an impl for the type `MsgCaseTest`
    --> tests-snapshots/dbc-cantools/long_names_multiple_relations.snap.rs:711:5
     |
-711 |     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0x3)});
+711 |     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0x...
     |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 error[E0034]: multiple applicable items in scope
@@ -160,12 +160,12 @@ error[E0034]: multiple applicable items in scope
 note: candidate #1 is defined in an impl for the type `MsgCaseTest`
    --> tests-snapshots/dbc-cantools/long_names_multiple_relations.snap.rs:627:5
     |
-627 |     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0x4)});
+627 |     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0x...
     |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 note: candidate #2 is defined in an impl for the type `MsgCaseTest`
    --> tests-snapshots/dbc-cantools/long_names_multiple_relations.snap.rs:711:5
     |
-711 |     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0x3)});
+711 |     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0x...
     |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 error[E0034]: multiple applicable items in scope
@@ -177,10 +177,10 @@ error[E0034]: multiple applicable items in scope
 note: candidate #1 is defined in an impl for the type `MsgCaseTest`
    --> tests-snapshots/dbc-cantools/long_names_multiple_relations.snap.rs:627:5
     |
-627 |     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0x4)});
+627 |     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0x...
     |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 note: candidate #2 is defined in an impl for the type `MsgCaseTest`
    --> tests-snapshots/dbc-cantools/long_names_multiple_relations.snap.rs:711:5
     |
-711 |     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0x3)});
+711 |     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0x...
     |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

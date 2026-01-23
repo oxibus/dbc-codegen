@@ -25,6 +25,7 @@ jobs:
         uses: Swatinem/rust-cache@v2
       - uses: taiki-e/install-action@v2
         with: { tool: 'just,cargo-binstall' }
+      - uses: dtolnay/rust-toolchain@stable
       - run: just ci-test
 
   test-msrv:
