@@ -1,4 +1,4 @@
-error[E0412]: cannot find type `ExtMuxIndepMultiplexorsMuxAIndex` in this scope
+error[E0425]: cannot find type `ExtMuxIndepMultiplexorsMuxAIndex` in this scope
    --> tests-snapshots/dbc-cantools/issue_184_extended_mux_independent_multiplexors.snap.rs:186:39
     |
 186 |     pub fn mux_a(&mut self) -> Result<ExtMuxIndepMultiplexorsMuxAIndex, CanError> {
@@ -44,7 +44,7 @@ error[E0422]: cannot find struct, variant or union type `ExtMuxIndepMultiplexors
 498 | pub struct ExtMuxIndepMultiplexorsMuxBM2 { raw: [u8; 8] }
     | ---------------------------------------- similarly named struct `ExtMuxIndepMultiplexorsMuxBM2` defined here
 
-error[E0412]: cannot find type `ExtMuxIndepMultiplexorsMuxAM0` in this scope
+error[E0425]: cannot find type `ExtMuxIndepMultiplexorsMuxAM0` in this scope
    --> tests-snapshots/dbc-cantools/issue_184_extended_mux_independent_multiplexors.snap.rs:212:37
     |
 212 |     pub fn set_m0(&mut self, value: ExtMuxIndepMultiplexorsMuxAM0) -> Result<(), CanError> {
@@ -53,7 +53,7 @@ error[E0412]: cannot find type `ExtMuxIndepMultiplexorsMuxAM0` in this scope
 316 | pub struct ExtMuxIndepMultiplexorsMuxBM0 { raw: [u8; 8] }
     | ---------------------------------------- similarly named struct `ExtMuxIndepMultiplexorsMuxBM0` defined here
 
-error[E0412]: cannot find type `ExtMuxIndepMultiplexorsMuxAM1` in this scope
+error[E0425]: cannot find type `ExtMuxIndepMultiplexorsMuxAM1` in this scope
    --> tests-snapshots/dbc-cantools/issue_184_extended_mux_independent_multiplexors.snap.rs:222:37
     |
 222 |     pub fn set_m1(&mut self, value: ExtMuxIndepMultiplexorsMuxAM1) -> Result<(), CanError> {
@@ -62,7 +62,7 @@ error[E0412]: cannot find type `ExtMuxIndepMultiplexorsMuxAM1` in this scope
 385 | pub struct ExtMuxIndepMultiplexorsMuxBM1 { raw: [u8; 8] }
     | ---------------------------------------- similarly named struct `ExtMuxIndepMultiplexorsMuxBM1` defined here
 
-error[E0412]: cannot find type `ExtMuxIndepMultiplexorsMuxAM2` in this scope
+error[E0425]: cannot find type `ExtMuxIndepMultiplexorsMuxAM2` in this scope
    --> tests-snapshots/dbc-cantools/issue_184_extended_mux_independent_multiplexors.snap.rs:232:37
     |
 232 |     pub fn set_m2(&mut self, value: ExtMuxIndepMultiplexorsMuxAM2) -> Result<(), CanError> {
@@ -101,14 +101,24 @@ error[E0592]: duplicate definitions with name `set_m2`
 error[E0277]: the trait bound `u16: From<i8>` is not satisfied
    --> tests-snapshots/dbc-cantools/issue_184_extended_mux_independent_multiplexors.snap.rs:120:137
     |
-120 | ...s::MESSAGE_ID, multiplexor: multiplexor.into() }),
-    |                                            ^^^^ the trait `From<i8>` is not implemented for `u16`
+120 |             multiplexor => Err(CanError::InvalidMultiplexor { message_id: ExtMuxIndepMultiplexors::MESSAGE_ID, multiplexor: multiplexor.into() }),
+    |                                                                                                                                         ^^^^ the trait `From<i8>` is not implemented for `u16`
     |
-    = help: the following other types implement trait `From<T>`:
-              `u16` implements `From<Char>`
-              `u16` implements `From<bool>`
-              `u16` implements `From<u8>`
+help: the following other types implement trait `From<T>`
+   --> $RUST/core/src/ascii/ascii_char.rs
+    |
+    | into_int_impl!(u8 u16 u32 u64 u128 char);
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `u16` implements `From<Char>`
+    |
+   ::: $RUST/core/src/convert/num.rs
+    |
+    | impl_from!(bool => u16);
+    | ^^^^^^^^^^^^^^^^^^^^^^^ `u16` implements `From<bool>`
+...
+    | impl_from!(u8 => u16, #[stable(feature = "lossless_int_conv", since = "1.5.0")]);
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `u16` implements `From<u8>`
     = note: required for `i8` to implement `Into<u16>`
+    = note: this error originates in the macro `into_int_impl` which comes from the expansion of the macro `impl_from` (in Nightly builds, run with -Z macro-backtrace for more info)
 
 error[E0433]: failed to resolve: use of undeclared type `ExtMuxIndepMultiplexorsMuxAIndex`
    --> tests-snapshots/dbc-cantools/issue_184_extended_mux_independent_multiplexors.snap.rs:188:21
@@ -140,11 +150,21 @@ error[E0433]: failed to resolve: use of undeclared type `ExtMuxIndepMultiplexors
 error[E0277]: the trait bound `u16: From<i8>` is not satisfied
    --> tests-snapshots/dbc-cantools/issue_184_extended_mux_independent_multiplexors.snap.rs:191:137
     |
-191 | ...s::MESSAGE_ID, multiplexor: multiplexor.into() }),
-    |                                            ^^^^ the trait `From<i8>` is not implemented for `u16`
+191 |             multiplexor => Err(CanError::InvalidMultiplexor { message_id: ExtMuxIndepMultiplexors::MESSAGE_ID, multiplexor: multiplexor.into() }),
+    |                                                                                                                                         ^^^^ the trait `From<i8>` is not implemented for `u16`
     |
-    = help: the following other types implement trait `From<T>`:
-              `u16` implements `From<Char>`
-              `u16` implements `From<bool>`
-              `u16` implements `From<u8>`
+help: the following other types implement trait `From<T>`
+   --> $RUST/core/src/ascii/ascii_char.rs
+    |
+    | into_int_impl!(u8 u16 u32 u64 u128 char);
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `u16` implements `From<Char>`
+    |
+   ::: $RUST/core/src/convert/num.rs
+    |
+    | impl_from!(bool => u16);
+    | ^^^^^^^^^^^^^^^^^^^^^^^ `u16` implements `From<bool>`
+...
+    | impl_from!(u8 => u16, #[stable(feature = "lossless_int_conv", since = "1.5.0")]);
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `u16` implements `From<u8>`
     = note: required for `i8` to implement `Into<u16>`
+    = note: this error originates in the macro `into_int_impl` which comes from the expansion of the macro `impl_from` (in Nightly builds, run with -Z macro-backtrace for more info)

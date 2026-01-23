@@ -1,3 +1,0 @@
-[toolchain]
-components = ["rust-src"]
-channel = "1.92.0"
