@@ -117,8 +117,8 @@ error[E0592]: duplicate definitions with name `set_m2`
 error[E0277]: the trait bound `u16: From<i8>` is not satisfied
    --> tests-snapshots/dbc-cantools/multiplex_2.snap.rs:121:120
     |
-121 | ...exor: multiplexor.into() }),
-    |                      ^^^^ the trait `From<i8>` is not implemented for `u16`
+121 |             multiplexor => Err(CanError::InvalidMultiplexor { message_id: Shared::MESSAGE_ID, multiplexor: multiplexor.into() }),
+    |                                                                                                                        ^^^^ the trait `From<i8>` is not implemented for `u16`
     |
 help: the following other types implement trait `From<T>`
    --> $RUST/core/src/ascii/ascii_char.rs
@@ -139,8 +139,8 @@ help: the following other types implement trait `From<T>`
 error[E0277]: the trait bound `u16: From<i8>` is not satisfied
    --> tests-snapshots/dbc-cantools/multiplex_2.snap.rs:425:120
     |
-425 | ...exor: multiplexor.into() }),
-    |                      ^^^^ the trait `From<i8>` is not implemented for `u16`
+425 |             multiplexor => Err(CanError::InvalidMultiplexor { message_id: Normal::MESSAGE_ID, multiplexor: multiplexor.into() }),
+    |                                                                                                                        ^^^^ the trait `From<i8>` is not implemented for `u16`
     |
 help: the following other types implement trait `From<T>`
    --> $RUST/core/src/ascii/ascii_char.rs
@@ -161,8 +161,8 @@ help: the following other types implement trait `From<T>`
 error[E0277]: the trait bound `u16: From<i8>` is not satisfied
    --> tests-snapshots/dbc-cantools/multiplex_2.snap.rs:743:122
     |
-743 | ...exor: multiplexor.into() }),
-    |                      ^^^^ the trait `From<i8>` is not implemented for `u16`
+743 |             multiplexor => Err(CanError::InvalidMultiplexor { message_id: Extended::MESSAGE_ID, multiplexor: multiplexor.into() }),
+    |                                                                                                                          ^^^^ the trait `From<i8>` is not implemented for `u16`
     |
 help: the following other types implement trait `From<T>`
    --> $RUST/core/src/ascii/ascii_char.rs
@@ -210,8 +210,8 @@ error[E0433]: failed to resolve: use of undeclared type `ExtendedS0Index`
 error[E0277]: the trait bound `u16: From<i8>` is not satisfied
    --> tests-snapshots/dbc-cantools/multiplex_2.snap.rs:814:122
     |
-814 | ...exor: multiplexor.into() }),
-    |                      ^^^^ the trait `From<i8>` is not implemented for `u16`
+814 |             multiplexor => Err(CanError::InvalidMultiplexor { message_id: Extended::MESSAGE_ID, multiplexor: multiplexor.into() }),
+    |                                                                                                                          ^^^^ the trait `From<i8>` is not implemented for `u16`
     |
 help: the following other types implement trait `From<T>`
    --> $RUST/core/src/ascii/ascii_char.rs

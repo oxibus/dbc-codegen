@@ -110,10 +110,10 @@ error[E0433]: failed to resolve: use of undeclared type `CruiseButtonsCruiseButt
 error: unreachable pattern
   --> tests-snapshots/dbc-cantools/issue_199.snap.rs:65:13
    |
-64 | ...   DriverDoorStatus::MESSAGE_ID => Messages::DriverDoorStatus(DriverDoorStatus::try_from(payl...
-   |       ---------------------------- matches all the relevant values
-65 | ...   Chime::MESSAGE_ID => Messages::Chime(Chime::try_from(payload)?),
-   |       ^^^^^^^^^^^^^^^^^ no value can reach this
+64 |             DriverDoorStatus::MESSAGE_ID => Messages::DriverDoorStatus(DriverDoorStatus::try_from(payload)?),
+   |             ---------------------------- matches all the relevant values
+65 |             Chime::MESSAGE_ID => Messages::Chime(Chime::try_from(payload)?),
+   |             ^^^^^^^^^^^^^^^^^ no value can reach this
    |
    = note: `-D unreachable-patterns` implied by `-D warnings`
    = help: to override `-D warnings` add `#[allow(unreachable_patterns)]`
@@ -121,47 +121,47 @@ error: unreachable pattern
 error: unreachable pattern
   --> tests-snapshots/dbc-cantools/issue_199.snap.rs:67:13
    |
-64 | ...   DriverDoorStatus::MESSAGE_ID => Messages::DriverDoorStatus(DriverDoorStatus::try_from(payl...
-   |       ---------------------------- matches all the relevant values
+64 |             DriverDoorStatus::MESSAGE_ID => Messages::DriverDoorStatus(DriverDoorStatus::try_from(payload)?),
+   |             ---------------------------- matches all the relevant values
 ...
-67 | ...   SteeringWheelAngle::MESSAGE_ID => Messages::SteeringWheelAngle(SteeringWheelAngle::try_fro...
-   |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no value can reach this
+67 |             SteeringWheelAngle::MESSAGE_ID => Messages::SteeringWheelAngle(SteeringWheelAngle::try_from(payload)?),
+   |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no value can reach this
 
 error: unreachable pattern
   --> tests-snapshots/dbc-cantools/issue_199.snap.rs:68:13
    |
-66 | ...   BlinkerStatus::MESSAGE_ID => Messages::BlinkerStatus(BlinkerStatus::try_from(payload)?),
-   |       ------------------------- matches all the relevant values
-67 | ...   SteeringWheelAngle::MESSAGE_ID => Messages::SteeringWheelAngle(SteeringWheelAngle::try_fro...
-68 | ...   GearShifter::MESSAGE_ID => Messages::GearShifter(GearShifter::try_from(payload)?),
-   |       ^^^^^^^^^^^^^^^^^^^^^^^ no value can reach this
+66 |             BlinkerStatus::MESSAGE_ID => Messages::BlinkerStatus(BlinkerStatus::try_from(payload)?),
+   |             ------------------------- matches all the relevant values
+67 |             SteeringWheelAngle::MESSAGE_ID => Messages::SteeringWheelAngle(SteeringWheelAngle::try_from(payload)?),
+68 |             GearShifter::MESSAGE_ID => Messages::GearShifter(GearShifter::try_from(payload)?),
+   |             ^^^^^^^^^^^^^^^^^^^^^^^ no value can reach this
 
 error: unreachable pattern
   --> tests-snapshots/dbc-cantools/issue_199.snap.rs:70:13
    |
-64 | ...   DriverDoorStatus::MESSAGE_ID => Messages::DriverDoorStatus(DriverDoorStatus::try_from(payl...
-   |       ---------------------------- matches all the relevant values
+64 |             DriverDoorStatus::MESSAGE_ID => Messages::DriverDoorStatus(DriverDoorStatus::try_from(payload)?),
+   |             ---------------------------- matches all the relevant values
 ...
-70 | ...   BrakePedal::MESSAGE_ID => Messages::BrakePedal(BrakePedal::try_from(payload)?),
-   |       ^^^^^^^^^^^^^^^^^^^^^^ no value can reach this
+70 |             BrakePedal::MESSAGE_ID => Messages::BrakePedal(BrakePedal::try_from(payload)?),
+   |             ^^^^^^^^^^^^^^^^^^^^^^ no value can reach this
 
 error: unreachable pattern
   --> tests-snapshots/dbc-cantools/issue_199.snap.rs:72:13
    |
-64 | ...   DriverDoorStatus::MESSAGE_ID => Messages::DriverDoorStatus(DriverDoorStatus::try_from(payl...
-   |       ---------------------------- matches all the relevant values
+64 |             DriverDoorStatus::MESSAGE_ID => Messages::DriverDoorStatus(DriverDoorStatus::try_from(payload)?),
+   |             ---------------------------- matches all the relevant values
 ...
-72 | ...   VehicleSpeed::MESSAGE_ID => Messages::VehicleSpeed(VehicleSpeed::try_from(payload)?),
-   |       ^^^^^^^^^^^^^^^^^^^^^^^^ no value can reach this
+72 |             VehicleSpeed::MESSAGE_ID => Messages::VehicleSpeed(VehicleSpeed::try_from(payload)?),
+   |             ^^^^^^^^^^^^^^^^^^^^^^^^ no value can reach this
 
 error: unreachable pattern
   --> tests-snapshots/dbc-cantools/issue_199.snap.rs:73:13
    |
-71 | ...   WheelSpeed::MESSAGE_ID => Messages::WheelSpeed(WheelSpeed::try_from(payload)?),
-   |       ---------------------- matches all the relevant values
-72 | ...   VehicleSpeed::MESSAGE_ID => Messages::VehicleSpeed(VehicleSpeed::try_from(payload)?),
-73 | ...   CruiseButtons::MESSAGE_ID => Messages::CruiseButtons(CruiseButtons::try_from(payload)?),
-   |       ^^^^^^^^^^^^^^^^^^^^^^^^^ no value can reach this
+71 |             WheelSpeed::MESSAGE_ID => Messages::WheelSpeed(WheelSpeed::try_from(payload)?),
+   |             ---------------------- matches all the relevant values
+72 |             VehicleSpeed::MESSAGE_ID => Messages::VehicleSpeed(VehicleSpeed::try_from(payload)?),
+73 |             CruiseButtons::MESSAGE_ID => Messages::CruiseButtons(CruiseButtons::try_from(payload)?),
+   |             ^^^^^^^^^^^^^^^^^^^^^^^^^ no value can reach this
 
 error: unreachable pattern
     --> tests-snapshots/dbc-cantools/issue_199.snap.rs:2479:13

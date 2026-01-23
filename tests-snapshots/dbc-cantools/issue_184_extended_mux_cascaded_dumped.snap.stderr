@@ -74,8 +74,8 @@ error[E0592]: duplicate definitions with name `set_m1`
 error[E0277]: the trait bound `u16: From<i8>` is not satisfied
    --> tests-snapshots/dbc-cantools/issue_184_extended_mux_cascaded_dumped.snap.rs:117:128
     |
-117 | ...exor: multiplexor.into() }),
-    |                      ^^^^ the trait `From<i8>` is not implemented for `u16`
+117 |             multiplexor => Err(CanError::InvalidMultiplexor { message_id: ExtMuxCascaded::MESSAGE_ID, multiplexor: multiplexor.into() }),
+    |                                                                                                                                ^^^^ the trait `From<i8>` is not implemented for `u16`
     |
 help: the following other types implement trait `From<T>`
    --> $RUST/core/src/ascii/ascii_char.rs
@@ -114,8 +114,8 @@ error[E0433]: failed to resolve: use of undeclared type `ExtMuxCascadedMuxAIndex
 error[E0277]: the trait bound `u16: From<i8>` is not satisfied
    --> tests-snapshots/dbc-cantools/issue_184_extended_mux_cascaded_dumped.snap.rs:177:128
     |
-177 | ...exor: multiplexor.into() }),
-    |                      ^^^^ the trait `From<i8>` is not implemented for `u16`
+177 |             multiplexor => Err(CanError::InvalidMultiplexor { message_id: ExtMuxCascaded::MESSAGE_ID, multiplexor: multiplexor.into() }),
+    |                                                                                                                                ^^^^ the trait `From<i8>` is not implemented for `u16`
     |
 help: the following other types implement trait `From<T>`
    --> $RUST/core/src/ascii/ascii_char.rs

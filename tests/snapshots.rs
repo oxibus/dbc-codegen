@@ -244,6 +244,10 @@ static BAD_TESTS: &[&str] = &[
 
 #[test]
 fn compile_test() {
+    // Clear any rust flags possibly set in the justfile
+    env::remove_var("RUSTFLAGS");
+    env::remove_var("RUSTDOCFLAGS");
+    env::remove_var("RUST_BACKTRACE");
     env::set_var("CARGO_ENCODED_RUSTFLAGS", "--deny=warnings");
     let t = trybuild::TestCases::new();
 
