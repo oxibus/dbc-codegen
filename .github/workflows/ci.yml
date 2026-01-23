@@ -26,7 +26,7 @@ jobs:
       - uses: taiki-e/install-action@v2
         with: { tool: 'just,cargo-binstall' }
       - uses: dtolnay/rust-toolchain@stable
-        with: { toolchain: '1.92.0', components: 'rust-src,rustfmt,clippy' }
+        with: { toolchain: '1.92.0', components: 'rust-src,rust-docs,rustfmt,clippy' }
       - run: just ci-test
 
   test-msrv:
@@ -59,7 +59,7 @@ jobs:
       - uses: taiki-e/install-action@v2
         with: { tool: 'just,cargo-llvm-cov' }
       - uses: dtolnay/rust-toolchain@stable
-        with: { toolchain: '1.92.0', components: 'rust-src,rustfmt,clippy' }
+        with: { toolchain: '1.92.0', components: 'rust-src,rust-docs,rustfmt,clippy' }
       - name: Generate code coverage
         run: just ci-coverage
       - name: Upload coverage to Codecov

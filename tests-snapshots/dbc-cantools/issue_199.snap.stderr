@@ -8,7 +8,7 @@ error[E0428]: the name `X` is defined multiple times
      |
      = note: `X` must be defined only once in the type namespace of this enum
 
-error[E0425]: cannot find type `GearShifterGearShifter` in this scope
+error[E0412]: cannot find type `GearShifterGearShifter` in this scope
     --> tests-snapshots/dbc-cantools/issue_199.snap.rs:1062:35
      |
 1062 |     pub fn gear_shifter(&self) -> GearShifterGearShifter {
@@ -17,7 +17,7 @@ error[E0425]: cannot find type `GearShifterGearShifter` in this scope
 1191 | pub enum GearShifterLeftBlinker {
      | ------------------------------- similarly named enum `GearShifterLeftBlinker` defined here
 
-error[E0425]: cannot find type `CruiseButtonsCruiseButtons` in this scope
+error[E0412]: cannot find type `CruiseButtonsCruiseButtons` in this scope
     --> tests-snapshots/dbc-cantools/issue_199.snap.rs:2226:37
      |
 2226 |     pub fn cruise_buttons(&self) -> CruiseButtonsCruiseButtons {
