@@ -2366,8 +2366,8 @@ impl CruiseButtons2 {
         let signal = self.raw.view_bits::<Msb0>()[6..8].load_be::<u8>();
         
         match signal {
-            2 => CruiseButtons2LkaGapButton::X,
-            1 => CruiseButtons2LkaGapButton::X,
+            2 => CruiseButtons2LkaGapButton::X(2),
+            1 => CruiseButtons2LkaGapButton::X(1),
             0 => CruiseButtons2LkaGapButton::None,
             _ => CruiseButtons2LkaGapButton::_Other(self.lka_gap_button_raw()),
         }
@@ -2466,8 +2466,7 @@ impl embedded_can::Frame for CruiseButtons2 {
 )]
 #[derive(Clone, Copy, PartialEq)]
 pub enum CruiseButtons2LkaGapButton {
-    X,
-    X,
+    X(u8),
     None,
     _Other(u8),
 }
@@ -2475,8 +2474,7 @@ pub enum CruiseButtons2LkaGapButton {
 impl From<CruiseButtons2LkaGapButton> for u8 {
     fn from(val: CruiseButtons2LkaGapButton) -> u8 {
         match val {
-            CruiseButtons2LkaGapButton::X => 2,
-            CruiseButtons2LkaGapButton::X => 1,
+            CruiseButtons2LkaGapButton::X(v) => v,
             CruiseButtons2LkaGapButton::None => 0,
             CruiseButtons2LkaGapButton::_Other(x) => x,
         }
