@@ -279,17 +279,15 @@ fn render_message(w: &mut impl Write, config: &Config<'_>, msg: &Message, dbc: &
         )?;
         writeln!(w)?;
 
-        for signal in msg
-            .signals
-            .iter()
-            .filter(|sig| signal_to_rust_type(sig) != "bool")
-        {
+        for signal in &msg.signals {
             let typ = signal_to_rust_type(signal);
-            let sig = field_name(&signal.name).to_uppercase();
-            let min = signal.min;
-            let max = signal.max;
-            writeln!(w, "pub const {sig}_MIN: {typ} = {min}_{typ};")?;
-            writeln!(w, "pub const {sig}_MAX: {typ} = {max}_{typ};")?;
+            if typ != "bool" {
+                let sig = field_name(&signal.name).to_uppercase();
+                let min = signal.min;
+                let max = signal.max;
+                writeln!(w, "pub const {sig}_MIN: {typ} = {min}_{typ};")?;
+                writeln!(w, "pub const {sig}_MAX: {typ} = {max}_{typ};")?;
+            }
         }
         writeln!(w)?;
 
@@ -298,9 +296,7 @@ fn render_message(w: &mut impl Write, config: &Config<'_>, msg: &Message, dbc: &
             .signals
             .iter()
             .filter_map(|signal| {
-                if signal.multiplexer_indicator == Plain
-                    || signal.multiplexer_indicator == Multiplexor
-                {
+                if matches!(signal.multiplexer_indicator, Plain | Multiplexor) {
                     Some(format!(
                         "{}: {}",
                         field_name(&signal.name),
@@ -448,7 +444,7 @@ fn render_signal(
         let signal_rust_type = signal_to_rust_type(signal);
         let variant_infos = generate_variant_info(variants, &signal_rust_type);
 
-        writeln!(w, "pub fn {fn_name}(&self) -> {type_name} {{",)?;
+        writeln!(w, "pub fn {fn_name}(&self) -> {type_name} {{")?;
         {
             let mut w = PadAdapter::wrap(w);
 
@@ -1205,7 +1201,7 @@ fn multiplexed_enum_variant_wrapper_name(switch_index: u64) -> String {
 
 fn multiplex_enum_name(msg: &Message, multiplexor: &Signal) -> Result<String> {
     ensure!(
-        matches!(multiplexor.multiplexer_indicator, Multiplexor,),
+        matches!(multiplexor.multiplexer_indicator, Multiplexor),
         "signal {multiplexor:?} is not the multiplexor",
     );
     Ok(format!(
@@ -1221,7 +1217,7 @@ fn multiplexed_enum_variant_name(
     switch_index: u64,
 ) -> Result<String> {
     ensure!(
-        matches!(multiplexor.multiplexer_indicator, Multiplexor,),
+        matches!(multiplexor.multiplexer_indicator, Multiplexor),
         "signal {multiplexor:?} is not the multiplexor",
     );
 
@@ -1472,9 +1468,7 @@ fn render_arbitrary(w: &mut impl Write, config: &Config<'_>, msg: &Message) -> R
         let filtered_signals: Vec<&Signal> = msg
             .signals
             .iter()
-            .filter(|signal| {
-                signal.multiplexer_indicator == Plain || signal.multiplexer_indicator == Multiplexor
-            })
+            .filter(|v| matches!(v.multiplexer_indicator, Plain | Multiplexor))
             .collect();
         let mut w = PadAdapter::wrap(w);
         writeln!(
@@ -1554,16 +1548,16 @@ fn signal_to_arbitrary(signal: &Signal) -> String {
     } else if signal_is_float_in_rust(signal) {
         let min = signal.min;
         let max = signal.max;
-        format!("u.float_in_range({min}_f32..={max}_f32)?",)
+        format!("u.float_in_range({min}_f32..={max}_f32)?")
     } else {
         let min = signal.min;
         let max = signal.max;
-        format!("u.int_in_range({min}..={max})?",)
+        format!("u.int_in_range({min}..={max})?")
     }
 }
 
 fn get_relevant_messages(dbc: &Dbc) -> impl Iterator<Item = &Message> {
-    dbc.messages.iter().filter(|m| !message_ignored(m))
+    dbc.messages.iter().filter(|v| !message_ignored(v))
 }
 
 fn message_ignored(message: &Message) -> bool {
