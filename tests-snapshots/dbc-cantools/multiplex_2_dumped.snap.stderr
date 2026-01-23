@@ -1,4 +1,4 @@
-error[E0425]: cannot find type `ExtendedS1Index` in this scope
+error[E0412]: cannot find type `ExtendedS1Index` in this scope
    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:810:36
     |
 810 |     pub fn s1(&mut self) -> Result<ExtendedS1Index, CanError> {
@@ -44,7 +44,7 @@ error[E0422]: cannot find struct, variant or union type `ExtendedS1M2` in this s
 1237 | pub struct ExtendedS6M2 { raw: [u8; 8] }
      | ----------------------- similarly named struct `ExtendedS6M2` defined here
 
-error[E0425]: cannot find type `ExtendedS1M0` in this scope
+error[E0412]: cannot find type `ExtendedS1M0` in this scope
     --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:836:37
      |
  836 |     pub fn set_m0(&mut self, value: ExtendedS1M0) -> Result<(), CanError> {
@@ -53,7 +53,7 @@ error[E0425]: cannot find type `ExtendedS1M0` in this scope
 1011 | pub struct ExtendedS6M0 { raw: [u8; 8] }
      | ----------------------- similarly named struct `ExtendedS6M0` defined here
 
-error[E0425]: cannot find type `ExtendedS1M1` in this scope
+error[E0412]: cannot find type `ExtendedS1M1` in this scope
     --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:846:37
      |
  846 |     pub fn set_m1(&mut self, value: ExtendedS1M1) -> Result<(), CanError> {
@@ -62,7 +62,7 @@ error[E0425]: cannot find type `ExtendedS1M1` in this scope
 1124 | pub struct ExtendedS6M1 { raw: [u8; 8] }
      | ----------------------- similarly named struct `ExtendedS6M1` defined here
 
-error[E0425]: cannot find type `ExtendedS1M2` in this scope
+error[E0412]: cannot find type `ExtendedS1M2` in this scope
     --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:856:37
      |
  856 |     pub fn set_m2(&mut self, value: ExtendedS1M2) -> Result<(), CanError> {
@@ -71,7 +71,7 @@ error[E0425]: cannot find type `ExtendedS1M2` in this scope
 1237 | pub struct ExtendedS6M2 { raw: [u8; 8] }
      | ----------------------- similarly named struct `ExtendedS6M2` defined here
 
-error[E0425]: cannot find type `ExtendedS0Index` in this scope
+error[E0412]: cannot find type `ExtendedS0Index` in this scope
    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:881:36
     |
 881 |     pub fn s0(&mut self) -> Result<ExtendedS0Index, CanError> {
@@ -117,7 +117,7 @@ error[E0422]: cannot find struct, variant or union type `ExtendedS0M2` in this s
 1237 | pub struct ExtendedS6M2 { raw: [u8; 8] }
      | ----------------------- similarly named struct `ExtendedS6M2` defined here
 
-error[E0425]: cannot find type `ExtendedS0M0` in this scope
+error[E0412]: cannot find type `ExtendedS0M0` in this scope
     --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:907:37
      |
  907 |     pub fn set_m0(&mut self, value: ExtendedS0M0) -> Result<(), CanError> {
@@ -126,7 +126,7 @@ error[E0425]: cannot find type `ExtendedS0M0` in this scope
 1011 | pub struct ExtendedS6M0 { raw: [u8; 8] }
      | ----------------------- similarly named struct `ExtendedS6M0` defined here
 
-error[E0425]: cannot find type `ExtendedS0M1` in this scope
+error[E0412]: cannot find type `ExtendedS0M1` in this scope
     --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:917:37
      |
  917 |     pub fn set_m1(&mut self, value: ExtendedS0M1) -> Result<(), CanError> {
@@ -135,7 +135,7 @@ error[E0425]: cannot find type `ExtendedS0M1` in this scope
 1124 | pub struct ExtendedS6M1 { raw: [u8; 8] }
      | ----------------------- similarly named struct `ExtendedS6M1` defined here
 
-error[E0425]: cannot find type `ExtendedS0M2` in this scope
+error[E0412]: cannot find type `ExtendedS0M2` in this scope
     --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:927:37
      |
  927 |     pub fn set_m2(&mut self, value: ExtendedS0M2) -> Result<(), CanError> {
@@ -144,7 +144,7 @@ error[E0425]: cannot find type `ExtendedS0M2` in this scope
 1237 | pub struct ExtendedS6M2 { raw: [u8; 8] }
      | ----------------------- similarly named struct `ExtendedS6M2` defined here
 
-error[E0425]: cannot find type `ExtendedTypesS11Index` in this scope
+error[E0412]: cannot find type `ExtendedTypesS11Index` in this scope
     --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:1460:37
      |
 1460 |     pub fn s11(&mut self) -> Result<ExtendedTypesS11Index, CanError> {
@@ -181,7 +181,7 @@ error[E0422]: cannot find struct, variant or union type `ExtendedTypesS11M5` in 
 1646 | pub struct ExtendedTypesS0M5 { raw: [u8; 8] }
      | ---------------------------- similarly named struct `ExtendedTypesS0M5` defined here
 
-error[E0425]: cannot find type `ExtendedTypesS11M0` in this scope
+error[E0412]: cannot find type `ExtendedTypesS11M0` in this scope
     --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:1484:37
      |
 1484 |     pub fn set_m0(&mut self, value: ExtendedTypesS11M0) -> Result<(), CanError> {
@@ -190,7 +190,7 @@ error[E0425]: cannot find type `ExtendedTypesS11M0` in this scope
 1577 | pub struct ExtendedTypesS0M0 { raw: [u8; 8] }
      | ---------------------------- similarly named struct `ExtendedTypesS0M0` defined here
 
-error[E0425]: cannot find type `ExtendedTypesS11M5` in this scope
+error[E0412]: cannot find type `ExtendedTypesS11M5` in this scope
     --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:1494:37
      |
 1494 |     pub fn set_m5(&mut self, value: ExtendedTypesS11M5) -> Result<(), CanError> {
@@ -293,21 +293,11 @@ error[E0277]: the trait bound `u16: From<i8>` is not satisfied
 121 |             multiplexor => Err(CanError::InvalidMultiplexor { message_id: Shared::MESSAGE_ID, multiplexor: multiplexor.into() }),
     |                                                                                                                        ^^^^ the trait `From<i8>` is not implemented for `u16`
     |
-help: the following other types implement trait `From<T>`
-   --> $RUST/core/src/ascii/ascii_char.rs
-    |
-    | into_int_impl!(u8 u16 u32 u64 u128 char);
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `u16` implements `From<Char>`
-    |
-   ::: $RUST/core/src/convert/num.rs
-    |
-    | impl_from!(bool => u16);
-    | ^^^^^^^^^^^^^^^^^^^^^^^ `u16` implements `From<bool>`
-...
-    | impl_from!(u8 => u16, #[stable(feature = "lossless_int_conv", since = "1.5.0")]);
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `u16` implements `From<u8>`
+    = help: the following other types implement trait `From<T>`:
+              `u16` implements `From<Char>`
+              `u16` implements `From<bool>`
+              `u16` implements `From<u8>`
     = note: required for `i8` to implement `Into<u16>`
-    = note: this error originates in the macro `into_int_impl` which comes from the expansion of the macro `impl_from` (in Nightly builds, run with -Z macro-backtrace for more info)
 
 error[E0277]: the trait bound `u16: From<i8>` is not satisfied
    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:425:120
@@ -315,21 +305,11 @@ error[E0277]: the trait bound `u16: From<i8>` is not satisfied
 425 |             multiplexor => Err(CanError::InvalidMultiplexor { message_id: Normal::MESSAGE_ID, multiplexor: multiplexor.into() }),
     |                                                                                                                        ^^^^ the trait `From<i8>` is not implemented for `u16`
     |
-help: the following other types implement trait `From<T>`
-   --> $RUST/core/src/ascii/ascii_char.rs
-    |
-    | into_int_impl!(u8 u16 u32 u64 u128 char);
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `u16` implements `From<Char>`
-    |
-   ::: $RUST/core/src/convert/num.rs
-    |
-    | impl_from!(bool => u16);
-    | ^^^^^^^^^^^^^^^^^^^^^^^ `u16` implements `From<bool>`
-...
-    | impl_from!(u8 => u16, #[stable(feature = "lossless_int_conv", since = "1.5.0")]);
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `u16` implements `From<u8>`
+    = help: the following other types implement trait `From<T>`:
+              `u16` implements `From<Char>`
+              `u16` implements `From<bool>`
+              `u16` implements `From<u8>`
     = note: required for `i8` to implement `Into<u16>`
-    = note: this error originates in the macro `into_int_impl` which comes from the expansion of the macro `impl_from` (in Nightly builds, run with -Z macro-backtrace for more info)
 
 error[E0277]: the trait bound `u16: From<i8>` is not satisfied
    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:744:122
@@ -337,21 +317,11 @@ error[E0277]: the trait bound `u16: From<i8>` is not satisfied
 744 |             multiplexor => Err(CanError::InvalidMultiplexor { message_id: Extended::MESSAGE_ID, multiplexor: multiplexor.into() }),
     |                                                                                                                          ^^^^ the trait `From<i8>` is not implemented for `u16`
     |
-help: the following other types implement trait `From<T>`
-   --> $RUST/core/src/ascii/ascii_char.rs
-    |
-    | into_int_impl!(u8 u16 u32 u64 u128 char);
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `u16` implements `From<Char>`
-    |
-   ::: $RUST/core/src/convert/num.rs
-    |
-    | impl_from!(bool => u16);
-    | ^^^^^^^^^^^^^^^^^^^^^^^ `u16` implements `From<bool>`
-...
-    | impl_from!(u8 => u16, #[stable(feature = "lossless_int_conv", since = "1.5.0")]);
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `u16` implements `From<u8>`
+    = help: the following other types implement trait `From<T>`:
+              `u16` implements `From<Char>`
+              `u16` implements `From<bool>`
+              `u16` implements `From<u8>`
     = note: required for `i8` to implement `Into<u16>`
-    = note: this error originates in the macro `into_int_impl` which comes from the expansion of the macro `impl_from` (in Nightly builds, run with -Z macro-backtrace for more info)
 
 error[E0433]: failed to resolve: use of undeclared type `ExtendedS1Index`
    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:812:21
@@ -386,21 +356,11 @@ error[E0277]: the trait bound `u16: From<i8>` is not satisfied
 815 |             multiplexor => Err(CanError::InvalidMultiplexor { message_id: Extended::MESSAGE_ID, multiplexor: multiplexor.into() }),
     |                                                                                                                          ^^^^ the trait `From<i8>` is not implemented for `u16`
     |
-help: the following other types implement trait `From<T>`
-   --> $RUST/core/src/ascii/ascii_char.rs
-    |
-    | into_int_impl!(u8 u16 u32 u64 u128 char);
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `u16` implements `From<Char>`
-    |
-   ::: $RUST/core/src/convert/num.rs
-    |
-    | impl_from!(bool => u16);
-    | ^^^^^^^^^^^^^^^^^^^^^^^ `u16` implements `From<bool>`
-...
-    | impl_from!(u8 => u16, #[stable(feature = "lossless_int_conv", since = "1.5.0")]);
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `u16` implements `From<u8>`
+    = help: the following other types implement trait `From<T>`:
+              `u16` implements `From<Char>`
+              `u16` implements `From<bool>`
+              `u16` implements `From<u8>`
     = note: required for `i8` to implement `Into<u16>`
-    = note: this error originates in the macro `into_int_impl` which comes from the expansion of the macro `impl_from` (in Nightly builds, run with -Z macro-backtrace for more info)
 
 error[E0433]: failed to resolve: use of undeclared type `ExtendedS0Index`
    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:883:21
@@ -435,21 +395,11 @@ error[E0277]: the trait bound `u16: From<i8>` is not satisfied
 886 |             multiplexor => Err(CanError::InvalidMultiplexor { message_id: Extended::MESSAGE_ID, multiplexor: multiplexor.into() }),
     |                                                                                                                          ^^^^ the trait `From<i8>` is not implemented for `u16`
     |
-help: the following other types implement trait `From<T>`
-   --> $RUST/core/src/ascii/ascii_char.rs
-    |
-    | into_int_impl!(u8 u16 u32 u64 u128 char);
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `u16` implements `From<Char>`
-    |
-   ::: $RUST/core/src/convert/num.rs
-    |
-    | impl_from!(bool => u16);
-    | ^^^^^^^^^^^^^^^^^^^^^^^ `u16` implements `From<bool>`
-...
-    | impl_from!(u8 => u16, #[stable(feature = "lossless_int_conv", since = "1.5.0")]);
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `u16` implements `From<u8>`
+    = help: the following other types implement trait `From<T>`:
+              `u16` implements `From<Char>`
+              `u16` implements `From<bool>`
+              `u16` implements `From<u8>`
     = note: required for `i8` to implement `Into<u16>`
-    = note: this error originates in the macro `into_int_impl` which comes from the expansion of the macro `impl_from` (in Nightly builds, run with -Z macro-backtrace for more info)
 
 error[E0277]: the trait bound `u16: From<i8>` is not satisfied
     --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:1405:127
@@ -457,21 +407,11 @@ error[E0277]: the trait bound `u16: From<i8>` is not satisfied
 1405 |             multiplexor => Err(CanError::InvalidMultiplexor { message_id: ExtendedTypes::MESSAGE_ID, multiplexor: multiplexor.into() }),
      |                                                                                                                               ^^^^ the trait `From<i8>` is not implemented for `u16`
      |
-help: the following other types implement trait `From<T>`
-    --> $RUST/core/src/ascii/ascii_char.rs
-     |
-     | into_int_impl!(u8 u16 u32 u64 u128 char);
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `u16` implements `From<Char>`
-     |
-    ::: $RUST/core/src/convert/num.rs
-     |
-     | impl_from!(bool => u16);
-     | ^^^^^^^^^^^^^^^^^^^^^^^ `u16` implements `From<bool>`
-...
-     | impl_from!(u8 => u16, #[stable(feature = "lossless_int_conv", since = "1.5.0")]);
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `u16` implements `From<u8>`
+     = help: the following other types implement trait `From<T>`:
+               `u16` implements `From<Char>`
+               `u16` implements `From<bool>`
+               `u16` implements `From<u8>`
      = note: required for `i8` to implement `Into<u16>`
-     = note: this error originates in the macro `into_int_impl` which comes from the expansion of the macro `impl_from` (in Nightly builds, run with -Z macro-backtrace for more info)
 
 error[E0433]: failed to resolve: use of undeclared type `ExtendedTypesS11Index`
     --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:1462:21
