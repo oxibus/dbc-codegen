@@ -96,15 +96,19 @@ docs *args='--open':
 
 # Print environment info
 env-info:
+    @echo "::group::Environment Info"
     @echo "Running for '{{main_crate}}' crate {{if ci_mode == '1' {'in CI mode'} else {'in dev mode'} }} on {{os()}} / {{arch()}}"
     @echo "PWD {{justfile_directory()}}"
     {{just}} --version
     rustc --version
     cargo --version
     rustup --version
+    rustup show
+    rustup component list --installed
     @echo "RUSTFLAGS='$RUSTFLAGS'"
     @echo "RUSTDOCFLAGS='$RUSTDOCFLAGS'"
     @echo "RUST_BACKTRACE='$RUST_BACKTRACE'"
+    @echo "::endgroup::"
 
 # Reformat all code `cargo fmt`. If nightly is available, use it for better results
 fmt:
