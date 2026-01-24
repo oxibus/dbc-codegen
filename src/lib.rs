@@ -284,34 +284,26 @@ fn render_message(w: &mut impl Write, config: &Config<'_>, msg: &Message, dbc: &
         writeln!(w)?;
 
         writeln!(w, "/// Construct new {} from values", msg.name)?;
-        let args: Vec<String> = msg
+        let args = msg
             .signals
             .iter()
             .filter_map(|signal| {
                 if matches!(signal.multiplexer_indicator, Plain | Multiplexor) {
-                    Some(format!(
-                        "{}: {}",
-                        signal.field_name(),
-                        signal_to_rust_type(signal),
-                    ))
+                    let field = signal.field_name();
+                    let typ = signal_to_rust_type(signal);
+                    Some(format!("{field}: {typ}"))
                 } else {
                     None
                 }
             })
-            .collect();
-        writeln!(
-            w,
-            "pub fn new({}) -> Result<Self, CanError> {{",
-            args.join(", "),
-        )?;
+            .collect::<Vec<_>>()
+            .join(", ");
+        writeln!(w, "pub fn new({args}) -> Result<Self, CanError> {{")?;
         {
             let mut w = PadAdapter::wrap(&mut w);
-            writeln!(
-                w,
-                "let {}res = Self {{ raw: [0u8; {}] }};",
-                if msg.signals.is_empty() { "" } else { "mut " },
-                msg.size,
-            )?;
+            let mutable = if msg.signals.is_empty() { "" } else { "mut " };
+            let size = msg.size;
+            writeln!(w, "let {mutable}res = Self {{ raw: [0u8; {size}] }};")?;
             for signal in &msg.signals {
                 if matches!(signal.multiplexer_indicator, Plain | Multiplexor) {
                     writeln!(w, "res.set_{0}({0})?;", signal.field_name())?;
@@ -480,11 +472,8 @@ fn render_signal(
         writeln!(w, "}}")?;
         writeln!(w)?;
     } else {
-        writeln!(
-            w,
-            "pub fn {fn_name}(&self) -> {} {{",
-            signal_to_rust_type(signal),
-        )?;
+        let typ = signal_to_rust_type(signal);
+        writeln!(w, "pub fn {fn_name}(&self) -> {typ} {{")?;
         {
             let mut w = PadAdapter::wrap(w);
             writeln!(w, "self.{fn_name}_raw()")?;
@@ -502,11 +491,8 @@ fn render_signal(
     writeln!(w, "/// - Byte order: {:?}", signal.byte_order)?;
     writeln!(w, "/// - Value type: {:?}", signal.value_type)?;
     writeln!(w, "#[inline(always)]")?;
-    writeln!(
-        w,
-        "pub fn {fn_name}_raw(&self) -> {} {{",
-        signal_to_rust_type(signal),
-    )?;
+    let typ = signal_to_rust_type(signal);
+    writeln!(w, "pub fn {fn_name}_raw(&self) -> {typ} {{")?;
     {
         let mut w = PadAdapter::wrap(w);
         signal_from_payload(&mut w, signal, msg).context("signal from payload")?;
@@ -536,11 +522,11 @@ fn render_set_signal(
         "pub "
     };
 
+    let field = signal.field_name();
+    let typ = signal_to_rust_type(signal);
     writeln!(
         w,
-        "{visibility}fn set_{}(&mut self, value: {}) -> Result<(), CanError> {{",
-        signal.field_name(),
-        signal_to_rust_type(signal),
+        "{visibility}fn set_{field}(&mut self, value: {typ}) -> Result<(), CanError> {{",
     )?;
 
     {
@@ -624,12 +610,9 @@ fn render_multiplexor_signal(
     writeln!(w, "/// - Byte order: {:?}", signal.byte_order)?;
     writeln!(w, "/// - Value type: {:?}", signal.value_type)?;
     writeln!(w, "#[inline(always)]")?;
-    writeln!(
-        w,
-        "pub fn {}_raw(&self) -> {} {{",
-        signal.field_name(),
-        signal_to_rust_type(signal),
-    )?;
+    let field = signal.field_name();
+    let typ = signal_to_rust_type(signal);
+    writeln!(w, "pub fn {field}_raw(&self) -> {typ} {{")?;
     {
         let mut w = PadAdapter::wrap(w);
         signal_from_payload(&mut w, signal, msg).context("signal from payload")?;
@@ -637,12 +620,9 @@ fn render_multiplexor_signal(
     writeln!(w, "}}")?;
     writeln!(w)?;
 
-    writeln!(
-        w,
-        "pub fn {}(&mut self) -> Result<{}, CanError> {{",
-        signal.field_name(),
-        multiplex_enum_name(msg, signal)?,
-    )?;
+    let field = signal.field_name();
+    let typ = multiplex_enum_name(msg, signal)?;
+    writeln!(w, "pub fn {field}(&mut self) -> Result<{typ}, CanError> {{")?;
 
     let multiplexer_indexes: BTreeSet<u64> = msg
         .signals
@@ -803,11 +783,8 @@ fn signal_to_payload(w: &mut impl Write, signal: &Signal, msg: &Message) -> Resu
         // Massage value into an int
         writeln!(w, "let factor = {}_f32;", signal.factor)?;
         writeln!(w, "let offset = {}_f32;", signal.offset)?;
-        writeln!(
-            w,
-            "let value = ((value - offset) / factor) as {};",
-            signal_to_rust_int(signal),
-        )?;
+        let typ = signal_to_rust_int(signal);
+        writeln!(w, "let value = ((value - offset) / factor) as {typ};")?;
         writeln!(w)?;
     } else {
         writeln!(w, "let factor = {};", signal.factor)?;
@@ -821,20 +798,14 @@ fn signal_to_payload(w: &mut impl Write, signal: &Signal, msg: &Message) -> Resu
             "    .ok_or(CanError::ParameterOutOfRange {{ message_id: {}::MESSAGE_ID }})?;",
             msg.type_name(),
         )?;
-        writeln!(
-            w,
-            "let value = (value / factor) as {};",
-            signal_to_rust_int(signal),
-        )?;
+        let typ = signal_to_rust_int(signal);
+        writeln!(w, "let value = (value / factor) as {typ};")?;
         writeln!(w)?;
     }
 
     if signal.value_type == Signed {
-        writeln!(
-            w,
-            "let value = {}::from_ne_bytes(value.to_ne_bytes());",
-            signal_to_rust_uint(signal),
-        )?;
+        let typ = signal_to_rust_uint(signal);
+        writeln!(w, "let value = {typ}::from_ne_bytes(value.to_ne_bytes());")?;
     }
 
     match signal.byte_order {
@@ -1589,26 +1560,15 @@ mod tests {
 
     #[test]
     fn test_convert_signal_params_to_rust_int() {
-        assert_eq!(
-            signal_to_rust_int_typ(&signal(Signed, 8, 1, 0)).unwrap(),
-            "i8"
-        );
-        assert_eq!(
-            signal_to_rust_int_typ(&signal(Signed, 8, 2, 0)).unwrap(),
-            "i16"
-        );
-        assert_eq!(
-            signal_to_rust_int_typ(&signal(Signed, 63, 1, 0)).unwrap(),
-            "i64"
-        );
-        assert_eq!(
-            signal_to_rust_int_typ(&signal(Unsigned, 64, -1, 0)).unwrap(),
-            "i128",
-        );
-        assert_eq!(
-            signal_to_rust_int_typ(&signal(Unsigned, 65, 1, 0)),
-            None,
-            "This shouldn't be valid in a DBC, it's more than 64 bits",
-        );
+        let typ = signal_to_rust_int_typ(&signal(Signed, 8, 1, 0)).unwrap();
+        assert_eq!(typ, "i8");
+        let typ = signal_to_rust_int_typ(&signal(Signed, 8, 2, 0)).unwrap();
+        assert_eq!(typ, "i16");
+        let typ = signal_to_rust_int_typ(&signal(Signed, 63, 1, 0)).unwrap();
+        assert_eq!(typ, "i64");
+        let typ = signal_to_rust_int_typ(&signal(Unsigned, 64, -1, 0)).unwrap();
+        assert_eq!(typ, "i128");
+        let typ = signal_to_rust_int_typ(&signal(Unsigned, 65, 1, 0));
+        assert_eq!(typ, None, "Not valid DBC, it's more than 64 bits");
     }
 }
