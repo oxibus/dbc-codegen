@@ -75,30 +75,6 @@ impl ValType {
         }
     }
 
-    /// Determine the smallest rust integer that can fit the actual signal values,
-    /// i.e. accounting for factor and offset.
-    ///
-    /// NOTE: Factor and offset must be whole integers.
-    pub(crate) fn from_scaled_signal(signal: &Signal) -> Self {
-        assert!(
-            is_integer(signal.factor),
-            "Signal Factor ({}) should be an integer",
-            signal.factor,
-        );
-        assert!(
-            is_integer(signal.offset),
-            "Signal Offset ({}) should be an integer",
-            signal.offset,
-        );
-
-        Self::from_signal_range(signal).unwrap_or_else(|| {
-            panic!(
-                "Signal {} could not be represented as a Rust integer",
-                signal.name,
-            );
-        })
-    }
-
     /// Convert the relevant parameters of a [`Signal`] into a Rust type.
     fn from_signal_range(signal: &Signal) -> Option<Self> {
         if signal.size > 64 {
@@ -194,7 +170,7 @@ impl ValType {
     }
 }
 
-pub(crate) fn is_float_signal(signal: &Signal) -> bool {
+fn is_float_signal(signal: &Signal) -> bool {
     !is_integer(signal.offset) || !is_integer(signal.factor)
 }
 
@@ -207,7 +183,13 @@ impl ValType {
             // If there is any scaling needed, go for float
             F32
         } else {
-            Self::from_scaled_signal(signal)
+            // FIXME: don't panic here
+            Self::from_signal_range(signal).unwrap_or_else(|| {
+                panic!(
+                    "Signal {} could not be represented as a Rust integer",
+                    signal.name,
+                );
+            })
         }
     }
 }

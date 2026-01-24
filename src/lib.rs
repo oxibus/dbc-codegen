@@ -31,7 +31,7 @@ use typed_builder::TypedBuilder;
 
 pub use crate::feature_config::FeatureConfig;
 use crate::pad::PadAdapter;
-use crate::signal_type::{is_float_signal, ValType};
+use crate::signal_type::ValType;
 use crate::utils::{enum_variant_name, MessageExt as _, SignalExt as _};
 
 static ALLOW_DEADCODE: &str = "#[allow(dead_code)]";
@@ -724,39 +724,38 @@ fn signal_from_payload(w: &mut impl Write, signal: &Signal, msg: &Message) -> Re
     writeln!(w, r"let signal = {};", read_fn(signal, msg)?)?;
     writeln!(w)?;
 
-    if signal.size == 1 {
-        writeln!(w, "signal == 1")?;
-    } else if is_float_signal(signal) {
-        // Scaling is always done on floats
-        writeln!(w, "let factor = {}_f32;", signal.factor)?;
-        writeln!(w, "let offset = {}_f32;", signal.offset)?;
-        writeln!(w, "(signal as f32) * factor + offset")?;
-    } else {
-        writeln!(w, "let factor = {};", signal.factor)?;
-        let scaled_type = ValType::from_scaled_signal(signal);
-
-        if scaled_type
-            == ValType::from_signal_uint(signal)
-                .unsigned_to_signed()
-                .unwrap()
-        {
-            // Can't do iNN::from(uNN) if they both fit in the same integer type,
-            // so cast first
-            writeln!(w, "let signal = signal as {scaled_type};")?;
+    let typ = ValType::from_signal(signal);
+    match typ {
+        ValType::Bool => {
+            writeln!(w, "signal == 1")?;
         }
+        ValType::F32 => {
+            // Scaling is always done on floats
+            writeln!(w, "let factor = {}_f32;", signal.factor)?;
+            writeln!(w, "let offset = {}_f32;", signal.offset)?;
+            writeln!(w, "(signal as f32) * factor + offset")?;
+        }
+        _ => {
+            writeln!(w, "let factor = {};", signal.factor)?;
+            if Some(typ) == ValType::from_signal_uint(signal).unsigned_to_signed() {
+                // Can't do iNN::from(uNN) if they both fit in the same integer type,
+                // so cast first
+                writeln!(w, "let signal = signal as {typ};")?;
+            }
 
-        if signal.offset >= 0.0 {
-            writeln!(
-                w,
-                "{scaled_type}::from(signal).saturating_mul(factor).saturating_add({})",
-                signal.offset,
-            )?;
-        } else {
-            writeln!(
-                w,
-                "{scaled_type}::from(signal).saturating_mul(factor).saturating_sub({})",
-                signal.offset.abs(),
-            )?;
+            if signal.offset >= 0.0 {
+                writeln!(
+                    w,
+                    "{typ}::from(signal).saturating_mul(factor).saturating_add({})",
+                    signal.offset,
+                )?;
+            } else {
+                writeln!(
+                    w,
+                    "{typ}::from(signal).saturating_mul(factor).saturating_sub({})",
+                    signal.offset.abs(),
+                )?;
+            }
         }
     }
     Ok(())
@@ -780,31 +779,36 @@ fn read_fn_with_type(signal: &Signal, msg: &Message, typ: ValType) -> Result<Str
 }
 
 fn signal_to_payload(w: &mut impl Write, signal: &Signal, msg: &Message) -> Result<()> {
-    if signal.size == 1 {
-        // Map boolean to byte so we can pack it
-        writeln!(w, "let value = value as u8;")?;
-    } else if is_float_signal(signal) {
-        // Massage value into an int
-        writeln!(w, "let factor = {}_f32;", signal.factor)?;
-        writeln!(w, "let offset = {}_f32;", signal.offset)?;
-        let typ = ValType::from_signal_int(signal);
-        writeln!(w, "let value = ((value - offset) / factor) as {typ};")?;
-        writeln!(w)?;
-    } else {
-        writeln!(w, "let factor = {};", signal.factor)?;
-        if signal.offset >= 0.0 {
-            writeln!(w, "let value = value.checked_sub({})", signal.offset)?;
-        } else {
-            writeln!(w, "let value = value.checked_add({})", signal.offset.abs())?;
+    let typ = ValType::from_signal(signal);
+    match typ {
+        ValType::Bool => {
+            // Map boolean to byte so we can pack it
+            writeln!(w, "let value = value as u8;")?;
         }
-        writeln!(
-            w,
-            "    .ok_or(CanError::ParameterOutOfRange {{ message_id: {}::MESSAGE_ID }})?;",
-            msg.type_name(),
-        )?;
-        let typ = ValType::from_signal_int(signal);
-        writeln!(w, "let value = (value / factor) as {typ};")?;
-        writeln!(w)?;
+        ValType::F32 => {
+            // Massage value into an int
+            writeln!(w, "let factor = {}_f32;", signal.factor)?;
+            writeln!(w, "let offset = {}_f32;", signal.offset)?;
+            let typ = ValType::from_signal_int(signal);
+            writeln!(w, "let value = ((value - offset) / factor) as {typ};")?;
+            writeln!(w)?;
+        }
+        _ => {
+            writeln!(w, "let factor = {};", signal.factor)?;
+            if signal.offset >= 0.0 {
+                writeln!(w, "let value = value.checked_sub({})", signal.offset)?;
+            } else {
+                writeln!(w, "let value = value.checked_add({})", signal.offset.abs())?;
+            }
+            writeln!(
+                w,
+                "    .ok_or(CanError::ParameterOutOfRange {{ message_id: {}::MESSAGE_ID }})?;",
+                msg.type_name(),
+            )?;
+            let typ = ValType::from_signal_int(signal);
+            writeln!(w, "let value = (value / factor) as {typ};")?;
+            writeln!(w)?;
+        }
     }
 
     if signal.value_type == Signed {
@@ -1295,16 +1299,19 @@ fn render_arbitrary_helpers(w: &mut impl Write, config: &Config<'_>) -> Result<(
 }
 
 fn signal_to_arbitrary(signal: &Signal) -> String {
-    if signal.size == 1 {
-        "u.int_in_range(0..=1)? == 1".to_string()
-    } else if is_float_signal(signal) {
-        let min = signal.min;
-        let max = signal.max;
-        format!("u.float_in_range({min}_f32..={max}_f32)?")
-    } else {
-        let min = signal.min;
-        let max = signal.max;
-        format!("u.int_in_range({min}..={max})?")
+    let typ = ValType::from_signal(signal);
+    match typ {
+        ValType::Bool => "u.int_in_range(0..=1)? == 1".to_string(),
+        ValType::F32 => {
+            let min = signal.min;
+            let max = signal.max;
+            format!("u.float_in_range({min}_f32..={max}_f32)?")
+        }
+        _ => {
+            let min = signal.min;
+            let max = signal.max;
+            format!("u.int_in_range({min}..={max})?")
+        }
     }
 }
 
