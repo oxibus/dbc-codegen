@@ -31,9 +31,7 @@ use typed_builder::TypedBuilder;
 
 pub use crate::feature_config::FeatureConfig;
 use crate::pad::PadAdapter;
-use crate::signal_type::{
-    is_float_signal, ty_from_scaled_signal, ty_from_signal, ty_from_signal_int, ty_from_signal_uint,
-};
+use crate::signal_type::{is_float_signal, ValType};
 use crate::utils::{enum_variant_name, MessageExt as _, SignalExt as _};
 
 static ALLOW_DEADCODE: &str = "#[allow(dead_code)]";
@@ -274,8 +272,8 @@ fn render_message(w: &mut impl Write, config: &Config<'_>, msg: &Message, dbc: &
         writeln!(w)?;
 
         for signal in &msg.signals {
-            let typ = ty_from_signal(signal);
-            if typ != "bool" {
+            let typ = ValType::from_signal(signal);
+            if typ != ValType::Bool {
                 let sig = signal.field_name().to_uppercase();
                 let min = signal.min;
                 let max = signal.max;
@@ -292,7 +290,7 @@ fn render_message(w: &mut impl Write, config: &Config<'_>, msg: &Message, dbc: &
             .filter_map(|signal| {
                 if matches!(signal.multiplexer_indicator, Plain | Multiplexor) {
                     let field = signal.field_name();
-                    let typ = ty_from_signal(signal);
+                    let typ = ValType::from_signal(signal);
                     Some(format!("{field}: {typ}"))
                 } else {
                     None
@@ -434,8 +432,8 @@ fn render_signal(
     let fn_name = signal.field_name();
     if let Some(variants) = dbc.value_descriptions_for_signal(msg.id, &signal.name) {
         let type_name = enum_name(msg, signal);
-        let signal_ty = ty_from_signal(signal);
-        let variant_infos = generate_variant_info(variants, &signal_ty);
+        let signal_ty = ValType::from_signal(signal);
+        let variant_infos = generate_variant_info(variants, signal_ty);
 
         writeln!(w, "pub fn {fn_name}(&self) -> {type_name} {{")?;
         {
@@ -446,10 +444,10 @@ fn render_signal(
             let load_type = if signal.value_type == Signed && has_negative_values {
                 signal_ty
             } else {
-                ty_from_signal_uint(signal)
+                ValType::from_signal_uint(signal)
             };
 
-            let read = read_fn_with_type(signal, msg, &load_type)?;
+            let read = read_fn_with_type(signal, msg, load_type)?;
             writeln!(w, r"let signal = {read};")?;
             writeln!(w)?;
             writeln!(w, "match signal {{")?;
@@ -474,7 +472,7 @@ fn render_signal(
         writeln!(w, "}}")?;
         writeln!(w)?;
     } else {
-        let typ = ty_from_signal(signal);
+        let typ = ValType::from_signal(signal);
         writeln!(w, "pub fn {fn_name}(&self) -> {typ} {{")?;
         {
             let mut w = PadAdapter::wrap(w);
@@ -493,7 +491,7 @@ fn render_signal(
     writeln!(w, "/// - Byte order: {:?}", signal.byte_order)?;
     writeln!(w, "/// - Value type: {:?}", signal.value_type)?;
     writeln!(w, "#[inline(always)]")?;
-    let typ = ty_from_signal(signal);
+    let typ = ValType::from_signal(signal);
     writeln!(w, "pub fn {fn_name}_raw(&self) -> {typ} {{")?;
     {
         let mut w = PadAdapter::wrap(w);
@@ -525,7 +523,7 @@ fn render_set_signal(
     };
 
     let field = signal.field_name();
-    let typ = ty_from_signal(signal);
+    let typ = ValType::from_signal(signal);
     writeln!(
         w,
         "{visibility}fn set_{field}(&mut self, value: {typ}) -> Result<(), CanError> {{",
@@ -540,7 +538,7 @@ fn render_set_signal(
             }
 
             if let FeatureConfig::Gated(..) | FeatureConfig::Always = config.check_ranges {
-                let typ = ty_from_signal(signal);
+                let typ = ValType::from_signal(signal);
                 let min = signal.min;
                 let max = signal.max;
                 writeln!(w, r"if value < {min}_{typ} || {max}_{typ} < value {{")?;
@@ -613,7 +611,7 @@ fn render_multiplexor_signal(
     writeln!(w, "/// - Value type: {:?}", signal.value_type)?;
     writeln!(w, "#[inline(always)]")?;
     let field = signal.field_name();
-    let typ = ty_from_signal(signal);
+    let typ = ValType::from_signal(signal);
     writeln!(w, "pub fn {field}_raw(&self) -> {typ} {{")?;
     {
         let mut w = PadAdapter::wrap(w);
@@ -735,9 +733,13 @@ fn signal_from_payload(w: &mut impl Write, signal: &Signal, msg: &Message) -> Re
         writeln!(w, "(signal as f32) * factor + offset")?;
     } else {
         writeln!(w, "let factor = {};", signal.factor)?;
-        let scaled_type = ty_from_scaled_signal(signal);
+        let scaled_type = ValType::from_scaled_signal(signal);
 
-        if scaled_type == ty_from_signal_uint(signal).replace('u', "i") {
+        if scaled_type
+            == ValType::from_signal_uint(signal)
+                .unsigned_to_signed()
+                .unwrap()
+        {
             // Can't do iNN::from(uNN) if they both fit in the same integer type,
             // so cast first
             writeln!(w, "let signal = signal as {scaled_type};")?;
@@ -761,10 +763,10 @@ fn signal_from_payload(w: &mut impl Write, signal: &Signal, msg: &Message) -> Re
 }
 
 fn read_fn(signal: &Signal, msg: &Message) -> Result<String> {
-    read_fn_with_type(signal, msg, &ty_from_signal_int(signal))
+    read_fn_with_type(signal, msg, ValType::from_signal_int(signal))
 }
 
-fn read_fn_with_type(signal: &Signal, msg: &Message, typ: &str) -> Result<String> {
+fn read_fn_with_type(signal: &Signal, msg: &Message, typ: ValType) -> Result<String> {
     Ok(match signal.byte_order {
         LittleEndian => {
             let (start, end) = le_start_end_bit(signal, msg)?;
@@ -785,7 +787,7 @@ fn signal_to_payload(w: &mut impl Write, signal: &Signal, msg: &Message) -> Resu
         // Massage value into an int
         writeln!(w, "let factor = {}_f32;", signal.factor)?;
         writeln!(w, "let offset = {}_f32;", signal.offset)?;
-        let typ = ty_from_signal_int(signal);
+        let typ = ValType::from_signal_int(signal);
         writeln!(w, "let value = ((value - offset) / factor) as {typ};")?;
         writeln!(w)?;
     } else {
@@ -800,13 +802,13 @@ fn signal_to_payload(w: &mut impl Write, signal: &Signal, msg: &Message) -> Resu
             "    .ok_or(CanError::ParameterOutOfRange {{ message_id: {}::MESSAGE_ID }})?;",
             msg.type_name(),
         )?;
-        let typ = ty_from_signal_int(signal);
+        let typ = ValType::from_signal_int(signal);
         writeln!(w, "let value = (value / factor) as {typ};")?;
         writeln!(w)?;
     }
 
     if signal.value_type == Signed {
-        let typ = ty_from_signal_uint(signal);
+        let typ = ValType::from_signal_uint(signal);
         writeln!(w, "let value = {typ}::from_ne_bytes(value.to_ne_bytes());")?;
     }
 
@@ -839,10 +841,10 @@ fn write_enum(
     variants: &[ValDescription],
 ) -> Result<()> {
     let type_name = enum_name(msg, signal);
-    let signal_ty = ty_from_signal(signal);
+    let signal_ty = ValType::from_signal(signal);
 
     // Generate variant info to handle duplicates with tuple variants
-    let variant_infos = generate_variant_info(variants, &signal_ty);
+    let variant_infos = generate_variant_info(variants, signal_ty);
 
     writeln!(w, "/// Defined values for {}", signal.name)?;
     writeln!(w, "{ALLOW_LINTS}")?;
@@ -870,9 +872,9 @@ fn write_enum(
 
     writeln!(w, "impl From<{type_name}> for {signal_ty} {{")?;
     {
-        let match_on_raw_type = match ty_from_signal(signal).as_str() {
-            "bool" => |x: i64| format!("{}", x == 1),
-            "f32" => |x: i64| format!("{x}_f32"),
+        let match_on_raw_type = match ValType::from_signal(signal) {
+            ValType::Bool => |x: i64| format!("{}", x == 1),
+            ValType::F32 => |x: i64| format!("{x}_f32"),
             _ => |x: i64| format!("{x}"),
         };
 
@@ -922,7 +924,7 @@ struct VariantInfo {
 
 /// Generate variant info for enum generation.
 /// For duplicates, uses tuple variants like `Reserved(u8)` instead of separate variants.
-fn generate_variant_info(variants: &[ValDescription], signal_ty: &str) -> Vec<VariantInfo> {
+fn generate_variant_info(variants: &[ValDescription], signal_ty: ValType) -> Vec<VariantInfo> {
     // First pass: count occurrences of each base name
     let mut name_counts: HashMap<String, usize> = HashMap::new();
     for variant in variants {

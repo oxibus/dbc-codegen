@@ -38,3 +38,8 @@ pub fn type_name(x: &str) -> String {
 pub fn enum_variant_name(x: &str) -> String {
     type_name(x) // enum variant and type encoding are identical
 }
+
+/// Check if a floating point value is an integer
+pub fn is_integer(val: f64) -> bool {
+    val.fract().abs() < f64::EPSILON
+}
