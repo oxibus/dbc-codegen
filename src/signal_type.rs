@@ -18,7 +18,7 @@ pub enum IntSize {
 }
 
 impl IntSize {
-    fn bits(self) -> u64 {
+    fn bits(self) -> u8 {
         match self {
             Size8 => 8,
             Size16 => 16,
