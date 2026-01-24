@@ -1,7 +1,7 @@
 use std::fmt::Display;
 use std::io::Write;
 
-use anyhow::Error;
+use anyhow::{Error, Result};
 
 /// Configuration for including features in the code generator.
 ///
@@ -20,7 +20,7 @@ pub enum FeatureConfig<'a> {
 }
 
 impl FeatureConfig<'_> {
-    pub(crate) fn fmt_attr(&self, w: &mut impl Write, attr: impl Display) -> anyhow::Result<()> {
+    pub(crate) fn fmt_attr(&self, w: &mut impl Write, attr: impl Display) -> Result<()> {
         match self {
             FeatureConfig::Always => writeln!(w, "#[{attr}]")?,
             FeatureConfig::Gated(gate) => writeln!(w, "#[cfg_attr(feature = {gate:?}, {attr})]")?,
@@ -32,8 +32,8 @@ impl FeatureConfig<'_> {
     pub(crate) fn fmt_cfg<W: Write, E: Into<Error>>(
         &self,
         mut w: W,
-        f: impl FnOnce(W) -> anyhow::Result<(), E>,
-    ) -> anyhow::Result<()> {
+        f: impl FnOnce(W) -> Result<(), E>,
+    ) -> Result<()> {
         match self {
             // If config is Never, return immediately without calling `f`
             FeatureConfig::Never => return Ok(()),
