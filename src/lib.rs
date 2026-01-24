@@ -272,7 +272,7 @@ fn render_message(w: &mut impl Write, config: &Config<'_>, msg: &Message, dbc: &
         writeln!(w)?;
 
         for signal in &msg.signals {
-            let typ = signal_to_rust_type(signal);
+            let typ = ty_from_signal(signal);
             if typ != "bool" {
                 let sig = signal.field_name().to_uppercase();
                 let min = signal.min;
@@ -290,7 +290,7 @@ fn render_message(w: &mut impl Write, config: &Config<'_>, msg: &Message, dbc: &
             .filter_map(|signal| {
                 if matches!(signal.multiplexer_indicator, Plain | Multiplexor) {
                     let field = signal.field_name();
-                    let typ = signal_to_rust_type(signal);
+                    let typ = ty_from_signal(signal);
                     Some(format!("{field}: {typ}"))
                 } else {
                     None
@@ -432,8 +432,8 @@ fn render_signal(
     let fn_name = signal.field_name();
     if let Some(variants) = dbc.value_descriptions_for_signal(msg.id, &signal.name) {
         let type_name = enum_name(msg, signal);
-        let signal_rust_type = signal_to_rust_type(signal);
-        let variant_infos = generate_variant_info(variants, &signal_rust_type);
+        let signal_ty = ty_from_signal(signal);
+        let variant_infos = generate_variant_info(variants, &signal_ty);
 
         writeln!(w, "pub fn {fn_name}(&self) -> {type_name} {{")?;
         {
@@ -442,9 +442,9 @@ fn render_signal(
             // Use signed type for loading when signal is signed and has negative values
             let has_negative_values = variants.iter().any(|v| v.id < 0);
             let load_type = if signal.value_type == Signed && has_negative_values {
-                signal_rust_type
+                signal_ty
             } else {
-                signal_to_rust_uint(signal)
+                ty_from_signal_uint(signal)
             };
 
             let read = read_fn_with_type(signal, msg, &load_type)?;
@@ -472,7 +472,7 @@ fn render_signal(
         writeln!(w, "}}")?;
         writeln!(w)?;
     } else {
-        let typ = signal_to_rust_type(signal);
+        let typ = ty_from_signal(signal);
         writeln!(w, "pub fn {fn_name}(&self) -> {typ} {{")?;
         {
             let mut w = PadAdapter::wrap(w);
@@ -491,7 +491,7 @@ fn render_signal(
     writeln!(w, "/// - Byte order: {:?}", signal.byte_order)?;
     writeln!(w, "/// - Value type: {:?}", signal.value_type)?;
     writeln!(w, "#[inline(always)]")?;
-    let typ = signal_to_rust_type(signal);
+    let typ = ty_from_signal(signal);
     writeln!(w, "pub fn {fn_name}_raw(&self) -> {typ} {{")?;
     {
         let mut w = PadAdapter::wrap(w);
@@ -523,7 +523,7 @@ fn render_set_signal(
     };
 
     let field = signal.field_name();
-    let typ = signal_to_rust_type(signal);
+    let typ = ty_from_signal(signal);
     writeln!(
         w,
         "{visibility}fn set_{field}(&mut self, value: {typ}) -> Result<(), CanError> {{",
@@ -538,7 +538,7 @@ fn render_set_signal(
             }
 
             if let FeatureConfig::Gated(..) | FeatureConfig::Always = config.check_ranges {
-                let typ = signal_to_rust_type(signal);
+                let typ = ty_from_signal(signal);
                 let min = signal.min;
                 let max = signal.max;
                 writeln!(w, r"if value < {min}_{typ} || {max}_{typ} < value {{")?;
@@ -611,7 +611,7 @@ fn render_multiplexor_signal(
     writeln!(w, "/// - Value type: {:?}", signal.value_type)?;
     writeln!(w, "#[inline(always)]")?;
     let field = signal.field_name();
-    let typ = signal_to_rust_type(signal);
+    let typ = ty_from_signal(signal);
     writeln!(w, "pub fn {field}_raw(&self) -> {typ} {{")?;
     {
         let mut w = PadAdapter::wrap(w);
@@ -726,16 +726,16 @@ fn signal_from_payload(w: &mut impl Write, signal: &Signal, msg: &Message) -> Re
 
     if signal.size == 1 {
         writeln!(w, "signal == 1")?;
-    } else if signal_is_float_in_rust(signal) {
+    } else if is_float_signal(signal) {
         // Scaling is always done on floats
         writeln!(w, "let factor = {}_f32;", signal.factor)?;
         writeln!(w, "let offset = {}_f32;", signal.offset)?;
         writeln!(w, "(signal as f32) * factor + offset")?;
     } else {
         writeln!(w, "let factor = {};", signal.factor)?;
-        let scaled_type = scaled_signal_to_rust_int(signal);
+        let scaled_type = ty_from_scaled_signal(signal);
 
-        if scaled_type == signal_to_rust_uint(signal).replace('u', "i") {
+        if scaled_type == ty_from_signal_uint(signal).replace('u', "i") {
             // Can't do iNN::from(uNN) if they both fit in the same integer type,
             // so cast first
             writeln!(w, "let signal = signal as {scaled_type};")?;
@@ -759,7 +759,7 @@ fn signal_from_payload(w: &mut impl Write, signal: &Signal, msg: &Message) -> Re
 }
 
 fn read_fn(signal: &Signal, msg: &Message) -> Result<String> {
-    read_fn_with_type(signal, msg, &signal_to_rust_int(signal))
+    read_fn_with_type(signal, msg, &ty_from_signal_int(signal))
 }
 
 fn read_fn_with_type(signal: &Signal, msg: &Message, typ: &str) -> Result<String> {
@@ -779,11 +779,11 @@ fn signal_to_payload(w: &mut impl Write, signal: &Signal, msg: &Message) -> Resu
     if signal.size == 1 {
         // Map boolean to byte so we can pack it
         writeln!(w, "let value = value as u8;")?;
-    } else if signal_is_float_in_rust(signal) {
+    } else if is_float_signal(signal) {
         // Massage value into an int
         writeln!(w, "let factor = {}_f32;", signal.factor)?;
         writeln!(w, "let offset = {}_f32;", signal.offset)?;
-        let typ = signal_to_rust_int(signal);
+        let typ = ty_from_signal_int(signal);
         writeln!(w, "let value = ((value - offset) / factor) as {typ};")?;
         writeln!(w)?;
     } else {
@@ -798,13 +798,13 @@ fn signal_to_payload(w: &mut impl Write, signal: &Signal, msg: &Message) -> Resu
             "    .ok_or(CanError::ParameterOutOfRange {{ message_id: {}::MESSAGE_ID }})?;",
             msg.type_name(),
         )?;
-        let typ = signal_to_rust_int(signal);
+        let typ = ty_from_signal_int(signal);
         writeln!(w, "let value = (value / factor) as {typ};")?;
         writeln!(w)?;
     }
 
     if signal.value_type == Signed {
-        let typ = signal_to_rust_uint(signal);
+        let typ = ty_from_signal_uint(signal);
         writeln!(w, "let value = {typ}::from_ne_bytes(value.to_ne_bytes());")?;
     }
 
@@ -837,10 +837,10 @@ fn write_enum(
     variants: &[ValDescription],
 ) -> Result<()> {
     let type_name = enum_name(msg, signal);
-    let signal_rust_type = signal_to_rust_type(signal);
+    let signal_ty = ty_from_signal(signal);
 
     // Generate variant info to handle duplicates with tuple variants
-    let variant_infos = generate_variant_info(variants, &signal_rust_type);
+    let variant_infos = generate_variant_info(variants, &signal_ty);
 
     writeln!(w, "/// Defined values for {}", signal.name)?;
     writeln!(w, "{ALLOW_LINTS}")?;
@@ -861,21 +861,21 @@ fn write_enum(
                 DuplicateType::Duplicate => {}
             }
         }
-        writeln!(w, "_Other({signal_rust_type}),")?;
+        writeln!(w, "_Other({signal_ty}),")?;
     }
     writeln!(w, "}}")?;
     writeln!(w)?;
 
-    writeln!(w, "impl From<{type_name}> for {signal_rust_type} {{")?;
+    writeln!(w, "impl From<{type_name}> for {signal_ty} {{")?;
     {
-        let match_on_raw_type = match signal_to_rust_type(signal).as_str() {
+        let match_on_raw_type = match ty_from_signal(signal).as_str() {
             "bool" => |x: i64| format!("{}", x == 1),
             "f32" => |x: i64| format!("{x}_f32"),
             _ => |x: i64| format!("{x}"),
         };
 
         let mut w = PadAdapter::wrap(w);
-        writeln!(w, "fn from(val: {type_name}) -> {signal_rust_type} {{")?;
+        writeln!(w, "fn from(val: {type_name}) -> {signal_ty} {{")?;
         {
             let mut w = PadAdapter::wrap(&mut w);
             writeln!(w, "match val {{")?;
@@ -908,7 +908,7 @@ fn write_enum(
 /// i.e. accounting for factor and offset.
 ///
 /// NOTE: Factor and offset must be whole integers.
-fn scaled_signal_to_rust_int(signal: &Signal) -> String {
+fn ty_from_scaled_signal(signal: &Signal) -> String {
     assert!(
         signal.factor.fract().abs() <= f64::EPSILON,
         "Signal Factor ({}) should be an integer",
@@ -920,7 +920,7 @@ fn scaled_signal_to_rust_int(signal: &Signal) -> String {
         signal.offset,
     );
 
-    signal_to_rust_int_typ(signal).unwrap_or_else(|| {
+    ty_from_signal_range(signal).unwrap_or_else(|| {
         panic!(
             "Signal {} could not be represented as a Rust integer",
             signal.name,
@@ -929,15 +929,15 @@ fn scaled_signal_to_rust_int(signal: &Signal) -> String {
 }
 
 /// Convert the relevant parameters of a [`Signal`] into a Rust type.
-fn signal_to_rust_int_typ(signal: &Signal) -> Option<String> {
+fn ty_from_signal_range(signal: &Signal) -> Option<String> {
     if signal.size > 64 {
         return None;
     }
-    get_range_of_values(signal).map(|(low, high)| range_to_rust_int(low, high))
+    get_signal_value_range(signal).map(|(low, high)| ty_from_range(low, high))
 }
 
 /// Using the signal's parameters, find the range of values that it spans.
-fn get_range_of_values(signal: &Signal) -> Option<(i128, i128)> {
+fn get_signal_value_range(signal: &Signal) -> Option<(i128, i128)> {
     let sign: ValueType = signal.value_type;
     let signal_size: u32 = signal.size as u32;
     let factor: i64 = signal.factor as i64;
@@ -978,7 +978,7 @@ fn apply_factor_and_offset(input: Option<i128>, factor: i64, offset: i64) -> Opt
 
 /// Determine the smallest Rust integer type that can fit the range of values
 /// Only values derived from 64-bit integers are supported, i.e. the range [-2^64-1, 2^64-1]
-fn range_to_rust_int(low: i128, high: i128) -> String {
+fn ty_from_range(low: i128, high: i128) -> String {
     let lower_bound: u8;
     let upper_bound: u8;
     let sign: &str;
@@ -1027,7 +1027,7 @@ fn signal_bit_size_suffix(size: u32) -> &'static str {
 }
 
 /// Determine the smallest rust integer that can fit the raw signal values.
-fn signal_to_rust_int(signal: &Signal) -> String {
+fn ty_from_signal_int(signal: &Signal) -> String {
     let sign = match signal.value_type {
         Signed => "i",
         Unsigned => "u",
@@ -1036,24 +1036,24 @@ fn signal_to_rust_int(signal: &Signal) -> String {
 }
 
 /// Determine the smallest unsigned rust integer with no fewer bits than the signal.
-fn signal_to_rust_uint(signal: &Signal) -> String {
+fn ty_from_signal_uint(signal: &Signal) -> String {
     format!("u{}", signal_bit_size_suffix(signal.size as u32))
 }
 
 #[allow(clippy::float_cmp)]
-fn signal_is_float_in_rust(signal: &Signal) -> bool {
+fn is_float_signal(signal: &Signal) -> bool {
     signal.offset.fract() != 0.0 || signal.factor.fract() != 0.0
 }
 
 /// Get the Rust type for a signal
-fn signal_to_rust_type(signal: &Signal) -> String {
+fn ty_from_signal(signal: &Signal) -> String {
     if signal.size == 1 {
         String::from("bool")
-    } else if signal_is_float_in_rust(signal) {
+    } else if is_float_signal(signal) {
         // If there is any scaling needed, go for float
         String::from("f32")
     } else {
-        scaled_signal_to_rust_int(signal)
+        ty_from_scaled_signal(signal)
     }
 }
 
@@ -1073,7 +1073,7 @@ struct VariantInfo {
 
 /// Generate variant info for enum generation.
 /// For duplicates, uses tuple variants like `Reserved(u8)` instead of separate variants.
-fn generate_variant_info(variants: &[ValDescription], signal_rust_type: &str) -> Vec<VariantInfo> {
+fn generate_variant_info(variants: &[ValDescription], signal_ty: &str) -> Vec<VariantInfo> {
     // First pass: count occurrences of each base name
     let mut name_counts: HashMap<String, usize> = HashMap::new();
     for variant in variants {
@@ -1105,7 +1105,7 @@ fn generate_variant_info(variants: &[ValDescription], signal_rust_type: &str) ->
             base_name,
             value: variant.id,
             dup_type,
-            value_type: signal_rust_type.to_string(),
+            value_type: signal_ty.to_string(),
         });
     }
     variant_infos
@@ -1446,7 +1446,7 @@ fn render_arbitrary_helpers(w: &mut impl Write, config: &Config<'_>) -> Result<(
 fn signal_to_arbitrary(signal: &Signal) -> String {
     if signal.size == 1 {
         "u.int_in_range(0..=1)? == 1".to_string()
-    } else if signal_is_float_in_rust(signal) {
+    } else if is_float_signal(signal) {
         let min = signal.min;
         let max = signal.max;
         format!("u.float_in_range({min}_f32..={max}_f32)?")
@@ -1522,53 +1522,49 @@ mod tests {
     }
 
     #[test]
-    fn test_range_of_values() {
+    fn test_get_signal_value_range() {
         assert_eq!(
-            get_range_of_values(&signal(Unsigned, 4, 1, 0)),
+            get_signal_value_range(&signal(Unsigned, 4, 1, 0)),
             Some((0, 15))
         );
         assert_eq!(
-            get_range_of_values(&signal(Unsigned, 32, -1, 0)),
+            get_signal_value_range(&signal(Unsigned, 32, -1, 0)),
             Some((-i128::from(u32::MAX), 0))
         );
         assert_eq!(
-            get_range_of_values(&signal(Unsigned, 12, 1, -1000)),
+            get_signal_value_range(&signal(Unsigned, 12, 1, -1000)),
             Some((-1000, 3095))
         );
-    }
-
-    #[test]
-    fn test_range_0_signal_size() {
         assert_eq!(
-            get_range_of_values(&signal(Signed, 0, 1, 0)),
+            get_signal_value_range(&signal(Signed, 0, 1, 0)),
             None,
             "0 bit signal should be invalid",
         );
     }
 
     #[test]
-    fn test_range_to_rust_int() {
-        assert_eq!(range_to_rust_int(0, 255), "u8");
-        assert_eq!(range_to_rust_int(-1, 127), "i8");
-        assert_eq!(range_to_rust_int(-1, 128), "i16");
-        assert_eq!(range_to_rust_int(-1, 255), "i16");
-        assert_eq!(range_to_rust_int(-65535, 0), "i32");
-        assert_eq!(range_to_rust_int(-129, -127), "i16");
-        assert_eq!(range_to_rust_int(0, 1i128 << 65), "u128");
-        assert_eq!(range_to_rust_int(-(1i128 << 65), 0), "i128");
+    fn test_ty_from_range() {
+        assert_eq!(ty_from_range(0, 255), "u8");
+        assert_eq!(ty_from_range(-1, 127), "i8");
+        assert_eq!(ty_from_range(-1, 128), "i16");
+        assert_eq!(ty_from_range(-1, 255), "i16");
+        assert_eq!(ty_from_range(-65535, 0), "i32");
+        assert_eq!(ty_from_range(-129, -127), "i16");
+        assert_eq!(ty_from_range(0, 1i128 << 65), "u128");
+        assert_eq!(ty_from_range(-(1i128 << 65), 0), "i128");
     }
 
     #[test]
-    fn test_convert_signal_params_to_rust_int() {
-        let typ = signal_to_rust_int_typ(&signal(Signed, 8, 1, 0)).unwrap();
+    fn test_ty_from_signal_range() {
+        let typ = ty_from_signal_range(&signal(Signed, 8, 1, 0)).unwrap();
         assert_eq!(typ, "i8");
-        let typ = signal_to_rust_int_typ(&signal(Signed, 8, 2, 0)).unwrap();
+        let typ = ty_from_signal_range(&signal(Signed, 8, 2, 0)).unwrap();
         assert_eq!(typ, "i16");
-        let typ = signal_to_rust_int_typ(&signal(Signed, 63, 1, 0)).unwrap();
+        let typ = ty_from_signal_range(&signal(Signed, 63, 1, 0)).unwrap();
         assert_eq!(typ, "i64");
-        let typ = signal_to_rust_int_typ(&signal(Unsigned, 64, -1, 0)).unwrap();
+        let typ = ty_from_signal_range(&signal(Unsigned, 64, -1, 0)).unwrap();
         assert_eq!(typ, "i128");
-        let typ = signal_to_rust_int_typ(&signal(Unsigned, 65, 1, 0));
+        let typ = ty_from_signal_range(&signal(Unsigned, 65, 1, 0));
         assert_eq!(typ, None, "Not valid DBC, it's more than 64 bits");
     }
 }
