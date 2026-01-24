@@ -20,12 +20,13 @@ use std::io::{BufWriter, Write};
 use std::path::Path;
 
 use anyhow::{anyhow, ensure, Context, Error, Result};
+use can_dbc::ByteOrder::{BigEndian, LittleEndian};
 use can_dbc::MultiplexIndicator::{
     MultiplexedSignal, Multiplexor, MultiplexorAndMultiplexedSignal, Plain,
 };
+use can_dbc::ValueType::{Signed, Unsigned};
 use can_dbc::{
-    ByteOrder, Dbc, Message, MessageId, Signal, Transmitter, ValDescription, ValueDescription,
-    ValueType,
+    Dbc, Message, MessageId, Signal, Transmitter, ValDescription, ValueDescription, ValueType,
 };
 pub use feature_config::FeatureConfig;
 use heck::{ToPascalCase, ToSnakeCase};
@@ -448,13 +449,13 @@ fn render_signal(
 
             // Use signed type for loading when signal is signed and has negative values
             let has_negative_values = variants.iter().any(|v| v.id < 0);
-            let typ = if signal.value_type == ValueType::Signed && has_negative_values {
+            let load_type = if signal.value_type == Signed && has_negative_values {
                 signal_rust_type
             } else {
                 signal_to_rust_uint(signal)
             };
 
-            let read = read_fn_with_type(signal, msg, &typ)?;
+            let read = read_fn_with_type(signal, msg, &load_type)?;
             writeln!(w, r"let signal = {read};")?;
             writeln!(w)?;
             writeln!(w, "match signal {{")?;
@@ -783,11 +784,11 @@ fn read_fn(signal: &Signal, msg: &Message) -> Result<String> {
 
 fn read_fn_with_type(signal: &Signal, msg: &Message, typ: &str) -> Result<String> {
     Ok(match signal.byte_order {
-        ByteOrder::LittleEndian => {
+        LittleEndian => {
             let (start, end) = le_start_end_bit(signal, msg)?;
             format!("self.raw.view_bits::<Lsb0>()[{start}..{end}].load_le::<{typ}>()")
         }
-        ByteOrder::BigEndian => {
+        BigEndian => {
             let (start, end) = be_start_end_bit(signal, msg)?;
             format!("self.raw.view_bits::<Msb0>()[{start}..{end}].load_be::<{typ}>()")
         }
@@ -828,7 +829,7 @@ fn signal_to_payload(w: &mut impl Write, signal: &Signal, msg: &Message) -> Resu
         writeln!(w)?;
     }
 
-    if signal.value_type == ValueType::Signed {
+    if signal.value_type == Signed {
         writeln!(
             w,
             "let value = {}::from_ne_bytes(value.to_ne_bytes());",
@@ -837,14 +838,14 @@ fn signal_to_payload(w: &mut impl Write, signal: &Signal, msg: &Message) -> Resu
     }
 
     match signal.byte_order {
-        ByteOrder::LittleEndian => {
+        LittleEndian => {
             let (start, end) = le_start_end_bit(signal, msg)?;
             writeln!(
                 w,
                 r"self.raw.view_bits_mut::<Lsb0>()[{start}..{end}].store_le(value);",
             )?;
         }
-        ByteOrder::BigEndian => {
+        BigEndian => {
             let (start, end) = be_start_end_bit(signal, msg)?;
             writeln!(
                 w,
@@ -948,13 +949,7 @@ fn scaled_signal_to_rust_int(signal: &Signal) -> String {
         signal.offset,
     );
 
-    signal_params_to_rust_int(
-        signal.value_type,
-        signal.size as u32,
-        signal.factor as i64,
-        signal.offset as i64,
-    )
-    .unwrap_or_else(|| {
+    signal_to_rust_int_typ(signal).unwrap_or_else(|| {
         panic!(
             "Signal {} could not be represented as a Rust integer",
             signal.name,
@@ -963,31 +958,25 @@ fn scaled_signal_to_rust_int(signal: &Signal) -> String {
 }
 
 /// Convert the relevant parameters of a [`Signal`] into a Rust type.
-fn signal_params_to_rust_int(
-    sign: ValueType,
-    signal_size: u32,
-    factor: i64,
-    offset: i64,
-) -> Option<String> {
-    if signal_size > 64 {
+fn signal_to_rust_int_typ(signal: &Signal) -> Option<String> {
+    if signal.size > 64 {
         return None;
     }
-    get_range_of_values(sign, signal_size, factor, offset)
-        .map(|(low, high)| range_to_rust_int(low, high))
+    get_range_of_values(signal).map(|(low, high)| range_to_rust_int(low, high))
 }
 
 /// Using the signal's parameters, find the range of values that it spans.
-fn get_range_of_values(
-    sign: ValueType,
-    signal_size: u32,
-    factor: i64,
-    offset: i64,
-) -> Option<(i128, i128)> {
+fn get_range_of_values(signal: &Signal) -> Option<(i128, i128)> {
+    let sign: ValueType = signal.value_type;
+    let signal_size: u32 = signal.size as u32;
+    let factor: i64 = signal.factor as i64;
+    let offset: i64 = signal.offset as i64;
+
     if signal_size == 0 {
         return None;
     }
     let (low, high) = match sign {
-        ValueType::Signed => (
+        Signed => (
             1i128
                 .checked_shl(signal_size.saturating_sub(1))
                 .and_then(|n| n.checked_mul(-1)),
@@ -995,7 +984,7 @@ fn get_range_of_values(
                 .checked_shl(signal_size.saturating_sub(1))
                 .and_then(|n| n.checked_sub(1)),
         ),
-        ValueType::Unsigned => (
+        Unsigned => (
             Some(0),
             1i128
                 .checked_shl(signal_size)
@@ -1069,8 +1058,8 @@ fn signal_bit_size_suffix(size: u32) -> &'static str {
 /// Determine the smallest rust integer that can fit the raw signal values.
 fn signal_to_rust_int(signal: &Signal) -> String {
     let sign = match signal.value_type {
-        ValueType::Signed => "i",
-        ValueType::Unsigned => "u",
+        Signed => "i",
+        Unsigned => "u",
     };
     format!("{sign}{}", signal_bit_size_suffix(signal.size as u32))
 }
@@ -1540,19 +1529,39 @@ impl Config<'_> {
 
 #[cfg(test)]
 mod tests {
-    use can_dbc::ValueType::{Signed, Unsigned};
+    use can_dbc::{Signal, ValueType};
 
-    use crate::{get_range_of_values, range_to_rust_int, signal_params_to_rust_int};
+    use super::*;
+
+    fn signal(sign: ValueType, signal_size: u32, factor: i64, offset: i64) -> Signal {
+        Signal {
+            name: String::new(),
+            start_bit: 0,
+            size: u64::from(signal_size),
+            byte_order: LittleEndian,
+            value_type: sign,
+            factor: factor as f64,
+            offset: offset as f64,
+            min: 0.0,
+            max: 0.0,
+            unit: String::new(),
+            receivers: vec![],
+            multiplexer_indicator: Plain,
+        }
+    }
 
     #[test]
     fn test_range_of_values() {
-        assert_eq!(get_range_of_values(Unsigned, 4, 1, 0), Some((0, 15)));
         assert_eq!(
-            get_range_of_values(Unsigned, 32, -1, 0),
+            get_range_of_values(&signal(Unsigned, 4, 1, 0)),
+            Some((0, 15))
+        );
+        assert_eq!(
+            get_range_of_values(&signal(Unsigned, 32, -1, 0)),
             Some((-i128::from(u32::MAX), 0))
         );
         assert_eq!(
-            get_range_of_values(Unsigned, 12, 1, -1000),
+            get_range_of_values(&signal(Unsigned, 12, 1, -1000)),
             Some((-1000, 3095))
         );
     }
@@ -1560,7 +1569,7 @@ mod tests {
     #[test]
     fn test_range_0_signal_size() {
         assert_eq!(
-            get_range_of_values(Signed, 0, 1, 0),
+            get_range_of_values(&signal(Signed, 0, 1, 0)),
             None,
             "0 bit signal should be invalid",
         );
@@ -1580,15 +1589,24 @@ mod tests {
 
     #[test]
     fn test_convert_signal_params_to_rust_int() {
-        assert_eq!(signal_params_to_rust_int(Signed, 8, 1, 0).unwrap(), "i8");
-        assert_eq!(signal_params_to_rust_int(Signed, 8, 2, 0).unwrap(), "i16");
-        assert_eq!(signal_params_to_rust_int(Signed, 63, 1, 0).unwrap(), "i64");
         assert_eq!(
-            signal_params_to_rust_int(Unsigned, 64, -1, 0).unwrap(),
+            signal_to_rust_int_typ(&signal(Signed, 8, 1, 0)).unwrap(),
+            "i8"
+        );
+        assert_eq!(
+            signal_to_rust_int_typ(&signal(Signed, 8, 2, 0)).unwrap(),
+            "i16"
+        );
+        assert_eq!(
+            signal_to_rust_int_typ(&signal(Signed, 63, 1, 0)).unwrap(),
+            "i64"
+        );
+        assert_eq!(
+            signal_to_rust_int_typ(&signal(Unsigned, 64, -1, 0)).unwrap(),
             "i128",
         );
         assert_eq!(
-            signal_params_to_rust_int(Unsigned, 65, 1, 0),
+            signal_to_rust_int_typ(&signal(Unsigned, 65, 1, 0)),
             None,
             "This shouldn't be valid in a DBC, it's more than 64 bits",
         );
