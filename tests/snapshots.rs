@@ -6,6 +6,7 @@ use std::path::{Path, PathBuf};
 use std::{env, fs};
 
 use can_dbc::decode_cp1252;
+use dbc_codegen::Config;
 use insta::{assert_binary_snapshot, assert_debug_snapshot, with_settings};
 use test_each_file::test_each_path;
 use walkdir::WalkDir;
@@ -137,17 +138,13 @@ fn parse_one_file([path]: [&Path; 1]) {
     let buffer = fs::read(path).unwrap();
     let buffer = test.decode(&buffer);
 
-    let config = dbc_codegen::Config::builder()
+    let result = Config::builder()
         .dbc_name(&test.file_name)
         .dbc_content(&buffer)
-        .build();
+        .build()
+        .generate();
 
-    let mut out = Vec::<u8>::new();
-    let result = dbc_codegen::codegen(config, &mut out);
-    let result = result.and_then(|()| String::from_utf8(out).map_err(anyhow::Error::from));
-    let is_err = result.is_err();
-
-    if let Some(snapshot_path) = test.snapshot_path(is_err) {
+    if let Some(snapshot_path) = test.snapshot_path(result.is_err()) {
         with_settings! {
             {
                 omit_expression => true,
@@ -269,25 +266,22 @@ fn compile_test() {
 }
 
 #[test]
-#[ignore = "Manual test, run with `just test-manual`"]
+#[ignore = "use `just test-manual` to run"]
 fn single_file_manual_test() {
     let test_path = Path::new("tests/fixtures/shared-test-files/dbc-cantools/choices.dbc");
     let test = get_test_info(test_path);
     let buffer = fs::read(test_path).unwrap();
     let buffer = test.decode(&buffer);
 
-    let config = dbc_codegen::Config::builder()
+    let out_path = PathBuf::from("./target/manual/manual_test_output.rs");
+    fs::create_dir_all(out_path.parent().unwrap()).unwrap();
+
+    Config::builder()
         .dbc_name(&test.file_name)
         .dbc_content(&buffer)
-        .build();
-    let mut out = Vec::<u8>::new();
-    dbc_codegen::codegen(config, &mut out).unwrap();
-    let output = String::from_utf8(out).unwrap();
-
-    let out_path = PathBuf::from("./target/manual");
-    fs::create_dir_all(&out_path).unwrap();
-    let out_path = out_path.join("manual_test_output.rs");
-    fs::write(&out_path, output).unwrap();
+        .build()
+        .write_to_file(&out_path)
+        .unwrap();
 
     env::set_var("CARGO_ENCODED_RUSTFLAGS", "--deny=warnings");
     let t = trybuild::TestCases::new();

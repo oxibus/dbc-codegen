@@ -1,4 +1,3 @@
-use std::fs::File;
 use std::path::PathBuf;
 use std::process::exit;
 
@@ -41,25 +40,18 @@ fn main() {
     }
 
     let messages_path = args.out_path.join("messages.rs");
-    let mut messages_code = File::create(messages_path).unwrap_or_else(|e| {
-        eprintln!(
-            "Could not create `messages.rs` file in {}: {e:?}",
-            args.out_path.display(),
-        );
-        exit(exitcode::CANTCREAT);
-    });
 
-    let config = Config::builder()
+    if let Err(e) = Config::builder()
         .dbc_name(&dbc_file_name)
         .dbc_content(&dbc_file)
         .debug_prints(args.debug)
-        .build();
-
-    dbc_codegen::codegen(config, &mut messages_code).unwrap_or_else(|e| {
+        .build()
+        .write_to_file(messages_path)
+    {
         eprintln!("could not convert `{}`: {e}", args.dbc_path.display());
         if args.debug {
             eprintln!("details: {e:?}");
         }
         exit(exitcode::NOINPUT)
-    });
+    }
 }
