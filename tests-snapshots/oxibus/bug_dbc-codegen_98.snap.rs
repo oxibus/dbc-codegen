@@ -1,15 +1,13 @@
-// Generated code!
-//
-// Message definitions from file `bug_dbc-codegen_98`
-// Version: 
-
 #[allow(unused_imports)]
 use core::ops::BitOr;
 #[allow(unused_imports)]
 use bitvec::prelude::*;
 #[allow(unused_imports)]
 use embedded_can::{Id, StandardId, ExtendedId};
-
+#[allow(dead_code)]
+pub const DBC_FILE_NAME: &str = "bug_dbc-codegen_98";
+#[allow(dead_code)]
+pub const DBC_FILE_VERSION: &str = "";
 /// All messages
 #[allow(
     clippy::absurd_extreme_comparisons,
@@ -27,7 +25,6 @@ pub enum Messages {
     /// Test_output
     TestOutput(TestOutput),
 }
-
 #[allow(
     clippy::absurd_extreme_comparisons,
     clippy::excessive_precision,
@@ -41,16 +38,16 @@ impl Messages {
     /// Read message from CAN frame
     #[inline(never)]
     pub fn from_can_message(id: Id, payload: &[u8]) -> Result<Self, CanError> {
-        
         let res = match id {
             TestInput::MESSAGE_ID => Messages::TestInput(TestInput::try_from(payload)?),
-            TestOutput::MESSAGE_ID => Messages::TestOutput(TestOutput::try_from(payload)?),
+            TestOutput::MESSAGE_ID => {
+                Messages::TestOutput(TestOutput::try_from(payload)?)
+            }
             id => return Err(CanError::UnknownMessageId(id)),
         };
         Ok(res)
     }
 }
-
 /// Test_input
 ///
 /// - Standard ID: 0 (0x0)
@@ -59,7 +56,6 @@ impl Messages {
 pub struct TestInput {
     raw: [u8; 8],
 }
-
 #[allow(
     clippy::absurd_extreme_comparisons,
     clippy::excessive_precision,
@@ -70,8 +66,9 @@ pub struct TestInput {
     unused_variables,
 )]
 impl TestInput {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0x0)});
-    
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
+        StandardId::new_unchecked(0x0)
+    });
     pub const TEST_INPUT_MUX_MIN: u8 = 0_u8;
     pub const TEST_INPUT_MUX_MAX: u8 = 0_u8;
     pub const VAR1_MIN: u16 = 0_u16;
@@ -82,19 +79,16 @@ impl TestInput {
     pub const VAR3_MAX: u16 = 65535_u16;
     pub const VAR4_MIN: u16 = 0_u16;
     pub const VAR4_MAX: u16 = 65535_u16;
-    
     /// Construct new Test_input from values
     pub fn new(test_input_mux: u8) -> Result<Self, CanError> {
         let mut res = Self { raw: [0u8; 8] };
         res.set_test_input_mux(test_input_mux)?;
         Ok(res)
     }
-    
     /// Access message payload raw value
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    
     /// Get raw value of Test_input_Mux
     ///
     /// - Start bit: 56
@@ -106,35 +100,65 @@ impl TestInput {
     #[inline(always)]
     pub fn test_input_mux_raw(&self) -> u8 {
         let signal = self.raw.view_bits::<Lsb0>()[56..60].load_le::<u8>();
-        
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    
     pub fn test_input_mux(&mut self) -> Result<TestInputTestInputMuxIndex, CanError> {
         match self.test_input_mux_raw() {
-            0 => Ok(TestInputTestInputMuxIndex::M0(TestInputTestInputMuxM0{ raw: self.raw })),
-            1 => Ok(TestInputTestInputMuxIndex::M1(TestInputTestInputMuxM1{ raw: self.raw })),
-            2 => Ok(TestInputTestInputMuxIndex::M2(TestInputTestInputMuxM2{ raw: self.raw })),
-            3 => Ok(TestInputTestInputMuxIndex::M3(TestInputTestInputMuxM3{ raw: self.raw })),
-            multiplexor => Err(CanError::InvalidMultiplexor { message_id: TestInput::MESSAGE_ID, multiplexor: multiplexor.into() }),
+            0 => {
+                Ok(
+                    TestInputTestInputMuxIndex::M0(TestInputTestInputMuxM0 {
+                        raw: self.raw,
+                    }),
+                )
+            }
+            1 => {
+                Ok(
+                    TestInputTestInputMuxIndex::M1(TestInputTestInputMuxM1 {
+                        raw: self.raw,
+                    }),
+                )
+            }
+            2 => {
+                Ok(
+                    TestInputTestInputMuxIndex::M2(TestInputTestInputMuxM2 {
+                        raw: self.raw,
+                    }),
+                )
+            }
+            3 => {
+                Ok(
+                    TestInputTestInputMuxIndex::M3(TestInputTestInputMuxM3 {
+                        raw: self.raw,
+                    }),
+                )
+            }
+            multiplexor => {
+                Err(CanError::InvalidMultiplexor {
+                    message_id: TestInput::MESSAGE_ID,
+                    multiplexor: multiplexor.into(),
+                })
+            }
         }
     }
     /// Set value of Test_input_Mux
     #[inline(always)]
     fn set_test_input_mux(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 0_u8 < value {
-            return Err(CanError::ParameterOutOfRange { message_id: TestInput::MESSAGE_ID });
+            return Err(CanError::ParameterOutOfRange {
+                message_id: TestInput::MESSAGE_ID,
+            });
         }
         let factor = 1;
-        let value = value.checked_sub(0)
-            .ok_or(CanError::ParameterOutOfRange { message_id: TestInput::MESSAGE_ID })?;
+        let value = value
+            .checked_sub(0)
+            .ok_or(CanError::ParameterOutOfRange {
+                message_id: TestInput::MESSAGE_ID,
+            })?;
         let value = (value / factor) as u8;
-        
         self.raw.view_bits_mut::<Lsb0>()[56..60].store_le(value);
         Ok(())
     }
-    
     /// Set value of Test_input_Mux
     #[inline(always)]
     pub fn set_m0(&mut self, value: TestInputTestInputMuxM0) -> Result<(), CanError> {
@@ -144,7 +168,6 @@ impl TestInput {
         self.set_test_input_mux(0)?;
         Ok(())
     }
-    
     /// Set value of Test_input_Mux
     #[inline(always)]
     pub fn set_m1(&mut self, value: TestInputTestInputMuxM1) -> Result<(), CanError> {
@@ -154,7 +177,6 @@ impl TestInput {
         self.set_test_input_mux(1)?;
         Ok(())
     }
-    
     /// Set value of Test_input_Mux
     #[inline(always)]
     pub fn set_m2(&mut self, value: TestInputTestInputMuxM2) -> Result<(), CanError> {
@@ -164,7 +186,6 @@ impl TestInput {
         self.set_test_input_mux(2)?;
         Ok(())
     }
-    
     /// Set value of Test_input_Mux
     #[inline(always)]
     pub fn set_m3(&mut self, value: TestInputTestInputMuxM3) -> Result<(), CanError> {
@@ -174,53 +195,41 @@ impl TestInput {
         self.set_test_input_mux(3)?;
         Ok(())
     }
-    
 }
-
 impl core::convert::TryFrom<&[u8]> for TestInput {
     type Error = CanError;
-    
     #[inline(always)]
     fn try_from(payload: &[u8]) -> Result<Self, Self::Error> {
-        if payload.len() != 8 { return Err(CanError::InvalidPayloadSize); }
+        if payload.len() != 8 {
+            return Err(CanError::InvalidPayloadSize);
+        }
         let mut raw = [0u8; 8];
         raw.copy_from_slice(&payload[..8]);
         Ok(Self { raw })
     }
 }
-
 impl embedded_can::Frame for TestInput {
     fn new(id: impl Into<Id>, data: &[u8]) -> Option<Self> {
-        if id.into() != Self::MESSAGE_ID {
-            None
-        } else {
-            data.try_into().ok()
-        }
+        if id.into() != Self::MESSAGE_ID { None } else { data.try_into().ok() }
     }
-
     fn new_remote(_id: impl Into<Id>, _dlc: usize) -> Option<Self> {
         unimplemented!()
     }
-
     fn is_extended(&self) -> bool {
         match self.id() {
             Id::Standard(_) => false,
             Id::Extended(_) => true,
         }
     }
-
     fn is_remote_frame(&self) -> bool {
         false
     }
-
     fn id(&self) -> Id {
         Self::MESSAGE_ID
     }
-
     fn dlc(&self) -> usize {
         self.raw.len()
     }
-
     fn data(&self) -> &[u8] {
         &self.raw
     }
@@ -243,7 +252,6 @@ pub enum TestInputTestInputMux {
     Multiplexer4,
     _Other(u8),
 }
-
 impl From<TestInputTestInputMux> for u8 {
     fn from(val: TestInputTestInputMux) -> u8 {
         match val {
@@ -255,7 +263,6 @@ impl From<TestInputTestInputMux> for u8 {
         }
     }
 }
-
 /// Defined values for multiplexed signal Test_input
 #[allow(
     clippy::absurd_extreme_comparisons,
@@ -272,7 +279,6 @@ pub enum TestInputTestInputMuxIndex {
     M2(TestInputTestInputMuxM2),
     M3(TestInputTestInputMuxM3),
 }
-
 #[allow(
     clippy::absurd_extreme_comparisons,
     clippy::excessive_precision,
@@ -283,8 +289,9 @@ pub enum TestInputTestInputMuxIndex {
     unused_variables,
 )]
 #[derive(Default)]
-pub struct TestInputTestInputMuxM0 { raw: [u8; 8] }
-
+pub struct TestInputTestInputMuxM0 {
+    raw: [u8; 8],
+}
 #[allow(
     clippy::absurd_extreme_comparisons,
     clippy::excessive_precision,
@@ -295,51 +302,52 @@ pub struct TestInputTestInputMuxM0 { raw: [u8; 8] }
     unused_variables,
 )]
 impl TestInputTestInputMuxM0 {
-pub fn new() -> Self { Self { raw: [0u8; 8] } }
-/// Var1
-///
-/// - Min: 0
-/// - Max: 65535
-/// - Unit: ""
-/// - Receivers: Vector__XXX
-#[inline(always)]
-pub fn var1(&self) -> u16 {
-    self.var1_raw()
-}
-
-/// Get raw value of Var1
-///
-/// - Start bit: 0
-/// - Signal size: 16 bits
-/// - Factor: 1
-/// - Offset: 0
-/// - Byte order: LittleEndian
-/// - Value type: Unsigned
-#[inline(always)]
-pub fn var1_raw(&self) -> u16 {
-    let signal = self.raw.view_bits::<Lsb0>()[0..16].load_le::<u16>();
-    
-    let factor = 1;
-    u16::from(signal).saturating_mul(factor).saturating_add(0)
-}
-
-/// Set value of Var1
-#[inline(always)]
-pub fn set_var1(&mut self, value: u16) -> Result<(), CanError> {
-    if value < 0_u16 || 65535_u16 < value {
-        return Err(CanError::ParameterOutOfRange { message_id: TestInput::MESSAGE_ID });
+    pub fn new() -> Self {
+        Self { raw: [0u8; 8] }
     }
-    let factor = 1;
-    let value = value.checked_sub(0)
-        .ok_or(CanError::ParameterOutOfRange { message_id: TestInput::MESSAGE_ID })?;
-    let value = (value / factor) as u16;
-    
-    self.raw.view_bits_mut::<Lsb0>()[0..16].store_le(value);
-    Ok(())
+    /// Var1
+    ///
+    /// - Min: 0
+    /// - Max: 65535
+    /// - Unit: ""
+    /// - Receivers: Vector__XXX
+    #[inline(always)]
+    pub fn var1(&self) -> u16 {
+        self.var1_raw()
+    }
+    /// Get raw value of Var1
+    ///
+    /// - Start bit: 0
+    /// - Signal size: 16 bits
+    /// - Factor: 1
+    /// - Offset: 0
+    /// - Byte order: LittleEndian
+    /// - Value type: Unsigned
+    #[inline(always)]
+    pub fn var1_raw(&self) -> u16 {
+        let signal = self.raw.view_bits::<Lsb0>()[0..16].load_le::<u16>();
+        let factor = 1;
+        u16::from(signal).saturating_mul(factor).saturating_add(0)
+    }
+    /// Set value of Var1
+    #[inline(always)]
+    pub fn set_var1(&mut self, value: u16) -> Result<(), CanError> {
+        if value < 0_u16 || 65535_u16 < value {
+            return Err(CanError::ParameterOutOfRange {
+                message_id: TestInput::MESSAGE_ID,
+            });
+        }
+        let factor = 1;
+        let value = value
+            .checked_sub(0)
+            .ok_or(CanError::ParameterOutOfRange {
+                message_id: TestInput::MESSAGE_ID,
+            })?;
+        let value = (value / factor) as u16;
+        self.raw.view_bits_mut::<Lsb0>()[0..16].store_le(value);
+        Ok(())
+    }
 }
-
-}
-
 #[allow(
     clippy::absurd_extreme_comparisons,
     clippy::excessive_precision,
@@ -350,8 +358,9 @@ pub fn set_var1(&mut self, value: u16) -> Result<(), CanError> {
     unused_variables,
 )]
 #[derive(Default)]
-pub struct TestInputTestInputMuxM1 { raw: [u8; 8] }
-
+pub struct TestInputTestInputMuxM1 {
+    raw: [u8; 8],
+}
 #[allow(
     clippy::absurd_extreme_comparisons,
     clippy::excessive_precision,
@@ -362,51 +371,52 @@ pub struct TestInputTestInputMuxM1 { raw: [u8; 8] }
     unused_variables,
 )]
 impl TestInputTestInputMuxM1 {
-pub fn new() -> Self { Self { raw: [0u8; 8] } }
-/// Var2
-///
-/// - Min: 0
-/// - Max: 65535
-/// - Unit: ""
-/// - Receivers: Vector__XXX
-#[inline(always)]
-pub fn var2(&self) -> u16 {
-    self.var2_raw()
-}
-
-/// Get raw value of Var2
-///
-/// - Start bit: 0
-/// - Signal size: 16 bits
-/// - Factor: 1
-/// - Offset: 0
-/// - Byte order: LittleEndian
-/// - Value type: Unsigned
-#[inline(always)]
-pub fn var2_raw(&self) -> u16 {
-    let signal = self.raw.view_bits::<Lsb0>()[0..16].load_le::<u16>();
-    
-    let factor = 1;
-    u16::from(signal).saturating_mul(factor).saturating_add(0)
-}
-
-/// Set value of Var2
-#[inline(always)]
-pub fn set_var2(&mut self, value: u16) -> Result<(), CanError> {
-    if value < 0_u16 || 65535_u16 < value {
-        return Err(CanError::ParameterOutOfRange { message_id: TestInput::MESSAGE_ID });
+    pub fn new() -> Self {
+        Self { raw: [0u8; 8] }
     }
-    let factor = 1;
-    let value = value.checked_sub(0)
-        .ok_or(CanError::ParameterOutOfRange { message_id: TestInput::MESSAGE_ID })?;
-    let value = (value / factor) as u16;
-    
-    self.raw.view_bits_mut::<Lsb0>()[0..16].store_le(value);
-    Ok(())
+    /// Var2
+    ///
+    /// - Min: 0
+    /// - Max: 65535
+    /// - Unit: ""
+    /// - Receivers: Vector__XXX
+    #[inline(always)]
+    pub fn var2(&self) -> u16 {
+        self.var2_raw()
+    }
+    /// Get raw value of Var2
+    ///
+    /// - Start bit: 0
+    /// - Signal size: 16 bits
+    /// - Factor: 1
+    /// - Offset: 0
+    /// - Byte order: LittleEndian
+    /// - Value type: Unsigned
+    #[inline(always)]
+    pub fn var2_raw(&self) -> u16 {
+        let signal = self.raw.view_bits::<Lsb0>()[0..16].load_le::<u16>();
+        let factor = 1;
+        u16::from(signal).saturating_mul(factor).saturating_add(0)
+    }
+    /// Set value of Var2
+    #[inline(always)]
+    pub fn set_var2(&mut self, value: u16) -> Result<(), CanError> {
+        if value < 0_u16 || 65535_u16 < value {
+            return Err(CanError::ParameterOutOfRange {
+                message_id: TestInput::MESSAGE_ID,
+            });
+        }
+        let factor = 1;
+        let value = value
+            .checked_sub(0)
+            .ok_or(CanError::ParameterOutOfRange {
+                message_id: TestInput::MESSAGE_ID,
+            })?;
+        let value = (value / factor) as u16;
+        self.raw.view_bits_mut::<Lsb0>()[0..16].store_le(value);
+        Ok(())
+    }
 }
-
-}
-
 #[allow(
     clippy::absurd_extreme_comparisons,
     clippy::excessive_precision,
@@ -417,8 +427,9 @@ pub fn set_var2(&mut self, value: u16) -> Result<(), CanError> {
     unused_variables,
 )]
 #[derive(Default)]
-pub struct TestInputTestInputMuxM2 { raw: [u8; 8] }
-
+pub struct TestInputTestInputMuxM2 {
+    raw: [u8; 8],
+}
 #[allow(
     clippy::absurd_extreme_comparisons,
     clippy::excessive_precision,
@@ -429,51 +440,52 @@ pub struct TestInputTestInputMuxM2 { raw: [u8; 8] }
     unused_variables,
 )]
 impl TestInputTestInputMuxM2 {
-pub fn new() -> Self { Self { raw: [0u8; 8] } }
-/// Var3
-///
-/// - Min: 0
-/// - Max: 65535
-/// - Unit: ""
-/// - Receivers: Vector__XXX
-#[inline(always)]
-pub fn var3(&self) -> u16 {
-    self.var3_raw()
-}
-
-/// Get raw value of Var3
-///
-/// - Start bit: 0
-/// - Signal size: 16 bits
-/// - Factor: 1
-/// - Offset: 0
-/// - Byte order: LittleEndian
-/// - Value type: Unsigned
-#[inline(always)]
-pub fn var3_raw(&self) -> u16 {
-    let signal = self.raw.view_bits::<Lsb0>()[0..16].load_le::<u16>();
-    
-    let factor = 1;
-    u16::from(signal).saturating_mul(factor).saturating_add(0)
-}
-
-/// Set value of Var3
-#[inline(always)]
-pub fn set_var3(&mut self, value: u16) -> Result<(), CanError> {
-    if value < 0_u16 || 65535_u16 < value {
-        return Err(CanError::ParameterOutOfRange { message_id: TestInput::MESSAGE_ID });
+    pub fn new() -> Self {
+        Self { raw: [0u8; 8] }
     }
-    let factor = 1;
-    let value = value.checked_sub(0)
-        .ok_or(CanError::ParameterOutOfRange { message_id: TestInput::MESSAGE_ID })?;
-    let value = (value / factor) as u16;
-    
-    self.raw.view_bits_mut::<Lsb0>()[0..16].store_le(value);
-    Ok(())
+    /// Var3
+    ///
+    /// - Min: 0
+    /// - Max: 65535
+    /// - Unit: ""
+    /// - Receivers: Vector__XXX
+    #[inline(always)]
+    pub fn var3(&self) -> u16 {
+        self.var3_raw()
+    }
+    /// Get raw value of Var3
+    ///
+    /// - Start bit: 0
+    /// - Signal size: 16 bits
+    /// - Factor: 1
+    /// - Offset: 0
+    /// - Byte order: LittleEndian
+    /// - Value type: Unsigned
+    #[inline(always)]
+    pub fn var3_raw(&self) -> u16 {
+        let signal = self.raw.view_bits::<Lsb0>()[0..16].load_le::<u16>();
+        let factor = 1;
+        u16::from(signal).saturating_mul(factor).saturating_add(0)
+    }
+    /// Set value of Var3
+    #[inline(always)]
+    pub fn set_var3(&mut self, value: u16) -> Result<(), CanError> {
+        if value < 0_u16 || 65535_u16 < value {
+            return Err(CanError::ParameterOutOfRange {
+                message_id: TestInput::MESSAGE_ID,
+            });
+        }
+        let factor = 1;
+        let value = value
+            .checked_sub(0)
+            .ok_or(CanError::ParameterOutOfRange {
+                message_id: TestInput::MESSAGE_ID,
+            })?;
+        let value = (value / factor) as u16;
+        self.raw.view_bits_mut::<Lsb0>()[0..16].store_le(value);
+        Ok(())
+    }
 }
-
-}
-
 #[allow(
     clippy::absurd_extreme_comparisons,
     clippy::excessive_precision,
@@ -484,8 +496,9 @@ pub fn set_var3(&mut self, value: u16) -> Result<(), CanError> {
     unused_variables,
 )]
 #[derive(Default)]
-pub struct TestInputTestInputMuxM3 { raw: [u8; 8] }
-
+pub struct TestInputTestInputMuxM3 {
+    raw: [u8; 8],
+}
 #[allow(
     clippy::absurd_extreme_comparisons,
     clippy::excessive_precision,
@@ -496,52 +509,52 @@ pub struct TestInputTestInputMuxM3 { raw: [u8; 8] }
     unused_variables,
 )]
 impl TestInputTestInputMuxM3 {
-pub fn new() -> Self { Self { raw: [0u8; 8] } }
-/// Var4
-///
-/// - Min: 0
-/// - Max: 65535
-/// - Unit: ""
-/// - Receivers: Vector__XXX
-#[inline(always)]
-pub fn var4(&self) -> u16 {
-    self.var4_raw()
-}
-
-/// Get raw value of Var4
-///
-/// - Start bit: 0
-/// - Signal size: 16 bits
-/// - Factor: 1
-/// - Offset: 0
-/// - Byte order: LittleEndian
-/// - Value type: Unsigned
-#[inline(always)]
-pub fn var4_raw(&self) -> u16 {
-    let signal = self.raw.view_bits::<Lsb0>()[0..16].load_le::<u16>();
-    
-    let factor = 1;
-    u16::from(signal).saturating_mul(factor).saturating_add(0)
-}
-
-/// Set value of Var4
-#[inline(always)]
-pub fn set_var4(&mut self, value: u16) -> Result<(), CanError> {
-    if value < 0_u16 || 65535_u16 < value {
-        return Err(CanError::ParameterOutOfRange { message_id: TestInput::MESSAGE_ID });
+    pub fn new() -> Self {
+        Self { raw: [0u8; 8] }
     }
-    let factor = 1;
-    let value = value.checked_sub(0)
-        .ok_or(CanError::ParameterOutOfRange { message_id: TestInput::MESSAGE_ID })?;
-    let value = (value / factor) as u16;
-    
-    self.raw.view_bits_mut::<Lsb0>()[0..16].store_le(value);
-    Ok(())
+    /// Var4
+    ///
+    /// - Min: 0
+    /// - Max: 65535
+    /// - Unit: ""
+    /// - Receivers: Vector__XXX
+    #[inline(always)]
+    pub fn var4(&self) -> u16 {
+        self.var4_raw()
+    }
+    /// Get raw value of Var4
+    ///
+    /// - Start bit: 0
+    /// - Signal size: 16 bits
+    /// - Factor: 1
+    /// - Offset: 0
+    /// - Byte order: LittleEndian
+    /// - Value type: Unsigned
+    #[inline(always)]
+    pub fn var4_raw(&self) -> u16 {
+        let signal = self.raw.view_bits::<Lsb0>()[0..16].load_le::<u16>();
+        let factor = 1;
+        u16::from(signal).saturating_mul(factor).saturating_add(0)
+    }
+    /// Set value of Var4
+    #[inline(always)]
+    pub fn set_var4(&mut self, value: u16) -> Result<(), CanError> {
+        if value < 0_u16 || 65535_u16 < value {
+            return Err(CanError::ParameterOutOfRange {
+                message_id: TestInput::MESSAGE_ID,
+            });
+        }
+        let factor = 1;
+        let value = value
+            .checked_sub(0)
+            .ok_or(CanError::ParameterOutOfRange {
+                message_id: TestInput::MESSAGE_ID,
+            })?;
+        let value = (value / factor) as u16;
+        self.raw.view_bits_mut::<Lsb0>()[0..16].store_le(value);
+        Ok(())
+    }
 }
-
-}
-
-
 /// Test_output
 ///
 /// - Standard ID: 1 (0x1)
@@ -550,7 +563,6 @@ pub fn set_var4(&mut self, value: u16) -> Result<(), CanError> {
 pub struct TestOutput {
     raw: [u8; 8],
 }
-
 #[allow(
     clippy::absurd_extreme_comparisons,
     clippy::excessive_precision,
@@ -561,8 +573,9 @@ pub struct TestOutput {
     unused_variables,
 )]
 impl TestOutput {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0x1)});
-    
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
+        StandardId::new_unchecked(0x1)
+    });
     pub const TEST_OUTPUT_MUX_MIN: u8 = 0_u8;
     pub const TEST_OUTPUT_MUX_MAX: u8 = 0_u8;
     pub const VAR5_MIN: u16 = 0_u16;
@@ -573,19 +586,16 @@ impl TestOutput {
     pub const VAR7_MAX: u16 = 65535_u16;
     pub const VAR8_MIN: u16 = 0_u16;
     pub const VAR8_MAX: u16 = 65535_u16;
-    
     /// Construct new Test_output from values
     pub fn new(test_output_mux: u8) -> Result<Self, CanError> {
         let mut res = Self { raw: [0u8; 8] };
         res.set_test_output_mux(test_output_mux)?;
         Ok(res)
     }
-    
     /// Access message payload raw value
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    
     /// Get raw value of Test_output_Mux
     ///
     /// - Start bit: 56
@@ -597,35 +607,65 @@ impl TestOutput {
     #[inline(always)]
     pub fn test_output_mux_raw(&self) -> u8 {
         let signal = self.raw.view_bits::<Lsb0>()[56..60].load_le::<u8>();
-        
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    
     pub fn test_output_mux(&mut self) -> Result<TestOutputTestOutputMuxIndex, CanError> {
         match self.test_output_mux_raw() {
-            0 => Ok(TestOutputTestOutputMuxIndex::M0(TestOutputTestOutputMuxM0{ raw: self.raw })),
-            1 => Ok(TestOutputTestOutputMuxIndex::M1(TestOutputTestOutputMuxM1{ raw: self.raw })),
-            2 => Ok(TestOutputTestOutputMuxIndex::M2(TestOutputTestOutputMuxM2{ raw: self.raw })),
-            3 => Ok(TestOutputTestOutputMuxIndex::M3(TestOutputTestOutputMuxM3{ raw: self.raw })),
-            multiplexor => Err(CanError::InvalidMultiplexor { message_id: TestOutput::MESSAGE_ID, multiplexor: multiplexor.into() }),
+            0 => {
+                Ok(
+                    TestOutputTestOutputMuxIndex::M0(TestOutputTestOutputMuxM0 {
+                        raw: self.raw,
+                    }),
+                )
+            }
+            1 => {
+                Ok(
+                    TestOutputTestOutputMuxIndex::M1(TestOutputTestOutputMuxM1 {
+                        raw: self.raw,
+                    }),
+                )
+            }
+            2 => {
+                Ok(
+                    TestOutputTestOutputMuxIndex::M2(TestOutputTestOutputMuxM2 {
+                        raw: self.raw,
+                    }),
+                )
+            }
+            3 => {
+                Ok(
+                    TestOutputTestOutputMuxIndex::M3(TestOutputTestOutputMuxM3 {
+                        raw: self.raw,
+                    }),
+                )
+            }
+            multiplexor => {
+                Err(CanError::InvalidMultiplexor {
+                    message_id: TestOutput::MESSAGE_ID,
+                    multiplexor: multiplexor.into(),
+                })
+            }
         }
     }
     /// Set value of Test_output_Mux
     #[inline(always)]
     fn set_test_output_mux(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 0_u8 < value {
-            return Err(CanError::ParameterOutOfRange { message_id: TestOutput::MESSAGE_ID });
+            return Err(CanError::ParameterOutOfRange {
+                message_id: TestOutput::MESSAGE_ID,
+            });
         }
         let factor = 1;
-        let value = value.checked_sub(0)
-            .ok_or(CanError::ParameterOutOfRange { message_id: TestOutput::MESSAGE_ID })?;
+        let value = value
+            .checked_sub(0)
+            .ok_or(CanError::ParameterOutOfRange {
+                message_id: TestOutput::MESSAGE_ID,
+            })?;
         let value = (value / factor) as u8;
-        
         self.raw.view_bits_mut::<Lsb0>()[56..60].store_le(value);
         Ok(())
     }
-    
     /// Set value of Test_output_Mux
     #[inline(always)]
     pub fn set_m0(&mut self, value: TestOutputTestOutputMuxM0) -> Result<(), CanError> {
@@ -635,7 +675,6 @@ impl TestOutput {
         self.set_test_output_mux(0)?;
         Ok(())
     }
-    
     /// Set value of Test_output_Mux
     #[inline(always)]
     pub fn set_m1(&mut self, value: TestOutputTestOutputMuxM1) -> Result<(), CanError> {
@@ -645,7 +684,6 @@ impl TestOutput {
         self.set_test_output_mux(1)?;
         Ok(())
     }
-    
     /// Set value of Test_output_Mux
     #[inline(always)]
     pub fn set_m2(&mut self, value: TestOutputTestOutputMuxM2) -> Result<(), CanError> {
@@ -655,7 +693,6 @@ impl TestOutput {
         self.set_test_output_mux(2)?;
         Ok(())
     }
-    
     /// Set value of Test_output_Mux
     #[inline(always)]
     pub fn set_m3(&mut self, value: TestOutputTestOutputMuxM3) -> Result<(), CanError> {
@@ -665,53 +702,41 @@ impl TestOutput {
         self.set_test_output_mux(3)?;
         Ok(())
     }
-    
 }
-
 impl core::convert::TryFrom<&[u8]> for TestOutput {
     type Error = CanError;
-    
     #[inline(always)]
     fn try_from(payload: &[u8]) -> Result<Self, Self::Error> {
-        if payload.len() != 8 { return Err(CanError::InvalidPayloadSize); }
+        if payload.len() != 8 {
+            return Err(CanError::InvalidPayloadSize);
+        }
         let mut raw = [0u8; 8];
         raw.copy_from_slice(&payload[..8]);
         Ok(Self { raw })
     }
 }
-
 impl embedded_can::Frame for TestOutput {
     fn new(id: impl Into<Id>, data: &[u8]) -> Option<Self> {
-        if id.into() != Self::MESSAGE_ID {
-            None
-        } else {
-            data.try_into().ok()
-        }
+        if id.into() != Self::MESSAGE_ID { None } else { data.try_into().ok() }
     }
-
     fn new_remote(_id: impl Into<Id>, _dlc: usize) -> Option<Self> {
         unimplemented!()
     }
-
     fn is_extended(&self) -> bool {
         match self.id() {
             Id::Standard(_) => false,
             Id::Extended(_) => true,
         }
     }
-
     fn is_remote_frame(&self) -> bool {
         false
     }
-
     fn id(&self) -> Id {
         Self::MESSAGE_ID
     }
-
     fn dlc(&self) -> usize {
         self.raw.len()
     }
-
     fn data(&self) -> &[u8] {
         &self.raw
     }
@@ -734,7 +759,6 @@ pub enum TestOutputTestOutputMux {
     Multiplexer4Out,
     _Other(u8),
 }
-
 impl From<TestOutputTestOutputMux> for u8 {
     fn from(val: TestOutputTestOutputMux) -> u8 {
         match val {
@@ -746,7 +770,6 @@ impl From<TestOutputTestOutputMux> for u8 {
         }
     }
 }
-
 /// Defined values for multiplexed signal Test_output
 #[allow(
     clippy::absurd_extreme_comparisons,
@@ -763,7 +786,6 @@ pub enum TestOutputTestOutputMuxIndex {
     M2(TestOutputTestOutputMuxM2),
     M3(TestOutputTestOutputMuxM3),
 }
-
 #[allow(
     clippy::absurd_extreme_comparisons,
     clippy::excessive_precision,
@@ -774,8 +796,9 @@ pub enum TestOutputTestOutputMuxIndex {
     unused_variables,
 )]
 #[derive(Default)]
-pub struct TestOutputTestOutputMuxM0 { raw: [u8; 8] }
-
+pub struct TestOutputTestOutputMuxM0 {
+    raw: [u8; 8],
+}
 #[allow(
     clippy::absurd_extreme_comparisons,
     clippy::excessive_precision,
@@ -786,51 +809,52 @@ pub struct TestOutputTestOutputMuxM0 { raw: [u8; 8] }
     unused_variables,
 )]
 impl TestOutputTestOutputMuxM0 {
-pub fn new() -> Self { Self { raw: [0u8; 8] } }
-/// Var5
-///
-/// - Min: 0
-/// - Max: 65535
-/// - Unit: ""
-/// - Receivers: Vector__XXX
-#[inline(always)]
-pub fn var5(&self) -> u16 {
-    self.var5_raw()
-}
-
-/// Get raw value of Var5
-///
-/// - Start bit: 0
-/// - Signal size: 16 bits
-/// - Factor: 1
-/// - Offset: 0
-/// - Byte order: LittleEndian
-/// - Value type: Unsigned
-#[inline(always)]
-pub fn var5_raw(&self) -> u16 {
-    let signal = self.raw.view_bits::<Lsb0>()[0..16].load_le::<u16>();
-    
-    let factor = 1;
-    u16::from(signal).saturating_mul(factor).saturating_add(0)
-}
-
-/// Set value of Var5
-#[inline(always)]
-pub fn set_var5(&mut self, value: u16) -> Result<(), CanError> {
-    if value < 0_u16 || 65535_u16 < value {
-        return Err(CanError::ParameterOutOfRange { message_id: TestOutput::MESSAGE_ID });
+    pub fn new() -> Self {
+        Self { raw: [0u8; 8] }
     }
-    let factor = 1;
-    let value = value.checked_sub(0)
-        .ok_or(CanError::ParameterOutOfRange { message_id: TestOutput::MESSAGE_ID })?;
-    let value = (value / factor) as u16;
-    
-    self.raw.view_bits_mut::<Lsb0>()[0..16].store_le(value);
-    Ok(())
+    /// Var5
+    ///
+    /// - Min: 0
+    /// - Max: 65535
+    /// - Unit: ""
+    /// - Receivers: Vector__XXX
+    #[inline(always)]
+    pub fn var5(&self) -> u16 {
+        self.var5_raw()
+    }
+    /// Get raw value of Var5
+    ///
+    /// - Start bit: 0
+    /// - Signal size: 16 bits
+    /// - Factor: 1
+    /// - Offset: 0
+    /// - Byte order: LittleEndian
+    /// - Value type: Unsigned
+    #[inline(always)]
+    pub fn var5_raw(&self) -> u16 {
+        let signal = self.raw.view_bits::<Lsb0>()[0..16].load_le::<u16>();
+        let factor = 1;
+        u16::from(signal).saturating_mul(factor).saturating_add(0)
+    }
+    /// Set value of Var5
+    #[inline(always)]
+    pub fn set_var5(&mut self, value: u16) -> Result<(), CanError> {
+        if value < 0_u16 || 65535_u16 < value {
+            return Err(CanError::ParameterOutOfRange {
+                message_id: TestOutput::MESSAGE_ID,
+            });
+        }
+        let factor = 1;
+        let value = value
+            .checked_sub(0)
+            .ok_or(CanError::ParameterOutOfRange {
+                message_id: TestOutput::MESSAGE_ID,
+            })?;
+        let value = (value / factor) as u16;
+        self.raw.view_bits_mut::<Lsb0>()[0..16].store_le(value);
+        Ok(())
+    }
 }
-
-}
-
 #[allow(
     clippy::absurd_extreme_comparisons,
     clippy::excessive_precision,
@@ -841,8 +865,9 @@ pub fn set_var5(&mut self, value: u16) -> Result<(), CanError> {
     unused_variables,
 )]
 #[derive(Default)]
-pub struct TestOutputTestOutputMuxM1 { raw: [u8; 8] }
-
+pub struct TestOutputTestOutputMuxM1 {
+    raw: [u8; 8],
+}
 #[allow(
     clippy::absurd_extreme_comparisons,
     clippy::excessive_precision,
@@ -853,51 +878,52 @@ pub struct TestOutputTestOutputMuxM1 { raw: [u8; 8] }
     unused_variables,
 )]
 impl TestOutputTestOutputMuxM1 {
-pub fn new() -> Self { Self { raw: [0u8; 8] } }
-/// Var6
-///
-/// - Min: 0
-/// - Max: 65535
-/// - Unit: ""
-/// - Receivers: Vector__XXX
-#[inline(always)]
-pub fn var6(&self) -> u16 {
-    self.var6_raw()
-}
-
-/// Get raw value of Var6
-///
-/// - Start bit: 0
-/// - Signal size: 16 bits
-/// - Factor: 1
-/// - Offset: 0
-/// - Byte order: LittleEndian
-/// - Value type: Unsigned
-#[inline(always)]
-pub fn var6_raw(&self) -> u16 {
-    let signal = self.raw.view_bits::<Lsb0>()[0..16].load_le::<u16>();
-    
-    let factor = 1;
-    u16::from(signal).saturating_mul(factor).saturating_add(0)
-}
-
-/// Set value of Var6
-#[inline(always)]
-pub fn set_var6(&mut self, value: u16) -> Result<(), CanError> {
-    if value < 0_u16 || 65535_u16 < value {
-        return Err(CanError::ParameterOutOfRange { message_id: TestOutput::MESSAGE_ID });
+    pub fn new() -> Self {
+        Self { raw: [0u8; 8] }
     }
-    let factor = 1;
-    let value = value.checked_sub(0)
-        .ok_or(CanError::ParameterOutOfRange { message_id: TestOutput::MESSAGE_ID })?;
-    let value = (value / factor) as u16;
-    
-    self.raw.view_bits_mut::<Lsb0>()[0..16].store_le(value);
-    Ok(())
+    /// Var6
+    ///
+    /// - Min: 0
+    /// - Max: 65535
+    /// - Unit: ""
+    /// - Receivers: Vector__XXX
+    #[inline(always)]
+    pub fn var6(&self) -> u16 {
+        self.var6_raw()
+    }
+    /// Get raw value of Var6
+    ///
+    /// - Start bit: 0
+    /// - Signal size: 16 bits
+    /// - Factor: 1
+    /// - Offset: 0
+    /// - Byte order: LittleEndian
+    /// - Value type: Unsigned
+    #[inline(always)]
+    pub fn var6_raw(&self) -> u16 {
+        let signal = self.raw.view_bits::<Lsb0>()[0..16].load_le::<u16>();
+        let factor = 1;
+        u16::from(signal).saturating_mul(factor).saturating_add(0)
+    }
+    /// Set value of Var6
+    #[inline(always)]
+    pub fn set_var6(&mut self, value: u16) -> Result<(), CanError> {
+        if value < 0_u16 || 65535_u16 < value {
+            return Err(CanError::ParameterOutOfRange {
+                message_id: TestOutput::MESSAGE_ID,
+            });
+        }
+        let factor = 1;
+        let value = value
+            .checked_sub(0)
+            .ok_or(CanError::ParameterOutOfRange {
+                message_id: TestOutput::MESSAGE_ID,
+            })?;
+        let value = (value / factor) as u16;
+        self.raw.view_bits_mut::<Lsb0>()[0..16].store_le(value);
+        Ok(())
+    }
 }
-
-}
-
 #[allow(
     clippy::absurd_extreme_comparisons,
     clippy::excessive_precision,
@@ -908,8 +934,9 @@ pub fn set_var6(&mut self, value: u16) -> Result<(), CanError> {
     unused_variables,
 )]
 #[derive(Default)]
-pub struct TestOutputTestOutputMuxM2 { raw: [u8; 8] }
-
+pub struct TestOutputTestOutputMuxM2 {
+    raw: [u8; 8],
+}
 #[allow(
     clippy::absurd_extreme_comparisons,
     clippy::excessive_precision,
@@ -920,51 +947,52 @@ pub struct TestOutputTestOutputMuxM2 { raw: [u8; 8] }
     unused_variables,
 )]
 impl TestOutputTestOutputMuxM2 {
-pub fn new() -> Self { Self { raw: [0u8; 8] } }
-/// Var7
-///
-/// - Min: 0
-/// - Max: 65535
-/// - Unit: ""
-/// - Receivers: Vector__XXX
-#[inline(always)]
-pub fn var7(&self) -> u16 {
-    self.var7_raw()
-}
-
-/// Get raw value of Var7
-///
-/// - Start bit: 0
-/// - Signal size: 16 bits
-/// - Factor: 1
-/// - Offset: 0
-/// - Byte order: LittleEndian
-/// - Value type: Unsigned
-#[inline(always)]
-pub fn var7_raw(&self) -> u16 {
-    let signal = self.raw.view_bits::<Lsb0>()[0..16].load_le::<u16>();
-    
-    let factor = 1;
-    u16::from(signal).saturating_mul(factor).saturating_add(0)
-}
-
-/// Set value of Var7
-#[inline(always)]
-pub fn set_var7(&mut self, value: u16) -> Result<(), CanError> {
-    if value < 0_u16 || 65535_u16 < value {
-        return Err(CanError::ParameterOutOfRange { message_id: TestOutput::MESSAGE_ID });
+    pub fn new() -> Self {
+        Self { raw: [0u8; 8] }
     }
-    let factor = 1;
-    let value = value.checked_sub(0)
-        .ok_or(CanError::ParameterOutOfRange { message_id: TestOutput::MESSAGE_ID })?;
-    let value = (value / factor) as u16;
-    
-    self.raw.view_bits_mut::<Lsb0>()[0..16].store_le(value);
-    Ok(())
+    /// Var7
+    ///
+    /// - Min: 0
+    /// - Max: 65535
+    /// - Unit: ""
+    /// - Receivers: Vector__XXX
+    #[inline(always)]
+    pub fn var7(&self) -> u16 {
+        self.var7_raw()
+    }
+    /// Get raw value of Var7
+    ///
+    /// - Start bit: 0
+    /// - Signal size: 16 bits
+    /// - Factor: 1
+    /// - Offset: 0
+    /// - Byte order: LittleEndian
+    /// - Value type: Unsigned
+    #[inline(always)]
+    pub fn var7_raw(&self) -> u16 {
+        let signal = self.raw.view_bits::<Lsb0>()[0..16].load_le::<u16>();
+        let factor = 1;
+        u16::from(signal).saturating_mul(factor).saturating_add(0)
+    }
+    /// Set value of Var7
+    #[inline(always)]
+    pub fn set_var7(&mut self, value: u16) -> Result<(), CanError> {
+        if value < 0_u16 || 65535_u16 < value {
+            return Err(CanError::ParameterOutOfRange {
+                message_id: TestOutput::MESSAGE_ID,
+            });
+        }
+        let factor = 1;
+        let value = value
+            .checked_sub(0)
+            .ok_or(CanError::ParameterOutOfRange {
+                message_id: TestOutput::MESSAGE_ID,
+            })?;
+        let value = (value / factor) as u16;
+        self.raw.view_bits_mut::<Lsb0>()[0..16].store_le(value);
+        Ok(())
+    }
 }
-
-}
-
 #[allow(
     clippy::absurd_extreme_comparisons,
     clippy::excessive_precision,
@@ -975,8 +1003,9 @@ pub fn set_var7(&mut self, value: u16) -> Result<(), CanError> {
     unused_variables,
 )]
 #[derive(Default)]
-pub struct TestOutputTestOutputMuxM3 { raw: [u8; 8] }
-
+pub struct TestOutputTestOutputMuxM3 {
+    raw: [u8; 8],
+}
 #[allow(
     clippy::absurd_extreme_comparisons,
     clippy::excessive_precision,
@@ -987,57 +1016,55 @@ pub struct TestOutputTestOutputMuxM3 { raw: [u8; 8] }
     unused_variables,
 )]
 impl TestOutputTestOutputMuxM3 {
-pub fn new() -> Self { Self { raw: [0u8; 8] } }
-/// Var8
-///
-/// - Min: 0
-/// - Max: 65535
-/// - Unit: ""
-/// - Receivers: Vector__XXX
-#[inline(always)]
-pub fn var8(&self) -> u16 {
-    self.var8_raw()
-}
-
-/// Get raw value of Var8
-///
-/// - Start bit: 0
-/// - Signal size: 16 bits
-/// - Factor: 1
-/// - Offset: 0
-/// - Byte order: LittleEndian
-/// - Value type: Unsigned
-#[inline(always)]
-pub fn var8_raw(&self) -> u16 {
-    let signal = self.raw.view_bits::<Lsb0>()[0..16].load_le::<u16>();
-    
-    let factor = 1;
-    u16::from(signal).saturating_mul(factor).saturating_add(0)
-}
-
-/// Set value of Var8
-#[inline(always)]
-pub fn set_var8(&mut self, value: u16) -> Result<(), CanError> {
-    if value < 0_u16 || 65535_u16 < value {
-        return Err(CanError::ParameterOutOfRange { message_id: TestOutput::MESSAGE_ID });
+    pub fn new() -> Self {
+        Self { raw: [0u8; 8] }
     }
-    let factor = 1;
-    let value = value.checked_sub(0)
-        .ok_or(CanError::ParameterOutOfRange { message_id: TestOutput::MESSAGE_ID })?;
-    let value = (value / factor) as u16;
-    
-    self.raw.view_bits_mut::<Lsb0>()[0..16].store_le(value);
-    Ok(())
+    /// Var8
+    ///
+    /// - Min: 0
+    /// - Max: 65535
+    /// - Unit: ""
+    /// - Receivers: Vector__XXX
+    #[inline(always)]
+    pub fn var8(&self) -> u16 {
+        self.var8_raw()
+    }
+    /// Get raw value of Var8
+    ///
+    /// - Start bit: 0
+    /// - Signal size: 16 bits
+    /// - Factor: 1
+    /// - Offset: 0
+    /// - Byte order: LittleEndian
+    /// - Value type: Unsigned
+    #[inline(always)]
+    pub fn var8_raw(&self) -> u16 {
+        let signal = self.raw.view_bits::<Lsb0>()[0..16].load_le::<u16>();
+        let factor = 1;
+        u16::from(signal).saturating_mul(factor).saturating_add(0)
+    }
+    /// Set value of Var8
+    #[inline(always)]
+    pub fn set_var8(&mut self, value: u16) -> Result<(), CanError> {
+        if value < 0_u16 || 65535_u16 < value {
+            return Err(CanError::ParameterOutOfRange {
+                message_id: TestOutput::MESSAGE_ID,
+            });
+        }
+        let factor = 1;
+        let value = value
+            .checked_sub(0)
+            .ok_or(CanError::ParameterOutOfRange {
+                message_id: TestOutput::MESSAGE_ID,
+            })?;
+        let value = (value / factor) as u16;
+        self.raw.view_bits_mut::<Lsb0>()[0..16].store_le(value);
+        Ok(())
+    }
 }
-
-}
-
-
-
 /// This is just to make testing easier
 #[allow(dead_code)]
 fn main() {}
-
 #[allow(dead_code)]
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum CanError {
@@ -1057,10 +1084,8 @@ pub enum CanError {
         multiplexor: u16,
     },
 }
-
 impl core::fmt::Display for CanError {
     fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
         write!(f, "{self:?}")
     }
 }
-

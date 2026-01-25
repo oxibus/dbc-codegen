@@ -1,15 +1,13 @@
-// Generated code!
-//
-// Message definitions from file `test_extended_id_dump`
-// Version: 
-
 #[allow(unused_imports)]
 use core::ops::BitOr;
 #[allow(unused_imports)]
 use bitvec::prelude::*;
 #[allow(unused_imports)]
 use embedded_can::{Id, StandardId, ExtendedId};
-
+#[allow(dead_code)]
+pub const DBC_FILE_NAME: &str = "test_extended_id_dump";
+#[allow(dead_code)]
+pub const DBC_FILE_VERSION: &str = "";
 /// All messages
 #[allow(
     clippy::absurd_extreme_comparisons,
@@ -27,7 +25,6 @@ pub enum Messages {
     /// SomeExtFrame
     SomeExtFrame(SomeExtFrame),
 }
-
 #[allow(
     clippy::absurd_extreme_comparisons,
     clippy::excessive_precision,
@@ -41,16 +38,16 @@ impl Messages {
     /// Read message from CAN frame
     #[inline(never)]
     pub fn from_can_message(id: Id, payload: &[u8]) -> Result<Self, CanError> {
-        
         let res = match id {
             SomeFrame::MESSAGE_ID => Messages::SomeFrame(SomeFrame::try_from(payload)?),
-            SomeExtFrame::MESSAGE_ID => Messages::SomeExtFrame(SomeExtFrame::try_from(payload)?),
+            SomeExtFrame::MESSAGE_ID => {
+                Messages::SomeExtFrame(SomeExtFrame::try_from(payload)?)
+            }
             id => return Err(CanError::UnknownMessageId(id)),
         };
         Ok(res)
     }
 }
-
 /// SomeFrame
 ///
 /// - Standard ID: 256 (0x100)
@@ -59,7 +56,6 @@ impl Messages {
 pub struct SomeFrame {
     raw: [u8; 8],
 }
-
 #[allow(
     clippy::absurd_extreme_comparisons,
     clippy::excessive_precision,
@@ -70,23 +66,21 @@ pub struct SomeFrame {
     unused_variables,
 )]
 impl SomeFrame {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe { StandardId::new_unchecked(0x100)});
-    
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
+        StandardId::new_unchecked(0x100)
+    });
     pub const SOME_DIFFERENT_SIG_MIN: i8 = 0_i8;
     pub const SOME_DIFFERENT_SIG_MAX: i8 = 0_i8;
-    
     /// Construct new SomeFrame from values
     pub fn new(some_different_sig: i8) -> Result<Self, CanError> {
         let mut res = Self { raw: [0u8; 8] };
         res.set_some_different_sig(some_different_sig)?;
         Ok(res)
     }
-    
     /// Access message payload raw value
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    
     /// SomeDifferentSig
     ///
     /// - Min: 0
@@ -97,7 +91,6 @@ impl SomeFrame {
     pub fn some_different_sig(&self) -> i8 {
         self.some_different_sig_raw()
     }
-    
     /// Get raw value of SomeDifferentSig
     ///
     /// - Start bit: 0
@@ -109,79 +102,68 @@ impl SomeFrame {
     #[inline(always)]
     pub fn some_different_sig_raw(&self) -> i8 {
         let signal = self.raw.view_bits::<Lsb0>()[0..8].load_le::<i8>();
-        
         let factor = 1;
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    
     /// Set value of SomeDifferentSig
     #[inline(always)]
     pub fn set_some_different_sig(&mut self, value: i8) -> Result<(), CanError> {
         if value < 0_i8 || 0_i8 < value {
-            return Err(CanError::ParameterOutOfRange { message_id: SomeFrame::MESSAGE_ID });
+            return Err(CanError::ParameterOutOfRange {
+                message_id: SomeFrame::MESSAGE_ID,
+            });
         }
         let factor = 1;
-        let value = value.checked_sub(0)
-            .ok_or(CanError::ParameterOutOfRange { message_id: SomeFrame::MESSAGE_ID })?;
+        let value = value
+            .checked_sub(0)
+            .ok_or(CanError::ParameterOutOfRange {
+                message_id: SomeFrame::MESSAGE_ID,
+            })?;
         let value = (value / factor) as i8;
-        
         let value = u8::from_ne_bytes(value.to_ne_bytes());
         self.raw.view_bits_mut::<Lsb0>()[0..8].store_le(value);
         Ok(())
     }
-    
 }
-
 impl core::convert::TryFrom<&[u8]> for SomeFrame {
     type Error = CanError;
-    
     #[inline(always)]
     fn try_from(payload: &[u8]) -> Result<Self, Self::Error> {
-        if payload.len() != 8 { return Err(CanError::InvalidPayloadSize); }
+        if payload.len() != 8 {
+            return Err(CanError::InvalidPayloadSize);
+        }
         let mut raw = [0u8; 8];
         raw.copy_from_slice(&payload[..8]);
         Ok(Self { raw })
     }
 }
-
 impl embedded_can::Frame for SomeFrame {
     fn new(id: impl Into<Id>, data: &[u8]) -> Option<Self> {
-        if id.into() != Self::MESSAGE_ID {
-            None
-        } else {
-            data.try_into().ok()
-        }
+        if id.into() != Self::MESSAGE_ID { None } else { data.try_into().ok() }
     }
-
     fn new_remote(_id: impl Into<Id>, _dlc: usize) -> Option<Self> {
         unimplemented!()
     }
-
     fn is_extended(&self) -> bool {
         match self.id() {
             Id::Standard(_) => false,
             Id::Extended(_) => true,
         }
     }
-
     fn is_remote_frame(&self) -> bool {
         false
     }
-
     fn id(&self) -> Id {
         Self::MESSAGE_ID
     }
-
     fn dlc(&self) -> usize {
         self.raw.len()
     }
-
     fn data(&self) -> &[u8] {
         &self.raw
     }
 }
-
 /// SomeExtFrame
 ///
 /// - Extended ID: 472525354 (0x1c2a2a2a)
@@ -190,7 +172,6 @@ impl embedded_can::Frame for SomeFrame {
 pub struct SomeExtFrame {
     raw: [u8; 8],
 }
-
 #[allow(
     clippy::absurd_extreme_comparisons,
     clippy::excessive_precision,
@@ -201,23 +182,21 @@ pub struct SomeExtFrame {
     unused_variables,
 )]
 impl SomeExtFrame {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe { ExtendedId::new_unchecked(0x1c2a2a2a)});
-    
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
+        ExtendedId::new_unchecked(0x1c2a2a2a)
+    });
     pub const SOME_SIG_MIN: i8 = 0_i8;
     pub const SOME_SIG_MAX: i8 = 0_i8;
-    
     /// Construct new SomeExtFrame from values
     pub fn new(some_sig: i8) -> Result<Self, CanError> {
         let mut res = Self { raw: [0u8; 8] };
         res.set_some_sig(some_sig)?;
         Ok(res)
     }
-    
     /// Access message payload raw value
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    
     /// SomeSig
     ///
     /// - Min: 0
@@ -228,7 +207,6 @@ impl SomeExtFrame {
     pub fn some_sig(&self) -> i8 {
         self.some_sig_raw()
     }
-    
     /// Get raw value of SomeSig
     ///
     /// - Start bit: 0
@@ -240,84 +218,71 @@ impl SomeExtFrame {
     #[inline(always)]
     pub fn some_sig_raw(&self) -> i8 {
         let signal = self.raw.view_bits::<Lsb0>()[0..8].load_le::<i8>();
-        
         let factor = 1;
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    
     /// Set value of SomeSig
     #[inline(always)]
     pub fn set_some_sig(&mut self, value: i8) -> Result<(), CanError> {
         if value < 0_i8 || 0_i8 < value {
-            return Err(CanError::ParameterOutOfRange { message_id: SomeExtFrame::MESSAGE_ID });
+            return Err(CanError::ParameterOutOfRange {
+                message_id: SomeExtFrame::MESSAGE_ID,
+            });
         }
         let factor = 1;
-        let value = value.checked_sub(0)
-            .ok_or(CanError::ParameterOutOfRange { message_id: SomeExtFrame::MESSAGE_ID })?;
+        let value = value
+            .checked_sub(0)
+            .ok_or(CanError::ParameterOutOfRange {
+                message_id: SomeExtFrame::MESSAGE_ID,
+            })?;
         let value = (value / factor) as i8;
-        
         let value = u8::from_ne_bytes(value.to_ne_bytes());
         self.raw.view_bits_mut::<Lsb0>()[0..8].store_le(value);
         Ok(())
     }
-    
 }
-
 impl core::convert::TryFrom<&[u8]> for SomeExtFrame {
     type Error = CanError;
-    
     #[inline(always)]
     fn try_from(payload: &[u8]) -> Result<Self, Self::Error> {
-        if payload.len() != 8 { return Err(CanError::InvalidPayloadSize); }
+        if payload.len() != 8 {
+            return Err(CanError::InvalidPayloadSize);
+        }
         let mut raw = [0u8; 8];
         raw.copy_from_slice(&payload[..8]);
         Ok(Self { raw })
     }
 }
-
 impl embedded_can::Frame for SomeExtFrame {
     fn new(id: impl Into<Id>, data: &[u8]) -> Option<Self> {
-        if id.into() != Self::MESSAGE_ID {
-            None
-        } else {
-            data.try_into().ok()
-        }
+        if id.into() != Self::MESSAGE_ID { None } else { data.try_into().ok() }
     }
-
     fn new_remote(_id: impl Into<Id>, _dlc: usize) -> Option<Self> {
         unimplemented!()
     }
-
     fn is_extended(&self) -> bool {
         match self.id() {
             Id::Standard(_) => false,
             Id::Extended(_) => true,
         }
     }
-
     fn is_remote_frame(&self) -> bool {
         false
     }
-
     fn id(&self) -> Id {
         Self::MESSAGE_ID
     }
-
     fn dlc(&self) -> usize {
         self.raw.len()
     }
-
     fn data(&self) -> &[u8] {
         &self.raw
     }
 }
-
-
 /// This is just to make testing easier
 #[allow(dead_code)]
 fn main() {}
-
 #[allow(dead_code)]
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum CanError {
@@ -337,10 +302,8 @@ pub enum CanError {
         multiplexor: u16,
     },
 }
-
 impl core::fmt::Display for CanError {
     fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
         write!(f, "{self:?}")
     }
 }
-

@@ -1,15 +1,13 @@
-// Generated code!
-//
-// Message definitions from file `bus_comment`
-// Version: 
-
 #[allow(unused_imports)]
 use core::ops::BitOr;
 #[allow(unused_imports)]
 use bitvec::prelude::*;
 #[allow(unused_imports)]
 use embedded_can::{Id, StandardId, ExtendedId};
-
+#[allow(dead_code)]
+pub const DBC_FILE_NAME: &str = "bus_comment";
+#[allow(dead_code)]
+pub const DBC_FILE_VERSION: &str = "";
 /// All messages
 #[allow(
     clippy::absurd_extreme_comparisons,
@@ -25,7 +23,6 @@ pub enum Messages {
     /// Message1
     Message1(Message1),
 }
-
 #[allow(
     clippy::absurd_extreme_comparisons,
     clippy::excessive_precision,
@@ -39,7 +36,6 @@ impl Messages {
     /// Read message from CAN frame
     #[inline(never)]
     pub fn from_can_message(id: Id, payload: &[u8]) -> Result<Self, CanError> {
-        
         let res = match id {
             Message1::MESSAGE_ID => Messages::Message1(Message1::try_from(payload)?),
             id => return Err(CanError::UnknownMessageId(id)),
@@ -47,7 +43,6 @@ impl Messages {
         Ok(res)
     }
 }
-
 /// Message1
 ///
 /// - Extended ID: 1193046 (0x123456)
@@ -56,7 +51,6 @@ impl Messages {
 pub struct Message1 {
     raw: [u8; 8],
 }
-
 #[allow(
     clippy::absurd_extreme_comparisons,
     clippy::excessive_precision,
@@ -67,23 +61,21 @@ pub struct Message1 {
     unused_variables,
 )]
 impl Message1 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe { ExtendedId::new_unchecked(0x123456)});
-    
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
+        ExtendedId::new_unchecked(0x123456)
+    });
     pub const MULTIPLEXOR_MIN: u8 = 0_u8;
     pub const MULTIPLEXOR_MAX: u8 = 0_u8;
-    
     /// Construct new Message1 from values
     pub fn new(multiplexor: u8) -> Result<Self, CanError> {
         let mut res = Self { raw: [0u8; 8] };
         res.set_multiplexor(multiplexor)?;
         Ok(res)
     }
-    
     /// Access message payload raw value
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    
     /// Get raw value of Multiplexor
     ///
     /// - Start bit: 2
@@ -95,33 +87,51 @@ impl Message1 {
     #[inline(always)]
     pub fn multiplexor_raw(&self) -> u8 {
         let signal = self.raw.view_bits::<Lsb0>()[2..8].load_le::<u8>();
-        
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    
     pub fn multiplexor(&mut self) -> Result<Message1MultiplexorIndex, CanError> {
         match self.multiplexor_raw() {
-            8 => Ok(Message1MultiplexorIndex::M8(Message1MultiplexorM8{ raw: self.raw })),
-            24 => Ok(Message1MultiplexorIndex::M24(Message1MultiplexorM24{ raw: self.raw })),
-            multiplexor => Err(CanError::InvalidMultiplexor { message_id: Message1::MESSAGE_ID, multiplexor: multiplexor.into() }),
+            8 => {
+                Ok(
+                    Message1MultiplexorIndex::M8(Message1MultiplexorM8 {
+                        raw: self.raw,
+                    }),
+                )
+            }
+            24 => {
+                Ok(
+                    Message1MultiplexorIndex::M24(Message1MultiplexorM24 {
+                        raw: self.raw,
+                    }),
+                )
+            }
+            multiplexor => {
+                Err(CanError::InvalidMultiplexor {
+                    message_id: Message1::MESSAGE_ID,
+                    multiplexor: multiplexor.into(),
+                })
+            }
         }
     }
     /// Set value of Multiplexor
     #[inline(always)]
     fn set_multiplexor(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 0_u8 < value {
-            return Err(CanError::ParameterOutOfRange { message_id: Message1::MESSAGE_ID });
+            return Err(CanError::ParameterOutOfRange {
+                message_id: Message1::MESSAGE_ID,
+            });
         }
         let factor = 1;
-        let value = value.checked_sub(0)
-            .ok_or(CanError::ParameterOutOfRange { message_id: Message1::MESSAGE_ID })?;
+        let value = value
+            .checked_sub(0)
+            .ok_or(CanError::ParameterOutOfRange {
+                message_id: Message1::MESSAGE_ID,
+            })?;
         let value = (value / factor) as u8;
-        
         self.raw.view_bits_mut::<Lsb0>()[2..8].store_le(value);
         Ok(())
     }
-    
     /// Set value of Multiplexor
     #[inline(always)]
     pub fn set_m8(&mut self, value: Message1MultiplexorM8) -> Result<(), CanError> {
@@ -131,7 +141,6 @@ impl Message1 {
         self.set_multiplexor(8)?;
         Ok(())
     }
-    
     /// Set value of Multiplexor
     #[inline(always)]
     pub fn set_m24(&mut self, value: Message1MultiplexorM24) -> Result<(), CanError> {
@@ -141,53 +150,41 @@ impl Message1 {
         self.set_multiplexor(24)?;
         Ok(())
     }
-    
 }
-
 impl core::convert::TryFrom<&[u8]> for Message1 {
     type Error = CanError;
-    
     #[inline(always)]
     fn try_from(payload: &[u8]) -> Result<Self, Self::Error> {
-        if payload.len() != 8 { return Err(CanError::InvalidPayloadSize); }
+        if payload.len() != 8 {
+            return Err(CanError::InvalidPayloadSize);
+        }
         let mut raw = [0u8; 8];
         raw.copy_from_slice(&payload[..8]);
         Ok(Self { raw })
     }
 }
-
 impl embedded_can::Frame for Message1 {
     fn new(id: impl Into<Id>, data: &[u8]) -> Option<Self> {
-        if id.into() != Self::MESSAGE_ID {
-            None
-        } else {
-            data.try_into().ok()
-        }
+        if id.into() != Self::MESSAGE_ID { None } else { data.try_into().ok() }
     }
-
     fn new_remote(_id: impl Into<Id>, _dlc: usize) -> Option<Self> {
         unimplemented!()
     }
-
     fn is_extended(&self) -> bool {
         match self.id() {
             Id::Standard(_) => false,
             Id::Extended(_) => true,
         }
     }
-
     fn is_remote_frame(&self) -> bool {
         false
     }
-
     fn id(&self) -> Id {
         Self::MESSAGE_ID
     }
-
     fn dlc(&self) -> usize {
         self.raw.len()
     }
-
     fn data(&self) -> &[u8] {
         &self.raw
     }
@@ -206,7 +203,6 @@ pub enum Message1MultiplexorIndex {
     M8(Message1MultiplexorM8),
     M24(Message1MultiplexorM24),
 }
-
 #[allow(
     clippy::absurd_extreme_comparisons,
     clippy::excessive_precision,
@@ -217,8 +213,9 @@ pub enum Message1MultiplexorIndex {
     unused_variables,
 )]
 #[derive(Default)]
-pub struct Message1MultiplexorM8 { raw: [u8; 8] }
-
+pub struct Message1MultiplexorM8 {
+    raw: [u8; 8],
+}
 #[allow(
     clippy::absurd_extreme_comparisons,
     clippy::excessive_precision,
@@ -229,145 +226,130 @@ pub struct Message1MultiplexorM8 { raw: [u8; 8] }
     unused_variables,
 )]
 impl Message1MultiplexorM8 {
-pub fn new() -> Self { Self { raw: [0u8; 8] } }
-/// BIT_L
-///
-/// - Min: 0
-/// - Max: 0
-/// - Unit: ""
-/// - Receivers: Vector__XXX
-#[inline(always)]
-pub fn bit_l(&self) -> bool {
-    self.bit_l_raw()
+    pub fn new() -> Self {
+        Self { raw: [0u8; 8] }
+    }
+    /// BIT_L
+    ///
+    /// - Min: 0
+    /// - Max: 0
+    /// - Unit: ""
+    /// - Receivers: Vector__XXX
+    #[inline(always)]
+    pub fn bit_l(&self) -> bool {
+        self.bit_l_raw()
+    }
+    /// Get raw value of BIT_L
+    ///
+    /// - Start bit: 24
+    /// - Signal size: 1 bits
+    /// - Factor: 1
+    /// - Offset: 0
+    /// - Byte order: LittleEndian
+    /// - Value type: Unsigned
+    #[inline(always)]
+    pub fn bit_l_raw(&self) -> bool {
+        let signal = self.raw.view_bits::<Lsb0>()[24..25].load_le::<u8>();
+        signal == 1
+    }
+    /// Set value of BIT_L
+    #[inline(always)]
+    pub fn set_bit_l(&mut self, value: bool) -> Result<(), CanError> {
+        let value = value as u8;
+        self.raw.view_bits_mut::<Lsb0>()[24..25].store_le(value);
+        Ok(())
+    }
+    /// BIT_G
+    ///
+    /// - Min: 0
+    /// - Max: 0
+    /// - Unit: ""
+    /// - Receivers: Vector__XXX
+    #[inline(always)]
+    pub fn bit_g(&self) -> bool {
+        self.bit_g_raw()
+    }
+    /// Get raw value of BIT_G
+    ///
+    /// - Start bit: 23
+    /// - Signal size: 1 bits
+    /// - Factor: 1
+    /// - Offset: 0
+    /// - Byte order: LittleEndian
+    /// - Value type: Unsigned
+    #[inline(always)]
+    pub fn bit_g_raw(&self) -> bool {
+        let signal = self.raw.view_bits::<Lsb0>()[23..24].load_le::<u8>();
+        signal == 1
+    }
+    /// Set value of BIT_G
+    #[inline(always)]
+    pub fn set_bit_g(&mut self, value: bool) -> Result<(), CanError> {
+        let value = value as u8;
+        self.raw.view_bits_mut::<Lsb0>()[23..24].store_le(value);
+        Ok(())
+    }
+    /// BIT_C
+    ///
+    /// - Min: 0
+    /// - Max: 0
+    /// - Unit: ""
+    /// - Receivers: Vector__XXX
+    #[inline(always)]
+    pub fn bit_c(&self) -> bool {
+        self.bit_c_raw()
+    }
+    /// Get raw value of BIT_C
+    ///
+    /// - Start bit: 19
+    /// - Signal size: 1 bits
+    /// - Factor: 1
+    /// - Offset: 0
+    /// - Byte order: LittleEndian
+    /// - Value type: Unsigned
+    #[inline(always)]
+    pub fn bit_c_raw(&self) -> bool {
+        let signal = self.raw.view_bits::<Lsb0>()[19..20].load_le::<u8>();
+        signal == 1
+    }
+    /// Set value of BIT_C
+    #[inline(always)]
+    pub fn set_bit_c(&mut self, value: bool) -> Result<(), CanError> {
+        let value = value as u8;
+        self.raw.view_bits_mut::<Lsb0>()[19..20].store_le(value);
+        Ok(())
+    }
+    /// BIT_J
+    ///
+    /// - Min: 0
+    /// - Max: 0
+    /// - Unit: ""
+    /// - Receivers: Vector__XXX
+    #[inline(always)]
+    pub fn bit_j(&self) -> bool {
+        self.bit_j_raw()
+    }
+    /// Get raw value of BIT_J
+    ///
+    /// - Start bit: 18
+    /// - Signal size: 1 bits
+    /// - Factor: 1
+    /// - Offset: 0
+    /// - Byte order: LittleEndian
+    /// - Value type: Unsigned
+    #[inline(always)]
+    pub fn bit_j_raw(&self) -> bool {
+        let signal = self.raw.view_bits::<Lsb0>()[18..19].load_le::<u8>();
+        signal == 1
+    }
+    /// Set value of BIT_J
+    #[inline(always)]
+    pub fn set_bit_j(&mut self, value: bool) -> Result<(), CanError> {
+        let value = value as u8;
+        self.raw.view_bits_mut::<Lsb0>()[18..19].store_le(value);
+        Ok(())
+    }
 }
-
-/// Get raw value of BIT_L
-///
-/// - Start bit: 24
-/// - Signal size: 1 bits
-/// - Factor: 1
-/// - Offset: 0
-/// - Byte order: LittleEndian
-/// - Value type: Unsigned
-#[inline(always)]
-pub fn bit_l_raw(&self) -> bool {
-    let signal = self.raw.view_bits::<Lsb0>()[24..25].load_le::<u8>();
-    
-    signal == 1
-}
-
-/// Set value of BIT_L
-#[inline(always)]
-pub fn set_bit_l(&mut self, value: bool) -> Result<(), CanError> {
-    let value = value as u8;
-    self.raw.view_bits_mut::<Lsb0>()[24..25].store_le(value);
-    Ok(())
-}
-
-/// BIT_G
-///
-/// - Min: 0
-/// - Max: 0
-/// - Unit: ""
-/// - Receivers: Vector__XXX
-#[inline(always)]
-pub fn bit_g(&self) -> bool {
-    self.bit_g_raw()
-}
-
-/// Get raw value of BIT_G
-///
-/// - Start bit: 23
-/// - Signal size: 1 bits
-/// - Factor: 1
-/// - Offset: 0
-/// - Byte order: LittleEndian
-/// - Value type: Unsigned
-#[inline(always)]
-pub fn bit_g_raw(&self) -> bool {
-    let signal = self.raw.view_bits::<Lsb0>()[23..24].load_le::<u8>();
-    
-    signal == 1
-}
-
-/// Set value of BIT_G
-#[inline(always)]
-pub fn set_bit_g(&mut self, value: bool) -> Result<(), CanError> {
-    let value = value as u8;
-    self.raw.view_bits_mut::<Lsb0>()[23..24].store_le(value);
-    Ok(())
-}
-
-/// BIT_C
-///
-/// - Min: 0
-/// - Max: 0
-/// - Unit: ""
-/// - Receivers: Vector__XXX
-#[inline(always)]
-pub fn bit_c(&self) -> bool {
-    self.bit_c_raw()
-}
-
-/// Get raw value of BIT_C
-///
-/// - Start bit: 19
-/// - Signal size: 1 bits
-/// - Factor: 1
-/// - Offset: 0
-/// - Byte order: LittleEndian
-/// - Value type: Unsigned
-#[inline(always)]
-pub fn bit_c_raw(&self) -> bool {
-    let signal = self.raw.view_bits::<Lsb0>()[19..20].load_le::<u8>();
-    
-    signal == 1
-}
-
-/// Set value of BIT_C
-#[inline(always)]
-pub fn set_bit_c(&mut self, value: bool) -> Result<(), CanError> {
-    let value = value as u8;
-    self.raw.view_bits_mut::<Lsb0>()[19..20].store_le(value);
-    Ok(())
-}
-
-/// BIT_J
-///
-/// - Min: 0
-/// - Max: 0
-/// - Unit: ""
-/// - Receivers: Vector__XXX
-#[inline(always)]
-pub fn bit_j(&self) -> bool {
-    self.bit_j_raw()
-}
-
-/// Get raw value of BIT_J
-///
-/// - Start bit: 18
-/// - Signal size: 1 bits
-/// - Factor: 1
-/// - Offset: 0
-/// - Byte order: LittleEndian
-/// - Value type: Unsigned
-#[inline(always)]
-pub fn bit_j_raw(&self) -> bool {
-    let signal = self.raw.view_bits::<Lsb0>()[18..19].load_le::<u8>();
-    
-    signal == 1
-}
-
-/// Set value of BIT_J
-#[inline(always)]
-pub fn set_bit_j(&mut self, value: bool) -> Result<(), CanError> {
-    let value = value as u8;
-    self.raw.view_bits_mut::<Lsb0>()[18..19].store_le(value);
-    Ok(())
-}
-
-}
-
 #[allow(
     clippy::absurd_extreme_comparisons,
     clippy::excessive_precision,
@@ -378,8 +360,9 @@ pub fn set_bit_j(&mut self, value: bool) -> Result<(), CanError> {
     unused_variables,
 )]
 #[derive(Default)]
-pub struct Message1MultiplexorM24 { raw: [u8; 8] }
-
+pub struct Message1MultiplexorM24 {
+    raw: [u8; 8],
+}
 #[allow(
     clippy::absurd_extreme_comparisons,
     clippy::excessive_precision,
@@ -390,253 +373,223 @@ pub struct Message1MultiplexorM24 { raw: [u8; 8] }
     unused_variables,
 )]
 impl Message1MultiplexorM24 {
-pub fn new() -> Self { Self { raw: [0u8; 8] } }
-/// BIT_F
-///
-/// - Min: 0
-/// - Max: 0
-/// - Unit: ""
-/// - Receivers: Vector__XXX
-#[inline(always)]
-pub fn bit_f(&self) -> bool {
-    self.bit_f_raw()
+    pub fn new() -> Self {
+        Self { raw: [0u8; 8] }
+    }
+    /// BIT_F
+    ///
+    /// - Min: 0
+    /// - Max: 0
+    /// - Unit: ""
+    /// - Receivers: Vector__XXX
+    #[inline(always)]
+    pub fn bit_f(&self) -> bool {
+        self.bit_f_raw()
+    }
+    /// Get raw value of BIT_F
+    ///
+    /// - Start bit: 39
+    /// - Signal size: 1 bits
+    /// - Factor: 1
+    /// - Offset: 0
+    /// - Byte order: LittleEndian
+    /// - Value type: Unsigned
+    #[inline(always)]
+    pub fn bit_f_raw(&self) -> bool {
+        let signal = self.raw.view_bits::<Lsb0>()[39..40].load_le::<u8>();
+        signal == 1
+    }
+    /// Set value of BIT_F
+    #[inline(always)]
+    pub fn set_bit_f(&mut self, value: bool) -> Result<(), CanError> {
+        let value = value as u8;
+        self.raw.view_bits_mut::<Lsb0>()[39..40].store_le(value);
+        Ok(())
+    }
+    /// BIT_H
+    ///
+    /// - Min: 0
+    /// - Max: 0
+    /// - Unit: ""
+    /// - Receivers: Vector__XXX
+    #[inline(always)]
+    pub fn bit_h(&self) -> bool {
+        self.bit_h_raw()
+    }
+    /// Get raw value of BIT_H
+    ///
+    /// - Start bit: 38
+    /// - Signal size: 1 bits
+    /// - Factor: 1
+    /// - Offset: 0
+    /// - Byte order: LittleEndian
+    /// - Value type: Unsigned
+    #[inline(always)]
+    pub fn bit_h_raw(&self) -> bool {
+        let signal = self.raw.view_bits::<Lsb0>()[38..39].load_le::<u8>();
+        signal == 1
+    }
+    /// Set value of BIT_H
+    #[inline(always)]
+    pub fn set_bit_h(&mut self, value: bool) -> Result<(), CanError> {
+        let value = value as u8;
+        self.raw.view_bits_mut::<Lsb0>()[38..39].store_le(value);
+        Ok(())
+    }
+    /// BIT_B
+    ///
+    /// - Min: 0
+    /// - Max: 0
+    /// - Unit: ""
+    /// - Receivers: Vector__XXX
+    #[inline(always)]
+    pub fn bit_b(&self) -> bool {
+        self.bit_b_raw()
+    }
+    /// Get raw value of BIT_B
+    ///
+    /// - Start bit: 33
+    /// - Signal size: 1 bits
+    /// - Factor: 1
+    /// - Offset: 0
+    /// - Byte order: LittleEndian
+    /// - Value type: Unsigned
+    #[inline(always)]
+    pub fn bit_b_raw(&self) -> bool {
+        let signal = self.raw.view_bits::<Lsb0>()[33..34].load_le::<u8>();
+        signal == 1
+    }
+    /// Set value of BIT_B
+    #[inline(always)]
+    pub fn set_bit_b(&mut self, value: bool) -> Result<(), CanError> {
+        let value = value as u8;
+        self.raw.view_bits_mut::<Lsb0>()[33..34].store_le(value);
+        Ok(())
+    }
+    /// BIT_D
+    ///
+    /// - Min: 0
+    /// - Max: 0
+    /// - Unit: ""
+    /// - Receivers: Vector__XXX
+    #[inline(always)]
+    pub fn bit_d(&self) -> bool {
+        self.bit_d_raw()
+    }
+    /// Get raw value of BIT_D
+    ///
+    /// - Start bit: 32
+    /// - Signal size: 1 bits
+    /// - Factor: 1
+    /// - Offset: 0
+    /// - Byte order: LittleEndian
+    /// - Value type: Unsigned
+    #[inline(always)]
+    pub fn bit_d_raw(&self) -> bool {
+        let signal = self.raw.view_bits::<Lsb0>()[32..33].load_le::<u8>();
+        signal == 1
+    }
+    /// Set value of BIT_D
+    #[inline(always)]
+    pub fn set_bit_d(&mut self, value: bool) -> Result<(), CanError> {
+        let value = value as u8;
+        self.raw.view_bits_mut::<Lsb0>()[32..33].store_le(value);
+        Ok(())
+    }
+    /// BIT_E
+    ///
+    /// - Min: 0
+    /// - Max: 0
+    /// - Unit: ""
+    /// - Receivers: Vector__XXX
+    #[inline(always)]
+    pub fn bit_e(&self) -> bool {
+        self.bit_e_raw()
+    }
+    /// Get raw value of BIT_E
+    ///
+    /// - Start bit: 29
+    /// - Signal size: 1 bits
+    /// - Factor: 1
+    /// - Offset: 0
+    /// - Byte order: LittleEndian
+    /// - Value type: Unsigned
+    #[inline(always)]
+    pub fn bit_e_raw(&self) -> bool {
+        let signal = self.raw.view_bits::<Lsb0>()[29..30].load_le::<u8>();
+        signal == 1
+    }
+    /// Set value of BIT_E
+    #[inline(always)]
+    pub fn set_bit_e(&mut self, value: bool) -> Result<(), CanError> {
+        let value = value as u8;
+        self.raw.view_bits_mut::<Lsb0>()[29..30].store_le(value);
+        Ok(())
+    }
+    /// BIT_K
+    ///
+    /// - Min: 0
+    /// - Max: 0
+    /// - Unit: ""
+    /// - Receivers: Vector__XXX
+    #[inline(always)]
+    pub fn bit_k(&self) -> bool {
+        self.bit_k_raw()
+    }
+    /// Get raw value of BIT_K
+    ///
+    /// - Start bit: 28
+    /// - Signal size: 1 bits
+    /// - Factor: 1
+    /// - Offset: 0
+    /// - Byte order: LittleEndian
+    /// - Value type: Unsigned
+    #[inline(always)]
+    pub fn bit_k_raw(&self) -> bool {
+        let signal = self.raw.view_bits::<Lsb0>()[28..29].load_le::<u8>();
+        signal == 1
+    }
+    /// Set value of BIT_K
+    #[inline(always)]
+    pub fn set_bit_k(&mut self, value: bool) -> Result<(), CanError> {
+        let value = value as u8;
+        self.raw.view_bits_mut::<Lsb0>()[28..29].store_le(value);
+        Ok(())
+    }
+    /// BIT_A
+    ///
+    /// - Min: 0
+    /// - Max: 0
+    /// - Unit: ""
+    /// - Receivers: Vector__XXX
+    #[inline(always)]
+    pub fn bit_a(&self) -> bool {
+        self.bit_a_raw()
+    }
+    /// Get raw value of BIT_A
+    ///
+    /// - Start bit: 26
+    /// - Signal size: 1 bits
+    /// - Factor: 1
+    /// - Offset: 0
+    /// - Byte order: LittleEndian
+    /// - Value type: Unsigned
+    #[inline(always)]
+    pub fn bit_a_raw(&self) -> bool {
+        let signal = self.raw.view_bits::<Lsb0>()[26..27].load_le::<u8>();
+        signal == 1
+    }
+    /// Set value of BIT_A
+    #[inline(always)]
+    pub fn set_bit_a(&mut self, value: bool) -> Result<(), CanError> {
+        let value = value as u8;
+        self.raw.view_bits_mut::<Lsb0>()[26..27].store_le(value);
+        Ok(())
+    }
 }
-
-/// Get raw value of BIT_F
-///
-/// - Start bit: 39
-/// - Signal size: 1 bits
-/// - Factor: 1
-/// - Offset: 0
-/// - Byte order: LittleEndian
-/// - Value type: Unsigned
-#[inline(always)]
-pub fn bit_f_raw(&self) -> bool {
-    let signal = self.raw.view_bits::<Lsb0>()[39..40].load_le::<u8>();
-    
-    signal == 1
-}
-
-/// Set value of BIT_F
-#[inline(always)]
-pub fn set_bit_f(&mut self, value: bool) -> Result<(), CanError> {
-    let value = value as u8;
-    self.raw.view_bits_mut::<Lsb0>()[39..40].store_le(value);
-    Ok(())
-}
-
-/// BIT_H
-///
-/// - Min: 0
-/// - Max: 0
-/// - Unit: ""
-/// - Receivers: Vector__XXX
-#[inline(always)]
-pub fn bit_h(&self) -> bool {
-    self.bit_h_raw()
-}
-
-/// Get raw value of BIT_H
-///
-/// - Start bit: 38
-/// - Signal size: 1 bits
-/// - Factor: 1
-/// - Offset: 0
-/// - Byte order: LittleEndian
-/// - Value type: Unsigned
-#[inline(always)]
-pub fn bit_h_raw(&self) -> bool {
-    let signal = self.raw.view_bits::<Lsb0>()[38..39].load_le::<u8>();
-    
-    signal == 1
-}
-
-/// Set value of BIT_H
-#[inline(always)]
-pub fn set_bit_h(&mut self, value: bool) -> Result<(), CanError> {
-    let value = value as u8;
-    self.raw.view_bits_mut::<Lsb0>()[38..39].store_le(value);
-    Ok(())
-}
-
-/// BIT_B
-///
-/// - Min: 0
-/// - Max: 0
-/// - Unit: ""
-/// - Receivers: Vector__XXX
-#[inline(always)]
-pub fn bit_b(&self) -> bool {
-    self.bit_b_raw()
-}
-
-/// Get raw value of BIT_B
-///
-/// - Start bit: 33
-/// - Signal size: 1 bits
-/// - Factor: 1
-/// - Offset: 0
-/// - Byte order: LittleEndian
-/// - Value type: Unsigned
-#[inline(always)]
-pub fn bit_b_raw(&self) -> bool {
-    let signal = self.raw.view_bits::<Lsb0>()[33..34].load_le::<u8>();
-    
-    signal == 1
-}
-
-/// Set value of BIT_B
-#[inline(always)]
-pub fn set_bit_b(&mut self, value: bool) -> Result<(), CanError> {
-    let value = value as u8;
-    self.raw.view_bits_mut::<Lsb0>()[33..34].store_le(value);
-    Ok(())
-}
-
-/// BIT_D
-///
-/// - Min: 0
-/// - Max: 0
-/// - Unit: ""
-/// - Receivers: Vector__XXX
-#[inline(always)]
-pub fn bit_d(&self) -> bool {
-    self.bit_d_raw()
-}
-
-/// Get raw value of BIT_D
-///
-/// - Start bit: 32
-/// - Signal size: 1 bits
-/// - Factor: 1
-/// - Offset: 0
-/// - Byte order: LittleEndian
-/// - Value type: Unsigned
-#[inline(always)]
-pub fn bit_d_raw(&self) -> bool {
-    let signal = self.raw.view_bits::<Lsb0>()[32..33].load_le::<u8>();
-    
-    signal == 1
-}
-
-/// Set value of BIT_D
-#[inline(always)]
-pub fn set_bit_d(&mut self, value: bool) -> Result<(), CanError> {
-    let value = value as u8;
-    self.raw.view_bits_mut::<Lsb0>()[32..33].store_le(value);
-    Ok(())
-}
-
-/// BIT_E
-///
-/// - Min: 0
-/// - Max: 0
-/// - Unit: ""
-/// - Receivers: Vector__XXX
-#[inline(always)]
-pub fn bit_e(&self) -> bool {
-    self.bit_e_raw()
-}
-
-/// Get raw value of BIT_E
-///
-/// - Start bit: 29
-/// - Signal size: 1 bits
-/// - Factor: 1
-/// - Offset: 0
-/// - Byte order: LittleEndian
-/// - Value type: Unsigned
-#[inline(always)]
-pub fn bit_e_raw(&self) -> bool {
-    let signal = self.raw.view_bits::<Lsb0>()[29..30].load_le::<u8>();
-    
-    signal == 1
-}
-
-/// Set value of BIT_E
-#[inline(always)]
-pub fn set_bit_e(&mut self, value: bool) -> Result<(), CanError> {
-    let value = value as u8;
-    self.raw.view_bits_mut::<Lsb0>()[29..30].store_le(value);
-    Ok(())
-}
-
-/// BIT_K
-///
-/// - Min: 0
-/// - Max: 0
-/// - Unit: ""
-/// - Receivers: Vector__XXX
-#[inline(always)]
-pub fn bit_k(&self) -> bool {
-    self.bit_k_raw()
-}
-
-/// Get raw value of BIT_K
-///
-/// - Start bit: 28
-/// - Signal size: 1 bits
-/// - Factor: 1
-/// - Offset: 0
-/// - Byte order: LittleEndian
-/// - Value type: Unsigned
-#[inline(always)]
-pub fn bit_k_raw(&self) -> bool {
-    let signal = self.raw.view_bits::<Lsb0>()[28..29].load_le::<u8>();
-    
-    signal == 1
-}
-
-/// Set value of BIT_K
-#[inline(always)]
-pub fn set_bit_k(&mut self, value: bool) -> Result<(), CanError> {
-    let value = value as u8;
-    self.raw.view_bits_mut::<Lsb0>()[28..29].store_le(value);
-    Ok(())
-}
-
-/// BIT_A
-///
-/// - Min: 0
-/// - Max: 0
-/// - Unit: ""
-/// - Receivers: Vector__XXX
-#[inline(always)]
-pub fn bit_a(&self) -> bool {
-    self.bit_a_raw()
-}
-
-/// Get raw value of BIT_A
-///
-/// - Start bit: 26
-/// - Signal size: 1 bits
-/// - Factor: 1
-/// - Offset: 0
-/// - Byte order: LittleEndian
-/// - Value type: Unsigned
-#[inline(always)]
-pub fn bit_a_raw(&self) -> bool {
-    let signal = self.raw.view_bits::<Lsb0>()[26..27].load_le::<u8>();
-    
-    signal == 1
-}
-
-/// Set value of BIT_A
-#[inline(always)]
-pub fn set_bit_a(&mut self, value: bool) -> Result<(), CanError> {
-    let value = value as u8;
-    self.raw.view_bits_mut::<Lsb0>()[26..27].store_le(value);
-    Ok(())
-}
-
-}
-
-
-
 /// This is just to make testing easier
 #[allow(dead_code)]
 fn main() {}
-
 #[allow(dead_code)]
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum CanError {
@@ -656,10 +609,8 @@ pub enum CanError {
         multiplexor: u16,
     },
 }
-
 impl core::fmt::Display for CanError {
     fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
         write!(f, "{self:?}")
     }
 }
-
