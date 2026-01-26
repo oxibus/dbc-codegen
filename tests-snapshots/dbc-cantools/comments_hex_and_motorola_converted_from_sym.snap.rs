@@ -1,13 +1,15 @@
+/// The name of the DBC file this code was generated from
+#[allow(dead_code)]
+pub const DBC_FILE_NAME: &str = "comments_hex_and_motorola_converted_from_sym";
+/// The version of the DBC file this code was generated from
+#[allow(dead_code)]
+pub const DBC_FILE_VERSION: &str = "6.0";
 #[allow(unused_imports)]
 use core::ops::BitOr;
 #[allow(unused_imports)]
 use bitvec::prelude::*;
 #[allow(unused_imports)]
 use embedded_can::{Id, StandardId, ExtendedId};
-#[allow(dead_code)]
-pub const DBC_FILE_NAME: &str = "comments_hex_and_motorola_converted_from_sym";
-#[allow(dead_code)]
-pub const DBC_FILE_VERSION: &str = "6.0";
 /// All messages
 #[allow(
     clippy::absurd_extreme_comparisons,

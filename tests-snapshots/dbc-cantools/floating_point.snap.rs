@@ -1,13 +1,15 @@
+/// The name of the DBC file this code was generated from
+#[allow(dead_code)]
+pub const DBC_FILE_NAME: &str = "floating_point";
+/// The version of the DBC file this code was generated from
+#[allow(dead_code)]
+pub const DBC_FILE_VERSION: &str = "HIPBNYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY/4/%%%/4/\'%**4YYY///";
 #[allow(unused_imports)]
 use core::ops::BitOr;
 #[allow(unused_imports)]
 use bitvec::prelude::*;
 #[allow(unused_imports)]
 use embedded_can::{Id, StandardId, ExtendedId};
-#[allow(dead_code)]
-pub const DBC_FILE_NAME: &str = "floating_point";
-#[allow(dead_code)]
-pub const DBC_FILE_VERSION: &str = "HIPBNYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY/4/%%%/4/\'%**4YYY///";
 /// All messages
 #[allow(
     clippy::absurd_extreme_comparisons,

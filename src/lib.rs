@@ -109,6 +109,15 @@ fn codegen(config: &Config<'_>, out: impl Write) -> Result<()> {
     }
     let mut w = BufWriter::new(out);
 
+    let dbc_name = config.dbc_name.escape_default();
+    writeln!(w, "/// The name of the DBC file this code was generated from")?;
+    writeln!(w, "#[allow(dead_code)]")?;
+    writeln!(w, r#"pub const DBC_FILE_NAME: &str = "{dbc_name}";"#)?;
+    let dbc_version = dbc.version.0.escape_default();
+    writeln!(w, "/// The version of the DBC file this code was generated from")?;
+    writeln!(w, "#[allow(dead_code)]")?;
+    writeln!(w, r#"pub const DBC_FILE_VERSION: &str = "{dbc_version}";"#)?;
+
     writeln!(w, "#[allow(unused_imports)]")?;
     writeln!(w, "use core::ops::BitOr;")?;
     writeln!(w, "#[allow(unused_imports)]")?;
@@ -124,12 +133,7 @@ fn codegen(config: &Config<'_>, out: impl Write) -> Result<()> {
         writeln!(w, "use serde::{{Serialize, Deserialize}};")
     })?;
 
-    let dbc_name = config.dbc_name.escape_default();
-    writeln!(w, "#[allow(dead_code)]")?;
-    writeln!(w, r#"pub const DBC_FILE_NAME: &str = "{dbc_name}";"#)?;
-    let dbc_version = dbc.version.0.escape_default();
-    writeln!(w, "#[allow(dead_code)]")?;
-    writeln!(w, r#"pub const DBC_FILE_VERSION: &str = "{dbc_version}";"#)?;
+    writeln!(w)?;
 
     render_dbc(&mut w, config, &dbc).context("could not generate Rust code")?;
 

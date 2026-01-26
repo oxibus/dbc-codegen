@@ -1,32 +1,32 @@
 error: literal out of range for `u64`
-   --> tests-snapshots/dbc-cantools/padding_bit_order.snap.rs:730:28
+   --> tests-snapshots/dbc-cantools/padding_bit_order.snap.rs:732:28
     |
-730 |     pub const L_MAX: u64 = 18446744073709552000_u64;
+732 |     pub const L_MAX: u64 = 18446744073709552000_u64;
     |                            ^^^^^^^^^^^^^^^^^^^^^^^^
     |
     = note: the literal `18446744073709552000_u64` does not fit into the type `u64` whose range is `0..=18446744073709551615`
     = note: `#[deny(overflowing_literals)]` on by default
 
 error: literal out of range for `u64`
-   --> tests-snapshots/dbc-cantools/padding_bit_order.snap.rs:768:29
+   --> tests-snapshots/dbc-cantools/padding_bit_order.snap.rs:770:29
     |
-768 |         if value < 0_u64 || 18446744073709552000_u64 < value {
+770 |         if value < 0_u64 || 18446744073709552000_u64 < value {
     |                             ^^^^^^^^^^^^^^^^^^^^^^^^
     |
     = note: the literal `18446744073709552000_u64` does not fit into the type `u64` whose range is `0..=18446744073709551615`
 
 error: literal out of range for `u64`
-   --> tests-snapshots/dbc-cantools/padding_bit_order.snap.rs:845:28
+   --> tests-snapshots/dbc-cantools/padding_bit_order.snap.rs:847:28
     |
-845 |     pub const M_MAX: u64 = 18446744073709552000_u64;
+847 |     pub const M_MAX: u64 = 18446744073709552000_u64;
     |                            ^^^^^^^^^^^^^^^^^^^^^^^^
     |
     = note: the literal `18446744073709552000_u64` does not fit into the type `u64` whose range is `0..=18446744073709551615`
 
 error: literal out of range for `u64`
-   --> tests-snapshots/dbc-cantools/padding_bit_order.snap.rs:883:29
+   --> tests-snapshots/dbc-cantools/padding_bit_order.snap.rs:885:29
     |
-883 |         if value < 0_u64 || 18446744073709552000_u64 < value {
+885 |         if value < 0_u64 || 18446744073709552000_u64 < value {
     |                             ^^^^^^^^^^^^^^^^^^^^^^^^
     |
     = note: the literal `18446744073709552000_u64` does not fit into the type `u64` whose range is `0..=18446744073709551615`

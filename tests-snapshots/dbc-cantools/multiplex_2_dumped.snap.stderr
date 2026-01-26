@@ -1,296 +1,296 @@
 error[E0412]: cannot find type `ExtendedS1Index` in this scope
-   --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:789:36
+   --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:791:36
     |
-789 |     pub fn s1(&mut self) -> Result<ExtendedS1Index, CanError> {
+791 |     pub fn s1(&mut self) -> Result<ExtendedS1Index, CanError> {
     |                                    ^^^^^^^^^^^^^^^
 ...
-971 | pub enum ExtendedS6Index {
+973 | pub enum ExtendedS6Index {
     | ------------------------ similarly named enum `ExtendedS6Index` defined here
     |
 help: an enum with a similar name exists
     |
-789 -     pub fn s1(&mut self) -> Result<ExtendedS1Index, CanError> {
-789 +     pub fn s1(&mut self) -> Result<ExtendedS6Index, CanError> {
+791 -     pub fn s1(&mut self) -> Result<ExtendedS1Index, CanError> {
+791 +     pub fn s1(&mut self) -> Result<ExtendedS6Index, CanError> {
     |
 help: you might be missing a type parameter
     |
-666 | impl<ExtendedS1Index> Extended {
+668 | impl<ExtendedS1Index> Extended {
     |     +++++++++++++++++
 
 error[E0422]: cannot find struct, variant or union type `ExtendedS1M0` in this scope
-   --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:791:41
+   --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:793:41
     |
-791 |             0 => Ok(ExtendedS1Index::M0(ExtendedS1M0 { raw: self.raw })),
+793 |             0 => Ok(ExtendedS1Index::M0(ExtendedS1M0 { raw: self.raw })),
     |                                         ^^^^^^^^^^^^ help: a struct with a similar name exists: `ExtendedS6M0`
 ...
-986 | pub struct ExtendedS6M0 {
+988 | pub struct ExtendedS6M0 {
     | ----------------------- similarly named struct `ExtendedS6M0` defined here
 
 error[E0422]: cannot find struct, variant or union type `ExtendedS1M1` in this scope
-    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:792:41
+    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:794:41
      |
- 792 |             1 => Ok(ExtendedS1Index::M1(ExtendedS1M1 { raw: self.raw })),
+ 794 |             1 => Ok(ExtendedS1Index::M1(ExtendedS1M1 { raw: self.raw })),
      |                                         ^^^^^^^^^^^^ help: a struct with a similar name exists: `ExtendedS6M1`
 ...
-1101 | pub struct ExtendedS6M1 {
+1103 | pub struct ExtendedS6M1 {
      | ----------------------- similarly named struct `ExtendedS6M1` defined here
 
 error[E0422]: cannot find struct, variant or union type `ExtendedS1M2` in this scope
-    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:793:41
+    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:795:41
      |
- 793 |             2 => Ok(ExtendedS1Index::M2(ExtendedS1M2 { raw: self.raw })),
+ 795 |             2 => Ok(ExtendedS1Index::M2(ExtendedS1M2 { raw: self.raw })),
      |                                         ^^^^^^^^^^^^ help: a struct with a similar name exists: `ExtendedS6M2`
 ...
-1216 | pub struct ExtendedS6M2 {
+1218 | pub struct ExtendedS6M2 {
      | ----------------------- similarly named struct `ExtendedS6M2` defined here
 
 error[E0412]: cannot find type `ExtendedS1M0` in this scope
-   --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:823:37
+   --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:825:37
     |
-823 |     pub fn set_m0(&mut self, value: ExtendedS1M0) -> Result<(), CanError> {
+825 |     pub fn set_m0(&mut self, value: ExtendedS1M0) -> Result<(), CanError> {
     |                                     ^^^^^^^^^^^^ help: a struct with a similar name exists: `ExtendedS6M0`
 ...
-986 | pub struct ExtendedS6M0 {
+988 | pub struct ExtendedS6M0 {
     | ----------------------- similarly named struct `ExtendedS6M0` defined here
 
 error[E0412]: cannot find type `ExtendedS1M1` in this scope
-    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:832:37
+    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:834:37
      |
- 832 |     pub fn set_m1(&mut self, value: ExtendedS1M1) -> Result<(), CanError> {
+ 834 |     pub fn set_m1(&mut self, value: ExtendedS1M1) -> Result<(), CanError> {
      |                                     ^^^^^^^^^^^^ help: a struct with a similar name exists: `ExtendedS6M1`
 ...
-1101 | pub struct ExtendedS6M1 {
+1103 | pub struct ExtendedS6M1 {
      | ----------------------- similarly named struct `ExtendedS6M1` defined here
 
 error[E0412]: cannot find type `ExtendedS1M2` in this scope
-    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:841:37
+    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:843:37
      |
- 841 |     pub fn set_m2(&mut self, value: ExtendedS1M2) -> Result<(), CanError> {
+ 843 |     pub fn set_m2(&mut self, value: ExtendedS1M2) -> Result<(), CanError> {
      |                                     ^^^^^^^^^^^^ help: a struct with a similar name exists: `ExtendedS6M2`
 ...
-1216 | pub struct ExtendedS6M2 {
+1218 | pub struct ExtendedS6M2 {
      | ----------------------- similarly named struct `ExtendedS6M2` defined here
 
 error[E0412]: cannot find type `ExtendedS0Index` in this scope
-   --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:863:36
+   --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:865:36
     |
-863 |     pub fn s0(&mut self) -> Result<ExtendedS0Index, CanError> {
+865 |     pub fn s0(&mut self) -> Result<ExtendedS0Index, CanError> {
     |                                    ^^^^^^^^^^^^^^^
 ...
-971 | pub enum ExtendedS6Index {
+973 | pub enum ExtendedS6Index {
     | ------------------------ similarly named enum `ExtendedS6Index` defined here
     |
 help: an enum with a similar name exists
     |
-863 -     pub fn s0(&mut self) -> Result<ExtendedS0Index, CanError> {
-863 +     pub fn s0(&mut self) -> Result<ExtendedS6Index, CanError> {
+865 -     pub fn s0(&mut self) -> Result<ExtendedS0Index, CanError> {
+865 +     pub fn s0(&mut self) -> Result<ExtendedS6Index, CanError> {
     |
 help: you might be missing a type parameter
     |
-666 | impl<ExtendedS0Index> Extended {
+668 | impl<ExtendedS0Index> Extended {
     |     +++++++++++++++++
 
 error[E0422]: cannot find struct, variant or union type `ExtendedS0M0` in this scope
-   --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:865:41
+   --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:867:41
     |
-865 |             0 => Ok(ExtendedS0Index::M0(ExtendedS0M0 { raw: self.raw })),
+867 |             0 => Ok(ExtendedS0Index::M0(ExtendedS0M0 { raw: self.raw })),
     |                                         ^^^^^^^^^^^^ help: a struct with a similar name exists: `ExtendedS6M0`
 ...
-986 | pub struct ExtendedS6M0 {
+988 | pub struct ExtendedS6M0 {
     | ----------------------- similarly named struct `ExtendedS6M0` defined here
 
 error[E0422]: cannot find struct, variant or union type `ExtendedS0M1` in this scope
-    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:866:41
+    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:868:41
      |
- 866 |             1 => Ok(ExtendedS0Index::M1(ExtendedS0M1 { raw: self.raw })),
+ 868 |             1 => Ok(ExtendedS0Index::M1(ExtendedS0M1 { raw: self.raw })),
      |                                         ^^^^^^^^^^^^ help: a struct with a similar name exists: `ExtendedS6M1`
 ...
-1101 | pub struct ExtendedS6M1 {
+1103 | pub struct ExtendedS6M1 {
      | ----------------------- similarly named struct `ExtendedS6M1` defined here
 
 error[E0422]: cannot find struct, variant or union type `ExtendedS0M2` in this scope
-    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:867:41
+    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:869:41
      |
- 867 |             2 => Ok(ExtendedS0Index::M2(ExtendedS0M2 { raw: self.raw })),
+ 869 |             2 => Ok(ExtendedS0Index::M2(ExtendedS0M2 { raw: self.raw })),
      |                                         ^^^^^^^^^^^^ help: a struct with a similar name exists: `ExtendedS6M2`
 ...
-1216 | pub struct ExtendedS6M2 {
+1218 | pub struct ExtendedS6M2 {
      | ----------------------- similarly named struct `ExtendedS6M2` defined here
 
 error[E0412]: cannot find type `ExtendedS0M0` in this scope
-   --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:897:37
+   --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:899:37
     |
-897 |     pub fn set_m0(&mut self, value: ExtendedS0M0) -> Result<(), CanError> {
+899 |     pub fn set_m0(&mut self, value: ExtendedS0M0) -> Result<(), CanError> {
     |                                     ^^^^^^^^^^^^ help: a struct with a similar name exists: `ExtendedS6M0`
 ...
-986 | pub struct ExtendedS6M0 {
+988 | pub struct ExtendedS6M0 {
     | ----------------------- similarly named struct `ExtendedS6M0` defined here
 
 error[E0412]: cannot find type `ExtendedS0M1` in this scope
-    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:906:37
+    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:908:37
      |
- 906 |     pub fn set_m1(&mut self, value: ExtendedS0M1) -> Result<(), CanError> {
+ 908 |     pub fn set_m1(&mut self, value: ExtendedS0M1) -> Result<(), CanError> {
      |                                     ^^^^^^^^^^^^ help: a struct with a similar name exists: `ExtendedS6M1`
 ...
-1101 | pub struct ExtendedS6M1 {
+1103 | pub struct ExtendedS6M1 {
      | ----------------------- similarly named struct `ExtendedS6M1` defined here
 
 error[E0412]: cannot find type `ExtendedS0M2` in this scope
-    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:915:37
+    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:917:37
      |
- 915 |     pub fn set_m2(&mut self, value: ExtendedS0M2) -> Result<(), CanError> {
+ 917 |     pub fn set_m2(&mut self, value: ExtendedS0M2) -> Result<(), CanError> {
      |                                     ^^^^^^^^^^^^ help: a struct with a similar name exists: `ExtendedS6M2`
 ...
-1216 | pub struct ExtendedS6M2 {
+1218 | pub struct ExtendedS6M2 {
      | ----------------------- similarly named struct `ExtendedS6M2` defined here
 
 error[E0412]: cannot find type `ExtendedTypesS11Index` in this scope
-    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:1439:37
+    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:1441:37
      |
-1439 |     pub fn s11(&mut self) -> Result<ExtendedTypesS11Index, CanError> {
+1441 |     pub fn s11(&mut self) -> Result<ExtendedTypesS11Index, CanError> {
      |                                     ^^^^^^^^^^^^^^^^^^^^^
 ...
-1548 | pub enum ExtendedTypesS0Index {
+1550 | pub enum ExtendedTypesS0Index {
      | ----------------------------- similarly named enum `ExtendedTypesS0Index` defined here
      |
 help: an enum with a similar name exists
      |
-1439 -     pub fn s11(&mut self) -> Result<ExtendedTypesS11Index, CanError> {
-1439 +     pub fn s11(&mut self) -> Result<ExtendedTypesS0Index, CanError> {
+1441 -     pub fn s11(&mut self) -> Result<ExtendedTypesS11Index, CanError> {
+1441 +     pub fn s11(&mut self) -> Result<ExtendedTypesS0Index, CanError> {
      |
 help: you might be missing a type parameter
      |
-1338 | impl<ExtendedTypesS11Index> ExtendedTypes {
+1340 | impl<ExtendedTypesS11Index> ExtendedTypes {
      |     +++++++++++++++++++++++
 
 error[E0422]: cannot find struct, variant or union type `ExtendedTypesS11M0` in this scope
-    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:1443:47
+    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:1445:47
      |
-1443 |                     ExtendedTypesS11Index::M0(ExtendedTypesS11M0 {
+1445 |                     ExtendedTypesS11Index::M0(ExtendedTypesS11M0 {
      |                                               ^^^^^^^^^^^^^^^^^^ help: a struct with a similar name exists: `ExtendedTypesS0M0`
 ...
-1562 | pub struct ExtendedTypesS0M0 {
+1564 | pub struct ExtendedTypesS0M0 {
      | ---------------------------- similarly named struct `ExtendedTypesS0M0` defined here
 
 error[E0422]: cannot find struct, variant or union type `ExtendedTypesS11M5` in this scope
-    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:1450:47
+    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:1452:47
      |
-1450 |                     ExtendedTypesS11Index::M5(ExtendedTypesS11M5 {
+1452 |                     ExtendedTypesS11Index::M5(ExtendedTypesS11M5 {
      |                                               ^^^^^^^^^^^^^^^^^^ help: a struct with a similar name exists: `ExtendedTypesS0M5`
 ...
-1635 | pub struct ExtendedTypesS0M5 {
+1637 | pub struct ExtendedTypesS0M5 {
      | ---------------------------- similarly named struct `ExtendedTypesS0M5` defined here
 
 error[E0412]: cannot find type `ExtendedTypesS11M0` in this scope
-    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:1483:37
+    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:1485:37
      |
-1483 |     pub fn set_m0(&mut self, value: ExtendedTypesS11M0) -> Result<(), CanError> {
+1485 |     pub fn set_m0(&mut self, value: ExtendedTypesS11M0) -> Result<(), CanError> {
      |                                     ^^^^^^^^^^^^^^^^^^ help: a struct with a similar name exists: `ExtendedTypesS0M0`
 ...
-1562 | pub struct ExtendedTypesS0M0 {
+1564 | pub struct ExtendedTypesS0M0 {
      | ---------------------------- similarly named struct `ExtendedTypesS0M0` defined here
 
 error[E0412]: cannot find type `ExtendedTypesS11M5` in this scope
-    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:1492:37
+    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:1494:37
      |
-1492 |     pub fn set_m5(&mut self, value: ExtendedTypesS11M5) -> Result<(), CanError> {
+1494 |     pub fn set_m5(&mut self, value: ExtendedTypesS11M5) -> Result<(), CanError> {
      |                                     ^^^^^^^^^^^^^^^^^^ help: a struct with a similar name exists: `ExtendedTypesS0M5`
 ...
-1635 | pub struct ExtendedTypesS0M5 {
+1637 | pub struct ExtendedTypesS0M5 {
      | ---------------------------- similarly named struct `ExtendedTypesS0M5` defined here
 
 error: invalid suffix `i32` for float literal
-    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:1342:30
+    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:1344:30
      |
-1342 |     pub const S9_MIN: i32 = -1.34_i32;
+1344 |     pub const S9_MIN: i32 = -1.34_i32;
      |                              ^^^^^^^^ invalid suffix `i32`
      |
      = help: valid suffixes are `f32` and `f64`
 
 error: invalid suffix `i32` for float literal
-    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:1679:21
+    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:1681:21
      |
-1679 |         if value < -1.34_i32 || 1235_i32 < value {
+1681 |         if value < -1.34_i32 || 1235_i32 < value {
      |                     ^^^^^^^^ invalid suffix `i32`
      |
      = help: valid suffixes are `f32` and `f64`
 
 error[E0592]: duplicate definitions with name `set_m0`
-   --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:823:5
+   --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:825:5
     |
-749 |     pub fn set_m0(&mut self, value: ExtendedS6M0) -> Result<(), CanError> {
+751 |     pub fn set_m0(&mut self, value: ExtendedS6M0) -> Result<(), CanError> {
     |     --------------------------------------------------------------------- other definition for `set_m0`
 ...
-823 |     pub fn set_m0(&mut self, value: ExtendedS1M0) -> Result<(), CanError> {
+825 |     pub fn set_m0(&mut self, value: ExtendedS1M0) -> Result<(), CanError> {
     |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ duplicate definitions for `set_m0`
 
 error[E0592]: duplicate definitions with name `set_m1`
-   --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:832:5
+   --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:834:5
     |
-758 |     pub fn set_m1(&mut self, value: ExtendedS6M1) -> Result<(), CanError> {
+760 |     pub fn set_m1(&mut self, value: ExtendedS6M1) -> Result<(), CanError> {
     |     --------------------------------------------------------------------- other definition for `set_m1`
 ...
-832 |     pub fn set_m1(&mut self, value: ExtendedS1M1) -> Result<(), CanError> {
+834 |     pub fn set_m1(&mut self, value: ExtendedS1M1) -> Result<(), CanError> {
     |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ duplicate definitions for `set_m1`
 
 error[E0592]: duplicate definitions with name `set_m2`
-   --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:841:5
+   --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:843:5
     |
-767 |     pub fn set_m2(&mut self, value: ExtendedS6M2) -> Result<(), CanError> {
+769 |     pub fn set_m2(&mut self, value: ExtendedS6M2) -> Result<(), CanError> {
     |     --------------------------------------------------------------------- other definition for `set_m2`
 ...
-841 |     pub fn set_m2(&mut self, value: ExtendedS1M2) -> Result<(), CanError> {
+843 |     pub fn set_m2(&mut self, value: ExtendedS1M2) -> Result<(), CanError> {
     |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ duplicate definitions for `set_m2`
 
 error[E0592]: duplicate definitions with name `set_m0`
-   --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:897:5
+   --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:899:5
     |
-749 |     pub fn set_m0(&mut self, value: ExtendedS6M0) -> Result<(), CanError> {
+751 |     pub fn set_m0(&mut self, value: ExtendedS6M0) -> Result<(), CanError> {
     |     --------------------------------------------------------------------- other definition for `set_m0`
 ...
-897 |     pub fn set_m0(&mut self, value: ExtendedS0M0) -> Result<(), CanError> {
+899 |     pub fn set_m0(&mut self, value: ExtendedS0M0) -> Result<(), CanError> {
     |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ duplicate definitions for `set_m0`
 
 error[E0592]: duplicate definitions with name `set_m1`
-   --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:906:5
+   --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:908:5
     |
-758 |     pub fn set_m1(&mut self, value: ExtendedS6M1) -> Result<(), CanError> {
+760 |     pub fn set_m1(&mut self, value: ExtendedS6M1) -> Result<(), CanError> {
     |     --------------------------------------------------------------------- other definition for `set_m1`
 ...
-906 |     pub fn set_m1(&mut self, value: ExtendedS0M1) -> Result<(), CanError> {
+908 |     pub fn set_m1(&mut self, value: ExtendedS0M1) -> Result<(), CanError> {
     |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ duplicate definitions for `set_m1`
 
 error[E0592]: duplicate definitions with name `set_m2`
-   --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:915:5
+   --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:917:5
     |
-767 |     pub fn set_m2(&mut self, value: ExtendedS6M2) -> Result<(), CanError> {
+769 |     pub fn set_m2(&mut self, value: ExtendedS6M2) -> Result<(), CanError> {
     |     --------------------------------------------------------------------- other definition for `set_m2`
 ...
-915 |     pub fn set_m2(&mut self, value: ExtendedS0M2) -> Result<(), CanError> {
+917 |     pub fn set_m2(&mut self, value: ExtendedS0M2) -> Result<(), CanError> {
     |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ duplicate definitions for `set_m2`
 
 error[E0592]: duplicate definitions with name `set_m0`
-    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:1483:5
+    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:1485:5
      |
-1409 |     pub fn set_m0(&mut self, value: ExtendedTypesS0M0) -> Result<(), CanError> {
+1411 |     pub fn set_m0(&mut self, value: ExtendedTypesS0M0) -> Result<(), CanError> {
      |     -------------------------------------------------------------------------- other definition for `set_m0`
 ...
-1483 |     pub fn set_m0(&mut self, value: ExtendedTypesS11M0) -> Result<(), CanError> {
+1485 |     pub fn set_m0(&mut self, value: ExtendedTypesS11M0) -> Result<(), CanError> {
      |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ duplicate definitions for `set_m0`
 
 error[E0592]: duplicate definitions with name `set_m5`
-    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:1492:5
+    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:1494:5
      |
-1418 |     pub fn set_m5(&mut self, value: ExtendedTypesS0M5) -> Result<(), CanError> {
+1420 |     pub fn set_m5(&mut self, value: ExtendedTypesS0M5) -> Result<(), CanError> {
      |     -------------------------------------------------------------------------- other definition for `set_m5`
 ...
-1492 |     pub fn set_m5(&mut self, value: ExtendedTypesS11M5) -> Result<(), CanError> {
+1494 |     pub fn set_m5(&mut self, value: ExtendedTypesS11M5) -> Result<(), CanError> {
      |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ duplicate definitions for `set_m5`
 
 error[E0277]: the trait bound `u16: From<i8>` is not satisfied
-   --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:116:46
+   --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:118:46
     |
-116 |                     multiplexor: multiplexor.into(),
+118 |                     multiplexor: multiplexor.into(),
     |                                              ^^^^ the trait `From<i8>` is not implemented for `u16`
     |
     = help: the following other types implement trait `From<T>`:
@@ -300,9 +300,9 @@ error[E0277]: the trait bound `u16: From<i8>` is not satisfied
     = note: required for `i8` to implement `Into<u16>`
 
 error[E0277]: the trait bound `u16: From<i8>` is not satisfied
-   --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:412:46
+   --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:414:46
     |
-412 |                     multiplexor: multiplexor.into(),
+414 |                     multiplexor: multiplexor.into(),
     |                                              ^^^^ the trait `From<i8>` is not implemented for `u16`
     |
     = help: the following other types implement trait `From<T>`:
@@ -312,9 +312,9 @@ error[E0277]: the trait bound `u16: From<i8>` is not satisfied
     = note: required for `i8` to implement `Into<u16>`
 
 error[E0277]: the trait bound `u16: From<i8>` is not satisfied
-   --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:723:46
+   --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:725:46
     |
-723 |                     multiplexor: multiplexor.into(),
+725 |                     multiplexor: multiplexor.into(),
     |                                              ^^^^ the trait `From<i8>` is not implemented for `u16`
     |
     = help: the following other types implement trait `From<T>`:
@@ -322,38 +322,38 @@ error[E0277]: the trait bound `u16: From<i8>` is not satisfied
               `u16` implements `From<bool>`
               `u16` implements `From<u8>`
     = note: required for `i8` to implement `Into<u16>`
-
-error[E0433]: failed to resolve: use of undeclared type `ExtendedS1Index`
-   --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:791:21
-    |
-791 |             0 => Ok(ExtendedS1Index::M0(ExtendedS1M0 { raw: self.raw })),
-    |                     ^^^^^^^^^^^^^^^
-    |                     |
-    |                     use of undeclared type `ExtendedS1Index`
-    |                     help: an enum with a similar name exists: `ExtendedS6Index`
-
-error[E0433]: failed to resolve: use of undeclared type `ExtendedS1Index`
-   --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:792:21
-    |
-792 |             1 => Ok(ExtendedS1Index::M1(ExtendedS1M1 { raw: self.raw })),
-    |                     ^^^^^^^^^^^^^^^
-    |                     |
-    |                     use of undeclared type `ExtendedS1Index`
-    |                     help: an enum with a similar name exists: `ExtendedS6Index`
 
 error[E0433]: failed to resolve: use of undeclared type `ExtendedS1Index`
    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:793:21
     |
-793 |             2 => Ok(ExtendedS1Index::M2(ExtendedS1M2 { raw: self.raw })),
+793 |             0 => Ok(ExtendedS1Index::M0(ExtendedS1M0 { raw: self.raw })),
+    |                     ^^^^^^^^^^^^^^^
+    |                     |
+    |                     use of undeclared type `ExtendedS1Index`
+    |                     help: an enum with a similar name exists: `ExtendedS6Index`
+
+error[E0433]: failed to resolve: use of undeclared type `ExtendedS1Index`
+   --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:794:21
+    |
+794 |             1 => Ok(ExtendedS1Index::M1(ExtendedS1M1 { raw: self.raw })),
+    |                     ^^^^^^^^^^^^^^^
+    |                     |
+    |                     use of undeclared type `ExtendedS1Index`
+    |                     help: an enum with a similar name exists: `ExtendedS6Index`
+
+error[E0433]: failed to resolve: use of undeclared type `ExtendedS1Index`
+   --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:795:21
+    |
+795 |             2 => Ok(ExtendedS1Index::M2(ExtendedS1M2 { raw: self.raw })),
     |                     ^^^^^^^^^^^^^^^
     |                     |
     |                     use of undeclared type `ExtendedS1Index`
     |                     help: an enum with a similar name exists: `ExtendedS6Index`
 
 error[E0277]: the trait bound `u16: From<i8>` is not satisfied
-   --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:797:46
+   --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:799:46
     |
-797 |                     multiplexor: multiplexor.into(),
+799 |                     multiplexor: multiplexor.into(),
     |                                              ^^^^ the trait `From<i8>` is not implemented for `u16`
     |
     = help: the following other types implement trait `From<T>`:
@@ -361,38 +361,38 @@ error[E0277]: the trait bound `u16: From<i8>` is not satisfied
               `u16` implements `From<bool>`
               `u16` implements `From<u8>`
     = note: required for `i8` to implement `Into<u16>`
-
-error[E0433]: failed to resolve: use of undeclared type `ExtendedS0Index`
-   --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:865:21
-    |
-865 |             0 => Ok(ExtendedS0Index::M0(ExtendedS0M0 { raw: self.raw })),
-    |                     ^^^^^^^^^^^^^^^
-    |                     |
-    |                     use of undeclared type `ExtendedS0Index`
-    |                     help: an enum with a similar name exists: `ExtendedS6Index`
-
-error[E0433]: failed to resolve: use of undeclared type `ExtendedS0Index`
-   --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:866:21
-    |
-866 |             1 => Ok(ExtendedS0Index::M1(ExtendedS0M1 { raw: self.raw })),
-    |                     ^^^^^^^^^^^^^^^
-    |                     |
-    |                     use of undeclared type `ExtendedS0Index`
-    |                     help: an enum with a similar name exists: `ExtendedS6Index`
 
 error[E0433]: failed to resolve: use of undeclared type `ExtendedS0Index`
    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:867:21
     |
-867 |             2 => Ok(ExtendedS0Index::M2(ExtendedS0M2 { raw: self.raw })),
+867 |             0 => Ok(ExtendedS0Index::M0(ExtendedS0M0 { raw: self.raw })),
+    |                     ^^^^^^^^^^^^^^^
+    |                     |
+    |                     use of undeclared type `ExtendedS0Index`
+    |                     help: an enum with a similar name exists: `ExtendedS6Index`
+
+error[E0433]: failed to resolve: use of undeclared type `ExtendedS0Index`
+   --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:868:21
+    |
+868 |             1 => Ok(ExtendedS0Index::M1(ExtendedS0M1 { raw: self.raw })),
+    |                     ^^^^^^^^^^^^^^^
+    |                     |
+    |                     use of undeclared type `ExtendedS0Index`
+    |                     help: an enum with a similar name exists: `ExtendedS6Index`
+
+error[E0433]: failed to resolve: use of undeclared type `ExtendedS0Index`
+   --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:869:21
+    |
+869 |             2 => Ok(ExtendedS0Index::M2(ExtendedS0M2 { raw: self.raw })),
     |                     ^^^^^^^^^^^^^^^
     |                     |
     |                     use of undeclared type `ExtendedS0Index`
     |                     help: an enum with a similar name exists: `ExtendedS6Index`
 
 error[E0277]: the trait bound `u16: From<i8>` is not satisfied
-   --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:871:46
+   --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:873:46
     |
-871 |                     multiplexor: multiplexor.into(),
+873 |                     multiplexor: multiplexor.into(),
     |                                              ^^^^ the trait `From<i8>` is not implemented for `u16`
     |
     = help: the following other types implement trait `From<T>`:
@@ -402,9 +402,9 @@ error[E0277]: the trait bound `u16: From<i8>` is not satisfied
     = note: required for `i8` to implement `Into<u16>`
 
 error[E0277]: the trait bound `u16: From<i8>` is not satisfied
-    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:1383:46
+    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:1385:46
      |
-1383 |                     multiplexor: multiplexor.into(),
+1385 |                     multiplexor: multiplexor.into(),
      |                                              ^^^^ the trait `From<i8>` is not implemented for `u16`
      |
      = help: the following other types implement trait `From<T>`:
@@ -414,18 +414,18 @@ error[E0277]: the trait bound `u16: From<i8>` is not satisfied
      = note: required for `i8` to implement `Into<u16>`
 
 error[E0433]: failed to resolve: use of undeclared type `ExtendedTypesS11Index`
-    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:1443:21
+    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:1445:21
      |
-1443 |                     ExtendedTypesS11Index::M0(ExtendedTypesS11M0 {
+1445 |                     ExtendedTypesS11Index::M0(ExtendedTypesS11M0 {
      |                     ^^^^^^^^^^^^^^^^^^^^^
      |                     |
      |                     use of undeclared type `ExtendedTypesS11Index`
      |                     help: an enum with a similar name exists: `ExtendedTypesS0Index`
 
 error[E0433]: failed to resolve: use of undeclared type `ExtendedTypesS11Index`
-    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:1450:21
+    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:1452:21
      |
-1450 |                     ExtendedTypesS11Index::M5(ExtendedTypesS11M5 {
+1452 |                     ExtendedTypesS11Index::M5(ExtendedTypesS11M5 {
      |                     ^^^^^^^^^^^^^^^^^^^^^
      |                     |
      |                     use of undeclared type `ExtendedTypesS11Index`
