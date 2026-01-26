@@ -596,7 +596,7 @@ fn single_file_manual_test() {
         }
     }
     "#,
-    )
+    );
 
     // let out_path = PathBuf::from("./target/manual/manual_test_output.rs");
     // fs::create_dir_all(out_path.parent().unwrap()).unwrap();
