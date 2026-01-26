@@ -1,7 +1,4 @@
 use std::fmt::Display;
-use std::io::Write;
-
-use anyhow::{Error, Result};
 
 /// Configuration for including features in the code generator.
 ///
@@ -20,31 +17,49 @@ pub enum FeatureConfig<'a> {
 }
 
 impl FeatureConfig<'_> {
-    pub(crate) fn fmt_attr(&self, w: &mut impl Write, attr: impl Display) -> Result<()> {
+    /// Generate an attribute token stream (like `#[derive(Debug)]`)
+    pub(crate) fn to_attr_tokens(&self, attr: impl Display) -> Option<proc_macro2::TokenStream> {
+        use quote::quote;
+
         match self {
-            FeatureConfig::Always => writeln!(w, "#[{attr}]")?,
-            FeatureConfig::Gated(gate) => writeln!(w, "#[cfg_attr(feature = {gate:?}, {attr})]")?,
-            FeatureConfig::Never => {}
+            FeatureConfig::Always => {
+                let attr_str = attr.to_string();
+                let tokens: proc_macro2::TokenStream = attr_str.parse().ok()?;
+                Some(quote! { #[#tokens] })
+            }
+            FeatureConfig::Gated(gate) => {
+                let attr_str = attr.to_string();
+                let tokens: proc_macro2::TokenStream = attr_str.parse().ok()?;
+                Some(quote! { #[cfg_attr(feature = #gate, #tokens)] })
+            }
+            FeatureConfig::Never => None,
         }
-        Ok(())
     }
 
-    pub(crate) fn fmt_cfg<W: Write, E: Into<Error>>(
+    /// Generate a token stream optionally wrapped in a cfg attribute
+    pub(crate) fn to_tokens_opt(
         &self,
-        mut w: W,
-        f: impl FnOnce(W) -> Result<(), E>,
-    ) -> Result<()> {
-        match self {
-            // If config is Never, return immediately without calling `f`
-            FeatureConfig::Never => return Ok(()),
-            // If config is Gated, prepend `f` with a cfg guard
-            FeatureConfig::Gated(gate) => {
-                writeln!(w, "#[cfg(feature = {gate:?})]")?;
-            }
-            // Otherwise, just call `f`
-            FeatureConfig::Always => {}
-        }
+        tokens: proc_macro2::TokenStream,
+    ) -> Option<proc_macro2::TokenStream> {
+        use quote::quote;
 
-        f(w).map_err(Into::into)
+        match self {
+            FeatureConfig::Never => None,
+            FeatureConfig::Gated(gate) => Some(quote! {
+                #[cfg(feature = #gate)]
+                #tokens
+            }),
+            FeatureConfig::Always => Some(tokens),
+        }
+    }
+
+    /// Generate allow(dead_code) attribute if needed
+    pub(crate) fn allow_dead_code_tokens(allow: bool) -> Option<proc_macro2::TokenStream> {
+        if allow {
+            use quote::quote;
+            Some(quote! { #[allow(dead_code)] })
+        } else {
+            None
+        }
     }
 }
