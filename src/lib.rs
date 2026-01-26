@@ -109,11 +109,21 @@ fn codegen(config: &Config<'_>, out: impl Write) -> Result<()> {
     }
     let mut w = BufWriter::new(out);
 
-    writeln!(w, "// Generated code!")?;
-    writeln!(w, "//")?;
-    writeln!(w, "// Message definitions from file `{}`", config.dbc_name)?;
-    writeln!(w, "// Version: {}", dbc.version.0)?;
-    writeln!(w)?;
+    let dbc_name = config.dbc_name.escape_default();
+    writeln!(
+        w,
+        "/// The name of the DBC file this code was generated from"
+    )?;
+    writeln!(w, "#[allow(dead_code)]")?;
+    writeln!(w, r#"pub const DBC_FILE_NAME: &str = "{dbc_name}";"#)?;
+    let dbc_version = dbc.version.0.escape_default();
+    writeln!(
+        w,
+        "/// The version of the DBC file this code was generated from"
+    )?;
+    writeln!(w, "#[allow(dead_code)]")?;
+    writeln!(w, r#"pub const DBC_FILE_VERSION: &str = "{dbc_version}";"#)?;
+
     writeln!(w, "#[allow(unused_imports)]")?;
     writeln!(w, "use core::ops::BitOr;")?;
     writeln!(w, "#[allow(unused_imports)]")?;
@@ -1328,13 +1338,19 @@ impl Config<'_> {
     /// Generate Rust structs matching DBC input description and return as String
     pub fn generate(self) -> Result<String> {
         let mut out = Vec::new();
-        self.write(&mut out)?;
-        Ok(String::from_utf8(out)?)
+        codegen(&self, &mut out)?;
+        // Parse and re-format the generated code to allow for future
+        // syn/quote codegen migration. Note that this is inefficient at the moment,
+        // but this shouldn't be significantly noticeable.
+        let out = std::str::from_utf8(&out).context("Failed to convert output to str")?;
+        let file = syn::parse_file(out).context("Failed to parse generated Rust code")?;
+        Ok(prettyplease::unparse(&file))
     }
 
     /// Generate Rust structs matching DBC input description and write to `out`
-    pub fn write(self, out: impl Write) -> Result<()> {
-        codegen(&self, out)
+    pub fn write(self, mut out: impl Write) -> Result<()> {
+        out.write_all(self.generate()?.as_bytes())?;
+        Ok(())
     }
 
     /// Generate Rust structs matching DBC input description and write to file at `path`

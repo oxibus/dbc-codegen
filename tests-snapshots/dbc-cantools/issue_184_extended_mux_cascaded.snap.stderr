@@ -1,8 +1,8 @@
 error[E0277]: the trait bound `u16: From<i8>` is not satisfied
-   --> tests-snapshots/dbc-cantools/issue_184_extended_mux_cascaded.snap.rs:116:128
+   --> tests-snapshots/dbc-cantools/issue_184_extended_mux_cascaded.snap.rs:125:46
     |
-116 |             multiplexor => Err(CanError::InvalidMultiplexor { message_id: ExtMuxCascaded::MESSAGE_ID, multiplexor: multiplexor.into() }),
-    |                                                                                                                                ^^^^ the trait `From<i8>` is not implemented for `u16`
+125 |                     multiplexor: multiplexor.into(),
+    |                                              ^^^^ the trait `From<i8>` is not implemented for `u16`
     |
     = help: the following other types implement trait `From<T>`:
               `u16` implements `From<Char>`

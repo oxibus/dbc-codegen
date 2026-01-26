@@ -321,6 +321,8 @@ dependencies = [
  "embedded-can",
  "heck",
  "insta",
+ "prettyplease",
+ "syn",
  "test_each_file",
  "trybuild",
  "typed-builder",

@@ -1,97 +1,97 @@
 error[E0412]: cannot find type `GearShifterGearShifter` in this scope
-    --> tests-snapshots/dbc-cantools/issue_199.snap.rs:1062:35
+    --> tests-snapshots/dbc-cantools/issue_199.snap.rs:991:35
      |
-1062 |     pub fn gear_shifter(&self) -> GearShifterGearShifter {
+ 991 |     pub fn gear_shifter(&self) -> GearShifterGearShifter {
      |                                   ^^^^^^^^^^^^^^^^^^^^^^ help: an enum with a similar name exists: `GearShifterLeftBlinker`
 ...
-1191 | pub enum GearShifterLeftBlinker {
+1106 | pub enum GearShifterLeftBlinker {
      | ------------------------------- similarly named enum `GearShifterLeftBlinker` defined here
 
 error[E0412]: cannot find type `CruiseButtonsCruiseButtons` in this scope
-    --> tests-snapshots/dbc-cantools/issue_199.snap.rs:2226:37
+    --> tests-snapshots/dbc-cantools/issue_199.snap.rs:2054:37
      |
-2226 |     pub fn cruise_buttons(&self) -> CruiseButtonsCruiseButtons {
+2054 |     pub fn cruise_buttons(&self) -> CruiseButtonsCruiseButtons {
      |                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^ help: an enum with a similar name exists: `CruiseButtons2LkaGapButton`
 ...
-2468 | pub enum CruiseButtons2LkaGapButton {
+2268 | pub enum CruiseButtons2LkaGapButton {
      | ----------------------------------- similarly named enum `CruiseButtons2LkaGapButton` defined here
 
 error[E0433]: failed to resolve: use of undeclared type `GearShifterGearShifter`
-    --> tests-snapshots/dbc-cantools/issue_199.snap.rs:1066:18
-     |
-1066 |             3 => GearShifterGearShifter::Park,
-     |                  ^^^^^^^^^^^^^^^^^^^^^^
-     |                  |
-     |                  use of undeclared type `GearShifterGearShifter`
-     |                  help: an enum with a similar name exists: `GearShifterLeftBlinker`
+   --> tests-snapshots/dbc-cantools/issue_199.snap.rs:994:18
+    |
+994 |             3 => GearShifterGearShifter::Park,
+    |                  ^^^^^^^^^^^^^^^^^^^^^^
+    |                  |
+    |                  use of undeclared type `GearShifterGearShifter`
+    |                  help: an enum with a similar name exists: `GearShifterLeftBlinker`
 
 error[E0433]: failed to resolve: use of undeclared type `GearShifterGearShifter`
-    --> tests-snapshots/dbc-cantools/issue_199.snap.rs:1067:18
-     |
-1067 |             0 => GearShifterGearShifter::DriveLow,
-     |                  ^^^^^^^^^^^^^^^^^^^^^^
-     |                  |
-     |                  use of undeclared type `GearShifterGearShifter`
-     |                  help: an enum with a similar name exists: `GearShifterLeftBlinker`
+   --> tests-snapshots/dbc-cantools/issue_199.snap.rs:995:18
+    |
+995 |             0 => GearShifterGearShifter::DriveLow,
+    |                  ^^^^^^^^^^^^^^^^^^^^^^
+    |                  |
+    |                  use of undeclared type `GearShifterGearShifter`
+    |                  help: an enum with a similar name exists: `GearShifterLeftBlinker`
 
 error[E0433]: failed to resolve: use of undeclared type `GearShifterGearShifter`
-    --> tests-snapshots/dbc-cantools/issue_199.snap.rs:1068:18
-     |
-1068 |             _ => GearShifterGearShifter::_Other(self.gear_shifter_raw()),
-     |                  ^^^^^^^^^^^^^^^^^^^^^^
-     |                  |
-     |                  use of undeclared type `GearShifterGearShifter`
-     |                  help: an enum with a similar name exists: `GearShifterLeftBlinker`
+   --> tests-snapshots/dbc-cantools/issue_199.snap.rs:996:18
+    |
+996 |             _ => GearShifterGearShifter::_Other(self.gear_shifter_raw()),
+    |                  ^^^^^^^^^^^^^^^^^^^^^^
+    |                  |
+    |                  use of undeclared type `GearShifterGearShifter`
+    |                  help: an enum with a similar name exists: `GearShifterLeftBlinker`
 
 error[E0433]: failed to resolve: use of undeclared type `CruiseButtonsCruiseButtons`
-    --> tests-snapshots/dbc-cantools/issue_199.snap.rs:2230:18
+    --> tests-snapshots/dbc-cantools/issue_199.snap.rs:2057:18
      |
-2230 |             6 => CruiseButtonsCruiseButtons::Cancel,
+2057 |             6 => CruiseButtonsCruiseButtons::Cancel,
      |                  ^^^^^^^^^^^^^^^^^^^^^^^^^^
      |                  |
      |                  use of undeclared type `CruiseButtonsCruiseButtons`
      |                  help: an enum with a similar name exists: `CruiseButtons2LkaGapButton`
 
 error[E0433]: failed to resolve: use of undeclared type `CruiseButtonsCruiseButtons`
-    --> tests-snapshots/dbc-cantools/issue_199.snap.rs:2231:18
+    --> tests-snapshots/dbc-cantools/issue_199.snap.rs:2058:18
      |
-2231 |             5 => CruiseButtonsCruiseButtons::Main,
+2058 |             5 => CruiseButtonsCruiseButtons::Main,
      |                  ^^^^^^^^^^^^^^^^^^^^^^^^^^
      |                  |
      |                  use of undeclared type `CruiseButtonsCruiseButtons`
      |                  help: an enum with a similar name exists: `CruiseButtons2LkaGapButton`
 
 error[E0433]: failed to resolve: use of undeclared type `CruiseButtonsCruiseButtons`
-    --> tests-snapshots/dbc-cantools/issue_199.snap.rs:2232:18
+    --> tests-snapshots/dbc-cantools/issue_199.snap.rs:2059:18
      |
-2232 |             3 => CruiseButtonsCruiseButtons::Set,
+2059 |             3 => CruiseButtonsCruiseButtons::Set,
      |                  ^^^^^^^^^^^^^^^^^^^^^^^^^^
      |                  |
      |                  use of undeclared type `CruiseButtonsCruiseButtons`
      |                  help: an enum with a similar name exists: `CruiseButtons2LkaGapButton`
 
 error[E0433]: failed to resolve: use of undeclared type `CruiseButtonsCruiseButtons`
-    --> tests-snapshots/dbc-cantools/issue_199.snap.rs:2233:18
+    --> tests-snapshots/dbc-cantools/issue_199.snap.rs:2060:18
      |
-2233 |             2 => CruiseButtonsCruiseButtons::Resume,
+2060 |             2 => CruiseButtonsCruiseButtons::Resume,
      |                  ^^^^^^^^^^^^^^^^^^^^^^^^^^
      |                  |
      |                  use of undeclared type `CruiseButtonsCruiseButtons`
      |                  help: an enum with a similar name exists: `CruiseButtons2LkaGapButton`
 
 error[E0433]: failed to resolve: use of undeclared type `CruiseButtonsCruiseButtons`
-    --> tests-snapshots/dbc-cantools/issue_199.snap.rs:2234:18
+    --> tests-snapshots/dbc-cantools/issue_199.snap.rs:2061:18
      |
-2234 |             1 => CruiseButtonsCruiseButtons::None,
+2061 |             1 => CruiseButtonsCruiseButtons::None,
      |                  ^^^^^^^^^^^^^^^^^^^^^^^^^^
      |                  |
      |                  use of undeclared type `CruiseButtonsCruiseButtons`
      |                  help: an enum with a similar name exists: `CruiseButtons2LkaGapButton`
 
 error[E0433]: failed to resolve: use of undeclared type `CruiseButtonsCruiseButtons`
-    --> tests-snapshots/dbc-cantools/issue_199.snap.rs:2235:18
+    --> tests-snapshots/dbc-cantools/issue_199.snap.rs:2062:18
      |
-2235 |             _ => CruiseButtonsCruiseButtons::_Other(self.cruise_buttons_raw()),
+2062 |             _ => CruiseButtonsCruiseButtons::_Other(self.cruise_buttons_raw()),
      |                  ^^^^^^^^^^^^^^^^^^^^^^^^^^
      |                  |
      |                  use of undeclared type `CruiseButtonsCruiseButtons`
@@ -100,8 +100,9 @@ error[E0433]: failed to resolve: use of undeclared type `CruiseButtonsCruiseButt
 error: unreachable pattern
   --> tests-snapshots/dbc-cantools/issue_199.snap.rs:65:13
    |
-64 |             DriverDoorStatus::MESSAGE_ID => Messages::DriverDoorStatus(DriverDoorStatus::try_from(payload)?),
+62 |             DriverDoorStatus::MESSAGE_ID => {
    |             ---------------------------- matches all the relevant values
+...
 65 |             Chime::MESSAGE_ID => Messages::Chime(Chime::try_from(payload)?),
    |             ^^^^^^^^^^^^^^^^^ no value can reach this
    |
@@ -109,46 +110,46 @@ error: unreachable pattern
    = help: to override `-D warnings` add `#[allow(unreachable_patterns)]`
 
 error: unreachable pattern
-  --> tests-snapshots/dbc-cantools/issue_199.snap.rs:67:13
+  --> tests-snapshots/dbc-cantools/issue_199.snap.rs:69:13
    |
-64 |             DriverDoorStatus::MESSAGE_ID => Messages::DriverDoorStatus(DriverDoorStatus::try_from(payload)?),
+62 |             DriverDoorStatus::MESSAGE_ID => {
    |             ---------------------------- matches all the relevant values
 ...
-67 |             SteeringWheelAngle::MESSAGE_ID => Messages::SteeringWheelAngle(SteeringWheelAngle::try_from(payload)?),
+69 |             SteeringWheelAngle::MESSAGE_ID => {
    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no value can reach this
-
-error: unreachable pattern
-  --> tests-snapshots/dbc-cantools/issue_199.snap.rs:68:13
-   |
-66 |             BlinkerStatus::MESSAGE_ID => Messages::BlinkerStatus(BlinkerStatus::try_from(payload)?),
-   |             ------------------------- matches all the relevant values
-67 |             SteeringWheelAngle::MESSAGE_ID => Messages::SteeringWheelAngle(SteeringWheelAngle::try_from(payload)?),
-68 |             GearShifter::MESSAGE_ID => Messages::GearShifter(GearShifter::try_from(payload)?),
-   |             ^^^^^^^^^^^^^^^^^^^^^^^ no value can reach this
-
-error: unreachable pattern
-  --> tests-snapshots/dbc-cantools/issue_199.snap.rs:70:13
-   |
-64 |             DriverDoorStatus::MESSAGE_ID => Messages::DriverDoorStatus(DriverDoorStatus::try_from(payload)?),
-   |             ---------------------------- matches all the relevant values
-...
-70 |             BrakePedal::MESSAGE_ID => Messages::BrakePedal(BrakePedal::try_from(payload)?),
-   |             ^^^^^^^^^^^^^^^^^^^^^^ no value can reach this
 
 error: unreachable pattern
   --> tests-snapshots/dbc-cantools/issue_199.snap.rs:72:13
    |
-64 |             DriverDoorStatus::MESSAGE_ID => Messages::DriverDoorStatus(DriverDoorStatus::try_from(payload)?),
+66 |             BlinkerStatus::MESSAGE_ID => {
+   |             ------------------------- matches all the relevant values
+...
+72 |             GearShifter::MESSAGE_ID => {
+   |             ^^^^^^^^^^^^^^^^^^^^^^^ no value can reach this
+
+error: unreachable pattern
+  --> tests-snapshots/dbc-cantools/issue_199.snap.rs:78:13
+   |
+62 |             DriverDoorStatus::MESSAGE_ID => {
    |             ---------------------------- matches all the relevant values
 ...
-72 |             VehicleSpeed::MESSAGE_ID => Messages::VehicleSpeed(VehicleSpeed::try_from(payload)?),
+78 |             BrakePedal::MESSAGE_ID => {
+   |             ^^^^^^^^^^^^^^^^^^^^^^ no value can reach this
+
+error: unreachable pattern
+  --> tests-snapshots/dbc-cantools/issue_199.snap.rs:84:13
+   |
+62 |             DriverDoorStatus::MESSAGE_ID => {
+   |             ---------------------------- matches all the relevant values
+...
+84 |             VehicleSpeed::MESSAGE_ID => {
    |             ^^^^^^^^^^^^^^^^^^^^^^^^ no value can reach this
 
 error: unreachable pattern
-  --> tests-snapshots/dbc-cantools/issue_199.snap.rs:73:13
+  --> tests-snapshots/dbc-cantools/issue_199.snap.rs:87:13
    |
-71 |             WheelSpeed::MESSAGE_ID => Messages::WheelSpeed(WheelSpeed::try_from(payload)?),
+81 |             WheelSpeed::MESSAGE_ID => {
    |             ---------------------- matches all the relevant values
-72 |             VehicleSpeed::MESSAGE_ID => Messages::VehicleSpeed(VehicleSpeed::try_from(payload)?),
-73 |             CruiseButtons::MESSAGE_ID => Messages::CruiseButtons(CruiseButtons::try_from(payload)?),
+...
+87 |             CruiseButtons::MESSAGE_ID => {
    |             ^^^^^^^^^^^^^^^^^^^^^^^^^ no value can reach this

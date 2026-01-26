@@ -1,15 +1,15 @@
-// Generated code!
-//
-// Message definitions from file `bus_comment_bare_out`
-// Version: 
-
+/// The name of the DBC file this code was generated from
+#[allow(dead_code)]
+pub const DBC_FILE_NAME: &str = "bus_comment_bare_out";
+/// The version of the DBC file this code was generated from
+#[allow(dead_code)]
+pub const DBC_FILE_VERSION: &str = "";
 #[allow(unused_imports)]
 use core::ops::BitOr;
 #[allow(unused_imports)]
 use bitvec::prelude::*;
 #[allow(unused_imports)]
 use embedded_can::{Id, StandardId, ExtendedId};
-
 /// All messages
 #[allow(
     clippy::absurd_extreme_comparisons,
@@ -21,9 +21,7 @@ use embedded_can::{Id, StandardId, ExtendedId};
     unused_variables,
 )]
 #[derive(Clone)]
-pub enum Messages {
-}
-
+pub enum Messages {}
 #[allow(
     clippy::absurd_extreme_comparisons,
     clippy::excessive_precision,
@@ -40,12 +38,9 @@ impl Messages {
         Err(CanError::UnknownMessageId(id))
     }
 }
-
-
 /// This is just to make testing easier
 #[allow(dead_code)]
 fn main() {}
-
 #[allow(dead_code)]
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum CanError {
@@ -65,10 +60,8 @@ pub enum CanError {
         multiplexor: u16,
     },
 }
-
 impl core::fmt::Display for CanError {
     fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
         write!(f, "{self:?}")
     }
 }
-
