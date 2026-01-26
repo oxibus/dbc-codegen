@@ -676,7 +676,7 @@ impl Config<'_> {
                 match info.dup_type {
                     DuplicateType::Unique => writeln!(w, "{variant},")?,
                     DuplicateType::FirstDuplicate => {
-                        writeln!(w, "{variant}({}),", info.value_type)?
+                        writeln!(w, "{variant}({}),", info.value_type)?;
                     }
                     DuplicateType::Duplicate => {}
                 }
@@ -1275,7 +1275,7 @@ impl Config<'_> {
     }
 
     fn render_error(&self, w: &mut impl Write) -> Result<()> {
-        w.write(
+        w.write_all(
             r#"
         #[allow(dead_code)]
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
