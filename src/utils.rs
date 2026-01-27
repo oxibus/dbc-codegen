@@ -4,7 +4,7 @@ use std::fmt::Display;
 
 use can_dbc::{Message, Signal};
 use heck::{ToPascalCase, ToShoutySnakeCase, ToSnakeCase};
-use proc_macro2::Ident;
+use proc_macro2::{Ident, TokenStream};
 use quote::{format_ident, IdentFragment};
 
 use crate::keywords;
@@ -113,11 +113,29 @@ pub fn is_integer(val: f64) -> bool {
 
 /// A trait to convert a type to a proc-macro Ident
 pub trait ToIdent {
-    fn to_ident(&self) -> Ident;
+    fn ident(&self) -> Ident;
 }
 
 impl<T: Display + IdentFragment> ToIdent for T {
-    fn to_ident(&self) -> Ident {
+    fn ident(&self) -> Ident {
         format_ident!("{self}")
+    }
+}
+
+/// A trait to convert a type to a proc-macro Ident
+pub trait Tokens {
+    fn tokens(&self) -> anyhow::Result<TokenStream>;
+}
+
+impl Tokens for &str {
+    fn tokens(&self) -> anyhow::Result<TokenStream> {
+        self.parse()
+            .map_err(|e| anyhow::anyhow!("Unable to parse {self}\n{e}"))
+    }
+}
+
+impl Tokens for String {
+    fn tokens(&self) -> anyhow::Result<TokenStream> {
+        self.as_str().tokens()
     }
 }
