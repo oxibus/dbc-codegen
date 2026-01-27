@@ -25,6 +25,7 @@ use can_dbc::{Dbc, Message, MessageId, Signal, Transmitter, ValDescription, Valu
 use heck::ToSnakeCase;
 use proc_macro2::{Span, TokenStream};
 use quote::{format_ident, quote};
+use syn::{parse2, LitFloat, LitInt};
 use typed_builder::TypedBuilder;
 
 pub use crate::feature_config::FeatureConfig;
@@ -117,10 +118,11 @@ impl Config<'_> {
             #[allow(unused_imports)]
             use embedded_can::{Id, StandardId, ExtendedId};
         };
-        use_statements.extend(self.impl_arbitrary.fmt_cfg(quote! {
-            use arbitrary::Arbitrary;
-        }));
-        use_statements.extend(self.impl_serde.fmt_cfg(quote! {
+        use_statements.extend(
+            self.impl_arbitrary
+                .if_cfg(quote! { use arbitrary::Arbitrary; }),
+        );
+        use_statements.extend(self.impl_serde.if_cfg(quote! {
             use serde::{Serialize, Deserialize};
         }));
 
@@ -162,11 +164,11 @@ impl Config<'_> {
 
     fn render_root_enum(&self, dbc: &Dbc) -> TokenStream {
         let allow_dead_code = allow_dead_code_tokens(self.allow_dead_code);
-        let debug_derive = self.impl_debug.fmt_attr(&quote! {derive(Debug)});
-        let defmt_derive = self.impl_defmt.fmt_attr(&quote! {derive(defmt::Format)});
+        let debug_derive = self.impl_debug.attr(&quote! { derive(Debug) });
+        let defmt_derive = self.impl_defmt.attr(&quote! { derive(defmt::Format) });
         let serde_derives = self
             .impl_serde
-            .fmt_attr(&quote! {derive(Serialize, Deserialize)});
+            .attr(&quote! { derive(Serialize, Deserialize) });
         let allow_lints = allow_lints();
 
         let variants: Vec<_> = get_relevant_messages(dbc)
@@ -183,16 +185,12 @@ impl Config<'_> {
         let from_can_arms: Vec<_> = get_relevant_messages(dbc)
             .map(|msg| {
                 let msg_type = format_ident!("{}", msg.type_name());
-                quote! {
-                    #msg_type::MESSAGE_ID => Messages::#msg_type(#msg_type::try_from(payload)?)
-                }
+                quote! { #msg_type::MESSAGE_ID => Messages::#msg_type(#msg_type::try_from(payload)?) }
             })
             .collect();
 
         let from_can_body = if from_can_arms.is_empty() {
-            quote! {
-                Err(CanError::UnknownMessageId(id))
-            }
+            quote! { Err(CanError::UnknownMessageId(id)) }
         } else {
             quote! {
                 let res = match id {
@@ -231,7 +229,7 @@ impl Config<'_> {
         let msg_name = &msg.name;
         let msg_type = format_ident!("{}", msg.type_name());
         let msg_size = msg.size as usize;
-        let msg_size_lit = syn::LitInt::new(&msg_size.to_string(), Span::call_site());
+        let msg_size_lit = LitInt::new(&msg_size.to_string(), Span::call_site());
 
         // Build message documentation as individual lines (with leading space for prettyplease)
         let msg_name_doc = format!(" {msg_name}");
@@ -262,20 +260,20 @@ impl Config<'_> {
         }
 
         // Struct attributes
-        let serde_serialize = self.impl_serde.fmt_attr(&quote! {derive(Serialize)});
-        let serde_deserialize = self.impl_serde.fmt_attr(&quote! {derive(Deserialize)});
+        let serde_serialize = self.impl_serde.attr(&quote! { derive(Serialize) });
+        let serde_deserialize = self.impl_serde.attr(&quote! { derive(Deserialize) });
         let serde_with = self
             .impl_serde
-            .fmt_attr(&quote! {serde(with = "serde_bytes")});
+            .attr(&quote! { serde(with = "serde_bytes") });
 
         // Message ID constant
         let message_id = match msg.id {
             MessageId::Standard(id) => {
-                let id_lit = syn::LitInt::new(&format!("{id:#x}"), Span::call_site());
+                let id_lit = LitInt::new(&format!("{id:#x}"), Span::call_site());
                 quote! { Id::Standard(unsafe { StandardId::new_unchecked(#id_lit) }) }
             }
             MessageId::Extended(id) => {
-                let id_lit = syn::LitInt::new(&format!("{id:#x}"), Span::call_site());
+                let id_lit = LitInt::new(&format!("{id:#x}"), Span::call_site());
                 quote! { Id::Extended(unsafe { ExtendedId::new_unchecked(#id_lit) }) }
             }
         };
@@ -362,9 +360,9 @@ impl Config<'_> {
         let embedded_can_impl = self.render_embedded_can_frame(msg);
 
         // Render debug/defmt/arbitrary impls
-        let debug_impl = self.impl_debug.fmt_cfg(render_debug_impl(msg));
-        let defmt_impl = self.impl_defmt.fmt_cfg(render_defmt_impl(msg));
-        let arbitrary_impl = self.impl_arbitrary.fmt_cfg(self.render_arbitrary(msg));
+        let debug_impl = self.impl_debug.if_cfg(render_debug_impl(msg));
+        let defmt_impl = self.impl_defmt.if_cfg(render_defmt_impl(msg));
+        let arbitrary_impl = self.impl_arbitrary.if_cfg(self.render_arbitrary(msg));
 
         // Render enums for this message
         let enums_for_this_message: Vec<_> = dbc
@@ -530,7 +528,7 @@ impl Config<'_> {
             let match_arms: Vec<_> = variant_infos
                 .iter()
                 .map(|info| {
-                    let literal = syn::LitInt::new(&info.value.to_string(), Span::call_site());
+                    let literal = LitInt::new(&info.value.to_string(), Span::call_site());
                     let variant = format_ident!("{}", info.base_name);
                     match info.dup_type {
                         DuplicateType::Unique => {
@@ -623,7 +621,7 @@ impl Config<'_> {
                 }
             };
 
-            self.check_ranges.fmt_cfg(check_code)
+            self.check_ranges.if_cfg(check_code)
         };
 
         let signal_to_payload_body = signal_to_payload(signal, msg)?;
@@ -653,7 +651,7 @@ fn render_set_signal_multiplexer(
         multiplexed_enum_variant_wrapper_name(switch_index).to_snake_case()
     );
     let multiplexor_setter = format_ident!("set_{}", multiplexor.field_name());
-    let switch_index_lit = syn::LitInt::new(&switch_index.to_string(), Span::call_site());
+    let switch_index_lit = LitInt::new(&switch_index.to_string(), Span::call_site());
 
     let doc = format!(" Set value of {}", multiplexor.name);
 
@@ -718,7 +716,7 @@ impl Config<'_> {
         let match_arms: Vec<_> = multiplexer_indexes.iter().map(|idx| {
             let multiplexed_wrapper_name = format_ident!("{}", multiplexed_enum_variant_wrapper_name(*idx));
             let multiplexed_name = format_ident!("{}", multiplexed_enum_variant_name(msg, signal, *idx).unwrap());
-            let idx_lit = syn::LitInt::new(&idx.to_string(), Span::call_site());
+            let idx_lit = LitInt::new(&idx.to_string(), Span::call_site());
             quote! {
                 #idx_lit => Ok(#enum_type::#multiplexed_wrapper_name(#multiplexed_name { raw: self.raw }))
             }
@@ -808,14 +806,14 @@ fn read_fn_with_type(signal: &Signal, msg: &Message, typ: ValType) -> Result<Tok
     Ok(match signal.byte_order {
         LittleEndian => {
             let (start, end) = le_start_end_bit(signal, msg)?;
-            let start_lit = syn::LitInt::new(&start.to_string(), Span::call_site());
-            let end_lit = syn::LitInt::new(&end.to_string(), Span::call_site());
+            let start_lit = LitInt::new(&start.to_string(), Span::call_site());
+            let end_lit = LitInt::new(&end.to_string(), Span::call_site());
             quote! { self.raw.view_bits::<Lsb0>()[#start_lit..#end_lit].load_le::<#typ_ident>() }
         }
         BigEndian => {
             let (start, end) = be_start_end_bit(signal, msg)?;
-            let start_lit = syn::LitInt::new(&start.to_string(), Span::call_site());
-            let end_lit = syn::LitInt::new(&end.to_string(), Span::call_site());
+            let start_lit = LitInt::new(&start.to_string(), Span::call_site());
+            let end_lit = LitInt::new(&end.to_string(), Span::call_site());
             quote! { self.raw.view_bits::<Msb0>()[#start_lit..#end_lit].load_be::<#typ_ident>() }
         }
     })
@@ -837,8 +835,8 @@ fn signal_from_payload(signal: &Signal, msg: &Message) -> Result<TokenStream> {
         ValType::F32 => {
             let factor = signal.factor;
             let offset = signal.offset;
-            let factor_lit = syn::LitFloat::new(&format!("{factor}_f32"), Span::call_site());
-            let offset_lit = syn::LitFloat::new(&format!("{offset}_f32"), Span::call_site());
+            let factor_lit = LitFloat::new(&format!("{factor}_f32"), Span::call_site());
+            let offset_lit = LitFloat::new(&format!("{offset}_f32"), Span::call_site());
             quote! {
                 let signal = #read_expr;
                 let factor = #factor_lit;
@@ -848,7 +846,7 @@ fn signal_from_payload(signal: &Signal, msg: &Message) -> Result<TokenStream> {
         }
         _ => {
             let factor = signal.factor;
-            let factor_lit = syn::LitFloat::new(&factor.to_string(), Span::call_site());
+            let factor_lit = LitFloat::new(&factor.to_string(), Span::call_site());
 
             let signal_cast = if Some(typ) == ValType::from_signal_uint(signal).unsigned_to_signed()
             {
@@ -859,7 +857,7 @@ fn signal_from_payload(signal: &Signal, msg: &Message) -> Result<TokenStream> {
 
             if signal.offset >= 0.0 {
                 let offset = signal.offset;
-                let offset_lit = syn::LitFloat::new(&offset.to_string(), Span::call_site());
+                let offset_lit = LitFloat::new(&offset.to_string(), Span::call_site());
                 quote! {
                     let signal = #read_expr;
                     let factor = #factor_lit;
@@ -868,7 +866,7 @@ fn signal_from_payload(signal: &Signal, msg: &Message) -> Result<TokenStream> {
                 }
             } else {
                 let offset_abs = signal.offset.abs();
-                let offset_lit = syn::LitFloat::new(&offset_abs.to_string(), Span::call_site());
+                let offset_lit = LitFloat::new(&offset_abs.to_string(), Span::call_site());
                 quote! {
                     let signal = #read_expr;
                     let factor = #factor_lit;
@@ -891,8 +889,8 @@ fn signal_to_payload(signal: &Signal, msg: &Message) -> Result<TokenStream> {
         ValType::F32 => {
             let factor = signal.factor;
             let offset = signal.offset;
-            let factor_lit = syn::LitFloat::new(&format!("{factor}_f32"), Span::call_site());
-            let offset_lit = syn::LitFloat::new(&format!("{offset}_f32"), Span::call_site());
+            let factor_lit = LitFloat::new(&format!("{factor}_f32"), Span::call_site());
+            let offset_lit = LitFloat::new(&format!("{offset}_f32"), Span::call_site());
             let int_typ = ValType::from_signal_int(signal);
             let int_typ_ident = format_ident!("{int_typ}");
             quote! {
@@ -903,13 +901,13 @@ fn signal_to_payload(signal: &Signal, msg: &Message) -> Result<TokenStream> {
         }
         _ => {
             let factor = signal.factor;
-            let factor_lit = syn::LitFloat::new(&factor.to_string(), Span::call_site());
+            let factor_lit = LitFloat::new(&factor.to_string(), Span::call_site());
             let int_typ = ValType::from_signal_int(signal);
             let int_typ_ident = format_ident!("{int_typ}");
 
             if signal.offset >= 0.0 {
                 let offset = signal.offset;
-                let offset_lit = syn::LitFloat::new(&offset.to_string(), Span::call_site());
+                let offset_lit = LitFloat::new(&offset.to_string(), Span::call_site());
                 quote! {
                     let factor = #factor_lit;
                     let value = value.checked_sub(#offset_lit)
@@ -918,7 +916,7 @@ fn signal_to_payload(signal: &Signal, msg: &Message) -> Result<TokenStream> {
                 }
             } else {
                 let offset_abs = signal.offset.abs();
-                let offset_lit = syn::LitFloat::new(&offset_abs.to_string(), Span::call_site());
+                let offset_lit = LitFloat::new(&offset_abs.to_string(), Span::call_site());
                 quote! {
                     let factor = #factor_lit;
                     let value = value.checked_add(#offset_lit)
@@ -940,14 +938,14 @@ fn signal_to_payload(signal: &Signal, msg: &Message) -> Result<TokenStream> {
     let store_expr = match signal.byte_order {
         LittleEndian => {
             let (start, end) = le_start_end_bit(signal, msg)?;
-            let start_lit = syn::LitInt::new(&start.to_string(), Span::call_site());
-            let end_lit = syn::LitInt::new(&end.to_string(), Span::call_site());
+            let start_lit = LitInt::new(&start.to_string(), Span::call_site());
+            let end_lit = LitInt::new(&end.to_string(), Span::call_site());
             quote! { self.raw.view_bits_mut::<Lsb0>()[#start_lit..#end_lit].store_le(value); }
         }
         BigEndian => {
             let (start, end) = be_start_end_bit(signal, msg)?;
-            let start_lit = syn::LitInt::new(&start.to_string(), Span::call_site());
-            let end_lit = syn::LitInt::new(&end.to_string(), Span::call_site());
+            let start_lit = LitInt::new(&start.to_string(), Span::call_site());
+            let end_lit = LitInt::new(&end.to_string(), Span::call_site());
             quote! { self.raw.view_bits_mut::<Msb0>()[#start_lit..#end_lit].store_be(value); }
         }
     };
@@ -979,10 +977,10 @@ impl Config<'_> {
 
         let allow_lints = allow_lints();
         let allow_dead_code = allow_dead_code_tokens(self.allow_dead_code);
-        let debug_derive = self.impl_debug.fmt_attr(&quote! {derive(Debug)});
-        let defmt_derive = self.impl_defmt.fmt_attr(&quote! {derive(defmt::Format)});
-        let serde_serialize = self.impl_serde.fmt_attr(&quote! {derive(Serialize)});
-        let serde_deserialize = self.impl_serde.fmt_attr(&quote! {derive(Deserialize)});
+        let debug_derive = self.impl_debug.attr(&quote! { derive(Debug) });
+        let defmt_derive = self.impl_defmt.attr(&quote! { derive(defmt::Format) });
+        let serde_serialize = self.impl_serde.attr(&quote! { derive(Serialize) });
+        let serde_deserialize = self.impl_serde.attr(&quote! { derive(Deserialize) });
 
         // Generate enum variants
         let enum_variants: Vec<_> = variant_infos
@@ -1016,15 +1014,14 @@ impl Config<'_> {
                                 }
                             }
                             ValType::F32 => {
-                                let val = syn::LitFloat::new(
+                                let val = LitFloat::new(
                                     &format!("{}_f32", info.value),
                                     Span::call_site(),
                                 );
                                 quote! { #val }
                             }
                             _ => {
-                                let val =
-                                    syn::LitInt::new(&info.value.to_string(), Span::call_site());
+                                let val = LitInt::new(&info.value.to_string(), Span::call_site());
                                 quote! { #val }
                             }
                         };
@@ -1159,7 +1156,7 @@ impl Config<'_> {
             }
         };
 
-        self.impl_embedded_can_frame.fmt_cfg(impl_tokens)
+        self.impl_embedded_can_frame.if_cfg(impl_tokens)
     }
 }
 
@@ -1279,7 +1276,7 @@ impl Config<'_> {
                     multiplexed_enum_variant_name(msg, multiplexor_signal, *switch_index)?
                 );
                 let msg_size = msg.size as usize;
-                let msg_size_lit = syn::LitInt::new(&msg_size.to_string(), Span::call_site());
+                let msg_size_lit = LitInt::new(&msg_size.to_string(), Span::call_site());
 
                 let signal_impls: Result<Vec<_>> = signals
                     .iter()
@@ -1293,9 +1290,8 @@ impl Config<'_> {
                 let allow_lints_inner = allow_lints_outer.clone();
                 let allow_dead_code_inner = allow_dead_code_outer.clone();
 
-                let serde_serialize_inner = self.impl_serde.fmt_attr(&quote! {derive(Serialize)});
-                let serde_deserialize_inner =
-                    self.impl_serde.fmt_attr(&quote! {derive(Deserialize)});
+                let serde_serialize_inner = self.impl_serde.attr(&quote! { derive(Serialize) });
+                let serde_deserialize_inner = self.impl_serde.attr(&quote! { derive(Deserialize) });
 
                 let allow_lints_inner2 = allow_lints_outer.clone();
                 let allow_dead_code_inner2 = allow_dead_code_outer.clone();
@@ -1383,7 +1379,7 @@ impl Config<'_> {
     }
 
     fn render_error(&self) -> TokenStream {
-        let error_impl = self.impl_error.fmt_cfg(quote! {
+        let error_impl = self.impl_error.if_cfg(quote! {
             impl core::error::Error for CanError {}
         });
 
@@ -1421,14 +1417,14 @@ impl Config<'_> {
     fn render_arbitrary_helpers(&self) -> TokenStream {
         let allow_dead_code = allow_dead_code_tokens(self.allow_dead_code);
 
-        let trait_def = self.impl_arbitrary.fmt_cfg(quote! {
+        let trait_def = self.impl_arbitrary.if_cfg(quote! {
             #allow_dead_code
             trait UnstructuredFloatExt {
                 fn arbitrary_f32(&mut self) -> arbitrary::Result<f32>;
             }
         });
 
-        let trait_impl = self.impl_arbitrary.fmt_cfg(quote! {
+        let trait_impl = self.impl_arbitrary.if_cfg(quote! {
             impl UnstructuredFloatExt for arbitrary::Unstructured<'_> {
                 fn arbitrary_f32(&mut self) -> arbitrary::Result<f32> {
                     Ok(f32::from_bits(u32::arbitrary(self)?))
@@ -1478,8 +1474,7 @@ impl Config<'_> {
             eprintln!("{tokens}");
             eprintln!("=== End TokenStream ===");
         }
-        let file =
-            syn::parse2(tokens).context("Failed to parse generated TokenStream as Rust code")?;
+        let file = parse2(tokens).context("Failed to parse generated TokenStream as Rust code")?;
         Ok(prettyplease::unparse(&file))
     }
 
@@ -1522,18 +1517,18 @@ fn allow_lints() -> TokenStream {
 /// otherwise generates a float literal with the integer type suffix.
 fn generate_value_literal(value: f64, typ: ValType) -> TokenStream {
     if typ == ValType::F32 {
-        let lit = syn::LitFloat::new(&format!("{value}_f32"), Span::call_site());
+        let lit = LitFloat::new(&format!("{value}_f32"), Span::call_site());
         quote! { #lit }
     } else {
         let typ_str = typ.to_string().to_lowercase();
         // Check if value is an integer and fits in i64 range
         if is_integer(value) && value >= i64::MIN as f64 && value <= i64::MAX as f64 {
             let val = value as i64;
-            let lit = syn::LitInt::new(&format!("{val}_{typ_str}"), Span::call_site());
+            let lit = LitInt::new(&format!("{val}_{typ_str}"), Span::call_site());
             quote! { #lit }
         } else {
             // Use float literal with integer type suffix for fractional/overflow values
-            let lit = syn::LitFloat::new(&format!("{value}_{typ_str}"), Span::call_site());
+            let lit = LitFloat::new(&format!("{value}_{typ_str}"), Span::call_site());
             quote! { #lit }
         }
     }
