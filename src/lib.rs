@@ -11,8 +11,8 @@ mod feature_config;
 mod keywords;
 mod signal_type;
 mod utils;
-
 use std::collections::{BTreeMap, BTreeSet, HashMap};
+use std::fmt::Write as _;
 use std::fs::OpenOptions;
 use std::io::Write;
 use std::path::Path;
@@ -33,20 +33,6 @@ use crate::utils::{
     enum_name, enum_variant_name, multiplex_enum_name, multiplexed_enum_variant_name,
     multiplexed_enum_variant_wrapper_name, MessageExt as _, SignalExt as _,
 };
-
-fn allow_lints() -> TokenStream {
-    quote! {
-        #[allow(
-            clippy::absurd_extreme_comparisons,
-            clippy::excessive_precision,
-            clippy::manual_range_contains,
-            clippy::unnecessary_cast,
-            clippy::useless_conversion,
-            unused_comparisons,
-            unused_variables,
-        )]
-    }
-}
 
 /// Code generator configuration. See module-level docs for an example.
 #[derive(TypedBuilder)]
@@ -101,11 +87,10 @@ impl Config<'_> {
     /// Write Rust structs matching DBC input description to `out` buffer
     fn codegen(&self) -> Result<TokenStream> {
         let dbc = Dbc::try_from(self.dbc_content).map_err(|e| {
-            let msg = "Could not parse dbc file";
             if self.debug_prints {
-                anyhow!("{msg}: {e:#?}")
+                anyhow!("Could not parse dbc file: {e:#?}")
             } else {
-                anyhow!("{msg}")
+                anyhow!("Could not parse dbc file")
             }
         })?;
         if self.debug_prints {
@@ -114,22 +99,7 @@ impl Config<'_> {
 
         let dbc_name = &self.dbc_name;
         let dbc_version = &dbc.version.0;
-
-        let arbitrary_use = self.impl_arbitrary.to_tokens_opt(quote! {
-            use arbitrary::Arbitrary;
-        });
-
-        let serde_use = self.impl_serde.to_tokens_opt(quote! {
-            use serde::{Serialize, Deserialize};
-        });
-
-        let dbc_content = self
-            .render_dbc(&dbc)
-            .context("could not generate Rust code")?;
-        let error_content = self.render_error()?;
-        let arbitrary_helpers = self.render_arbitrary_helpers()?;
-
-        Ok(quote! {
+        let header = quote! {
             /// The name of the DBC file this code was generated from
             #[allow(dead_code)]
             pub const DBC_FILE_NAME: &str = #dbc_name;
@@ -137,16 +107,32 @@ impl Config<'_> {
             #[allow(dead_code)]
             pub const DBC_FILE_VERSION: &str = #dbc_version;
 
+        };
+
+        let mut use_statements = quote! {
             #[allow(unused_imports)]
             use core::ops::BitOr;
             #[allow(unused_imports)]
             use bitvec::prelude::*;
             #[allow(unused_imports)]
             use embedded_can::{Id, StandardId, ExtendedId};
+        };
+        use_statements.extend(self.impl_arbitrary.fmt_cfg(quote! {
+            use arbitrary::Arbitrary;
+        }));
+        use_statements.extend(self.impl_serde.fmt_cfg(quote! {
+            use serde::{Serialize, Deserialize};
+        }));
 
-            #arbitrary_use
-            #serde_use
+        let dbc_content = self
+            .render_dbc(&dbc)
+            .context("could not generate Rust code")?;
+        let error_content = self.render_error();
+        let arbitrary_helpers = self.render_arbitrary_helpers();
 
+        Ok(quote! {
+            #header
+            #use_statements
             #dbc_content
 
             /// This is just to make testing easier
@@ -159,7 +145,7 @@ impl Config<'_> {
     }
 
     fn render_dbc(&self, dbc: &Dbc) -> Result<TokenStream> {
-        let root_enum = self.render_root_enum(dbc)?;
+        let root_enum = self.render_root_enum(dbc);
 
         let messages = get_relevant_messages(dbc)
             .map(|msg| {
@@ -174,19 +160,19 @@ impl Config<'_> {
         })
     }
 
-    fn render_root_enum(&self, dbc: &Dbc) -> Result<TokenStream> {
-        let allow_dead_code = FeatureConfig::allow_dead_code_tokens(self.allow_dead_code);
-        let debug_derive = self.impl_debug.to_attr_tokens("derive(Debug)");
-        let defmt_derive = self.impl_defmt.to_attr_tokens("derive(defmt::Format)");
+    fn render_root_enum(&self, dbc: &Dbc) -> TokenStream {
+        let allow_dead_code = allow_dead_code_tokens(self.allow_dead_code);
+        let debug_derive = self.impl_debug.fmt_attr(&quote! {derive(Debug)});
+        let defmt_derive = self.impl_defmt.fmt_attr(&quote! {derive(defmt::Format)});
         let serde_derives = self
             .impl_serde
-            .to_attr_tokens("derive(Serialize, Deserialize)");
+            .fmt_attr(&quote! {derive(Serialize, Deserialize)});
         let allow_lints = allow_lints();
 
         let variants: Vec<_> = get_relevant_messages(dbc)
             .map(|msg| {
                 let msg_type = format_ident!("{}", msg.type_name());
-                let doc_str = format!(" {}", &msg.name); // Use message name, not type_name
+                let doc_str = format!(" {}", msg.name); // Use message name, not type_name
                 quote! {
                     #[doc = #doc_str]
                     #msg_type(#msg_type)
@@ -217,7 +203,7 @@ impl Config<'_> {
             }
         };
 
-        Ok(quote! {
+        quote! {
             /// All messages
             #allow_lints
             #allow_dead_code
@@ -238,43 +224,7 @@ impl Config<'_> {
                     #from_can_body
                 }
             }
-        })
-    }
-
-    fn render_error(&self) -> Result<TokenStream> {
-        let error_impl = self.impl_error.to_tokens_opt(quote! {
-            impl core::error::Error for CanError {}
-        });
-
-        Ok(quote! {
-            #[allow(dead_code)]
-            #[derive(Clone, Copy, Debug, PartialEq, Eq)]
-            pub enum CanError {
-                UnknownMessageId(embedded_can::Id),
-                /// Signal parameter is not within the range
-                /// defined in the dbc
-                ParameterOutOfRange {
-                    /// dbc message id
-                    message_id: embedded_can::Id,
-                },
-                InvalidPayloadSize,
-                /// Multiplexor value not defined in the dbc
-                InvalidMultiplexor {
-                    /// dbc message id
-                    message_id: embedded_can::Id,
-                    /// Multiplexor value not defined in the dbc
-                    multiplexor: u16,
-                },
-            }
-
-            impl core::fmt::Display for CanError {
-                fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
-                    write!(f, "{self:?}")
-                }
-            }
-
-            #error_impl
-        })
+        }
     }
 
     fn render_message(&self, msg: &Message, dbc: &Dbc) -> Result<TokenStream> {
@@ -284,7 +234,7 @@ impl Config<'_> {
         let msg_size_lit = syn::LitInt::new(&msg_size.to_string(), Span::call_site());
 
         // Build message documentation as individual lines (with leading space for prettyplease)
-        let msg_name_doc = format!(" {}", msg_name);
+        let msg_name_doc = format!(" {msg_name}");
         let id_text = match msg.id {
             MessageId::Standard(id) => format!(" - Standard ID: {id} ({id:#x})"),
             MessageId::Extended(id) => format!(" - Extended ID: {id} ({id:#x})"),
@@ -306,17 +256,17 @@ impl Config<'_> {
         if let Some(comment) = dbc.message_comment(msg.id) {
             struct_doc_lines.push(quote! { #[doc = ""] });
             for line in comment.trim().lines() {
-                let line_with_space = format!(" {}", line);
+                let line_with_space = format!(" {line}");
                 struct_doc_lines.push(quote! { #[doc = #line_with_space] });
             }
         }
 
         // Struct attributes
-        let serde_serialize = self.impl_serde.to_attr_tokens("derive(Serialize)");
-        let serde_deserialize = self.impl_serde.to_attr_tokens("derive(Deserialize)");
+        let serde_serialize = self.impl_serde.fmt_attr(&quote! {derive(Serialize)});
+        let serde_deserialize = self.impl_serde.fmt_attr(&quote! {derive(Deserialize)});
         let serde_with = self
             .impl_serde
-            .to_attr_tokens("serde(with = \"serde_bytes\")");
+            .fmt_attr(&quote! {serde(with = "serde_bytes")});
 
         // Message ID constant
         let message_id = match msg.id {
@@ -336,10 +286,12 @@ impl Config<'_> {
             .iter()
             .filter_map(|signal| {
                 let typ = ValType::from_signal(signal);
-                if typ != ValType::Bool {
+                if typ == ValType::Bool {
+                    None
+                } else {
                     let min_name = format_ident!("{}_MIN", signal.field_name().to_uppercase());
                     let max_name = format_ident!("{}_MAX", signal.field_name().to_uppercase());
-                    let typ_ident = format_ident!("{}", typ.to_string());
+                    let typ_ident = format_ident!("{typ}");
 
                     let min_lit = generate_value_literal(signal.min, typ);
                     let max_lit = generate_value_literal(signal.max, typ);
@@ -348,8 +300,6 @@ impl Config<'_> {
                         pub const #min_name: #typ_ident = #min_lit;
                         pub const #max_name: #typ_ident = #max_lit;
                     })
-                } else {
-                    None
                 }
             })
             .collect();
@@ -362,7 +312,7 @@ impl Config<'_> {
                 if matches!(signal.multiplexer_indicator, Plain | Multiplexor) {
                     let field_name = format_ident!("{}", signal.field_name());
                     let typ = ValType::from_signal(signal);
-                    let typ_ident = format_ident!("{}", typ.to_string());
+                    let typ_ident = format_ident!("{typ}");
                     Some(quote! { #field_name: #typ_ident })
                 } else {
                     None
@@ -409,17 +359,15 @@ impl Config<'_> {
         let signal_impls = signal_impls?;
 
         // Render embedded can frame impl
-        let embedded_can_impl = self.render_embedded_can_frame(msg)?;
+        let embedded_can_impl = self.render_embedded_can_frame(msg);
 
         // Render debug/defmt/arbitrary impls
-        let debug_impl = self.impl_debug.to_tokens_opt(render_debug_impl(msg)?);
-        let defmt_impl = self.impl_defmt.to_tokens_opt(render_defmt_impl(msg)?);
-        let arbitrary_impl = self
-            .impl_arbitrary
-            .to_tokens_opt(self.render_arbitrary(msg)?);
+        let debug_impl = self.impl_debug.fmt_cfg(render_debug_impl(msg));
+        let defmt_impl = self.impl_defmt.fmt_cfg(render_defmt_impl(msg));
+        let arbitrary_impl = self.impl_arbitrary.fmt_cfg(self.render_arbitrary(msg));
 
         // Render enums for this message
-        let enums_for_this_message: Result<Vec<_>> = dbc
+        let enums_for_this_message: Vec<_> = dbc
             .value_descriptions
             .iter()
             .filter_map(|x| {
@@ -439,7 +387,6 @@ impl Config<'_> {
                 }
             })
             .collect();
-        let enums_for_this_message = enums_for_this_message?;
 
         // Render multiplexor enums
         let multiplexor_enums = msg
@@ -450,7 +397,7 @@ impl Config<'_> {
             .transpose()?;
 
         let allow_lints = allow_lints();
-        let allow_dead_code = FeatureConfig::allow_dead_code_tokens(self.allow_dead_code);
+        let allow_dead_code = allow_dead_code_tokens(self.allow_dead_code);
 
         // Create constructor doc string (with leading space)
         let new_fn_doc = format!(" Construct new {msg_name} from values");
@@ -509,36 +456,7 @@ impl Config<'_> {
             #multiplexor_enums
         })
     }
-}
 
-/// Generate a literal token for a signal min/max value.
-///
-/// For F32 types, always generates a float literal.
-/// For other types, generates an integer literal if the value is an integer within i64 range,
-/// otherwise generates a float literal with the integer type suffix.
-fn generate_value_literal(value: f64, typ: ValType) -> TokenStream {
-    match typ {
-        ValType::F32 => {
-            let lit = syn::LitFloat::new(&format!("{value}_f32"), Span::call_site());
-            quote! { #lit }
-        }
-        _ => {
-            let typ_str = typ.to_string().to_lowercase();
-            // Check if value is an integer and fits in i64 range
-            if is_integer(value) && value >= i64::MIN as f64 && value <= i64::MAX as f64 {
-                let val = value as i64;
-                let lit = syn::LitInt::new(&format!("{val}_{typ_str}"), Span::call_site());
-                quote! { #lit }
-            } else {
-                // Use float literal with integer type suffix for fractional/overflow values
-                let lit = syn::LitFloat::new(&format!("{value}_{typ_str}"), Span::call_site());
-                quote! { #lit }
-            }
-        }
-    }
-}
-
-impl Config<'_> {
     fn render_signal(&self, signal: &Signal, dbc: &Dbc, msg: &Message) -> Result<TokenStream> {
         let signal_name = &signal.name;
         let fn_name = format_ident!("{}", signal.field_name());
@@ -557,23 +475,24 @@ impl Config<'_> {
         let value_type_doc = format!("{:?}", signal.value_type);
 
         // Build signal getter doc as doc comment and parse into tokens
-        let mut signal_doc_text = format!("/// {signal_name}");
+        let mut signal_doc_text = format!("/// {signal_name}\n");
         if let Some(comment) = dbc.signal_comment(msg.id, &signal.name) {
-            signal_doc_text.push_str("\n///");
+            signal_doc_text.push_str("///\n");
             for line in comment.trim().lines() {
-                signal_doc_text.push_str(&format!("\n/// {line}"));
+                let _ = writeln!(signal_doc_text, "/// {line}");
             }
         }
-        signal_doc_text.push_str(&format!(
-            "\n///
+        let _ = writeln!(
+            signal_doc_text,
+            "///
          /// - Min: {min_doc}
          /// - Max: {max_doc}
          /// - Unit: {unit_doc}
          /// - Receivers: {receivers_doc}"
-        ));
+        );
         let signal_doc_tokens: TokenStream = signal_doc_text
             .parse()
-            .map_err(|e| anyhow::anyhow!("Failed to parse signal doc: {}", e))?;
+            .map_err(|e| anyhow::anyhow!("Failed to parse signal doc: {e}"))?;
 
         // Build raw getter doc as doc comment and parse into tokens
         let raw_doc_text = format!(
@@ -586,10 +505,10 @@ impl Config<'_> {
          /// - Byte order: {byte_order_doc}
          /// - Value type: {value_type_doc}"
         );
-        let raw_doc_tokens = to_tokens(raw_doc_text)?;
+        let raw_doc_tokens = to_tokens(&raw_doc_text)?;
 
         let typ = ValType::from_signal(signal);
-        let typ_ident = format_ident!("{}", typ.to_string());
+        let typ_ident = format_ident!("{typ}");
 
         // Generate getter function
         let getter = if let Some(variants) = dbc.value_descriptions_for_signal(msg.id, &signal.name)
@@ -606,13 +525,13 @@ impl Config<'_> {
                 ValType::from_signal_uint(signal)
             };
 
-            let read_expr = read_fn_with_type_tokens(signal, msg, load_type)?;
+            let read_expr = read_fn_with_type(signal, msg, load_type)?;
 
             let match_arms: Vec<_> = variant_infos
                 .iter()
                 .map(|info| {
                     let literal = syn::LitInt::new(&info.value.to_string(), Span::call_site());
-                    let variant = format_ident!("{}", &info.base_name);
+                    let variant = format_ident!("{}", info.base_name);
                     match info.dup_type {
                         DuplicateType::Unique => {
                             quote! { #literal => #type_name::#variant }
@@ -646,7 +565,7 @@ impl Config<'_> {
 
         // Generate raw getter function
         let signal_from_payload_body =
-            signal_from_payload_tokens(signal, msg).context("signal from payload")?;
+            signal_from_payload(signal, msg).context("signal from payload")?;
 
         let setter = self.render_set_signal(signal, msg)?;
 
@@ -665,10 +584,10 @@ impl Config<'_> {
     }
 }
 
-fn to_tokens(raw_doc_text: String) -> Result<TokenStream> {
+fn to_tokens(raw_doc_text: &str) -> Result<TokenStream> {
     raw_doc_text
         .parse()
-        .map_err(|e| anyhow::anyhow!("Failed to parse raw doc: {}", e))
+        .map_err(|e| anyhow::anyhow!("Failed to parse raw doc: {e}"))
 }
 
 impl Config<'_> {
@@ -683,19 +602,15 @@ impl Config<'_> {
             quote! { pub }
         };
 
-        // Doc comment for setter
-        let setter_doc = if signal.multiplexer_indicator == Multiplexor {
-            format!(" Set value of {}", signal.name)
-        } else {
-            format!(" Set value of {}", signal.name)
-        };
-
+        let setter_doc = format!(" Set value of {}", signal.name);
         let typ = ValType::from_signal(signal);
-        let typ_ident = format_ident!("{}", typ.to_string());
+        let typ_ident = format_ident!("{typ}");
         let msg_type = format_ident!("{}", msg.type_name());
 
         // Range check logic
-        let range_check = if signal.size != 1 {
+        let range_check = if signal.size == 1 {
+            quote! {}
+        } else {
             let min = signal.min;
             let max = signal.max;
 
@@ -708,12 +623,10 @@ impl Config<'_> {
                 }
             };
 
-            self.check_ranges.to_tokens_opt(check_code)
-        } else {
-            None
+            self.check_ranges.fmt_cfg(check_code)
         };
 
-        let signal_to_payload_body = signal_to_payload_tokens(signal, msg)?;
+        let signal_to_payload_body = signal_to_payload(signal, msg)?;
 
         Ok(quote! {
             #[doc = #setter_doc]
@@ -762,7 +675,7 @@ impl Config<'_> {
         let field = format_ident!("{}", signal.field_name());
         let field_raw = format_ident!("{}_raw", signal.field_name());
         let typ = ValType::from_signal(signal);
-        let typ_ident = format_ident!("{}", typ.to_string());
+        let typ_ident = format_ident!("{typ}");
         let enum_type = format_ident!("{}", multiplex_enum_name(msg, signal)?);
 
         let signal_name = &signal.name;
@@ -786,9 +699,9 @@ impl Config<'_> {
         );
         let raw_doc_tokens: TokenStream = raw_doc_text
             .parse()
-            .map_err(|e| anyhow::anyhow!("Failed to parse multiplexor raw doc: {}", e))?;
+            .map_err(|e| anyhow::anyhow!("Failed to parse multiplexor raw doc: {e}"))?;
 
-        let signal_from_payload_body = signal_from_payload_tokens(signal, msg)?;
+        let signal_from_payload_body = signal_from_payload(signal, msg)?;
 
         let multiplexer_indexes: BTreeSet<u64> = msg
             .signals
@@ -890,8 +803,8 @@ fn le_start_end_bit(signal: &Signal, msg: &Message) -> Result<(u64, u64)> {
     Ok((start_bit, end_bit))
 }
 
-fn read_fn_with_type_tokens(signal: &Signal, msg: &Message, typ: ValType) -> Result<TokenStream> {
-    let typ_ident = format_ident!("{}", typ.to_string());
+fn read_fn_with_type(signal: &Signal, msg: &Message, typ: ValType) -> Result<TokenStream> {
+    let typ_ident = format_ident!("{typ}");
     Ok(match signal.byte_order {
         LittleEndian => {
             let (start, end) = le_start_end_bit(signal, msg)?;
@@ -908,11 +821,11 @@ fn read_fn_with_type_tokens(signal: &Signal, msg: &Message, typ: ValType) -> Res
     })
 }
 
-fn signal_from_payload_tokens(signal: &Signal, msg: &Message) -> Result<TokenStream> {
-    let read_expr = read_fn_with_type_tokens(signal, msg, ValType::from_signal_int(signal))?;
+fn signal_from_payload(signal: &Signal, msg: &Message) -> Result<TokenStream> {
+    let read_expr = read_fn_with_type(signal, msg, ValType::from_signal_int(signal))?;
 
     let typ = ValType::from_signal(signal);
-    let typ_ident = format_ident!("{}", typ.to_string());
+    let typ_ident = format_ident!("{typ}");
 
     Ok(match typ {
         ValType::Bool => {
@@ -967,7 +880,7 @@ fn signal_from_payload_tokens(signal: &Signal, msg: &Message) -> Result<TokenStr
     })
 }
 
-fn signal_to_payload_tokens(signal: &Signal, msg: &Message) -> Result<TokenStream> {
+fn signal_to_payload(signal: &Signal, msg: &Message) -> Result<TokenStream> {
     let typ = ValType::from_signal(signal);
     let msg_type = format_ident!("{}", msg.type_name());
 
@@ -981,7 +894,7 @@ fn signal_to_payload_tokens(signal: &Signal, msg: &Message) -> Result<TokenStrea
             let factor_lit = syn::LitFloat::new(&format!("{factor}_f32"), Span::call_site());
             let offset_lit = syn::LitFloat::new(&format!("{offset}_f32"), Span::call_site());
             let int_typ = ValType::from_signal_int(signal);
-            let int_typ_ident = format_ident!("{}", int_typ.to_string());
+            let int_typ_ident = format_ident!("{int_typ}");
             quote! {
                 let factor = #factor_lit;
                 let offset = #offset_lit;
@@ -992,7 +905,7 @@ fn signal_to_payload_tokens(signal: &Signal, msg: &Message) -> Result<TokenStrea
             let factor = signal.factor;
             let factor_lit = syn::LitFloat::new(&factor.to_string(), Span::call_site());
             let int_typ = ValType::from_signal_int(signal);
-            let int_typ_ident = format_ident!("{}", int_typ.to_string());
+            let int_typ_ident = format_ident!("{int_typ}");
 
             if signal.offset >= 0.0 {
                 let offset = signal.offset;
@@ -1018,7 +931,7 @@ fn signal_to_payload_tokens(signal: &Signal, msg: &Message) -> Result<TokenStrea
 
     let signed_conversion = if signal.value_type == Signed {
         let uint_typ = ValType::from_signal_uint(signal);
-        let uint_typ_ident = format_ident!("{}", uint_typ.to_string());
+        let uint_typ_ident = format_ident!("{uint_typ}");
         quote! { let value = #uint_typ_ident::from_ne_bytes(value.to_ne_bytes()); }
     } else {
         quote! {}
@@ -1053,10 +966,10 @@ impl Config<'_> {
         signal: &Signal,
         msg: &Message,
         variants: &[ValDescription],
-    ) -> Result<TokenStream> {
+    ) -> TokenStream {
         let type_name = format_ident!("{}", enum_name(msg, signal));
         let signal_ty = ValType::from_signal(signal);
-        let signal_ty_ident = format_ident!("{}", signal_ty.to_string());
+        let signal_ty_ident = format_ident!("{signal_ty}");
 
         // Generate variant info to handle duplicates with tuple variants
         let variant_infos = generate_variant_info(variants, signal_ty);
@@ -1065,21 +978,21 @@ impl Config<'_> {
         let doc = format!(" Defined values for {signal_name}");
 
         let allow_lints = allow_lints();
-        let allow_dead_code = FeatureConfig::allow_dead_code_tokens(self.allow_dead_code);
-        let debug_derive = self.impl_debug.to_attr_tokens("derive(Debug)");
-        let defmt_derive = self.impl_defmt.to_attr_tokens("derive(defmt::Format)");
-        let serde_serialize = self.impl_serde.to_attr_tokens("derive(Serialize)");
-        let serde_deserialize = self.impl_serde.to_attr_tokens("derive(Deserialize)");
+        let allow_dead_code = allow_dead_code_tokens(self.allow_dead_code);
+        let debug_derive = self.impl_debug.fmt_attr(&quote! {derive(Debug)});
+        let defmt_derive = self.impl_defmt.fmt_attr(&quote! {derive(defmt::Format)});
+        let serde_serialize = self.impl_serde.fmt_attr(&quote! {derive(Serialize)});
+        let serde_deserialize = self.impl_serde.fmt_attr(&quote! {derive(Deserialize)});
 
         // Generate enum variants
         let enum_variants: Vec<_> = variant_infos
             .iter()
             .filter_map(|info| {
-                let variant = format_ident!("{}", &info.base_name);
+                let variant = format_ident!("{}", info.base_name);
                 match info.dup_type {
                     DuplicateType::Unique => Some(quote! { #variant }),
                     DuplicateType::FirstDuplicate => {
-                        let value_type = format_ident!("{}", &info.value_type);
+                        let value_type = format_ident!("{}", info.value_type);
                         Some(quote! { #variant(#value_type) })
                     }
                     DuplicateType::Duplicate => None,
@@ -1091,7 +1004,7 @@ impl Config<'_> {
         let from_match_arms: Vec<_> = variant_infos
             .iter()
             .filter_map(|info| {
-                let variant = format_ident!("{}", &info.base_name);
+                let variant = format_ident!("{}", info.base_name);
                 match info.dup_type {
                     DuplicateType::Unique => {
                         let literal_value = match signal_ty {
@@ -1123,7 +1036,7 @@ impl Config<'_> {
             })
             .collect();
 
-        Ok(quote! {
+        quote! {
             #[doc = #doc]
             #allow_lints
             #allow_dead_code
@@ -1145,7 +1058,7 @@ impl Config<'_> {
                     }
                 }
             }
-        })
+        }
     }
 }
 
@@ -1204,7 +1117,7 @@ fn generate_variant_info(variants: &[ValDescription], signal_ty: ValType) -> Vec
 }
 
 impl Config<'_> {
-    fn render_embedded_can_frame(&self, msg: &Message) -> Result<Option<TokenStream>> {
+    fn render_embedded_can_frame(&self, msg: &Message) -> TokenStream {
         let msg_type = format_ident!("{}", msg.type_name());
 
         let impl_tokens = quote! {
@@ -1246,11 +1159,11 @@ impl Config<'_> {
             }
         };
 
-        Ok(self.impl_embedded_can_frame.to_tokens_opt(impl_tokens))
+        self.impl_embedded_can_frame.fmt_cfg(impl_tokens)
     }
 }
 
-fn render_debug_impl(msg: &Message) -> Result<TokenStream> {
+fn render_debug_impl(msg: &Message) -> TokenStream {
     let msg_type = format_ident!("{}", msg.type_name());
     let typ_name = msg.type_name();
 
@@ -1260,12 +1173,12 @@ fn render_debug_impl(msg: &Message) -> Result<TokenStream> {
         .filter(|signal| signal.multiplexer_indicator == Plain)
         .map(|signal| {
             let field_name = signal.field_name();
-            let field_ident = format_ident!("{}", field_name);
+            let field_ident = format_ident!("{field_name}");
             quote! { .field(#field_name, &self.#field_ident()) }
         })
         .collect();
 
-    Ok(quote! {
+    quote! {
         impl core::fmt::Debug for #msg_type {
             fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
                 if f.alternate() {
@@ -1277,10 +1190,10 @@ fn render_debug_impl(msg: &Message) -> Result<TokenStream> {
                 }
             }
         }
-    })
+    }
 }
 
-fn render_defmt_impl(msg: &Message) -> Result<TokenStream> {
+fn render_defmt_impl(msg: &Message) -> TokenStream {
     let msg_type = format_ident!("{}", msg.type_name());
     let typ_name = msg.type_name();
 
@@ -1293,7 +1206,7 @@ fn render_defmt_impl(msg: &Message) -> Result<TokenStream> {
     // Build format string
     let mut format_str = format!("{typ_name} {{{{");
     for signal in &plain_signals {
-        format_str.push_str(&format!(" {}={{:?}}", signal.name));
+        let _ = write!(format_str, " {}={{:?}}", signal.name);
     }
     format_str.push_str(" }}}}");
 
@@ -1306,7 +1219,7 @@ fn render_defmt_impl(msg: &Message) -> Result<TokenStream> {
         })
         .collect();
 
-    Ok(quote! {
+    quote! {
         impl defmt::Format for #msg_type {
             fn format(&self, f: defmt::Formatter) {
                 defmt::write!(
@@ -1316,7 +1229,7 @@ fn render_defmt_impl(msg: &Message) -> Result<TokenStream> {
                 );
             }
         }
-    })
+    }
 }
 
 impl Config<'_> {
@@ -1356,7 +1269,7 @@ impl Config<'_> {
 
         // Generate structs for each multiplexed signal
         let allow_lints_outer = allow_lints();
-        let allow_dead_code_outer = FeatureConfig::allow_dead_code_tokens(self.allow_dead_code);
+        let allow_dead_code_outer = allow_dead_code_tokens(self.allow_dead_code);
 
         let struct_defs: Result<Vec<_>> = multiplexed_signals
             .iter()
@@ -1380,8 +1293,9 @@ impl Config<'_> {
                 let allow_lints_inner = allow_lints_outer.clone();
                 let allow_dead_code_inner = allow_dead_code_outer.clone();
 
-                let serde_serialize_inner = self.impl_serde.to_attr_tokens("derive(Serialize)");
-                let serde_deserialize_inner = self.impl_serde.to_attr_tokens("derive(Deserialize)");
+                let serde_serialize_inner = self.impl_serde.fmt_attr(&quote! {derive(Serialize)});
+                let serde_deserialize_inner =
+                    self.impl_serde.fmt_attr(&quote! {derive(Deserialize)});
 
                 let allow_lints_inner2 = allow_lints_outer.clone();
                 let allow_dead_code_inner2 = allow_dead_code_outer.clone();
@@ -1422,9 +1336,9 @@ impl Config<'_> {
         })
     }
 
-    fn render_arbitrary(&self, msg: &Message) -> Result<TokenStream> {
+    fn render_arbitrary(&self, msg: &Message) -> TokenStream {
         let allow_lints = allow_lints();
-        let allow_dead_code = FeatureConfig::allow_dead_code_tokens(self.allow_dead_code);
+        let allow_dead_code = allow_dead_code_tokens(self.allow_dead_code);
         let msg_type = format_ident!("{}", msg.type_name());
 
         let filtered_signals: Vec<&Signal> = msg
@@ -1444,7 +1358,7 @@ impl Config<'_> {
             .iter()
             .map(|signal| {
                 let field_name = format_ident!("{}", signal.field_name());
-                let value_expr = signal_to_arbitrary_tokens(signal);
+                let value_expr = signal_to_arbitrary(signal);
                 quote! { let #field_name = #value_expr; }
             })
             .collect();
@@ -1455,7 +1369,7 @@ impl Config<'_> {
             .map(|signal| format_ident!("{}", signal.field_name()))
             .collect();
 
-        Ok(quote! {
+        quote! {
             #allow_lints
             #allow_dead_code
             impl arbitrary::Arbitrary<'_> for #msg_type {
@@ -1465,16 +1379,15 @@ impl Config<'_> {
                         .map_err(|_| arbitrary::Error::IncorrectFormat)
                 }
             }
-        })
+        }
     }
 
-    #[allow(dead_code)]
-    fn render_error(&self) -> Result<TokenStream> {
-        let error_impl = self.impl_error.to_tokens_opt(quote! {
+    fn render_error(&self) -> TokenStream {
+        let error_impl = self.impl_error.fmt_cfg(quote! {
             impl core::error::Error for CanError {}
         });
 
-        Ok(quote! {
+        quote! {
             #[allow(dead_code)]
             #[derive(Clone, Copy, Debug, PartialEq, Eq)]
             pub enum CanError {
@@ -1502,20 +1415,20 @@ impl Config<'_> {
             }
 
             #error_impl
-        })
+        }
     }
 
-    fn render_arbitrary_helpers(&self) -> Result<TokenStream> {
-        let allow_dead_code = FeatureConfig::allow_dead_code_tokens(self.allow_dead_code);
+    fn render_arbitrary_helpers(&self) -> TokenStream {
+        let allow_dead_code = allow_dead_code_tokens(self.allow_dead_code);
 
-        let trait_def = self.impl_arbitrary.to_tokens_opt(quote! {
+        let trait_def = self.impl_arbitrary.fmt_cfg(quote! {
             #allow_dead_code
             trait UnstructuredFloatExt {
                 fn arbitrary_f32(&mut self) -> arbitrary::Result<f32>;
             }
         });
 
-        let trait_impl = self.impl_arbitrary.to_tokens_opt(quote! {
+        let trait_impl = self.impl_arbitrary.fmt_cfg(quote! {
             impl UnstructuredFloatExt for arbitrary::Unstructured<'_> {
                 fn arbitrary_f32(&mut self) -> arbitrary::Result<f32> {
                     Ok(f32::from_bits(u32::arbitrary(self)?))
@@ -1523,47 +1436,14 @@ impl Config<'_> {
             }
         });
 
-        Ok(quote! {
+        quote! {
             #trait_def
             #trait_impl
-        })
+        }
     }
-
-    // #[allow(dead_code)]
-    // fn render_arbitrary_helpers(&self) -> Result<TokenStream> {
-    //     let allow_dead_code = FeatureConfig::allow_dead_code_tokens(self.allow_dead_code);
-    //
-    //     let trait_def = self.impl_arbitrary.to_tokens_opt(quote! {
-    //         #allow_dead_code
-    //         trait UnstructuredFloatExt {
-    //             fn float_in_range(&mut self, range: core::ops::RangeInclusive<f32>) -> arbitrary::Result<f32>;
-    //         }
-    //     });
-    //
-    //     let trait_impl = self.impl_arbitrary.to_tokens_opt(quote! {
-    //         impl UnstructuredFloatExt for arbitrary::Unstructured<'_> {
-    //             fn float_in_range(&mut self, range: core::ops::RangeInclusive<f32>) -> arbitrary::Result<f32> {
-    //                 let min = range.start();
-    //                 let max = range.end();
-    //                 let steps = u32::MAX;
-    //                 let factor = (max - min) / (steps as f32);
-    //                 let random_int: u32 = self.int_in_range(0..=steps)?;
-    //                 let random = min + factor * (random_int as f32);
-    //                 Ok(random)
-    //             }
-    //         }
-    //     });
-    //
-    //     Ok(quote! {
-    //         #trait_def
-    //         #trait_impl
-    //     })
-    // }
-
-
 }
 
-fn signal_to_arbitrary_tokens(signal: &Signal) -> TokenStream {
+fn signal_to_arbitrary(signal: &Signal) -> TokenStream {
     let typ = ValType::from_signal(signal);
     match typ {
         ValType::Bool => quote! { u.int_in_range(0..=1)? == 1 },
@@ -1573,7 +1453,7 @@ fn signal_to_arbitrary_tokens(signal: &Signal) -> TokenStream {
         _ => {
             let min = signal.min as i64;
             let max = signal.max as i64;
-            let typ_ident = format_ident!("{}", typ.to_string());
+            let typ_ident = format_ident!("{typ}");
             quote! { u.int_in_range(#min..=#max)? as #typ_ident }
         }
     }
@@ -1595,7 +1475,7 @@ impl Config<'_> {
         // Debug: write tokens to stderr for debugging
         if std::env::var("DEBUG_TOKENS").is_ok() {
             eprintln!("=== Generated TokenStream ===");
-            eprintln!("{}", tokens);
+            eprintln!("{tokens}");
             eprintln!("=== End TokenStream ===");
         }
         let file =
@@ -1618,5 +1498,53 @@ impl Config<'_> {
             .open(path.as_ref())?;
 
         self.write(file)
+    }
+}
+
+fn allow_lints() -> TokenStream {
+    quote! {
+        #[allow(
+            clippy::absurd_extreme_comparisons,
+            clippy::excessive_precision,
+            clippy::manual_range_contains,
+            clippy::unnecessary_cast,
+            clippy::useless_conversion,
+            unused_comparisons,
+            unused_variables,
+        )]
+    }
+}
+
+/// Generate a literal token for a signal min/max value.
+///
+/// For F32 types, always generates a float literal.
+/// For other types, generates an integer literal if the value is an integer within i64 range,
+/// otherwise generates a float literal with the integer type suffix.
+fn generate_value_literal(value: f64, typ: ValType) -> TokenStream {
+    if typ == ValType::F32 {
+        let lit = syn::LitFloat::new(&format!("{value}_f32"), Span::call_site());
+        quote! { #lit }
+    } else {
+        let typ_str = typ.to_string().to_lowercase();
+        // Check if value is an integer and fits in i64 range
+        if is_integer(value) && value >= i64::MIN as f64 && value <= i64::MAX as f64 {
+            let val = value as i64;
+            let lit = syn::LitInt::new(&format!("{val}_{typ_str}"), Span::call_site());
+            quote! { #lit }
+        } else {
+            // Use float literal with integer type suffix for fractional/overflow values
+            let lit = syn::LitFloat::new(&format!("{value}_{typ_str}"), Span::call_site());
+            quote! { #lit }
+        }
+    }
+}
+
+/// Generate `[allow(dead_code)]` attribute if needed
+fn allow_dead_code_tokens(allow: bool) -> Option<TokenStream> {
+    if allow {
+        use quote::quote;
+        Some(quote! { #[allow(dead_code)] })
+    } else {
+        None
     }
 }
