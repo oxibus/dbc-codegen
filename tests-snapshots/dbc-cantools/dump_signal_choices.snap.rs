@@ -3,7 +3,7 @@
 pub const DBC_FILE_NAME: &str = "dump_signal_choices";
 /// The version of the DBC file this code was generated from
 #[allow(dead_code)]
-pub const DBC_FILE_VERSION: &str = "HIPBNYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY/4/%%%/4/\'%**4YYY///";
+pub const DBC_FILE_VERSION: &str = "HIPBNYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY/4/%%%/4/'%**4YYY///";
 #[allow(unused_imports)]
 use core::ops::BitOr;
 #[allow(unused_imports)]

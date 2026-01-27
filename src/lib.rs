@@ -27,6 +27,7 @@ use can_dbc::MultiplexIndicator::{
 use can_dbc::ValueType::Signed;
 use can_dbc::{Dbc, Message, MessageId, Signal, Transmitter, ValDescription, ValueDescription};
 use heck::{ToPascalCase, ToSnakeCase};
+use quote::ToTokens;
 use typed_builder::TypedBuilder;
 
 pub use crate::feature_config::FeatureConfig;
@@ -109,20 +110,20 @@ fn codegen(config: &Config<'_>, out: impl Write) -> Result<()> {
     }
     let mut w = BufWriter::new(out);
 
-    let dbc_name = config.dbc_name.escape_default();
     writeln!(
         w,
         "/// The name of the DBC file this code was generated from"
     )?;
     writeln!(w, "#[allow(dead_code)]")?;
-    writeln!(w, r#"pub const DBC_FILE_NAME: &str = "{dbc_name}";"#)?;
-    let dbc_version = dbc.version.0.escape_default();
+    let dbc_name = config.dbc_name.to_token_stream();
+    writeln!(w, "pub const DBC_FILE_NAME: &str = {dbc_name};")?;
     writeln!(
         w,
         "/// The version of the DBC file this code was generated from"
     )?;
     writeln!(w, "#[allow(dead_code)]")?;
-    writeln!(w, r#"pub const DBC_FILE_VERSION: &str = "{dbc_version}";"#)?;
+    let dbc_version = dbc.version.0.to_token_stream();
+    writeln!(w, "pub const DBC_FILE_VERSION: &str = {dbc_version};")?;
 
     writeln!(w, "#[allow(unused_imports)]")?;
     writeln!(w, "use core::ops::BitOr;")?;

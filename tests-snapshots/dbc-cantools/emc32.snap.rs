@@ -3,7 +3,7 @@
 pub const DBC_FILE_NAME: &str = "emc32";
 /// The version of the DBC file this code was generated from
 #[allow(dead_code)]
-pub const DBC_FILE_VERSION: &str = "HINBNYYYYYYYYYYYYYYYYYYYYYYYYYYYNNNNNNNNNN/4/%%%/4/\'%**4NNN///";
+pub const DBC_FILE_VERSION: &str = "HINBNYYYYYYYYYYYYYYYYYYYYYYYYYYYNNNNNNNNNN/4/%%%/4/'%**4NNN///";
 #[allow(unused_imports)]
 use core::ops::BitOr;
 #[allow(unused_imports)]
