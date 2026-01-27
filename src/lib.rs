@@ -25,14 +25,17 @@ use can_dbc::MultiplexIndicator::{
 };
 use can_dbc::ValueType::Signed;
 use can_dbc::{Dbc, Message, MessageId, Signal, Transmitter, ValDescription, ValueDescription};
-use heck::{ToPascalCase, ToSnakeCase};
+use heck::ToSnakeCase;
 use quote::ToTokens;
 use typed_builder::TypedBuilder;
 
 pub use crate::feature_config::FeatureConfig;
 use crate::pad::PadAdapter;
 use crate::signal_type::ValType;
-use crate::utils::{enum_variant_name, MessageExt as _, SignalExt as _};
+use crate::utils::{
+    enum_name, enum_variant_name, multiplex_enum_name, multiplexed_enum_variant_name,
+    multiplexed_enum_variant_wrapper_name, MessageExt as _, SignalExt as _,
+};
 
 static ALLOW_DEADCODE: &str = "#[allow(dead_code)]";
 static ALLOW_LINTS: &str = r"#[allow(
@@ -971,50 +974,6 @@ fn generate_variant_info(variants: &[ValDescription], signal_ty: ValType) -> Vec
         });
     }
     variant_infos
-}
-
-fn enum_name(msg: &Message, signal: &Signal) -> String {
-    // this turns signal `_4DRIVE` into `4drive`
-    let signal_name = signal
-        .name
-        .trim_start_matches(|c: char| c.is_ascii_punctuation())
-        .to_pascal_case();
-    let msg_name = enum_variant_name(&msg.name);
-
-    format!("{msg_name}{signal_name}")
-}
-
-fn multiplexed_enum_variant_wrapper_name(switch_index: u64) -> String {
-    format!("M{switch_index}")
-}
-
-fn multiplex_enum_name(msg: &Message, multiplexor: &Signal) -> Result<String> {
-    ensure!(
-        matches!(multiplexor.multiplexer_indicator, Multiplexor),
-        "signal {multiplexor:?} is not the multiplexor",
-    );
-    Ok(format!(
-        "{}{}Index",
-        msg.name.to_pascal_case(),
-        multiplexor.name.to_pascal_case(),
-    ))
-}
-
-fn multiplexed_enum_variant_name(
-    msg: &Message,
-    multiplexor: &Signal,
-    switch_index: u64,
-) -> Result<String> {
-    ensure!(
-        matches!(multiplexor.multiplexer_indicator, Multiplexor),
-        "signal {multiplexor:?} is not the multiplexor",
-    );
-
-    Ok(format!(
-        "{}{}M{switch_index}",
-        msg.name.to_pascal_case(),
-        multiplexor.name.to_pascal_case(),
-    ))
 }
 
 impl Config<'_> {
