@@ -1,7 +1,11 @@
 use anyhow::{ensure, Result};
 use can_dbc::MultiplexIndicator::Multiplexor;
+use std::fmt::Display;
+
 use can_dbc::{Message, Signal};
-use heck::{ToPascalCase, ToSnakeCase};
+use heck::{ToPascalCase, ToShoutySnakeCase, ToSnakeCase};
+use proc_macro2::Ident;
+use quote::{format_ident, IdentFragment};
 
 use crate::keywords;
 
@@ -50,12 +54,33 @@ pub fn multiplexed_enum_variant_name(
 }
 
 pub trait SignalExt {
-    fn field_name(&self) -> String;
+    fn get_name(&self) -> &str;
+    fn field_name(&self) -> String {
+        sanitize_name(self.get_name(), ToSnakeCase::to_snake_case)
+    }
+    fn field_name2(&self, prefix: &str, suffix: &str) -> String {
+        format!(
+            "{prefix}{}{suffix}",
+            sanitize_name(self.get_name(), ToSnakeCase::to_snake_case)
+        )
+    }
+    fn const_name(&self, suffix: &str) -> String {
+        let tmp: String;
+        sanitize_name(
+            if suffix.is_empty() {
+                self.get_name()
+            } else {
+                tmp = format!("{}{suffix}", self.get_name());
+                &tmp
+            },
+            ToShoutySnakeCase::to_shouty_snake_case,
+        )
+    }
 }
 
 impl SignalExt for Signal {
-    fn field_name(&self) -> String {
-        sanitize_name(&self.name, "x", ToSnakeCase::to_snake_case)
+    fn get_name(&self) -> &str {
+        &self.name
     }
 }
 
@@ -65,27 +90,34 @@ pub trait MessageExt {
 
 impl MessageExt for Message {
     fn type_name(&self) -> String {
-        sanitize_name(&self.name, "X", ToPascalCase::to_pascal_case)
+        sanitize_name(&self.name, ToPascalCase::to_pascal_case)
     }
 }
 
-pub fn sanitize_name(x: &str, prefix: &str, to_case: fn(&str) -> String) -> String {
+pub fn sanitize_name(x: &str, to_case: fn(&str) -> String) -> String {
     if keywords::is_keyword(x) || !x.starts_with(|c: char| c.is_ascii_alphabetic()) {
-        format!("{prefix}{}", to_case(x))
+        format!("{}{}", to_case("x"), to_case(x))
     } else {
         to_case(x)
     }
 }
 
-pub fn type_name(x: &str) -> String {
-    sanitize_name(x, "X", ToPascalCase::to_pascal_case)
-}
-
 pub fn enum_variant_name(x: &str) -> String {
-    type_name(x) // enum variant and type encoding are identical
+    sanitize_name(x, ToPascalCase::to_pascal_case)
 }
 
 /// Check if a floating point value is an integer
 pub fn is_integer(val: f64) -> bool {
     val.fract().abs() < f64::EPSILON
+}
+
+/// A trait to convert a type to a proc-macro Ident
+pub trait ToIdent {
+    fn to_ident(&self) -> Ident;
+}
+
+impl<T: Display + IdentFragment> ToIdent for T {
+    fn to_ident(&self) -> Ident {
+        format_ident!("{self}")
+    }
 }
