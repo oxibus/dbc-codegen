@@ -19,7 +19,7 @@ pub enum FeatureConfig<'a> {
 
 impl FeatureConfig<'_> {
     /// Generate an attribute token stream (like `#[derive(Debug)]`)
-    pub(crate) fn fmt_attr(&self, tokens: &TokenStream) -> TokenStream {
+    pub(crate) fn attr(&self, tokens: &TokenStream) -> TokenStream {
         match self {
             FeatureConfig::Always => quote! { #[#tokens] },
             FeatureConfig::Gated(gate) => quote! { #[cfg_attr(feature = #gate, #tokens)] },
@@ -28,13 +28,13 @@ impl FeatureConfig<'_> {
     }
 
     /// Generate a token stream optionally wrapped in a cfg attribute
-    pub(crate) fn fmt_cfg(&self, tokens: TokenStream) -> TokenStream {
+    pub(crate) fn if_cfg(&self, tokens: TokenStream) -> TokenStream {
         match self {
+            FeatureConfig::Always => tokens,
             FeatureConfig::Gated(gate) => quote! {
                 #[cfg(feature = #gate)]
                 #tokens
             },
-            FeatureConfig::Always => tokens,
             FeatureConfig::Never => quote! {},
         }
     }
