@@ -22,20 +22,17 @@ use can_dbc::ByteOrder::{BigEndian, LittleEndian};
 use can_dbc::MultiplexIndicator::{MultiplexedSignal, Multiplexor, Plain};
 use can_dbc::ValueType::Signed;
 use can_dbc::{Dbc, Message, MessageId, Signal, Transmitter, ValDescription, ValueDescription};
-use heck::ToSnakeCase;
 use proc_macro2::{Span, TokenStream};
-use quote::{format_ident, quote};
+use quote::quote;
 use syn::{parse2, LitFloat, LitInt};
 use typed_builder::TypedBuilder;
 
 pub use crate::feature_config::FeatureConfig;
 use crate::signal_type::ValType;
 use crate::utils::{
-    enum_name, enum_variant_name, multiplex_enum_name, multiplexed_enum_variant_name,
-    multiplexed_enum_variant_wrapper_name, MessageExt as _, SignalExt as _,
-};
-use crate::utils::{
-    enum_variant_name, is_integer, MessageExt as _, SignalExt as _, ToIdent as _, Tokens as _,
+    enum_name, enum_variant_name, is_integer, multiplex_enum_name, multiplexed_enum_variant_name,
+    multiplexed_enum_variant_wrapper_name, multiplexed_enum_variant_wrapper_setter_name,
+    MessageExt as _, SignalExt as _, ToIdent as _, Tokens as _,
 };
 
 /// Code generator configuration. See module-level docs for an example.
@@ -176,7 +173,7 @@ impl Config<'_> {
 
         let variants: Vec<_> = get_relevant_messages(dbc)
             .map(|msg| {
-                let msg_type = msg.type_name().ident();
+                let msg_type = msg.type_name();
                 let doc_str = format!(" {}", msg.name); // Use message name, not type_name
                 quote! {
                     #[doc = #doc_str]
@@ -187,7 +184,7 @@ impl Config<'_> {
 
         let from_can_arms: Vec<_> = get_relevant_messages(dbc)
             .map(|msg| {
-                let msg_type = msg.type_name().ident();
+                let msg_type = msg.type_name();
                 quote! { #msg_type::MESSAGE_ID => Messages::#msg_type(#msg_type::try_from(payload)?) }
             })
             .collect();
@@ -256,7 +253,7 @@ impl Config<'_> {
         }
         let struct_doc = doc.tokens().context("message doc to tokens")?;
 
-        let msg_type = msg.type_name().ident();
+        let msg_type = msg.type_name();
         let msg_size = msg.size as usize;
         let msg_size_lit = LitInt::new(&msg_size.to_string(), Span::call_site());
 
@@ -276,10 +273,9 @@ impl Config<'_> {
                 if typ == ValType::Bool {
                     None
                 } else {
-                    let min_name = signal.const_name("_MIN").ident();
-                    let max_name = signal.const_name("_MAX").ident();
+                    let min_name = signal.const_name("_MIN");
+                    let max_name = signal.const_name("_MAX");
                     let typ_ident = typ.ident();
-
                     let min_lit = generate_value_literal(signal.min, typ);
                     let max_lit = generate_value_literal(signal.max, typ);
 
@@ -297,7 +293,7 @@ impl Config<'_> {
             .iter()
             .filter_map(|signal| {
                 if matches!(signal.multiplexer_indicator, Plain | Multiplexor) {
-                    let field_name = signal.field_name().ident();
+                    let field_name = signal.field_name();
                     let typ = ValType::from_signal(signal);
                     let typ_ident = typ.ident();
                     Some(quote! { #field_name: #typ_ident })
@@ -312,8 +308,8 @@ impl Config<'_> {
             .iter()
             .filter_map(|signal| {
                 if matches!(signal.multiplexer_indicator, Plain | Multiplexor) {
-                    let field_name = signal.field_name().ident();
-                    let setter_name = signal.field_name2("set_", "").ident();
+                    let field_name = signal.field_name();
+                    let setter_name = signal.field_name2("set_", "");
                     Some(quote! { res.#setter_name(#field_name)?; })
                 } else {
                     None
@@ -445,8 +441,8 @@ impl Config<'_> {
 
     fn render_signal(&self, signal: &Signal, dbc: &Dbc, msg: &Message) -> Result<TokenStream> {
         let signal_name = &signal.name;
-        let fn_name = signal.field_name().ident();
-        let fn_name_raw = signal.field_name2("", "_raw").ident();
+        let fn_name = signal.field_name();
+        let fn_name_raw = signal.field_name2("", "_raw");
 
         // Build signal getter doc as doc comment and parse into tokens
         let mut doc = format!("/// {signal_name}\n");
@@ -477,7 +473,7 @@ impl Config<'_> {
         // Generate getter function
         let getter = if let Some(variants) = dbc.value_descriptions_for_signal(msg.id, &signal.name)
         {
-            let type_name = enum_name(msg, signal).ident();
+            let type_name = enum_name(msg, signal);
             let signal_ty = ValType::from_signal(signal);
             let variant_infos = generate_variant_info(variants, signal_ty);
 
@@ -563,7 +559,7 @@ impl Config<'_> {
     }
 
     fn render_set_signal(&self, signal: &Signal, msg: &Message) -> Result<TokenStream> {
-        let setter_name = signal.field_name2("set_", "").ident();
+        let setter_name = signal.field_name2("set_", "");
 
         // To avoid accidentally changing the multiplexor value without changing
         // the signals accordingly this fn is kept private for multiplexors.
@@ -576,7 +572,7 @@ impl Config<'_> {
         let setter_doc = format!(" Set value of {}", signal.name);
         let typ = ValType::from_signal(signal);
         let typ_ident = typ.ident();
-        let msg_type = msg.type_name().ident();
+        let msg_type = msg.type_name();
 
         // Range check logic
         let range_check = if signal.size == 1 {
@@ -612,12 +608,9 @@ fn render_set_signal_multiplexer(
     msg: &Message,
     switch_index: u64,
 ) -> Result<TokenStream> {
-    let enum_variant = multiplexed_enum_variant_name(msg, multiplexor, switch_index)?.ident();
-    let setter_name = format_ident!(
-        "set_{}",
-        multiplexed_enum_variant_wrapper_name(switch_index).to_snake_case()
-    );
-    let multiplexor_setter = format_ident!("set_{}", multiplexor.field_name());
+    let enum_variant = multiplexed_enum_variant_name(msg, multiplexor, switch_index)?;
+    let setter_name = multiplexed_enum_variant_wrapper_setter_name(switch_index);
+    let multiplexor_setter = multiplexor.field_name2("set_", "");
     let switch_index_lit = LitInt::new(&switch_index.to_string(), Span::call_site());
 
     let doc = format!("/// Set value of {}", multiplexor.name).tokens()?;
@@ -637,11 +630,11 @@ fn render_set_signal_multiplexer(
 
 impl Config<'_> {
     fn render_multiplexor_signal(&self, signal: &Signal, msg: &Message) -> Result<TokenStream> {
-        let field = signal.field_name().ident();
-        let field_raw = format_ident!("{}_raw", signal.field_name());
+        let field = signal.field_name();
+        let field_raw = signal.field_name2("", "_raw");
         let typ = ValType::from_signal(signal);
         let typ_ident = typ.ident();
-        let enum_type = multiplex_enum_name(msg, signal)?.ident();
+        let enum_type = multiplex_enum_name(msg, signal)?;
 
         // Build raw doc as doc comment string and parse into tokens
         let raw_doc_text = format!(
@@ -679,15 +672,15 @@ impl Config<'_> {
             .collect();
 
         let match_arms: Vec<_> = multiplexer_indexes.iter().map(|idx| {
-            let multiplexed_wrapper_name = multiplexed_enum_variant_wrapper_name(*idx).ident();
-            let multiplexed_name = multiplexed_enum_variant_name(msg, signal, *idx).unwrap().ident();
+            let multiplexed_wrapper_name = multiplexed_enum_variant_wrapper_name(*idx);
+            let multiplexed_name = multiplexed_enum_variant_name(msg, signal, *idx).unwrap();
             let idx_lit = LitInt::new(&idx.to_string(), Span::call_site());
             quote! {
                 #idx_lit => Ok(#enum_type::#multiplexed_wrapper_name(#multiplexed_name { raw: self.raw }))
             }
         }).collect();
 
-        let msg_type = msg.type_name().ident();
+        let msg_type = msg.type_name();
 
         let setter = self.render_set_signal(signal, msg)?;
 
@@ -845,7 +838,7 @@ fn signal_from_payload(signal: &Signal, msg: &Message) -> Result<TokenStream> {
 
 fn signal_to_payload(signal: &Signal, msg: &Message) -> Result<TokenStream> {
     let typ = ValType::from_signal(signal);
-    let msg_type = msg.type_name().ident();
+    let msg_type = msg.type_name();
 
     let value_conversion = match typ {
         ValType::Bool => {
@@ -930,7 +923,7 @@ impl Config<'_> {
         msg: &Message,
         variants: &[ValDescription],
     ) -> TokenStream {
-        let type_name = enum_name(msg, signal).ident();
+        let type_name = enum_name(msg, signal);
         let signal_ty = ValType::from_signal(signal);
         let signal_ty_ident = signal_ty.ident();
 
@@ -1080,7 +1073,7 @@ fn generate_variant_info(variants: &[ValDescription], signal_ty: ValType) -> Vec
 
 impl Config<'_> {
     fn render_embedded_can_frame(&self, msg: &Message) -> TokenStream {
-        let msg_type = msg.type_name().ident();
+        let msg_type = msg.type_name();
 
         let impl_tokens = quote! {
             impl embedded_can::Frame for #msg_type {
@@ -1126,16 +1119,16 @@ impl Config<'_> {
 }
 
 fn render_debug_impl(msg: &Message) -> TokenStream {
-    let msg_type = msg.type_name().ident();
-    let typ_name = msg.type_name();
+    let msg_type = msg.type_name();
+    let typ_name = msg_type.to_string();
 
     let debug_fields: Vec<_> = msg
         .signals
         .iter()
         .filter(|signal| signal.multiplexer_indicator == Plain)
         .map(|signal| {
-            let field_name = signal.field_name();
-            let field_ident = signal.field_name().ident();
+            let field_ident = signal.field_name();
+            let field_name = field_ident.to_string();
             quote! { .field(#field_name, &self.#field_ident()) }
         })
         .collect();
@@ -1156,8 +1149,8 @@ fn render_debug_impl(msg: &Message) -> TokenStream {
 }
 
 fn render_defmt_impl(msg: &Message) -> TokenStream {
-    let msg_type = msg.type_name().ident();
-    let typ_name = msg.type_name();
+    let msg_type = msg.type_name();
+    let typ_name = msg_type.to_string();
 
     let plain_signals: Vec<_> = msg
         .signals
@@ -1176,7 +1169,7 @@ fn render_defmt_impl(msg: &Message) -> TokenStream {
     let field_accessors: Vec<_> = plain_signals
         .iter()
         .map(|signal| {
-            let field_ident = signal.field_name().ident();
+            let field_ident = signal.field_name();
             quote! { self.#field_ident() }
         })
         .collect();
@@ -1213,15 +1206,15 @@ impl Config<'_> {
 
         let doc = format!(" Defined values for multiplexed signal {}", msg.name);
 
-        let enum_name = multiplex_enum_name(msg, multiplexor_signal)?.ident();
+        let enum_name = multiplex_enum_name(msg, multiplexor_signal)?;
 
         // Generate enum variants
         let enum_variants = multiplexed_signals
             .keys()
             .map(|switch_index| {
-                let wrapper_name = multiplexed_enum_variant_wrapper_name(*switch_index).ident();
+                let wrapper_name = multiplexed_enum_variant_wrapper_name(*switch_index);
                 let variant_name =
-                    multiplexed_enum_variant_name(msg, multiplexor_signal, *switch_index)?.ident();
+                    multiplexed_enum_variant_name(msg, multiplexor_signal, *switch_index)?;
 
                 Ok(quote! { #wrapper_name(#variant_name) })
             })
@@ -1235,7 +1228,7 @@ impl Config<'_> {
             .iter()
             .map(|(switch_index, signals)| {
                 let struct_name =
-                    multiplexed_enum_variant_name(msg, multiplexor_signal, *switch_index)?.ident();
+                    multiplexed_enum_variant_name(msg, multiplexor_signal, *switch_index)?;
                 let msg_size = msg.size as usize;
                 let msg_size_lit = LitInt::new(&msg_size.to_string(), Span::call_site());
 
@@ -1296,7 +1289,7 @@ impl Config<'_> {
     fn render_arbitrary(&self, msg: &Message) -> TokenStream {
         let allow_lints = allow_lints();
         let allow_dead_code = allow_dead_code_tokens(self.allow_dead_code);
-        let msg_type = msg.type_name().ident();
+        let msg_type = msg.type_name();
 
         let filtered_signals: Vec<&Signal> = msg
             .signals
@@ -1314,7 +1307,7 @@ impl Config<'_> {
         let signal_bindings: Vec<_> = filtered_signals
             .iter()
             .map(|signal| {
-                let field_name = signal.field_name().ident();
+                let field_name = signal.field_name();
                 let value_expr = signal_to_arbitrary(signal);
                 quote! { let #field_name = #value_expr; }
             })
@@ -1323,7 +1316,7 @@ impl Config<'_> {
         // Generate function arguments
         let args: Vec<_> = filtered_signals
             .iter()
-            .map(|signal| signal.field_name().ident())
+            .map(|signal| signal.field_name())
             .collect();
 
         quote! {
