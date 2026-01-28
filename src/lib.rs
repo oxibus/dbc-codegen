@@ -8,43 +8,32 @@
 )]
 
 mod feature_config;
-mod includes;
 mod keywords;
-mod pad;
 mod signal_type;
 mod utils;
-
 use std::collections::{BTreeMap, BTreeSet, HashMap};
+use std::fmt::Write as _;
 use std::fs::OpenOptions;
-use std::io::{BufWriter, Write};
+use std::io::Write;
 use std::path::Path;
 
-use anyhow::{anyhow, ensure, Context, Error, Result};
+use anyhow::{anyhow, ensure, Context, Result};
 use can_dbc::ByteOrder::{BigEndian, LittleEndian};
-use can_dbc::MultiplexIndicator::{
-    MultiplexedSignal, Multiplexor, MultiplexorAndMultiplexedSignal, Plain,
-};
+use can_dbc::MultiplexIndicator::{MultiplexedSignal, Multiplexor, Plain};
 use can_dbc::ValueType::Signed;
 use can_dbc::{Dbc, Message, MessageId, Signal, Transmitter, ValDescription, ValueDescription};
-use heck::{ToPascalCase, ToSnakeCase};
-use quote::ToTokens;
+use proc_macro2::{Span, TokenStream};
+use quote::quote;
+use syn::{parse2, LitFloat, LitInt};
 use typed_builder::TypedBuilder;
 
 pub use crate::feature_config::FeatureConfig;
-use crate::pad::PadAdapter;
 use crate::signal_type::ValType;
-use crate::utils::{enum_variant_name, MessageExt as _, SignalExt as _};
-
-static ALLOW_DEADCODE: &str = "#[allow(dead_code)]";
-static ALLOW_LINTS: &str = r"#[allow(
-    clippy::absurd_extreme_comparisons,
-    clippy::excessive_precision,
-    clippy::manual_range_contains,
-    clippy::unnecessary_cast,
-    clippy::useless_conversion,
-    unused_comparisons,
-    unused_variables,
-)]";
+use crate::utils::{
+    enum_name, enum_variant_name, is_integer, multiplex_enum_name, multiplexed_enum_variant_name,
+    multiplexed_enum_variant_wrapper_name, multiplexed_enum_variant_wrapper_setter_name,
+    MessageExt as _, SignalExt as _, ToIdent as _, Tokens as _,
+};
 
 /// Code generator configuration. See module-level docs for an example.
 #[derive(TypedBuilder)]
@@ -95,360 +84,398 @@ pub struct Config<'a> {
     pub allow_dead_code: bool,
 }
 
-/// Write Rust structs matching DBC input description to `out` buffer
-fn codegen(config: &Config<'_>, out: impl Write) -> Result<()> {
-    let dbc = Dbc::try_from(config.dbc_content).map_err(|e| {
-        let msg = "Could not parse dbc file";
-        if config.debug_prints {
-            anyhow!("{msg}: {e:#?}")
-        } else {
-            anyhow!("{msg}")
-        }
-    })?;
-    if config.debug_prints {
-        eprintln!("{dbc:#?}");
-    }
-    let mut w = BufWriter::new(out);
-
-    writeln!(
-        w,
-        "/// The name of the DBC file this code was generated from"
-    )?;
-    writeln!(w, "#[allow(dead_code)]")?;
-    let dbc_name = config.dbc_name.to_token_stream();
-    writeln!(w, "pub const DBC_FILE_NAME: &str = {dbc_name};")?;
-    writeln!(
-        w,
-        "/// The version of the DBC file this code was generated from"
-    )?;
-    writeln!(w, "#[allow(dead_code)]")?;
-    let dbc_version = dbc.version.0.to_token_stream();
-    writeln!(w, "pub const DBC_FILE_VERSION: &str = {dbc_version};")?;
-
-    writeln!(w, "#[allow(unused_imports)]")?;
-    writeln!(w, "use core::ops::BitOr;")?;
-    writeln!(w, "#[allow(unused_imports)]")?;
-    writeln!(w, "use bitvec::prelude::*;")?;
-    writeln!(w, "#[allow(unused_imports)]")?;
-    writeln!(w, "use embedded_can::{{Id, StandardId, ExtendedId}};")?;
-
-    config.impl_arbitrary.fmt_cfg(&mut w, |w| {
-        writeln!(w, "use arbitrary::{{Arbitrary, Unstructured}};")
-    })?;
-
-    config.impl_serde.fmt_cfg(&mut w, |w| {
-        writeln!(w, "use serde::{{Serialize, Deserialize}};")
-    })?;
-
-    writeln!(w)?;
-
-    render_dbc(&mut w, config, &dbc).context("could not generate Rust code")?;
-
-    writeln!(w)?;
-    writeln!(w, "/// This is just to make testing easier")?;
-    writeln!(w, "#[allow(dead_code)]")?;
-    writeln!(w, "fn main() {{}}")?;
-    writeln!(w)?;
-    render_error(&mut w, config)?;
-    render_arbitrary_helpers(&mut w, config)?;
-    writeln!(w)?;
-
-    Ok(())
-}
-
-fn render_dbc(w: &mut impl Write, config: &Config<'_>, dbc: &Dbc) -> Result<()> {
-    render_root_enum(w, dbc, config)?;
-
-    for msg in get_relevant_messages(dbc) {
-        render_message(w, config, msg, dbc)
-            .with_context(|| format!("write message `{}`", msg.name))?;
-        writeln!(w)?;
-    }
-
-    Ok(())
-}
-
-fn render_root_enum(w: &mut impl Write, dbc: &Dbc, config: &Config<'_>) -> Result<()> {
-    writeln!(w, "/// All messages")?;
-    writeln!(w, "{ALLOW_LINTS}")?;
-    config.write_allow_dead_code(w)?;
-    writeln!(w, "#[derive(Clone)]")?;
-    config.impl_debug.fmt_attr(w, "derive(Debug)")?;
-    config.impl_defmt.fmt_attr(w, "derive(defmt::Format)")?;
-    config.impl_serde.fmt_attr(w, "derive(Serialize)")?;
-    config.impl_serde.fmt_attr(w, "derive(Deserialize)")?;
-    writeln!(w, "pub enum Messages {{")?;
-    {
-        let mut w = PadAdapter::wrap(w);
-        for msg in get_relevant_messages(dbc) {
-            writeln!(w, "/// {}", msg.name)?;
-            writeln!(w, "{0}({0}),", msg.type_name())?;
-        }
-    }
-    writeln!(w, "}}")?;
-    writeln!(w)?;
-
-    writeln!(w, "{ALLOW_LINTS}")?;
-    config.write_allow_dead_code(w)?;
-    writeln!(w, "impl Messages {{")?;
-    {
-        let mut w = PadAdapter::wrap(w);
-        writeln!(w, "/// Read message from CAN frame")?;
-        writeln!(w, "#[inline(never)]")?;
-        writeln!(
-            w,
-            "pub fn from_can_message(id: Id, payload: &[u8]) -> Result<Self, CanError> {{",
-        )?;
-
-        {
-            let mut w = PadAdapter::wrap(&mut w);
-            let messages: Vec<_> = get_relevant_messages(dbc).collect();
-            if messages.is_empty() {
-                writeln!(w, "Err(CanError::UnknownMessageId(id))")?;
+impl Config<'_> {
+    /// Write Rust structs matching DBC input description to `out` buffer
+    fn codegen(&self) -> Result<TokenStream> {
+        let dbc = Dbc::try_from(self.dbc_content).map_err(|e| {
+            if self.debug_prints {
+                anyhow!("Could not parse dbc file: {e:#?}")
             } else {
-                writeln!(w)?;
-                writeln!(w, "let res = match id {{")?;
-                {
-                    let mut w = PadAdapter::wrap(&mut w);
-                    for msg in messages {
-                        writeln!(
-                            w,
-                            "{0}::MESSAGE_ID => Messages::{0}({0}::try_from(payload)?),",
-                            msg.type_name(),
-                        )?;
-                    }
-                    writeln!(w, r"id => return Err(CanError::UnknownMessageId(id)),")?;
-                }
-                writeln!(w, "}};")?;
-                writeln!(w, "Ok(res)")?;
+                anyhow!("Could not parse dbc file")
             }
+        })?;
+        if self.debug_prints {
+            eprintln!("{dbc:#?}");
         }
 
-        writeln!(w, "}}")?;
-    }
-    writeln!(w, "}}")?;
-    writeln!(w)?;
+        let dbc_name = &self.dbc_name;
+        let dbc_version = &dbc.version.0;
+        let header = quote! {
+            /// The name of the DBC file this code was generated from
+            #[allow(dead_code)]
+            pub const DBC_FILE_NAME: &str = #dbc_name;
+            /// The version of the DBC file this code was generated from
+            #[allow(dead_code)]
+            pub const DBC_FILE_VERSION: &str = #dbc_version;
 
-    Ok(())
-}
+        };
 
-fn render_message(w: &mut impl Write, config: &Config<'_>, msg: &Message, dbc: &Dbc) -> Result<()> {
-    writeln!(w, "/// {}", msg.name)?;
-    writeln!(w, "///")?;
-    match msg.id {
-        MessageId::Standard(id) => writeln!(w, "/// - Standard ID: {id} (0x{id:x})"),
-        MessageId::Extended(id) => writeln!(w, "/// - Extended ID: {id} (0x{id:x})"),
-    }?;
-    writeln!(w, "/// - Size: {} bytes", msg.size)?;
-    if let Transmitter::NodeName(transmitter) = &msg.transmitter {
-        writeln!(w, "/// - Transmitter: {transmitter}")?;
+        let mut use_statements = quote! {
+            #[allow(unused_imports)]
+            use core::ops::BitOr;
+            #[allow(unused_imports)]
+            use bitvec::prelude::*;
+            #[allow(unused_imports)]
+            use embedded_can::{Id, StandardId, ExtendedId};
+        };
+        use_statements.extend(
+            self.impl_arbitrary
+                .if_cfg(quote! { use arbitrary::Arbitrary; }),
+        );
+        use_statements.extend(self.impl_serde.if_cfg(quote! {
+            use serde::{Serialize, Deserialize};
+        }));
+
+        let dbc_content = self
+            .render_dbc(&dbc)
+            .context("could not generate Rust code")?;
+        let error_content = self.render_error();
+        let arbitrary_helpers = self.render_arbitrary_helpers();
+
+        Ok(quote! {
+            #header
+            #use_statements
+            #dbc_content
+
+            /// This is just to make testing easier
+            #[allow(dead_code)]
+            fn main() {}
+
+            #error_content
+            #arbitrary_helpers
+        })
     }
-    if let Some(comment) = dbc.message_comment(msg.id) {
-        writeln!(w, "///")?;
-        for line in comment.trim().lines() {
-            writeln!(w, "/// {line}")?;
-        }
+
+    fn render_dbc(&self, dbc: &Dbc) -> Result<TokenStream> {
+        let root_enum = self.render_root_enum(dbc);
+
+        let messages = get_relevant_messages(dbc)
+            .map(|msg| {
+                self.render_message(msg, dbc)
+                    .with_context(|| format!("write message `{}`", msg.name))
+            })
+            .collect::<Result<Vec<_>>>()?;
+
+        Ok(quote! {
+            #root_enum
+            #(#messages)*
+        })
     }
-    writeln!(w, "#[derive(Clone, Copy)]")?;
-    config.impl_serde.fmt_attr(w, "derive(Serialize)")?;
-    config.impl_serde.fmt_attr(w, "derive(Deserialize)")?;
-    writeln!(w, "pub struct {} {{", msg.type_name())?;
-    {
-        let mut w = PadAdapter::wrap(w);
-        config
+
+    fn render_root_enum(&self, dbc: &Dbc) -> TokenStream {
+        let allow_dead_code = allow_dead_code_tokens(self.allow_dead_code);
+        let debug_derive = self.impl_debug.attr(&quote! { derive(Debug) });
+        let defmt_derive = self.impl_defmt.attr(&quote! { derive(defmt::Format) });
+        let serde_derives = self
             .impl_serde
-            .fmt_attr(&mut w, "serde(with = \"serde_bytes\")")?;
-        writeln!(w, "raw: [u8; {}],", msg.size)?;
-    }
-    writeln!(w, "}}")?;
-    writeln!(w)?;
+            .attr(&quote! { derive(Serialize, Deserialize) });
+        let allow_lints = allow_lints();
 
-    writeln!(w, "{ALLOW_LINTS}")?;
-    config.write_allow_dead_code(w)?;
-    writeln!(w, "impl {} {{", msg.type_name())?;
-    {
-        let mut w = PadAdapter::wrap(w);
+        let variants: Vec<_> = get_relevant_messages(dbc)
+            .map(|msg| {
+                let msg_type = msg.type_name();
+                let doc_str = format!(" {}", msg.name); // Use message name, not type_name
+                quote! {
+                    #[doc = #doc_str]
+                    #msg_type(#msg_type)
+                }
+            })
+            .collect();
 
-        writeln!(
-            w,
-            "pub const MESSAGE_ID: embedded_can::Id = {};",
-            match msg.id {
-                // use StandardId::new().unwrap() once const_option is stable
-                MessageId::Standard(id) =>
-                    format!("Id::Standard(unsafe {{ StandardId::new_unchecked({id:#x})}})"),
-                MessageId::Extended(id) =>
-                    format!("Id::Extended(unsafe {{ ExtendedId::new_unchecked({id:#x})}})"),
+        let from_can_arms: Vec<_> = get_relevant_messages(dbc)
+            .map(|msg| {
+                let msg_type = msg.type_name();
+                quote! { #msg_type::MESSAGE_ID => Messages::#msg_type(#msg_type::try_from(payload)?) }
+            })
+            .collect();
+
+        let from_can_body = if from_can_arms.is_empty() {
+            quote! { Err(CanError::UnknownMessageId(id)) }
+        } else {
+            quote! {
+                let res = match id {
+                    #(#from_can_arms,)*
+                    id => return Err(CanError::UnknownMessageId(id)),
+                };
+                Ok(res)
             }
-        )?;
-        writeln!(w)?;
+        };
 
-        for signal in &msg.signals {
-            let typ = ValType::from_signal(signal);
-            if typ != ValType::Bool {
-                let sig = signal.field_name().to_uppercase();
-                let min = signal.min;
-                let max = signal.max;
-                writeln!(w, "pub const {sig}_MIN: {typ} = {min}_{typ};")?;
-                writeln!(w, "pub const {sig}_MAX: {typ} = {max}_{typ};")?;
+        quote! {
+            /// All messages
+            #allow_lints
+            #allow_dead_code
+            #[derive(Clone)]
+            #debug_derive
+            #defmt_derive
+            #serde_derives
+            pub enum Messages {
+                #(#variants,)*
+            }
+
+            #allow_lints
+            #allow_dead_code
+            impl Messages {
+                /// Read message from CAN frame
+                #[inline(never)]
+                pub fn from_can_message(id: Id, payload: &[u8]) -> Result<Self, CanError> {
+                    #from_can_body
+                }
             }
         }
-        writeln!(w)?;
+    }
 
-        writeln!(w, "/// Construct new {} from values", msg.name)?;
-        let args = msg
+    fn render_message(&self, msg: &Message, dbc: &Dbc) -> Result<TokenStream> {
+        let mut doc = String::new();
+        writeln!(doc, "/// {}", msg.name)?;
+        writeln!(doc, "///")?;
+        let message_id = match msg.id {
+            MessageId::Standard(id) => {
+                writeln!(doc, "/// - Standard ID: {id} (0x{id:x})")?;
+                let id_lit = LitInt::new(&format!("{id:#x}"), Span::call_site());
+                quote! { Id::Standard(unsafe { StandardId::new_unchecked(#id_lit) }) }
+            }
+            MessageId::Extended(id) => {
+                writeln!(doc, "/// - Extended ID: {id} (0x{id:x})")?;
+                let id_lit = LitInt::new(&format!("{id:#x}"), Span::call_site());
+                quote! { Id::Extended(unsafe { ExtendedId::new_unchecked(#id_lit) }) }
+            }
+        };
+        writeln!(doc, "/// - Size: {} bytes", msg.size)?;
+        if let Transmitter::NodeName(transmitter) = &msg.transmitter {
+            writeln!(doc, "/// - Transmitter: {transmitter}")?;
+        }
+        if let Some(comment) = dbc.message_comment(msg.id) {
+            writeln!(doc, "///")?;
+            for line in comment.trim().lines() {
+                writeln!(doc, "/// {line}")?;
+            }
+        }
+        let struct_doc = doc.tokens().context("message doc to tokens")?;
+
+        let msg_type = msg.type_name();
+        let msg_size = msg.size as usize;
+        let msg_size_lit = LitInt::new(&msg_size.to_string(), Span::call_site());
+
+        // Struct attributes
+        let serde_serialize = self.impl_serde.attr(&quote! { derive(Serialize) });
+        let serde_deserialize = self.impl_serde.attr(&quote! { derive(Deserialize) });
+        let serde_with = self
+            .impl_serde
+            .attr(&quote! { serde(with = "serde_bytes") });
+
+        // Signal min/max constants
+        let signal_constants: Vec<_> = msg
+            .signals
+            .iter()
+            .filter_map(|signal| {
+                let typ = ValType::from_signal(signal);
+                if typ == ValType::Bool {
+                    None
+                } else {
+                    let min_name = signal.const_name("_MIN");
+                    let max_name = signal.const_name("_MAX");
+                    let typ_ident = typ.ident();
+                    let min_lit = generate_value_literal(signal.min, typ);
+                    let max_lit = generate_value_literal(signal.max, typ);
+
+                    Some(quote! {
+                        pub const #min_name: #typ_ident = #min_lit;
+                        pub const #max_name: #typ_ident = #max_lit;
+                    })
+                }
+            })
+            .collect();
+
+        // New function arguments and setter calls
+        let new_fn_args: Vec<_> = msg
             .signals
             .iter()
             .filter_map(|signal| {
                 if matches!(signal.multiplexer_indicator, Plain | Multiplexor) {
-                    let field = signal.field_name();
+                    let field_name = signal.field_name();
                     let typ = ValType::from_signal(signal);
-                    Some(format!("{field}: {typ}"))
+                    let typ_ident = typ.ident();
+                    Some(quote! { #field_name: #typ_ident })
                 } else {
                     None
                 }
             })
-            .collect::<Vec<_>>()
-            .join(", ");
-        writeln!(w, "pub fn new({args}) -> Result<Self, CanError> {{")?;
-        {
-            let mut w = PadAdapter::wrap(&mut w);
-            let mutable = if msg.signals.is_empty() { "" } else { "mut " };
-            let size = msg.size;
-            writeln!(w, "let {mutable}res = Self {{ raw: [0u8; {size}] }};")?;
-            for signal in &msg.signals {
+            .collect();
+
+        let new_fn_setters: Vec<_> = msg
+            .signals
+            .iter()
+            .filter_map(|signal| {
                 if matches!(signal.multiplexer_indicator, Plain | Multiplexor) {
-                    writeln!(w, "res.set_{0}({0})?;", signal.field_name())?;
+                    let field_name = signal.field_name();
+                    let setter_name = signal.field_name2("set_", "");
+                    Some(quote! { res.#setter_name(#field_name)?; })
+                } else {
+                    None
                 }
-            }
-            writeln!(w, "Ok(res)")?;
-        }
-        writeln!(w, "}}")?;
-        writeln!(w)?;
+            })
+            .collect();
 
-        writeln!(w, "/// Access message payload raw value")?;
-        writeln!(w, "pub fn raw(&self) -> &[u8; {}] {{", msg.size)?;
-        {
-            let mut w = PadAdapter::wrap(&mut w);
-            writeln!(w, "&self.raw")?;
-        }
-        writeln!(w, "}}")?;
-        writeln!(w)?;
-
-        for signal in &msg.signals {
-            match signal.multiplexer_indicator {
-                Plain => render_signal(&mut w, config, signal, dbc, msg)
-                    .with_context(|| format!("write signal impl `{}`", signal.name))?,
-                Multiplexor => {
-                    render_multiplexor_signal(&mut w, config, signal, msg)?;
-                }
-                MultiplexedSignal(_) | MultiplexorAndMultiplexedSignal(_) => {}
-            }
-        }
-    }
-
-    writeln!(w, "}}")?;
-    writeln!(w)?;
-
-    let typ = msg.type_name();
-    writeln!(w, "impl core::convert::TryFrom<&[u8]> for {typ} {{")?;
-    {
-        let mut w = PadAdapter::wrap(w);
-        writeln!(w, "type Error = CanError;")?;
-        writeln!(w)?;
-        writeln!(w, "#[inline(always)]")?;
-        writeln!(
-            w,
-            "fn try_from(payload: &[u8]) -> Result<Self, Self::Error> {{",
-        )?;
-        {
-            let mut w = PadAdapter::wrap(&mut w);
-            writeln!(
-                w,
-                r"if payload.len() != {} {{ return Err(CanError::InvalidPayloadSize); }}",
-                msg.size,
-            )?;
-            writeln!(w, "let mut raw = [0u8; {}];", msg.size)?;
-            writeln!(w, "raw.copy_from_slice(&payload[..{}]);", msg.size)?;
-            writeln!(w, "Ok(Self {{ raw }})")?;
-        }
-        writeln!(w, "}}")?;
-    }
-    writeln!(w, "}}")?;
-    writeln!(w)?;
-
-    render_embedded_can_frame(w, config, msg)?;
-
-    config
-        .impl_debug
-        .fmt_cfg(&mut *w, |w| render_debug_impl(w, msg))?;
-    config
-        .impl_defmt
-        .fmt_cfg(&mut *w, |w| render_defmt_impl(w, msg))?;
-    config
-        .impl_arbitrary
-        .fmt_cfg(&mut *w, |w| render_arbitrary(w, config, msg))?;
-
-    let enums_for_this_message = dbc.value_descriptions.iter().filter_map(|x| {
-        if let ValueDescription::Signal {
-            message_id,
-            name,
-            value_descriptions,
-        } = x
-        {
-            if *message_id != msg.id {
-                return None;
-            }
-            dbc.signal_by_name(*message_id, name)
-                .map(|v| (v, value_descriptions))
+        let new_fn_mutability = if msg.signals.is_empty() {
+            quote! {}
         } else {
-            None
+            quote! { mut }
+        };
+
+        // Render signals
+        let signal_impls: Result<Vec<_>> = msg
+            .signals
+            .iter()
+            .map(|signal| {
+                if signal.multiplexer_indicator == Multiplexor {
+                    self.render_multiplexor_signal(signal, msg)
+                        .with_context(|| format!("write signal impl `{}`", signal.name))
+                } else if signal.multiplexer_indicator == Plain {
+                    self.render_signal(signal, dbc, msg)
+                        .with_context(|| format!("write signal impl `{}`", signal.name))
+                } else {
+                    Ok(quote! {})
+                }
+            })
+            .collect();
+        let signal_impls = signal_impls?;
+
+        // Render embedded can frame impl
+        let embedded_can_impl = self.render_embedded_can_frame(msg);
+
+        // Render debug/defmt/arbitrary impls
+        let debug_impl = self.impl_debug.if_cfg(render_debug_impl(msg));
+        let defmt_impl = self.impl_defmt.if_cfg(render_defmt_impl(msg));
+        let arbitrary_impl = self.impl_arbitrary.if_cfg(self.render_arbitrary(msg));
+
+        // Render enums for this message
+        let enums_for_this_message: Vec<_> = dbc
+            .value_descriptions
+            .iter()
+            .filter_map(|x| {
+                if let ValueDescription::Signal {
+                    message_id,
+                    name,
+                    value_descriptions,
+                } = x
+                {
+                    if *message_id != msg.id {
+                        return None;
+                    }
+                    dbc.signal_by_name(*message_id, name)
+                        .map(|v| self.write_enum(v, msg, value_descriptions.as_slice()))
+                } else {
+                    None
+                }
+            })
+            .collect();
+
+        // Render multiplexor enums
+        let multiplexor_enums = msg
+            .signals
+            .iter()
+            .find(|signal| signal.multiplexer_indicator == Multiplexor)
+            .map(|multiplexor_signal| self.render_multiplexor_enums(dbc, msg, multiplexor_signal))
+            .transpose()?;
+
+        let allow_lints = allow_lints();
+        let allow_dead_code = allow_dead_code_tokens(self.allow_dead_code);
+
+        let new_fn_doc = format!("/// Construct new {} from values", msg.name).tokens()?;
+
+        Ok(quote! {
+            #struct_doc
+            #[derive(Clone, Copy)]
+            #serde_serialize
+            #serde_deserialize
+            pub struct #msg_type {
+                #serde_with
+                raw: [u8; #msg_size_lit],
+            }
+
+            #allow_lints
+            #allow_dead_code
+            impl #msg_type {
+                pub const MESSAGE_ID: embedded_can::Id = #message_id;
+
+                #(#signal_constants)*
+
+                #new_fn_doc
+                pub fn new(#(#new_fn_args),*) -> Result<Self, CanError> {
+                    let #new_fn_mutability res = Self { raw: [0u8; #msg_size_lit] };
+                    #(#new_fn_setters)*
+                    Ok(res)
+                }
+
+                /// Access message payload raw value
+                pub fn raw(&self) -> &[u8; #msg_size_lit] {
+                    &self.raw
+                }
+
+                #(#signal_impls)*
+            }
+
+            impl core::convert::TryFrom<&[u8]> for #msg_type {
+                type Error = CanError;
+
+                #[inline(always)]
+                fn try_from(payload: &[u8]) -> Result<Self, Self::Error> {
+                    if payload.len() != #msg_size_lit {
+                        return Err(CanError::InvalidPayloadSize);
+                    }
+                    let mut raw = [0u8; #msg_size_lit];
+                    raw.copy_from_slice(&payload[..#msg_size_lit]);
+                    Ok(Self { raw })
+                }
+            }
+
+            #embedded_can_impl
+            #debug_impl
+            #defmt_impl
+            #arbitrary_impl
+            #(#enums_for_this_message)*
+            #multiplexor_enums
+        })
+    }
+
+    fn render_signal(&self, signal: &Signal, dbc: &Dbc, msg: &Message) -> Result<TokenStream> {
+        let signal_name = &signal.name;
+        let fn_name = signal.field_name();
+        let fn_name_raw = signal.field_name2("", "_raw");
+
+        // Build signal getter doc as doc comment and parse into tokens
+        let mut doc = format!("/// {signal_name}\n");
+        if let Some(comment) = dbc.signal_comment(msg.id, &signal.name) {
+            doc.push_str("///\n");
+            for line in comment.trim().lines() {
+                let _ = writeln!(doc, "/// {line}");
+            }
         }
-    });
-    for (signal, variants) in enums_for_this_message {
-        write_enum(w, config, signal, msg, variants.as_slice())?;
-    }
+        let _ = writeln!(
+            doc,
+            "\
+///
+/// - Min: {}
+/// - Max: {}
+/// - Unit: {:?}
+/// - Receivers: {}",
+            signal.min,
+            signal.max,
+            signal.unit,
+            signal.receivers.join(", ")
+        );
+        let signal_doc = doc.tokens()?;
 
-    let multiplexor_signal = msg
-        .signals
-        .iter()
-        .find(|s| s.multiplexer_indicator == Multiplexor);
+        let typ = ValType::from_signal(signal);
+        let typ = typ.ident();
 
-    if let Some(multiplexor_signal) = multiplexor_signal {
-        render_multiplexor_enums(w, config, dbc, msg, multiplexor_signal)?;
-    }
-
-    Ok(())
-}
-
-fn render_signal(
-    w: &mut impl Write,
-    config: &Config<'_>,
-    signal: &Signal,
-    dbc: &Dbc,
-    msg: &Message,
-) -> Result<()> {
-    writeln!(w, "/// {}", signal.name)?;
-    if let Some(comment) = dbc.signal_comment(msg.id, &signal.name) {
-        writeln!(w, "///")?;
-        for line in comment.trim().lines() {
-            writeln!(w, "/// {line}")?;
-        }
-    }
-    writeln!(w, "///")?;
-    writeln!(w, "/// - Min: {}", signal.min)?;
-    writeln!(w, "/// - Max: {}", signal.max)?;
-    writeln!(w, "/// - Unit: {:?}", signal.unit)?;
-    writeln!(w, "/// - Receivers: {}", signal.receivers.join(", "))?;
-    writeln!(w, "#[inline(always)]")?;
-    let fn_name = signal.field_name();
-    if let Some(variants) = dbc.value_descriptions_for_signal(msg.id, &signal.name) {
-        let type_name = enum_name(msg, signal);
-        let signal_ty = ValType::from_signal(signal);
-        let variant_infos = generate_variant_info(variants, signal_ty);
-
-        writeln!(w, "pub fn {fn_name}(&self) -> {type_name} {{")?;
+        // Generate getter function
+        let getter = if let Some(variants) = dbc.value_descriptions_for_signal(msg.id, &signal.name)
         {
-            let mut w = PadAdapter::wrap(w);
+            let type_name = enum_name(msg, signal);
+            let signal_ty = ValType::from_signal(signal);
+            let variant_infos = generate_variant_info(variants, signal_ty);
 
             // Use signed type for loading when signal is signed and has negative values
             let has_negative_values = variants.iter().any(|v| v.id < 0);
@@ -458,231 +485,232 @@ fn render_signal(
                 ValType::from_signal_uint(signal)
             };
 
-            let read = read_fn_with_type(signal, msg, load_type)?;
-            writeln!(w, r"let signal = {read};")?;
-            writeln!(w)?;
-            writeln!(w, "match signal {{")?;
-            {
-                let mut w = PadAdapter::wrap(&mut w);
-                for info in &variant_infos {
-                    let literal = info.value;
-                    let variant = &info.base_name;
+            let read_expr = read_fn_with_type(signal, msg, load_type)?;
+
+            let match_arms: Vec<_> = variant_infos
+                .iter()
+                .map(|info| {
+                    let literal = LitInt::new(&info.value.to_string(), Span::call_site());
+                    let variant = info.base_name.ident();
                     match info.dup_type {
                         DuplicateType::Unique => {
-                            writeln!(w, "{literal} => {type_name}::{variant},")?;
+                            quote! { #literal => #type_name::#variant }
                         }
                         DuplicateType::FirstDuplicate | DuplicateType::Duplicate => {
-                            writeln!(w, "{literal} => {type_name}::{variant}({literal}),")?;
+                            quote! { #literal => #type_name::#variant(#literal) }
                         }
                     }
+                })
+                .collect();
+
+            quote! {
+                #[inline(always)]
+                pub fn #fn_name(&self) -> #type_name {
+                    let signal = #read_expr;
+
+                    match signal {
+                        #(#match_arms,)*
+                        _ => #type_name::_Other(self.#fn_name_raw()),
+                    }
                 }
-                writeln!(w, "_ => {type_name}::_Other(self.{fn_name}_raw()),")?;
             }
-            writeln!(w, "}}")?;
-        }
-        writeln!(w, "}}")?;
-        writeln!(w)?;
-    } else {
+        } else {
+            quote! {
+                #[inline(always)]
+                pub fn #fn_name(&self) -> #typ {
+                    self.#fn_name_raw()
+                }
+            }
+        };
+
+        let raw_doc_text = format!(
+            "\
+/// Get raw value of {signal_name}
+///
+/// - Start bit: {}
+/// - Signal size: {} bits
+/// - Factor: {}
+/// - Offset: {}
+/// - Byte order: {:?}
+/// - Value type: {:?}",
+            signal.start_bit,
+            signal.size,
+            signal.factor,
+            signal.offset,
+            signal.byte_order,
+            signal.value_type
+        );
+        let fn_name_doc = raw_doc_text.tokens()?;
+        let fn_body = signal_from_payload(signal, msg).context("signal from payload")?;
+        let setter = self.render_set_signal(signal, msg)?;
+
+        Ok(quote! {
+            #signal_doc
+            #getter
+
+            #fn_name_doc
+            #[inline(always)]
+            pub fn #fn_name_raw(&self) -> #typ {
+                #fn_body
+            }
+
+            #setter
+        })
+    }
+
+    fn render_set_signal(&self, signal: &Signal, msg: &Message) -> Result<TokenStream> {
+        let setter_name = signal.field_name2("set_", "");
+
+        // To avoid accidentally changing the multiplexor value without changing
+        // the signals accordingly this fn is kept private for multiplexors.
+        let visibility = if signal.multiplexer_indicator == Multiplexor {
+            quote! {}
+        } else {
+            quote! { pub }
+        };
+
+        let setter_doc = format!(" Set value of {}", signal.name);
         let typ = ValType::from_signal(signal);
-        writeln!(w, "pub fn {fn_name}(&self) -> {typ} {{")?;
-        {
-            let mut w = PadAdapter::wrap(w);
-            writeln!(w, "self.{fn_name}_raw()")?;
-        }
-        writeln!(w, "}}")?;
-        writeln!(w)?;
-    }
+        let typ_ident = typ.ident();
+        let msg_type = msg.type_name();
 
-    writeln!(w, "/// Get raw value of {}", signal.name)?;
-    writeln!(w, "///")?;
-    writeln!(w, "/// - Start bit: {}", signal.start_bit)?;
-    writeln!(w, "/// - Signal size: {} bits", signal.size)?;
-    writeln!(w, "/// - Factor: {}", signal.factor)?;
-    writeln!(w, "/// - Offset: {}", signal.offset)?;
-    writeln!(w, "/// - Byte order: {:?}", signal.byte_order)?;
-    writeln!(w, "/// - Value type: {:?}", signal.value_type)?;
-    writeln!(w, "#[inline(always)]")?;
-    let typ = ValType::from_signal(signal);
-    writeln!(w, "pub fn {fn_name}_raw(&self) -> {typ} {{")?;
-    {
-        let mut w = PadAdapter::wrap(w);
-        signal_from_payload(&mut w, signal, msg).context("signal from payload")?;
-    }
-    writeln!(w, "}}")?;
-    writeln!(w)?;
+        // Range check logic
+        let range_check = if signal.size == 1 {
+            quote! {}
+        } else {
+            let min_lit = generate_value_literal(signal.min, typ);
+            let max_lit = generate_value_literal(signal.max, typ);
 
-    render_set_signal(w, config, signal, msg)?;
-
-    Ok(())
-}
-
-fn render_set_signal(
-    w: &mut impl Write,
-    config: &Config<'_>,
-    signal: &Signal,
-    msg: &Message,
-) -> Result<()> {
-    writeln!(w, "/// Set value of {}", signal.name)?;
-    writeln!(w, "#[inline(always)]")?;
-
-    // To avoid accidentally changing the multiplexor value without changing
-    // the signals accordingly this fn is kept private for multiplexors.
-    let visibility = if signal.multiplexer_indicator == Multiplexor {
-        ""
-    } else {
-        "pub "
-    };
-
-    let field = signal.field_name();
-    let typ = ValType::from_signal(signal);
-    writeln!(
-        w,
-        "{visibility}fn set_{field}(&mut self, value: {typ}) -> Result<(), CanError> {{",
-    )?;
-
-    {
-        let mut w = PadAdapter::wrap(w);
-
-        if signal.size != 1 {
-            if let FeatureConfig::Gated(gate) = config.check_ranges {
-                writeln!(w, r"#[cfg(feature = {gate:?})]")?;
-            }
-
-            if let FeatureConfig::Gated(..) | FeatureConfig::Always = config.check_ranges {
-                let typ = ValType::from_signal(signal);
-                let min = signal.min;
-                let max = signal.max;
-                writeln!(w, r"if value < {min}_{typ} || {max}_{typ} < value {{")?;
-
-                {
-                    let mut w = PadAdapter::wrap(&mut w);
-                    let typ = msg.type_name();
-                    writeln!(
-                        w,
-                        r"return Err(CanError::ParameterOutOfRange {{ message_id: {typ}::MESSAGE_ID }});",
-                    )?;
+            let check_code = quote! {
+                if value < #min_lit || #max_lit < value {
+                    return Err(CanError::ParameterOutOfRange { message_id: #msg_type::MESSAGE_ID });
                 }
+            };
 
-                writeln!(w, r"}}")?;
+            self.check_ranges.if_cfg(check_code)
+        };
+
+        let signal_to_payload_body = signal_to_payload(signal, msg)?;
+
+        Ok(quote! {
+            #[doc = #setter_doc]
+            #[inline(always)]
+            #visibility fn #setter_name(&mut self, value: #typ_ident) -> Result<(), CanError> {
+                #range_check
+                #signal_to_payload_body
             }
-        }
-        signal_to_payload(&mut w, signal, msg).context("signal to payload")?;
+        })
     }
-
-    writeln!(w, "}}")?;
-    writeln!(w)?;
-
-    Ok(())
 }
 
 fn render_set_signal_multiplexer(
-    w: &mut impl Write,
     multiplexor: &Signal,
     msg: &Message,
     switch_index: u64,
-) -> Result<()> {
-    writeln!(w, "/// Set value of {}", multiplexor.name)?;
-    writeln!(w, "#[inline(always)]")?;
-    writeln!(
-        w,
-        "pub fn set_{enum_variant_wrapper}(&mut self, value: {enum_variant}) -> Result<(), CanError> {{",
-        enum_variant_wrapper = multiplexed_enum_variant_wrapper_name(switch_index).to_snake_case(),
-        enum_variant = multiplexed_enum_variant_name(msg, multiplexor, switch_index)?,
-    )?;
+) -> Result<TokenStream> {
+    let enum_variant = multiplexed_enum_variant_name(msg, multiplexor, switch_index)?;
+    let setter_name = multiplexed_enum_variant_wrapper_setter_name(switch_index);
+    let multiplexor_setter = multiplexor.field_name2("set_", "");
+    let switch_index_lit = LitInt::new(&switch_index.to_string(), Span::call_site());
 
-    {
-        let mut w = PadAdapter::wrap(w);
+    let doc = format!("/// Set value of {}", multiplexor.name).tokens()?;
 
-        writeln!(w, "let b0 = BitArray::<_, LocalBits>::new(self.raw);")?;
-        writeln!(w, "let b1 = BitArray::<_, LocalBits>::new(value.raw);")?;
-        writeln!(w, "self.raw = b0.bitor(b1).into_inner();")?;
-        writeln!(w, "self.set_{}({switch_index})?;", multiplexor.field_name())?;
-        writeln!(w, "Ok(())")?;
-    }
-
-    writeln!(w, "}}")?;
-    writeln!(w)?;
-
-    Ok(())
+    Ok(quote! {
+        #doc
+        #[inline(always)]
+        pub fn #setter_name(&mut self, value: #enum_variant) -> Result<(), CanError> {
+            let b0 = BitArray::<_, LocalBits>::new(self.raw);
+            let b1 = BitArray::<_, LocalBits>::new(value.raw);
+            self.raw = b0.bitor(b1).into_inner();
+            self.#multiplexor_setter(#switch_index_lit)?;
+            Ok(())
+        }
+    })
 }
 
-fn render_multiplexor_signal(
-    w: &mut impl Write,
-    config: &Config<'_>,
-    signal: &Signal,
-    msg: &Message,
-) -> Result<()> {
-    writeln!(w, "/// Get raw value of {}", signal.name)?;
-    writeln!(w, "///")?;
-    writeln!(w, "/// - Start bit: {}", signal.start_bit)?;
-    writeln!(w, "/// - Signal size: {} bits", signal.size)?;
-    writeln!(w, "/// - Factor: {}", signal.factor)?;
-    writeln!(w, "/// - Offset: {}", signal.offset)?;
-    writeln!(w, "/// - Byte order: {:?}", signal.byte_order)?;
-    writeln!(w, "/// - Value type: {:?}", signal.value_type)?;
-    writeln!(w, "#[inline(always)]")?;
-    let field = signal.field_name();
-    let typ = ValType::from_signal(signal);
-    writeln!(w, "pub fn {field}_raw(&self) -> {typ} {{")?;
-    {
-        let mut w = PadAdapter::wrap(w);
-        signal_from_payload(&mut w, signal, msg).context("signal from payload")?;
-    }
-    writeln!(w, "}}")?;
-    writeln!(w)?;
+impl Config<'_> {
+    fn render_multiplexor_signal(&self, signal: &Signal, msg: &Message) -> Result<TokenStream> {
+        let field = signal.field_name();
+        let field_raw = signal.field_name2("", "_raw");
+        let typ = ValType::from_signal(signal);
+        let typ_ident = typ.ident();
+        let enum_type = multiplex_enum_name(msg, signal)?;
 
-    let field = signal.field_name();
-    let typ = multiplex_enum_name(msg, signal)?;
-    writeln!(w, "pub fn {field}(&mut self) -> Result<{typ}, CanError> {{")?;
+        // Build raw doc as doc comment string and parse into tokens
+        let raw_doc_text = format!(
+            "\
+/// Get raw value of {}
+///
+/// - Start bit: {}
+/// - Signal size: {} bits
+/// - Factor: {}
+/// - Offset: {}
+/// - Byte order: {:?}
+/// - Value type: {:?}",
+            signal.name,
+            signal.start_bit,
+            signal.size,
+            signal.factor,
+            signal.offset,
+            signal.byte_order,
+            signal.value_type
+        );
+        let field_raw_doc = raw_doc_text.tokens()?;
 
-    let multiplexer_indexes: BTreeSet<u64> = msg
-        .signals
-        .iter()
-        .filter_map(|s| {
-            if let MultiplexedSignal(index) = &s.multiplexer_indicator {
-                Some(index)
-            } else {
-                None
+        let signal_from_payload_body = signal_from_payload(signal, msg)?;
+
+        let multiplexer_indexes: BTreeSet<u64> = msg
+            .signals
+            .iter()
+            .filter_map(|s| {
+                if let MultiplexedSignal(index) = &s.multiplexer_indicator {
+                    Some(*index)
+                } else {
+                    None
+                }
+            })
+            .collect();
+
+        let match_arms: Vec<_> = multiplexer_indexes.iter().map(|idx| {
+            let multiplexed_wrapper_name = multiplexed_enum_variant_wrapper_name(*idx);
+            let multiplexed_name = multiplexed_enum_variant_name(msg, signal, *idx).unwrap();
+            let idx_lit = LitInt::new(&idx.to_string(), Span::call_site());
+            quote! {
+                #idx_lit => Ok(#enum_type::#multiplexed_wrapper_name(#multiplexed_name { raw: self.raw }))
             }
+        }).collect();
+
+        let msg_type = msg.type_name();
+
+        let setter = self.render_set_signal(signal, msg)?;
+
+        let set_multiplexer_fns: Result<Vec<_>> = multiplexer_indexes
+            .iter()
+            .map(|switch_index| render_set_signal_multiplexer(signal, msg, *switch_index))
+            .collect();
+        let set_multiplexer_fns = set_multiplexer_fns?;
+
+        Ok(quote! {
+            #field_raw_doc
+            #[inline(always)]
+            pub fn #field_raw(&self) -> #typ_ident {
+                #signal_from_payload_body
+            }
+
+            pub fn #field(&mut self) -> Result<#enum_type, CanError> {
+                match self.#field_raw() {
+                    #(#match_arms,)*
+                    multiplexor => Err(CanError::InvalidMultiplexor {
+                        message_id: #msg_type::MESSAGE_ID,
+                        multiplexor: multiplexor.into()
+                    }),
+                }
+            }
+
+            #setter
+            #(#set_multiplexer_fns)*
         })
-        .copied()
-        .collect();
-
-    {
-        let mut w = PadAdapter::wrap(w);
-        writeln!(w, "match self.{}_raw() {{", signal.field_name())?;
-
-        {
-            let mut w = PadAdapter::wrap(&mut w);
-            for multiplexer_index in &multiplexer_indexes {
-                writeln!(
-                    w,
-                    "{idx} => Ok({enum_name}::{multiplexed_wrapper_name}({multiplexed_name}{{ raw: self.raw }})),",
-                    idx = multiplexer_index,
-                    enum_name = multiplex_enum_name(msg, signal)?,
-                    multiplexed_wrapper_name = multiplexed_enum_variant_wrapper_name(*multiplexer_index),
-                    multiplexed_name =
-                        multiplexed_enum_variant_name(msg, signal, *multiplexer_index)?,
-                )?;
-            }
-            writeln!(
-                w,
-                "multiplexor => Err(CanError::InvalidMultiplexor {{ message_id: {}::MESSAGE_ID, multiplexor: multiplexor.into() }}),",
-                msg.type_name(),
-            )?;
-        }
-
-        writeln!(w, "}}")?;
     }
-    writeln!(w, "}}")?;
-
-    render_set_signal(w, config, signal, msg)?;
-
-    for switch_index in multiplexer_indexes {
-        render_set_signal_multiplexer(w, signal, msg, switch_index)?;
-    }
-
-    Ok(())
 }
 
 fn be_start_end_bit(signal: &Signal, msg: &Message) -> Result<(u64, u64)> {
@@ -731,196 +759,262 @@ fn le_start_end_bit(signal: &Signal, msg: &Message) -> Result<(u64, u64)> {
     Ok((start_bit, end_bit))
 }
 
-fn signal_from_payload(w: &mut impl Write, signal: &Signal, msg: &Message) -> Result<()> {
-    writeln!(w, r"let signal = {};", read_fn(signal, msg)?)?;
-    writeln!(w)?;
-
-    let typ = ValType::from_signal(signal);
-    match typ {
-        ValType::Bool => {
-            writeln!(w, "signal == 1")?;
-        }
-        ValType::F32 => {
-            // Scaling is always done on floats
-            writeln!(w, "let factor = {}_f32;", signal.factor)?;
-            writeln!(w, "let offset = {}_f32;", signal.offset)?;
-            writeln!(w, "(signal as f32) * factor + offset")?;
-        }
-        _ => {
-            writeln!(w, "let factor = {};", signal.factor)?;
-            if Some(typ) == ValType::from_signal_uint(signal).unsigned_to_signed() {
-                // Can't do iNN::from(uNN) if they both fit in the same integer type,
-                // so cast first
-                writeln!(w, "let signal = signal as {typ};")?;
-            }
-
-            if signal.offset >= 0.0 {
-                writeln!(
-                    w,
-                    "{typ}::from(signal).saturating_mul(factor).saturating_add({})",
-                    signal.offset,
-                )?;
-            } else {
-                writeln!(
-                    w,
-                    "{typ}::from(signal).saturating_mul(factor).saturating_sub({})",
-                    signal.offset.abs(),
-                )?;
-            }
-        }
-    }
-    Ok(())
-}
-
-fn read_fn(signal: &Signal, msg: &Message) -> Result<String> {
-    read_fn_with_type(signal, msg, ValType::from_signal_int(signal))
-}
-
-fn read_fn_with_type(signal: &Signal, msg: &Message, typ: ValType) -> Result<String> {
+fn read_fn_with_type(signal: &Signal, msg: &Message, typ: ValType) -> Result<TokenStream> {
+    let typ_ident = typ.ident();
     Ok(match signal.byte_order {
         LittleEndian => {
             let (start, end) = le_start_end_bit(signal, msg)?;
-            format!("self.raw.view_bits::<Lsb0>()[{start}..{end}].load_le::<{typ}>()")
+            let start_lit = LitInt::new(&start.to_string(), Span::call_site());
+            let end_lit = LitInt::new(&end.to_string(), Span::call_site());
+            quote! { self.raw.view_bits::<Lsb0>()[#start_lit..#end_lit].load_le::<#typ_ident>() }
         }
         BigEndian => {
             let (start, end) = be_start_end_bit(signal, msg)?;
-            format!("self.raw.view_bits::<Msb0>()[{start}..{end}].load_be::<{typ}>()")
+            let start_lit = LitInt::new(&start.to_string(), Span::call_site());
+            let end_lit = LitInt::new(&end.to_string(), Span::call_site());
+            quote! { self.raw.view_bits::<Msb0>()[#start_lit..#end_lit].load_be::<#typ_ident>() }
         }
     })
 }
 
-fn signal_to_payload(w: &mut impl Write, signal: &Signal, msg: &Message) -> Result<()> {
+fn signal_from_payload(signal: &Signal, msg: &Message) -> Result<TokenStream> {
+    let read_expr = read_fn_with_type(signal, msg, ValType::from_signal_int(signal))?;
+
     let typ = ValType::from_signal(signal);
-    match typ {
+    let typ_ident = typ.ident();
+
+    Ok(match typ {
         ValType::Bool => {
-            // Map boolean to byte so we can pack it
-            writeln!(w, "let value = value as u8;")?;
+            quote! {
+                let signal = #read_expr;
+                signal == 1
+            }
         }
         ValType::F32 => {
-            // Massage value into an int
-            writeln!(w, "let factor = {}_f32;", signal.factor)?;
-            writeln!(w, "let offset = {}_f32;", signal.offset)?;
-            let typ = ValType::from_signal_int(signal);
-            writeln!(w, "let value = ((value - offset) / factor) as {typ};")?;
-            writeln!(w)?;
+            let factor = signal.factor;
+            let offset = signal.offset;
+            let factor_lit = LitFloat::new(&format!("{factor}_f32"), Span::call_site());
+            let offset_lit = LitFloat::new(&format!("{offset}_f32"), Span::call_site());
+            quote! {
+                let signal = #read_expr;
+                let factor = #factor_lit;
+                let offset = #offset_lit;
+                (signal as f32) * factor + offset
+            }
         }
         _ => {
-            writeln!(w, "let factor = {};", signal.factor)?;
-            if signal.offset >= 0.0 {
-                writeln!(w, "let value = value.checked_sub({})", signal.offset)?;
+            let factor = signal.factor;
+            let factor_lit = LitFloat::new(&factor.to_string(), Span::call_site());
+
+            let signal_cast = if Some(typ) == ValType::from_signal_uint(signal).unsigned_to_signed()
+            {
+                quote! { let signal = signal as #typ_ident; }
             } else {
-                writeln!(w, "let value = value.checked_add({})", signal.offset.abs())?;
+                quote! {}
+            };
+
+            if signal.offset >= 0.0 {
+                let offset = signal.offset;
+                let offset_lit = LitFloat::new(&offset.to_string(), Span::call_site());
+                quote! {
+                    let signal = #read_expr;
+                    let factor = #factor_lit;
+                    #signal_cast
+                    #typ_ident::from(signal).saturating_mul(factor).saturating_add(#offset_lit)
+                }
+            } else {
+                let offset_abs = signal.offset.abs();
+                let offset_lit = LitFloat::new(&offset_abs.to_string(), Span::call_site());
+                quote! {
+                    let signal = #read_expr;
+                    let factor = #factor_lit;
+                    #signal_cast
+                    #typ_ident::from(signal).saturating_mul(factor).saturating_sub(#offset_lit)
+                }
             }
-            writeln!(
-                w,
-                "    .ok_or(CanError::ParameterOutOfRange {{ message_id: {}::MESSAGE_ID }})?;",
-                msg.type_name(),
-            )?;
-            let typ = ValType::from_signal_int(signal);
-            writeln!(w, "let value = (value / factor) as {typ};")?;
-            writeln!(w)?;
         }
-    }
+    })
+}
 
-    if signal.value_type == Signed {
-        let typ = ValType::from_signal_uint(signal);
-        writeln!(w, "let value = {typ}::from_ne_bytes(value.to_ne_bytes());")?;
-    }
+fn signal_to_payload(signal: &Signal, msg: &Message) -> Result<TokenStream> {
+    let typ = ValType::from_signal(signal);
+    let msg_type = msg.type_name();
 
-    match signal.byte_order {
+    let value_conversion = match typ {
+        ValType::Bool => {
+            quote! { let value = value as u8; }
+        }
+        ValType::F32 => {
+            let factor = signal.factor;
+            let offset = signal.offset;
+            let factor_lit = LitFloat::new(&format!("{factor}_f32"), Span::call_site());
+            let offset_lit = LitFloat::new(&format!("{offset}_f32"), Span::call_site());
+            let int_typ = ValType::from_signal_int(signal);
+            let int_typ_ident = int_typ.ident();
+            quote! {
+                let factor = #factor_lit;
+                let offset = #offset_lit;
+                let value = ((value - offset) / factor) as #int_typ_ident;
+            }
+        }
+        _ => {
+            let factor = signal.factor;
+            let factor_lit = LitFloat::new(&factor.to_string(), Span::call_site());
+            let int_typ = ValType::from_signal_int(signal);
+            let int_typ_ident = int_typ.ident();
+
+            if signal.offset >= 0.0 {
+                let offset = signal.offset;
+                let offset_lit = LitFloat::new(&offset.to_string(), Span::call_site());
+                quote! {
+                    let factor = #factor_lit;
+                    let value = value.checked_sub(#offset_lit)
+                        .ok_or(CanError::ParameterOutOfRange { message_id: #msg_type::MESSAGE_ID })?;
+                    let value = (value / factor) as #int_typ_ident;
+                }
+            } else {
+                let offset_abs = signal.offset.abs();
+                let offset_lit = LitFloat::new(&offset_abs.to_string(), Span::call_site());
+                quote! {
+                    let factor = #factor_lit;
+                    let value = value.checked_add(#offset_lit)
+                        .ok_or(CanError::ParameterOutOfRange { message_id: #msg_type::MESSAGE_ID })?;
+                    let value = (value / factor) as #int_typ_ident;
+                }
+            }
+        }
+    };
+
+    let signed_conversion = if signal.value_type == Signed {
+        let uint_typ = ValType::from_signal_uint(signal);
+        let uint_typ_ident = uint_typ.ident();
+        quote! { let value = #uint_typ_ident::from_ne_bytes(value.to_ne_bytes()); }
+    } else {
+        quote! {}
+    };
+
+    let store_expr = match signal.byte_order {
         LittleEndian => {
             let (start, end) = le_start_end_bit(signal, msg)?;
-            writeln!(
-                w,
-                r"self.raw.view_bits_mut::<Lsb0>()[{start}..{end}].store_le(value);",
-            )?;
+            let start_lit = LitInt::new(&start.to_string(), Span::call_site());
+            let end_lit = LitInt::new(&end.to_string(), Span::call_site());
+            quote! { self.raw.view_bits_mut::<Lsb0>()[#start_lit..#end_lit].store_le(value); }
         }
         BigEndian => {
             let (start, end) = be_start_end_bit(signal, msg)?;
-            writeln!(
-                w,
-                r"self.raw.view_bits_mut::<Msb0>()[{start}..{end}].store_be(value);",
-            )?;
+            let start_lit = LitInt::new(&start.to_string(), Span::call_site());
+            let end_lit = LitInt::new(&end.to_string(), Span::call_site());
+            quote! { self.raw.view_bits_mut::<Msb0>()[#start_lit..#end_lit].store_be(value); }
         }
-    }
+    };
 
-    writeln!(w, "Ok(())")?;
-    Ok(())
+    Ok(quote! {
+        #value_conversion
+        #signed_conversion
+        #store_expr
+        Ok(())
+    })
 }
 
-fn write_enum(
-    w: &mut impl Write,
-    config: &Config<'_>,
-    signal: &Signal,
-    msg: &Message,
-    variants: &[ValDescription],
-) -> Result<()> {
-    let type_name = enum_name(msg, signal);
-    let signal_ty = ValType::from_signal(signal);
+impl Config<'_> {
+    fn write_enum(
+        &self,
+        signal: &Signal,
+        msg: &Message,
+        variants: &[ValDescription],
+    ) -> TokenStream {
+        let type_name = enum_name(msg, signal);
+        let signal_ty = ValType::from_signal(signal);
+        let signal_ty_ident = signal_ty.ident();
 
-    // Generate variant info to handle duplicates with tuple variants
-    let variant_infos = generate_variant_info(variants, signal_ty);
+        // Generate variant info to handle duplicates with tuple variants
+        let variant_infos = generate_variant_info(variants, signal_ty);
 
-    writeln!(w, "/// Defined values for {}", signal.name)?;
-    writeln!(w, "{ALLOW_LINTS}")?;
-    config.write_allow_dead_code(w)?;
-    writeln!(w, "#[derive(Clone, Copy, PartialEq)]")?;
-    config.impl_debug.fmt_attr(w, "derive(Debug)")?;
-    config.impl_defmt.fmt_attr(w, "derive(defmt::Format)")?;
-    config.impl_serde.fmt_attr(w, "derive(Serialize)")?;
-    config.impl_serde.fmt_attr(w, "derive(Deserialize)")?;
-    writeln!(w, "pub enum {type_name} {{")?;
-    {
-        let mut w = PadAdapter::wrap(w);
-        for info in &variant_infos {
-            let variant = &info.base_name;
-            match info.dup_type {
-                DuplicateType::Unique => writeln!(w, "{variant},")?,
-                DuplicateType::FirstDuplicate => writeln!(w, "{variant}({}),", info.value_type)?,
-                DuplicateType::Duplicate => {}
+        let signal_name = &signal.name;
+        let doc = format!(" Defined values for {signal_name}");
+
+        let allow_lints = allow_lints();
+        let allow_dead_code = allow_dead_code_tokens(self.allow_dead_code);
+        let debug_derive = self.impl_debug.attr(&quote! { derive(Debug) });
+        let defmt_derive = self.impl_defmt.attr(&quote! { derive(defmt::Format) });
+        let serde_serialize = self.impl_serde.attr(&quote! { derive(Serialize) });
+        let serde_deserialize = self.impl_serde.attr(&quote! { derive(Deserialize) });
+
+        // Generate enum variants
+        let enum_variants: Vec<_> = variant_infos
+            .iter()
+            .filter_map(|info| {
+                let variant = info.base_name.ident();
+                match info.dup_type {
+                    DuplicateType::Unique => Some(quote! { #variant }),
+                    DuplicateType::FirstDuplicate => {
+                        let value_type = info.value_type.ident();
+                        Some(quote! { #variant(#value_type) })
+                    }
+                    DuplicateType::Duplicate => None,
+                }
+            })
+            .collect();
+
+        // Generate From impl match arms
+        let from_match_arms: Vec<_> = variant_infos
+            .iter()
+            .filter_map(|info| {
+                let variant = info.base_name.ident();
+                match info.dup_type {
+                    DuplicateType::Unique => {
+                        let literal_value = match signal_ty {
+                            ValType::Bool => {
+                                if info.value == 1 {
+                                    quote! { true }
+                                } else {
+                                    quote! { false }
+                                }
+                            }
+                            ValType::F32 => {
+                                let val = LitFloat::new(
+                                    &format!("{}_f32", info.value),
+                                    Span::call_site(),
+                                );
+                                quote! { #val }
+                            }
+                            _ => {
+                                let val = LitInt::new(&info.value.to_string(), Span::call_site());
+                                quote! { #val }
+                            }
+                        };
+                        Some(quote! { #type_name::#variant => #literal_value })
+                    }
+                    DuplicateType::FirstDuplicate => Some(quote! { #type_name::#variant(v) => v }),
+                    DuplicateType::Duplicate => None,
+                }
+            })
+            .collect();
+
+        quote! {
+            #[doc = #doc]
+            #allow_lints
+            #allow_dead_code
+            #[derive(Clone, Copy, PartialEq)]
+            #debug_derive
+            #defmt_derive
+            #serde_serialize
+            #serde_deserialize
+            pub enum #type_name {
+                #(#enum_variants,)*
+                _Other(#signal_ty_ident),
             }
-        }
-        writeln!(w, "_Other({signal_ty}),")?;
-    }
-    writeln!(w, "}}")?;
-    writeln!(w)?;
 
-    writeln!(w, "impl From<{type_name}> for {signal_ty} {{")?;
-    {
-        let match_on_raw_type = match ValType::from_signal(signal) {
-            ValType::Bool => |x: i64| format!("{}", x == 1),
-            ValType::F32 => |x: i64| format!("{x}_f32"),
-            _ => |x: i64| format!("{x}"),
-        };
-
-        let mut w = PadAdapter::wrap(w);
-        writeln!(w, "fn from(val: {type_name}) -> {signal_ty} {{")?;
-        {
-            let mut w = PadAdapter::wrap(&mut w);
-            writeln!(w, "match val {{")?;
-            {
-                let mut w = PadAdapter::wrap(&mut w);
-                for info in &variant_infos {
-                    match info.dup_type {
-                        DuplicateType::Unique => {
-                            let literal = match_on_raw_type(info.value);
-                            writeln!(w, "{type_name}::{} => {literal},", info.base_name)?;
-                        }
-                        DuplicateType::FirstDuplicate => {
-                            writeln!(w, "{type_name}::{}(v) => v,", info.base_name)?;
-                        }
-                        DuplicateType::Duplicate => {}
+            impl From<#type_name> for #signal_ty_ident {
+                fn from(val: #type_name) -> #signal_ty_ident {
+                    match val {
+                        #(#from_match_arms,)*
+                        #type_name::_Other(x) => x,
                     }
                 }
-                writeln!(w, "{type_name}::_Other(x) => x,")?;
             }
-            writeln!(w, "}}")?;
         }
-        writeln!(w, "}}")?;
     }
-    writeln!(w, "}}")?;
-    writeln!(w)?;
-    Ok(())
 }
 
 enum DuplicateType {
@@ -977,351 +1071,340 @@ fn generate_variant_info(variants: &[ValDescription], signal_ty: ValType) -> Vec
     variant_infos
 }
 
-fn enum_name(msg: &Message, signal: &Signal) -> String {
-    // this turns signal `_4DRIVE` into `4drive`
-    let signal_name = signal
-        .name
-        .trim_start_matches(|c: char| c.is_ascii_punctuation())
-        .to_pascal_case();
-    let msg_name = enum_variant_name(&msg.name);
+impl Config<'_> {
+    fn render_embedded_can_frame(&self, msg: &Message) -> TokenStream {
+        let msg_type = msg.type_name();
 
-    format!("{msg_name}{signal_name}")
+        let impl_tokens = quote! {
+            impl embedded_can::Frame for #msg_type {
+                fn new(id: impl Into<Id>, data: &[u8]) -> Option<Self> {
+                    if id.into() != Self::MESSAGE_ID {
+                        None
+                    } else {
+                        data.try_into().ok()
+                    }
+                }
+
+                fn new_remote(_id: impl Into<Id>, _dlc: usize) -> Option<Self> {
+                    unimplemented!()
+                }
+
+                fn is_extended(&self) -> bool {
+                    match self.id() {
+                        Id::Standard(_) => false,
+                        Id::Extended(_) => true,
+                    }
+                }
+
+                fn is_remote_frame(&self) -> bool {
+                    false
+                }
+
+                fn id(&self) -> Id {
+                    Self::MESSAGE_ID
+                }
+
+                fn dlc(&self) -> usize {
+                    self.raw.len()
+                }
+
+                fn data(&self) -> &[u8] {
+                    &self.raw
+                }
+            }
+        };
+
+        self.impl_embedded_can_frame.if_cfg(impl_tokens)
+    }
 }
 
-fn multiplexed_enum_variant_wrapper_name(switch_index: u64) -> String {
-    format!("M{switch_index}")
+fn render_debug_impl(msg: &Message) -> TokenStream {
+    let msg_type = msg.type_name();
+    let typ_name = msg_type.to_string();
+
+    let debug_fields: Vec<_> = msg
+        .signals
+        .iter()
+        .filter(|signal| signal.multiplexer_indicator == Plain)
+        .map(|signal| {
+            let field_ident = signal.field_name();
+            let field_name = field_ident.to_string();
+            quote! { .field(#field_name, &self.#field_ident()) }
+        })
+        .collect();
+
+    quote! {
+        impl core::fmt::Debug for #msg_type {
+            fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+                if f.alternate() {
+                    f.debug_struct(#typ_name)
+                        #(#debug_fields)*
+                        .finish()
+                } else {
+                    f.debug_tuple(#typ_name).field(&self.raw).finish()
+                }
+            }
+        }
+    }
 }
 
-fn multiplex_enum_name(msg: &Message, multiplexor: &Signal) -> Result<String> {
-    ensure!(
-        matches!(multiplexor.multiplexer_indicator, Multiplexor),
-        "signal {multiplexor:?} is not the multiplexor",
-    );
-    Ok(format!(
-        "{}{}Index",
-        msg.name.to_pascal_case(),
-        multiplexor.name.to_pascal_case(),
-    ))
+fn render_defmt_impl(msg: &Message) -> TokenStream {
+    let msg_type = msg.type_name();
+    let typ_name = msg_type.to_string();
+
+    let plain_signals: Vec<_> = msg
+        .signals
+        .iter()
+        .filter(|signal| signal.multiplexer_indicator == Plain)
+        .collect();
+
+    // Build format string
+    let mut format_str = format!("{typ_name} {{{{");
+    for signal in &plain_signals {
+        let _ = write!(format_str, " {}={{:?}}", signal.name);
+    }
+    format_str.push_str(" }}}}");
+
+    // Build field accessors
+    let field_accessors: Vec<_> = plain_signals
+        .iter()
+        .map(|signal| {
+            let field_ident = signal.field_name();
+            quote! { self.#field_ident() }
+        })
+        .collect();
+
+    quote! {
+        impl defmt::Format for #msg_type {
+            fn format(&self, f: defmt::Formatter) {
+                defmt::write!(
+                    f,
+                    #format_str,
+                    #(#field_accessors,)*
+                );
+            }
+        }
+    }
 }
 
-fn multiplexed_enum_variant_name(
-    msg: &Message,
-    multiplexor: &Signal,
-    switch_index: u64,
-) -> Result<String> {
-    ensure!(
-        matches!(multiplexor.multiplexer_indicator, Multiplexor),
-        "signal {multiplexor:?} is not the multiplexor",
-    );
+impl Config<'_> {
+    fn render_multiplexor_enums(
+        &self,
+        dbc: &Dbc,
+        msg: &Message,
+        multiplexor_signal: &Signal,
+    ) -> Result<TokenStream> {
+        let mut multiplexed_signals = BTreeMap::new();
+        for signal in &msg.signals {
+            if let MultiplexedSignal(switch_index) = signal.multiplexer_indicator {
+                multiplexed_signals
+                    .entry(switch_index)
+                    .and_modify(|v: &mut Vec<&Signal>| v.push(signal))
+                    .or_insert_with(|| vec![signal]);
+            }
+        }
 
-    Ok(format!(
-        "{}{}M{switch_index}",
-        msg.name.to_pascal_case(),
-        multiplexor.name.to_pascal_case(),
-    ))
-}
+        let doc = format!(" Defined values for multiplexed signal {}", msg.name);
 
-fn render_embedded_can_frame(w: &mut impl Write, config: &Config<'_>, msg: &Message) -> Result<()> {
-    config.impl_embedded_can_frame.fmt_cfg(w, |w| {
-        writeln!(
-            w,
-            "\
-impl embedded_can::Frame for {0} {{
-    fn new(id: impl Into<Id>, data: &[u8]) -> Option<Self> {{
-        if id.into() != Self::MESSAGE_ID {{
-            None
-        }} else {{
-            data.try_into().ok()
-        }}
-    }}
+        let enum_name = multiplex_enum_name(msg, multiplexor_signal)?;
 
-    fn new_remote(_id: impl Into<Id>, _dlc: usize) -> Option<Self> {{
-        unimplemented!()
-    }}
+        // Generate enum variants
+        let enum_variants = multiplexed_signals
+            .keys()
+            .map(|switch_index| {
+                let wrapper_name = multiplexed_enum_variant_wrapper_name(*switch_index);
+                let variant_name =
+                    multiplexed_enum_variant_name(msg, multiplexor_signal, *switch_index)?;
 
-    fn is_extended(&self) -> bool {{
-        match self.id() {{
-            Id::Standard(_) => false,
-            Id::Extended(_) => true,
-        }}
-    }}
+                Ok(quote! { #wrapper_name(#variant_name) })
+            })
+            .collect::<Result<Vec<_>>>()?;
 
-    fn is_remote_frame(&self) -> bool {{
-        false
-    }}
+        // Generate structs for each multiplexed signal
+        let allow_lints_outer = allow_lints();
+        let allow_dead_code_outer = allow_dead_code_tokens(self.allow_dead_code);
 
-    fn id(&self) -> Id {{
-        Self::MESSAGE_ID
-    }}
+        let struct_defs: Result<Vec<_>> = multiplexed_signals
+            .iter()
+            .map(|(switch_index, signals)| {
+                let struct_name =
+                    multiplexed_enum_variant_name(msg, multiplexor_signal, *switch_index)?;
+                let msg_size = msg.size as usize;
+                let msg_size_lit = LitInt::new(&msg_size.to_string(), Span::call_site());
 
-    fn dlc(&self) -> usize {{
-        self.raw.len()
-    }}
+                let signal_impls: Result<Vec<_>> = signals
+                    .iter()
+                    .map(|signal| {
+                        self.render_signal(signal, dbc, msg)
+                            .with_context(|| format!("write signal impl `{}`", signal.name))
+                    })
+                    .collect();
+                let signal_impls = signal_impls?;
 
-    fn data(&self) -> &[u8] {{
-        &self.raw
-    }}
-}}",
-            msg.type_name(),
-        )
-    })
-}
+                let allow_lints_inner = allow_lints_outer.clone();
+                let allow_dead_code_inner = allow_dead_code_outer.clone();
 
-fn render_debug_impl(w: &mut impl Write, msg: &Message) -> Result<()> {
-    let typ = msg.type_name();
-    writeln!(w, r"impl core::fmt::Debug for {typ} {{")?;
-    {
-        let mut w = PadAdapter::wrap(w);
-        writeln!(
-            w,
-            "fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {{",
-        )?;
-        {
-            let mut w = PadAdapter::wrap(&mut w);
-            writeln!(w, r"if f.alternate() {{")?;
-            {
-                let mut w = PadAdapter::wrap(&mut w);
-                writeln!(w, r#"f.debug_struct("{typ}")"#)?;
-                {
-                    let mut w = PadAdapter::wrap(&mut w);
-                    for signal in &msg.signals {
-                        if signal.multiplexer_indicator == Plain {
-                            writeln!(w, r#".field("{0}", &self.{0}())"#, signal.field_name())?;
+                let serde_serialize_inner = self.impl_serde.attr(&quote! { derive(Serialize) });
+                let serde_deserialize_inner = self.impl_serde.attr(&quote! { derive(Deserialize) });
+
+                let allow_lints_inner2 = allow_lints_outer.clone();
+                let allow_dead_code_inner2 = allow_dead_code_outer.clone();
+
+                Ok(quote! {
+                    #allow_lints_inner
+                    #allow_dead_code_inner
+                    #[derive(Default)]
+                    #serde_serialize_inner
+                    #serde_deserialize_inner
+                    pub struct #struct_name {
+                        raw: [u8; #msg_size_lit]
+                    }
+
+                    #allow_lints_inner2
+                    #allow_dead_code_inner2
+                    impl #struct_name {
+                        pub fn new() -> Self {
+                            Self { raw: [0u8; #msg_size_lit] }
                         }
+
+                        #(#signal_impls)*
                     }
-                }
-                writeln!(w, r".finish()")?;
+                })
+            })
+            .collect();
+        let struct_defs = struct_defs?;
+
+        Ok(quote! {
+            #[doc = #doc]
+            #allow_lints_outer
+            #allow_dead_code_outer
+            pub enum #enum_name {
+                #(#enum_variants,)*
             }
-            writeln!(w, r"}} else {{")?;
-            {
-                let mut w = PadAdapter::wrap(&mut w);
-                writeln!(w, r#"f.debug_tuple("{typ}").field(&self.raw).finish()"#)?;
-            }
-            writeln!(w, "}}")?;
-        }
-        writeln!(w, "}}")?;
-    }
-    writeln!(w, "}}")?;
-    writeln!(w)?;
-    Ok(())
-}
 
-fn render_defmt_impl(w: &mut impl Write, msg: &Message) -> Result<()> {
-    let typ = msg.type_name();
-    writeln!(w, r"impl defmt::Format for {typ} {{")?;
-    {
-        let mut w = PadAdapter::wrap(w);
-        writeln!(w, "fn format(&self, f: defmt::Formatter) {{")?;
-        {
-            let mut w = PadAdapter::wrap(&mut w);
-            writeln!(w, r"defmt::write!(f,")?;
-            {
-                let mut w = PadAdapter::wrap(&mut w);
-                write!(w, r#""{typ} {{{{"#)?;
-                {
-                    for signal in &msg.signals {
-                        if signal.multiplexer_indicator == Plain {
-                            write!(w, r" {}={{:?}}", signal.name)?;
-                        }
-                    }
-                }
-                writeln!(w, r#" }}}}","#)?;
-
-                for signal in &msg.signals {
-                    if signal.multiplexer_indicator == Plain {
-                        writeln!(w, "self.{}(),", signal.field_name())?;
-                    }
-                }
-                writeln!(w, r");")?;
-            }
-            writeln!(w, "}}")?;
-        }
-    }
-    writeln!(w, "}}")?;
-    writeln!(w)?;
-    Ok(())
-}
-
-fn render_multiplexor_enums(
-    w: &mut impl Write,
-    config: &Config<'_>,
-    dbc: &Dbc,
-    msg: &Message,
-    multiplexor_signal: &Signal,
-) -> Result<()> {
-    ensure!(
-        multiplexor_signal.multiplexer_indicator == Multiplexor,
-        "signal {} is not the multiplexor",
-        multiplexor_signal.name,
-    );
-
-    let mut multiplexed_signals = BTreeMap::new();
-    for signal in &msg.signals {
-        if let MultiplexedSignal(switch_index) = signal.multiplexer_indicator {
-            multiplexed_signals
-                .entry(switch_index)
-                .and_modify(|v: &mut Vec<&Signal>| v.push(signal))
-                .or_insert_with(|| vec![&signal]);
-        }
+            #(#struct_defs)*
+        })
     }
 
-    writeln!(w, "/// Defined values for multiplexed signal {}", msg.name)?;
-    writeln!(w, "{ALLOW_LINTS}")?;
-    config.write_allow_dead_code(w)?;
+    fn render_arbitrary(&self, msg: &Message) -> TokenStream {
+        let allow_lints = allow_lints();
+        let allow_dead_code = allow_dead_code_tokens(self.allow_dead_code);
+        let msg_type = msg.type_name();
 
-    config.impl_debug.fmt_attr(w, "derive(Debug)")?;
-    config.impl_defmt.fmt_attr(w, "derive(defmt::Format)")?;
-    config.impl_serde.fmt_attr(w, "derive(Serialize)")?;
-    config.impl_serde.fmt_attr(w, "derive(Deserialize)")?;
-
-    let enum_name = multiplex_enum_name(msg, multiplexor_signal)?;
-    writeln!(w, "pub enum {enum_name} {{")?;
-
-    {
-        let mut w = PadAdapter::wrap(w);
-        for switch_index in multiplexed_signals.keys() {
-            writeln!(
-                w,
-                "{multiplexed_wrapper_name}({multiplexed_name}),",
-                multiplexed_wrapper_name = multiplexed_enum_variant_wrapper_name(*switch_index),
-                multiplexed_name =
-                    multiplexed_enum_variant_name(msg, multiplexor_signal, *switch_index)?,
-            )?;
-        }
-    }
-    writeln!(w, "}}")?;
-    writeln!(w)?;
-
-    for (switch_index, multiplexed_signals) in &multiplexed_signals {
-        let struct_name = multiplexed_enum_variant_name(msg, multiplexor_signal, *switch_index)?;
-
-        writeln!(w, "{ALLOW_LINTS}")?;
-        config.write_allow_dead_code(w)?;
-        config.impl_debug.fmt_attr(w, "derive(Debug)")?;
-        config.impl_defmt.fmt_attr(w, "derive(defmt::Format)")?;
-        config.impl_serde.fmt_attr(w, "derive(Serialize)")?;
-        config.impl_serde.fmt_attr(w, "derive(Deserialize)")?;
-        writeln!(w, r"#[derive(Default)]")?;
-        writeln!(w, "pub struct {struct_name} {{ raw: [u8; {}] }}", msg.size)?;
-        writeln!(w)?;
-
-        writeln!(w, "{ALLOW_LINTS}")?;
-        config.write_allow_dead_code(w)?;
-        writeln!(w, "impl {struct_name} {{")?;
-
-        writeln!(
-            w,
-            "pub fn new() -> Self {{ Self {{ raw: [0u8; {}] }} }}",
-            msg.size
-        )?;
-
-        for signal in multiplexed_signals {
-            render_signal(w, config, signal, dbc, msg)?;
-        }
-
-        writeln!(w, "}}")?;
-        writeln!(w)?;
-    }
-
-    Ok(())
-}
-
-fn render_arbitrary(w: &mut impl Write, config: &Config<'_>, msg: &Message) -> Result<()> {
-    writeln!(w, "{ALLOW_LINTS}")?;
-    config.write_allow_dead_code(w)?;
-    let typ = msg.type_name();
-    writeln!(w, "impl<'a> Arbitrary<'a> for {typ} {{")?;
-    {
         let filtered_signals: Vec<&Signal> = msg
             .signals
             .iter()
             .filter(|v| matches!(v.multiplexer_indicator, Plain | Multiplexor))
             .collect();
-        let mut w = PadAdapter::wrap(w);
-        writeln!(
-            w,
-            "fn arbitrary({}u: &mut Unstructured<'a>) -> Result<Self, arbitrary::Error> {{",
-            if filtered_signals.is_empty() { "_" } else { "" },
-        )?;
-        {
-            let mut w = PadAdapter::wrap(&mut w);
 
-            for signal in &filtered_signals {
-                writeln!(
-                    w,
-                    "let {field_name} = {arbitrary_value};",
-                    field_name = signal.field_name(),
-                    arbitrary_value = signal_to_arbitrary(signal),
-                )?;
+        let u_param = if filtered_signals.is_empty() {
+            quote! { _u }
+        } else {
+            quote! { u }
+        };
+
+        // Generate signal bindings
+        let signal_bindings: Vec<_> = filtered_signals
+            .iter()
+            .map(|signal| {
+                let field_name = signal.field_name();
+                let value_expr = signal_to_arbitrary(signal);
+                quote! { let #field_name = #value_expr; }
+            })
+            .collect();
+
+        // Generate function arguments
+        let args: Vec<_> = filtered_signals
+            .iter()
+            .map(|signal| signal.field_name())
+            .collect();
+
+        quote! {
+            #allow_lints
+            #allow_dead_code
+            impl arbitrary::Arbitrary<'_> for #msg_type {
+                fn arbitrary(#u_param: &mut arbitrary::Unstructured<'_>) -> arbitrary::Result<Self> {
+                    #(#signal_bindings)*
+                    #msg_type::new(#(#args),*)
+                        .map_err(|_| arbitrary::Error::IncorrectFormat)
+                }
+            }
+        }
+    }
+
+    fn render_error(&self) -> TokenStream {
+        let error_impl = self.impl_error.if_cfg(quote! {
+            impl core::error::Error for CanError {}
+        });
+
+        quote! {
+            #[allow(dead_code)]
+            #[derive(Clone, Copy, Debug, PartialEq, Eq)]
+            pub enum CanError {
+                UnknownMessageId(embedded_can::Id),
+                /// Signal parameter is not within the range
+                /// defined in the dbc
+                ParameterOutOfRange {
+                    /// dbc message id
+                    message_id: embedded_can::Id,
+                },
+                InvalidPayloadSize,
+                /// Multiplexor value not defined in the dbc
+                InvalidMultiplexor {
+                    /// dbc message id
+                    message_id: embedded_can::Id,
+                    /// Multiplexor value not defined in the dbc
+                    multiplexor: u16,
+                },
             }
 
-            let args: Vec<String> = filtered_signals
-                .iter()
-                .map(|signal| signal.field_name())
-                .collect();
+            impl core::fmt::Display for CanError {
+                fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+                    write!(f, "{self:?}")
+                }
+            }
 
-            writeln!(
-                w,
-                "{typ}::new({args}).map_err(|_| arbitrary::Error::IncorrectFormat)",
-                typ = msg.type_name(),
-                args = args.join(","),
-            )?;
+            #error_impl
         }
-        writeln!(w, "}}")?;
     }
-    writeln!(w, "}}")?;
 
-    Ok(())
+    fn render_arbitrary_helpers(&self) -> TokenStream {
+        let allow_dead_code = allow_dead_code_tokens(self.allow_dead_code);
+
+        let trait_def = self.impl_arbitrary.if_cfg(quote! {
+            #allow_dead_code
+            trait UnstructuredFloatExt {
+                fn arbitrary_f32(&mut self) -> arbitrary::Result<f32>;
+            }
+        });
+
+        let trait_impl = self.impl_arbitrary.if_cfg(quote! {
+            impl UnstructuredFloatExt for arbitrary::Unstructured<'_> {
+                fn arbitrary_f32(&mut self) -> arbitrary::Result<f32> {
+                    Ok(f32::from_bits(u32::arbitrary(self)?))
+                }
+            }
+        });
+
+        quote! {
+            #trait_def
+            #trait_impl
+        }
+    }
 }
 
-fn render_error(w: &mut impl Write, config: &Config<'_>) -> Result<()> {
-    w.write_all(include_bytes!("./includes/errors.rs"))?;
-
-    config.impl_error.fmt_cfg(w, |w| {
-        writeln!(w, "impl core::error::Error for CanError {{}}")
-    })
-}
-
-fn render_arbitrary_helpers(w: &mut impl Write, config: &Config<'_>) -> Result<()> {
-    config.impl_arbitrary.fmt_cfg(&mut *w, |w| {
-        config.write_allow_dead_code(w)?;
-        writeln!(w, "trait UnstructuredFloatExt {{")?;
-        writeln!(w, "    fn float_in_range(&mut self, range: core::ops::RangeInclusive<f32>) -> arbitrary::Result<f32>;")?;
-        writeln!(w, "}}")?;
-        writeln!(w)?;
-        Ok::<_, Error>(())
-    })?;
-
-    config.impl_arbitrary.fmt_cfg(w, |w| {
-        writeln!(w, "impl UnstructuredFloatExt for arbitrary::Unstructured<'_> {{")?;
-        writeln!(w, "    fn float_in_range(&mut self, range: core::ops::RangeInclusive<f32>) -> arbitrary::Result<f32> {{")?;
-        writeln!(w, "        let min = range.start();")?;
-        writeln!(w, "        let max = range.end();")?;
-        writeln!(w, "        let steps = u32::MAX;")?;
-        writeln!(w, "        let factor = (max - min) / (steps as f32);")?;
-        writeln!(w, "        let random_int: u32 = self.int_in_range(0..=steps)?;")?;
-        writeln!(w, "        let random = min + factor * (random_int as f32);")?;
-        writeln!(w, "        Ok(random)")?;
-        writeln!(w, "    }}")?;
-        writeln!(w, "}}")?;
-        writeln!(w)?;
-        Ok::<_, Error>(())
-    })
-}
-
-fn signal_to_arbitrary(signal: &Signal) -> String {
+fn signal_to_arbitrary(signal: &Signal) -> TokenStream {
     let typ = ValType::from_signal(signal);
     match typ {
-        ValType::Bool => "u.int_in_range(0..=1)? == 1".to_string(),
+        ValType::Bool => quote! { u.int_in_range(0..=1)? == 1 },
         ValType::F32 => {
-            let min = signal.min;
-            let max = signal.max;
-            format!("u.float_in_range({min}_f32..={max}_f32)?")
+            quote! { u.arbitrary_f32()? }
         }
         _ => {
-            let min = signal.min;
-            let max = signal.max;
-            format!("u.int_in_range({min}..={max})?")
+            let min = signal.min as i64;
+            let max = signal.max as i64;
+            let typ_ident = typ.ident();
+            quote! { u.int_in_range(#min..=#max)? as #typ_ident }
         }
     }
 }
@@ -1338,13 +1421,14 @@ fn message_ignored(message: &Message) -> bool {
 impl Config<'_> {
     /// Generate Rust structs matching DBC input description and return as String
     pub fn generate(self) -> Result<String> {
-        let mut out = Vec::new();
-        codegen(&self, &mut out)?;
-        // Parse and re-format the generated code to allow for future
-        // syn/quote codegen migration. Note that this is inefficient at the moment,
-        // but this shouldn't be significantly noticeable.
-        let out = std::str::from_utf8(&out).context("Failed to convert output to str")?;
-        let file = syn::parse_file(out).context("Failed to parse generated Rust code")?;
+        let tokens = self.codegen()?;
+        // Debug: write tokens to stderr for debugging
+        if std::env::var("DEBUG_TOKENS").is_ok() {
+            eprintln!("=== Generated TokenStream ===");
+            eprintln!("{tokens}");
+            eprintln!("=== End TokenStream ===");
+        }
+        let file = parse2(tokens).context("Failed to parse generated TokenStream as Rust code")?;
         Ok(prettyplease::unparse(&file))
     }
 
@@ -1364,11 +1448,52 @@ impl Config<'_> {
 
         self.write(file)
     }
+}
 
-    fn write_allow_dead_code(&self, w: &mut impl Write) -> Result<()> {
-        if self.allow_dead_code {
-            writeln!(w, "{ALLOW_DEADCODE}")?;
+fn allow_lints() -> TokenStream {
+    quote! {
+        #[allow(
+            clippy::absurd_extreme_comparisons,
+            clippy::excessive_precision,
+            clippy::manual_range_contains,
+            clippy::unnecessary_cast,
+            clippy::useless_conversion,
+            unused_comparisons,
+            unused_variables,
+        )]
+    }
+}
+
+/// Generate a literal token for a signal min/max value.
+///
+/// For F32 types, always generates a float literal.
+/// For other types, generates an integer literal if the value is an integer within i64 range,
+/// otherwise generates a float literal with the integer type suffix.
+fn generate_value_literal(value: f64, typ: ValType) -> TokenStream {
+    if typ == ValType::F32 {
+        let lit = LitFloat::new(&format!("{value}_f32"), Span::call_site());
+        quote! { #lit }
+    } else {
+        let typ_str = typ.to_string().to_lowercase();
+        // Check if value is an integer and fits in i64 range
+        if is_integer(value) && value >= i64::MIN as f64 && value <= i64::MAX as f64 {
+            let val = value as i64;
+            let lit = LitInt::new(&format!("{val}_{typ_str}"), Span::call_site());
+            quote! { #lit }
+        } else {
+            // Use float literal with integer type suffix for fractional/overflow values
+            let lit = LitFloat::new(&format!("{value}_{typ_str}"), Span::call_site());
+            quote! { #lit }
         }
-        Ok(())
+    }
+}
+
+/// Generate `[allow(dead_code)]` attribute if needed
+fn allow_dead_code_tokens(allow: bool) -> Option<TokenStream> {
+    if allow {
+        use quote::quote;
+        Some(quote! { #[allow(dead_code)] })
+    } else {
+        None
     }
 }

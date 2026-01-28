@@ -322,6 +322,7 @@ dependencies = [
  "heck",
  "insta",
  "prettyplease",
+ "proc-macro2",
  "quote",
  "syn",
  "test_each_file",
