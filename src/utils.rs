@@ -37,7 +37,8 @@ pub fn multiplex_enum_name(msg: &Message, multiplexor: &Signal) -> Result<Ident>
         "{}{}Index",
         msg.name.to_pascal_case(),
         multiplexor.name.to_pascal_case(),
-    ).ident())
+    )
+    .ident())
 }
 
 pub fn multiplexed_enum_variant_name(
@@ -54,7 +55,8 @@ pub fn multiplexed_enum_variant_name(
         "{}{}M{switch_index}",
         msg.name.to_pascal_case(),
         multiplexor.name.to_pascal_case(),
-    ).ident())
+    )
+    .ident())
 }
 
 pub trait SignalExt {
@@ -66,7 +68,8 @@ pub trait SignalExt {
         format!(
             "{prefix}{}{suffix}",
             sanitize_name(self.get_name(), ToSnakeCase::to_snake_case)
-        ).ident()
+        )
+        .ident()
     }
     fn const_name(&self, suffix: &str) -> Ident {
         let tmp: String;
@@ -78,7 +81,8 @@ pub trait SignalExt {
                 &tmp
             },
             ToShoutySnakeCase::to_shouty_snake_case,
-        ).ident()
+        )
+        .ident()
     }
 }
 
