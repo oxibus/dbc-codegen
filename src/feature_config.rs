@@ -1,7 +1,5 @@
-use std::fmt::Display;
-use std::io::Write;
-
-use anyhow::{Error, Result};
+use proc_macro2::TokenStream;
+use quote::quote;
 
 /// Configuration for including features in the code generator.
 ///
@@ -20,31 +18,24 @@ pub enum FeatureConfig<'a> {
 }
 
 impl FeatureConfig<'_> {
-    pub(crate) fn fmt_attr(&self, w: &mut impl Write, attr: impl Display) -> Result<()> {
+    /// Generate an attribute token stream (like `#[derive(Debug)]`)
+    pub(crate) fn attr(&self, tokens: &TokenStream) -> TokenStream {
         match self {
-            FeatureConfig::Always => writeln!(w, "#[{attr}]")?,
-            FeatureConfig::Gated(gate) => writeln!(w, "#[cfg_attr(feature = {gate:?}, {attr})]")?,
-            FeatureConfig::Never => {}
+            FeatureConfig::Always => quote! { #[#tokens] },
+            FeatureConfig::Gated(gate) => quote! { #[cfg_attr(feature = #gate, #tokens)] },
+            FeatureConfig::Never => quote! {},
         }
-        Ok(())
     }
 
-    pub(crate) fn fmt_cfg<W: Write, E: Into<Error>>(
-        &self,
-        mut w: W,
-        f: impl FnOnce(W) -> Result<(), E>,
-    ) -> Result<()> {
+    /// Generate a token stream optionally wrapped in a cfg attribute
+    pub(crate) fn if_cfg(&self, tokens: TokenStream) -> TokenStream {
         match self {
-            // If config is Never, return immediately without calling `f`
-            FeatureConfig::Never => return Ok(()),
-            // If config is Gated, prepend `f` with a cfg guard
-            FeatureConfig::Gated(gate) => {
-                writeln!(w, "#[cfg(feature = {gate:?})]")?;
-            }
-            // Otherwise, just call `f`
-            FeatureConfig::Always => {}
+            FeatureConfig::Always => tokens,
+            FeatureConfig::Gated(gate) => quote! {
+                #[cfg(feature = #gate)]
+                #tokens
+            },
+            FeatureConfig::Never => quote! {},
         }
-
-        f(w).map_err(Into::into)
     }
 }
