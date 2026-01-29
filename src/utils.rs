@@ -64,7 +64,7 @@ pub trait SignalExt {
     fn field_name(&self) -> Ident {
         sanitize_name(self.get_name(), ToSnakeCase::to_snake_case).ident()
     }
-    fn field_name2(&self, prefix: &str, suffix: &str) -> Ident {
+    fn field_name_ext(&self, prefix: &str, suffix: &str) -> Ident {
         format!(
             "{prefix}{}{suffix}",
             sanitize_name(self.get_name(), ToSnakeCase::to_snake_case)

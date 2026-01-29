@@ -309,7 +309,7 @@ impl Config<'_> {
             .filter_map(|signal| {
                 if matches!(signal.multiplexer_indicator, Plain | Multiplexor) {
                     let field_name = signal.field_name();
-                    let setter_name = signal.field_name2("set_", "");
+                    let setter_name = signal.field_name_ext("set_", "");
                     Some(quote! { res.#setter_name(#field_name)?; })
                 } else {
                     None
@@ -442,7 +442,7 @@ impl Config<'_> {
     fn render_signal(&self, signal: &Signal, dbc: &Dbc, msg: &Message) -> Result<TokenStream> {
         let signal_name = &signal.name;
         let fn_name = signal.field_name();
-        let fn_name_raw = signal.field_name2("", "_raw");
+        let fn_name_raw = signal.field_name_ext("", "_raw");
 
         // Build signal getter doc as doc comment and parse into tokens
         let mut doc = format!("/// {signal_name}\n");
@@ -559,7 +559,7 @@ impl Config<'_> {
     }
 
     fn render_set_signal(&self, signal: &Signal, msg: &Message) -> Result<TokenStream> {
-        let setter_name = signal.field_name2("set_", "");
+        let setter_name = signal.field_name_ext("set_", "");
 
         // To avoid accidentally changing the multiplexor value without changing
         // the signals accordingly this fn is kept private for multiplexors.
@@ -610,7 +610,7 @@ fn render_set_signal_multiplexer(
 ) -> Result<TokenStream> {
     let enum_variant = multiplexed_enum_variant_name(msg, multiplexor, switch_index)?;
     let setter_name = multiplexed_enum_variant_wrapper_setter_name(switch_index);
-    let multiplexor_setter = multiplexor.field_name2("set_", "");
+    let multiplexor_setter = multiplexor.field_name_ext("set_", "");
     let switch_index_lit = LitInt::new(&switch_index.to_string(), Span::call_site());
 
     let doc = format!("/// Set value of {}", multiplexor.name).tokens()?;
@@ -631,7 +631,7 @@ fn render_set_signal_multiplexer(
 impl Config<'_> {
     fn render_multiplexor_signal(&self, signal: &Signal, msg: &Message) -> Result<TokenStream> {
         let field = signal.field_name();
-        let field_raw = signal.field_name2("", "_raw");
+        let field_raw = signal.field_name_ext("", "_raw");
         let typ = ValType::from_signal(signal);
         let typ_ident = typ.ident();
         let enum_type = multiplex_enum_name(msg, signal)?;
