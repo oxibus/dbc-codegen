@@ -22,17 +22,18 @@ use can_dbc::ByteOrder::{BigEndian, LittleEndian};
 use can_dbc::MultiplexIndicator::{MultiplexedSignal, Multiplexor, Plain};
 use can_dbc::ValueType::Signed;
 use can_dbc::{Dbc, Message, MessageId, Signal, Transmitter, ValDescription, ValueDescription};
-use proc_macro2::{Span, TokenStream};
+use proc_macro2::TokenStream;
 use quote::quote;
-use syn::{parse2, LitFloat, LitInt};
+use syn::parse2;
 use typed_builder::TypedBuilder;
 
 pub use crate::feature_config::FeatureConfig;
 use crate::signal_type::ValType;
 use crate::utils::{
-    enum_name, enum_variant_name, is_integer, multiplex_enum_name, multiplexed_enum_variant_name,
-    multiplexed_enum_variant_wrapper_name, multiplexed_enum_variant_wrapper_setter_name,
-    MessageExt as _, SignalExt as _, ToIdent as _, Tokens as _,
+    enum_name, enum_variant_name, is_integer, lit_float, lit_int, multiplex_enum_name,
+    multiplexed_enum_variant_name, multiplexed_enum_variant_wrapper_name,
+    multiplexed_enum_variant_wrapper_setter_name, MessageExt as _, SignalExt as _, ToIdent as _,
+    Tokens as _,
 };
 
 /// Code generator configuration. See module-level docs for an example.
@@ -232,12 +233,12 @@ impl Config<'_> {
         let message_id = match msg.id {
             MessageId::Standard(id) => {
                 writeln!(doc, "/// - Standard ID: {id} (0x{id:x})")?;
-                let id_lit = LitInt::new(&format!("{id:#x}"), Span::call_site());
+                let id_lit = lit_int(format!("{id:#x}"));
                 quote! { Id::Standard(unsafe { StandardId::new_unchecked(#id_lit) }) }
             }
             MessageId::Extended(id) => {
                 writeln!(doc, "/// - Extended ID: {id} (0x{id:x})")?;
-                let id_lit = LitInt::new(&format!("{id:#x}"), Span::call_site());
+                let id_lit = lit_int(format!("{id:#x}"));
                 quote! { Id::Extended(unsafe { ExtendedId::new_unchecked(#id_lit) }) }
             }
         };
@@ -254,8 +255,7 @@ impl Config<'_> {
         let struct_doc = doc.tokens().context("message doc to tokens")?;
 
         let msg_type = msg.type_name();
-        let msg_size = msg.size as usize;
-        let msg_size_lit = LitInt::new(&msg_size.to_string(), Span::call_site());
+        let msg_size_lit = lit_int(msg.size as usize);
 
         // Struct attributes
         let serde_serialize = self.impl_serde.attr(&quote! { derive(Serialize) });
@@ -490,7 +490,7 @@ impl Config<'_> {
             let match_arms: Vec<_> = variant_infos
                 .iter()
                 .map(|info| {
-                    let literal = LitInt::new(&info.value.to_string(), Span::call_site());
+                    let literal = lit_int(info.value);
                     let variant = info.base_name.ident();
                     match info.dup_type {
                         DuplicateType::Unique => {
@@ -611,7 +611,7 @@ fn render_set_signal_multiplexer(
     let enum_variant = multiplexed_enum_variant_name(msg, multiplexor, switch_index)?;
     let setter_name = multiplexed_enum_variant_wrapper_setter_name(switch_index);
     let multiplexor_setter = multiplexor.field_name_ext("set_", "");
-    let switch_index_lit = LitInt::new(&switch_index.to_string(), Span::call_site());
+    let switch_index_lit = lit_int(switch_index);
 
     let doc = format!("/// Set value of {}", multiplexor.name).tokens()?;
 
@@ -674,7 +674,7 @@ impl Config<'_> {
         let match_arms: Vec<_> = multiplexer_indexes.iter().map(|idx| {
             let multiplexed_wrapper_name = multiplexed_enum_variant_wrapper_name(*idx);
             let multiplexed_name = multiplexed_enum_variant_name(msg, signal, *idx).unwrap();
-            let idx_lit = LitInt::new(&idx.to_string(), Span::call_site());
+            let idx_lit = lit_int(idx);
             quote! {
                 #idx_lit => Ok(#enum_type::#multiplexed_wrapper_name(#multiplexed_name { raw: self.raw }))
             }
@@ -764,14 +764,14 @@ fn read_fn_with_type(signal: &Signal, msg: &Message, typ: ValType) -> Result<Tok
     Ok(match signal.byte_order {
         LittleEndian => {
             let (start, end) = le_start_end_bit(signal, msg)?;
-            let start_lit = LitInt::new(&start.to_string(), Span::call_site());
-            let end_lit = LitInt::new(&end.to_string(), Span::call_site());
+            let start_lit = lit_int(start);
+            let end_lit = lit_int(end);
             quote! { self.raw.view_bits::<Lsb0>()[#start_lit..#end_lit].load_le::<#typ_ident>() }
         }
         BigEndian => {
             let (start, end) = be_start_end_bit(signal, msg)?;
-            let start_lit = LitInt::new(&start.to_string(), Span::call_site());
-            let end_lit = LitInt::new(&end.to_string(), Span::call_site());
+            let start_lit = lit_int(start);
+            let end_lit = lit_int(end);
             quote! { self.raw.view_bits::<Msb0>()[#start_lit..#end_lit].load_be::<#typ_ident>() }
         }
     })
@@ -791,10 +791,8 @@ fn signal_from_payload(signal: &Signal, msg: &Message) -> Result<TokenStream> {
             }
         }
         ValType::F32 => {
-            let factor = signal.factor;
-            let offset = signal.offset;
-            let factor_lit = LitFloat::new(&format!("{factor}_f32"), Span::call_site());
-            let offset_lit = LitFloat::new(&format!("{offset}_f32"), Span::call_site());
+            let factor_lit = lit_float(format!("{}_f32", signal.factor));
+            let offset_lit = lit_float(format!("{}_f32", signal.offset));
             quote! {
                 let signal = #read_expr;
                 let factor = #factor_lit;
@@ -803,9 +801,6 @@ fn signal_from_payload(signal: &Signal, msg: &Message) -> Result<TokenStream> {
             }
         }
         _ => {
-            let factor = signal.factor;
-            let factor_lit = LitFloat::new(&factor.to_string(), Span::call_site());
-
             let signal_cast = if Some(typ) == ValType::from_signal_uint(signal).unsigned_to_signed()
             {
                 quote! { let signal = signal as #typ_ident; }
@@ -813,9 +808,9 @@ fn signal_from_payload(signal: &Signal, msg: &Message) -> Result<TokenStream> {
                 quote! {}
             };
 
+            let factor_lit = lit_float(signal.factor);
             if signal.offset >= 0.0 {
-                let offset = signal.offset;
-                let offset_lit = LitFloat::new(&offset.to_string(), Span::call_site());
+                let offset_lit = lit_float(signal.offset);
                 quote! {
                     let signal = #read_expr;
                     let factor = #factor_lit;
@@ -823,8 +818,7 @@ fn signal_from_payload(signal: &Signal, msg: &Message) -> Result<TokenStream> {
                     #typ_ident::from(signal).saturating_mul(factor).saturating_add(#offset_lit)
                 }
             } else {
-                let offset_abs = signal.offset.abs();
-                let offset_lit = LitFloat::new(&offset_abs.to_string(), Span::call_site());
+                let offset_lit = lit_float(signal.offset.abs());
                 quote! {
                     let signal = #read_expr;
                     let factor = #factor_lit;
@@ -845,10 +839,8 @@ fn signal_to_payload(signal: &Signal, msg: &Message) -> Result<TokenStream> {
             quote! { let value = value as u8; }
         }
         ValType::F32 => {
-            let factor = signal.factor;
-            let offset = signal.offset;
-            let factor_lit = LitFloat::new(&format!("{factor}_f32"), Span::call_site());
-            let offset_lit = LitFloat::new(&format!("{offset}_f32"), Span::call_site());
+            let factor_lit = lit_float(format!("{}_f32", signal.factor));
+            let offset_lit = lit_float(format!("{}_f32", signal.offset));
             let int_typ = ValType::from_signal_int(signal);
             let int_typ_ident = int_typ.ident();
             quote! {
@@ -858,14 +850,12 @@ fn signal_to_payload(signal: &Signal, msg: &Message) -> Result<TokenStream> {
             }
         }
         _ => {
-            let factor = signal.factor;
-            let factor_lit = LitFloat::new(&factor.to_string(), Span::call_site());
+            let factor_lit = lit_float(signal.factor);
             let int_typ = ValType::from_signal_int(signal);
             let int_typ_ident = int_typ.ident();
 
             if signal.offset >= 0.0 {
-                let offset = signal.offset;
-                let offset_lit = LitFloat::new(&offset.to_string(), Span::call_site());
+                let offset_lit = lit_float(signal.offset);
                 quote! {
                     let factor = #factor_lit;
                     let value = value.checked_sub(#offset_lit)
@@ -873,8 +863,7 @@ fn signal_to_payload(signal: &Signal, msg: &Message) -> Result<TokenStream> {
                     let value = (value / factor) as #int_typ_ident;
                 }
             } else {
-                let offset_abs = signal.offset.abs();
-                let offset_lit = LitFloat::new(&offset_abs.to_string(), Span::call_site());
+                let offset_lit = lit_float(signal.offset.abs());
                 quote! {
                     let factor = #factor_lit;
                     let value = value.checked_add(#offset_lit)
@@ -896,14 +885,14 @@ fn signal_to_payload(signal: &Signal, msg: &Message) -> Result<TokenStream> {
     let store_expr = match signal.byte_order {
         LittleEndian => {
             let (start, end) = le_start_end_bit(signal, msg)?;
-            let start_lit = LitInt::new(&start.to_string(), Span::call_site());
-            let end_lit = LitInt::new(&end.to_string(), Span::call_site());
+            let start_lit = lit_int(start);
+            let end_lit = lit_int(end);
             quote! { self.raw.view_bits_mut::<Lsb0>()[#start_lit..#end_lit].store_le(value); }
         }
         BigEndian => {
             let (start, end) = be_start_end_bit(signal, msg)?;
-            let start_lit = LitInt::new(&start.to_string(), Span::call_site());
-            let end_lit = LitInt::new(&end.to_string(), Span::call_site());
+            let start_lit = lit_int(start);
+            let end_lit = lit_int(end);
             quote! { self.raw.view_bits_mut::<Msb0>()[#start_lit..#end_lit].store_be(value); }
         }
     };
@@ -972,14 +961,11 @@ impl Config<'_> {
                                 }
                             }
                             ValType::F32 => {
-                                let val = LitFloat::new(
-                                    &format!("{}_f32", info.value),
-                                    Span::call_site(),
-                                );
+                                let val = lit_float(format!("{}_f32", info.value));
                                 quote! { #val }
                             }
                             _ => {
-                                let val = LitInt::new(&info.value.to_string(), Span::call_site());
+                                let val = lit_int(info.value);
                                 quote! { #val }
                             }
                         };
@@ -1229,8 +1215,7 @@ impl Config<'_> {
             .map(|(switch_index, signals)| {
                 let struct_name =
                     multiplexed_enum_variant_name(msg, multiplexor_signal, *switch_index)?;
-                let msg_size = msg.size as usize;
-                let msg_size_lit = LitInt::new(&msg_size.to_string(), Span::call_site());
+                let msg_size_lit = lit_int(msg.size as usize);
 
                 let signal_impls: Result<Vec<_>> = signals
                     .iter()
@@ -1372,18 +1357,18 @@ impl Config<'_> {
         let allow_dead_code = allow_dead_code_tokens(self.allow_dead_code);
 
         let trait_def = self.impl_arbitrary.if_cfg(quote! {
-            #allow_dead_code
-            trait UnstructuredFloatExt {
-                fn arbitrary_f32(&mut self) -> arbitrary::Result<f32>;
-            }
+                #allow_dead_code
+                trait UnstructuredFloatExt {
+                    fn arbitrary_f32(&mut self) -> arbitrary::Result<f32>;
+                }
         });
 
         let trait_impl = self.impl_arbitrary.if_cfg(quote! {
-            impl UnstructuredFloatExt for arbitrary::Unstructured<'_> {
-                fn arbitrary_f32(&mut self) -> arbitrary::Result<f32> {
-                    Ok(f32::from_bits(u32::arbitrary(self)?))
+                impl UnstructuredFloatExt for arbitrary::Unstructured<'_> {
+                    fn arbitrary_f32(&mut self) -> arbitrary::Result<f32> {
+                        Ok(f32::from_bits(u32::arbitrary(self)?))
+                    }
                 }
-            }
         });
 
         quote! {
@@ -1471,18 +1456,17 @@ fn allow_lints() -> TokenStream {
 /// otherwise generates a float literal with the integer type suffix.
 fn generate_value_literal(value: f64, typ: ValType) -> TokenStream {
     if typ == ValType::F32 {
-        let lit = LitFloat::new(&format!("{value}_f32"), Span::call_site());
+        let lit = lit_float(format!("{value}_f32"));
         quote! { #lit }
     } else {
         let typ_str = typ.to_string().to_lowercase();
         // Check if value is an integer and fits in i64 range
         if is_integer(value) && value >= i64::MIN as f64 && value <= i64::MAX as f64 {
-            let val = value as i64;
-            let lit = LitInt::new(&format!("{val}_{typ_str}"), Span::call_site());
+            let lit = lit_int(format!("{}_{typ_str}", value as i64));
             quote! { #lit }
         } else {
             // Use float literal with integer type suffix for fractional/overflow values
-            let lit = LitFloat::new(&format!("{value}_{typ_str}"), Span::call_site());
+            let lit = lit_float(format!("{value}_{typ_str}"));
             quote! { #lit }
         }
     }
@@ -1491,7 +1475,6 @@ fn generate_value_literal(value: f64, typ: ValType) -> TokenStream {
 /// Generate `[allow(dead_code)]` attribute if needed
 fn allow_dead_code_tokens(allow: bool) -> Option<TokenStream> {
     if allow {
-        use quote::quote;
         Some(quote! { #[allow(dead_code)] })
     } else {
         None

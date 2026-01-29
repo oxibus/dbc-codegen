@@ -4,8 +4,9 @@ use anyhow::{anyhow, ensure, Result};
 use can_dbc::MultiplexIndicator::Multiplexor;
 use can_dbc::{Message, Signal};
 use heck::{ToPascalCase, ToShoutySnakeCase, ToSnakeCase};
-use proc_macro2::{Ident, TokenStream};
+use proc_macro2::{Ident, Span, TokenStream};
 use quote::{format_ident, IdentFragment};
+use syn::{LitFloat, LitInt};
 
 use crate::keywords;
 
@@ -146,4 +147,12 @@ impl Tokens for String {
     fn tokens(&self) -> Result<TokenStream> {
         self.as_str().tokens()
     }
+}
+
+pub fn lit_int<T: Display>(value: T) -> LitInt {
+    LitInt::new(&value.to_string(), Span::call_site())
+}
+
+pub fn lit_float<T: Display>(value: T) -> LitFloat {
+    LitFloat::new(&value.to_string(), Span::call_site())
 }
