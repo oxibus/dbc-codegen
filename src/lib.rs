@@ -164,7 +164,7 @@ impl Config<'_> {
     }
 
     fn render_root_enum(&self, dbc: &Dbc) -> TokenStream {
-        let allow_dead_code = allow_dead_code_tokens(self.allow_dead_code);
+        let allow_dead_code = self.allow_dead_code();
         let debug_derive = self.impl_debug.attr(&quote! { derive(Debug) });
         let defmt_derive = self.impl_defmt.attr(&quote! { derive(defmt::Format) });
         let serde_derives = self
@@ -380,7 +380,7 @@ impl Config<'_> {
             .transpose()?;
 
         let allow_lints = allow_lints();
-        let allow_dead_code = allow_dead_code_tokens(self.allow_dead_code);
+        let allow_dead_code = self.allow_dead_code();
 
         let new_fn_doc = format!("/// Construct new {} from values", msg.name).tokens()?;
 
@@ -711,6 +711,15 @@ impl Config<'_> {
             #(#set_multiplexer_fns)*
         })
     }
+
+    /// Generate `[allow(dead_code)]` attribute if needed
+    fn allow_dead_code(&self) -> Option<TokenStream> {
+        if self.allow_dead_code {
+            Some(quote! { #[allow(dead_code)] })
+        } else {
+            None
+        }
+    }
 }
 
 fn be_start_end_bit(signal: &Signal, msg: &Message) -> Result<(u64, u64)> {
@@ -923,7 +932,7 @@ impl Config<'_> {
         let doc = format!(" Defined values for {signal_name}");
 
         let allow_lints = allow_lints();
-        let allow_dead_code = allow_dead_code_tokens(self.allow_dead_code);
+        let allow_dead_code = self.allow_dead_code();
         let debug_derive = self.impl_debug.attr(&quote! { derive(Debug) });
         let defmt_derive = self.impl_defmt.attr(&quote! { derive(defmt::Format) });
         let serde_serialize = self.impl_serde.attr(&quote! { derive(Serialize) });
@@ -1208,7 +1217,7 @@ impl Config<'_> {
 
         // Generate structs for each multiplexed signal
         let allow_lints_outer = allow_lints();
-        let allow_dead_code_outer = allow_dead_code_tokens(self.allow_dead_code);
+        let allow_dead_code_outer = self.allow_dead_code();
 
         let struct_defs: Result<Vec<_>> = multiplexed_signals
             .iter()
@@ -1273,7 +1282,7 @@ impl Config<'_> {
 
     fn render_arbitrary(&self, msg: &Message) -> TokenStream {
         let allow_lints = allow_lints();
-        let allow_dead_code = allow_dead_code_tokens(self.allow_dead_code);
+        let allow_dead_code = self.allow_dead_code();
         let msg_type = msg.type_name();
 
         let filtered_signals: Vec<&Signal> = msg
@@ -1354,7 +1363,7 @@ impl Config<'_> {
     }
 
     fn render_arbitrary_helpers(&self) -> TokenStream {
-        let allow_dead_code = allow_dead_code_tokens(self.allow_dead_code);
+        let allow_dead_code = self.allow_dead_code();
 
         let trait_def = self.impl_arbitrary.if_cfg(quote! {
                 #allow_dead_code
@@ -1469,14 +1478,5 @@ fn generate_value_literal(value: f64, typ: ValType) -> TokenStream {
             let lit = lit_float(format!("{value}_{typ_str}"));
             quote! { #lit }
         }
-    }
-}
-
-/// Generate `[allow(dead_code)]` attribute if needed
-fn allow_dead_code_tokens(allow: bool) -> Option<TokenStream> {
-    if allow {
-        Some(quote! { #[allow(dead_code)] })
-    } else {
-        None
     }
 }
