@@ -316,9 +316,6 @@ impl From<ExampleMessageNonEmptyChoice> for i8 {
         }
     }
 }
-/// This is just to make testing easier
-#[allow(dead_code)]
-fn main() {}
 #[allow(dead_code)]
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum CanError {
@@ -343,3 +340,7 @@ impl core::fmt::Display for CanError {
         write!(f, "{self:?}")
     }
 }
+
+
+#[allow(dead_code)]
+fn main() {}

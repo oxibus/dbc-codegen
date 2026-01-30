@@ -135,14 +135,7 @@ Make sure git submodules are up to date by running
 /// Parse a single DBC file and assert a snapshot of the result.
 fn parse_one_file([path]: [&Path; 1]) {
     let test = get_test_info(path);
-    let buffer = fs::read(path).unwrap();
-    let buffer = test.decode(&buffer);
-
-    let result = Config::builder()
-        .dbc_name(&test.file_name)
-        .dbc_content(&buffer)
-        .build()
-        .generate();
+    let result = create_content(&test, path);
 
     if let Some(snapshot_path) = test.snapshot_path(result.is_err()) {
         with_settings! {
@@ -161,6 +154,22 @@ fn parse_one_file([path]: [&Path; 1]) {
     } else if let Err(e) = result {
         panic!("Failed to parse {}.dbc: {e:#?}", test.file_name);
     }
+}
+
+fn create_content(test: &Test, path: &Path) -> anyhow::Result<String> {
+    let buffer = fs::read(path)?;
+    let buffer = test.decode(&buffer);
+
+    Config::builder()
+        .dbc_name(&test.file_name)
+        .dbc_content(&buffer)
+        .build()
+        .generate()
+        .map(|mut v| {
+            // Append a main function because trybuild requires one
+            v += "\n\n#[allow(dead_code)]\nfn main() {}\n";
+            v
+        })
 }
 
 static BAD_TESTS: &[&str] = &[
@@ -270,18 +279,12 @@ fn compile_test() {
 fn single_file_manual_test() {
     let test_path = Path::new("tests/fixtures/shared-test-files/dbc-cantools/choices.dbc");
     let test = get_test_info(test_path);
-    let buffer = fs::read(test_path).unwrap();
-    let buffer = test.decode(&buffer);
+
+    let result = create_content(&test, test_path).unwrap();
 
     let out_path = PathBuf::from("./target/manual/manual_test_output.rs");
     fs::create_dir_all(out_path.parent().unwrap()).unwrap();
-
-    Config::builder()
-        .dbc_name(&test.file_name)
-        .dbc_content(&buffer)
-        .build()
-        .write_to_file(&out_path)
-        .unwrap();
+    fs::write(&out_path, result).unwrap();
 
     env::set_var("CARGO_ENCODED_RUSTFLAGS", "--deny=warnings");
     let t = trybuild::TestCases::new();
