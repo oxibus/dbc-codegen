@@ -1,7 +1,5 @@
-use std::fmt::Display;
-use std::io::Write;
-
-use anyhow::{Error, Result};
+use proc_macro2::TokenStream;
+use template_quote::quote;
 
 /// Configuration for including features in the code generator.
 ///
@@ -20,31 +18,41 @@ pub enum FeatureConfig<'a> {
 }
 
 impl FeatureConfig<'_> {
-    pub(crate) fn fmt_attr(&self, w: &mut impl Write, attr: impl Display) -> Result<()> {
+    /// Generate an attribute token stream (like `#[derive(Debug)]`).
+    /// The closure is only called when the feature is enabled, so expensive codegen can be skipped when `Never`.
+    pub(crate) fn attr<F>(&self, f: F) -> TokenStream
+    where
+        F: FnOnce() -> TokenStream,
+    {
         match self {
-            FeatureConfig::Always => writeln!(w, "#[{attr}]")?,
-            FeatureConfig::Gated(gate) => writeln!(w, "#[cfg_attr(feature = {gate:?}, {attr})]")?,
-            FeatureConfig::Never => {}
+            FeatureConfig::Always => {
+                let tokens = f();
+                quote! { #[#tokens] }
+            }
+            FeatureConfig::Gated(gate) => {
+                let tokens = f();
+                quote! { #[cfg_attr(feature = #gate, #tokens)] }
+            }
+            FeatureConfig::Never => quote! {},
         }
-        Ok(())
     }
 
-    pub(crate) fn fmt_cfg<W: Write, E: Into<Error>>(
-        &self,
-        mut w: W,
-        f: impl FnOnce(W) -> Result<(), E>,
-    ) -> Result<()> {
+    /// Generate a token stream optionally wrapped in a cfg attribute.
+    /// The closure is only called when the feature is enabled, so expensive codegen can be skipped when `Never`.
+    pub(crate) fn if_cfg<F>(&self, f: F) -> TokenStream
+    where
+        F: FnOnce() -> TokenStream,
+    {
         match self {
-            // If config is Never, return immediately without calling `f`
-            FeatureConfig::Never => return Ok(()),
-            // If config is Gated, prepend `f` with a cfg guard
+            FeatureConfig::Always => f(),
             FeatureConfig::Gated(gate) => {
-                writeln!(w, "#[cfg(feature = {gate:?})]")?;
+                let tokens = f();
+                quote! {
+                    #[cfg(feature = #gate)]
+                    #tokens
+                }
             }
-            // Otherwise, just call `f`
-            FeatureConfig::Always => {}
+            FeatureConfig::Never => quote! {},
         }
-
-        f(w).map_err(Into::into)
     }
 }

@@ -29,8 +29,10 @@ can-dbc = "8.0.1"
 embedded-can = "0.4.1"
 heck = "0.5.0"
 prettyplease = "0.2.37"
-quote = "1.0"
+proc-macro2 = "1.0.92"
+quote = "1.0.44"
 syn = "2.0.114"
+template-quote = "0.4.2"
 typed-builder = "0.23.0"
 
 [dev-dependencies]
@@ -48,6 +50,7 @@ unused_qualifications = "warn"
 [lints.clippy]
 cargo = { level = "warn", priority = -1 }
 pedantic = { level = "warn", priority = -1 }
+multiple_crate_versions = "allow"
 cast_possible_truncation = "allow"
 cast_precision_loss = "allow"
 missing_errors_doc = "allow"
