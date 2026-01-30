@@ -144,14 +144,7 @@ impl Config<'_> {
         })?;
 
         writeln!(w)?;
-
-        self.render_dbc(&mut w, &dbc)
-            .context("could not generate Rust code")?;
-
-        writeln!(w)?;
-        writeln!(w, "/// This is just to make testing easier")?;
-        writeln!(w, "#[allow(dead_code)]")?;
-        writeln!(w, "fn main() {{}}")?;
+        self.render_dbc(&mut w, &dbc)?;
         writeln!(w)?;
         self.render_error(&mut w)?;
         self.render_arbitrary_helpers(&mut w)?;
@@ -1328,7 +1321,8 @@ impl Config<'_> {
     /// Generate Rust structs matching DBC input description and return as String
     pub fn generate(self) -> Result<String> {
         let mut out = Vec::new();
-        self.codegen(&mut out)?;
+        self.codegen(&mut out)
+            .context("could not generate Rust code")?;
         // Parse and re-format the generated code to allow for future
         // syn/quote codegen migration. Note that this is inefficient at the moment,
         // but this shouldn't be significantly noticeable.
