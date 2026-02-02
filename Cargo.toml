@@ -36,9 +36,9 @@ typed-builder = "0.23.0"
 [dev-dependencies]
 bitvec = "1.0.1"
 embedded-can = "0.4.1"
-insta = "1.46.1"
+insta = "1.46.2"
 test_each_file = "0.3.6"
-trybuild = "1.0.114"
+trybuild = "1.0.115"
 walkdir = "2.5.0"
 
 [lints.rust]
