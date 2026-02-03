@@ -1,4 +1,4 @@
-error[E0412]: cannot find type `ExtMuxCascadedMuxAIndex` in this scope
+error[E0425]: cannot find type `ExtMuxCascadedMuxAIndex` in this scope
    --> tests-snapshots/dbc-cantools/issue_184_extended_mux_cascaded_dumped.snap.rs:191:39
     |
 191 |     pub fn mux_a(&mut self) -> Result<ExtMuxCascadedMuxAIndex, CanError> {
@@ -35,7 +35,7 @@ error[E0422]: cannot find struct, variant or union type `ExtMuxCascadedMuxAM1` i
 202 |                     ExtMuxCascadedMuxAIndex::M1(ExtMuxCascadedMuxAM1 {
     |                                                 ^^^^^^^^^^^^^^^^^^^^ help: a struct with a similar name exists: `ExtMuxCascaded`
 
-error[E0412]: cannot find type `ExtMuxCascadedMuxAM0` in this scope
+error[E0425]: cannot find type `ExtMuxCascadedMuxAM0` in this scope
    --> tests-snapshots/dbc-cantools/issue_184_extended_mux_cascaded_dumped.snap.rs:236:37
     |
  55 | pub struct ExtMuxCascaded {
@@ -44,7 +44,7 @@ error[E0412]: cannot find type `ExtMuxCascadedMuxAM0` in this scope
 236 |     pub fn set_m0(&mut self, value: ExtMuxCascadedMuxAM0) -> Result<(), CanError> {
     |                                     ^^^^^^^^^^^^^^^^^^^^ help: a struct with a similar name exists: `ExtMuxCascaded`
 
-error[E0412]: cannot find type `ExtMuxCascadedMuxAM1` in this scope
+error[E0425]: cannot find type `ExtMuxCascadedMuxAM1` in this scope
    --> tests-snapshots/dbc-cantools/issue_184_extended_mux_cascaded_dumped.snap.rs:245:37
     |
  55 | pub struct ExtMuxCascaded {
@@ -83,11 +83,21 @@ error[E0277]: the trait bound `u16: From<i8>` is not satisfied
 128 |                     multiplexor: multiplexor.into(),
     |                                              ^^^^ the trait `From<i8>` is not implemented for `u16`
     |
-    = help: the following other types implement trait `From<T>`:
-              `u16` implements `From<Char>`
-              `u16` implements `From<bool>`
-              `u16` implements `From<u8>`
+help: the following other types implement trait `From<T>`
+   --> $RUST/core/src/ascii/ascii_char.rs
+    |
+    | into_int_impl!(u8 u16 u32 u64 u128 char);
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `u16` implements `From<Char>`
+    |
+   ::: $RUST/core/src/convert/num.rs
+    |
+    | impl_from!(bool => u16);
+    | ^^^^^^^^^^^^^^^^^^^^^^^ `u16` implements `From<bool>`
+...
+    | impl_from!(u8 => u16, #[stable(feature = "lossless_int_conv", since = "1.5.0")]);
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `u16` implements `From<u8>`
     = note: required for `i8` to implement `Into<u16>`
+    = note: this error originates in the macro `into_int_impl` which comes from the expansion of the macro `impl_from` (in Nightly builds, run with -Z macro-backtrace for more info)
 
 error[E0433]: failed to resolve: use of undeclared type `ExtMuxCascadedMuxAIndex`
    --> tests-snapshots/dbc-cantools/issue_184_extended_mux_cascaded_dumped.snap.rs:195:21
@@ -113,8 +123,18 @@ error[E0277]: the trait bound `u16: From<i8>` is not satisfied
 210 |                     multiplexor: multiplexor.into(),
     |                                              ^^^^ the trait `From<i8>` is not implemented for `u16`
     |
-    = help: the following other types implement trait `From<T>`:
-              `u16` implements `From<Char>`
-              `u16` implements `From<bool>`
-              `u16` implements `From<u8>`
+help: the following other types implement trait `From<T>`
+   --> $RUST/core/src/ascii/ascii_char.rs
+    |
+    | into_int_impl!(u8 u16 u32 u64 u128 char);
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `u16` implements `From<Char>`
+    |
+   ::: $RUST/core/src/convert/num.rs
+    |
+    | impl_from!(bool => u16);
+    | ^^^^^^^^^^^^^^^^^^^^^^^ `u16` implements `From<bool>`
+...
+    | impl_from!(u8 => u16, #[stable(feature = "lossless_int_conv", since = "1.5.0")]);
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `u16` implements `From<u8>`
     = note: required for `i8` to implement `Into<u16>`
+    = note: this error originates in the macro `into_int_impl` which comes from the expansion of the macro `impl_from` (in Nightly builds, run with -Z macro-backtrace for more info)
