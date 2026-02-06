@@ -24,7 +24,7 @@ rust-version = "1.88"
 std = []
 
 [dependencies]
-anyhow = "1.0.100"
+anyhow = "1.0.101"
 can-dbc = "8.0.1"
 embedded-can = "0.4.1"
 heck = "0.5.0"
