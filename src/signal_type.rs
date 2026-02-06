@@ -3,6 +3,7 @@ use std::fmt::Display;
 
 use can_dbc::Signal;
 use can_dbc::ValueType::{Signed, Unsigned};
+use quote::IdentFragment;
 use IntSize::{Size128, Size16, Size32, Size64, Size8};
 use ValType::{Bool, SignedInt, UnsignedInt, F32};
 
@@ -63,6 +64,12 @@ impl Display for ValType {
             SignedInt(v) => write!(f, "i{}", v.bits()),
             F32 => write!(f, "f32"),
         }
+    }
+}
+
+impl IdentFragment for ValType {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        Display::fmt(self, f)
     }
 }
 

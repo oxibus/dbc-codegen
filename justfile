@@ -33,7 +33,7 @@ bless-generate:  (cargo-install 'cargo-insta')
 # Generate all snapshots, including forced (.gitignore-d) ones
 bless-generate-all:
     rm -rf tests-snapshots
-    FORCE_INSTA=1 {{just}} bless-generate
+    FORCE_INSTA=1 {{just}} bless-generate bless-compile
 
 # Build the project
 build:
