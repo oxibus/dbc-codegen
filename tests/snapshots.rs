@@ -187,7 +187,6 @@ static BAD_TESTS: &[&str] = &[
     "long_names_multiple_relations_dumped.snap.rs",
     "multiplex_2.snap.rs",
     "multiplex_2_dumped.snap.rs",
-    "padding_bit_order.snap.rs",
     "signed.snap.rs",
     //
     "FORD_CADS.snap.rs",

@@ -282,8 +282,8 @@ impl Config<'_> {
                 let typ = ValType::from_signal(signal);
                 if typ != ValType::Bool {
                     let sig = signal.field_name().to_uppercase();
-                    let min = signal.min;
-                    let max = signal.max;
+                    let min = &signal.min;
+                    let max = &signal.max;
                     writeln!(w, "pub const {sig}_MIN: {typ} = {min}_{typ};")?;
                     writeln!(w, "pub const {sig}_MAX: {typ} = {max}_{typ};")?;
                 }
@@ -539,8 +539,8 @@ impl Config<'_> {
 
                 if let FeatureConfig::Gated(..) | FeatureConfig::Always = self.check_ranges {
                     let typ = ValType::from_signal(signal);
-                    let min = signal.min;
-                    let max = signal.max;
+                    let min = &signal.min;
+                    let max = &signal.max;
                     writeln!(w, r"if value < {min}_{typ} || {max}_{typ} < value {{")?;
 
                     {
@@ -1296,13 +1296,13 @@ fn signal_to_arbitrary(signal: &Signal) -> String {
     match typ {
         ValType::Bool => "u.int_in_range(0..=1)? == 1".to_string(),
         ValType::F32 => {
-            let min = signal.min;
-            let max = signal.max;
+            let min = &signal.min;
+            let max = &signal.max;
             format!("u.float_in_range({min}_f32..={max}_f32)?")
         }
         _ => {
-            let min = signal.min;
-            let max = signal.max;
+            let min = &signal.min;
+            let max = &signal.max;
             format!("u.int_in_range({min}..={max})?")
         }
     }
