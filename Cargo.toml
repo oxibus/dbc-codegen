@@ -67,3 +67,6 @@ default-members = ["."]
 [package.metadata.docs.rs]
 # Indicates features that docs.rs should enable when building documentation.
 features = ["std"]
+
+[patch.crates-io]
+can-dbc = { git = "https://github.com/trnila/can-dbc", rev = "3a074924789c59954905186261133825907ed678" }

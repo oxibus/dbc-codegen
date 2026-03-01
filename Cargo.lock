@@ -144,8 +144,7 @@ dependencies = [
 [[package]]
 name = "can-dbc"
 version = "8.1.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "912874d84099e530055bac10893f2d2b09c63bcf41c02e854e42ca42ec33ade1"
+source = "git+https://github.com/trnila/can-dbc?rev=3a074924789c59954905186261133825907ed678#3a074924789c59954905186261133825907ed678"
 dependencies = [
  "can-dbc-pest",
  "encoding_rs",
