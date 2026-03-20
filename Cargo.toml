@@ -25,7 +25,7 @@ std = []
 
 [dependencies]
 anyhow = "1.0.101"
-can-dbc = "8.0.1"
+can-dbc = "9.0.0"
 embedded-can = "0.4.1"
 heck = "0.5.0"
 prettyplease = "0.2.37"
@@ -67,6 +67,3 @@ default-members = ["."]
 [package.metadata.docs.rs]
 # Indicates features that docs.rs should enable when building documentation.
 features = ["std"]
-
-[patch.crates-io]
-can-dbc = { git = "https://github.com/trnila/can-dbc", rev = "3a074924789c59954905186261133825907ed678" }
