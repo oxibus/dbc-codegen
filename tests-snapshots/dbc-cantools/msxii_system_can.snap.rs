@@ -496,7 +496,7 @@ impl BatteryVt {
             multiplexor => {
                 Err(CanError::InvalidMultiplexor {
                     message_id: BatteryVt::MESSAGE_ID,
-                    multiplexor: multiplexor.into(),
+                    multiplexor: multiplexor,
                 })
             }
         }

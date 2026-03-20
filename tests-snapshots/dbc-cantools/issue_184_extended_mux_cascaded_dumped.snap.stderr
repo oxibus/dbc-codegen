@@ -101,37 +101,6 @@ error[E0592]: duplicate definitions with name `set_m1`
 245 |       pub fn set_m1(&mut self, value: ExtMuxCascadedMuxAM1) -> Result<(), CanError> {
     |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ duplicate definitions for `set_m1`
 
-error[E0277]: the trait bound `u16: From<i8>` is not satisfied
-   --> tests-snapshots/dbc-cantools/issue_184_extended_mux_cascaded_dumped.snap.rs:128:46
-    |
-128 |                     multiplexor: multiplexor.into(),
-    |                                              ^^^^ the trait `From<i8>` is not implemented for `u16`
-    |
-help: the following other types implement trait `From<T>`
-   --> $RUST/core/src/ascii/ascii_char.rs
-    |
-    |             impl const From<AsciiChar> for $ty {
-    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `u16` implements `From<std::ascii::Char>`
-...
-    | into_int_impl!(u8 u16 u32 u64 u128 char);
-    | ---------------------------------------- in this macro invocation
-    |
-   ::: $RUST/core/src/convert/num.rs
-    |
-    |         impl const From<$Small> for $Large {
-    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    |         |
-    |         `u16` implements `From<bool>`
-    |         `u16` implements `From<u8>`
-...
-    | impl_from!(bool => u16);
-    | ----------------------- in this macro invocation
-...
-    | impl_from!(u8 => u16, #[stable(feature = "lossless_int_conv", since = "1.5.0")]);
-    | -------------------------------------------------------------------------------- in this macro invocation
-    = note: required for `i8` to implement `Into<u16>`
-    = note: this error originates in the macro `into_int_impl` which comes from the expansion of the macro `impl_from` (in Nightly builds, run with -Z macro-backtrace for more info)
-
 error[E0433]: failed to resolve: use of undeclared type `ExtMuxCascadedMuxAIndex`
    --> tests-snapshots/dbc-cantools/issue_184_extended_mux_cascaded_dumped.snap.rs:195:21
     |
@@ -155,34 +124,3 @@ help: an enum with a similar name exists
 202 -                     ExtMuxCascadedMuxAIndex::M1(ExtMuxCascadedMuxAM1 {
 202 +                     ExtMuxCascadedMuxedA2MuxBIndex::M1(ExtMuxCascadedMuxAM1 {
     |
-
-error[E0277]: the trait bound `u16: From<i8>` is not satisfied
-   --> tests-snapshots/dbc-cantools/issue_184_extended_mux_cascaded_dumped.snap.rs:210:46
-    |
-210 |                     multiplexor: multiplexor.into(),
-    |                                              ^^^^ the trait `From<i8>` is not implemented for `u16`
-    |
-help: the following other types implement trait `From<T>`
-   --> $RUST/core/src/ascii/ascii_char.rs
-    |
-    |             impl const From<AsciiChar> for $ty {
-    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `u16` implements `From<std::ascii::Char>`
-...
-    | into_int_impl!(u8 u16 u32 u64 u128 char);
-    | ---------------------------------------- in this macro invocation
-    |
-   ::: $RUST/core/src/convert/num.rs
-    |
-    |         impl const From<$Small> for $Large {
-    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    |         |
-    |         `u16` implements `From<bool>`
-    |         `u16` implements `From<u8>`
-...
-    | impl_from!(bool => u16);
-    | ----------------------- in this macro invocation
-...
-    | impl_from!(u8 => u16, #[stable(feature = "lossless_int_conv", since = "1.5.0")]);
-    | -------------------------------------------------------------------------------- in this macro invocation
-    = note: required for `i8` to implement `Into<u16>`
-    = note: this error originates in the macro `into_int_impl` which comes from the expansion of the macro `impl_from` (in Nightly builds, run with -Z macro-backtrace for more info)

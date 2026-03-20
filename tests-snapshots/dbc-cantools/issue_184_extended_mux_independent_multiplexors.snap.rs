@@ -134,7 +134,7 @@ impl ExtMuxIndepMultiplexors {
             multiplexor => {
                 Err(CanError::InvalidMultiplexor {
                     message_id: ExtMuxIndepMultiplexors::MESSAGE_ID,
-                    multiplexor: multiplexor.into(),
+                    multiplexor: u16::try_from(multiplexor).unwrap_or(u16::MAX),
                 })
             }
         }
@@ -235,7 +235,7 @@ impl ExtMuxIndepMultiplexors {
             multiplexor => {
                 Err(CanError::InvalidMultiplexor {
                     message_id: ExtMuxIndepMultiplexors::MESSAGE_ID,
-                    multiplexor: multiplexor.into(),
+                    multiplexor: u16::try_from(multiplexor).unwrap_or(u16::MAX),
                 })
             }
         }
