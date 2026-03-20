@@ -21,55 +21,91 @@ error[E0422]: cannot find struct, variant or union type `ExtendedS1M0` in this s
    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:793:41
     |
 793 |             0 => Ok(ExtendedS1Index::M0(ExtendedS1M0 { raw: self.raw })),
-    |                                         ^^^^^^^^^^^^ help: a struct with a similar name exists: `ExtendedS6M0`
+    |                                         ^^^^^^^^^^^^
 ...
 988 | pub struct ExtendedS6M0 {
     | ----------------------- similarly named struct `ExtendedS6M0` defined here
+    |
+help: a struct with a similar name exists
+    |
+793 -             0 => Ok(ExtendedS1Index::M0(ExtendedS1M0 { raw: self.raw })),
+793 +             0 => Ok(ExtendedS1Index::M0(ExtendedS6M0 { raw: self.raw })),
+    |
 
 error[E0422]: cannot find struct, variant or union type `ExtendedS1M1` in this scope
     --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:794:41
      |
  794 |             1 => Ok(ExtendedS1Index::M1(ExtendedS1M1 { raw: self.raw })),
-     |                                         ^^^^^^^^^^^^ help: a struct with a similar name exists: `ExtendedS6M1`
+     |                                         ^^^^^^^^^^^^
 ...
 1103 | pub struct ExtendedS6M1 {
      | ----------------------- similarly named struct `ExtendedS6M1` defined here
+     |
+help: a struct with a similar name exists
+     |
+ 794 -             1 => Ok(ExtendedS1Index::M1(ExtendedS1M1 { raw: self.raw })),
+ 794 +             1 => Ok(ExtendedS1Index::M1(ExtendedS6M1 { raw: self.raw })),
+     |
 
 error[E0422]: cannot find struct, variant or union type `ExtendedS1M2` in this scope
     --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:795:41
      |
  795 |             2 => Ok(ExtendedS1Index::M2(ExtendedS1M2 { raw: self.raw })),
-     |                                         ^^^^^^^^^^^^ help: a struct with a similar name exists: `ExtendedS6M2`
+     |                                         ^^^^^^^^^^^^
 ...
 1218 | pub struct ExtendedS6M2 {
      | ----------------------- similarly named struct `ExtendedS6M2` defined here
+     |
+help: a struct with a similar name exists
+     |
+ 795 -             2 => Ok(ExtendedS1Index::M2(ExtendedS1M2 { raw: self.raw })),
+ 795 +             2 => Ok(ExtendedS1Index::M2(ExtendedS6M2 { raw: self.raw })),
+     |
 
 error[E0425]: cannot find type `ExtendedS1M0` in this scope
    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:825:37
     |
 825 |     pub fn set_m0(&mut self, value: ExtendedS1M0) -> Result<(), CanError> {
-    |                                     ^^^^^^^^^^^^ help: a struct with a similar name exists: `ExtendedS6M0`
+    |                                     ^^^^^^^^^^^^
 ...
 988 | pub struct ExtendedS6M0 {
     | ----------------------- similarly named struct `ExtendedS6M0` defined here
+    |
+help: a struct with a similar name exists
+    |
+825 -     pub fn set_m0(&mut self, value: ExtendedS1M0) -> Result<(), CanError> {
+825 +     pub fn set_m0(&mut self, value: ExtendedS6M0) -> Result<(), CanError> {
+    |
 
 error[E0425]: cannot find type `ExtendedS1M1` in this scope
     --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:834:37
      |
  834 |     pub fn set_m1(&mut self, value: ExtendedS1M1) -> Result<(), CanError> {
-     |                                     ^^^^^^^^^^^^ help: a struct with a similar name exists: `ExtendedS6M1`
+     |                                     ^^^^^^^^^^^^
 ...
 1103 | pub struct ExtendedS6M1 {
      | ----------------------- similarly named struct `ExtendedS6M1` defined here
+     |
+help: a struct with a similar name exists
+     |
+ 834 -     pub fn set_m1(&mut self, value: ExtendedS1M1) -> Result<(), CanError> {
+ 834 +     pub fn set_m1(&mut self, value: ExtendedS6M1) -> Result<(), CanError> {
+     |
 
 error[E0425]: cannot find type `ExtendedS1M2` in this scope
     --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:843:37
      |
  843 |     pub fn set_m2(&mut self, value: ExtendedS1M2) -> Result<(), CanError> {
-     |                                     ^^^^^^^^^^^^ help: a struct with a similar name exists: `ExtendedS6M2`
+     |                                     ^^^^^^^^^^^^
 ...
 1218 | pub struct ExtendedS6M2 {
      | ----------------------- similarly named struct `ExtendedS6M2` defined here
+     |
+help: a struct with a similar name exists
+     |
+ 843 -     pub fn set_m2(&mut self, value: ExtendedS1M2) -> Result<(), CanError> {
+ 843 +     pub fn set_m2(&mut self, value: ExtendedS6M2) -> Result<(), CanError> {
+     |
 
 error[E0425]: cannot find type `ExtendedS0Index` in this scope
    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:865:36
@@ -94,55 +130,91 @@ error[E0422]: cannot find struct, variant or union type `ExtendedS0M0` in this s
    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:867:41
     |
 867 |             0 => Ok(ExtendedS0Index::M0(ExtendedS0M0 { raw: self.raw })),
-    |                                         ^^^^^^^^^^^^ help: a struct with a similar name exists: `ExtendedS6M0`
+    |                                         ^^^^^^^^^^^^
 ...
 988 | pub struct ExtendedS6M0 {
     | ----------------------- similarly named struct `ExtendedS6M0` defined here
+    |
+help: a struct with a similar name exists
+    |
+867 -             0 => Ok(ExtendedS0Index::M0(ExtendedS0M0 { raw: self.raw })),
+867 +             0 => Ok(ExtendedS0Index::M0(ExtendedS6M0 { raw: self.raw })),
+    |
 
 error[E0422]: cannot find struct, variant or union type `ExtendedS0M1` in this scope
     --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:868:41
      |
  868 |             1 => Ok(ExtendedS0Index::M1(ExtendedS0M1 { raw: self.raw })),
-     |                                         ^^^^^^^^^^^^ help: a struct with a similar name exists: `ExtendedS6M1`
+     |                                         ^^^^^^^^^^^^
 ...
 1103 | pub struct ExtendedS6M1 {
      | ----------------------- similarly named struct `ExtendedS6M1` defined here
+     |
+help: a struct with a similar name exists
+     |
+ 868 -             1 => Ok(ExtendedS0Index::M1(ExtendedS0M1 { raw: self.raw })),
+ 868 +             1 => Ok(ExtendedS0Index::M1(ExtendedS6M1 { raw: self.raw })),
+     |
 
 error[E0422]: cannot find struct, variant or union type `ExtendedS0M2` in this scope
     --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:869:41
      |
  869 |             2 => Ok(ExtendedS0Index::M2(ExtendedS0M2 { raw: self.raw })),
-     |                                         ^^^^^^^^^^^^ help: a struct with a similar name exists: `ExtendedS6M2`
+     |                                         ^^^^^^^^^^^^
 ...
 1218 | pub struct ExtendedS6M2 {
      | ----------------------- similarly named struct `ExtendedS6M2` defined here
+     |
+help: a struct with a similar name exists
+     |
+ 869 -             2 => Ok(ExtendedS0Index::M2(ExtendedS0M2 { raw: self.raw })),
+ 869 +             2 => Ok(ExtendedS0Index::M2(ExtendedS6M2 { raw: self.raw })),
+     |
 
 error[E0425]: cannot find type `ExtendedS0M0` in this scope
    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:899:37
     |
 899 |     pub fn set_m0(&mut self, value: ExtendedS0M0) -> Result<(), CanError> {
-    |                                     ^^^^^^^^^^^^ help: a struct with a similar name exists: `ExtendedS6M0`
+    |                                     ^^^^^^^^^^^^
 ...
 988 | pub struct ExtendedS6M0 {
     | ----------------------- similarly named struct `ExtendedS6M0` defined here
+    |
+help: a struct with a similar name exists
+    |
+899 -     pub fn set_m0(&mut self, value: ExtendedS0M0) -> Result<(), CanError> {
+899 +     pub fn set_m0(&mut self, value: ExtendedS6M0) -> Result<(), CanError> {
+    |
 
 error[E0425]: cannot find type `ExtendedS0M1` in this scope
     --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:908:37
      |
  908 |     pub fn set_m1(&mut self, value: ExtendedS0M1) -> Result<(), CanError> {
-     |                                     ^^^^^^^^^^^^ help: a struct with a similar name exists: `ExtendedS6M1`
+     |                                     ^^^^^^^^^^^^
 ...
 1103 | pub struct ExtendedS6M1 {
      | ----------------------- similarly named struct `ExtendedS6M1` defined here
+     |
+help: a struct with a similar name exists
+     |
+ 908 -     pub fn set_m1(&mut self, value: ExtendedS0M1) -> Result<(), CanError> {
+ 908 +     pub fn set_m1(&mut self, value: ExtendedS6M1) -> Result<(), CanError> {
+     |
 
 error[E0425]: cannot find type `ExtendedS0M2` in this scope
     --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:917:37
      |
  917 |     pub fn set_m2(&mut self, value: ExtendedS0M2) -> Result<(), CanError> {
-     |                                     ^^^^^^^^^^^^ help: a struct with a similar name exists: `ExtendedS6M2`
+     |                                     ^^^^^^^^^^^^
 ...
 1218 | pub struct ExtendedS6M2 {
      | ----------------------- similarly named struct `ExtendedS6M2` defined here
+     |
+help: a struct with a similar name exists
+     |
+ 917 -     pub fn set_m2(&mut self, value: ExtendedS0M2) -> Result<(), CanError> {
+ 917 +     pub fn set_m2(&mut self, value: ExtendedS6M2) -> Result<(), CanError> {
+     |
 
 error[E0425]: cannot find type `ExtendedTypesS11Index` in this scope
     --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:1441:37
@@ -167,37 +239,61 @@ error[E0422]: cannot find struct, variant or union type `ExtendedTypesS11M0` in 
     --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:1445:47
      |
 1445 |                     ExtendedTypesS11Index::M0(ExtendedTypesS11M0 {
-     |                                               ^^^^^^^^^^^^^^^^^^ help: a struct with a similar name exists: `ExtendedTypesS0M0`
+     |                                               ^^^^^^^^^^^^^^^^^^
 ...
 1564 | pub struct ExtendedTypesS0M0 {
      | ---------------------------- similarly named struct `ExtendedTypesS0M0` defined here
+     |
+help: a struct with a similar name exists
+     |
+1445 -                     ExtendedTypesS11Index::M0(ExtendedTypesS11M0 {
+1445 +                     ExtendedTypesS11Index::M0(ExtendedTypesS0M0 {
+     |
 
 error[E0422]: cannot find struct, variant or union type `ExtendedTypesS11M5` in this scope
     --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:1452:47
      |
 1452 |                     ExtendedTypesS11Index::M5(ExtendedTypesS11M5 {
-     |                                               ^^^^^^^^^^^^^^^^^^ help: a struct with a similar name exists: `ExtendedTypesS0M5`
+     |                                               ^^^^^^^^^^^^^^^^^^
 ...
 1637 | pub struct ExtendedTypesS0M5 {
      | ---------------------------- similarly named struct `ExtendedTypesS0M5` defined here
+     |
+help: a struct with a similar name exists
+     |
+1452 -                     ExtendedTypesS11Index::M5(ExtendedTypesS11M5 {
+1452 +                     ExtendedTypesS11Index::M5(ExtendedTypesS0M5 {
+     |
 
 error[E0425]: cannot find type `ExtendedTypesS11M0` in this scope
     --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:1485:37
      |
 1485 |     pub fn set_m0(&mut self, value: ExtendedTypesS11M0) -> Result<(), CanError> {
-     |                                     ^^^^^^^^^^^^^^^^^^ help: a struct with a similar name exists: `ExtendedTypesS0M0`
+     |                                     ^^^^^^^^^^^^^^^^^^
 ...
 1564 | pub struct ExtendedTypesS0M0 {
      | ---------------------------- similarly named struct `ExtendedTypesS0M0` defined here
+     |
+help: a struct with a similar name exists
+     |
+1485 -     pub fn set_m0(&mut self, value: ExtendedTypesS11M0) -> Result<(), CanError> {
+1485 +     pub fn set_m0(&mut self, value: ExtendedTypesS0M0) -> Result<(), CanError> {
+     |
 
 error[E0425]: cannot find type `ExtendedTypesS11M5` in this scope
     --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:1494:37
      |
 1494 |     pub fn set_m5(&mut self, value: ExtendedTypesS11M5) -> Result<(), CanError> {
-     |                                     ^^^^^^^^^^^^^^^^^^ help: a struct with a similar name exists: `ExtendedTypesS0M5`
+     |                                     ^^^^^^^^^^^^^^^^^^
 ...
 1637 | pub struct ExtendedTypesS0M5 {
      | ---------------------------- similarly named struct `ExtendedTypesS0M5` defined here
+     |
+help: a struct with a similar name exists
+     |
+1494 -     pub fn set_m5(&mut self, value: ExtendedTypesS11M5) -> Result<(), CanError> {
+1494 +     pub fn set_m5(&mut self, value: ExtendedTypesS0M5) -> Result<(), CanError> {
+     |
 
 error: invalid suffix `i32` for float literal
     --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:1344:30
@@ -296,16 +392,25 @@ error[E0277]: the trait bound `u16: From<i8>` is not satisfied
 help: the following other types implement trait `From<T>`
    --> $RUST/core/src/ascii/ascii_char.rs
     |
+    |             impl const From<AsciiChar> for $ty {
+    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `u16` implements `From<std::ascii::Char>`
+...
     | into_int_impl!(u8 u16 u32 u64 u128 char);
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `u16` implements `From<Char>`
+    | ---------------------------------------- in this macro invocation
     |
    ::: $RUST/core/src/convert/num.rs
     |
+    |         impl const From<$Small> for $Large {
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |         |
+    |         `u16` implements `From<bool>`
+    |         `u16` implements `From<u8>`
+...
     | impl_from!(bool => u16);
-    | ^^^^^^^^^^^^^^^^^^^^^^^ `u16` implements `From<bool>`
+    | ----------------------- in this macro invocation
 ...
     | impl_from!(u8 => u16, #[stable(feature = "lossless_int_conv", since = "1.5.0")]);
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `u16` implements `From<u8>`
+    | -------------------------------------------------------------------------------- in this macro invocation
     = note: required for `i8` to implement `Into<u16>`
     = note: this error originates in the macro `into_int_impl` which comes from the expansion of the macro `impl_from` (in Nightly builds, run with -Z macro-backtrace for more info)
 
@@ -318,16 +423,25 @@ error[E0277]: the trait bound `u16: From<i8>` is not satisfied
 help: the following other types implement trait `From<T>`
    --> $RUST/core/src/ascii/ascii_char.rs
     |
+    |             impl const From<AsciiChar> for $ty {
+    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `u16` implements `From<std::ascii::Char>`
+...
     | into_int_impl!(u8 u16 u32 u64 u128 char);
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `u16` implements `From<Char>`
+    | ---------------------------------------- in this macro invocation
     |
    ::: $RUST/core/src/convert/num.rs
     |
+    |         impl const From<$Small> for $Large {
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |         |
+    |         `u16` implements `From<bool>`
+    |         `u16` implements `From<u8>`
+...
     | impl_from!(bool => u16);
-    | ^^^^^^^^^^^^^^^^^^^^^^^ `u16` implements `From<bool>`
+    | ----------------------- in this macro invocation
 ...
     | impl_from!(u8 => u16, #[stable(feature = "lossless_int_conv", since = "1.5.0")]);
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `u16` implements `From<u8>`
+    | -------------------------------------------------------------------------------- in this macro invocation
     = note: required for `i8` to implement `Into<u16>`
     = note: this error originates in the macro `into_int_impl` which comes from the expansion of the macro `impl_from` (in Nightly builds, run with -Z macro-backtrace for more info)
 
@@ -340,16 +454,25 @@ error[E0277]: the trait bound `u16: From<i8>` is not satisfied
 help: the following other types implement trait `From<T>`
    --> $RUST/core/src/ascii/ascii_char.rs
     |
+    |             impl const From<AsciiChar> for $ty {
+    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `u16` implements `From<std::ascii::Char>`
+...
     | into_int_impl!(u8 u16 u32 u64 u128 char);
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `u16` implements `From<Char>`
+    | ---------------------------------------- in this macro invocation
     |
    ::: $RUST/core/src/convert/num.rs
     |
+    |         impl const From<$Small> for $Large {
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |         |
+    |         `u16` implements `From<bool>`
+    |         `u16` implements `From<u8>`
+...
     | impl_from!(bool => u16);
-    | ^^^^^^^^^^^^^^^^^^^^^^^ `u16` implements `From<bool>`
+    | ----------------------- in this macro invocation
 ...
     | impl_from!(u8 => u16, #[stable(feature = "lossless_int_conv", since = "1.5.0")]);
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `u16` implements `From<u8>`
+    | -------------------------------------------------------------------------------- in this macro invocation
     = note: required for `i8` to implement `Into<u16>`
     = note: this error originates in the macro `into_int_impl` which comes from the expansion of the macro `impl_from` (in Nightly builds, run with -Z macro-backtrace for more info)
 
@@ -357,28 +480,37 @@ error[E0433]: failed to resolve: use of undeclared type `ExtendedS1Index`
    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:793:21
     |
 793 |             0 => Ok(ExtendedS1Index::M0(ExtendedS1M0 { raw: self.raw })),
-    |                     ^^^^^^^^^^^^^^^
-    |                     |
-    |                     use of undeclared type `ExtendedS1Index`
-    |                     help: an enum with a similar name exists: `ExtendedS6Index`
+    |                     ^^^^^^^^^^^^^^^ use of undeclared type `ExtendedS1Index`
+    |
+help: an enum with a similar name exists
+    |
+793 -             0 => Ok(ExtendedS1Index::M0(ExtendedS1M0 { raw: self.raw })),
+793 +             0 => Ok(ExtendedS6Index::M0(ExtendedS1M0 { raw: self.raw })),
+    |
 
 error[E0433]: failed to resolve: use of undeclared type `ExtendedS1Index`
    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:794:21
     |
 794 |             1 => Ok(ExtendedS1Index::M1(ExtendedS1M1 { raw: self.raw })),
-    |                     ^^^^^^^^^^^^^^^
-    |                     |
-    |                     use of undeclared type `ExtendedS1Index`
-    |                     help: an enum with a similar name exists: `ExtendedS6Index`
+    |                     ^^^^^^^^^^^^^^^ use of undeclared type `ExtendedS1Index`
+    |
+help: an enum with a similar name exists
+    |
+794 -             1 => Ok(ExtendedS1Index::M1(ExtendedS1M1 { raw: self.raw })),
+794 +             1 => Ok(ExtendedS6Index::M1(ExtendedS1M1 { raw: self.raw })),
+    |
 
 error[E0433]: failed to resolve: use of undeclared type `ExtendedS1Index`
    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:795:21
     |
 795 |             2 => Ok(ExtendedS1Index::M2(ExtendedS1M2 { raw: self.raw })),
-    |                     ^^^^^^^^^^^^^^^
-    |                     |
-    |                     use of undeclared type `ExtendedS1Index`
-    |                     help: an enum with a similar name exists: `ExtendedS6Index`
+    |                     ^^^^^^^^^^^^^^^ use of undeclared type `ExtendedS1Index`
+    |
+help: an enum with a similar name exists
+    |
+795 -             2 => Ok(ExtendedS1Index::M2(ExtendedS1M2 { raw: self.raw })),
+795 +             2 => Ok(ExtendedS6Index::M2(ExtendedS1M2 { raw: self.raw })),
+    |
 
 error[E0277]: the trait bound `u16: From<i8>` is not satisfied
    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:799:46
@@ -389,16 +521,25 @@ error[E0277]: the trait bound `u16: From<i8>` is not satisfied
 help: the following other types implement trait `From<T>`
    --> $RUST/core/src/ascii/ascii_char.rs
     |
+    |             impl const From<AsciiChar> for $ty {
+    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `u16` implements `From<std::ascii::Char>`
+...
     | into_int_impl!(u8 u16 u32 u64 u128 char);
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `u16` implements `From<Char>`
+    | ---------------------------------------- in this macro invocation
     |
    ::: $RUST/core/src/convert/num.rs
     |
+    |         impl const From<$Small> for $Large {
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |         |
+    |         `u16` implements `From<bool>`
+    |         `u16` implements `From<u8>`
+...
     | impl_from!(bool => u16);
-    | ^^^^^^^^^^^^^^^^^^^^^^^ `u16` implements `From<bool>`
+    | ----------------------- in this macro invocation
 ...
     | impl_from!(u8 => u16, #[stable(feature = "lossless_int_conv", since = "1.5.0")]);
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `u16` implements `From<u8>`
+    | -------------------------------------------------------------------------------- in this macro invocation
     = note: required for `i8` to implement `Into<u16>`
     = note: this error originates in the macro `into_int_impl` which comes from the expansion of the macro `impl_from` (in Nightly builds, run with -Z macro-backtrace for more info)
 
@@ -406,28 +547,37 @@ error[E0433]: failed to resolve: use of undeclared type `ExtendedS0Index`
    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:867:21
     |
 867 |             0 => Ok(ExtendedS0Index::M0(ExtendedS0M0 { raw: self.raw })),
-    |                     ^^^^^^^^^^^^^^^
-    |                     |
-    |                     use of undeclared type `ExtendedS0Index`
-    |                     help: an enum with a similar name exists: `ExtendedS6Index`
+    |                     ^^^^^^^^^^^^^^^ use of undeclared type `ExtendedS0Index`
+    |
+help: an enum with a similar name exists
+    |
+867 -             0 => Ok(ExtendedS0Index::M0(ExtendedS0M0 { raw: self.raw })),
+867 +             0 => Ok(ExtendedS6Index::M0(ExtendedS0M0 { raw: self.raw })),
+    |
 
 error[E0433]: failed to resolve: use of undeclared type `ExtendedS0Index`
    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:868:21
     |
 868 |             1 => Ok(ExtendedS0Index::M1(ExtendedS0M1 { raw: self.raw })),
-    |                     ^^^^^^^^^^^^^^^
-    |                     |
-    |                     use of undeclared type `ExtendedS0Index`
-    |                     help: an enum with a similar name exists: `ExtendedS6Index`
+    |                     ^^^^^^^^^^^^^^^ use of undeclared type `ExtendedS0Index`
+    |
+help: an enum with a similar name exists
+    |
+868 -             1 => Ok(ExtendedS0Index::M1(ExtendedS0M1 { raw: self.raw })),
+868 +             1 => Ok(ExtendedS6Index::M1(ExtendedS0M1 { raw: self.raw })),
+    |
 
 error[E0433]: failed to resolve: use of undeclared type `ExtendedS0Index`
    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:869:21
     |
 869 |             2 => Ok(ExtendedS0Index::M2(ExtendedS0M2 { raw: self.raw })),
-    |                     ^^^^^^^^^^^^^^^
-    |                     |
-    |                     use of undeclared type `ExtendedS0Index`
-    |                     help: an enum with a similar name exists: `ExtendedS6Index`
+    |                     ^^^^^^^^^^^^^^^ use of undeclared type `ExtendedS0Index`
+    |
+help: an enum with a similar name exists
+    |
+869 -             2 => Ok(ExtendedS0Index::M2(ExtendedS0M2 { raw: self.raw })),
+869 +             2 => Ok(ExtendedS6Index::M2(ExtendedS0M2 { raw: self.raw })),
+    |
 
 error[E0277]: the trait bound `u16: From<i8>` is not satisfied
    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:873:46
@@ -438,16 +588,25 @@ error[E0277]: the trait bound `u16: From<i8>` is not satisfied
 help: the following other types implement trait `From<T>`
    --> $RUST/core/src/ascii/ascii_char.rs
     |
+    |             impl const From<AsciiChar> for $ty {
+    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `u16` implements `From<std::ascii::Char>`
+...
     | into_int_impl!(u8 u16 u32 u64 u128 char);
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `u16` implements `From<Char>`
+    | ---------------------------------------- in this macro invocation
     |
    ::: $RUST/core/src/convert/num.rs
     |
+    |         impl const From<$Small> for $Large {
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |         |
+    |         `u16` implements `From<bool>`
+    |         `u16` implements `From<u8>`
+...
     | impl_from!(bool => u16);
-    | ^^^^^^^^^^^^^^^^^^^^^^^ `u16` implements `From<bool>`
+    | ----------------------- in this macro invocation
 ...
     | impl_from!(u8 => u16, #[stable(feature = "lossless_int_conv", since = "1.5.0")]);
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `u16` implements `From<u8>`
+    | -------------------------------------------------------------------------------- in this macro invocation
     = note: required for `i8` to implement `Into<u16>`
     = note: this error originates in the macro `into_int_impl` which comes from the expansion of the macro `impl_from` (in Nightly builds, run with -Z macro-backtrace for more info)
 
@@ -460,16 +619,25 @@ error[E0277]: the trait bound `u16: From<i8>` is not satisfied
 help: the following other types implement trait `From<T>`
     --> $RUST/core/src/ascii/ascii_char.rs
      |
+     |             impl const From<AsciiChar> for $ty {
+     |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `u16` implements `From<std::ascii::Char>`
+...
      | into_int_impl!(u8 u16 u32 u64 u128 char);
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `u16` implements `From<Char>`
+     | ---------------------------------------- in this macro invocation
      |
     ::: $RUST/core/src/convert/num.rs
      |
+     |         impl const From<$Small> for $Large {
+     |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     |         |
+     |         `u16` implements `From<bool>`
+     |         `u16` implements `From<u8>`
+...
      | impl_from!(bool => u16);
-     | ^^^^^^^^^^^^^^^^^^^^^^^ `u16` implements `From<bool>`
+     | ----------------------- in this macro invocation
 ...
      | impl_from!(u8 => u16, #[stable(feature = "lossless_int_conv", since = "1.5.0")]);
-     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `u16` implements `From<u8>`
+     | -------------------------------------------------------------------------------- in this macro invocation
      = note: required for `i8` to implement `Into<u16>`
      = note: this error originates in the macro `into_int_impl` which comes from the expansion of the macro `impl_from` (in Nightly builds, run with -Z macro-backtrace for more info)
 
@@ -477,16 +645,22 @@ error[E0433]: failed to resolve: use of undeclared type `ExtendedTypesS11Index`
     --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:1445:21
      |
 1445 |                     ExtendedTypesS11Index::M0(ExtendedTypesS11M0 {
-     |                     ^^^^^^^^^^^^^^^^^^^^^
-     |                     |
-     |                     use of undeclared type `ExtendedTypesS11Index`
-     |                     help: an enum with a similar name exists: `ExtendedTypesS0Index`
+     |                     ^^^^^^^^^^^^^^^^^^^^^ use of undeclared type `ExtendedTypesS11Index`
+     |
+help: an enum with a similar name exists
+     |
+1445 -                     ExtendedTypesS11Index::M0(ExtendedTypesS11M0 {
+1445 +                     ExtendedTypesS0Index::M0(ExtendedTypesS11M0 {
+     |
 
 error[E0433]: failed to resolve: use of undeclared type `ExtendedTypesS11Index`
     --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:1452:21
      |
 1452 |                     ExtendedTypesS11Index::M5(ExtendedTypesS11M5 {
-     |                     ^^^^^^^^^^^^^^^^^^^^^
-     |                     |
-     |                     use of undeclared type `ExtendedTypesS11Index`
-     |                     help: an enum with a similar name exists: `ExtendedTypesS0Index`
+     |                     ^^^^^^^^^^^^^^^^^^^^^ use of undeclared type `ExtendedTypesS11Index`
+     |
+help: an enum with a similar name exists
+     |
+1452 -                     ExtendedTypesS11Index::M5(ExtendedTypesS11M5 {
+1452 +                     ExtendedTypesS0Index::M5(ExtendedTypesS11M5 {
+     |
