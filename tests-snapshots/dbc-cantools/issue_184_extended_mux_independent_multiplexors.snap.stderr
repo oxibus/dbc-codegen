@@ -21,55 +21,91 @@ error[E0422]: cannot find struct, variant or union type `ExtMuxIndepMultiplexors
    --> tests-snapshots/dbc-cantools/issue_184_extended_mux_independent_multiplexors.snap.rs:216:58
     |
 216 |                     ExtMuxIndepMultiplexorsMuxAIndex::M0(ExtMuxIndepMultiplexorsMuxAM0 {
-    |                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: a struct with a similar name exists: `ExtMuxIndepMultiplexorsMuxBM0`
+    |                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 ...
 362 | pub struct ExtMuxIndepMultiplexorsMuxBM0 {
     | ---------------------------------------- similarly named struct `ExtMuxIndepMultiplexorsMuxBM0` defined here
+    |
+help: a struct with a similar name exists
+    |
+216 -                     ExtMuxIndepMultiplexorsMuxAIndex::M0(ExtMuxIndepMultiplexorsMuxAM0 {
+216 +                     ExtMuxIndepMultiplexorsMuxAIndex::M0(ExtMuxIndepMultiplexorsMuxBM0 {
+    |
 
 error[E0422]: cannot find struct, variant or union type `ExtMuxIndepMultiplexorsMuxAM1` in this scope
    --> tests-snapshots/dbc-cantools/issue_184_extended_mux_independent_multiplexors.snap.rs:223:58
     |
 223 |                     ExtMuxIndepMultiplexorsMuxAIndex::M1(ExtMuxIndepMultiplexorsMuxAM1 {
-    |                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: a struct with a similar name exists: `ExtMuxIndepMultiplexorsMuxBM1`
+    |                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 ...
 433 | pub struct ExtMuxIndepMultiplexorsMuxBM1 {
     | ---------------------------------------- similarly named struct `ExtMuxIndepMultiplexorsMuxBM1` defined here
+    |
+help: a struct with a similar name exists
+    |
+223 -                     ExtMuxIndepMultiplexorsMuxAIndex::M1(ExtMuxIndepMultiplexorsMuxAM1 {
+223 +                     ExtMuxIndepMultiplexorsMuxAIndex::M1(ExtMuxIndepMultiplexorsMuxBM1 {
+    |
 
 error[E0422]: cannot find struct, variant or union type `ExtMuxIndepMultiplexorsMuxAM2` in this scope
    --> tests-snapshots/dbc-cantools/issue_184_extended_mux_independent_multiplexors.snap.rs:230:58
     |
 230 |                     ExtMuxIndepMultiplexorsMuxAIndex::M2(ExtMuxIndepMultiplexorsMuxAM2 {
-    |                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: a struct with a similar name exists: `ExtMuxIndepMultiplexorsMuxBM2`
+    |                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 ...
 548 | pub struct ExtMuxIndepMultiplexorsMuxBM2 {
     | ---------------------------------------- similarly named struct `ExtMuxIndepMultiplexorsMuxBM2` defined here
+    |
+help: a struct with a similar name exists
+    |
+230 -                     ExtMuxIndepMultiplexorsMuxAIndex::M2(ExtMuxIndepMultiplexorsMuxAM2 {
+230 +                     ExtMuxIndepMultiplexorsMuxAIndex::M2(ExtMuxIndepMultiplexorsMuxBM2 {
+    |
 
 error[E0425]: cannot find type `ExtMuxIndepMultiplexorsMuxAM0` in this scope
    --> tests-snapshots/dbc-cantools/issue_184_extended_mux_independent_multiplexors.snap.rs:266:16
     |
 266 |         value: ExtMuxIndepMultiplexorsMuxAM0,
-    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: a struct with a similar name exists: `ExtMuxIndepMultiplexorsMuxBM0`
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 ...
 362 | pub struct ExtMuxIndepMultiplexorsMuxBM0 {
     | ---------------------------------------- similarly named struct `ExtMuxIndepMultiplexorsMuxBM0` defined here
+    |
+help: a struct with a similar name exists
+    |
+266 -         value: ExtMuxIndepMultiplexorsMuxAM0,
+266 +         value: ExtMuxIndepMultiplexorsMuxBM0,
+    |
 
 error[E0425]: cannot find type `ExtMuxIndepMultiplexorsMuxAM1` in this scope
    --> tests-snapshots/dbc-cantools/issue_184_extended_mux_independent_multiplexors.snap.rs:278:16
     |
 278 |         value: ExtMuxIndepMultiplexorsMuxAM1,
-    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: a struct with a similar name exists: `ExtMuxIndepMultiplexorsMuxBM1`
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 ...
 433 | pub struct ExtMuxIndepMultiplexorsMuxBM1 {
     | ---------------------------------------- similarly named struct `ExtMuxIndepMultiplexorsMuxBM1` defined here
+    |
+help: a struct with a similar name exists
+    |
+278 -         value: ExtMuxIndepMultiplexorsMuxAM1,
+278 +         value: ExtMuxIndepMultiplexorsMuxBM1,
+    |
 
 error[E0425]: cannot find type `ExtMuxIndepMultiplexorsMuxAM2` in this scope
    --> tests-snapshots/dbc-cantools/issue_184_extended_mux_independent_multiplexors.snap.rs:290:16
     |
 290 |         value: ExtMuxIndepMultiplexorsMuxAM2,
-    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ help: a struct with a similar name exists: `ExtMuxIndepMultiplexorsMuxBM2`
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 ...
 548 | pub struct ExtMuxIndepMultiplexorsMuxBM2 {
     | ---------------------------------------- similarly named struct `ExtMuxIndepMultiplexorsMuxBM2` defined here
+    |
+help: a struct with a similar name exists
+    |
+290 -         value: ExtMuxIndepMultiplexorsMuxAM2,
+290 +         value: ExtMuxIndepMultiplexorsMuxBM2,
+    |
 
 error[E0592]: duplicate definitions with name `set_m0`
    --> tests-snapshots/dbc-cantools/issue_184_extended_mux_independent_multiplexors.snap.rs:264:5
@@ -125,16 +161,25 @@ error[E0277]: the trait bound `u16: From<i8>` is not satisfied
 help: the following other types implement trait `From<T>`
    --> $RUST/core/src/ascii/ascii_char.rs
     |
+    |             impl const From<AsciiChar> for $ty {
+    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `u16` implements `From<std::ascii::Char>`
+...
     | into_int_impl!(u8 u16 u32 u64 u128 char);
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `u16` implements `From<Char>`
+    | ---------------------------------------- in this macro invocation
     |
    ::: $RUST/core/src/convert/num.rs
     |
+    |         impl const From<$Small> for $Large {
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |         |
+    |         `u16` implements `From<bool>`
+    |         `u16` implements `From<u8>`
+...
     | impl_from!(bool => u16);
-    | ^^^^^^^^^^^^^^^^^^^^^^^ `u16` implements `From<bool>`
+    | ----------------------- in this macro invocation
 ...
     | impl_from!(u8 => u16, #[stable(feature = "lossless_int_conv", since = "1.5.0")]);
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `u16` implements `From<u8>`
+    | -------------------------------------------------------------------------------- in this macro invocation
     = note: required for `i8` to implement `Into<u16>`
     = note: this error originates in the macro `into_int_impl` which comes from the expansion of the macro `impl_from` (in Nightly builds, run with -Z macro-backtrace for more info)
 
@@ -142,28 +187,37 @@ error[E0433]: failed to resolve: use of undeclared type `ExtMuxIndepMultiplexors
    --> tests-snapshots/dbc-cantools/issue_184_extended_mux_independent_multiplexors.snap.rs:216:21
     |
 216 |                     ExtMuxIndepMultiplexorsMuxAIndex::M0(ExtMuxIndepMultiplexorsMuxAM0 {
-    |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    |                     |
-    |                     use of undeclared type `ExtMuxIndepMultiplexorsMuxAIndex`
-    |                     help: an enum with a similar name exists: `ExtMuxIndepMultiplexorsMuxBIndex`
+    |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ use of undeclared type `ExtMuxIndepMultiplexorsMuxAIndex`
+    |
+help: an enum with a similar name exists
+    |
+216 -                     ExtMuxIndepMultiplexorsMuxAIndex::M0(ExtMuxIndepMultiplexorsMuxAM0 {
+216 +                     ExtMuxIndepMultiplexorsMuxBIndex::M0(ExtMuxIndepMultiplexorsMuxAM0 {
+    |
 
 error[E0433]: failed to resolve: use of undeclared type `ExtMuxIndepMultiplexorsMuxAIndex`
    --> tests-snapshots/dbc-cantools/issue_184_extended_mux_independent_multiplexors.snap.rs:223:21
     |
 223 |                     ExtMuxIndepMultiplexorsMuxAIndex::M1(ExtMuxIndepMultiplexorsMuxAM1 {
-    |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    |                     |
-    |                     use of undeclared type `ExtMuxIndepMultiplexorsMuxAIndex`
-    |                     help: an enum with a similar name exists: `ExtMuxIndepMultiplexorsMuxBIndex`
+    |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ use of undeclared type `ExtMuxIndepMultiplexorsMuxAIndex`
+    |
+help: an enum with a similar name exists
+    |
+223 -                     ExtMuxIndepMultiplexorsMuxAIndex::M1(ExtMuxIndepMultiplexorsMuxAM1 {
+223 +                     ExtMuxIndepMultiplexorsMuxBIndex::M1(ExtMuxIndepMultiplexorsMuxAM1 {
+    |
 
 error[E0433]: failed to resolve: use of undeclared type `ExtMuxIndepMultiplexorsMuxAIndex`
    --> tests-snapshots/dbc-cantools/issue_184_extended_mux_independent_multiplexors.snap.rs:230:21
     |
 230 |                     ExtMuxIndepMultiplexorsMuxAIndex::M2(ExtMuxIndepMultiplexorsMuxAM2 {
-    |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    |                     |
-    |                     use of undeclared type `ExtMuxIndepMultiplexorsMuxAIndex`
-    |                     help: an enum with a similar name exists: `ExtMuxIndepMultiplexorsMuxBIndex`
+    |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ use of undeclared type `ExtMuxIndepMultiplexorsMuxAIndex`
+    |
+help: an enum with a similar name exists
+    |
+230 -                     ExtMuxIndepMultiplexorsMuxAIndex::M2(ExtMuxIndepMultiplexorsMuxAM2 {
+230 +                     ExtMuxIndepMultiplexorsMuxBIndex::M2(ExtMuxIndepMultiplexorsMuxAM2 {
+    |
 
 error[E0277]: the trait bound `u16: From<i8>` is not satisfied
    --> tests-snapshots/dbc-cantools/issue_184_extended_mux_independent_multiplexors.snap.rs:238:46
@@ -174,15 +228,24 @@ error[E0277]: the trait bound `u16: From<i8>` is not satisfied
 help: the following other types implement trait `From<T>`
    --> $RUST/core/src/ascii/ascii_char.rs
     |
+    |             impl const From<AsciiChar> for $ty {
+    |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `u16` implements `From<std::ascii::Char>`
+...
     | into_int_impl!(u8 u16 u32 u64 u128 char);
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `u16` implements `From<Char>`
+    | ---------------------------------------- in this macro invocation
     |
    ::: $RUST/core/src/convert/num.rs
     |
+    |         impl const From<$Small> for $Large {
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |         |
+    |         `u16` implements `From<bool>`
+    |         `u16` implements `From<u8>`
+...
     | impl_from!(bool => u16);
-    | ^^^^^^^^^^^^^^^^^^^^^^^ `u16` implements `From<bool>`
+    | ----------------------- in this macro invocation
 ...
     | impl_from!(u8 => u16, #[stable(feature = "lossless_int_conv", since = "1.5.0")]);
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `u16` implements `From<u8>`
+    | -------------------------------------------------------------------------------- in this macro invocation
     = note: required for `i8` to implement `Into<u16>`
     = note: this error originates in the macro `into_int_impl` which comes from the expansion of the macro `impl_from` (in Nightly builds, run with -Z macro-backtrace for more info)

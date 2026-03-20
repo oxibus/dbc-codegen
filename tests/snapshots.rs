@@ -175,12 +175,9 @@ fn create_content(test: &Test, path: &Path) -> anyhow::Result<String> {
 static BAD_TESTS: &[&str] = &[
     //
     "empty_choice.snap.rs",
-    "issue_184_extended_mux_cascaded.snap.rs",
     "issue_184_extended_mux_cascaded_dumped.snap.rs",
     "issue_184_extended_mux_independent_multiplexors.snap.rs",
     "issue_184_extended_mux_independent_multiplexors_dumped.snap.rs",
-    "issue_184_extended_mux_multiple_values.snap.rs",
-    "issue_184_extended_mux_multiple_values_dumped.snap.rs",
     "issue_199.snap.rs",
     "issue_199_extended.snap.rs",
     "long_names_multiple_relations.snap.rs",
