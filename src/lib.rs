@@ -31,7 +31,7 @@ use typed_builder::TypedBuilder;
 
 pub use crate::feature_config::FeatureConfig;
 use crate::pad::PadAdapter;
-use crate::signal_type::ValType;
+use crate::signal_type::{IntSize, ValType};
 use crate::utils::{
     enum_name, enum_variant_name, multiplex_enum_name, multiplexed_enum_variant_name,
     multiplexed_enum_variant_wrapper_name, MessageExt as _, SignalExt as _,
@@ -580,8 +580,8 @@ impl Config<'_> {
         writeln!(w, "/// - Value type: {:?}", signal.value_type)?;
         writeln!(w, "#[inline(always)]")?;
         let field = signal.field_name();
-        let typ = ValType::from_signal(signal);
-        writeln!(w, "pub fn {field}_raw(&self) -> {typ} {{")?;
+        let signal_typ = ValType::from_signal(signal);
+        writeln!(w, "pub fn {field}_raw(&self) -> {signal_typ} {{")?;
         {
             let mut w = PadAdapter::wrap(w);
             signal_from_payload(&mut w, signal, msg).context("signal from payload")?;
@@ -623,9 +623,14 @@ impl Config<'_> {
                         multiplexed_enum_variant_name(msg, signal, *multiplexer_index)?,
                     )?;
                 }
+                let to_u16 = match signal_typ {
+                    ValType::UnsignedInt(IntSize::Size8) => "multiplexor.into()",
+                    ValType::UnsignedInt(IntSize::Size16) => "multiplexor",
+                    _ => "u16::try_from(multiplexor).unwrap_or(u16::MAX)",
+                };
                 writeln!(
                     w,
-                    "multiplexor => Err(CanError::InvalidMultiplexor {{ message_id: {}::MESSAGE_ID, multiplexor: multiplexor.into() }}),",
+                    "multiplexor => Err(CanError::InvalidMultiplexor {{ message_id: {}::MESSAGE_ID, multiplexor: {to_u16} }}),",
                     msg.type_name(),
                 )?;
             }

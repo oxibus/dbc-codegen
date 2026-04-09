@@ -127,7 +127,7 @@ impl ExtMuxMultipleValues {
             multiplexor => {
                 Err(CanError::InvalidMultiplexor {
                     message_id: ExtMuxMultipleValues::MESSAGE_ID,
-                    multiplexor: multiplexor.into(),
+                    multiplexor: u16::try_from(multiplexor).unwrap_or(u16::MAX),
                 })
             }
         }

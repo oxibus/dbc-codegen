@@ -115,7 +115,7 @@ impl Shared {
             multiplexor => {
                 Err(CanError::InvalidMultiplexor {
                     message_id: Shared::MESSAGE_ID,
-                    multiplexor: multiplexor.into(),
+                    multiplexor: u16::try_from(multiplexor).unwrap_or(u16::MAX),
                 })
             }
         }
@@ -411,7 +411,7 @@ impl Normal {
             multiplexor => {
                 Err(CanError::InvalidMultiplexor {
                     message_id: Normal::MESSAGE_ID,
-                    multiplexor: multiplexor.into(),
+                    multiplexor: u16::try_from(multiplexor).unwrap_or(u16::MAX),
                 })
             }
         }
@@ -722,7 +722,7 @@ impl Extended {
             multiplexor => {
                 Err(CanError::InvalidMultiplexor {
                     message_id: Extended::MESSAGE_ID,
-                    multiplexor: multiplexor.into(),
+                    multiplexor: u16::try_from(multiplexor).unwrap_or(u16::MAX),
                 })
             }
         }
@@ -796,7 +796,7 @@ impl Extended {
             multiplexor => {
                 Err(CanError::InvalidMultiplexor {
                     message_id: Extended::MESSAGE_ID,
-                    multiplexor: multiplexor.into(),
+                    multiplexor: u16::try_from(multiplexor).unwrap_or(u16::MAX),
                 })
             }
         }
@@ -870,7 +870,7 @@ impl Extended {
             multiplexor => {
                 Err(CanError::InvalidMultiplexor {
                     message_id: Extended::MESSAGE_ID,
-                    multiplexor: multiplexor.into(),
+                    multiplexor: u16::try_from(multiplexor).unwrap_or(u16::MAX),
                 })
             }
         }
@@ -1382,7 +1382,7 @@ impl ExtendedTypes {
             multiplexor => {
                 Err(CanError::InvalidMultiplexor {
                     message_id: ExtendedTypes::MESSAGE_ID,
-                    multiplexor: multiplexor.into(),
+                    multiplexor: u16::try_from(multiplexor).unwrap_or(u16::MAX),
                 })
             }
         }

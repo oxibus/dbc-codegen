@@ -729,7 +729,7 @@ impl Msg3 {
         StandardId::new_unchecked(0x4)
     });
     pub const L_MIN: u64 = 0_u64;
-    pub const L_MAX: u64 = 18446744073709552000_u64;
+    pub const L_MAX: u64 = 18446744073709551615_u64;
     /// Construct new MSG3 from values
     pub fn new(l: u64) -> Result<Self, CanError> {
         let mut res = Self { raw: [0u8; 8] };
@@ -743,7 +743,7 @@ impl Msg3 {
     /// L
     ///
     /// - Min: 0
-    /// - Max: 18446744073709552000
+    /// - Max: 18446744073709551615
     /// - Unit: ""
     /// - Receivers: E1
     #[inline(always)]
@@ -767,7 +767,7 @@ impl Msg3 {
     /// Set value of L
     #[inline(always)]
     pub fn set_l(&mut self, value: u64) -> Result<(), CanError> {
-        if value < 0_u64 || 18446744073709552000_u64 < value {
+        if value < 0_u64 || 18446744073709551615_u64 < value {
             return Err(CanError::ParameterOutOfRange {
                 message_id: Msg3::MESSAGE_ID,
             });
@@ -844,7 +844,7 @@ impl Msg4 {
         StandardId::new_unchecked(0x5)
     });
     pub const M_MIN: u64 = 0_u64;
-    pub const M_MAX: u64 = 18446744073709552000_u64;
+    pub const M_MAX: u64 = 18446744073709551615_u64;
     /// Construct new MSG4 from values
     pub fn new(m: u64) -> Result<Self, CanError> {
         let mut res = Self { raw: [0u8; 8] };
@@ -858,7 +858,7 @@ impl Msg4 {
     /// M
     ///
     /// - Min: 0
-    /// - Max: 18446744073709552000
+    /// - Max: 18446744073709551615
     /// - Unit: ""
     /// - Receivers: E1
     #[inline(always)]
@@ -882,7 +882,7 @@ impl Msg4 {
     /// Set value of M
     #[inline(always)]
     pub fn set_m(&mut self, value: u64) -> Result<(), CanError> {
-        if value < 0_u64 || 18446744073709552000_u64 < value {
+        if value < 0_u64 || 18446744073709551615_u64 < value {
             return Err(CanError::ParameterOutOfRange {
                 message_id: Msg4::MESSAGE_ID,
             });

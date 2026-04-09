@@ -125,7 +125,7 @@ impl ExtMuxCascaded {
             multiplexor => {
                 Err(CanError::InvalidMultiplexor {
                     message_id: ExtMuxCascaded::MESSAGE_ID,
-                    multiplexor: multiplexor.into(),
+                    multiplexor: u16::try_from(multiplexor).unwrap_or(u16::MAX),
                 })
             }
         }
@@ -207,7 +207,7 @@ impl ExtMuxCascaded {
             multiplexor => {
                 Err(CanError::InvalidMultiplexor {
                     message_id: ExtMuxCascaded::MESSAGE_ID,
-                    multiplexor: multiplexor.into(),
+                    multiplexor: u16::try_from(multiplexor).unwrap_or(u16::MAX),
                 })
             }
         }

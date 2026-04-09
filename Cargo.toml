@@ -25,7 +25,7 @@ std = []
 
 [dependencies]
 anyhow = "1.0.101"
-can-dbc = "8.0.1"
+can-dbc = "9.0.0"
 embedded-can = "0.4.1"
 heck = "0.5.0"
 prettyplease = "0.2.37"
