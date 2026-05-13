@@ -14,7 +14,7 @@ std = []
 [dependencies]
 arbitrary = { version = "1.4", optional = true }
 bitvec = { version = "1.0", default-features = false }
-defmt = "1.0.1"
+defmt = "1.1.0"
 embedded-can = "0.4.1"
 
 # can-messages is optional and default so we can turn it off for the embedded target.
