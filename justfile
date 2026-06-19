@@ -122,6 +122,10 @@ fmt:
         cargo fmt --all
     fi
 
+# Run cargo fuzz tests. Requires nightly toolchain (install with `rustup install nightly`)
+fuzz:
+    RUSTFLAGS='-C target-feature=-crt-static' cargo +nightly fuzz run fuzz_target_1 --target $(rustc --print host-tuple)
+
 # Get a package field from the metadata
 get-crate-field field package=main_crate:  (assert-cmd 'jq')
     cargo metadata --format-version 1 | jq -e -r '.packages | map(select(.name == "{{package}}")) | first | .{{field}} // error("Field \"{{field}}\" is missing in Cargo.toml for package {{package}}")'
