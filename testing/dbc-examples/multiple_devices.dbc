@@ -1,0 +1,104 @@
+VERSION "1"
+
+
+NS_ :
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_: MCU BMS DISPLAY VCU CHARGER
+
+BO_ 2203160576 Gear_Selection: 8 VCU
+ SG_ Gear : 0|2@1+ (1,0) [0|1] ""  MCU
+ SG_ Drive_Profile : 8|4@1+ (1,0) [0|15] ""  MCU
+ SG_ Allow_Discharge : 16|16@1+ (0.1,0) [0|6553.5] "A"  MCU
+ SG_ Allow_Charge : 32|16@1+ (0.1,0) [0|6553.5] "A"  MCU
+
+BO_ 2203131904 MCU_Diag_Status: 8 MCU
+ SG_ Throttle : 50|10@1+ (0.1,0) [0|100] "%"  VCU
+ SG_ Derating : 40|10@1+ (0.1,0) [0|100] "%"  VCU
+ SG_ Driving_Profile : 36|4@1+ (1,0) [0|15] ""  VCU
+ SG_ FNR : 32|4@1+ (1,0) [0|15] ""  VCU
+ SG_ Pre_charge_temp : 24|8@1+ (1,-50) [-50|205] "C"  VCU
+ SG_ MCU_temp : 16|8@1+ (1,-50) [-50|205] "C"  VCU
+ SG_ Motor_temp : 8|8@1+ (1,-50) [-50|205] "degC"  VCU
+ SG_ Brake : 2|1@1+ (1,0) [0|1] ""  VCU
+ SG_ Limp_home : 1|1@1+ (1,0) [0|1] ""  VCU
+ SG_ hill_hold : 0|1@1+ (1,0) [0|1] ""  VCU
+ SG_ Derating_Reason : 3|3@1+ (1,0) [0|7] "" VCU
+
+BO_ 2214625281 Cell_voltage_information_BMS: 8 BMS
+ SG_ Multiplexor M : 0|8@1+ (1,0) [0|255] ""  VCU
+ SG_ Cell_1_Voltage m1 : 8|16@1+ (0.001,0) [0|65.535] "V"  VCU
+ SG_ Cell_2_Voltage m1 : 24|16@1+ (0.001,0) [0|65.535] "V"  VCU
+ SG_ Cell_3_Voltage m1 : 40|16@1+ (0.001,0) [0|65.535] "V"  VCU
+ SG_ Cell_4_Voltage m2 : 8|16@1+ (0.001,0) [0|65.535] "V"  VCU
+ SG_ Cell_5_Voltage m2 : 24|16@1+ (0.001,0) [0|65.535] "V"  VCU
+ SG_ Cell_6_Voltage m2 : 40|16@1+ (0.001,0) [0|65.535] "V"  VCU
+ SG_ Cell_7_Voltage m3 : 8|16@1+ (0.001,0) [0|65.535] "V"  VCU
+ SG_ Cell_8_Voltage m3 : 24|16@1+ (0.001,0) [0|65.535] "V"  VCU
+ SG_ Cell_9_Voltage m3 : 40|16@1+ (0.001,0) [0|65.535] "V"  VCU
+ SG_ Cell_10_Voltage m4 : 8|16@1+ (0.001,0) [0|65.535] "V"  VCU
+ SG_ Cell_11_Voltage m4 : 24|16@1+ (0.001,0) [0|65.535] "V"  VCU
+ SG_ Cell_12_Voltage m4 : 40|16@1+ (0.001,0) [0|65.535] "V"  VCU
+ SG_ Cell_13_Voltage m5 : 8|16@1+ (0.001,0) [0|65.535] "V"  VCU
+ SG_ Cell_14_Voltage m5 : 24|16@1+ (0.001,0) [0|65.535] "V"  VCU
+ SG_ Cell_15_Voltage m5 : 40|16@1+ (0.001,0) [0|65.535] "V"  VCU
+
+ BO_ 2214756353 Total_Information_0_BMS: 8 BMS
+ SG_ Sum_Voltage : 7|16@0+ (0.1,0) [0|6553.5] "V"  VCU
+ SG_ Current : 23|16@0- (0.1,-3000) [-3000|276.7] "A"  VCU
+ SG_ SOC : 39|16@0+ (0.1,0) [0|100] "%"  VCU
+ SG_ Life : 48|8@0+ (1,0) [0|255] ""  VCU
+
+BO_ 2566869221 Charger_to_BMS: 8 CHARGER
+ SG_ Charger_Output_Voltage : 7|16@0+ (0.1,0) [0|6553.5] "V" BMS
+ SG_ Charger_Output_Current : 23|16@0+ (0.1,0) [0|6553.5] "A" BMS
+ SG_ Charger_Status_Flag : 32|8@1+ (1,0) [0|255] "" BMS
+
+
+BO_ 2432176272 Bike_Information_New: 8 VCU
+ SG_ Low_Beam : 0|1@1+ (1,0) [0|1] ""  DISPLAY
+ SG_ High_Beam : 1|1@1+ (1,0) [0|1] ""  DISPLAY
+ SG_ DRL : 2|1@1+ (1,0) [0|1] ""  DISPLAY
+ SG_ Right_Blinker : 3|1@1+ (1,0) [0|1] ""  DISPLAY
+ SG_ Left_Blinker : 4|1@1+ (1,0) [0|1] ""  DISPLAY
+ SG_ Kickstand : 5|1@1+ (1,0) [0|1] ""  DISPLAY
+ SG_ Ready : 6|1@1+ (1,0) [0|1] "" DISPLAY
+ SG_ Warning : 8|1@1+ (1,0) [0|1] ""  DISPLAY
+ SG_ Battery_Error : 9|1@1+ (1,0) [0|1] ""  DISPLAY
+ SG_ Motor_Error : 10|1@1+ (1,0) [0|1] ""  DISPLAY
+ SG_ Limp_Home : 11|1@1+ (1,0) [0|1] ""  DISPLAY
+ SG_ Modes : 16|2@1+ (1,0) [0|2] ""  DISPLAY
+ SG_ Gear : 18|2@1+ (1,0) [0|2] ""  DISPLAY
+ SG_ Units : 20|1@1+ (1,0) [0|1] ""  DISPLAY
+ SG_ Trip_Selection : 21|1@1+ (1,0) [0|1] ""  DISPLAY
+ SG_ TripA_Distance : 24|16@1+ (1,0) [0|999] ""  DISPLAY
+ SG_ Speed : 48|8@1+ (1,0) [0|255] "" DISPLAY

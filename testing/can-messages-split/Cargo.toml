@@ -1,0 +1,13 @@
+[package]
+name = "can-messages-split"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[dependencies]
+bitvec = { version = "1.0", default-features = false }
+embedded-can = "0.4.1"
+
+[build-dependencies]
+anyhow = "1.0"
+dbc-codegen = { path = "../.." }

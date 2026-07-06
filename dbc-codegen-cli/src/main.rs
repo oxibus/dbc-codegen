@@ -39,14 +39,12 @@ fn main() {
         exit(exitcode::CANTCREAT);
     }
 
-    let messages_path = args.out_path.join("messages.rs");
-
     if let Err(e) = Config::builder()
         .dbc_name(&dbc_file_name)
         .dbc_content(&dbc_file)
         .debug_prints(args.debug)
         .build()
-        .write_to_file(messages_path)
+        .write_split_by_sender(&args.out_path)
     {
         eprintln!("could not convert `{}`: {e}", args.dbc_path.display());
         if args.debug {

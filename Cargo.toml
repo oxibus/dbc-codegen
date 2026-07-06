@@ -59,6 +59,7 @@ members = [
     "dbc-codegen-cli",
     "testing/can-embedded",
     "testing/can-messages",
+    "testing/can-messages-split",
     "testing/cantools-messages",
     "testing/rust-integration",
 ]

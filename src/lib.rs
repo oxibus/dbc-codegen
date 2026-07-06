@@ -144,7 +144,8 @@ impl Config<'_> {
         })?;
 
         writeln!(w)?;
-        self.render_dbc(&mut w, &dbc)?;
+        let messages: Vec<&Message> = get_relevant_messages(&dbc).collect();
+        self.render_dbc(&mut w, &dbc, &messages)?;
         writeln!(w)?;
         self.render_error(&mut w)?;
         self.render_arbitrary_helpers(&mut w)?;
@@ -153,10 +154,10 @@ impl Config<'_> {
         Ok(())
     }
 
-    fn render_dbc(&self, w: &mut impl Write, dbc: &Dbc) -> Result<()> {
-        self.render_root_enum(w, dbc)?;
+    fn render_dbc(&self, w: &mut impl Write, dbc: &Dbc, messages: &[&Message]) -> Result<()> {
+        self.render_root_enum(w, messages)?;
 
-        for msg in get_relevant_messages(dbc) {
+        for msg in messages {
             self.render_message(w, msg, dbc)
                 .with_context(|| format!("write message `{}`", msg.name))?;
             writeln!(w)?;
@@ -165,7 +166,7 @@ impl Config<'_> {
         Ok(())
     }
 
-    fn render_root_enum(&self, w: &mut impl Write, dbc: &Dbc) -> Result<()> {
+    fn render_root_enum(&self, w: &mut impl Write, messages: &[&Message]) -> Result<()> {
         writeln!(w, "/// All messages")?;
         writeln!(w, "{ALLOW_LINTS}")?;
         self.write_allow_dead_code(w)?;
@@ -177,7 +178,7 @@ impl Config<'_> {
         writeln!(w, "pub enum Messages {{")?;
         {
             let mut w = PadAdapter::wrap(w);
-            for msg in get_relevant_messages(dbc) {
+            for msg in messages {
                 writeln!(w, "/// {}", msg.name)?;
                 writeln!(w, "{0}({0}),", msg.type_name())?;
             }
@@ -199,7 +200,6 @@ impl Config<'_> {
 
             {
                 let mut w = PadAdapter::wrap(&mut w);
-                let messages: Vec<_> = get_relevant_messages(dbc).collect();
                 if messages.is_empty() {
                     writeln!(w, "Err(CanError::UnknownMessageId(id))")?;
                 } else {
@@ -224,6 +224,53 @@ impl Config<'_> {
             writeln!(w, "}}")?;
         }
         writeln!(w, "}}")?;
+        writeln!(w)?;
+
+        Ok(())
+    }
+
+    fn codegen_for_sender(&self, out: &mut impl Write, dbc: &Dbc, sender: &str) -> Result<()> {
+        let msgs: Vec<&Message> = get_relevant_messages(dbc)
+            .filter(|m| matches!(&m.transmitter, Transmitter::NodeName(n) if n == sender))
+            .collect();
+
+        let mut w = BufWriter::new(out);
+
+        writeln!(
+            w,
+            "/// The name of the DBC file this code was generated from"
+        )?;
+        writeln!(w, "#[allow(dead_code)]")?;
+        let dbc_name = self.dbc_name.to_token_stream();
+        writeln!(w, "pub const DBC_FILE_NAME: &str = {dbc_name};")?;
+        writeln!(
+            w,
+            "/// The version of the DBC file this code was generated from"
+        )?;
+        writeln!(w, "#[allow(dead_code)]")?;
+        let dbc_version = dbc.version.0.to_token_stream();
+        writeln!(w, "pub const DBC_FILE_VERSION: &str = {dbc_version};")?;
+
+        writeln!(w, "#[allow(unused_imports)]")?;
+        writeln!(w, "use core::ops::BitOr;")?;
+        writeln!(w, "#[allow(unused_imports)]")?;
+        writeln!(w, "use bitvec::prelude::*;")?;
+        writeln!(w, "#[allow(unused_imports)]")?;
+        writeln!(w, "use embedded_can::{{Id, StandardId, ExtendedId}};")?;
+
+        self.impl_arbitrary.fmt_cfg(&mut w, |w| {
+            writeln!(w, "use arbitrary::{{Arbitrary, Unstructured}};")
+        })?;
+
+        self.impl_serde.fmt_cfg(&mut w, |w| {
+            writeln!(w, "use serde::{{Serialize, Deserialize}};")
+        })?;
+
+        writeln!(w)?;
+        self.render_dbc(&mut w, dbc, &msgs)?;
+        writeln!(w)?;
+        self.render_error(&mut w)?;
+        self.render_arbitrary_helpers(&mut w)?;
         writeln!(w)?;
 
         Ok(())
@@ -1322,6 +1369,16 @@ fn message_ignored(message: &Message) -> bool {
     message.name == "VECTOR__INDEPENDENT_SIG_MSG"
 }
 
+fn unique_senders(dbc: &Dbc) -> Vec<String> {
+    let mut seen = BTreeSet::new();
+    for msg in get_relevant_messages(dbc) {
+        if let Transmitter::NodeName(name) = &msg.transmitter {
+            seen.insert(name.clone());
+        }
+    }
+    seen.into_iter().collect()
+}
+
 impl Config<'_> {
     /// Generate Rust structs matching DBC input description and return as String
     pub fn generate(self) -> Result<String> {
@@ -1351,6 +1408,44 @@ impl Config<'_> {
             .open(path.as_ref())?;
 
         self.write(file)
+    }
+
+    /// Generate one `.rs` file per sender and a `mod.rs` in `out_dir`
+    pub fn write_split_by_sender<P: AsRef<Path>>(self, out_dir: P) -> Result<()> {
+        let dbc = Dbc::try_from(self.dbc_content).map_err(|e| {
+            let msg = "Could not parse dbc file";
+            if self.debug_prints {
+                anyhow!("{msg}: {e:#?}")
+            } else {
+                anyhow!("{msg}")
+            }
+        })?;
+
+        let senders = unique_senders(&dbc);
+        let mut mod_names: Vec<String> = Vec::new();
+
+        for sender in &senders {
+            let mod_name = sender.to_snake_case();
+            let path = out_dir.as_ref().join(format!("{mod_name}.rs"));
+
+            let mut buf = Vec::new();
+            self.codegen_for_sender(&mut buf, &dbc, sender)?;
+            let code = std::str::from_utf8(&buf).context("Failed to convert output to str")?;
+            let file = syn::parse_file(code).context("Failed to parse generated Rust code")?;
+            std::fs::write(&path, prettyplease::unparse(&file))?;
+
+            mod_names.push(mod_name);
+        }
+
+        let mut mod_rs = String::new();
+        for m in &mod_names {
+            mod_rs.push_str(&format!(
+                "pub mod {m} {{ include!(concat!(env!(\"OUT_DIR\"), \"/{m}.rs\")); }}\n"
+            ));
+        }
+        std::fs::write(out_dir.as_ref().join("mod.rs"), mod_rs)?;
+
+        Ok(())
     }
 
     fn write_allow_dead_code(&self, w: &mut impl Write) -> Result<()> {
