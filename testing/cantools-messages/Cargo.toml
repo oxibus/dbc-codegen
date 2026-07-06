@@ -7,6 +7,10 @@ publish = false
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
+[features]
+# Expose C bindings for fuzzing (compare dbc-codegen output with cantools C library).
+fuzz = []
+
 [dependencies]
 can-messages = { path = "../can-messages" }
 
