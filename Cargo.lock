@@ -190,6 +190,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "can-messages-split"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "bitvec",
+ "dbc-codegen",
+ "embedded-can",
+]
+
+[[package]]
 name = "cantools-messages"
 version = "0.1.0"
 dependencies = [
