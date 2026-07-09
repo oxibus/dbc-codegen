@@ -584,7 +584,15 @@ impl Config<'_> {
                     if message_attr(dbc, msg.id, spec.require).is_none() {
                         continue;
                     }
-                    self.render_attribute_struct(w, spec, spec.const_name, msg, dbc, None, &mut used)?;
+                    self.render_attribute_struct(
+                        w,
+                        spec,
+                        spec.const_name,
+                        msg,
+                        dbc,
+                        None,
+                        &mut used,
+                    )?;
                 }
                 AttributeScope::Signal => {
                     for signal in &msg.signals {

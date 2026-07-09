@@ -67,10 +67,14 @@ fn main() {
     // Print just the associated consts to keep the output readable.
     for line in code.lines() {
         let t = line.trim_start();
-        if t.starts_with("pub const") || t.starts_with("data_id")
-            || t.starts_with("start_byte") || t.starts_with("width_bit")
-            || t.starts_with("profile") || t.starts_with("freshness_id")
-            || t.contains("E2EDataIdInfo {") || t.contains("SecOcInfo {")
+        if t.starts_with("pub const")
+            || t.starts_with("data_id")
+            || t.starts_with("start_byte")
+            || t.starts_with("width_bit")
+            || t.starts_with("profile")
+            || t.starts_with("freshness_id")
+            || t.contains("E2EDataIdInfo {")
+            || t.contains("SecOcInfo {")
         {
             println!("{line}");
         }

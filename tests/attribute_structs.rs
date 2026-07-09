@@ -184,7 +184,10 @@ fn duplicate_const_name_is_an_error() {
         const_name: "SEC_OC",
         scope: AttributeScope::Message,
         require: "SCP_FreshnessValueId",
-        fields: &[field("freshness_id", FieldSource::Attr("SCP_FreshnessValueId"))],
+        fields: &[field(
+            "freshness_id",
+            FieldSource::Attr("SCP_FreshnessValueId"),
+        )],
     };
     let err = format!("{:#}", try_generate(&[SEC_OC, dup]).unwrap_err());
     assert!(err.contains("collides"), "{err}");
