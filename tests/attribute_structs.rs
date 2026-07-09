@@ -1,7 +1,6 @@
 #![cfg(feature = "std")]
 
-//! Tests for emitting user-defined structs populated from DBC attributes and
-//! message layout.
+//! Tests for emitting user-defined structs populated from DBC attributes.
 
 use dbc_codegen::{AttributeField, AttributeScope, AttributeStruct, Config, FieldSource};
 
@@ -19,6 +18,9 @@ BO_ 256 Protected: 8 ECU1
 BO_ 257 Plain: 8 ECU1
  SG_ OtherSig : 0|8@1+ (1,0) [0|255] "" ECU1
 
+BO_ 258 BeProtected: 8 ECU1
+ SG_ BeSig : 23|8@0+ (1,0) [0|255] "" ECU1
+
 BA_DEF_ BO_  "SC_Message" ENUM  "0","1","2";
 BA_DEF_ BO_  "SCP_FreshnessValueId" INT 0 65535;
 BA_DEF_ SG_  "E2EDataId" INT 0 65535;
@@ -33,7 +35,13 @@ BA_ "SC_Message" BO_ 256 1;
 BA_ "SCP_FreshnessValueId" BO_ 256 1002;
 BA_ "E2EDataId" SG_ 256 TestSig 373;
 BA_ "E2EDataLength" SG_ 256 TestSig 48;
+BA_ "E2EDataId" SG_ 258 BeSig 500;
+BA_ "E2EDataLength" SG_ 258 BeSig 16;
 "#;
+
+fn field(name: &'static str, source: FieldSource<'static>) -> AttributeField<'static> {
+    AttributeField { name, source }
+}
 
 const E2E: AttributeStruct = AttributeStruct {
     type_path: "data_protection::E2EDataIdInfo",
@@ -64,21 +72,30 @@ const SEC_OC: AttributeStruct = AttributeStruct {
     type_path: "data_protection::SecOcInfo",
     const_name: "SEC_OC",
     scope: AttributeScope::Message,
-    require: "SC_Message",
-    fields: &[AttributeField {
-        name: "freshness_id",
-        source: FieldSource::Attr("SCP_FreshnessValueId"),
-    }],
+    require: "SCP_FreshnessValueId",
+    fields: &[
+        AttributeField {
+            name: "freshness_id",
+            source: FieldSource::Attr("SCP_FreshnessValueId"),
+        },
+        AttributeField {
+            name: "sc_message",
+            source: FieldSource::Attr("SC_Message"),
+        },
+    ],
 };
 
-fn generate(specs: &[AttributeStruct<'_>]) -> String {
+fn try_generate(specs: &[AttributeStruct<'_>]) -> anyhow::Result<String> {
     Config::builder()
         .dbc_name("attribute_structs_test")
         .dbc_content(DBC)
         .attribute_structs(specs)
         .build()
         .generate()
-        .expect("generate")
+}
+
+fn generate(specs: &[AttributeStruct<'_>]) -> String {
+    try_generate(specs).expect("generate")
 }
 
 #[test]
@@ -101,6 +118,17 @@ fn signal_scope_emits_typed_struct_with_derived_layout() {
 }
 
 #[test]
+fn big_endian_start_byte_uses_start_bit_over_eight() {
+    let out = generate(&[E2E]);
+    assert!(
+        out.contains("pub const BE_SIG_E2E: data_protection::E2EDataIdInfo"),
+        "{out}"
+    );
+    assert!(out.contains("data_id: 500"), "{out}");
+    assert!(out.contains("start_byte: 2"), "{out}");
+}
+
+#[test]
 fn message_scope_emits_once_per_protected_message() {
     let out = generate(&[SEC_OC]);
     assert!(
@@ -111,12 +139,53 @@ fn message_scope_emits_once_per_protected_message() {
 }
 
 #[test]
+fn enum_attribute_emitted_as_integer_index() {
+    let out = generate(&[SEC_OC]);
+    assert!(out.contains("sc_message: 1"), "{out}");
+}
+
+#[test]
 fn unprotected_message_and_signal_get_no_const() {
     let out = generate(&[E2E, SEC_OC]);
     assert!(!out.contains("OTHER_SIG_E2E"), "{out}");
-    assert_eq!(
-        out.matches("pub const SEC_OC").count(),
-        1,
-        "SEC_OC should appear once\n{out}"
-    );
+    assert_eq!(out.matches("pub const SEC_OC").count(), 1, "{out}");
+}
+
+#[test]
+fn message_scope_with_signal_source_is_rejected() {
+    let bad = AttributeStruct {
+        type_path: "foo::Bar",
+        const_name: "BAD",
+        scope: AttributeScope::Message,
+        require: "SCP_FreshnessValueId",
+        fields: &[field("x", FieldSource::StartByte)],
+    };
+    let err = format!("{:#}", try_generate(&[bad]).unwrap_err());
+    assert!(err.contains("signal-only source"), "{err}");
+}
+
+#[test]
+fn missing_field_value_is_an_error() {
+    let bad = AttributeStruct {
+        type_path: "foo::Bar",
+        const_name: "BAD",
+        scope: AttributeScope::Signal,
+        require: "E2EDataId",
+        fields: &[field("x", FieldSource::Attr("NoSuchAttr"))],
+    };
+    let err = format!("{:#}", try_generate(&[bad]).unwrap_err());
+    assert!(err.contains("has no value"), "{err}");
+}
+
+#[test]
+fn duplicate_const_name_is_an_error() {
+    let dup = AttributeStruct {
+        type_path: "foo::Bar",
+        const_name: "SEC_OC",
+        scope: AttributeScope::Message,
+        require: "SCP_FreshnessValueId",
+        fields: &[field("freshness_id", FieldSource::Attr("SCP_FreshnessValueId"))],
+    };
+    let err = format!("{:#}", try_generate(&[SEC_OC, dup]).unwrap_err());
+    assert!(err.contains("collides"), "{err}");
 }

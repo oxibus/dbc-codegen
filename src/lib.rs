@@ -202,6 +202,7 @@ pub enum FieldSource<'a> {
 impl Config<'_> {
     /// Write Rust structs matching DBC input description to `out` buffer
     fn codegen(&self, out: impl Write) -> Result<()> {
+        self.validate_attribute_structs()?;
         let dbc = Dbc::try_from(self.dbc_content).map_err(|e| {
             let msg = "Could not parse dbc file";
             if self.debug_prints {
@@ -518,15 +519,72 @@ impl Config<'_> {
         Ok(())
     }
 
+    /// Validate the [`AttributeStruct`] specs.
+    fn validate_attribute_structs(&self) -> Result<()> {
+        for spec in self.attribute_structs {
+            ensure!(
+                !spec.const_name.is_empty(),
+                "attribute_structs: 'const_name' must not be empty"
+            );
+            ensure!(
+                !spec.type_path.is_empty(),
+                "attribute_structs: 'type_path' must not be empty for '{}'",
+                spec.const_name
+            );
+            ensure!(
+                !spec.require.is_empty(),
+                "attribute_structs: 'require' must not be empty for '{}'",
+                spec.const_name
+            );
+            ensure!(
+                !spec.fields.is_empty(),
+                "attribute_structs: '{}' declares no fields",
+                spec.const_name
+            );
+            if matches!(spec.scope, AttributeScope::Message) {
+                for field in spec.fields {
+                    ensure!(
+                        !matches!(
+                            field.source,
+                            FieldSource::StartBit | FieldSource::StartByte | FieldSource::BitWidth
+                        ),
+                        "attribute_structs: field '{}' of '{}' uses a signal-only source \
+                         (StartBit/StartByte/BitWidth) but the struct has message scope",
+                        field.name,
+                        spec.const_name
+                    );
+                }
+            }
+        }
+        Ok(())
+    }
+
     /// Emit the configured [`AttributeStruct`]s as associated constants.
     fn render_attribute_structs(&self, w: &mut impl Write, msg: &Message, dbc: &Dbc) -> Result<()> {
+        if self.attribute_structs.is_empty() {
+            return Ok(());
+        }
+
+        // Track every const name already emitted for this message type so that
+        // a duplicate is rejected here instead of producing code that fails to
+        // compile.
+        let mut used: BTreeSet<String> = BTreeSet::new();
+        used.insert("MESSAGE_ID".to_string());
+        for signal in &msg.signals {
+            if ValType::from_signal(signal) != ValType::Bool {
+                let sig = signal.field_name().to_uppercase();
+                used.insert(format!("{sig}_MIN"));
+                used.insert(format!("{sig}_MAX"));
+            }
+        }
+
         for spec in self.attribute_structs {
             match spec.scope {
                 AttributeScope::Message => {
                     if message_attr(dbc, msg.id, spec.require).is_none() {
                         continue;
                     }
-                    self.render_attribute_struct(w, spec, spec.const_name, msg, dbc, None)?;
+                    self.render_attribute_struct(w, spec, spec.const_name, msg, dbc, None, &mut used)?;
                 }
                 AttributeScope::Signal => {
                     for signal in &msg.signals {
@@ -535,7 +593,15 @@ impl Config<'_> {
                         }
                         let name =
                             format!("{}_{}", signal.field_name().to_uppercase(), spec.const_name);
-                        self.render_attribute_struct(w, spec, &name, msg, dbc, Some(signal))?;
+                        self.render_attribute_struct(
+                            w,
+                            spec,
+                            &name,
+                            msg,
+                            dbc,
+                            Some(signal),
+                            &mut used,
+                        )?;
                     }
                 }
             }
@@ -552,21 +618,26 @@ impl Config<'_> {
         msg: &Message,
         dbc: &Dbc,
         signal: Option<&Signal>,
+        used: &mut BTreeSet<String>,
     ) -> Result<()> {
+        ensure!(
+            used.insert(const_name.to_string()),
+            "attribute_structs: generated const '{const_name}' on message '{}' collides with \
+             another const. Use a distinct 'const_name'.",
+            msg.name
+        );
+
         let mut fields = Vec::with_capacity(spec.fields.len());
         for field in spec.fields {
-            match resolve_field_source(&field.source, msg, dbc, signal) {
-                Some(lit) => fields.push((field.name, lit)),
-                None => {
-                    if self.debug_prints {
-                        eprintln!(
-                            "Skipping const {const_name}: field `{}` has no value",
-                            field.name
-                        );
-                    }
-                    return Ok(());
-                }
-            }
+            let lit = resolve_field_source(&field.source, msg, dbc, signal).ok_or_else(|| {
+                anyhow!(
+                    "attribute_structs: const '{const_name}' field '{}' has no value in the DBC \
+                     and no default (source: {:?})",
+                    field.name,
+                    field.source
+                )
+            })?;
+            fields.push((field.name, lit));
         }
 
         let ty = spec.type_path;
