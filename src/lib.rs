@@ -20,12 +20,12 @@ use std::path::Path;
 
 use anyhow::{anyhow, ensure, Context, Error, Result};
 use can_dbc::ByteOrder::{BigEndian, LittleEndian};
-use can_dbc::MultiplexIndicator::{
+use can_dbc::MultsiplexIndicator::{
     MultiplexedSignal, Multiplexor, MultiplexorAndMultiplexedSignal, Plain,
 };
 use can_dbc::ValueType::Signed;
 use can_dbc::{Dbc, Message, MessageId, Signal, ValDescription, ValueDescription};
-use heck::ToSnakeCase;
+use heck::ToSnaskeCase;
 use quote::ToTokens;
 use typed_builder::TypedBuilder;
 
@@ -95,6 +95,108 @@ pub struct Config<'a> {
     /// Optional: Allow dead code in the generated module. Default: `false`.
     #[builder(default)]
     pub allow_dead_code: bool,
+
+    /// Optional: User-defined structs populated from DBC attributes and message layout.
+    /// These are emitted as associated constants in the generated message types.
+    /// Default: empty.
+    #[builder(default)]
+    pub attribute_structs: &'a [AttributeStruct<'a>],
+}
+
+/// A user-defined struct that [`Config`] fills from DBC data and emits as an
+/// associated constant in the generated message type.
+///
+/// # Example
+///
+/// Given a consumer type `data_protection::E2EDataIdInfo { data_id, start_byte,
+/// width_bit }`, this declaration:
+///
+/// ```
+/// use dbc_codegen::{AttributeField, AttributeScope, AttributeStruct, FieldSource};
+///
+/// const E2E: AttributeStruct = AttributeStruct {
+///     type_path: "data_protection::E2EDataIdInfo",
+///     const_name: "E2E",
+///     scope: AttributeScope::Signal,
+///     require: "E2EDataId",
+///     fields: &[
+///         AttributeField { name: "data_id", source: FieldSource::Attr("E2EDataId") },
+///         AttributeField { name: "start_byte", source: FieldSource::StartByte },
+///         AttributeField { name: "width_bit", source: FieldSource::Attr("E2EDataLength") },
+///     ],
+/// };
+/// ```
+///
+/// emits, for every signal that carries an `E2EDataId` attribute:
+///
+/// ```ignore
+/// impl SomeMessage {
+///     pub const SOME_SIGNAL_E2E: data_protection::E2EDataIdInfo =
+///         data_protection::E2EDataIdInfo { data_id: 373, start_byte: 0, width_bit: 48 };
+/// }
+/// ```
+#[derive(Debug, Clone)]
+pub struct AttributeStruct<'a> {
+    /// Fully-qualified path of the target Rust type, e.g.
+    /// 'data_protection::E2EDataIdInfo'.
+    pub type_path: &'a str,
+
+    /// Base name of the emitted associated constant.
+    pub const_name: &'a str,
+
+    /// Whether one constant is emitted per message or per matching signal.
+    pub scope: AttributeScope,
+
+    /// Only emit the constant when this attribute has an assigned value on the
+    /// scoped object (the message for [`AttributeScope::Message`] or the signal
+    /// for [`AttributeScope::Signal`]).
+    pub require: &'a str,
+
+    /// The struct fields, written in this order.
+    pub fields: &'a [AttributeField<'a>],
+}
+
+/// Whether an [`AttributeStruct`] is emitted once per message or once per signal.
+#[derive(Debug, Clone, Copy)]
+#[non_exhaustive]
+pub enum AttributeScope {
+    /// One const per message (BO_ attribute).
+    Message,
+    /// One const per signal (SG_ attribute).
+    Signal,
+}
+
+/// One field of an [`AttributeStruct`] and where its value comes from.
+#[derive(Debug, Clone)]
+pub struct AttributeField<'a> {
+    /// The target struct field name.
+    pub name: &'a str,
+    /// Where the field's value comes from.
+    pub source: FieldSource<'a>,
+}
+
+/// Source of a generated [`AttributeField`] value.
+#[derive(Debug, Clone)]
+#[non_exhaustive]
+pub enum FieldSource<'a> {
+    /// Value of an attribute on the scoped object: a signal-level attribute in
+    /// [`AttributeScope::Signal`] or a message-level attribute in
+    /// [`AttributeScope::Message`].
+    Attr(&'a str),
+    /// Value of a message-level attribute.
+    MessageAttr(&'a str),
+    /// The signal's start bit. [`AttributeScope::Signal`] only.
+    StartBit,
+    /// The signal's start byte. [`AttributeScope::Signal`] only.
+    StartByte,
+    /// The signal's width in bits. [`AttributeScope::Signal`] only.
+    BitWidth,
+    /// The message size in bytes.
+    MessageSize,
+    /// A literal integer.
+    Int(i64),
+    /// A literal string.
+    Str(&'a str),
 }
 
 impl Config<'_> {
@@ -290,6 +392,8 @@ impl Config<'_> {
             }
             writeln!(w)?;
 
+            self.render_attribute_structs(&mut w, msg, dbc)?;
+
             writeln!(w, "/// Construct new {} from values", msg.name)?;
             let args = msg
                 .signals
@@ -411,6 +515,71 @@ impl Config<'_> {
             self.render_multiplexor_enums(w, dbc, msg, multiplexor_signal)?;
         }
 
+        Ok(())
+    }
+
+    /// Emit the configured [`AttributeStruct`]s as associated constants.
+    fn render_attribute_structs(&self, w: &mut impl Write, msg: &Message, dbc: &Dbc) -> Result<()> {
+        for spec in self.attribute_structs {
+            match spec.scope {
+                AttributeScope::Message => {
+                    if message_attr(dbc, msg.id, spec.require).is_none() {
+                        continue;
+                    }
+                    self.render_attribute_struct(w, spec, spec.const_name, msg, dbc, None)?;
+                }
+                AttributeScope::Signal => {
+                    for signal in &msg.signals {
+                        if signal_attr(dbc, msg.id, &signal.name, spec.require).is_none() {
+                            continue;
+                        }
+                        let name =
+                            format!("{}_{}", signal.field_name().to_uppercase(), spec.const_name);
+                        self.render_attribute_struct(w, spec, &name, msg, dbc, Some(signal))?;
+                    }
+                }
+            }
+        }
+        Ok(())
+    }
+
+    /// Emit a single struct constant.
+    fn render_attribute_struct(
+        &self,
+        w: &mut impl Write,
+        spec: &AttributeStruct<'_>,
+        const_name: &str,
+        msg: &Message,
+        dbc: &Dbc,
+        signal: Option<&Signal>,
+    ) -> Result<()> {
+        let mut fields = Vec::with_capacity(spec.fields.len());
+        for field in spec.fields {
+            match resolve_field_source(&field.source, msg, dbc, signal) {
+                Some(lit) => fields.push((field.name, lit)),
+                None => {
+                    if self.debug_prints {
+                        eprintln!(
+                            "Skipping const {const_name}: field `{}` has no value",
+                            field.name
+                        );
+                    }
+                    return Ok(());
+                }
+            }
+        }
+
+        let ty = spec.type_path;
+        writeln!(w, "/// Generated from DBC attributes '{}'", spec.require)?;
+        writeln!(w, "pub const {const_name}: {ty} = {ty} {{")?;
+        {
+            let mut w = PadAdapter::wrap(w);
+            for (name, lit) in fields {
+                writeln!(w, "{name}: {lit},")?;
+            }
+        }
+        writeln!(w, "}};")?;
+        writeln!(w)?;
         Ok(())
     }
 
@@ -1323,6 +1492,76 @@ fn get_relevant_messages(dbc: &Dbc) -> impl Iterator<Item = &Message> {
 fn message_ignored(message: &Message) -> bool {
     // DBC internal message containing signals unassigned to any real message
     message.name == "VECTOR__INDEPENDENT_SIG_MSG"
+}
+
+/// Look up an assigned message-level (BO_) attribute value.
+fn message_attr<'a>(dbc: &'a Dbc, id: MessageId, name: &str) -> Option<&'a AttributeValue> {
+    dbc.attribute_values_message
+        .iter()
+        .find(|a| a.message_id == id && a.name == name)
+        .map(|a| &a.value)
+}
+
+/// Look up an assigned signal-level (SG_) attribute value.
+fn signal_attr<'a>(
+    dbc: &'a Dbc,
+    id: MessageId,
+    signal: &str,
+    name: &str,
+) -> Option<&'a AttributeValue> {
+    dbc.attribute_values_signal
+        .iter()
+        .find(|a| a.message_id == id && a.signal_name == signal && a.name == name)
+        .map(|a| &a.value)
+}
+
+/// Look up an attribute's default value (BA_DEF_DEF_).
+fn attr_default<'a>(dbc: &'a Dbc, name: &str) -> Option<&'a AttributeValue> {
+    dbc.attribute_defaults
+        .iter()
+        .find(|d| d.name == name)
+        .map(|d| &d.value)
+}
+
+/// Resolve a [`FieldSource`] to a Rust literal.
+fn resolve_field_source(
+    source: &FieldSource<'_>,
+    msg: &Message,
+    dbc: &Dbc,
+    signal: Option<&Signal>,
+) -> Option<String> {
+    match source {
+        FieldSource::Attr(name) => {
+            let value = match signal {
+                Some(s) => signal_attr(dbc, msg.id, &s.name, name),
+                None => message_attr(dbc, msg.id, name),
+            }
+            .or_else(|| attr_default(dbc, name))?;
+            Some(attr_value_literal(value))
+        }
+        FieldSource::MessageAttr(name) => {
+            let value = message_attr(dbc, msg.id, name).or_else(|| attr_default(dbc, name))?;
+            Some(attr_value_literal(value))
+        }
+        FieldSource::StartBit => signal.map(|s| s.start_bit.to_string()),
+        FieldSource::StartByte => {
+            signal.map(|s| s.start_bit.checked_div(8).unwrap_or(0).to_string())
+        }
+        FieldSource::BitWidth => signal.map(|s| s.size.to_string()),
+        FieldSource::MessageSize => Some(msg.size.to_string()),
+        FieldSource::Int(v) => Some(v.to_string()),
+        FieldSource::Str(v) => Some(format!("{v:?}")),
+    }
+}
+
+/// Render an attribute value as an un-suffixed Rust literal.
+fn attr_value_literal(value: &AttributeValue) -> String {
+    match value {
+        AttributeValue::Uint(v) => v.to_string(),
+        AttributeValue::Int(v) => v.to_string(),
+        AttributeValue::Double(v) => format!("{v:?}"),
+        AttributeValue::String(v) => format!("{v:?}"),
+    }
 }
 
 impl Config<'_> {
