@@ -185,7 +185,7 @@ pub enum FieldSource<'a> {
     Attr(&'a str),
     /// Value of a message-level attribute.
     MessageAttr(&'a str),
-    /// The signal's start bit. [`AttributeScope::Signal`] only.
+    /// The signal's raw DBC start bit. [`AttributeScope::Signal`] only.
     StartBit,
     /// The signal's start byte. [`AttributeScope::Signal`] only.
     StartByte,
@@ -1544,14 +1544,20 @@ fn resolve_field_source(
             Some(attr_value_literal(value))
         }
         FieldSource::StartBit => signal.map(|s| s.start_bit.to_string()),
-        FieldSource::StartByte => {
-            signal.map(|s| s.start_bit.checked_div(8).unwrap_or(0).to_string())
-        }
+        FieldSource::StartByte => signal.map(|s| signal_start_byte(s).to_string()),
         FieldSource::BitWidth => signal.map(|s| s.size.to_string()),
         FieldSource::MessageSize => Some(msg.size.to_string()),
         FieldSource::Int(v) => Some(v.to_string()),
         FieldSource::Str(v) => Some(format!("{v:?}")),
     }
+}
+
+/// Frame-relative byte index of a signal's start bit.
+fn signal_start_byte(signal: &Signal) -> u64 {
+    let start_bit = match signal.byte_order {
+        LittleEndian | BigEndian => signal.start_bit,
+    };
+    start_bit.checked_div(8).unwrap_or(0)
 }
 
 /// Render an attribute value as an un-suffixed Rust literal.
