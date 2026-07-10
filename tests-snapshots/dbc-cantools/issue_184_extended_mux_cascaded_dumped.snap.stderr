@@ -105,6 +105,22 @@ error[E0433]: cannot find type `ExtMuxCascadedMuxAIndex` in this scope
    --> tests-snapshots/dbc-cantools/issue_184_extended_mux_cascaded_dumped.snap.rs:196:21
     |
 196 |                     ExtMuxCascadedMuxAIndex::M0(ExtMuxCascadedMuxAM0 {
+<<<<<<< HEAD
+=======
+    |                     ^^^^^^^^^^^^^^^^^^^^^^^ use of undeclared type `ExtMuxCascadedMuxAIndex`
+    |
+help: an enum with a similar name exists
+    |
+196 -                     ExtMuxCascadedMuxAIndex::M0(ExtMuxCascadedMuxAM0 {
+196 +                     ExtMuxCascadedMuxedA2MuxBIndex::M0(ExtMuxCascadedMuxAM0 {
+    |
+
+<<<<<<< HEAD
+error[E0433]: cannot find type `ExtMuxCascadedMuxAIndex` in this scope
+   --> tests-snapshots/dbc-cantools/issue_184_extended_mux_cascaded_dumped.snap.rs:202:21
+    |
+202 |                     ExtMuxCascadedMuxAIndex::M1(ExtMuxCascadedMuxAM1 {
+>>>>>>> 69c067c (Regenerate snap files on Rust 1.94)
     |                     ^^^^^^^^^^^^^^^^^^^^^^^ use of undeclared type `ExtMuxCascadedMuxAIndex`
     |
 help: an enum with a similar name exists

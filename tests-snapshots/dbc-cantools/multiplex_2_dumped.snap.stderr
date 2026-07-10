@@ -387,6 +387,22 @@ error[E0433]: cannot find type `ExtendedS1Index` in this scope
    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:796:21
     |
 796 |             0 => Ok(ExtendedS1Index::M0(ExtendedS1M0 { raw: self.raw })),
+<<<<<<< HEAD
+=======
+    |                     ^^^^^^^^^^^^^^^ use of undeclared type `ExtendedS1Index`
+    |
+help: an enum with a similar name exists
+    |
+796 -             0 => Ok(ExtendedS1Index::M0(ExtendedS1M0 { raw: self.raw })),
+796 +             0 => Ok(ExtendedS6Index::M0(ExtendedS1M0 { raw: self.raw })),
+    |
+
+<<<<<<< HEAD
+error[E0433]: cannot find type `ExtendedS1Index` in this scope
+   --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:794:21
+    |
+794 |             1 => Ok(ExtendedS1Index::M1(ExtendedS1M1 { raw: self.raw })),
+>>>>>>> 69c067c (Regenerate snap files on Rust 1.94)
     |                     ^^^^^^^^^^^^^^^ use of undeclared type `ExtendedS1Index`
     |
 help: an enum with a similar name exists
@@ -399,6 +415,22 @@ error[E0433]: cannot find type `ExtendedS1Index` in this scope
    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:797:21
     |
 797 |             1 => Ok(ExtendedS1Index::M1(ExtendedS1M1 { raw: self.raw })),
+<<<<<<< HEAD
+=======
+    |                     ^^^^^^^^^^^^^^^ use of undeclared type `ExtendedS1Index`
+    |
+help: an enum with a similar name exists
+    |
+797 -             1 => Ok(ExtendedS1Index::M1(ExtendedS1M1 { raw: self.raw })),
+797 +             1 => Ok(ExtendedS6Index::M1(ExtendedS1M1 { raw: self.raw })),
+    |
+
+<<<<<<< HEAD
+error[E0433]: cannot find type `ExtendedS1Index` in this scope
+   --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:795:21
+    |
+795 |             2 => Ok(ExtendedS1Index::M2(ExtendedS1M2 { raw: self.raw })),
+>>>>>>> 69c067c (Regenerate snap files on Rust 1.94)
     |                     ^^^^^^^^^^^^^^^ use of undeclared type `ExtendedS1Index`
     |
 help: an enum with a similar name exists
@@ -412,6 +444,22 @@ error[E0433]: cannot find type `ExtendedS1Index` in this scope
     |
 798 |             2 => Ok(ExtendedS1Index::M2(ExtendedS1M2 { raw: self.raw })),
     |                     ^^^^^^^^^^^^^^^ use of undeclared type `ExtendedS1Index`
+<<<<<<< HEAD
+=======
+    |
+help: an enum with a similar name exists
+    |
+798 -             2 => Ok(ExtendedS1Index::M2(ExtendedS1M2 { raw: self.raw })),
+798 +             2 => Ok(ExtendedS6Index::M2(ExtendedS1M2 { raw: self.raw })),
+    |
+
+<<<<<<< HEAD
+error[E0433]: cannot find type `ExtendedS0Index` in this scope
+   --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:867:21
+    |
+867 |             0 => Ok(ExtendedS0Index::M0(ExtendedS0M0 { raw: self.raw })),
+    |                     ^^^^^^^^^^^^^^^ use of undeclared type `ExtendedS0Index`
+>>>>>>> 69c067c (Regenerate snap files on Rust 1.94)
     |
 help: an enum with a similar name exists
     |
@@ -423,6 +471,22 @@ error[E0433]: cannot find type `ExtendedS0Index` in this scope
    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:870:21
     |
 870 |             0 => Ok(ExtendedS0Index::M0(ExtendedS0M0 { raw: self.raw })),
+<<<<<<< HEAD
+=======
+    |                     ^^^^^^^^^^^^^^^ use of undeclared type `ExtendedS0Index`
+    |
+help: an enum with a similar name exists
+    |
+870 -             0 => Ok(ExtendedS0Index::M0(ExtendedS0M0 { raw: self.raw })),
+870 +             0 => Ok(ExtendedS6Index::M0(ExtendedS0M0 { raw: self.raw })),
+    |
+
+<<<<<<< HEAD
+error[E0433]: cannot find type `ExtendedS0Index` in this scope
+   --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:868:21
+    |
+868 |             1 => Ok(ExtendedS0Index::M1(ExtendedS0M1 { raw: self.raw })),
+>>>>>>> 69c067c (Regenerate snap files on Rust 1.94)
     |                     ^^^^^^^^^^^^^^^ use of undeclared type `ExtendedS0Index`
     |
 help: an enum with a similar name exists
@@ -435,6 +499,22 @@ error[E0433]: cannot find type `ExtendedS0Index` in this scope
    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:871:21
     |
 871 |             1 => Ok(ExtendedS0Index::M1(ExtendedS0M1 { raw: self.raw })),
+<<<<<<< HEAD
+=======
+    |                     ^^^^^^^^^^^^^^^ use of undeclared type `ExtendedS0Index`
+    |
+help: an enum with a similar name exists
+    |
+871 -             1 => Ok(ExtendedS0Index::M1(ExtendedS0M1 { raw: self.raw })),
+871 +             1 => Ok(ExtendedS6Index::M1(ExtendedS0M1 { raw: self.raw })),
+    |
+
+<<<<<<< HEAD
+error[E0433]: cannot find type `ExtendedS0Index` in this scope
+   --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:869:21
+    |
+869 |             2 => Ok(ExtendedS0Index::M2(ExtendedS0M2 { raw: self.raw })),
+>>>>>>> 69c067c (Regenerate snap files on Rust 1.94)
     |                     ^^^^^^^^^^^^^^^ use of undeclared type `ExtendedS0Index`
     |
 help: an enum with a similar name exists
@@ -449,6 +529,22 @@ error[E0433]: cannot find type `ExtendedS0Index` in this scope
 872 |             2 => Ok(ExtendedS0Index::M2(ExtendedS0M2 { raw: self.raw })),
     |                     ^^^^^^^^^^^^^^^ use of undeclared type `ExtendedS0Index`
     |
+<<<<<<< HEAD
+=======
+help: an enum with a similar name exists
+    |
+872 -             2 => Ok(ExtendedS0Index::M2(ExtendedS0M2 { raw: self.raw })),
+872 +             2 => Ok(ExtendedS6Index::M2(ExtendedS0M2 { raw: self.raw })),
+    |
+
+<<<<<<< HEAD
+error[E0433]: cannot find type `ExtendedTypesS11Index` in this scope
+    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:1445:21
+     |
+1445 |                     ExtendedTypesS11Index::M0(ExtendedTypesS11M0 {
+     |                     ^^^^^^^^^^^^^^^^^^^^^ use of undeclared type `ExtendedTypesS11Index`
+     |
+>>>>>>> 69c067c (Regenerate snap files on Rust 1.94)
 help: an enum with a similar name exists
     |
 872 -             2 => Ok(ExtendedS0Index::M2(ExtendedS0M2 { raw: self.raw })),
@@ -459,6 +555,22 @@ error[E0433]: cannot find type `ExtendedTypesS11Index` in this scope
     --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:1449:21
      |
 1449 |                     ExtendedTypesS11Index::M0(ExtendedTypesS11M0 {
+<<<<<<< HEAD
+=======
+     |                     ^^^^^^^^^^^^^^^^^^^^^ use of undeclared type `ExtendedTypesS11Index`
+     |
+help: an enum with a similar name exists
+     |
+1449 -                     ExtendedTypesS11Index::M0(ExtendedTypesS11M0 {
+1449 +                     ExtendedTypesS0Index::M0(ExtendedTypesS11M0 {
+     |
+
+<<<<<<< HEAD
+error[E0433]: cannot find type `ExtendedTypesS11Index` in this scope
+    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:1452:21
+     |
+1452 |                     ExtendedTypesS11Index::M5(ExtendedTypesS11M5 {
+>>>>>>> 69c067c (Regenerate snap files on Rust 1.94)
      |                     ^^^^^^^^^^^^^^^^^^^^^ use of undeclared type `ExtendedTypesS11Index`
      |
 help: an enum with a similar name exists
