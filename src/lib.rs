@@ -137,8 +137,7 @@ pub struct Config<'a> {
 /// ```
 #[derive(Debug, Clone)]
 pub struct AttributeStruct<'a> {
-    /// Fully-qualified path of the target Rust type, e.g.
-    /// 'data_protection::E2EDataIdInfo'.
+    /// Fully-qualified path of the target Rust type.
     pub type_path: &'a str,
 
     /// Base name of the emitted associated constant.
@@ -584,7 +583,7 @@ impl Config<'_> {
                     if message_attr(dbc, msg.id, spec.require).is_none() {
                         continue;
                     }
-                    self.render_attribute_struct(
+                    Self::render_attribute_struct(
                         w,
                         spec,
                         spec.const_name,
@@ -601,7 +600,7 @@ impl Config<'_> {
                         }
                         let name =
                             format!("{}_{}", signal.field_name().to_uppercase(), spec.const_name);
-                        self.render_attribute_struct(
+                        Self::render_attribute_struct(
                             w,
                             spec,
                             &name,
@@ -619,7 +618,6 @@ impl Config<'_> {
 
     /// Emit a single struct constant.
     fn render_attribute_struct(
-        &self,
         w: &mut impl Write,
         spec: &AttributeStruct<'_>,
         const_name: &str,
@@ -1573,7 +1571,7 @@ fn message_ignored(message: &Message) -> bool {
     message.name == "VECTOR__INDEPENDENT_SIG_MSG"
 }
 
-/// Look up an assigned message-level (BO_) attribute value.
+/// Look up an assigned message-level (`BO_`) attribute value.
 fn message_attr<'a>(dbc: &'a Dbc, id: MessageId, name: &str) -> Option<&'a AttributeValue> {
     dbc.attribute_values_message
         .iter()
@@ -1581,7 +1579,7 @@ fn message_attr<'a>(dbc: &'a Dbc, id: MessageId, name: &str) -> Option<&'a Attri
         .map(|a| &a.value)
 }
 
-/// Look up an assigned signal-level (SG_) attribute value.
+/// Look up an assigned signal-level (`SG_`) attribute value.
 fn signal_attr<'a>(
     dbc: &'a Dbc,
     id: MessageId,
@@ -1594,7 +1592,7 @@ fn signal_attr<'a>(
         .map(|a| &a.value)
 }
 
-/// Look up an attribute's default value (BA_DEF_DEF_).
+/// Look up an attribute's default value (`BA_DEF_DEF_`).
 fn attr_default<'a>(dbc: &'a Dbc, name: &str) -> Option<&'a AttributeValue> {
     dbc.attribute_defaults
         .iter()

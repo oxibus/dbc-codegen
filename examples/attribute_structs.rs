@@ -1,4 +1,4 @@
-//! Demonstrates [Config::attribute_structs].
+//! Demonstrates [`Config::attribute_structs`].
 //! Emits constants for AUTOSAR E2E / SecOC-style metdata from DBC 'BA_' attributes.
 
 use dbc_codegen::{AttributeField, AttributeScope, AttributeStruct, Config, FieldSource};
