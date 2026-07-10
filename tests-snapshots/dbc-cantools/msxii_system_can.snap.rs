@@ -67,6 +67,7 @@ impl BatteryVt {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
         StandardId::new_unchecked(0x401)
     });
+    pub const MESSAGE_SIZE: usize = 6;
     pub const MODULE_TEMP_35_MIN: u16 = 0_u16;
     pub const MODULE_TEMP_35_MAX: u16 = 0_u16;
     pub const MODULE_TEMP_34_MIN: u16 = 0_u16;

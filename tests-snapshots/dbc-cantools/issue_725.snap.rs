@@ -69,6 +69,7 @@ impl TestMessage {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
         StandardId::new_unchecked(0x1)
     });
+    pub const MESSAGE_SIZE: usize = 1;
     pub const SIGNAL1_MIN: u8 = 0_u8;
     pub const SIGNAL1_MAX: u8 = 250_u8;
     /// Construct new TestMessage from values

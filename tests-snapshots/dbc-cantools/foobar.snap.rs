@@ -81,6 +81,7 @@ impl Foo {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x12330)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const FOO_MIN: f32 = 229.53_f32;
     pub const FOO_MAX: f32 = 270.47_f32;
     pub const BAR_MIN: f32 = 0_f32;
@@ -239,6 +240,8 @@ impl Fum {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x12331)
     });
+    pub const MESSAGE_SIZE: usize = 5;
+    pub const MESSAGE_CYCLE_TIME: Duration = Duration::from_millis(1);
     pub const FUM_MIN: i16 = 0_i16;
     pub const FUM_MAX: i16 = 10_i16;
     pub const FAM_MIN: i16 = 0_i16;
@@ -433,6 +436,7 @@ impl Bar {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x12332)
     });
+    pub const MESSAGE_SIZE: usize = 4;
     pub const BINARY32_MIN: i32 = 0_i32;
     pub const BINARY32_MAX: i32 = 0_i32;
     /// Construct new Bar from values
@@ -550,6 +554,7 @@ impl CanFd {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x12333)
     });
+    pub const MESSAGE_SIZE: usize = 64;
     pub const FIE_MIN: u64 = 0_u64;
     pub const FIE_MAX: u64 = 0_u64;
     pub const FAS_MIN: u64 = 0_u64;
@@ -710,6 +715,7 @@ impl Foobar {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
         StandardId::new_unchecked(0x30c)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const ACC_02_CRC_MIN: i16 = 0_i16;
     pub const ACC_02_CRC_MAX: i16 = 1_i16;
     /// Construct new FOOBAR from values

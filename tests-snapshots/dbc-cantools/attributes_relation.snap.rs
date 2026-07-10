@@ -70,6 +70,8 @@ impl Message2 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
         StandardId::new_unchecked(0x53)
     });
+    pub const MESSAGE_SIZE: usize = 8;
+    pub const MESSAGE_CYCLE_TIME: Duration = Duration::from_millis(50);
     pub const SIGNAL_2_MIN: i8 = 0_i8;
     pub const SIGNAL_2_MAX: i8 = 0_i8;
     /// Construct new Message_2 from values
@@ -187,6 +189,7 @@ impl Message1 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
         StandardId::new_unchecked(0x52)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const SIGNAL_1_MIN: i8 = 0_i8;
     pub const SIGNAL_1_MAX: i8 = 0_i8;
     /// Construct new Message_1 from values

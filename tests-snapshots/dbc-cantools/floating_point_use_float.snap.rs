@@ -73,6 +73,7 @@ impl Message1 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
         StandardId::new_unchecked(0x400)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const SIGNAL1_MIN: i64 = 0_i64;
     pub const SIGNAL1_MAX: i64 = 0_i64;
     /// Construct new Message1 from values
@@ -190,6 +191,7 @@ impl Message2 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
         StandardId::new_unchecked(0x401)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const SIGNAL2_MIN: i32 = 0_i32;
     pub const SIGNAL2_MAX: i32 = 0_i32;
     pub const SIGNAL1_MIN: i32 = 0_i32;
@@ -353,6 +355,7 @@ impl Message3 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
         StandardId::new_unchecked(0x402)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const SIGNAL3_MIN: f32 = 0_f32;
     pub const SIGNAL3_MAX: f32 = 0_f32;
     /// Construct new Message3 from values

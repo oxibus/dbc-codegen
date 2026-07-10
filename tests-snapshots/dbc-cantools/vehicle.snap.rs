@@ -1166,6 +1166,7 @@ impl RtSbInsVelBodyAxes {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9588322)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const INS_VEL_SIDEWAYS_2D_MIN: f32 = -838_f32;
     pub const INS_VEL_SIDEWAYS_2D_MAX: f32 = 838_f32;
     pub const INS_VEL_FORWARDS_2D_MIN: f32 = -838_f32;
@@ -1450,6 +1451,7 @@ impl RtDl1mk3Speed {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x94a7c24)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const SPEED_MIN: f32 = -20000_f32;
     pub const SPEED_MAX: f32 = 20000_f32;
     pub const ACCURACY_SPEED_MIN: u8 = 0_u8;
@@ -1646,6 +1648,7 @@ impl RtDl1mk3GpsTime {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9566d24)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const GPS_WEEK_MIN: u16 = 0_u16;
     pub const GPS_WEEK_MAX: u16 = 65535_u16;
     pub const GPS_TIME_MIN: f32 = 0_f32;
@@ -1921,6 +1924,7 @@ impl RtDl1mk3GpsPosLlh2 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9566f24)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const GPS_POS_LLH_ALTITUDE_MIN: f32 = -1000_f32;
     pub const GPS_POS_LLH_ALTITUDE_MAX: f32 = 100000_f32;
     pub const GPS_POS_LLH_LONGITUDE_MIN: f32 = -180_f32;
@@ -2079,6 +2083,7 @@ impl RtDl1mk3GpsPosLlh1 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9566e24)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const GPS_POS_LLH_LATITUDE_MIN: f32 = -90_f32;
     pub const GPS_POS_LLH_LATITUDE_MAX: f32 = 90_f32;
     pub const ACCURACY_GPS_POS_LLH_ALTITUDE_MIN: u8 = 0_u8;
@@ -2457,6 +2462,7 @@ impl RtDl1mk3GpsSpeed {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9567c24)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const GPS_SPEED_3D_MIN: f32 = 0_f32;
     pub const GPS_SPEED_3D_MAX: f32 = 1675_f32;
     pub const GPS_SPEED_2D_MIN: f32 = 0_f32;
@@ -2733,6 +2739,7 @@ impl RtIrTempTemp7 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95b7325)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_7_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_7_MAX: f32 = 0_f32;
     /// Construct new RT_IRTemp_Temp_7 from values
@@ -2845,6 +2852,7 @@ impl RtIrTempTempRr2 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9627425)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const IR_TEMPERATURE_32_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_32_MAX: f32 = 0_f32;
     pub const IR_TEMPERATURE_31_MIN: f32 = 0_f32;
@@ -3091,6 +3099,7 @@ impl RtIrTempTempRl2 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9627225)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const IR_TEMPERATURE_24_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_24_MAX: f32 = 0_f32;
     pub const IR_TEMPERATURE_23_MIN: f32 = 0_f32;
@@ -3337,6 +3346,7 @@ impl RtIrTempTempFr2 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9627025)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const IR_TEMPERATURE_16_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_16_MAX: f32 = 0_f32;
     pub const IR_TEMPERATURE_15_MIN: f32 = 0_f32;
@@ -3583,6 +3593,7 @@ impl RtIrTempTempFl2 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9626e25)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const IR_TEMPERATURE_8_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_8_MAX: f32 = 0_f32;
     pub const IR_TEMPERATURE_7_MIN: f32 = 0_f32;
@@ -3829,6 +3840,7 @@ impl RtIrTempTempRr1 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9627325)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const IR_TEMPERATURE_28_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_28_MAX: f32 = 0_f32;
     pub const IR_TEMPERATURE_27_MIN: f32 = 0_f32;
@@ -4075,6 +4087,7 @@ impl RtIrTempTempRl1 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9627125)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const IR_TEMPERATURE_20_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_20_MAX: f32 = 0_f32;
     pub const IR_TEMPERATURE_19_MIN: f32 = 0_f32;
@@ -4321,6 +4334,7 @@ impl RtIrTempTempFr1 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9626f25)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const IR_TEMPERATURE_12_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_12_MAX: f32 = 0_f32;
     pub const IR_TEMPERATURE_11_MIN: f32 = 0_f32;
@@ -4567,6 +4581,7 @@ impl RtIrTempTempFl1 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9626d25)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const IR_TEMPERATURE_4_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_4_MAX: f32 = 0_f32;
     pub const IR_TEMPERATURE_3_MIN: f32 = 0_f32;
@@ -4813,6 +4828,7 @@ impl RtIrTempTemp32 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95b8c25)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_32_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_32_MAX: f32 = 0_f32;
     /// Construct new RT_IRTemp_Temp_32 from values
@@ -4925,6 +4941,7 @@ impl RtIrTempTemp31 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95b8b25)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_31_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_31_MAX: f32 = 0_f32;
     /// Construct new RT_IRTemp_Temp_31 from values
@@ -5037,6 +5054,7 @@ impl RtIrTempTemp30 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95b8a25)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_30_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_30_MAX: f32 = 0_f32;
     /// Construct new RT_IRTemp_Temp_30 from values
@@ -5149,6 +5167,7 @@ impl RtIrTempTemp29 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95b8925)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_29_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_29_MAX: f32 = 0_f32;
     /// Construct new RT_IRTemp_Temp_29 from values
@@ -5261,6 +5280,7 @@ impl RtIrTempTemp28 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95b8825)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_28_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_28_MAX: f32 = 0_f32;
     /// Construct new RT_IRTemp_Temp_28 from values
@@ -5373,6 +5393,7 @@ impl RtIrTempTemp27 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95b8725)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_27_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_27_MAX: f32 = 0_f32;
     /// Construct new RT_IRTemp_Temp_27 from values
@@ -5485,6 +5506,7 @@ impl RtIrTempTemp26 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95b8625)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_26_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_26_MAX: f32 = 0_f32;
     /// Construct new RT_IRTemp_Temp_26 from values
@@ -5597,6 +5619,7 @@ impl RtIrTempTemp25 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95b8525)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_25_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_25_MAX: f32 = 0_f32;
     /// Construct new RT_IRTemp_Temp_25 from values
@@ -5709,6 +5732,7 @@ impl RtIrTempTemp24 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95b8425)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_24_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_24_MAX: f32 = 0_f32;
     /// Construct new RT_IRTemp_Temp_24 from values
@@ -5821,6 +5845,7 @@ impl RtIrTempTemp22 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95b8225)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_22_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_22_MAX: f32 = 0_f32;
     /// Construct new RT_IRTemp_Temp_22 from values
@@ -5933,6 +5958,7 @@ impl RtIrTempTemp23 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95b8325)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_23_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_23_MAX: f32 = 0_f32;
     /// Construct new RT_IRTemp_Temp_23 from values
@@ -6045,6 +6071,7 @@ impl RtIrTempTemp21 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95b8125)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_21_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_21_MAX: f32 = 0_f32;
     /// Construct new RT_IRTemp_Temp_21 from values
@@ -6157,6 +6184,7 @@ impl RtIrTempTemp20 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95b8025)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_20_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_20_MAX: f32 = 0_f32;
     /// Construct new RT_IRTemp_Temp_20 from values
@@ -6269,6 +6297,7 @@ impl RtIrTempTemp19 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95b7f25)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_19_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_19_MAX: f32 = 0_f32;
     /// Construct new RT_IRTemp_Temp_19 from values
@@ -6381,6 +6410,7 @@ impl RtIrTempTemp18 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95b7e25)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_18_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_18_MAX: f32 = 0_f32;
     /// Construct new RT_IRTemp_Temp_18 from values
@@ -6493,6 +6523,7 @@ impl RtIrTempTemp16 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95b7c25)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_16_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_16_MAX: f32 = 0_f32;
     /// Construct new RT_IRTemp_Temp_16 from values
@@ -6605,6 +6636,7 @@ impl RtIrTempTemp15 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95b7b25)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_15_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_15_MAX: f32 = 0_f32;
     /// Construct new RT_IRTemp_Temp_15 from values
@@ -6717,6 +6749,7 @@ impl RtIrTempTemp14 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95b7a25)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_14_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_14_MAX: f32 = 0_f32;
     /// Construct new RT_IRTemp_Temp_14 from values
@@ -6829,6 +6862,7 @@ impl RtIrTempTemp13 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95b7925)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_13_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_13_MAX: f32 = 0_f32;
     /// Construct new RT_IRTemp_Temp_13 from values
@@ -6941,6 +6975,7 @@ impl RtIrTempTemp12 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95b7825)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_12_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_12_MAX: f32 = 0_f32;
     /// Construct new RT_IRTemp_Temp_12 from values
@@ -7053,6 +7088,7 @@ impl RtIrTempTemp11 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95b7725)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_11_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_11_MAX: f32 = 0_f32;
     /// Construct new RT_IRTemp_Temp_11 from values
@@ -7165,6 +7201,7 @@ impl RtIrTempTemp10 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95b7625)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_10_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_10_MAX: f32 = 0_f32;
     /// Construct new RT_IRTemp_Temp_10 from values
@@ -7277,6 +7314,7 @@ impl RtIrTempTemp8 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95b7425)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_8_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_8_MAX: f32 = 0_f32;
     /// Construct new RT_IRTemp_Temp_8 from values
@@ -7389,6 +7427,7 @@ impl RtIrTempTemp9 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95b7525)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_9_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_9_MAX: f32 = 0_f32;
     /// Construct new RT_IRTemp_Temp_9 from values
@@ -7501,6 +7540,7 @@ impl RtIrTempTemp17 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95b7d25)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_17_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_17_MAX: f32 = 0_f32;
     /// Construct new RT_IRTemp_Temp_17 from values
@@ -7613,6 +7653,7 @@ impl RtIrTempTemp6 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95b7225)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_6_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_6_MAX: f32 = 0_f32;
     /// Construct new RT_IRTemp_Temp_6 from values
@@ -7725,6 +7766,7 @@ impl RtIrTempTemp5 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95b7125)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_5_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_5_MAX: f32 = 0_f32;
     /// Construct new RT_IRTemp_Temp_5 from values
@@ -7837,6 +7879,7 @@ impl RtIrTempTemp4 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95b7025)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_4_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_4_MAX: f32 = 0_f32;
     /// Construct new RT_IRTemp_Temp_4 from values
@@ -7949,6 +7992,7 @@ impl RtIrTempTemp3 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95b6f25)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_3_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_3_MAX: f32 = 0_f32;
     /// Construct new RT_IRTemp_Temp_3 from values
@@ -8061,6 +8105,7 @@ impl RtIrTempTemp2 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95b6e25)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_2_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_2_MAX: f32 = 0_f32;
     /// Construct new RT_IRTemp_Temp_2 from values
@@ -8173,6 +8218,7 @@ impl RtIrTempTemp1 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95b6d25)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_1_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_1_MAX: f32 = 0_f32;
     /// Construct new RT_IRTemp_Temp_1 from values
@@ -8285,6 +8331,7 @@ impl RtSbTrigFinalCondition {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9577322)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const FINAL_SPEED_MIN: f32 = 0_f32;
     pub const FINAL_SPEED_MAX: f32 = 1675_f32;
     /// Construct new RT_SB_Trig_Final_Condition from values
@@ -8431,6 +8478,7 @@ impl RtSbTrigInitialCondition {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9577222)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const MFDD_END_THRESHOLD_MIN: u8 = 0_u8;
     pub const MFDD_END_THRESHOLD_MAX: u8 = 100_u8;
     pub const MFDD_START_THRESHOLD_MIN: u8 = 0_u8;
@@ -8752,6 +8800,7 @@ impl RtSbTrigDirectDist {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9577122)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const PATH_DISTANCE_2D_MIN: f32 = 0_f32;
     pub const PATH_DISTANCE_2D_MAX: f32 = 4294967_f32;
     pub const DIRECT_DISTANCE_MIN: f32 = 0_f32;
@@ -8909,6 +8958,7 @@ impl RtSbTrigForwardDist {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9577022)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const DEVIATION_DISTANCE_MIN: f32 = -2147483.648_f32;
     pub const DEVIATION_DISTANCE_MAX: f32 = 2147483.647_f32;
     pub const FORWARD_DISTANCE_MIN: f32 = -2147483.648_f32;
@@ -9071,6 +9121,7 @@ impl RtSbTrigPathDist {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9576f22)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const PATH_DISTANCE_3D_MIN: f32 = 0_f32;
     pub const PATH_DISTANCE_3D_MAX: f32 = 4294967_f32;
     /// Construct new RT_SB_Trig_Path_Dist from values
@@ -9184,6 +9235,7 @@ impl RtSbTrigAccel {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9576e22)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const TRIGGERED_TIME_MIN: f32 = 0_f32;
     pub const TRIGGERED_TIME_MAX: f32 = 167772_f32;
     pub const AVERAGE_ACCEL_MIN: f32 = -65_f32;
@@ -9493,6 +9545,7 @@ impl RtDl1mk3MeasureTime12 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9607824)
     });
+    pub const MESSAGE_SIZE: usize = 3;
     pub const MEASURED_TIME_12_MIN: u32 = 0_u32;
     pub const MEASURED_TIME_12_MAX: u32 = 0_u32;
     /// Construct new RT_DL1MK3_Measure_Time_12 from values
@@ -9607,6 +9660,7 @@ impl RtDl1mk3MeasureTime11 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9607724)
     });
+    pub const MESSAGE_SIZE: usize = 3;
     pub const MEASURED_TIME_11_MIN: u32 = 0_u32;
     pub const MEASURED_TIME_11_MAX: u32 = 0_u32;
     /// Construct new RT_DL1MK3_Measure_Time_11 from values
@@ -9721,6 +9775,7 @@ impl RtDl1mk3MeasureTime10 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9607624)
     });
+    pub const MESSAGE_SIZE: usize = 3;
     pub const MEASURED_TIME_10_MIN: u32 = 0_u32;
     pub const MEASURED_TIME_10_MAX: u32 = 0_u32;
     /// Construct new RT_DL1MK3_Measure_Time_10 from values
@@ -9835,6 +9890,7 @@ impl RtDl1mk3MeasureTime9 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9607524)
     });
+    pub const MESSAGE_SIZE: usize = 3;
     pub const MEASURED_TIME_9_MIN: u32 = 0_u32;
     pub const MEASURED_TIME_9_MAX: u32 = 0_u32;
     /// Construct new RT_DL1MK3_Measure_Time_9 from values
@@ -9949,6 +10005,7 @@ impl RtDl1mk3MeasureTime8 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9607424)
     });
+    pub const MESSAGE_SIZE: usize = 3;
     pub const MEASURED_TIME_8_MIN: u32 = 0_u32;
     pub const MEASURED_TIME_8_MAX: u32 = 0_u32;
     /// Construct new RT_DL1MK3_Measure_Time_8 from values
@@ -10063,6 +10120,7 @@ impl RtDl1mk3MeasureTime7 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9607324)
     });
+    pub const MESSAGE_SIZE: usize = 3;
     pub const MEASURED_TIME_7_MIN: u32 = 0_u32;
     pub const MEASURED_TIME_7_MAX: u32 = 0_u32;
     /// Construct new RT_DL1MK3_Measure_Time_7 from values
@@ -10177,6 +10235,7 @@ impl RtDl1mk3MeasureTime6 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9607224)
     });
+    pub const MESSAGE_SIZE: usize = 3;
     pub const MEASURED_TIME_6_MIN: u32 = 0_u32;
     pub const MEASURED_TIME_6_MAX: u32 = 0_u32;
     /// Construct new RT_DL1MK3_Measure_Time_6 from values
@@ -10291,6 +10350,7 @@ impl RtDl1mk3MeasureTime5 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9607124)
     });
+    pub const MESSAGE_SIZE: usize = 3;
     pub const MEASURED_TIME_5_MIN: u32 = 0_u32;
     pub const MEASURED_TIME_5_MAX: u32 = 0_u32;
     /// Construct new RT_DL1MK3_Measure_Time_5 from values
@@ -10405,6 +10465,7 @@ impl RtDl1mk3MeasureTime4 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9607024)
     });
+    pub const MESSAGE_SIZE: usize = 3;
     pub const MEASURED_TIME_4_MIN: u32 = 0_u32;
     pub const MEASURED_TIME_4_MAX: u32 = 0_u32;
     /// Construct new RT_DL1MK3_Measure_Time_4 from values
@@ -10519,6 +10580,7 @@ impl RtDl1mk3MeasureTime3 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9606f24)
     });
+    pub const MESSAGE_SIZE: usize = 3;
     pub const MEASURED_TIME_3_MIN: u32 = 0_u32;
     pub const MEASURED_TIME_3_MAX: u32 = 0_u32;
     /// Construct new RT_DL1MK3_Measure_Time_3 from values
@@ -10633,6 +10695,7 @@ impl RtDl1mk3MeasureTime2 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9606e24)
     });
+    pub const MESSAGE_SIZE: usize = 3;
     pub const MEASURED_TIME_2_MIN: u32 = 0_u32;
     pub const MEASURED_TIME_2_MAX: u32 = 0_u32;
     /// Construct new RT_DL1MK3_Measure_Time_2 from values
@@ -10747,6 +10810,7 @@ impl RtDl1mk3MeasureTime1 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9606d24)
     });
+    pub const MESSAGE_SIZE: usize = 3;
     pub const MEASURED_TIME_1_MIN: u32 = 0_u32;
     pub const MEASURED_TIME_1_MAX: u32 = 0_u32;
     /// Construct new RT_DL1MK3_Measure_Time_1 from values
@@ -10861,6 +10925,7 @@ impl RtDl1mk3Rpm {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95f7824)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const RPM_MIN: u16 = 0_u16;
     pub const RPM_MAX: u16 = 0_u16;
     /// Construct new RT_DL1MK3_RPM from values
@@ -10975,6 +11040,7 @@ impl RtDl1mk3Freq4 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95f7724)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const FREQUENCY_4_MIN: f32 = 0_f32;
     pub const FREQUENCY_4_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Freq_4 from values
@@ -11086,6 +11152,7 @@ impl RtDl1mk3Freq3 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95f7624)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const FREQUENCY_3_MIN: f32 = 0_f32;
     pub const FREQUENCY_3_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Freq_3 from values
@@ -11197,6 +11264,7 @@ impl RtDl1mk3Freq2 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95f7524)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const FREQUENCY_2_MIN: f32 = 0_f32;
     pub const FREQUENCY_2_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Freq_2 from values
@@ -11308,6 +11376,7 @@ impl RtDl1mk3Misc3 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9616f24)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const MISC_3_MIN: f32 = 0_f32;
     pub const MISC_3_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Misc_3 from values
@@ -11419,6 +11488,7 @@ impl RtDl1mk3Misc2 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9616e24)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const MISC_2_MIN: f32 = 0_f32;
     pub const MISC_2_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Misc_2 from values
@@ -11530,6 +11600,7 @@ impl RtDl1mk3Misc1 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9616d24)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const MISC_1_MIN: f32 = 0_f32;
     pub const MISC_1_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Misc_1 from values
@@ -11641,6 +11712,7 @@ impl RtDl1mk3Aux31 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95e8b24)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_31_MIN: f32 = 0_f32;
     pub const AUX_31_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Aux_31 from values
@@ -11752,6 +11824,7 @@ impl RtDl1mk3Aux30 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95e8a24)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_30_MIN: f32 = 0_f32;
     pub const AUX_30_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Aux_30 from values
@@ -11863,6 +11936,7 @@ impl RtDl1mk3Aux29 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95e8924)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_29_MIN: f32 = 0_f32;
     pub const AUX_29_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Aux_29 from values
@@ -11974,6 +12048,7 @@ impl RtDl1mk3Aux28 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95e8824)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_28_MIN: f32 = 0_f32;
     pub const AUX_28_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Aux_28 from values
@@ -12085,6 +12160,7 @@ impl RtDl1mk3Aux27 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95e8724)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_27_MIN: f32 = 0_f32;
     pub const AUX_27_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Aux_27 from values
@@ -12196,6 +12272,7 @@ impl RtDl1mk3Aux26 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95e8624)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_26_MIN: f32 = 0_f32;
     pub const AUX_26_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Aux_26 from values
@@ -12307,6 +12384,7 @@ impl RtDl1mk3Aux25 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95e8524)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_25_MIN: f32 = 0_f32;
     pub const AUX_25_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Aux_25 from values
@@ -12418,6 +12496,7 @@ impl RtDl1mk3Aux24 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95e8424)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_24_MIN: f32 = 0_f32;
     pub const AUX_24_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Aux_24 from values
@@ -12529,6 +12608,7 @@ impl RtDl1mk3Aux23 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95e8324)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_23_MIN: f32 = 0_f32;
     pub const AUX_23_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Aux_23 from values
@@ -12640,6 +12720,7 @@ impl RtDl1mk3Aux22 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95e8224)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_22_MIN: u32 = 0_u32;
     pub const AUX_22_MAX: u32 = 0_u32;
     /// Construct new RT_DL1MK3_Aux_22 from values
@@ -12754,6 +12835,7 @@ impl RtDl1mk3Aux21 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95e8124)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_21_MIN: f32 = 0_f32;
     pub const AUX_21_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Aux_21 from values
@@ -12865,6 +12947,7 @@ impl RtDl1mk3Aux20 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95e8024)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_20_MIN: f32 = 0_f32;
     pub const AUX_20_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Aux_20 from values
@@ -12976,6 +13059,7 @@ impl RtDl1mk3Aux19 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95e7f24)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_19_MIN: f32 = 0_f32;
     pub const AUX_19_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Aux_19 from values
@@ -13087,6 +13171,7 @@ impl RtDl1mk3Aux18 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95e7e24)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_18_MIN: f32 = 0_f32;
     pub const AUX_18_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Aux_18 from values
@@ -13198,6 +13283,7 @@ impl RtDl1mk3Aux17 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95e7d24)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_17_MIN: f32 = 0_f32;
     pub const AUX_17_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Aux_17 from values
@@ -13309,6 +13395,7 @@ impl RtDl1mk3Aux16 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95e7c24)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_16_MIN: f32 = 0_f32;
     pub const AUX_16_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Aux_16 from values
@@ -13420,6 +13507,7 @@ impl RtDl1mk3Aux15 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95e7b24)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_15_MIN: f32 = 0_f32;
     pub const AUX_15_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Aux_15 from values
@@ -13531,6 +13619,7 @@ impl RtDl1mk3Aux14 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95e7a24)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_14_MIN: f32 = 0_f32;
     pub const AUX_14_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Aux_14 from values
@@ -13642,6 +13731,7 @@ impl RtDl1mk3Aux13 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95e7924)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_13_MIN: f32 = 0_f32;
     pub const AUX_13_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Aux_13 from values
@@ -13753,6 +13843,7 @@ impl RtDl1mk3Aux12 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95e7824)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_12_MIN: f32 = 0_f32;
     pub const AUX_12_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Aux_12 from values
@@ -13864,6 +13955,7 @@ impl RtDl1mk3Aux11 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95e7724)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_11_MIN: f32 = 0_f32;
     pub const AUX_11_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Aux_11 from values
@@ -13975,6 +14067,7 @@ impl RtDl1mk3Aux9 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95e7524)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_9_MIN: f32 = 0_f32;
     pub const AUX_9_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Aux_9 from values
@@ -14086,6 +14179,7 @@ impl RtDl1mk3Aux10 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95e7624)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_10_MIN: f32 = 0_f32;
     pub const AUX_10_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Aux_10 from values
@@ -14197,6 +14291,7 @@ impl RtDl1mk3Aux8 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95e7424)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_8_MIN: f32 = 0_f32;
     pub const AUX_8_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Aux_8 from values
@@ -14308,6 +14403,7 @@ impl RtDl1mk3Aux7 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95e7324)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_7_MIN: f32 = 0_f32;
     pub const AUX_7_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Aux_7 from values
@@ -14419,6 +14515,7 @@ impl RtDl1mk3Aux6 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95e7224)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_6_MIN: f32 = 0_f32;
     pub const AUX_6_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Aux_6 from values
@@ -14530,6 +14627,7 @@ impl RtDl1mk3Aux5 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95e7124)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_5_MIN: f32 = 0_f32;
     pub const AUX_5_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Aux_5 from values
@@ -14641,6 +14739,7 @@ impl RtDl1mk3Aux4 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95e7024)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_4_MIN: f32 = 0_f32;
     pub const AUX_4_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Aux_4 from values
@@ -14752,6 +14851,7 @@ impl RtDl1mk3Aux3 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95e6f24)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_3_MIN: f32 = 0_f32;
     pub const AUX_3_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Aux_3 from values
@@ -14863,6 +14963,7 @@ impl RtDl1mk3Aux2 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95e6e24)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_2_MIN: f32 = 0_f32;
     pub const AUX_2_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Aux_2 from values
@@ -14974,6 +15075,7 @@ impl RtDl1mk3Aux1 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95e6d24)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_1_MIN: f32 = 0_f32;
     pub const AUX_1_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Aux_1 from values
@@ -15085,6 +15187,7 @@ impl RtDl1mk3Pressure5 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95a7124)
     });
+    pub const MESSAGE_SIZE: usize = 3;
     pub const PRESSURE_5_MIN: f32 = 0_f32;
     pub const PRESSURE_5_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Pressure_5 from values
@@ -15196,6 +15299,7 @@ impl RtDl1mk3Pressure4 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95a7024)
     });
+    pub const MESSAGE_SIZE: usize = 3;
     pub const PRESSURE_4_MIN: f32 = 0_f32;
     pub const PRESSURE_4_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Pressure_4 from values
@@ -15307,6 +15411,7 @@ impl RtDl1mk3Pressure3 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95a6f24)
     });
+    pub const MESSAGE_SIZE: usize = 3;
     pub const PRESSURE_3_MIN: f32 = 0_f32;
     pub const PRESSURE_3_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Pressure_3 from values
@@ -15418,6 +15523,7 @@ impl RtDl1mk3Pressure2 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95a6e24)
     });
+    pub const MESSAGE_SIZE: usize = 3;
     pub const PRESSURE_2_MIN: f32 = 0_f32;
     pub const PRESSURE_2_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Pressure_2 from values
@@ -15529,6 +15635,7 @@ impl RtDl1mk3Pressure1 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95a6d24)
     });
+    pub const MESSAGE_SIZE: usize = 3;
     pub const PRESSURE_1_MIN: f32 = 0_f32;
     pub const PRESSURE_1_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Pressure_1 from values
@@ -15640,6 +15747,7 @@ impl RtDl1mk3Angle3 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95c6f24)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const ANGLE_3_MIN: f32 = 0_f32;
     pub const ANGLE_3_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Angle_3 from values
@@ -15752,6 +15860,7 @@ impl RtDl1mk3Angle2 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95c6e24)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const ANGLE_2_MIN: f32 = 0_f32;
     pub const ANGLE_2_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Angle_2 from values
@@ -15864,6 +15973,7 @@ impl RtDl1mk3Angle1 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95c6d24)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const ANGLE_1_MIN: f32 = 0_f32;
     pub const ANGLE_1_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Angle_1 from values
@@ -15976,6 +16086,7 @@ impl RtDl1mk3Temp25 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95b8524)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_25_MIN: f32 = 0_f32;
     pub const TEMPERATURE_25_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Temp_25 from values
@@ -16088,6 +16199,7 @@ impl RtDl1mk3Temp24 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95b8424)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_24_MIN: f32 = 0_f32;
     pub const TEMPERATURE_24_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Temp_24 from values
@@ -16200,6 +16312,7 @@ impl RtDl1mk3Temp23 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95b8324)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_23_MIN: f32 = 0_f32;
     pub const TEMPERATURE_23_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Temp_23 from values
@@ -16312,6 +16425,7 @@ impl RtDl1mk3Temp22 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95b8224)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_22_MIN: f32 = 0_f32;
     pub const TEMPERATURE_22_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Temp_22 from values
@@ -16424,6 +16538,7 @@ impl RtDl1mk3Temp21 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95b8124)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_21_MIN: f32 = 0_f32;
     pub const TEMPERATURE_21_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Temp_21 from values
@@ -16536,6 +16651,7 @@ impl RtDl1mk3Temp20 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95b8024)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_20_MIN: f32 = 0_f32;
     pub const TEMPERATURE_20_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Temp_20 from values
@@ -16648,6 +16764,7 @@ impl RtDl1mk3Temp19 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95b7f24)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_19_MIN: f32 = 0_f32;
     pub const TEMPERATURE_19_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Temp_19 from values
@@ -16760,6 +16877,7 @@ impl RtDl1mk3Temp18 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95b7e24)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_18_MIN: f32 = 0_f32;
     pub const TEMPERATURE_18_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Temp_18 from values
@@ -16872,6 +16990,7 @@ impl RtDl1mk3Temp17 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95b7d24)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_17_MIN: f32 = 0_f32;
     pub const TEMPERATURE_17_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Temp_17 from values
@@ -16984,6 +17103,7 @@ impl RtDl1mk3Temp16 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95b7c24)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_16_MIN: f32 = 0_f32;
     pub const TEMPERATURE_16_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Temp_16 from values
@@ -17096,6 +17216,7 @@ impl RtDl1mk3Temp15 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95b7b24)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_15_MIN: f32 = 0_f32;
     pub const TEMPERATURE_15_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Temp_15 from values
@@ -17208,6 +17329,7 @@ impl RtDl1mk3Temp14 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95b7a24)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_14_MIN: f32 = 0_f32;
     pub const TEMPERATURE_14_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Temp_14 from values
@@ -17320,6 +17442,7 @@ impl RtDl1mk3Temp13 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95b7924)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_13_MIN: f32 = 0_f32;
     pub const TEMPERATURE_13_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Temp_13 from values
@@ -17432,6 +17555,7 @@ impl RtDl1mk3Temp12 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95b7824)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_12_MIN: f32 = 0_f32;
     pub const TEMPERATURE_12_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Temp_12 from values
@@ -17544,6 +17668,7 @@ impl RtDl1mk3Temp11 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95b7724)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_11_MIN: f32 = 0_f32;
     pub const TEMPERATURE_11_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Temp_11 from values
@@ -17656,6 +17781,7 @@ impl RtDl1mk3Temp10 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95b7624)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_10_MIN: f32 = 0_f32;
     pub const TEMPERATURE_10_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Temp_10 from values
@@ -17768,6 +17894,7 @@ impl RtDl1mk3Temp9 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95b7524)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_9_MIN: f32 = 0_f32;
     pub const TEMPERATURE_9_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Temp_9 from values
@@ -17880,6 +18007,7 @@ impl RtDl1mk3Temp8 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95b7424)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_8_MIN: f32 = 0_f32;
     pub const TEMPERATURE_8_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Temp_8 from values
@@ -17992,6 +18120,7 @@ impl RtDl1mk3Temp7 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95b7324)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_7_MIN: f32 = 0_f32;
     pub const TEMPERATURE_7_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Temp_7 from values
@@ -18104,6 +18233,7 @@ impl RtDl1mk3Temp6 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95b7224)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_6_MIN: f32 = 0_f32;
     pub const TEMPERATURE_6_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Temp_6 from values
@@ -18216,6 +18346,7 @@ impl RtDl1mk3Temp5 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95b7124)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_5_MIN: f32 = 0_f32;
     pub const TEMPERATURE_5_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Temp_5 from values
@@ -18328,6 +18459,7 @@ impl RtDl1mk3Temp4 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95b7024)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_4_MIN: f32 = 0_f32;
     pub const TEMPERATURE_4_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Temp_4 from values
@@ -18440,6 +18572,7 @@ impl RtDl1mk3Temp3 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95b6f24)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_3_MIN: f32 = 0_f32;
     pub const TEMPERATURE_3_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Temp_3 from values
@@ -18552,6 +18685,7 @@ impl RtDl1mk3Temp2 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95b6e24)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_2_MIN: f32 = 0_f32;
     pub const TEMPERATURE_2_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Temp_2 from values
@@ -18664,6 +18798,7 @@ impl RtDl1mk3Temp1 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x95b6d24)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_1_MIN: f32 = 0_f32;
     pub const TEMPERATURE_1_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Temp_1 from values
@@ -18776,6 +18911,7 @@ impl RtDl1mk3Analog32 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x94c8b24)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_32_MIN: f32 = 0_f32;
     pub const ANALOG_32_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Analog_32 from values
@@ -18887,6 +19023,7 @@ impl RtDl1mk3Analog31 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x94c8a24)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_31_MIN: f32 = 0_f32;
     pub const ANALOG_31_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Analog_31 from values
@@ -18998,6 +19135,7 @@ impl RtDl1mk3Analog30 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x94c8924)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_30_MIN: f32 = 0_f32;
     pub const ANALOG_30_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Analog_30 from values
@@ -19109,6 +19247,7 @@ impl RtDl1mk3Analog29 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x94c8824)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_29_MIN: f32 = 0_f32;
     pub const ANALOG_29_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Analog_29 from values
@@ -19220,6 +19359,7 @@ impl RtDl1mk3Analog28 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x94c8724)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_28_MIN: f32 = 0_f32;
     pub const ANALOG_28_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Analog_28 from values
@@ -19331,6 +19471,7 @@ impl RtDl1mk3Analog27 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x94c8624)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_27_MIN: f32 = 0_f32;
     pub const ANALOG_27_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Analog_27 from values
@@ -19442,6 +19583,7 @@ impl RtDl1mk3Analog26 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x94c8524)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_26_MIN: f32 = 0_f32;
     pub const ANALOG_26_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Analog_26 from values
@@ -19553,6 +19695,7 @@ impl RtDl1mk3Analog25 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x94c8424)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_25_MIN: f32 = 0_f32;
     pub const ANALOG_25_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Analog_25 from values
@@ -19664,6 +19807,7 @@ impl RtDl1mk3Analog15 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x94c7a24)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_15_MIN: f32 = 0_f32;
     pub const ANALOG_15_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Analog_15 from values
@@ -19775,6 +19919,7 @@ impl RtDl1mk3Analog14 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x94c7924)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_14_MIN: f32 = 0_f32;
     pub const ANALOG_14_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Analog_14 from values
@@ -19886,6 +20031,7 @@ impl RtDl1mk3Analog17 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x94c7c24)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_17_MIN: f32 = 0_f32;
     pub const ANALOG_17_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Analog_17 from values
@@ -19997,6 +20143,7 @@ impl RtDl1mk3Analog24 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x94c8324)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_24_MIN: f32 = 0_f32;
     pub const ANALOG_24_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Analog_24 from values
@@ -20108,6 +20255,7 @@ impl RtDl1mk3Analog23 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x94c8224)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_23_MIN: f32 = 0_f32;
     pub const ANALOG_23_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Analog_23 from values
@@ -20219,6 +20367,7 @@ impl RtDl1mk3Analog22 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x94c8124)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_22_MIN: f32 = 0_f32;
     pub const ANALOG_22_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Analog_22 from values
@@ -20330,6 +20479,7 @@ impl RtDl1mk3Analog21 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x94c8024)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_21_MIN: f32 = 0_f32;
     pub const ANALOG_21_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Analog_21 from values
@@ -20441,6 +20591,7 @@ impl RtDl1mk3Analog20 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x94c7f24)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_20_MIN: f32 = 0_f32;
     pub const ANALOG_20_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Analog_20 from values
@@ -20552,6 +20703,7 @@ impl RtDl1mk3Analog19 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x94c7e24)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_19_MIN: f32 = 0_f32;
     pub const ANALOG_19_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Analog_19 from values
@@ -20663,6 +20815,7 @@ impl RtDl1mk3Analog16 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x94c7b24)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_16_MIN: f32 = 0_f32;
     pub const ANALOG_16_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Analog_16 from values
@@ -20774,6 +20927,7 @@ impl RtDl1mk3Analog18 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x94c7d24)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_18_MIN: f32 = 0_f32;
     pub const ANALOG_18_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Analog_18 from values
@@ -20885,6 +21039,7 @@ impl RtDl1mk3Analog12 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x94c7724)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_12_MIN: f32 = 0_f32;
     pub const ANALOG_12_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Analog_12 from values
@@ -20996,6 +21151,7 @@ impl RtDl1mk3Analog11 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x94c7624)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_11_MIN: f32 = 0_f32;
     pub const ANALOG_11_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Analog_11 from values
@@ -21107,6 +21263,7 @@ impl RtDl1mk3Analog10 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x94c7524)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_10_MIN: f32 = 0_f32;
     pub const ANALOG_10_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Analog_10 from values
@@ -21218,6 +21375,7 @@ impl RtDl1mk3Analog9 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x94c7424)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_9_MIN: f32 = 0_f32;
     pub const ANALOG_9_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Analog_9 from values
@@ -21329,6 +21487,7 @@ impl RtDl1mk3Analog8 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x94c7324)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_8_MIN: f32 = 0_f32;
     pub const ANALOG_8_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Analog_8 from values
@@ -21440,6 +21599,7 @@ impl RtDl1mk3Analog7 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x94c7224)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_7_MIN: f32 = 0_f32;
     pub const ANALOG_7_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Analog_7 from values
@@ -21551,6 +21711,7 @@ impl RtDl1mk3Analog6 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x94c7124)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_6_MIN: f32 = 0_f32;
     pub const ANALOG_6_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Analog_6 from values
@@ -21662,6 +21823,7 @@ impl RtDl1mk3Analog5 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x94c7024)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_5_MIN: f32 = 0_f32;
     pub const ANALOG_5_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Analog_5 from values
@@ -21773,6 +21935,7 @@ impl RtDl1mk3Analog4 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x94c6f24)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_4_MIN: f32 = 0_f32;
     pub const ANALOG_4_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Analog_4 from values
@@ -21884,6 +22047,7 @@ impl RtDl1mk3Analog3 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x94c6e24)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_3_MIN: f32 = 0_f32;
     pub const ANALOG_3_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Analog_3 from values
@@ -21995,6 +22159,7 @@ impl RtDl1mk3Analog2 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x94c6d24)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_2_MIN: f32 = 0_f32;
     pub const ANALOG_2_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Analog_2 from values
@@ -22106,6 +22271,7 @@ impl RtDl1mk3Analog1 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x94c6c24)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_1_MIN: f32 = 0_f32;
     pub const ANALOG_1_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Analog_1 from values
@@ -22217,6 +22383,7 @@ impl RtDl1mk3Accel {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x94a6c24)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const ACCEL_VERTICAL_MIN: f32 = -65_f32;
     pub const ACCEL_VERTICAL_MAX: f32 = 65_f32;
     pub const ACCEL_LATERAL_MIN: f32 = -65_f32;
@@ -22578,6 +22745,7 @@ impl RtSbInsVpt4VelNed2 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9599e22)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const VIRTUAL_4_SLIP_MIN: f32 = -180_f32;
     pub const VIRTUAL_4_SLIP_MAX: f32 = 180_f32;
     pub const VIRTUAL_4_HEADING_MIN: f32 = -180_f32;
@@ -22786,6 +22954,7 @@ impl RtSbInsVpt4VelNed1 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9599d22)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const VIRTUAL_4_VEL_NED_E_MIN: f32 = -838_f32;
     pub const VIRTUAL_4_VEL_NED_E_MAX: f32 = 838_f32;
     pub const VIRTUAL_4_VEL_NED_N_MIN: f32 = -838_f32;
@@ -22948,6 +23117,7 @@ impl RtSbInsVpt4Offset {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9599c22)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const VIRTUAL_4_OFFSET_Z_MIN: f32 = -32.768_f32;
     pub const VIRTUAL_4_OFFSET_Z_MAX: f32 = 32.767_f32;
     pub const VIRTUAL_4_OFFSET_Y_MIN: f32 = -32.768_f32;
@@ -23156,6 +23326,7 @@ impl RtSbInsVpt3VelNed2 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9598e22)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const VIRTUAL_3_SLIP_MIN: f32 = -180_f32;
     pub const VIRTUAL_3_SLIP_MAX: f32 = 180_f32;
     pub const VIRTUAL_3_HEADING_MIN: f32 = -180_f32;
@@ -23364,6 +23535,7 @@ impl RtSbInsVpt3VelNed1 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9598d22)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const VIRTUAL_3_VEL_NED_E_MIN: f32 = -838_f32;
     pub const VIRTUAL_3_VEL_NED_E_MAX: f32 = 838_f32;
     pub const VIRTUAL_3_VEL_NED_N_MIN: f32 = -838_f32;
@@ -23526,6 +23698,7 @@ impl RtSbInsVpt3Offset {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9598c22)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const VIRTUAL_3_OFFSET_Z_MIN: f32 = -32.768_f32;
     pub const VIRTUAL_3_OFFSET_Z_MAX: f32 = 32.767_f32;
     pub const VIRTUAL_3_OFFSET_Y_MIN: f32 = -32.768_f32;
@@ -23734,6 +23907,7 @@ impl RtSbInsVpt2VelNed2 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9597e22)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const VIRTUAL_2_SLIP_MIN: f32 = -180_f32;
     pub const VIRTUAL_2_SLIP_MAX: f32 = 180_f32;
     pub const VIRTUAL_2_HEADING_MIN: f32 = -180_f32;
@@ -23942,6 +24116,7 @@ impl RtSbInsVpt2VelNed1 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9597d22)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const VIRTUAL_2_VEL_NED_E_MIN: f32 = -838_f32;
     pub const VIRTUAL_2_VEL_NED_E_MAX: f32 = 838_f32;
     pub const VIRTUAL_2_VEL_NED_N_MIN: f32 = -838_f32;
@@ -24104,6 +24279,7 @@ impl RtSbInsVpt2Offset {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9597c22)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const VIRTUAL_2_OFFSET_Z_MIN: f32 = -32.768_f32;
     pub const VIRTUAL_2_OFFSET_Z_MAX: f32 = 32.767_f32;
     pub const VIRTUAL_2_OFFSET_Y_MIN: f32 = -32.768_f32;
@@ -24312,6 +24488,7 @@ impl RtSbInsVpt1VelNed2 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9596e22)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const VIRTUAL_1_SLIP_MIN: f32 = -180_f32;
     pub const VIRTUAL_1_SLIP_MAX: f32 = 180_f32;
     pub const VIRTUAL_1_HEADING_MIN: f32 = -180_f32;
@@ -24520,6 +24697,7 @@ impl RtSbInsVpt1VelNed1 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9596d22)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const VIRTUAL_1_VEL_NED_E_MIN: f32 = -838_f32;
     pub const VIRTUAL_1_VEL_NED_E_MAX: f32 = 838_f32;
     pub const VIRTUAL_1_VEL_NED_N_MIN: f32 = -838_f32;
@@ -24682,6 +24860,7 @@ impl RtSbInsVpt1Offset {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9596c22)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const VIRTUAL_1_OFFSET_Z_MIN: f32 = -32.768_f32;
     pub const VIRTUAL_1_OFFSET_Z_MAX: f32 = 32.767_f32;
     pub const VIRTUAL_1_OFFSET_Y_MIN: f32 = -32.768_f32;
@@ -24890,6 +25069,7 @@ impl RtSbInsSlip {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9588222)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const INS_SQUAT_MIN: f32 = -360_f32;
     pub const INS_SQUAT_MAX: f32 = 360_f32;
     pub const ACCURACY_INS_SQUAT_MIN: u8 = 0_u8;
@@ -25212,6 +25392,7 @@ impl RtSbInsVelEcef2 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9587f22)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const INS_VEL_ECEF_Z_MIN: f32 = -838_f32;
     pub const INS_VEL_ECEF_Z_MAX: f32 = 838_f32;
     pub const INS_VEL_ECEF_Y_MIN: f32 = -838_f32;
@@ -25442,6 +25623,7 @@ impl RtSbInsVelEcef1 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9587e22)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const INS_VEL_ECEF_X_MIN: f32 = -838_f32;
     pub const INS_VEL_ECEF_X_MAX: f32 = 838_f32;
     pub const ACCURACY_INS_VEL_ECEF_Z_MIN: u8 = 0_u8;
@@ -25730,6 +25912,7 @@ impl RtSbInsVelNed2 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9587d22)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const INS_VEL_NED_D_MIN: f32 = -838_f32;
     pub const INS_VEL_NED_D_MAX: f32 = 838_f32;
     pub const ACCURACY_INS_VEL_D_MIN: u8 = 0_u8;
@@ -25926,6 +26109,7 @@ impl RtSbInsVelNed1 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9587c22)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const INS_VEL_NED_E_MIN: f32 = -838_f32;
     pub const INS_VEL_NED_E_MAX: f32 = 838_f32;
     pub const INS_VEL_NED_N_MIN: f32 = -838_f32;
@@ -26202,6 +26386,7 @@ impl RtSbInsPosEcef2 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9587122)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const INS_POS_ECEF_Z_MIN: f32 = -10000000_f32;
     pub const INS_POS_ECEF_Z_MAX: f32 = 10000000_f32;
     pub const INS_POS_ECEF_Y_MIN: f32 = -10000000_f32;
@@ -26361,6 +26546,7 @@ impl RtSbInsPosEcef1 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9587022)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const INS_POS_ECEF_X_MIN: f32 = -10000000_f32;
     pub const INS_POS_ECEF_X_MAX: f32 = 10000000_f32;
     pub const ACCURACY_INS_POS_ECEF_Z_MIN: u8 = 0_u8;
@@ -26723,6 +26909,7 @@ impl RtSbInsPosLlh2 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9586f22)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const INS_POS_LLH_ALTITUDE_MIN: f32 = -1000_f32;
     pub const INS_POS_LLH_ALTITUDE_MAX: f32 = 100000_f32;
     pub const INS_POS_LLH_LONGITUDE_MIN: f32 = -180_f32;
@@ -26881,6 +27068,7 @@ impl RtSbInsPosLlh1 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9586e22)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const INS_POS_LLH_LATITUDE_MIN: f32 = -90_f32;
     pub const INS_POS_LLH_LATITUDE_MAX: f32 = 90_f32;
     pub const ACCURACY_INS_POS_LLH_ALTITUDE_MIN: u8 = 0_u8;
@@ -27259,6 +27447,7 @@ impl RtSbInsHeadingGradient2 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9588122)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const INS_GRADIENT_MIN: f32 = -90_f32;
     pub const INS_GRADIENT_MAX: f32 = 90_f32;
     pub const ACCURACY_INS_GRADIENT_MIN: u8 = 0_u8;
@@ -27584,6 +27773,7 @@ impl RtSbInsHeadingGradient {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9588022)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const INS_GRADIENT_MIN: f32 = -90_f32;
     pub const INS_GRADIENT_MAX: f32 = 90_f32;
     pub const ACCURACY_INS_GRADIENT_MIN: u8 = 0_u8;
@@ -27910,6 +28100,7 @@ impl RtSbInsStatus {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9586c22)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const INS_STATUS_MIN: u8 = 0_u8;
     pub const INS_STATUS_MAX: u8 = 255_u8;
     /// Construct new RT_SB_INS_Status from values
@@ -28057,6 +28248,7 @@ impl RtSbInsAttitude {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9586d22)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const ATTITUDE_ROLL_MIN: f32 = -360_f32;
     pub const ATTITUDE_ROLL_MAX: f32 = 360_f32;
     pub const ATTITUDE_PITCH_MIN: f32 = -360_f32;
@@ -28491,6 +28683,7 @@ impl RtSbOutputStatus {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9576d22)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const GPS_TIME_MIN: f32 = 0_f32;
     pub const GPS_TIME_MAX: f32 = 604800_f32;
     /// Construct new RT_SB_Output_Status from values
@@ -29165,6 +29358,7 @@ impl RtSbGpsHeadingGradient2 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9568222)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const GPS_GRADIENT_MIN: f32 = -90_f32;
     pub const GPS_GRADIENT_MAX: f32 = 90_f32;
     pub const ACCURACY_GPS_GRADIENT_MIN: u8 = 0_u8;
@@ -29492,6 +29686,7 @@ impl RtSbCumulativeDistance2 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x94a8d22)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const CUMULATIVE_DISTANCE_MIN: f32 = 0_f32;
     pub const CUMULATIVE_DISTANCE_MAX: f32 = 4294967_f32;
     pub const CUMULATIVE_TIME_MIN: f32 = 0_f32;
@@ -29721,6 +29916,7 @@ impl RtSbCumulativeDistance1 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x94a8c22)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const CUMULATIVE_DISTANCE_MIN: f32 = 0_f32;
     pub const CUMULATIVE_DISTANCE_MAX: f32 = 4294967_f32;
     pub const CUMULATIVE_TIME_MIN: f32 = 0_f32;
@@ -29948,6 +30144,7 @@ impl RtSbTriggerTimestamp {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9576c22)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const GPS_HIGH_RESOLUTION_TIME_MIN: f32 = 0_f32;
     pub const GPS_HIGH_RESOLUTION_TIME_MAX: f32 = 604800_f32;
     pub const TRIGGER_NUMBER_MIN: u8 = 0_u8;
@@ -30262,6 +30459,7 @@ impl RtImu06GyroRates {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x94a6d21)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const GYRO_RATE_ROLL_MIN: f32 = -327_f32;
     pub const GYRO_RATE_ROLL_MAX: f32 = 327_f32;
     pub const GYRO_RATE_PITCH_MIN: f32 = -327_f32;
@@ -30620,6 +30818,7 @@ impl RtImu06Accel {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x94a6c21)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const ACCEL_VERTICAL_MIN: f32 = -65_f32;
     pub const ACCEL_VERTICAL_MAX: f32 = 65_f32;
     pub const ACCEL_LATERAL_MIN: f32 = -65_f32;
@@ -30981,6 +31180,7 @@ impl RtSbSpeed {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x94a7c22)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const SPEED_MIN: f32 = -20000_f32;
     pub const SPEED_MAX: f32 = 20000_f32;
     pub const ACCURACY_SPEED_MIN: u8 = 0_u8;
@@ -31177,6 +31377,7 @@ impl RtSbRtkSlip {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9568d22)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const RTK_BASELINE_MIN: u16 = 0_u16;
     pub const RTK_BASELINE_MAX: u16 = 65535_u16;
     pub const RTK_SQUAT_MIN: f32 = -360_f32;
@@ -31535,6 +31736,7 @@ impl RtSbRtkAttitude {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9568c22)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const RTK_ATTITUDE_ROLL_MIN: f32 = -90_f32;
     pub const RTK_ATTITUDE_ROLL_MAX: f32 = 90_f32;
     pub const RTK_ATTITUDE_PITCH_MIN: f32 = -90_f32;
@@ -31893,6 +32095,7 @@ impl RtSbGpsMcycleLean {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9569c22)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const GPS_MCYCLE_LEAN_ANGLE_MIN: f32 = -90_f32;
     pub const GPS_MCYCLE_LEAN_ANGLE_MAX: f32 = 90_f32;
     pub const GPS_LATERAL_ACCEL_MIN: f32 = -65_f32;
@@ -32174,6 +32377,7 @@ impl RtSbGpsStatus {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9566c22)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const RTK_STATUS_MIN: u8 = 0_u8;
     pub const RTK_STATUS_MAX: u8 = 255_u8;
     pub const GPS_N_SV_RTK_MIN: u8 = 0_u8;
@@ -32717,6 +32921,7 @@ impl RtSbGpsPosEcef2 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9567122)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const GPS_POS_ECEF_Z_MIN: f32 = -10000000_f32;
     pub const GPS_POS_ECEF_Z_MAX: f32 = 10000000_f32;
     pub const GPS_POS_ECEF_Y_MIN: f32 = -10000000_f32;
@@ -32876,6 +33081,7 @@ impl RtSbGpsPosEcef1 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9567022)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const GPS_POS_ECEF_X_MIN: f32 = -10000000_f32;
     pub const GPS_POS_ECEF_X_MAX: f32 = 10000000_f32;
     pub const ACCURACY_GPS_POS_ECEF_Z_MIN: u8 = 0_u8;
@@ -33238,6 +33444,7 @@ impl RtSbGpsPosLlh2 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9566f22)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const GPS_POS_LLH_ALTITUDE_MIN: f32 = -1000_f32;
     pub const GPS_POS_LLH_ALTITUDE_MAX: f32 = 100000_f32;
     pub const GPS_POS_LLH_LONGITUDE_MIN: f32 = -180_f32;
@@ -33396,6 +33603,7 @@ impl RtSbGpsPosLlh1 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9566e22)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const GPS_POS_LLH_LATITUDE_MIN: f32 = -90_f32;
     pub const GPS_POS_LLH_LATITUDE_MAX: f32 = 90_f32;
     pub const ACCURACY_GPS_POS_LLH_ALTITUDE_MIN: u8 = 0_u8;
@@ -33774,6 +33982,7 @@ impl RtSbGpsHeadingGradient {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9568122)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const GPS_GRADIENT_MIN: f32 = -90_f32;
     pub const GPS_GRADIENT_MAX: f32 = 90_f32;
     pub const ACCURACY_GPS_GRADIENT_MIN: u8 = 0_u8;
@@ -34100,6 +34309,7 @@ impl RtSbGpsVelEcef2 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9568022)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const GPS_VEL_ECEF_Z_MIN: f32 = -838_f32;
     pub const GPS_VEL_ECEF_Z_MAX: f32 = 838_f32;
     pub const GPS_VEL_ECEF_Y_MIN: f32 = -838_f32;
@@ -34330,6 +34540,7 @@ impl RtSbGpsVelEcef1 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9567f22)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const GPS_VEL_ECEF_X_MIN: f32 = -838_f32;
     pub const GPS_VEL_ECEF_X_MAX: f32 = 838_f32;
     pub const ACCURACY_GPS_VEL_ECEF_Z_MIN: u8 = 0_u8;
@@ -34618,6 +34829,7 @@ impl RtSbGpsVelNed2 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9567e22)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const GPS_VEL_NED_D_MIN: f32 = -838_f32;
     pub const GPS_VEL_NED_D_MAX: f32 = 838_f32;
     pub const ACCURACY_GPS_VEL_D_MIN: u8 = 0_u8;
@@ -34814,6 +35026,7 @@ impl RtSbGpsVelNed1 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9567d22)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const GPS_VEL_NED_E_MIN: f32 = -838_f32;
     pub const GPS_VEL_NED_E_MAX: f32 = 838_f32;
     pub const GPS_VEL_NED_N_MIN: f32 = -838_f32;
@@ -35090,6 +35303,7 @@ impl RtSbGpsSpeed {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9567c22)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const GPS_SPEED_3D_MIN: f32 = 0_f32;
     pub const GPS_SPEED_3D_MAX: f32 = 1675_f32;
     pub const GPS_SPEED_2D_MIN: f32 = 0_f32;
@@ -35366,6 +35580,7 @@ impl RtSbGpsTime {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x9566d22)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const GPS_WEEK_MIN: u16 = 0_u16;
     pub const GPS_WEEK_MAX: u16 = 65535_u16;
     pub const GPS_TIME_MIN: f32 = 0_f32;
@@ -35641,6 +35856,7 @@ impl RtSbAccel {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x94a6c22)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const ACCEL_VERTICAL_MIN: f32 = -65_f32;
     pub const ACCEL_VERTICAL_MAX: f32 = 65_f32;
     pub const ACCEL_LATERAL_MIN: f32 = -65_f32;
@@ -36002,6 +36218,7 @@ impl RtSbGyroRates {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x94a6d22)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const GYRO_RATE_ROLL_MIN: f32 = -327_f32;
     pub const GYRO_RATE_ROLL_MAX: f32 = 327_f32;
     pub const GYRO_RATE_PITCH_MIN: f32 = -327_f32;

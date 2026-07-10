@@ -67,6 +67,7 @@ impl Control {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
         StandardId::new_unchecked(0x1)
     });
+    pub const MESSAGE_SIZE: usize = 7;
     pub const STATE_MIN: u8 = 0_u8;
     pub const STATE_MAX: u8 = 100_u8;
     /// Construct new CONTROL from values

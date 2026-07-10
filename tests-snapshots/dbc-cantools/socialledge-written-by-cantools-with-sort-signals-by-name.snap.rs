@@ -87,6 +87,8 @@ impl DriverHeartbeat {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
         StandardId::new_unchecked(0x64)
     });
+    pub const MESSAGE_SIZE: usize = 1;
+    pub const MESSAGE_CYCLE_TIME: Duration = Duration::from_millis(1000);
     pub const DRIVER_HEARTBEAT_CMD_MIN: u8 = 0_u8;
     pub const DRIVER_HEARTBEAT_CMD_MAX: u8 = 0_u8;
     /// Construct new DRIVER_HEARTBEAT from values
@@ -239,6 +241,8 @@ impl IoDebug {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
         StandardId::new_unchecked(0x1f4)
     });
+    pub const MESSAGE_SIZE: usize = 4;
+    pub const MESSAGE_CYCLE_TIME: Duration = Duration::from_millis(100);
     pub const IO_DEBUG_TEST_ENUM_MIN: u8 = 0_u8;
     pub const IO_DEBUG_TEST_ENUM_MAX: u8 = 0_u8;
     pub const IO_DEBUG_TEST_FLOAT_MIN: f32 = 0_f32;
@@ -523,6 +527,8 @@ impl MotorCmd {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
         StandardId::new_unchecked(0x65)
     });
+    pub const MESSAGE_SIZE: usize = 1;
+    pub const MESSAGE_CYCLE_TIME: Duration = Duration::from_millis(100);
     pub const MOTOR_CMD_DRIVE_MIN: u8 = 0_u8;
     pub const MOTOR_CMD_DRIVE_MAX: u8 = 9_u8;
     pub const MOTOR_CMD_STEER_MIN: i8 = -5_i8;
@@ -685,6 +691,8 @@ impl MotorStatus {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
         StandardId::new_unchecked(0x190)
     });
+    pub const MESSAGE_SIZE: usize = 3;
+    pub const MESSAGE_CYCLE_TIME: Duration = Duration::from_millis(100);
     pub const MOTOR_STATUS_SPEED_KPH_MIN: f32 = 0_f32;
     pub const MOTOR_STATUS_SPEED_KPH_MAX: f32 = 0_f32;
     /// Construct new MOTOR_STATUS from values
@@ -831,6 +839,8 @@ impl SensorSonars {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
         StandardId::new_unchecked(0xc8)
     });
+    pub const MESSAGE_SIZE: usize = 8;
+    pub const MESSAGE_CYCLE_TIME: Duration = Duration::from_millis(100);
     pub const SENSOR_SONARS_ERR_COUNT_MIN: u16 = 0_u16;
     pub const SENSOR_SONARS_ERR_COUNT_MAX: u16 = 0_u16;
     pub const SENSOR_SONARS_LEFT_MIN: f32 = 0_f32;

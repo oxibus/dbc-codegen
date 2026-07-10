@@ -77,6 +77,7 @@ impl Shared {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0xc02fefe)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const S2_MIN: i8 = 0_i8;
     pub const S2_MAX: i8 = 0_i8;
     pub const S1_MIN: i8 = 0_i8;
@@ -373,6 +374,7 @@ impl Normal {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0xc01fefe)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const S2_MIN: i8 = 0_i8;
     pub const S2_MAX: i8 = 0_i8;
     pub const S1_MIN: i8 = 0_i8;
@@ -669,6 +671,7 @@ impl Extended {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0xc00fefe)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const S8_MIN: i8 = 0_i8;
     pub const S8_MAX: i8 = 0_i8;
     pub const S7_MIN: i32 = 0_i32;
@@ -1266,6 +1269,7 @@ impl ExtendedTypes {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0xc03fefe)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const S9_MIN: i32 = -1.34_i32;
     pub const S9_MAX: i32 = 1235_i32;
     pub const S10_MIN: i32 = -340000000000000000000000000000000000000_i32;

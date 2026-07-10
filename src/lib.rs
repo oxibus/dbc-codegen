@@ -351,6 +351,11 @@ impl Config<'_> {
             )?;
             writeln!(w)?;
 
+            writeln!(w, "pub const MESSAGE_SIZE: usize = {};", msg.size)?;
+            writeln!(w)?;
+
+            Self::render_cycle_time(&mut w, msg, dbc)?;
+
             for signal in &msg.signals {
                 let typ = ValType::from_signal(signal);
                 if typ != ValType::Bool {
@@ -650,6 +655,19 @@ impl Config<'_> {
         }
         writeln!(w, "}};")?;
         writeln!(w)?;
+        Ok(())
+    }
+
+    /// Emit the cycle time as a constant for messages that have an assigned
+    /// `GenMsgCycleTime` (`BA_`) attribute.
+    fn render_cycle_time(w: &mut impl Write, msg: &Message, dbc: &Dbc) -> Result<()> {
+        let Some(ms) = message_cycle_time_ms(dbc, msg.id) else {
+            return Ok(());
+        };
+        writeln!(
+            w,
+            "pub const MESSAGE_CYCLE_TIME: Duration = Duration::from_millis({ms});"
+        )?;
         Ok(())
     }
 
@@ -1604,6 +1622,16 @@ fn attr_value_literal(value: &AttributeValue) -> String {
         AttributeValue::Int(v) => v.to_string(),
         AttributeValue::Double(v) => format!("{v:?}"),
         AttributeValue::String(v) => format!("{v:?}"),
+    }
+}
+
+/// Cycle time in milliseconds from an assigned `GenMsgCycleTime` (`BA_`)
+/// attribute, if present and non-negative.
+fn message_cycle_time_ms(dbc: &Dbc, id: MessageId) -> Option<u64> {
+    match dbc.message_attribute(id, "GenMsgCycleTime")? {
+        AttributeValue::Uint(v) => Some(*v),
+        AttributeValue::Int(v) => u64::try_from(*v).ok(),
+        AttributeValue::Double(_) | AttributeValue::String(_) => None,
     }
 }
 

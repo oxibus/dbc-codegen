@@ -107,6 +107,7 @@ impl MsgLongName5678912345678912 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
         StandardId::new_unchecked(0x55)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const RX_TWICE_11111111111111111111111_MIN: i8 = 0_i8;
     pub const RX_TWICE_11111111111111111111111_MAX: i8 = 0_i8;
     pub const RX_TWICE_SHORT_MIN: i32 = 0_i32;
@@ -328,6 +329,7 @@ impl TxTwice {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
         StandardId::new_unchecked(0x6)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const RX_TWICE_LONG_YYYYYYYYYYYYYYYYYY_MIN: i8 = 0_i8;
     pub const RX_TWICE_LONG_YYYYYYYYYYYYYYYYYY_MAX: i8 = 0_i8;
     pub const RX_TWICE_SHORT_MIN: i8 = 0_i8;
@@ -498,6 +500,7 @@ impl RxTx1 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
         StandardId::new_unchecked(0x5)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const SIG_USED_TWICE_EFGH_ABCDEFG_0000_MIN: i16 = 0_i16;
     pub const SIG_USED_TWICE_EFGH_ABCDEFG_0000_MAX: i16 = 0_i16;
     /// Construct new RX_TX_1 from values
@@ -617,6 +620,7 @@ impl MsgCaseTest {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
         StandardId::new_unchecked(0x4)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     /// Construct new MSG_CASE_TEST from values
     pub fn new() -> Result<Self, CanError> {
         let res = Self { raw: [0u8; 8] };
@@ -686,6 +690,7 @@ impl MsgCaseTest {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
         StandardId::new_unchecked(0x3)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     /// Construct new msg_case_test from values
     pub fn new() -> Result<Self, CanError> {
         let res = Self { raw: [0u8; 8] };
@@ -755,6 +760,7 @@ impl MsgWithValueTableSigs {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
         StandardId::new_unchecked(0x2)
     });
+    pub const MESSAGE_SIZE: usize = 3;
     pub const SIG_WITH_SHORT_VAL_TABLE_MIN: i8 = 0_i8;
     pub const SIG_WITH_SHORT_VAL_TABLE_MAX: i8 = 0_i8;
     pub const SIG_WITH_LONG_VAL_TABLE_2_MIN: i8 = 0_i8;
@@ -1125,6 +1131,7 @@ impl MsgLongName5678912345670000 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
         StandardId::new_unchecked(0x1)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const RX_TWICE_11111111111111111111111_MIN: i8 = 0_i8;
     pub const RX_TWICE_11111111111111111111111_MAX: i8 = 0_i8;
     pub const SIG_USED_TWICE_EFGH_ABCDEFG_0001_MIN: i8 = 0_i8;
@@ -1297,6 +1304,7 @@ impl MsgLongName5678912345670001 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
         StandardId::new_unchecked(0x0)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const RX_TWICE_SHORT_MIN: i8 = 0_i8;
     pub const RX_TWICE_SHORT_MAX: i8 = 0_i8;
     pub const SIG_USED_TWICE_EFGH_ABCDEFG_0002_MIN: i8 = 0_i8;

@@ -70,6 +70,7 @@ impl ExtMuxIndepMultiplexors {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x2)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const MUXED_B_1_MIN: i8 = 0_i8;
     pub const MUXED_B_1_MAX: i8 = 0_i8;
     pub const MUXED_B_2_MIN: i8 = 0_i8;

@@ -72,6 +72,7 @@ impl Message1 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x123456)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const MULTIPLEXOR_MIN: u8 = 0_u8;
     pub const MULTIPLEXOR_MAX: u8 = 0_u8;
     /// Construct new Message1 from values
@@ -673,6 +674,7 @@ impl Message2 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x123457)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const MULTIPLEXOR_MIN: u8 = 0_u8;
     pub const MULTIPLEXOR_MAX: u8 = 0_u8;
     /// Construct new Message2 from values
@@ -1246,6 +1248,7 @@ impl Message3 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x123458)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const MULTIPLEXOR_MIN: u8 = 0_u8;
     pub const MULTIPLEXOR_MAX: u8 = 0_u8;
     /// Construct new Message3 from values

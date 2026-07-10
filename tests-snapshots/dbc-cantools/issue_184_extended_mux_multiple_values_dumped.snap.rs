@@ -68,6 +68,7 @@ impl ExtMuxMultipleValues {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x1)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const MUXED_0_3_4_5_MIN: i8 = 0_i8;
     pub const MUXED_0_3_4_5_MAX: i8 = 0_i8;
     pub const MUXED_1_MIN: i8 = 0_i8;

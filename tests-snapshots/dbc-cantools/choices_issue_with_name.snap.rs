@@ -68,6 +68,7 @@ impl TestMessage {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x90000)
     });
+    pub const MESSAGE_SIZE: usize = 1;
     /// Construct new TestMessage from values
     pub fn new(signal_with_choices: bool) -> Result<Self, CanError> {
         let mut res = Self { raw: [0u8; 1] };

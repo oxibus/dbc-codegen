@@ -69,6 +69,7 @@ impl MsgNowShort {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
         StandardId::new_unchecked(0x1)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const SIG_NOW_SHORT_MIN: u8 = 0_u8;
     pub const SIG_NOW_SHORT_MAX: u8 = 0_u8;
     /// Construct new msg_now_short from values

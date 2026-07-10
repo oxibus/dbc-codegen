@@ -70,6 +70,8 @@ impl Foo {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
         StandardId::new_unchecked(0x1)
     });
+    pub const MESSAGE_SIZE: usize = 8;
+    pub const MESSAGE_CYCLE_TIME: Duration = Duration::from_millis(200);
     pub const FOO_MIN: f32 = 229.53_f32;
     pub const FOO_MAX: f32 = 270.47_f32;
     /// Construct new Foo from values
@@ -183,6 +185,7 @@ impl Bar {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
         StandardId::new_unchecked(0x2)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const FOO_MIN: f32 = 229.53_f32;
     pub const FOO_MAX: f32 = 270.47_f32;
     /// Construct new Bar from values
