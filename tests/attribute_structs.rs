@@ -23,16 +23,22 @@ BO_ 258 BeProtected: 8 ECU1
 
 BA_DEF_ BO_  "SC_Message" ENUM  "0","1","2";
 BA_DEF_ BO_  "SCP_FreshnessValueId" INT 0 65535;
+BA_DEF_ BO_  "TxOffset" INT -128 127;
+BA_DEF_ BO_  "Gain" FLOAT 0 10;
 BA_DEF_ SG_  "E2EDataId" INT 0 65535;
 BA_DEF_ SG_  "E2EDataLength" INT 0 65535;
 BA_DEF_ SG_  "E2EProfile" STRING ;
 BA_DEF_DEF_  "SC_Message" "0";
 BA_DEF_DEF_  "SCP_FreshnessValueId" 0;
+BA_DEF_DEF_  "TxOffset" 0;
+BA_DEF_DEF_  "Gain" 0;
 BA_DEF_DEF_  "E2EDataId" 0;
 BA_DEF_DEF_  "E2EDataLength" 0;
 BA_DEF_DEF_  "E2EProfile" "none";
 BA_ "SC_Message" BO_ 256 1;
 BA_ "SCP_FreshnessValueId" BO_ 256 1002;
+BA_ "TxOffset" BO_ 256 -7;
+BA_ "Gain" BO_ 256 2.5;
 BA_ "E2EDataId" SG_ 256 TestSig 373;
 BA_ "E2EDataLength" SG_ 256 TestSig 48;
 BA_ "E2EDataId" SG_ 258 BeSig 500;
@@ -81,6 +87,43 @@ const SEC_OC: AttributeStruct = AttributeStruct {
         AttributeField {
             name: "sc_message",
             source: FieldSource::Attr("SC_Message"),
+        },
+    ],
+};
+
+const LAYOUT: AttributeStruct = AttributeStruct {
+    type_path: "layout::SignalLayout",
+    const_name: "LAYOUT",
+    scope: AttributeScope::Signal,
+    require: "E2EDataId",
+    fields: &[
+        AttributeField {
+            name: "start_bit",
+            source: FieldSource::StartBit,
+        },
+        AttributeField {
+            name: "bit_width",
+            source: FieldSource::BitWidth,
+        },
+        AttributeField {
+            name: "message_size",
+            source: FieldSource::MessageSize,
+        },
+        AttributeField {
+            name: "tx_offset",
+            source: FieldSource::MessageAttr("TxOffset"),
+        },
+        AttributeField {
+            name: "gain",
+            source: FieldSource::MessageAttr("Gain"),
+        },
+        AttributeField {
+            name: "version",
+            source: FieldSource::Int(42),
+        },
+        AttributeField {
+            name: "label",
+            source: FieldSource::Str("hello"),
         },
     ],
 };
@@ -149,6 +192,26 @@ fn unprotected_message_and_signal_get_no_const() {
     let out = generate(&[E2E, SEC_OC]);
     assert!(!out.contains("OTHER_SIG_E2E"), "{out}");
     assert_eq!(out.matches("pub const SEC_OC").count(), 1, "{out}");
+}
+
+#[test]
+fn layout_and_literal_sources_resolve() {
+    let out = generate(&[LAYOUT]);
+    assert!(
+        out.contains("pub const TEST_SIG_LAYOUT: layout::SignalLayout"),
+        "{out}"
+    );
+    // TestSig is `16|8@1+` on an 8-byte message.
+    assert!(out.contains("start_bit: 16"), "{out}");
+    assert!(out.contains("bit_width: 8"), "{out}");
+    assert!(out.contains("message_size: 8"), "{out}");
+    // Message-level attributes pulled into a signal-scoped struct, covering the
+    // signed-integer and floating-point attribute-value shapes.
+    assert!(out.contains("tx_offset: -7"), "{out}");
+    assert!(out.contains("gain: 2.5"), "{out}");
+    // Literal sources.
+    assert!(out.contains("version: 42"), "{out}");
+    assert!(out.contains(r#"label: "hello""#), "{out}");
 }
 
 #[test]
