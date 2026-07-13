@@ -64,7 +64,7 @@ fn main() {
         .generate()
         .expect("generate");
 
-    // Print just the associated consts to keep the output readable.
+    // Print only the associated consts to keep the output readable.
     for line in code.lines() {
         let t = line.trim_start();
         if t.starts_with("pub const")

@@ -114,9 +114,9 @@ Config::builder()
 
 ### Attribute-driven constants
 
-Many DBCs contain additional metadata in `BA_` attributes, e.g. parameters describing an AUTOSAR E2E protection scheme. `attribute_structs` lets you expose these as typed constants in the generated message types.
+Many DBCs contain additional metadata in `BA_` attributes - for example, parameters describing an AUTOSAR E2E protection scheme for specific CAN signals. `attribute_structs` lets you expose this metadata as typed constants in the generated message types.
 
-You declare a struct that your own crate owns and map each field to a DBC attribute, derived signal, or a literal:
+You can declare a struct in your own crate and map each field to a DBC attribute, derived signal, or a literal:
 
 ```rust,no_run
 use dbc_codegen::{AttributeField, AttributeScope, AttributeStruct, Config, FieldSource};

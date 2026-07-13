@@ -96,45 +96,15 @@ pub struct Config<'a> {
     #[builder(default)]
     pub allow_dead_code: bool,
 
-    /// Optional: User-defined structs populated from DBC attributes and message layout.
+    /// Optional: User-defined structs populated from DBC attributes.
     /// These are emitted as associated constants in the generated message types.
     /// Default: empty.
     #[builder(default)]
     pub attribute_structs: &'a [AttributeStruct<'a>],
 }
 
-/// A user-defined struct that [`Config`] fills from DBC data and emits as an
+/// A user-defined struct that [`Config`] fills from DBC attributes and emits as an
 /// associated constant in the generated message type.
-///
-/// # Example
-///
-/// Given a consumer type `data_protection::E2EDataIdInfo { data_id, start_byte,
-/// width_bit }`, this declaration:
-///
-/// ```
-/// use dbc_codegen::{AttributeField, AttributeScope, AttributeStruct, FieldSource};
-///
-/// const E2E: AttributeStruct = AttributeStruct {
-///     type_path: "data_protection::E2EDataIdInfo",
-///     const_name: "E2E",
-///     scope: AttributeScope::Signal,
-///     require: "E2EDataId",
-///     fields: &[
-///         AttributeField { name: "data_id", source: FieldSource::Attr("E2EDataId") },
-///         AttributeField { name: "start_byte", source: FieldSource::StartByte },
-///         AttributeField { name: "width_bit", source: FieldSource::Attr("E2EDataLength") },
-///     ],
-/// };
-/// ```
-///
-/// emits, for every signal that carries an `E2EDataId` attribute:
-///
-/// ```ignore
-/// impl SomeMessage {
-///     pub const SOME_SIGNAL_E2E: data_protection::E2EDataIdInfo =
-///         data_protection::E2EDataIdInfo { data_id: 373, start_byte: 0, width_bit: 48 };
-/// }
-/// ```
 #[derive(Debug, Clone)]
 pub struct AttributeStruct<'a> {
     /// Fully-qualified path of the target Rust type.
@@ -564,8 +534,8 @@ impl Config<'_> {
             return Ok(());
         }
 
-        // Track every const name already emitted for this message type so that
-        // a duplicate is rejected here instead of producing code that fails to
+        // Track every constant name already emitted for this message type so that
+        // duplicates are rejected here instead of producing code that fails to
         // compile.
         let mut used: BTreeSet<String> = BTreeSet::new();
         used.insert("MESSAGE_ID".to_string());
@@ -1629,7 +1599,7 @@ fn resolve_field_source(
     }
 }
 
-/// Frame-relative byte index of a signal's start bit.
+/// Byte index of a signal's start bit.
 fn signal_start_byte(signal: &Signal) -> u64 {
     let start_bit = match signal.byte_order {
         LittleEndian | BigEndian => signal.start_bit,
