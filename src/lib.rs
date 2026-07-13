@@ -79,9 +79,7 @@ pub struct Config<'a> {
     #[builder(default)]
     pub impl_serde: FeatureConfig<'a>,
 
-    /// Optional: `impl Error` for generated error type. Default: `Never`.
-    ///
-    /// Note: this feature depends on `std`.
+    /// Optional: `impl core::error::Error` for the generated `CanError` type. Default: `Never`.
     #[builder(default)]
     pub impl_error: FeatureConfig<'a>,
 

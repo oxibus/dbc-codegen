@@ -105,7 +105,7 @@ Config::builder()
     // this will generate Debug implementations
     .impl_debug(FeatureConfig::Always)
 
-    // this will generate Error implementations behind `#[cfg(feature = "std")]` guards
+    // this will generate Error implementations behind a `#[cfg(feature = "std")]` guard
     .impl_error(FeatureConfig::Gated("std"))
 
     // this will disable range checks
@@ -155,7 +155,7 @@ impl SomeMessage {
 
 ### `no_std`
 
-The generated code is `no_std` compatible, unless you enable `impl_error`.
+The generated code is `no_std` compatible.
 
 ### Field/variant rename rules
 
