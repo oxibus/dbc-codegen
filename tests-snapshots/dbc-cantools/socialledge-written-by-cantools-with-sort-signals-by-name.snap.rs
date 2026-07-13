@@ -10,6 +10,7 @@ use core::ops::BitOr;
 use bitvec::prelude::*;
 #[allow(unused_imports)]
 use embedded_can::{Id, StandardId, ExtendedId};
+use core::time::Duration;
 /// All messages
 #[allow(
     clippy::absurd_extreme_comparisons,

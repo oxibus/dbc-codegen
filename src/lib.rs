@@ -205,6 +205,9 @@ impl Config<'_> {
         writeln!(w, "use bitvec::prelude::*;")?;
         writeln!(w, "#[allow(unused_imports)]")?;
         writeln!(w, "use embedded_can::{{Id, StandardId, ExtendedId}};")?;
+        if get_relevant_messages(&dbc).any(|m| message_cycle_time_ms(&dbc, m.id).is_some()) {
+            writeln!(w, "use core::time::Duration;")?;
+        }
 
         self.impl_arbitrary.fmt_cfg(&mut w, |w| {
             writeln!(w, "use arbitrary::{{Arbitrary, Unstructured}};")
