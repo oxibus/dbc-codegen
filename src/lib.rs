@@ -797,8 +797,9 @@ impl Config<'_> {
         let field = signal.field_name();
         let typ = ValType::from_signal(signal);
         let param_ty = signal_pub_type(dbc, msg, signal);
+        let is_enum_backed = param_ty != typ.to_string();
 
-        if param_ty != typ.to_string() {
+        if is_enum_backed {
             writeln!(w, "/// Set value of '{}'", signal.name)?;
             writeln!(w, "#[inline(always)]")?;
             writeln!(
@@ -1542,9 +1543,9 @@ impl Config<'_> {
                     .iter()
                     .map(|signal| {
                         let field = signal.field_name();
-                        if signal_pub_type(dbc, msg, signal)
-                            != ValType::from_signal(signal).to_string()
-                        {
+                        let is_enum_backed = signal_pub_type(dbc, msg, signal)
+                            != ValType::from_signal(signal).to_string();
+                        if is_enum_backed {
                             format!("{}::_Other({field})", enum_name(msg, signal))
                         } else {
                             field
