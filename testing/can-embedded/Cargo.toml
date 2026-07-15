@@ -19,7 +19,7 @@ embedded-can = "0.4.1"
 
 # can-messages is optional and default so we can turn it off for the embedded target.
 # Then it doesn't pull in std.
-can-messages = { path = "../can-messages",  optional = true }
+can-messages = { path = "../can-messages", optional = true }
 
 [build-dependencies]
 anyhow = "1.0"

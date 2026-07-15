@@ -9,16 +9,15 @@ authors = [
 ]
 repository = "https://github.com/oxibus/dbc-codegen"
 edition = "2021"
-exclude = [
-    "fuzz/*",
-    "testing/*",
-    "tests/*",
-    "tests-snapshots/*",
-]
+exclude = ["fuzz/*", "testing/*", "tests/*", "tests-snapshots/*"]
 license = "MIT OR Apache-2.0"
 keywords = ["dbc", "can", "automotive", "codegen", "embedded"]
 categories = ["embedded", "code-generation", "automotive"]
 rust-version = "1.88"
+
+[package.metadata.docs.rs]
+# Indicates features that docs.rs should enable when building documentation.
+features = ["std"]
 
 [features]
 std = []
@@ -69,7 +68,3 @@ members = [
     "testing/rust-integration",
 ]
 default-members = ["."]
-
-[package.metadata.docs.rs]
-# Indicates features that docs.rs should enable when building documentation.
-features = ["std"]

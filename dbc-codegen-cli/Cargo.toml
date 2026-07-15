@@ -14,12 +14,12 @@ license = "MIT OR Apache-2.0"
 readme = "../README.md"
 repository = "https://github.com/oxibus/dbc-codegen"
 
-[dependencies]
-clap = { version = "4.6", features = ["derive"] }
-dbc-codegen = { version = "0.3", path = ".." }
-exitcode = "1.1.2"
-
 [[bin]]
 name = "dbc-codegen"
 path = "src/main.rs"
 doc = false
+
+[dependencies]
+clap = { version = "4.6", features = ["derive"] }
+dbc-codegen = { version = "0.3", path = ".." }
+exitcode = "1.1.2"

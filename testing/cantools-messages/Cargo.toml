@@ -10,7 +10,6 @@ publish = false
 [dependencies]
 can-messages = { path = "../can-messages" }
 
-
 [build-dependencies]
-cc = "1.2"
 bindgen = "0.72.1"
+cc = "1.2"
