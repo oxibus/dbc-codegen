@@ -89,3 +89,28 @@ pub fn enum_variant_name(x: &str) -> String {
 pub fn is_integer(val: f64) -> bool {
     val.fract().abs() < f64::EPSILON
 }
+
+/// Check whether an identifier is usable as a Rust identifier (const or field name).
+/// It must start with a letter or `_`, contain only `[A-Za-z0-9_]`, is not the bare
+/// wildcard `_`, and is not a keyword.
+pub fn is_valid_ident(s: &str) -> bool {
+    let mut chars = s.chars();
+    let starts_ok = matches!(chars.next(), Some(c) if c.is_ascii_alphabetic() || c == '_');
+    starts_ok
+        && chars.all(|c| c.is_ascii_alphanumeric() || c == '_')
+        && s != "_"
+        && !keywords::is_keyword(s)
+}
+
+/// Check Whether an idenfitier is a plain `::`-separated Rust type path, e.g.
+/// `crate::Foo`. Each segment must look like an identifier - path keywords
+/// (`self`, `Self`) are allowed, but generics and other punctuation are not.
+pub fn is_valid_type_path(s: &str) -> bool {
+    !s.is_empty()
+        && s.split("::").all(|seg| {
+            let mut chars = seg.chars();
+            matches!(chars.next(), Some(c) if c.is_ascii_alphabetic() || c == '_')
+                && chars.all(|c| c.is_ascii_alphanumeric() || c == '_')
+                && seg != "_"
+        })
+}

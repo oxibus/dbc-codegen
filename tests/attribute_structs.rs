@@ -310,6 +310,128 @@ fn duplicate_const_name_is_an_error() {
 }
 
 #[test]
+fn invalid_const_name_is_rejected() {
+    let bad = AttributeStruct {
+        type_path: "foo::Bar",
+        const_name: "1bad", // not a valid identifier
+        scope: AttributeScope::Message,
+        require: "SCP_FreshnessValueId",
+        fields: &[AttributeField {
+            name: "x",
+            source: FieldSource::Attr("SCP_FreshnessValueId"),
+        }],
+    };
+    let err = Config::builder()
+        .dbc_name("test")
+        .dbc_content(DBC)
+        .attribute_structs(&[bad])
+        .build()
+        .generate()
+        .unwrap_err();
+    assert!(
+        format!("{err:#}").contains("not a valid Rust identifier"),
+        "{err:#}"
+    );
+}
+
+#[test]
+fn const_name_colliding_with_generated_method_is_rejected() {
+    let bad = AttributeStruct {
+        type_path: "foo::Bar",
+        const_name: "new", // valid identifier, but collides with the `new()` constructor
+        scope: AttributeScope::Message,
+        require: "SCP_FreshnessValueId",
+        fields: &[AttributeField {
+            name: "x",
+            source: FieldSource::Attr("SCP_FreshnessValueId"),
+        }],
+    };
+    let err = Config::builder()
+        .dbc_name("test")
+        .dbc_content(DBC)
+        .attribute_structs(&[bad])
+        .build()
+        .generate()
+        .unwrap_err();
+    assert!(format!("{err:#}").contains("collides"), "{err:#}");
+}
+
+#[test]
+fn invalid_type_path_is_rejected() {
+    let bad = AttributeStruct {
+        type_path: "1bad::Type", // not a valid type path
+        const_name: "OK",
+        scope: AttributeScope::Message,
+        require: "SCP_FreshnessValueId",
+        fields: &[AttributeField {
+            name: "x",
+            source: FieldSource::Attr("SCP_FreshnessValueId"),
+        }],
+    };
+    let err = Config::builder()
+        .dbc_name("test")
+        .dbc_content(DBC)
+        .attribute_structs(&[bad])
+        .build()
+        .generate()
+        .unwrap_err();
+    assert!(
+        format!("{err:#}").contains("not a valid Rust type path"),
+        "{err:#}"
+    );
+}
+
+#[test]
+fn invalid_field_name_is_rejected() {
+    let bad = AttributeStruct {
+        type_path: "foo::Bar",
+        const_name: "OK",
+        scope: AttributeScope::Message,
+        require: "SCP_FreshnessValueId",
+        fields: &[AttributeField {
+            name: "1x", // not a valid identifier
+            source: FieldSource::Attr("SCP_FreshnessValueId"),
+        }],
+    };
+    let err = Config::builder()
+        .dbc_name("test")
+        .dbc_content(DBC)
+        .attribute_structs(&[bad])
+        .build()
+        .generate()
+        .unwrap_err();
+    assert!(format!("{err:#}").contains("field name"), "{err:#}");
+}
+
+#[test]
+fn duplicate_field_names_are_rejected() {
+    let bad = AttributeStruct {
+        type_path: "foo::Bar",
+        const_name: "OK",
+        scope: AttributeScope::Message,
+        require: "SCP_FreshnessValueId",
+        fields: &[
+            AttributeField {
+                name: "dup",
+                source: FieldSource::Attr("SCP_FreshnessValueId"),
+            },
+            AttributeField {
+                name: "dup",
+                source: FieldSource::Int(1),
+            },
+        ],
+    };
+    let err = Config::builder()
+        .dbc_name("test")
+        .dbc_content(DBC)
+        .attribute_structs(&[bad])
+        .build()
+        .generate()
+        .unwrap_err();
+    assert!(format!("{err:#}").contains("duplicate field"), "{err:#}");
+}
+
+#[test]
 fn fixture_message_scope_resolves_hex_float_enum_and_size() {
     let spec = AttributeStruct {
         type_path: "MsgAttrs",

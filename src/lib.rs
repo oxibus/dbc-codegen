@@ -33,8 +33,9 @@ pub use crate::feature_config::FeatureConfig;
 use crate::pad::PadAdapter;
 use crate::signal_type::{IntSize, ValType};
 use crate::utils::{
-    enum_name, enum_variant_name, multiplex_enum_name, multiplexed_enum_variant_name,
-    multiplexed_enum_variant_wrapper_name, MessageExt as _, SignalExt as _,
+    enum_name, enum_variant_name, is_valid_ident, is_valid_type_path, multiplex_enum_name,
+    multiplexed_enum_variant_name, multiplexed_enum_variant_wrapper_name, MessageExt as _,
+    SignalExt as _,
 };
 
 static ALLOW_DEADCODE: &str = "#[allow(dead_code)]";
@@ -492,12 +493,14 @@ impl Config<'_> {
     fn validate_attribute_structs(&self) -> Result<()> {
         for spec in self.attribute_structs {
             ensure!(
-                !spec.const_name.is_empty(),
-                "attribute_structs: 'const_name' must not be empty"
+                is_valid_ident(spec.const_name),
+                "attribute_structs: 'const_name' {:?} is not a valid Rust identifier",
+                spec.const_name
             );
             ensure!(
-                !spec.type_path.is_empty(),
-                "attribute_structs: 'type_path' must not be empty for '{}'",
+                is_valid_type_path(spec.type_path),
+                "attribute_structs: 'type_path' {:?} for '{}' is not a valid Rust type path",
+                spec.type_path,
                 spec.const_name
             );
             ensure!(
@@ -510,8 +513,22 @@ impl Config<'_> {
                 "attribute_structs: '{}' declares no fields",
                 spec.const_name
             );
-            if matches!(spec.scope, AttributeScope::Message) {
-                for field in spec.fields {
+
+            let mut seen = BTreeSet::new();
+            for field in spec.fields {
+                ensure!(
+                    is_valid_ident(field.name),
+                    "attribute_structs: field name {:?} in '{}' is not a valid Rust identifier",
+                    field.name,
+                    spec.const_name
+                );
+                ensure!(
+                    seen.insert(field.name),
+                    "attribute_structs: duplicate field '{}' in '{}'",
+                    field.name,
+                    spec.const_name
+                );
+                if matches!(spec.scope, AttributeScope::Message) {
                     ensure!(
                         !matches!(
                             field.source,
@@ -534,14 +551,19 @@ impl Config<'_> {
             return Ok(());
         }
 
-        // Track every constant name already emitted for this message type so that
-        // duplicates are rejected here instead of producing code that fails to
-        // compile.
+        // Track every associated item already emitted for this message type so
+        // that colliding const names are rejected here instead of producing code
+        // that fails to build.
         let mut used: BTreeSet<String> = BTreeSet::new();
         used.insert("MESSAGE_ID".to_string());
+        used.insert("new".to_string());
+        used.insert("raw".to_string());
         for signal in &msg.signals {
+            let field = signal.field_name();
+            used.insert(field.clone());
+            used.insert(format!("set_{field}"));
             if ValType::from_signal(signal) != ValType::Bool {
-                let sig = signal.field_name().to_uppercase();
+                let sig = field.to_uppercase();
                 used.insert(format!("{sig}_MIN"));
                 used.insert(format!("{sig}_MAX"));
             }
@@ -565,7 +587,10 @@ impl Config<'_> {
                 }
                 AttributeScope::Signal => {
                     for signal in &msg.signals {
-                        if dbc.signal_attribute(msg.id, &signal.name, spec.require).is_none() {
+                        if dbc
+                            .signal_attribute(msg.id, &signal.name, spec.require)
+                            .is_none()
+                        {
                             continue;
                         }
                         let name =
