@@ -28,7 +28,7 @@ help: an enum with a similar name exists
 1954 +     pub fn cruise_buttons(&self) -> CruiseButtons2LkaGapButton {
      |
 
-error[E0433]: failed to resolve: use of undeclared type `GearShifterGearShifter`
+error[E0433]: cannot find type `GearShifterGearShifter` in this scope
    --> tests-snapshots/dbc-cantools/issue_199_extended.snap.rs:944:18
     |
 944 |             3 => GearShifterGearShifter::Park,
@@ -40,7 +40,7 @@ help: an enum with a similar name exists
 944 +             3 => GearShifterLeftBlinker::Park,
     |
 
-error[E0433]: failed to resolve: use of undeclared type `GearShifterGearShifter`
+error[E0433]: cannot find type `GearShifterGearShifter` in this scope
    --> tests-snapshots/dbc-cantools/issue_199_extended.snap.rs:945:18
     |
 945 |             0 => GearShifterGearShifter::DriveLow,
@@ -52,7 +52,7 @@ help: an enum with a similar name exists
 945 +             0 => GearShifterLeftBlinker::DriveLow,
     |
 
-error[E0433]: failed to resolve: use of undeclared type `GearShifterGearShifter`
+error[E0433]: cannot find type `GearShifterGearShifter` in this scope
    --> tests-snapshots/dbc-cantools/issue_199_extended.snap.rs:946:18
     |
 946 |             _ => GearShifterGearShifter::_Other(self.gear_shifter_raw()),
@@ -64,7 +64,7 @@ help: an enum with a similar name exists
 946 +             _ => GearShifterLeftBlinker::_Other(self.gear_shifter_raw()),
     |
 
-error[E0433]: failed to resolve: use of undeclared type `CruiseButtonsCruiseButtons`
+error[E0433]: cannot find type `CruiseButtonsCruiseButtons` in this scope
     --> tests-snapshots/dbc-cantools/issue_199_extended.snap.rs:1957:18
      |
 1957 |             6 => CruiseButtonsCruiseButtons::Cancel,
@@ -76,7 +76,7 @@ help: an enum with a similar name exists
 1957 +             6 => CruiseButtons2LkaGapButton::Cancel,
      |
 
-error[E0433]: failed to resolve: use of undeclared type `CruiseButtonsCruiseButtons`
+error[E0433]: cannot find type `CruiseButtonsCruiseButtons` in this scope
     --> tests-snapshots/dbc-cantools/issue_199_extended.snap.rs:1958:18
      |
 1958 |             5 => CruiseButtonsCruiseButtons::Main,
@@ -88,7 +88,7 @@ help: an enum with a similar name exists
 1958 +             5 => CruiseButtons2LkaGapButton::Main,
      |
 
-error[E0433]: failed to resolve: use of undeclared type `CruiseButtonsCruiseButtons`
+error[E0433]: cannot find type `CruiseButtonsCruiseButtons` in this scope
     --> tests-snapshots/dbc-cantools/issue_199_extended.snap.rs:1959:18
      |
 1959 |             3 => CruiseButtonsCruiseButtons::Set,
@@ -100,7 +100,7 @@ help: an enum with a similar name exists
 1959 +             3 => CruiseButtons2LkaGapButton::Set,
      |
 
-error[E0433]: failed to resolve: use of undeclared type `CruiseButtonsCruiseButtons`
+error[E0433]: cannot find type `CruiseButtonsCruiseButtons` in this scope
     --> tests-snapshots/dbc-cantools/issue_199_extended.snap.rs:1960:18
      |
 1960 |             2 => CruiseButtonsCruiseButtons::Resume,
@@ -112,7 +112,7 @@ help: an enum with a similar name exists
 1960 +             2 => CruiseButtons2LkaGapButton::Resume,
      |
 
-error[E0433]: failed to resolve: use of undeclared type `CruiseButtonsCruiseButtons`
+error[E0433]: cannot find type `CruiseButtonsCruiseButtons` in this scope
     --> tests-snapshots/dbc-cantools/issue_199_extended.snap.rs:1961:18
      |
 1961 |             1 => CruiseButtonsCruiseButtons::None,
@@ -124,7 +124,7 @@ help: an enum with a similar name exists
 1961 +             1 => CruiseButtons2LkaGapButton::None,
      |
 
-error[E0433]: failed to resolve: use of undeclared type `CruiseButtonsCruiseButtons`
+error[E0433]: cannot find type `CruiseButtonsCruiseButtons` in this scope
     --> tests-snapshots/dbc-cantools/issue_199_extended.snap.rs:1962:18
      |
 1962 |             _ => CruiseButtonsCruiseButtons::_Other(self.cruise_buttons_raw()),

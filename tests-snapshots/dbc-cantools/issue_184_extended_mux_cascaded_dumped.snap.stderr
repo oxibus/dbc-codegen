@@ -101,7 +101,7 @@ error[E0592]: duplicate definitions with name `set_m1`
 245 |       pub fn set_m1(&mut self, value: ExtMuxCascadedMuxAM1) -> Result<(), CanError> {
     |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ duplicate definitions for `set_m1`
 
-error[E0433]: failed to resolve: use of undeclared type `ExtMuxCascadedMuxAIndex`
+error[E0433]: cannot find type `ExtMuxCascadedMuxAIndex` in this scope
    --> tests-snapshots/dbc-cantools/issue_184_extended_mux_cascaded_dumped.snap.rs:195:21
     |
 195 |                     ExtMuxCascadedMuxAIndex::M0(ExtMuxCascadedMuxAM0 {
@@ -113,7 +113,7 @@ help: an enum with a similar name exists
 195 +                     ExtMuxCascadedMuxedA2MuxBIndex::M0(ExtMuxCascadedMuxAM0 {
     |
 
-error[E0433]: failed to resolve: use of undeclared type `ExtMuxCascadedMuxAIndex`
+error[E0433]: cannot find type `ExtMuxCascadedMuxAIndex` in this scope
    --> tests-snapshots/dbc-cantools/issue_184_extended_mux_cascaded_dumped.snap.rs:202:21
     |
 202 |                     ExtMuxCascadedMuxAIndex::M1(ExtMuxCascadedMuxAM1 {

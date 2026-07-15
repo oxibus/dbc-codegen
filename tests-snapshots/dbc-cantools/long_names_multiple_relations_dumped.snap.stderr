@@ -29,7 +29,7 @@ error[E0119]: conflicting implementations of trait `Clone` for type `MsgCaseTest
 672 | #[derive(Clone, Copy)]
     |          ^^^^^ conflicting implementation for `MsgCaseTest`
 
-error[E0119]: conflicting implementations of trait `std::marker::Copy` for type `MsgCaseTest`
+error[E0119]: conflicting implementations of trait `Copy` for type `MsgCaseTest`
    --> tests-snapshots/dbc-cantools/long_names_multiple_relations_dumped.snap.rs:672:17
     |
 603 | #[derive(Clone, Copy)]
