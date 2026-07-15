@@ -1593,10 +1593,7 @@ fn resolve_field_source(
 
 /// Byte index of a signal's start bit.
 fn signal_start_byte(signal: &Signal) -> u64 {
-    let start_bit = match signal.byte_order {
-        LittleEndian | BigEndian => signal.start_bit,
-    };
-    start_bit.checked_div(8).unwrap_or(0)
+    signal.start_bit.checked_div(8).unwrap_or(0)
 }
 
 /// Render an attribute value as an un-suffixed Rust literal.
