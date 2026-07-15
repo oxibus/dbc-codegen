@@ -383,7 +383,7 @@ error[E0592]: duplicate definitions with name `set_m5`
 1494 |     pub fn set_m5(&mut self, value: ExtendedTypesS11M5) -> Result<(), CanError> {
      |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ duplicate definitions for `set_m5`
 
-error[E0433]: failed to resolve: use of undeclared type `ExtendedS1Index`
+error[E0433]: cannot find type `ExtendedS1Index` in this scope
    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:793:21
     |
 793 |             0 => Ok(ExtendedS1Index::M0(ExtendedS1M0 { raw: self.raw })),
@@ -395,7 +395,7 @@ help: an enum with a similar name exists
 793 +             0 => Ok(ExtendedS6Index::M0(ExtendedS1M0 { raw: self.raw })),
     |
 
-error[E0433]: failed to resolve: use of undeclared type `ExtendedS1Index`
+error[E0433]: cannot find type `ExtendedS1Index` in this scope
    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:794:21
     |
 794 |             1 => Ok(ExtendedS1Index::M1(ExtendedS1M1 { raw: self.raw })),
@@ -407,7 +407,7 @@ help: an enum with a similar name exists
 794 +             1 => Ok(ExtendedS6Index::M1(ExtendedS1M1 { raw: self.raw })),
     |
 
-error[E0433]: failed to resolve: use of undeclared type `ExtendedS1Index`
+error[E0433]: cannot find type `ExtendedS1Index` in this scope
    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:795:21
     |
 795 |             2 => Ok(ExtendedS1Index::M2(ExtendedS1M2 { raw: self.raw })),
@@ -419,7 +419,7 @@ help: an enum with a similar name exists
 795 +             2 => Ok(ExtendedS6Index::M2(ExtendedS1M2 { raw: self.raw })),
     |
 
-error[E0433]: failed to resolve: use of undeclared type `ExtendedS0Index`
+error[E0433]: cannot find type `ExtendedS0Index` in this scope
    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:867:21
     |
 867 |             0 => Ok(ExtendedS0Index::M0(ExtendedS0M0 { raw: self.raw })),
@@ -431,7 +431,7 @@ help: an enum with a similar name exists
 867 +             0 => Ok(ExtendedS6Index::M0(ExtendedS0M0 { raw: self.raw })),
     |
 
-error[E0433]: failed to resolve: use of undeclared type `ExtendedS0Index`
+error[E0433]: cannot find type `ExtendedS0Index` in this scope
    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:868:21
     |
 868 |             1 => Ok(ExtendedS0Index::M1(ExtendedS0M1 { raw: self.raw })),
@@ -443,7 +443,7 @@ help: an enum with a similar name exists
 868 +             1 => Ok(ExtendedS6Index::M1(ExtendedS0M1 { raw: self.raw })),
     |
 
-error[E0433]: failed to resolve: use of undeclared type `ExtendedS0Index`
+error[E0433]: cannot find type `ExtendedS0Index` in this scope
    --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:869:21
     |
 869 |             2 => Ok(ExtendedS0Index::M2(ExtendedS0M2 { raw: self.raw })),
@@ -455,7 +455,7 @@ help: an enum with a similar name exists
 869 +             2 => Ok(ExtendedS6Index::M2(ExtendedS0M2 { raw: self.raw })),
     |
 
-error[E0433]: failed to resolve: use of undeclared type `ExtendedTypesS11Index`
+error[E0433]: cannot find type `ExtendedTypesS11Index` in this scope
     --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:1445:21
      |
 1445 |                     ExtendedTypesS11Index::M0(ExtendedTypesS11M0 {
@@ -467,7 +467,7 @@ help: an enum with a similar name exists
 1445 +                     ExtendedTypesS0Index::M0(ExtendedTypesS11M0 {
      |
 
-error[E0433]: failed to resolve: use of undeclared type `ExtendedTypesS11Index`
+error[E0433]: cannot find type `ExtendedTypesS11Index` in this scope
     --> tests-snapshots/dbc-cantools/multiplex_2_dumped.snap.rs:1452:21
      |
 1452 |                     ExtendedTypesS11Index::M5(ExtendedTypesS11M5 {
