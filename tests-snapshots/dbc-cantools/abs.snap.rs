@@ -151,7 +151,7 @@ impl Bremse33 {
     /// - Min: 0
     /// - Max: 100
     /// - Unit: "m/s"
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn whlspeed_fl(&self) -> f32 {
         self.whlspeed_fl_raw()
@@ -192,7 +192,7 @@ impl Bremse33 {
     /// - Min: 0
     /// - Max: 100
     /// - Unit: "m/s"
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn whlspeed_fr(&self) -> f32 {
         self.whlspeed_fr_raw()
@@ -233,7 +233,7 @@ impl Bremse33 {
     /// - Min: 0
     /// - Max: 100
     /// - Unit: "m/s"
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn whlspeed_rl(&self) -> f32 {
         self.whlspeed_rl_raw()
@@ -274,7 +274,7 @@ impl Bremse33 {
     /// - Min: 0
     /// - Max: 100
     /// - Unit: "m/s"
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn whlspeed_rr(&self) -> f32 {
         self.whlspeed_rr_raw()
@@ -1182,7 +1182,7 @@ impl Bremse2 {
     /// - Min: 0
     /// - Max: 100
     /// - Unit: "m/s"
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn whlspeed_fl_bremse2(&self) -> f32 {
         self.whlspeed_fl_bremse2_raw()
@@ -1223,7 +1223,7 @@ impl Bremse2 {
     /// - Min: 0
     /// - Max: 100
     /// - Unit: "m/s"
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn whlspeed_fr_bremse2(&self) -> f32 {
         self.whlspeed_fr_bremse2_raw()
@@ -1264,7 +1264,7 @@ impl Bremse2 {
     /// - Min: 0
     /// - Max: 100
     /// - Unit: "m/s"
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn whlspeed_rl_bremse2(&self) -> f32 {
         self.whlspeed_rl_bremse2_raw()
@@ -1305,7 +1305,7 @@ impl Bremse2 {
     /// - Min: 0
     /// - Max: 100
     /// - Unit: "m/s"
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn whlspeed_rr_bremse2(&self) -> f32 {
         self.whlspeed_rr_bremse2_raw()
@@ -1603,7 +1603,7 @@ impl Bremse31 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: "-"
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn idle_time(&self) -> u16 {
         self.idle_time_raw()
@@ -1742,7 +1742,7 @@ impl Bremse32 {
     /// - Min: 0
     /// - Max: 10
     /// - Unit: "cm3"
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn acc_fa(&self) -> f32 {
         self.acc_fa_raw()
@@ -1783,7 +1783,7 @@ impl Bremse32 {
     /// - Min: 0
     /// - Max: 10
     /// - Unit: "cm3"
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn acc_ra(&self) -> f32 {
         self.acc_ra_raw()
@@ -1832,7 +1832,7 @@ impl Bremse32 {
     /// - Min: 0
     /// - Max: 32
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn wheel_quality_fl(&self) -> u8 {
         self.wheel_quality_fl_raw()
@@ -1884,7 +1884,7 @@ impl Bremse32 {
     /// - Min: 0
     /// - Max: 32
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn wheel_quality_fr(&self) -> u8 {
         self.wheel_quality_fr_raw()
@@ -1936,7 +1936,7 @@ impl Bremse32 {
     /// - Min: 0
     /// - Max: 32
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn wheel_quality_rl(&self) -> u8 {
         self.wheel_quality_rl_raw()
@@ -1988,7 +1988,7 @@ impl Bremse32 {
     /// - Min: 0
     /// - Max: 32
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn wheel_quality_rr(&self) -> u8 {
         self.wheel_quality_rr_raw()
@@ -2123,7 +2123,7 @@ impl Bremse51 {
     /// - Min: -4.1768
     /// - Max: 4.1736697
     /// - Unit: "g"
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn ax1_abs_int(&self) -> f32 {
         self.ax1_abs_int_raw()
@@ -2164,7 +2164,7 @@ impl Bremse51 {
     /// - Min: -4.1768
     /// - Max: 4.1765
     /// - Unit: "g"
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn ay1_abs_int(&self) -> f32 {
         self.ay1_abs_int_raw()
@@ -2205,7 +2205,7 @@ impl Bremse51 {
     /// - Min: 0
     /// - Max: 63
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn if_variant(&self) -> u8 {
         self.if_variant_raw()
@@ -2249,7 +2249,7 @@ impl Bremse51 {
     /// - Min: 0
     /// - Max: 63
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn if_revision(&self) -> u8 {
         self.if_revision_raw()
@@ -2293,7 +2293,7 @@ impl Bremse51 {
     /// - Min: 0
     /// - Max: 15
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn if_chksum(&self) -> u8 {
         self.if_chksum_raw()
@@ -2724,7 +2724,7 @@ impl Bremse52MplxSwInfoM1 {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn sw_version_high_upper(&self) -> u8 {
         self.sw_version_high_upper_raw()
@@ -2768,7 +2768,7 @@ impl Bremse52MplxSwInfoM1 {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn sw_version_high_lower(&self) -> u8 {
         self.sw_version_high_lower_raw()
@@ -2812,7 +2812,7 @@ impl Bremse52MplxSwInfoM1 {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn sw_version_mid_upper(&self) -> u8 {
         self.sw_version_mid_upper_raw()
@@ -2856,7 +2856,7 @@ impl Bremse52MplxSwInfoM1 {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn sw_version_mid_lower(&self) -> u8 {
         self.sw_version_mid_lower_raw()
@@ -2900,7 +2900,7 @@ impl Bremse52MplxSwInfoM1 {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn sw_version_low_upper(&self) -> u8 {
         self.sw_version_low_upper_raw()
@@ -2944,7 +2944,7 @@ impl Bremse52MplxSwInfoM1 {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn sw_version_low_lower(&self) -> u8 {
         self.sw_version_low_lower_raw()
@@ -3013,7 +3013,7 @@ impl Bremse52MplxSwInfoM2 {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: "ASCII"
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn bb_dig1(&self) -> u8 {
         self.bb_dig1_raw()
@@ -3055,7 +3055,7 @@ impl Bremse52MplxSwInfoM2 {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: "ASCII"
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn bb_dig2(&self) -> u8 {
         self.bb_dig2_raw()
@@ -3097,7 +3097,7 @@ impl Bremse52MplxSwInfoM2 {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: "ASCII"
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn bb_dig3(&self) -> u8 {
         self.bb_dig3_raw()
@@ -3139,7 +3139,7 @@ impl Bremse52MplxSwInfoM2 {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: "ASCII"
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn bb_dig4(&self) -> u8 {
         self.bb_dig4_raw()
@@ -3181,7 +3181,7 @@ impl Bremse52MplxSwInfoM2 {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: "ASCII"
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn bb_dig5(&self) -> u8 {
         self.bb_dig5_raw()
@@ -3223,7 +3223,7 @@ impl Bremse52MplxSwInfoM2 {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: "ASCII"
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn bb_dig6(&self) -> u8 {
         self.bb_dig6_raw()
@@ -3265,7 +3265,7 @@ impl Bremse52MplxSwInfoM2 {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: "ASCII"
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn bb_dig7(&self) -> u8 {
         self.bb_dig7_raw()
@@ -3334,7 +3334,7 @@ impl Bremse52MplxSwInfoM3 {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: "ASCII"
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn appl_id_01(&self) -> u8 {
         self.appl_id_01_raw()
@@ -3376,7 +3376,7 @@ impl Bremse52MplxSwInfoM3 {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: "ASCII"
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn appl_id_02(&self) -> u8 {
         self.appl_id_02_raw()
@@ -3418,7 +3418,7 @@ impl Bremse52MplxSwInfoM3 {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: "ASCII"
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn appl_id_03(&self) -> u8 {
         self.appl_id_03_raw()
@@ -3460,7 +3460,7 @@ impl Bremse52MplxSwInfoM3 {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: "ASCII"
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn appl_id_04(&self) -> u8 {
         self.appl_id_04_raw()
@@ -3502,7 +3502,7 @@ impl Bremse52MplxSwInfoM3 {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: "ASCII"
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn appl_id_05(&self) -> u8 {
         self.appl_id_05_raw()
@@ -3544,7 +3544,7 @@ impl Bremse52MplxSwInfoM3 {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: "ASCII"
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn appl_id_06(&self) -> u8 {
         self.appl_id_06_raw()
@@ -3586,7 +3586,7 @@ impl Bremse52MplxSwInfoM3 {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: "ASCII"
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn appl_id_07(&self) -> u8 {
         self.appl_id_07_raw()
@@ -3655,7 +3655,7 @@ impl Bremse52MplxSwInfoM4 {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: "ASCII"
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn appl_id_08(&self) -> u8 {
         self.appl_id_08_raw()
@@ -3697,7 +3697,7 @@ impl Bremse52MplxSwInfoM4 {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: "ASCII"
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn appl_id_09(&self) -> u8 {
         self.appl_id_09_raw()
@@ -3739,7 +3739,7 @@ impl Bremse52MplxSwInfoM4 {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: "ASCII"
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn appl_id_10(&self) -> u8 {
         self.appl_id_10_raw()
@@ -3781,7 +3781,7 @@ impl Bremse52MplxSwInfoM4 {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: "ASCII"
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn appl_id_11(&self) -> u8 {
         self.appl_id_11_raw()
@@ -3823,7 +3823,7 @@ impl Bremse52MplxSwInfoM4 {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: "ASCII"
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn appl_id_12(&self) -> u8 {
         self.appl_id_12_raw()
@@ -3865,7 +3865,7 @@ impl Bremse52MplxSwInfoM4 {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: "ASCII"
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn appl_id_13(&self) -> u8 {
         self.appl_id_13_raw()
@@ -3907,7 +3907,7 @@ impl Bremse52MplxSwInfoM4 {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: "ASCII"
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn appl_id_14(&self) -> u8 {
         self.appl_id_14_raw()
@@ -3978,7 +3978,7 @@ impl Bremse52MplxSwInfoM5 {
     /// - Min: 0
     /// - Max: 99
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn appl_date_01(&self) -> u8 {
         self.appl_date_01_raw()
@@ -4022,7 +4022,7 @@ impl Bremse52MplxSwInfoM5 {
     /// - Min: 1
     /// - Max: 12
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn appl_date_02(&self) -> u8 {
         self.appl_date_02_raw()
@@ -4066,7 +4066,7 @@ impl Bremse52MplxSwInfoM5 {
     /// - Min: 1
     /// - Max: 31
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn appl_date_03(&self) -> u8 {
         self.appl_date_03_raw()
@@ -4110,7 +4110,7 @@ impl Bremse52MplxSwInfoM5 {
     /// - Min: 0
     /// - Max: 24
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn appl_date_04(&self) -> u8 {
         self.appl_date_04_raw()
@@ -4154,7 +4154,7 @@ impl Bremse52MplxSwInfoM5 {
     /// - Min: 0
     /// - Max: 59
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn appl_date_05(&self) -> u8 {
         self.appl_date_05_raw()
@@ -4198,7 +4198,7 @@ impl Bremse52MplxSwInfoM5 {
     /// - Min: 0
     /// - Max: 59
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn appl_date_06(&self) -> u8 {
         self.appl_date_06_raw()
@@ -4267,7 +4267,7 @@ impl Bremse52MplxSwInfoM6 {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn sw_can_ident(&self) -> u8 {
         self.sw_can_ident_raw()
@@ -4336,7 +4336,7 @@ impl Bremse52MplxSwInfoM7 {
     /// - Min: 0
     /// - Max: 99
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn hu_date_year(&self) -> u8 {
         self.hu_date_year_raw()
@@ -4378,7 +4378,7 @@ impl Bremse52MplxSwInfoM7 {
     /// - Min: 1
     /// - Max: 12
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn hu_date_month(&self) -> u8 {
         self.hu_date_month_raw()
@@ -4420,7 +4420,7 @@ impl Bremse52MplxSwInfoM7 {
     /// - Min: 1
     /// - Max: 31
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn hu_date_day(&self) -> u8 {
         self.hu_date_day_raw()
@@ -4462,7 +4462,7 @@ impl Bremse52MplxSwInfoM7 {
     /// - Min: 0
     /// - Max: 99999
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn ecu_serial(&self) -> u32 {
         self.ecu_serial_raw()
@@ -4555,7 +4555,7 @@ impl Bremse50 {
     /// - Min: 0
     /// - Max: 100
     /// - Unit: "Bar"
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn brake_bal_at50(&self) -> f32 {
         self.brake_bal_at50_raw()
@@ -4596,7 +4596,7 @@ impl Bremse50 {
     /// - Min: 0
     /// - Max: 100
     /// - Unit: "Bar"
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn brake_bal_at50_advice(&self) -> u8 {
         self.brake_bal_at50_advice_raw()
@@ -4640,7 +4640,7 @@ impl Bremse50 {
     /// - Min: 0
     /// - Max: 100
     /// - Unit: "%"
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn brake_bal_pct(&self) -> f32 {
         self.brake_bal_pct_raw()
@@ -4681,7 +4681,7 @@ impl Bremse50 {
     /// - Min: 0
     /// - Max: 100
     /// - Unit: "%"
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn brake_bal_pct_advice(&self) -> u8 {
         self.brake_bal_pct_advice_raw()
@@ -4854,7 +4854,7 @@ impl Bremse53 {
     /// - Min: 1
     /// - Max: 12
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn switch_position(&self) -> u8 {
         self.switch_position_raw()
@@ -4898,7 +4898,7 @@ impl Bremse53 {
     /// - Min: -42.5
     /// - Max: 425
     /// - Unit: "bar"
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn p_fa(&self) -> f32 {
         self.p_fa_raw()
@@ -4940,7 +4940,7 @@ impl Bremse53 {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn bls(&self) -> bool {
         self.bls_raw()
@@ -4970,7 +4970,7 @@ impl Bremse53 {
     /// - Min: 0
     /// - Max: 3
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn bremse_53_cnt(&self) -> u8 {
         self.bremse_53_cnt_raw()
@@ -5014,7 +5014,7 @@ impl Bremse53 {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn abs_malfunction(&self) -> bool {
         self.abs_malfunction_raw()
@@ -5046,7 +5046,7 @@ impl Bremse53 {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn abs_active(&self) -> bool {
         self.abs_active_raw()
@@ -5078,7 +5078,7 @@ impl Bremse53 {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn ebd_lamp(&self) -> bool {
         self.ebd_lamp_raw()
@@ -5110,7 +5110,7 @@ impl Bremse53 {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn abs_lamp(&self) -> bool {
         self.abs_lamp_raw()
@@ -5143,7 +5143,7 @@ impl Bremse53 {
     /// - Min: 0
     /// - Max: 3
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn diag_fl(&self) -> Bremse53DiagFl {
         let signal = self.raw.view_bits::<Lsb0>()[32..34].load_le::<u8>();
@@ -5194,7 +5194,7 @@ impl Bremse53 {
     /// - Min: 0
     /// - Max: 3
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn diag_fr(&self) -> Bremse53DiagFr {
         let signal = self.raw.view_bits::<Lsb0>()[34..36].load_le::<u8>();
@@ -5245,7 +5245,7 @@ impl Bremse53 {
     /// - Min: 0
     /// - Max: 3
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn diag_rl(&self) -> Bremse53DiagRl {
         let signal = self.raw.view_bits::<Lsb0>()[36..38].load_le::<u8>();
@@ -5296,7 +5296,7 @@ impl Bremse53 {
     /// - Min: 0
     /// - Max: 3
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn diag_rr(&self) -> Bremse53DiagRr {
         let signal = self.raw.view_bits::<Lsb0>()[38..40].load_le::<u8>();
@@ -5346,7 +5346,7 @@ impl Bremse53 {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn diag_abs_unit(&self) -> bool {
         self.diag_abs_unit_raw()
@@ -5378,7 +5378,7 @@ impl Bremse53 {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn diag_fuse_valve(&self) -> bool {
         self.diag_fuse_valve_raw()
@@ -5410,7 +5410,7 @@ impl Bremse53 {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn diag_fuse_pump(&self) -> bool {
         self.diag_fuse_pump_raw()
@@ -5442,7 +5442,7 @@ impl Bremse53 {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn diag_p_fa(&self) -> bool {
         self.diag_p_fa_raw()
@@ -5474,7 +5474,7 @@ impl Bremse53 {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn diag_p_ra(&self) -> bool {
         self.diag_p_ra_raw()
@@ -5506,7 +5506,7 @@ impl Bremse53 {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn diag_yrs(&self) -> bool {
         self.diag_yrs_raw()
@@ -5538,7 +5538,7 @@ impl Bremse53 {
     /// - Min: 0
     /// - Max: 3
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn abs_fault_info(&self) -> Bremse53AbsFaultInfo {
         let signal = self.raw.view_bits::<Lsb0>()[46..48].load_le::<u8>();
@@ -5588,7 +5588,7 @@ impl Bremse53 {
     /// - Min: -42.5
     /// - Max: 425
     /// - Unit: "bar"
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn p_ra(&self) -> f32 {
         self.p_ra_raw()

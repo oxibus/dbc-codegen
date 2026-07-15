@@ -1039,7 +1039,7 @@ impl BatteryVtBatteryVtIndexM0 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_temp_00(&self) -> u16 {
         self.module_temp_00_raw()
@@ -1081,7 +1081,7 @@ impl BatteryVtBatteryVtIndexM0 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_voltage_00(&self) -> u16 {
         self.module_voltage_00_raw()
@@ -1150,7 +1150,7 @@ impl BatteryVtBatteryVtIndexM1 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_temp_01(&self) -> u16 {
         self.module_temp_01_raw()
@@ -1192,7 +1192,7 @@ impl BatteryVtBatteryVtIndexM1 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_voltage_01(&self) -> u16 {
         self.module_voltage_01_raw()
@@ -1261,7 +1261,7 @@ impl BatteryVtBatteryVtIndexM2 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_temp_02(&self) -> u16 {
         self.module_temp_02_raw()
@@ -1303,7 +1303,7 @@ impl BatteryVtBatteryVtIndexM2 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_voltage_02(&self) -> u16 {
         self.module_voltage_02_raw()
@@ -1372,7 +1372,7 @@ impl BatteryVtBatteryVtIndexM3 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_temp_03(&self) -> u16 {
         self.module_temp_03_raw()
@@ -1414,7 +1414,7 @@ impl BatteryVtBatteryVtIndexM3 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_voltage_03(&self) -> u16 {
         self.module_voltage_03_raw()
@@ -1483,7 +1483,7 @@ impl BatteryVtBatteryVtIndexM4 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_temp_04(&self) -> u16 {
         self.module_temp_04_raw()
@@ -1525,7 +1525,7 @@ impl BatteryVtBatteryVtIndexM4 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_voltage_04(&self) -> u16 {
         self.module_voltage_04_raw()
@@ -1594,7 +1594,7 @@ impl BatteryVtBatteryVtIndexM5 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_temp_05(&self) -> u16 {
         self.module_temp_05_raw()
@@ -1636,7 +1636,7 @@ impl BatteryVtBatteryVtIndexM5 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_voltage_05(&self) -> u16 {
         self.module_voltage_05_raw()
@@ -1705,7 +1705,7 @@ impl BatteryVtBatteryVtIndexM6 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_temp_06(&self) -> u16 {
         self.module_temp_06_raw()
@@ -1747,7 +1747,7 @@ impl BatteryVtBatteryVtIndexM6 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_voltage_06(&self) -> u16 {
         self.module_voltage_06_raw()
@@ -1816,7 +1816,7 @@ impl BatteryVtBatteryVtIndexM7 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_temp_07(&self) -> u16 {
         self.module_temp_07_raw()
@@ -1858,7 +1858,7 @@ impl BatteryVtBatteryVtIndexM7 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_voltage_07(&self) -> u16 {
         self.module_voltage_07_raw()
@@ -1927,7 +1927,7 @@ impl BatteryVtBatteryVtIndexM8 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_temp_08(&self) -> u16 {
         self.module_temp_08_raw()
@@ -1969,7 +1969,7 @@ impl BatteryVtBatteryVtIndexM8 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_voltage_08(&self) -> u16 {
         self.module_voltage_08_raw()
@@ -2038,7 +2038,7 @@ impl BatteryVtBatteryVtIndexM9 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_temp_09(&self) -> u16 {
         self.module_temp_09_raw()
@@ -2080,7 +2080,7 @@ impl BatteryVtBatteryVtIndexM9 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_voltage_09(&self) -> u16 {
         self.module_voltage_09_raw()
@@ -2149,7 +2149,7 @@ impl BatteryVtBatteryVtIndexM10 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_temp_10(&self) -> u16 {
         self.module_temp_10_raw()
@@ -2191,7 +2191,7 @@ impl BatteryVtBatteryVtIndexM10 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_voltage_10(&self) -> u16 {
         self.module_voltage_10_raw()
@@ -2260,7 +2260,7 @@ impl BatteryVtBatteryVtIndexM11 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_temp_11(&self) -> u16 {
         self.module_temp_11_raw()
@@ -2302,7 +2302,7 @@ impl BatteryVtBatteryVtIndexM11 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_voltage_11(&self) -> u16 {
         self.module_voltage_11_raw()
@@ -2371,7 +2371,7 @@ impl BatteryVtBatteryVtIndexM12 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_temp_12(&self) -> u16 {
         self.module_temp_12_raw()
@@ -2413,7 +2413,7 @@ impl BatteryVtBatteryVtIndexM12 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_voltage_12(&self) -> u16 {
         self.module_voltage_12_raw()
@@ -2482,7 +2482,7 @@ impl BatteryVtBatteryVtIndexM13 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_temp_13(&self) -> u16 {
         self.module_temp_13_raw()
@@ -2524,7 +2524,7 @@ impl BatteryVtBatteryVtIndexM13 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_voltage_13(&self) -> u16 {
         self.module_voltage_13_raw()
@@ -2593,7 +2593,7 @@ impl BatteryVtBatteryVtIndexM14 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_temp_14(&self) -> u16 {
         self.module_temp_14_raw()
@@ -2635,7 +2635,7 @@ impl BatteryVtBatteryVtIndexM14 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_voltage_14(&self) -> u16 {
         self.module_voltage_14_raw()
@@ -2704,7 +2704,7 @@ impl BatteryVtBatteryVtIndexM15 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_temp_15(&self) -> u16 {
         self.module_temp_15_raw()
@@ -2746,7 +2746,7 @@ impl BatteryVtBatteryVtIndexM15 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_voltage_15(&self) -> u16 {
         self.module_voltage_15_raw()
@@ -2815,7 +2815,7 @@ impl BatteryVtBatteryVtIndexM16 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_temp_16(&self) -> u16 {
         self.module_temp_16_raw()
@@ -2857,7 +2857,7 @@ impl BatteryVtBatteryVtIndexM16 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_voltage_16(&self) -> u16 {
         self.module_voltage_16_raw()
@@ -2926,7 +2926,7 @@ impl BatteryVtBatteryVtIndexM17 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_temp_17(&self) -> u16 {
         self.module_temp_17_raw()
@@ -2968,7 +2968,7 @@ impl BatteryVtBatteryVtIndexM17 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_voltage_17(&self) -> u16 {
         self.module_voltage_17_raw()
@@ -3037,7 +3037,7 @@ impl BatteryVtBatteryVtIndexM18 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_temp_18(&self) -> u16 {
         self.module_temp_18_raw()
@@ -3079,7 +3079,7 @@ impl BatteryVtBatteryVtIndexM18 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_voltage_18(&self) -> u16 {
         self.module_voltage_18_raw()
@@ -3148,7 +3148,7 @@ impl BatteryVtBatteryVtIndexM19 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_temp_19(&self) -> u16 {
         self.module_temp_19_raw()
@@ -3190,7 +3190,7 @@ impl BatteryVtBatteryVtIndexM19 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_voltage_19(&self) -> u16 {
         self.module_voltage_19_raw()
@@ -3259,7 +3259,7 @@ impl BatteryVtBatteryVtIndexM20 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_temp_20(&self) -> u16 {
         self.module_temp_20_raw()
@@ -3301,7 +3301,7 @@ impl BatteryVtBatteryVtIndexM20 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_voltage_20(&self) -> u16 {
         self.module_voltage_20_raw()
@@ -3370,7 +3370,7 @@ impl BatteryVtBatteryVtIndexM21 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_temp_21(&self) -> u16 {
         self.module_temp_21_raw()
@@ -3412,7 +3412,7 @@ impl BatteryVtBatteryVtIndexM21 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_voltage_21(&self) -> u16 {
         self.module_voltage_21_raw()
@@ -3481,7 +3481,7 @@ impl BatteryVtBatteryVtIndexM22 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_temp_22(&self) -> u16 {
         self.module_temp_22_raw()
@@ -3523,7 +3523,7 @@ impl BatteryVtBatteryVtIndexM22 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_voltage_22(&self) -> u16 {
         self.module_voltage_22_raw()
@@ -3592,7 +3592,7 @@ impl BatteryVtBatteryVtIndexM23 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_temp_23(&self) -> u16 {
         self.module_temp_23_raw()
@@ -3634,7 +3634,7 @@ impl BatteryVtBatteryVtIndexM23 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_voltage_23(&self) -> u16 {
         self.module_voltage_23_raw()
@@ -3703,7 +3703,7 @@ impl BatteryVtBatteryVtIndexM24 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_temp_24(&self) -> u16 {
         self.module_temp_24_raw()
@@ -3745,7 +3745,7 @@ impl BatteryVtBatteryVtIndexM24 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_voltage_24(&self) -> u16 {
         self.module_voltage_24_raw()
@@ -3814,7 +3814,7 @@ impl BatteryVtBatteryVtIndexM25 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_temp_25(&self) -> u16 {
         self.module_temp_25_raw()
@@ -3856,7 +3856,7 @@ impl BatteryVtBatteryVtIndexM25 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_voltage_25(&self) -> u16 {
         self.module_voltage_25_raw()
@@ -3925,7 +3925,7 @@ impl BatteryVtBatteryVtIndexM26 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_temp_26(&self) -> u16 {
         self.module_temp_26_raw()
@@ -3967,7 +3967,7 @@ impl BatteryVtBatteryVtIndexM26 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_voltage_26(&self) -> u16 {
         self.module_voltage_26_raw()
@@ -4036,7 +4036,7 @@ impl BatteryVtBatteryVtIndexM27 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_temp_27(&self) -> u16 {
         self.module_temp_27_raw()
@@ -4078,7 +4078,7 @@ impl BatteryVtBatteryVtIndexM27 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_voltage_27(&self) -> u16 {
         self.module_voltage_27_raw()
@@ -4147,7 +4147,7 @@ impl BatteryVtBatteryVtIndexM28 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_temp_28(&self) -> u16 {
         self.module_temp_28_raw()
@@ -4189,7 +4189,7 @@ impl BatteryVtBatteryVtIndexM28 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_voltage_28(&self) -> u16 {
         self.module_voltage_28_raw()
@@ -4258,7 +4258,7 @@ impl BatteryVtBatteryVtIndexM29 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_temp_29(&self) -> u16 {
         self.module_temp_29_raw()
@@ -4300,7 +4300,7 @@ impl BatteryVtBatteryVtIndexM29 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_voltage_29(&self) -> u16 {
         self.module_voltage_29_raw()
@@ -4369,7 +4369,7 @@ impl BatteryVtBatteryVtIndexM30 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_temp_30(&self) -> u16 {
         self.module_temp_30_raw()
@@ -4411,7 +4411,7 @@ impl BatteryVtBatteryVtIndexM30 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_voltage_30(&self) -> u16 {
         self.module_voltage_30_raw()
@@ -4480,7 +4480,7 @@ impl BatteryVtBatteryVtIndexM31 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_temp_31(&self) -> u16 {
         self.module_temp_31_raw()
@@ -4522,7 +4522,7 @@ impl BatteryVtBatteryVtIndexM31 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_voltage_31(&self) -> u16 {
         self.module_voltage_31_raw()
@@ -4591,7 +4591,7 @@ impl BatteryVtBatteryVtIndexM32 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_temp_32(&self) -> u16 {
         self.module_temp_32_raw()
@@ -4633,7 +4633,7 @@ impl BatteryVtBatteryVtIndexM32 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_voltage_32(&self) -> u16 {
         self.module_voltage_32_raw()
@@ -4702,7 +4702,7 @@ impl BatteryVtBatteryVtIndexM33 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_temp_33(&self) -> u16 {
         self.module_temp_33_raw()
@@ -4744,7 +4744,7 @@ impl BatteryVtBatteryVtIndexM33 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_voltage_33(&self) -> u16 {
         self.module_voltage_33_raw()
@@ -4813,7 +4813,7 @@ impl BatteryVtBatteryVtIndexM34 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_temp_34(&self) -> u16 {
         self.module_temp_34_raw()
@@ -4855,7 +4855,7 @@ impl BatteryVtBatteryVtIndexM34 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_voltage_34(&self) -> u16 {
         self.module_voltage_34_raw()
@@ -4924,7 +4924,7 @@ impl BatteryVtBatteryVtIndexM35 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_temp_35(&self) -> u16 {
         self.module_temp_35_raw()
@@ -4966,7 +4966,7 @@ impl BatteryVtBatteryVtIndexM35 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn module_voltage_35(&self) -> u16 {
         self.module_voltage_35_raw()

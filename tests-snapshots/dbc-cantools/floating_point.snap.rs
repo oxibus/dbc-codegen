@@ -87,7 +87,7 @@ impl Message1 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn signal1(&self) -> i64 {
         self.signal1_raw()
@@ -207,7 +207,7 @@ impl Message2 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn signal2(&self) -> i32 {
         self.signal2_raw()
@@ -251,7 +251,7 @@ impl Message2 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn signal1(&self) -> i32 {
         self.signal1_raw()

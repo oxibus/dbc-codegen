@@ -157,7 +157,7 @@ impl Message378910 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn s3big(&self) -> i8 {
         self.s3big_raw()
@@ -201,7 +201,7 @@ impl Message378910 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn s3(&self) -> i8 {
         self.s3_raw()
@@ -245,7 +245,7 @@ impl Message378910 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn s10big(&self) -> i16 {
         self.s10big_raw()
@@ -289,7 +289,7 @@ impl Message378910 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn s8big(&self) -> i8 {
         self.s8big_raw()
@@ -333,7 +333,7 @@ impl Message378910 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn s7big(&self) -> i8 {
         self.s7big_raw()
@@ -377,7 +377,7 @@ impl Message378910 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn s9(&self) -> i16 {
         self.s9_raw()
@@ -421,7 +421,7 @@ impl Message378910 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn s8(&self) -> i8 {
         self.s8_raw()
@@ -465,7 +465,7 @@ impl Message378910 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn s7(&self) -> i8 {
         self.s7_raw()
@@ -581,7 +581,7 @@ impl Message63big1 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn s63big(&self) -> i64 {
         self.s63big_raw()
@@ -697,7 +697,7 @@ impl Message631 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn s63(&self) -> i64 {
         self.s63_raw()
@@ -813,7 +813,7 @@ impl Message63big {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn s63big(&self) -> i64 {
         self.s63big_raw()
@@ -929,7 +929,7 @@ impl Message63 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn s63(&self) -> i64 {
         self.s63_raw()
@@ -1045,7 +1045,7 @@ impl Message32big {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn s32big(&self) -> i32 {
         self.s32big_raw()
@@ -1161,7 +1161,7 @@ impl Message33big {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn s33big(&self) -> i64 {
         self.s33big_raw()
@@ -1277,7 +1277,7 @@ impl Message64big {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn s64big(&self) -> i64 {
         self.s64big_raw()
@@ -1393,7 +1393,7 @@ impl Message64 {
     /// - Min: -9223372036854780000
     /// - Max: 9223372036854780000
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn s64(&self) -> i64 {
         self.s64_raw()
@@ -1509,7 +1509,7 @@ impl Message33 {
     /// - Min: -4294967296
     /// - Max: 4294967295
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn s33(&self) -> i64 {
         self.s33_raw()
@@ -1625,7 +1625,7 @@ impl Message32 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn s32(&self) -> i32 {
         self.s32_raw()

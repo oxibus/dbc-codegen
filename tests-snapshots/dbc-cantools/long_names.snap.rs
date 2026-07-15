@@ -495,7 +495,7 @@ impl S1234567890123456789012345678901 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn ss123456789012345678901234567890(&self) -> i8 {
         self.ss123456789012345678901234567890_raw()
@@ -614,7 +614,7 @@ impl M123456789012345678901234560000 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn sss12345678901234567890123456789(&self) -> i8 {
         self.sss12345678901234567890123456789_raw()
@@ -752,7 +752,7 @@ impl M1234567890123456789012345678901 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn ss1234567890123456789012345_0000(&self) -> i8 {
         self.ss1234567890123456789012345_0000_raw()
@@ -799,7 +799,7 @@ impl M1234567890123456789012345678901 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn ss1234567890123456789012345_0001(&self) -> i8 {
         self.ss1234567890123456789012345_0001_raw()
@@ -893,7 +893,7 @@ impl M1234567890123456789012345678901 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn s12345678901234567890123456_0000(&self) -> i8 {
         self.s12345678901234567890123456_0000_raw()
@@ -940,7 +940,7 @@ impl M1234567890123456789012345678901 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn s1234567890123456789012345678901(&self) -> i8 {
         self.s1234567890123456789012345678901_raw()
@@ -1074,7 +1074,7 @@ impl M123456789012345678901234560001 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn ss1234567890123456789012345_0003(&self) -> i8 {
         self.ss1234567890123456789012345_0003_raw()
@@ -1121,7 +1121,7 @@ impl M123456789012345678901234560001 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn ss1234567890123456789012345_0004(&self) -> i8 {
         self.ss1234567890123456789012345_0004_raw()
@@ -1168,7 +1168,7 @@ impl M123456789012345678901234560001 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn s12345678901234567890123456_0001(&self) -> i8 {
         self.s12345678901234567890123456_0001_raw()
@@ -1215,7 +1215,7 @@ impl M123456789012345678901234560001 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn s12345678901234567890123456_0002(&self) -> i8 {
         self.s12345678901234567890123456_0002_raw()
@@ -1340,7 +1340,7 @@ impl Mm123456789012345678901234567890 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn sss123456789012345678901234_0000(&self) -> i8 {
         self.sss123456789012345678901234_0000_raw()
@@ -1387,7 +1387,7 @@ impl Mm123456789012345678901234567890 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn ss1234567890123456789012345_0005(&self) -> i8 {
         self.ss1234567890123456789012345_0005_raw()

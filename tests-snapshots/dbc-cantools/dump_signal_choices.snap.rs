@@ -87,7 +87,7 @@ impl Message0 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn foo_signal(&self) -> Message0FooSignal {
         let signal = self.raw.view_bits::<Lsb0>()[0..2].load_le::<u8>();
@@ -136,7 +136,7 @@ impl Message0 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn bar_signal(&self) -> Message0BarSignal {
         let signal = self.raw.view_bits::<Lsb0>()[2..5].load_le::<u8>();

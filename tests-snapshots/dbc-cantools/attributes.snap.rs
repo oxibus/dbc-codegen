@@ -90,7 +90,7 @@ impl TheMessage {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn the_signal(&self) -> i8 {
         self.the_signal_raw()
@@ -206,7 +206,7 @@ impl TheOtherMessage {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn the_signal(&self) -> i8 {
         self.the_signal_raw()

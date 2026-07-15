@@ -85,7 +85,7 @@ impl Foo {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn signal_without_sender(&self) -> i8 {
         self.signal_without_sender_raw()

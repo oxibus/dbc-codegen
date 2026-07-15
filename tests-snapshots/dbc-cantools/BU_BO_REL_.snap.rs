@@ -84,7 +84,7 @@ impl Control {
     /// - Min: 0
     /// - Max: 100
     /// - Unit: "%"
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn state(&self) -> ControlState {
         let signal = self.raw.view_bits::<Lsb0>()[0..8].load_le::<u8>();

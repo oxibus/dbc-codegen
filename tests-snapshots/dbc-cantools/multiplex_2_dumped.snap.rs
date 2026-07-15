@@ -241,7 +241,7 @@ impl SharedS0M1 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn s1(&self) -> i8 {
         self.s1_raw()
@@ -312,7 +312,7 @@ impl SharedS0M2 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn s2(&self) -> i8 {
         self.s2_raw()
@@ -537,7 +537,7 @@ impl NormalS0M0 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn s1(&self) -> i8 {
         self.s1_raw()
@@ -608,7 +608,7 @@ impl NormalS0M1 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn s2(&self) -> i8 {
         self.s2_raw()
@@ -1006,7 +1006,7 @@ impl ExtendedS6M0 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn s3(&self) -> i16 {
         self.s3_raw()
@@ -1050,7 +1050,7 @@ impl ExtendedS6M0 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn s2(&self) -> i8 {
         self.s2_raw()
@@ -1121,7 +1121,7 @@ impl ExtendedS6M1 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn s7(&self) -> i32 {
         self.s7_raw()
@@ -1165,7 +1165,7 @@ impl ExtendedS6M1 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn s5(&self) -> i32 {
         self.s5_raw()
@@ -1236,7 +1236,7 @@ impl ExtendedS6M2 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn s8(&self) -> i8 {
         self.s8_raw()
@@ -1280,7 +1280,7 @@ impl ExtendedS6M2 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn s4(&self) -> i32 {
         self.s4_raw()
@@ -1582,7 +1582,7 @@ impl ExtendedTypesS0M0 {
     /// - Min: -340000000000000000000000000000000000000
     /// - Max: 340000000000000000000000000000000000000
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn s10(&self) -> i32 {
         self.s10_raw()
@@ -1655,7 +1655,7 @@ impl ExtendedTypesS0M5 {
     /// - Min: -1.34
     /// - Max: 1235
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn s9(&self) -> i32 {
         self.s9_raw()

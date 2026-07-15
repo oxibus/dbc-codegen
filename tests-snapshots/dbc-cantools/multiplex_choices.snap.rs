@@ -294,7 +294,7 @@ impl Message1MultiplexorM8 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn bit_l(&self) -> Message1BitL {
         let signal = self.raw.view_bits::<Lsb0>()[24..25].load_le::<u8>();
@@ -329,7 +329,7 @@ impl Message1MultiplexorM8 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn bit_g(&self) -> bool {
         self.bit_g_raw()
@@ -359,7 +359,7 @@ impl Message1MultiplexorM8 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn bit_c(&self) -> bool {
         self.bit_c_raw()
@@ -389,7 +389,7 @@ impl Message1MultiplexorM8 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn bit_j(&self) -> bool {
         self.bit_j_raw()
@@ -446,7 +446,7 @@ impl Message1MultiplexorM24 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn bit_k(&self) -> bool {
         self.bit_k_raw()
@@ -476,7 +476,7 @@ impl Message1MultiplexorM24 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn bit_d(&self) -> bool {
         self.bit_d_raw()
@@ -506,7 +506,7 @@ impl Message1MultiplexorM24 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn bit_b(&self) -> bool {
         self.bit_b_raw()
@@ -536,7 +536,7 @@ impl Message1MultiplexorM24 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn bit_f(&self) -> bool {
         self.bit_f_raw()
@@ -566,7 +566,7 @@ impl Message1MultiplexorM24 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn bit_h(&self) -> bool {
         self.bit_h_raw()
@@ -596,7 +596,7 @@ impl Message1MultiplexorM24 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn bit_e(&self) -> bool {
         self.bit_e_raw()
@@ -626,7 +626,7 @@ impl Message1MultiplexorM24 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn bit_a(&self) -> bool {
         self.bit_a_raw()
@@ -872,7 +872,7 @@ impl Message2MultiplexorM8 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn bit_l(&self) -> bool {
         self.bit_l_raw()
@@ -902,7 +902,7 @@ impl Message2MultiplexorM8 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn bit_g(&self) -> bool {
         self.bit_g_raw()
@@ -932,7 +932,7 @@ impl Message2MultiplexorM8 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn bit_c(&self) -> bool {
         self.bit_c_raw()
@@ -962,7 +962,7 @@ impl Message2MultiplexorM8 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn bit_j(&self) -> bool {
         self.bit_j_raw()
@@ -1019,7 +1019,7 @@ impl Message2MultiplexorM24 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn bit_k(&self) -> bool {
         self.bit_k_raw()
@@ -1049,7 +1049,7 @@ impl Message2MultiplexorM24 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn bit_d(&self) -> bool {
         self.bit_d_raw()
@@ -1079,7 +1079,7 @@ impl Message2MultiplexorM24 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn bit_b(&self) -> bool {
         self.bit_b_raw()
@@ -1109,7 +1109,7 @@ impl Message2MultiplexorM24 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn bit_f(&self) -> bool {
         self.bit_f_raw()
@@ -1139,7 +1139,7 @@ impl Message2MultiplexorM24 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn bit_h(&self) -> bool {
         self.bit_h_raw()
@@ -1169,7 +1169,7 @@ impl Message2MultiplexorM24 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn bit_e(&self) -> bool {
         self.bit_e_raw()
@@ -1199,7 +1199,7 @@ impl Message2MultiplexorM24 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn bit_a(&self) -> bool {
         self.bit_a_raw()
@@ -1399,7 +1399,7 @@ impl Message3MultiplexorM8 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn bit_l(&self) -> bool {
         self.bit_l_raw()
@@ -1429,7 +1429,7 @@ impl Message3MultiplexorM8 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn bit_g(&self) -> bool {
         self.bit_g_raw()
@@ -1459,7 +1459,7 @@ impl Message3MultiplexorM8 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn bit_c(&self) -> bool {
         self.bit_c_raw()
@@ -1489,7 +1489,7 @@ impl Message3MultiplexorM8 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn bit_j(&self) -> bool {
         self.bit_j_raw()

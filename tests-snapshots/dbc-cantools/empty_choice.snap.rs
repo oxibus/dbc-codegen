@@ -96,7 +96,7 @@ impl ExampleMessage {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn no_choice(&self) -> i8 {
         self.no_choice_raw()
@@ -140,7 +140,7 @@ impl ExampleMessage {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn empty_choice(&self) -> ExampleMessageEmptyChoice {
         let signal = self.raw.view_bits::<Lsb0>()[8..16].load_le::<u8>();
@@ -187,7 +187,7 @@ impl ExampleMessage {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn non_empty_choice(&self) -> ExampleMessageNonEmptyChoice {
         let signal = self.raw.view_bits::<Lsb0>()[0..8].load_le::<u8>();

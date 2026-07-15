@@ -433,7 +433,7 @@ impl Config<'_> {
         writeln!(w, "/// - Max: {}", signal.max)?;
         writeln!(w, "/// - Unit: {:?}", signal.unit)?;
         if signal.receivers.is_empty() {
-            writeln!(w, "/// - Receivers: None")?;
+            writeln!(w, "/// - Receivers: Vector__XXX")?;
         } else {
             writeln!(w, "/// - Receivers: {}", signal.receivers.join(", "))?;
         }

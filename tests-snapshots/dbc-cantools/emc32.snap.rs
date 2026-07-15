@@ -92,7 +92,7 @@ impl EmvStati {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn emv_aktion_status_5(&self) -> bool {
         self.emv_aktion_status_5_raw()
@@ -122,7 +122,7 @@ impl EmvStati {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn emv_aktion_status_4(&self) -> bool {
         self.emv_aktion_status_4_raw()
@@ -182,7 +182,7 @@ impl EmvStati {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn emv_aktion_status_2(&self) -> bool {
         self.emv_aktion_status_2_raw()
@@ -212,7 +212,7 @@ impl EmvStati {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: None
+    /// - Receivers: Vector__XXX
     #[inline(always)]
     pub fn emv_aktion_status_1(&self) -> bool {
         self.emv_aktion_status_1_raw()
