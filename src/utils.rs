@@ -102,7 +102,12 @@ pub fn is_valid_ident(s: &str) -> bool {
         && !keywords::is_keyword(s)
 }
 
-/// Check Whether an idenfitier is a plain `::`-separated Rust type path, e.g.
+/// Check whether an identifier is valid with no lowercase letters.
+pub fn is_screaming_snake_case(s: &str) -> bool {
+    is_valid_ident(s) && !s.bytes().any(|b| b.is_ascii_lowercase())
+}
+
+/// Check whether an idenfitier is a plain `::`-separated Rust type path, e.g.
 /// `crate::Foo`. Each segment must look like an identifier - path keywords
 /// (`self`, `Self`) are allowed, but generics and other punctuation are not.
 pub fn is_valid_type_path(s: &str) -> bool {

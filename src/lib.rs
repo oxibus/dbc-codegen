@@ -33,9 +33,9 @@ pub use crate::feature_config::FeatureConfig;
 use crate::pad::PadAdapter;
 use crate::signal_type::{IntSize, ValType};
 use crate::utils::{
-    enum_name, enum_variant_name, is_valid_ident, is_valid_type_path, multiplex_enum_name,
-    multiplexed_enum_variant_name, multiplexed_enum_variant_wrapper_name, MessageExt as _,
-    SignalExt as _,
+    enum_name, enum_variant_name, is_screaming_snake_case, is_valid_ident, is_valid_type_path,
+    multiplex_enum_name, multiplexed_enum_variant_name, multiplexed_enum_variant_wrapper_name,
+    MessageExt as _, SignalExt as _,
 };
 
 static ALLOW_DEADCODE: &str = "#[allow(dead_code)]";
@@ -492,9 +492,11 @@ impl Config<'_> {
     /// Validate the [`AttributeStruct`] specs.
     fn validate_attribute_structs(&self) -> Result<()> {
         for spec in self.attribute_structs {
+            // Require SCREAMING_SNAKE_CASE to guarantee that the name never collides
+            // with a generated method (all `snake_case`).
             ensure!(
-                is_valid_ident(spec.const_name),
-                "attribute_structs: 'const_name' {:?} is not a valid Rust identifier",
+                is_screaming_snake_case(spec.const_name),
+                "attribute_structs: 'const_name' {:?} must be SCREAMING_SNAKE_CASE",
                 spec.const_name
             );
             ensure!(
@@ -556,14 +558,9 @@ impl Config<'_> {
         // that fails to build.
         let mut used: BTreeSet<String> = BTreeSet::new();
         used.insert("MESSAGE_ID".to_string());
-        used.insert("new".to_string());
-        used.insert("raw".to_string());
         for signal in &msg.signals {
-            let field = signal.field_name();
-            used.insert(field.clone());
-            used.insert(format!("set_{field}"));
             if ValType::from_signal(signal) != ValType::Bool {
-                let sig = field.to_uppercase();
+                let sig = signal.field_name().to_uppercase();
                 used.insert(format!("{sig}_MIN"));
                 used.insert(format!("{sig}_MAX"));
             }

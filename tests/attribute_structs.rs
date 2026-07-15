@@ -310,35 +310,37 @@ fn duplicate_const_name_is_an_error() {
 }
 
 #[test]
-fn invalid_const_name_is_rejected() {
-    let bad = AttributeStruct {
-        type_path: "foo::Bar",
-        const_name: "1bad", // not a valid identifier
-        scope: AttributeScope::Message,
-        require: "SCP_FreshnessValueId",
-        fields: &[AttributeField {
-            name: "x",
-            source: FieldSource::Attr("SCP_FreshnessValueId"),
-        }],
-    };
-    let err = Config::builder()
-        .dbc_name("test")
-        .dbc_content(DBC)
-        .attribute_structs(&[bad])
-        .build()
-        .generate()
-        .unwrap_err();
-    assert!(
-        format!("{err:#}").contains("not a valid Rust identifier"),
-        "{err:#}"
-    );
+fn non_screaming_snake_case_const_name_is_rejected() {
+    for name in ["1bad", "new", "raw", "with-dash"] {
+        let bad = AttributeStruct {
+            type_path: "foo::Bar",
+            const_name: name,
+            scope: AttributeScope::Message,
+            require: "SCP_FreshnessValueId",
+            fields: &[AttributeField {
+                name: "x",
+                source: FieldSource::Attr("SCP_FreshnessValueId"),
+            }],
+        };
+        let err = Config::builder()
+            .dbc_name("test")
+            .dbc_content(DBC)
+            .attribute_structs(&[bad])
+            .build()
+            .generate()
+            .unwrap_err();
+        assert!(
+            format!("{err:#}").contains("SCREAMING_SNAKE_CASE"),
+            "{name}: {err:#}"
+        );
+    }
 }
 
 #[test]
-fn const_name_colliding_with_generated_method_is_rejected() {
+fn const_name_colliding_with_reserved_const_is_rejected() {
     let bad = AttributeStruct {
         type_path: "foo::Bar",
-        const_name: "new", // valid identifier, but collides with the `new()` constructor
+        const_name: "MESSAGE_ID", // Collides with the generated const MESSAGE_ID
         scope: AttributeScope::Message,
         require: "SCP_FreshnessValueId",
         fields: &[AttributeField {
