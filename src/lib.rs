@@ -550,7 +550,7 @@ impl Config<'_> {
         for spec in self.attribute_structs {
             match spec.scope {
                 AttributeScope::Message => {
-                    if message_attr(dbc, msg.id, spec.require).is_none() {
+                    if dbc.message_attribute(msg.id, spec.require).is_none() {
                         continue;
                     }
                     Self::render_attribute_struct(
@@ -565,7 +565,7 @@ impl Config<'_> {
                 }
                 AttributeScope::Signal => {
                     for signal in &msg.signals {
-                        if signal_attr(dbc, msg.id, &signal.name, spec.require).is_none() {
+                        if dbc.signal_attribute(msg.id, &signal.name, spec.require).is_none() {
                             continue;
                         }
                         let name =
@@ -1541,35 +1541,6 @@ fn message_ignored(message: &Message) -> bool {
     message.name == "VECTOR__INDEPENDENT_SIG_MSG"
 }
 
-/// Look up an assigned message-level (`BO_`) attribute value.
-fn message_attr<'a>(dbc: &'a Dbc, id: MessageId, name: &str) -> Option<&'a AttributeValue> {
-    dbc.attribute_values_message
-        .iter()
-        .find(|a| a.message_id == id && a.name == name)
-        .map(|a| &a.value)
-}
-
-/// Look up an assigned signal-level (`SG_`) attribute value.
-fn signal_attr<'a>(
-    dbc: &'a Dbc,
-    id: MessageId,
-    signal: &str,
-    name: &str,
-) -> Option<&'a AttributeValue> {
-    dbc.attribute_values_signal
-        .iter()
-        .find(|a| a.message_id == id && a.signal_name == signal && a.name == name)
-        .map(|a| &a.value)
-}
-
-/// Look up an attribute's default value (`BA_DEF_DEF_`).
-fn attr_default<'a>(dbc: &'a Dbc, name: &str) -> Option<&'a AttributeValue> {
-    dbc.attribute_defaults
-        .iter()
-        .find(|d| d.name == name)
-        .map(|d| &d.value)
-}
-
 /// Resolve a [`FieldSource`] to a Rust literal.
 fn resolve_field_source(
     source: &FieldSource<'_>,
@@ -1580,14 +1551,13 @@ fn resolve_field_source(
     match source {
         FieldSource::Attr(name) => {
             let value = match signal {
-                Some(s) => signal_attr(dbc, msg.id, &s.name, name),
-                None => message_attr(dbc, msg.id, name),
-            }
-            .or_else(|| attr_default(dbc, name))?;
+                Some(s) => dbc.resolved_signal_attribute(msg.id, &s.name, name),
+                None => dbc.resolved_message_attribute(msg.id, name),
+            }?;
             Some(attr_value_literal(value))
         }
         FieldSource::MessageAttr(name) => {
-            let value = message_attr(dbc, msg.id, name).or_else(|| attr_default(dbc, name))?;
+            let value = dbc.resolved_message_attribute(msg.id, name)?;
             Some(attr_value_literal(value))
         }
         FieldSource::StartBit => signal.map(|s| s.start_bit.to_string()),
