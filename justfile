@@ -8,11 +8,12 @@ binstall_args := if env('CI', '') != '' {'--no-confirm --no-track --disable-tele
 # location of the coverage output, used by CI
 coverage_lcov := 'target/llvm-cov/lcov.info'
 
-# if running in CI, treat warnings as errors by setting CARGO_BUILD_WARNINGS to 'deny' unless it is already set
+# if running in CI, treat warnings as errors by setting RUSTFLAGS and RUSTDOCFLAGS to '-D warnings' unless they are already set
 # Use `CI=true just ci-test` to run the same tests as in GitHub CI.
-# Use `just env-info` to see the current value of CARGO_BUILD_WARNINGS
+# Use `just env-info` to see the current values of RUSTFLAGS and RUSTDOCFLAGS
 ci_mode := if env('CI', '') != '' {'1'} else {''}
-export CARGO_BUILD_WARNINGS := env('CARGO_BUILD_WARNINGS', if ci_mode == '1' {'deny'} else {'warn'})
+export RUSTFLAGS := env('RUSTFLAGS', if ci_mode == '1' {'-D warnings'} else {''})
+export RUSTDOCFLAGS := env('RUSTDOCFLAGS', if ci_mode == '1' {'-D warnings'} else {''})
 export RUST_BACKTRACE := env('RUST_BACKTRACE', if ci_mode == '1' {'1'} else {'0'})
 
 @_default:
@@ -111,7 +112,8 @@ env-info:
     rustup --version
     rustup show
     rustup component list --installed
-    @echo "CARGO_BUILD_WARNINGS='$CARGO_BUILD_WARNINGS'"
+    @echo "RUSTFLAGS='$RUSTFLAGS'"
+    @echo "RUSTDOCFLAGS='$RUSTDOCFLAGS'"
     @echo "RUST_BACKTRACE='$RUST_BACKTRACE'"
     @echo "::endgroup::"
 
