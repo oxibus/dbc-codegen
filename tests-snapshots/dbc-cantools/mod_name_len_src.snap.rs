@@ -88,7 +88,7 @@ impl MsgWillBeShortened345678912 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn sig_will_be_shortened_3456789_12(&self) -> u8 {
         self.sig_will_be_shortened_3456789_12_raw()

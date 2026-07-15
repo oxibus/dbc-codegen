@@ -312,7 +312,7 @@ impl TestInputTestInputMuxM0 {
     /// - Min: 0
     /// - Max: 65535
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn var1(&self) -> u16 {
         self.var1_raw()
@@ -381,7 +381,7 @@ impl TestInputTestInputMuxM1 {
     /// - Min: 0
     /// - Max: 65535
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn var2(&self) -> u16 {
         self.var2_raw()
@@ -450,7 +450,7 @@ impl TestInputTestInputMuxM2 {
     /// - Min: 0
     /// - Max: 65535
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn var3(&self) -> u16 {
         self.var3_raw()
@@ -519,7 +519,7 @@ impl TestInputTestInputMuxM3 {
     /// - Min: 0
     /// - Max: 65535
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn var4(&self) -> u16 {
         self.var4_raw()
@@ -819,7 +819,7 @@ impl TestOutputTestOutputMuxM0 {
     /// - Min: 0
     /// - Max: 65535
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn var5(&self) -> u16 {
         self.var5_raw()
@@ -888,7 +888,7 @@ impl TestOutputTestOutputMuxM1 {
     /// - Min: 0
     /// - Max: 65535
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn var6(&self) -> u16 {
         self.var6_raw()
@@ -957,7 +957,7 @@ impl TestOutputTestOutputMuxM2 {
     /// - Min: 0
     /// - Max: 65535
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn var7(&self) -> u16 {
         self.var7_raw()
@@ -1026,7 +1026,7 @@ impl TestOutputTestOutputMuxM3 {
     /// - Min: 0
     /// - Max: 65535
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn var8(&self) -> u16 {
         self.var8_raw()

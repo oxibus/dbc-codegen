@@ -86,7 +86,7 @@ impl MsgNowShort {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn sig_now_short(&self) -> u8 {
         self.sig_now_short_raw()

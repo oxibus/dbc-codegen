@@ -83,7 +83,7 @@ impl TestMessage {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn signal_with_choices(&self) -> TestMessageSignalWithChoices {
         let signal = self.raw.view_bits::<Lsb0>()[0..1].load_le::<u8>();

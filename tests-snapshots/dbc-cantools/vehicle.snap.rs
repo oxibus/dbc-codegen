@@ -1199,7 +1199,7 @@ impl RtSbInsVelBodyAxes {
     /// - Min: -838
     /// - Max: 838
     /// - Unit: "m/s"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ins_vel_sideways_2d(&self) -> f32 {
         self.ins_vel_sideways_2d_raw()
@@ -1241,7 +1241,7 @@ impl RtSbInsVelBodyAxes {
     /// - Min: -838
     /// - Max: 838
     /// - Unit: "m/s"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ins_vel_forwards_2d(&self) -> f32 {
         self.ins_vel_forwards_2d_raw()
@@ -1283,7 +1283,7 @@ impl RtSbInsVelBodyAxes {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn accuracy_ins_vel_body(&self) -> u8 {
         self.accuracy_ins_vel_body_raw()
@@ -1327,7 +1327,7 @@ impl RtSbInsVelBodyAxes {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_ins_vel_sideways(&self) -> bool {
         self.validity_ins_vel_sideways_raw()
@@ -1362,7 +1362,7 @@ impl RtSbInsVelBodyAxes {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_ins_vel_forwards(&self) -> bool {
         self.validity_ins_vel_forwards_raw()
@@ -1475,7 +1475,7 @@ impl RtDl1mk3Speed {
     /// - Min: -20000
     /// - Max: 20000
     /// - Unit: "m/s"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn speed(&self) -> f32 {
         self.speed_raw()
@@ -1517,7 +1517,7 @@ impl RtDl1mk3Speed {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn accuracy_speed(&self) -> u8 {
         self.accuracy_speed_raw()
@@ -1561,7 +1561,7 @@ impl RtDl1mk3Speed {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_speed(&self) -> bool {
         self.validity_speed_raw()
@@ -1677,7 +1677,7 @@ impl RtDl1mk3GpsTime {
     /// - Min: 0
     /// - Max: 65535
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn gps_week(&self) -> u16 {
         self.gps_week_raw()
@@ -1721,7 +1721,7 @@ impl RtDl1mk3GpsTime {
     /// - Min: 0
     /// - Max: 604800
     /// - Unit: "s"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn gps_time(&self) -> f32 {
         self.gps_time_raw()
@@ -1760,7 +1760,7 @@ impl RtDl1mk3GpsTime {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn accuracy_gps_time(&self) -> u8 {
         self.accuracy_gps_time_raw()
@@ -1804,7 +1804,7 @@ impl RtDl1mk3GpsTime {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_gps_week(&self) -> bool {
         self.validity_gps_week_raw()
@@ -1836,7 +1836,7 @@ impl RtDl1mk3GpsTime {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_gps_time(&self) -> bool {
         self.validity_gps_time_raw()
@@ -1944,7 +1944,7 @@ impl RtDl1mk3GpsPosLlh2 {
     /// - Min: -1000
     /// - Max: 100000
     /// - Unit: "m"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn gps_pos_llh_altitude(&self) -> f32 {
         self.gps_pos_llh_altitude_raw()
@@ -1984,7 +1984,7 @@ impl RtDl1mk3GpsPosLlh2 {
     /// - Min: -180
     /// - Max: 180
     /// - Unit: "degrees"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn gps_pos_llh_longitude(&self) -> f32 {
         self.gps_pos_llh_longitude_raw()
@@ -2116,7 +2116,7 @@ impl RtDl1mk3GpsPosLlh1 {
     /// - Min: -90
     /// - Max: 90
     /// - Unit: "degrees"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn gps_pos_llh_latitude(&self) -> f32 {
         self.gps_pos_llh_latitude_raw()
@@ -2158,7 +2158,7 @@ impl RtDl1mk3GpsPosLlh1 {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn accuracy_gps_pos_llh_altitude(&self) -> u8 {
         self.accuracy_gps_pos_llh_altitude_raw()
@@ -2205,7 +2205,7 @@ impl RtDl1mk3GpsPosLlh1 {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn accuracy_gps_pos_llh_longitude(&self) -> u8 {
         self.accuracy_gps_pos_llh_longitude_raw()
@@ -2252,7 +2252,7 @@ impl RtDl1mk3GpsPosLlh1 {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn accuracy_gps_pos_llh_latitude(&self) -> u8 {
         self.accuracy_gps_pos_llh_latitude_raw()
@@ -2299,7 +2299,7 @@ impl RtDl1mk3GpsPosLlh1 {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_gps_pos_llh_altitude(&self) -> bool {
         self.validity_gps_pos_llh_altitude_raw()
@@ -2334,7 +2334,7 @@ impl RtDl1mk3GpsPosLlh1 {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_gps_pos_llh_longitude(&self) -> bool {
         self.validity_gps_pos_llh_longitude_raw()
@@ -2369,7 +2369,7 @@ impl RtDl1mk3GpsPosLlh1 {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_gps_pos_llh_latitude(&self) -> bool {
         self.validity_gps_pos_llh_latitude_raw()
@@ -2490,7 +2490,7 @@ impl RtDl1mk3GpsSpeed {
     /// - Min: 0
     /// - Max: 1675
     /// - Unit: "m/s"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn gps_speed_3d(&self) -> f32 {
         self.gps_speed_3d_raw()
@@ -2531,7 +2531,7 @@ impl RtDl1mk3GpsSpeed {
     /// - Min: 0
     /// - Max: 1675
     /// - Unit: "m/s"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn gps_speed_2d(&self) -> f32 {
         self.gps_speed_2d_raw()
@@ -2572,7 +2572,7 @@ impl RtDl1mk3GpsSpeed {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn accuracy_gps_speed(&self) -> u8 {
         self.accuracy_gps_speed_raw()
@@ -2616,7 +2616,7 @@ impl RtDl1mk3GpsSpeed {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_gps_speed_3d(&self) -> bool {
         self.validity_gps_speed_3d_raw()
@@ -2648,7 +2648,7 @@ impl RtDl1mk3GpsSpeed {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_gps_speed_2d(&self) -> bool {
         self.validity_gps_speed_2d_raw()
@@ -2750,7 +2750,7 @@ impl RtIrTempTemp7 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ir_temperature_7(&self) -> f32 {
         self.ir_temperature_7_raw()
@@ -2876,7 +2876,7 @@ impl RtIrTempTempRr2 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ir_temperature_32(&self) -> f32 {
         self.ir_temperature_32_raw()
@@ -2916,7 +2916,7 @@ impl RtIrTempTempRr2 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ir_temperature_31(&self) -> f32 {
         self.ir_temperature_31_raw()
@@ -2956,7 +2956,7 @@ impl RtIrTempTempRr2 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ir_temperature_30(&self) -> f32 {
         self.ir_temperature_30_raw()
@@ -2996,7 +2996,7 @@ impl RtIrTempTempRr2 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ir_temperature_29(&self) -> f32 {
         self.ir_temperature_29_raw()
@@ -3122,7 +3122,7 @@ impl RtIrTempTempRl2 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ir_temperature_24(&self) -> f32 {
         self.ir_temperature_24_raw()
@@ -3162,7 +3162,7 @@ impl RtIrTempTempRl2 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ir_temperature_23(&self) -> f32 {
         self.ir_temperature_23_raw()
@@ -3202,7 +3202,7 @@ impl RtIrTempTempRl2 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ir_temperature_22(&self) -> f32 {
         self.ir_temperature_22_raw()
@@ -3242,7 +3242,7 @@ impl RtIrTempTempRl2 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ir_temperature_21(&self) -> f32 {
         self.ir_temperature_21_raw()
@@ -3368,7 +3368,7 @@ impl RtIrTempTempFr2 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ir_temperature_16(&self) -> f32 {
         self.ir_temperature_16_raw()
@@ -3408,7 +3408,7 @@ impl RtIrTempTempFr2 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ir_temperature_15(&self) -> f32 {
         self.ir_temperature_15_raw()
@@ -3448,7 +3448,7 @@ impl RtIrTempTempFr2 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ir_temperature_14(&self) -> f32 {
         self.ir_temperature_14_raw()
@@ -3488,7 +3488,7 @@ impl RtIrTempTempFr2 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ir_temperature_13(&self) -> f32 {
         self.ir_temperature_13_raw()
@@ -3614,7 +3614,7 @@ impl RtIrTempTempFl2 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ir_temperature_8(&self) -> f32 {
         self.ir_temperature_8_raw()
@@ -3654,7 +3654,7 @@ impl RtIrTempTempFl2 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ir_temperature_7(&self) -> f32 {
         self.ir_temperature_7_raw()
@@ -3694,7 +3694,7 @@ impl RtIrTempTempFl2 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ir_temperature_6(&self) -> f32 {
         self.ir_temperature_6_raw()
@@ -3734,7 +3734,7 @@ impl RtIrTempTempFl2 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ir_temperature_5(&self) -> f32 {
         self.ir_temperature_5_raw()
@@ -3860,7 +3860,7 @@ impl RtIrTempTempRr1 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ir_temperature_28(&self) -> f32 {
         self.ir_temperature_28_raw()
@@ -3900,7 +3900,7 @@ impl RtIrTempTempRr1 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ir_temperature_27(&self) -> f32 {
         self.ir_temperature_27_raw()
@@ -3940,7 +3940,7 @@ impl RtIrTempTempRr1 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ir_temperature_26(&self) -> f32 {
         self.ir_temperature_26_raw()
@@ -3980,7 +3980,7 @@ impl RtIrTempTempRr1 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ir_temperature_25(&self) -> f32 {
         self.ir_temperature_25_raw()
@@ -4106,7 +4106,7 @@ impl RtIrTempTempRl1 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ir_temperature_20(&self) -> f32 {
         self.ir_temperature_20_raw()
@@ -4146,7 +4146,7 @@ impl RtIrTempTempRl1 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ir_temperature_19(&self) -> f32 {
         self.ir_temperature_19_raw()
@@ -4186,7 +4186,7 @@ impl RtIrTempTempRl1 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ir_temperature_18(&self) -> f32 {
         self.ir_temperature_18_raw()
@@ -4226,7 +4226,7 @@ impl RtIrTempTempRl1 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ir_temperature_17(&self) -> f32 {
         self.ir_temperature_17_raw()
@@ -4352,7 +4352,7 @@ impl RtIrTempTempFr1 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ir_temperature_12(&self) -> f32 {
         self.ir_temperature_12_raw()
@@ -4392,7 +4392,7 @@ impl RtIrTempTempFr1 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ir_temperature_11(&self) -> f32 {
         self.ir_temperature_11_raw()
@@ -4432,7 +4432,7 @@ impl RtIrTempTempFr1 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ir_temperature_10(&self) -> f32 {
         self.ir_temperature_10_raw()
@@ -4472,7 +4472,7 @@ impl RtIrTempTempFr1 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ir_temperature_9(&self) -> f32 {
         self.ir_temperature_9_raw()
@@ -4598,7 +4598,7 @@ impl RtIrTempTempFl1 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ir_temperature_4(&self) -> f32 {
         self.ir_temperature_4_raw()
@@ -4638,7 +4638,7 @@ impl RtIrTempTempFl1 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ir_temperature_3(&self) -> f32 {
         self.ir_temperature_3_raw()
@@ -4678,7 +4678,7 @@ impl RtIrTempTempFl1 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ir_temperature_2(&self) -> f32 {
         self.ir_temperature_2_raw()
@@ -4718,7 +4718,7 @@ impl RtIrTempTempFl1 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ir_temperature_1(&self) -> f32 {
         self.ir_temperature_1_raw()
@@ -4830,7 +4830,7 @@ impl RtIrTempTemp32 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ir_temperature_32(&self) -> f32 {
         self.ir_temperature_32_raw()
@@ -4942,7 +4942,7 @@ impl RtIrTempTemp31 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ir_temperature_31(&self) -> f32 {
         self.ir_temperature_31_raw()
@@ -5054,7 +5054,7 @@ impl RtIrTempTemp30 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ir_temperature_30(&self) -> f32 {
         self.ir_temperature_30_raw()
@@ -5166,7 +5166,7 @@ impl RtIrTempTemp29 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ir_temperature_29(&self) -> f32 {
         self.ir_temperature_29_raw()
@@ -5278,7 +5278,7 @@ impl RtIrTempTemp28 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ir_temperature_28(&self) -> f32 {
         self.ir_temperature_28_raw()
@@ -5390,7 +5390,7 @@ impl RtIrTempTemp27 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ir_temperature_27(&self) -> f32 {
         self.ir_temperature_27_raw()
@@ -5502,7 +5502,7 @@ impl RtIrTempTemp26 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ir_temperature_26(&self) -> f32 {
         self.ir_temperature_26_raw()
@@ -5614,7 +5614,7 @@ impl RtIrTempTemp25 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ir_temperature_25(&self) -> f32 {
         self.ir_temperature_25_raw()
@@ -5726,7 +5726,7 @@ impl RtIrTempTemp24 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ir_temperature_24(&self) -> f32 {
         self.ir_temperature_24_raw()
@@ -5838,7 +5838,7 @@ impl RtIrTempTemp22 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ir_temperature_22(&self) -> f32 {
         self.ir_temperature_22_raw()
@@ -5950,7 +5950,7 @@ impl RtIrTempTemp23 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ir_temperature_23(&self) -> f32 {
         self.ir_temperature_23_raw()
@@ -6062,7 +6062,7 @@ impl RtIrTempTemp21 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ir_temperature_21(&self) -> f32 {
         self.ir_temperature_21_raw()
@@ -6174,7 +6174,7 @@ impl RtIrTempTemp20 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ir_temperature_20(&self) -> f32 {
         self.ir_temperature_20_raw()
@@ -6286,7 +6286,7 @@ impl RtIrTempTemp19 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ir_temperature_19(&self) -> f32 {
         self.ir_temperature_19_raw()
@@ -6398,7 +6398,7 @@ impl RtIrTempTemp18 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ir_temperature_18(&self) -> f32 {
         self.ir_temperature_18_raw()
@@ -6510,7 +6510,7 @@ impl RtIrTempTemp16 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ir_temperature_16(&self) -> f32 {
         self.ir_temperature_16_raw()
@@ -6622,7 +6622,7 @@ impl RtIrTempTemp15 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ir_temperature_15(&self) -> f32 {
         self.ir_temperature_15_raw()
@@ -6734,7 +6734,7 @@ impl RtIrTempTemp14 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ir_temperature_14(&self) -> f32 {
         self.ir_temperature_14_raw()
@@ -6846,7 +6846,7 @@ impl RtIrTempTemp13 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ir_temperature_13(&self) -> f32 {
         self.ir_temperature_13_raw()
@@ -6958,7 +6958,7 @@ impl RtIrTempTemp12 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ir_temperature_12(&self) -> f32 {
         self.ir_temperature_12_raw()
@@ -7070,7 +7070,7 @@ impl RtIrTempTemp11 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ir_temperature_11(&self) -> f32 {
         self.ir_temperature_11_raw()
@@ -7182,7 +7182,7 @@ impl RtIrTempTemp10 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ir_temperature_10(&self) -> f32 {
         self.ir_temperature_10_raw()
@@ -7294,7 +7294,7 @@ impl RtIrTempTemp8 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ir_temperature_8(&self) -> f32 {
         self.ir_temperature_8_raw()
@@ -7406,7 +7406,7 @@ impl RtIrTempTemp9 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ir_temperature_9(&self) -> f32 {
         self.ir_temperature_9_raw()
@@ -7518,7 +7518,7 @@ impl RtIrTempTemp17 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ir_temperature_17(&self) -> f32 {
         self.ir_temperature_17_raw()
@@ -7630,7 +7630,7 @@ impl RtIrTempTemp6 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ir_temperature_6(&self) -> f32 {
         self.ir_temperature_6_raw()
@@ -7742,7 +7742,7 @@ impl RtIrTempTemp5 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ir_temperature_5(&self) -> f32 {
         self.ir_temperature_5_raw()
@@ -7854,7 +7854,7 @@ impl RtIrTempTemp4 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ir_temperature_4(&self) -> f32 {
         self.ir_temperature_4_raw()
@@ -7966,7 +7966,7 @@ impl RtIrTempTemp3 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ir_temperature_3(&self) -> f32 {
         self.ir_temperature_3_raw()
@@ -8078,7 +8078,7 @@ impl RtIrTempTemp2 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ir_temperature_2(&self) -> f32 {
         self.ir_temperature_2_raw()
@@ -8190,7 +8190,7 @@ impl RtIrTempTemp1 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ir_temperature_1(&self) -> f32 {
         self.ir_temperature_1_raw()
@@ -8305,7 +8305,7 @@ impl RtSbTrigFinalCondition {
     /// - Min: 0
     /// - Max: 1675
     /// - Unit: "m/s"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn final_speed(&self) -> f32 {
         self.final_speed_raw()
@@ -8346,7 +8346,7 @@ impl RtSbTrigFinalCondition {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_final_speed(&self) -> bool {
         self.validity_final_speed_raw()
@@ -8466,7 +8466,7 @@ impl RtSbTrigInitialCondition {
     /// - Min: 0
     /// - Max: 100
     /// - Unit: "%"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn mfdd_end_threshold(&self) -> u8 {
         self.mfdd_end_threshold_raw()
@@ -8508,7 +8508,7 @@ impl RtSbTrigInitialCondition {
     /// - Min: 0
     /// - Max: 100
     /// - Unit: "%"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn mfdd_start_threshold(&self) -> u8 {
         self.mfdd_start_threshold_raw()
@@ -8552,7 +8552,7 @@ impl RtSbTrigInitialCondition {
     /// - Min: -180
     /// - Max: 180
     /// - Unit: "degrees"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn initial_heading(&self) -> f32 {
         self.initial_heading_raw()
@@ -8594,7 +8594,7 @@ impl RtSbTrigInitialCondition {
     /// - Min: 0
     /// - Max: 1675
     /// - Unit: "m/s"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn initial_speed(&self) -> f32 {
         self.initial_speed_raw()
@@ -8635,7 +8635,7 @@ impl RtSbTrigInitialCondition {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_initial_heading(&self) -> bool {
         self.validity_initial_heading_raw()
@@ -8667,7 +8667,7 @@ impl RtSbTrigInitialCondition {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_initial_speed(&self) -> bool {
         self.validity_initial_speed_raw()
@@ -8774,7 +8774,7 @@ impl RtSbTrigDirectDist {
     /// - Min: 0
     /// - Max: 4294967
     /// - Unit: "m"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn path_distance_2d(&self) -> f32 {
         self.path_distance_2d_raw()
@@ -8815,7 +8815,7 @@ impl RtSbTrigDirectDist {
     /// - Min: 0
     /// - Max: 4294967
     /// - Unit: "m"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn direct_distance(&self) -> f32 {
         self.direct_distance_raw()
@@ -8934,7 +8934,7 @@ impl RtSbTrigForwardDist {
     /// - Min: -2147483.648
     /// - Max: 2147483.647
     /// - Unit: "m"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn deviation_distance(&self) -> f32 {
         self.deviation_distance_raw()
@@ -8976,7 +8976,7 @@ impl RtSbTrigForwardDist {
     /// - Min: -2147483.648
     /// - Max: 2147483.647
     /// - Unit: "m"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn forward_distance(&self) -> f32 {
         self.forward_distance_raw()
@@ -9090,7 +9090,7 @@ impl RtSbTrigPathDist {
     /// - Min: 0
     /// - Max: 4294967
     /// - Unit: "m"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn path_distance_3d(&self) -> f32 {
         self.path_distance_3d_raw()
@@ -9219,7 +9219,7 @@ impl RtSbTrigAccel {
     /// - Min: 0
     /// - Max: 167772
     /// - Unit: "s"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn triggered_time(&self) -> f32 {
         self.triggered_time_raw()
@@ -9260,7 +9260,7 @@ impl RtSbTrigAccel {
     /// - Min: -65
     /// - Max: 65
     /// - Unit: "g"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn average_accel(&self) -> f32 {
         self.average_accel_raw()
@@ -9302,7 +9302,7 @@ impl RtSbTrigAccel {
     /// - Min: -65
     /// - Max: 65
     /// - Unit: "g"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn mfdd(&self) -> f32 {
         self.mfdd_raw()
@@ -9344,7 +9344,7 @@ impl RtSbTrigAccel {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_triggered_time(&self) -> bool {
         self.validity_triggered_time_raw()
@@ -9376,7 +9376,7 @@ impl RtSbTrigAccel {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_average_accel(&self) -> bool {
         self.validity_average_accel_raw()
@@ -9408,7 +9408,7 @@ impl RtSbTrigAccel {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_mfdd(&self) -> bool {
         self.validity_mfdd_raw()
@@ -9510,7 +9510,7 @@ impl RtDl1mk3MeasureTime12 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn measured_time_12(&self) -> u32 {
         self.measured_time_12_raw()
@@ -9624,7 +9624,7 @@ impl RtDl1mk3MeasureTime11 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn measured_time_11(&self) -> u32 {
         self.measured_time_11_raw()
@@ -9738,7 +9738,7 @@ impl RtDl1mk3MeasureTime10 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn measured_time_10(&self) -> u32 {
         self.measured_time_10_raw()
@@ -9852,7 +9852,7 @@ impl RtDl1mk3MeasureTime9 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn measured_time_9(&self) -> u32 {
         self.measured_time_9_raw()
@@ -9966,7 +9966,7 @@ impl RtDl1mk3MeasureTime8 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn measured_time_8(&self) -> u32 {
         self.measured_time_8_raw()
@@ -10080,7 +10080,7 @@ impl RtDl1mk3MeasureTime7 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn measured_time_7(&self) -> u32 {
         self.measured_time_7_raw()
@@ -10194,7 +10194,7 @@ impl RtDl1mk3MeasureTime6 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn measured_time_6(&self) -> u32 {
         self.measured_time_6_raw()
@@ -10308,7 +10308,7 @@ impl RtDl1mk3MeasureTime5 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn measured_time_5(&self) -> u32 {
         self.measured_time_5_raw()
@@ -10422,7 +10422,7 @@ impl RtDl1mk3MeasureTime4 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn measured_time_4(&self) -> u32 {
         self.measured_time_4_raw()
@@ -10536,7 +10536,7 @@ impl RtDl1mk3MeasureTime3 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn measured_time_3(&self) -> u32 {
         self.measured_time_3_raw()
@@ -10650,7 +10650,7 @@ impl RtDl1mk3MeasureTime2 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn measured_time_2(&self) -> u32 {
         self.measured_time_2_raw()
@@ -10764,7 +10764,7 @@ impl RtDl1mk3MeasureTime1 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn measured_time_1(&self) -> u32 {
         self.measured_time_1_raw()
@@ -10878,7 +10878,7 @@ impl RtDl1mk3Rpm {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn rpm(&self) -> u16 {
         self.rpm_raw()
@@ -10992,7 +10992,7 @@ impl RtDl1mk3Freq4 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn frequency_4(&self) -> f32 {
         self.frequency_4_raw()
@@ -11103,7 +11103,7 @@ impl RtDl1mk3Freq3 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn frequency_3(&self) -> f32 {
         self.frequency_3_raw()
@@ -11214,7 +11214,7 @@ impl RtDl1mk3Freq2 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn frequency_2(&self) -> f32 {
         self.frequency_2_raw()
@@ -11325,7 +11325,7 @@ impl RtDl1mk3Misc3 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn misc_3(&self) -> f32 {
         self.misc_3_raw()
@@ -11436,7 +11436,7 @@ impl RtDl1mk3Misc2 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn misc_2(&self) -> f32 {
         self.misc_2_raw()
@@ -11547,7 +11547,7 @@ impl RtDl1mk3Misc1 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn misc_1(&self) -> f32 {
         self.misc_1_raw()
@@ -11658,7 +11658,7 @@ impl RtDl1mk3Aux31 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn aux_31(&self) -> f32 {
         self.aux_31_raw()
@@ -11769,7 +11769,7 @@ impl RtDl1mk3Aux30 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn aux_30(&self) -> f32 {
         self.aux_30_raw()
@@ -11880,7 +11880,7 @@ impl RtDl1mk3Aux29 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn aux_29(&self) -> f32 {
         self.aux_29_raw()
@@ -11991,7 +11991,7 @@ impl RtDl1mk3Aux28 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn aux_28(&self) -> f32 {
         self.aux_28_raw()
@@ -12102,7 +12102,7 @@ impl RtDl1mk3Aux27 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn aux_27(&self) -> f32 {
         self.aux_27_raw()
@@ -12213,7 +12213,7 @@ impl RtDl1mk3Aux26 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn aux_26(&self) -> f32 {
         self.aux_26_raw()
@@ -12324,7 +12324,7 @@ impl RtDl1mk3Aux25 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn aux_25(&self) -> f32 {
         self.aux_25_raw()
@@ -12435,7 +12435,7 @@ impl RtDl1mk3Aux24 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn aux_24(&self) -> f32 {
         self.aux_24_raw()
@@ -12546,7 +12546,7 @@ impl RtDl1mk3Aux23 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn aux_23(&self) -> f32 {
         self.aux_23_raw()
@@ -12657,7 +12657,7 @@ impl RtDl1mk3Aux22 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn aux_22(&self) -> u32 {
         self.aux_22_raw()
@@ -12771,7 +12771,7 @@ impl RtDl1mk3Aux21 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn aux_21(&self) -> f32 {
         self.aux_21_raw()
@@ -12882,7 +12882,7 @@ impl RtDl1mk3Aux20 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn aux_20(&self) -> f32 {
         self.aux_20_raw()
@@ -12993,7 +12993,7 @@ impl RtDl1mk3Aux19 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn aux_19(&self) -> f32 {
         self.aux_19_raw()
@@ -13104,7 +13104,7 @@ impl RtDl1mk3Aux18 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn aux_18(&self) -> f32 {
         self.aux_18_raw()
@@ -13215,7 +13215,7 @@ impl RtDl1mk3Aux17 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn aux_17(&self) -> f32 {
         self.aux_17_raw()
@@ -13326,7 +13326,7 @@ impl RtDl1mk3Aux16 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn aux_16(&self) -> f32 {
         self.aux_16_raw()
@@ -13437,7 +13437,7 @@ impl RtDl1mk3Aux15 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn aux_15(&self) -> f32 {
         self.aux_15_raw()
@@ -13548,7 +13548,7 @@ impl RtDl1mk3Aux14 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn aux_14(&self) -> f32 {
         self.aux_14_raw()
@@ -13659,7 +13659,7 @@ impl RtDl1mk3Aux13 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn aux_13(&self) -> f32 {
         self.aux_13_raw()
@@ -13770,7 +13770,7 @@ impl RtDl1mk3Aux12 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn aux_12(&self) -> f32 {
         self.aux_12_raw()
@@ -13881,7 +13881,7 @@ impl RtDl1mk3Aux11 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn aux_11(&self) -> f32 {
         self.aux_11_raw()
@@ -13992,7 +13992,7 @@ impl RtDl1mk3Aux9 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn aux_9(&self) -> f32 {
         self.aux_9_raw()
@@ -14103,7 +14103,7 @@ impl RtDl1mk3Aux10 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn aux_10(&self) -> f32 {
         self.aux_10_raw()
@@ -14214,7 +14214,7 @@ impl RtDl1mk3Aux8 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn aux_8(&self) -> f32 {
         self.aux_8_raw()
@@ -14325,7 +14325,7 @@ impl RtDl1mk3Aux7 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn aux_7(&self) -> f32 {
         self.aux_7_raw()
@@ -14436,7 +14436,7 @@ impl RtDl1mk3Aux6 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn aux_6(&self) -> f32 {
         self.aux_6_raw()
@@ -14547,7 +14547,7 @@ impl RtDl1mk3Aux5 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn aux_5(&self) -> f32 {
         self.aux_5_raw()
@@ -14658,7 +14658,7 @@ impl RtDl1mk3Aux4 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn aux_4(&self) -> f32 {
         self.aux_4_raw()
@@ -14769,7 +14769,7 @@ impl RtDl1mk3Aux3 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn aux_3(&self) -> f32 {
         self.aux_3_raw()
@@ -14880,7 +14880,7 @@ impl RtDl1mk3Aux2 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn aux_2(&self) -> f32 {
         self.aux_2_raw()
@@ -14991,7 +14991,7 @@ impl RtDl1mk3Aux1 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn aux_1(&self) -> f32 {
         self.aux_1_raw()
@@ -15102,7 +15102,7 @@ impl RtDl1mk3Pressure5 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn pressure_5(&self) -> f32 {
         self.pressure_5_raw()
@@ -15213,7 +15213,7 @@ impl RtDl1mk3Pressure4 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn pressure_4(&self) -> f32 {
         self.pressure_4_raw()
@@ -15324,7 +15324,7 @@ impl RtDl1mk3Pressure3 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn pressure_3(&self) -> f32 {
         self.pressure_3_raw()
@@ -15435,7 +15435,7 @@ impl RtDl1mk3Pressure2 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn pressure_2(&self) -> f32 {
         self.pressure_2_raw()
@@ -15546,7 +15546,7 @@ impl RtDl1mk3Pressure1 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn pressure_1(&self) -> f32 {
         self.pressure_1_raw()
@@ -15657,7 +15657,7 @@ impl RtDl1mk3Angle3 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn angle_3(&self) -> f32 {
         self.angle_3_raw()
@@ -15769,7 +15769,7 @@ impl RtDl1mk3Angle2 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn angle_2(&self) -> f32 {
         self.angle_2_raw()
@@ -15881,7 +15881,7 @@ impl RtDl1mk3Angle1 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn angle_1(&self) -> f32 {
         self.angle_1_raw()
@@ -15993,7 +15993,7 @@ impl RtDl1mk3Temp25 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn temperature_25(&self) -> f32 {
         self.temperature_25_raw()
@@ -16105,7 +16105,7 @@ impl RtDl1mk3Temp24 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn temperature_24(&self) -> f32 {
         self.temperature_24_raw()
@@ -16217,7 +16217,7 @@ impl RtDl1mk3Temp23 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn temperature_23(&self) -> f32 {
         self.temperature_23_raw()
@@ -16329,7 +16329,7 @@ impl RtDl1mk3Temp22 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn temperature_22(&self) -> f32 {
         self.temperature_22_raw()
@@ -16441,7 +16441,7 @@ impl RtDl1mk3Temp21 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn temperature_21(&self) -> f32 {
         self.temperature_21_raw()
@@ -16553,7 +16553,7 @@ impl RtDl1mk3Temp20 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn temperature_20(&self) -> f32 {
         self.temperature_20_raw()
@@ -16665,7 +16665,7 @@ impl RtDl1mk3Temp19 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn temperature_19(&self) -> f32 {
         self.temperature_19_raw()
@@ -16777,7 +16777,7 @@ impl RtDl1mk3Temp18 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn temperature_18(&self) -> f32 {
         self.temperature_18_raw()
@@ -16889,7 +16889,7 @@ impl RtDl1mk3Temp17 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn temperature_17(&self) -> f32 {
         self.temperature_17_raw()
@@ -17001,7 +17001,7 @@ impl RtDl1mk3Temp16 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn temperature_16(&self) -> f32 {
         self.temperature_16_raw()
@@ -17113,7 +17113,7 @@ impl RtDl1mk3Temp15 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn temperature_15(&self) -> f32 {
         self.temperature_15_raw()
@@ -17225,7 +17225,7 @@ impl RtDl1mk3Temp14 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn temperature_14(&self) -> f32 {
         self.temperature_14_raw()
@@ -17337,7 +17337,7 @@ impl RtDl1mk3Temp13 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn temperature_13(&self) -> f32 {
         self.temperature_13_raw()
@@ -17449,7 +17449,7 @@ impl RtDl1mk3Temp12 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn temperature_12(&self) -> f32 {
         self.temperature_12_raw()
@@ -17561,7 +17561,7 @@ impl RtDl1mk3Temp11 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn temperature_11(&self) -> f32 {
         self.temperature_11_raw()
@@ -17673,7 +17673,7 @@ impl RtDl1mk3Temp10 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn temperature_10(&self) -> f32 {
         self.temperature_10_raw()
@@ -17785,7 +17785,7 @@ impl RtDl1mk3Temp9 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn temperature_9(&self) -> f32 {
         self.temperature_9_raw()
@@ -17897,7 +17897,7 @@ impl RtDl1mk3Temp8 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn temperature_8(&self) -> f32 {
         self.temperature_8_raw()
@@ -18009,7 +18009,7 @@ impl RtDl1mk3Temp7 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn temperature_7(&self) -> f32 {
         self.temperature_7_raw()
@@ -18121,7 +18121,7 @@ impl RtDl1mk3Temp6 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn temperature_6(&self) -> f32 {
         self.temperature_6_raw()
@@ -18233,7 +18233,7 @@ impl RtDl1mk3Temp5 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn temperature_5(&self) -> f32 {
         self.temperature_5_raw()
@@ -18345,7 +18345,7 @@ impl RtDl1mk3Temp4 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn temperature_4(&self) -> f32 {
         self.temperature_4_raw()
@@ -18457,7 +18457,7 @@ impl RtDl1mk3Temp3 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn temperature_3(&self) -> f32 {
         self.temperature_3_raw()
@@ -18569,7 +18569,7 @@ impl RtDl1mk3Temp2 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn temperature_2(&self) -> f32 {
         self.temperature_2_raw()
@@ -18681,7 +18681,7 @@ impl RtDl1mk3Temp1 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn temperature_1(&self) -> f32 {
         self.temperature_1_raw()
@@ -18793,7 +18793,7 @@ impl RtDl1mk3Analog32 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn analog_32(&self) -> f32 {
         self.analog_32_raw()
@@ -18904,7 +18904,7 @@ impl RtDl1mk3Analog31 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn analog_31(&self) -> f32 {
         self.analog_31_raw()
@@ -19015,7 +19015,7 @@ impl RtDl1mk3Analog30 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn analog_30(&self) -> f32 {
         self.analog_30_raw()
@@ -19126,7 +19126,7 @@ impl RtDl1mk3Analog29 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn analog_29(&self) -> f32 {
         self.analog_29_raw()
@@ -19237,7 +19237,7 @@ impl RtDl1mk3Analog28 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn analog_28(&self) -> f32 {
         self.analog_28_raw()
@@ -19348,7 +19348,7 @@ impl RtDl1mk3Analog27 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn analog_27(&self) -> f32 {
         self.analog_27_raw()
@@ -19459,7 +19459,7 @@ impl RtDl1mk3Analog26 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn analog_26(&self) -> f32 {
         self.analog_26_raw()
@@ -19570,7 +19570,7 @@ impl RtDl1mk3Analog25 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn analog_25(&self) -> f32 {
         self.analog_25_raw()
@@ -19681,7 +19681,7 @@ impl RtDl1mk3Analog15 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn analog_15(&self) -> f32 {
         self.analog_15_raw()
@@ -19792,7 +19792,7 @@ impl RtDl1mk3Analog14 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn analog_14(&self) -> f32 {
         self.analog_14_raw()
@@ -19903,7 +19903,7 @@ impl RtDl1mk3Analog17 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn analog_17(&self) -> f32 {
         self.analog_17_raw()
@@ -20014,7 +20014,7 @@ impl RtDl1mk3Analog24 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn analog_24(&self) -> f32 {
         self.analog_24_raw()
@@ -20125,7 +20125,7 @@ impl RtDl1mk3Analog23 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn analog_23(&self) -> f32 {
         self.analog_23_raw()
@@ -20236,7 +20236,7 @@ impl RtDl1mk3Analog22 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn analog_22(&self) -> f32 {
         self.analog_22_raw()
@@ -20347,7 +20347,7 @@ impl RtDl1mk3Analog21 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn analog_21(&self) -> f32 {
         self.analog_21_raw()
@@ -20458,7 +20458,7 @@ impl RtDl1mk3Analog20 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn analog_20(&self) -> f32 {
         self.analog_20_raw()
@@ -20569,7 +20569,7 @@ impl RtDl1mk3Analog19 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn analog_19(&self) -> f32 {
         self.analog_19_raw()
@@ -20680,7 +20680,7 @@ impl RtDl1mk3Analog16 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn analog_16(&self) -> f32 {
         self.analog_16_raw()
@@ -20791,7 +20791,7 @@ impl RtDl1mk3Analog18 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn analog_18(&self) -> f32 {
         self.analog_18_raw()
@@ -20902,7 +20902,7 @@ impl RtDl1mk3Analog12 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn analog_12(&self) -> f32 {
         self.analog_12_raw()
@@ -21013,7 +21013,7 @@ impl RtDl1mk3Analog11 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn analog_11(&self) -> f32 {
         self.analog_11_raw()
@@ -21124,7 +21124,7 @@ impl RtDl1mk3Analog10 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn analog_10(&self) -> f32 {
         self.analog_10_raw()
@@ -21235,7 +21235,7 @@ impl RtDl1mk3Analog9 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn analog_9(&self) -> f32 {
         self.analog_9_raw()
@@ -21346,7 +21346,7 @@ impl RtDl1mk3Analog8 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn analog_8(&self) -> f32 {
         self.analog_8_raw()
@@ -21457,7 +21457,7 @@ impl RtDl1mk3Analog7 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn analog_7(&self) -> f32 {
         self.analog_7_raw()
@@ -21568,7 +21568,7 @@ impl RtDl1mk3Analog6 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn analog_6(&self) -> f32 {
         self.analog_6_raw()
@@ -21679,7 +21679,7 @@ impl RtDl1mk3Analog5 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn analog_5(&self) -> f32 {
         self.analog_5_raw()
@@ -21790,7 +21790,7 @@ impl RtDl1mk3Analog4 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn analog_4(&self) -> f32 {
         self.analog_4_raw()
@@ -21901,7 +21901,7 @@ impl RtDl1mk3Analog3 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn analog_3(&self) -> f32 {
         self.analog_3_raw()
@@ -22012,7 +22012,7 @@ impl RtDl1mk3Analog2 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn analog_2(&self) -> f32 {
         self.analog_2_raw()
@@ -22123,7 +22123,7 @@ impl RtDl1mk3Analog1 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn analog_1(&self) -> f32 {
         self.analog_1_raw()
@@ -22256,7 +22256,7 @@ impl RtDl1mk3Accel {
     /// - Min: -65
     /// - Max: 65
     /// - Unit: "g"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn accel_vertical(&self) -> f32 {
         self.accel_vertical_raw()
@@ -22298,7 +22298,7 @@ impl RtDl1mk3Accel {
     /// - Min: -65
     /// - Max: 65
     /// - Unit: "g"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn accel_lateral(&self) -> f32 {
         self.accel_lateral_raw()
@@ -22340,7 +22340,7 @@ impl RtDl1mk3Accel {
     /// - Min: -65
     /// - Max: 65
     /// - Unit: "g"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn accel_longitudinal(&self) -> f32 {
         self.accel_longitudinal_raw()
@@ -22382,7 +22382,7 @@ impl RtDl1mk3Accel {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn accuracy_accel(&self) -> u8 {
         self.accuracy_accel_raw()
@@ -22426,7 +22426,7 @@ impl RtDl1mk3Accel {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_accel_vertical(&self) -> bool {
         self.validity_accel_vertical_raw()
@@ -22458,7 +22458,7 @@ impl RtDl1mk3Accel {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_accel_lateral(&self) -> bool {
         self.validity_accel_lateral_raw()
@@ -22490,7 +22490,7 @@ impl RtDl1mk3Accel {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_accel_longitudinal(&self) -> bool {
         self.validity_accel_longitudinal_raw()
@@ -22607,7 +22607,7 @@ impl RtSbInsVpt4VelNed2 {
     /// - Min: -180
     /// - Max: 180
     /// - Unit: "degrees"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn virtual_4_slip(&self) -> f32 {
         self.virtual_4_slip_raw()
@@ -22649,7 +22649,7 @@ impl RtSbInsVpt4VelNed2 {
     /// - Min: -180
     /// - Max: 180
     /// - Unit: "degrees"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn virtual_4_heading(&self) -> f32 {
         self.virtual_4_heading_raw()
@@ -22691,7 +22691,7 @@ impl RtSbInsVpt4VelNed2 {
     /// - Min: -838
     /// - Max: 838
     /// - Unit: "m/s"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn virtual_4_vel_ned_d(&self) -> f32 {
         self.virtual_4_vel_ned_d_raw()
@@ -22811,7 +22811,7 @@ impl RtSbInsVpt4VelNed1 {
     /// - Min: -838
     /// - Max: 838
     /// - Unit: "m/s"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn virtual_4_vel_ned_e(&self) -> f32 {
         self.virtual_4_vel_ned_e_raw()
@@ -22853,7 +22853,7 @@ impl RtSbInsVpt4VelNed1 {
     /// - Min: -838
     /// - Max: 838
     /// - Unit: "m/s"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn virtual_4_vel_ned_n(&self) -> f32 {
         self.virtual_4_vel_ned_n_raw()
@@ -22977,7 +22977,7 @@ impl RtSbInsVpt4Offset {
     /// - Min: -32.768
     /// - Max: 32.767
     /// - Unit: "m"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn virtual_4_offset_z(&self) -> f32 {
         self.virtual_4_offset_z_raw()
@@ -23019,7 +23019,7 @@ impl RtSbInsVpt4Offset {
     /// - Min: -32.768
     /// - Max: 32.767
     /// - Unit: "m"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn virtual_4_offset_y(&self) -> f32 {
         self.virtual_4_offset_y_raw()
@@ -23061,7 +23061,7 @@ impl RtSbInsVpt4Offset {
     /// - Min: -32.768
     /// - Max: 32.767
     /// - Unit: "m"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn virtual_4_offset_x(&self) -> f32 {
         self.virtual_4_offset_x_raw()
@@ -23185,7 +23185,7 @@ impl RtSbInsVpt3VelNed2 {
     /// - Min: -180
     /// - Max: 180
     /// - Unit: "degrees"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn virtual_3_slip(&self) -> f32 {
         self.virtual_3_slip_raw()
@@ -23227,7 +23227,7 @@ impl RtSbInsVpt3VelNed2 {
     /// - Min: -180
     /// - Max: 180
     /// - Unit: "degrees"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn virtual_3_heading(&self) -> f32 {
         self.virtual_3_heading_raw()
@@ -23269,7 +23269,7 @@ impl RtSbInsVpt3VelNed2 {
     /// - Min: -838
     /// - Max: 838
     /// - Unit: "m/s"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn virtual_3_vel_ned_d(&self) -> f32 {
         self.virtual_3_vel_ned_d_raw()
@@ -23389,7 +23389,7 @@ impl RtSbInsVpt3VelNed1 {
     /// - Min: -838
     /// - Max: 838
     /// - Unit: "m/s"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn virtual_3_vel_ned_e(&self) -> f32 {
         self.virtual_3_vel_ned_e_raw()
@@ -23431,7 +23431,7 @@ impl RtSbInsVpt3VelNed1 {
     /// - Min: -838
     /// - Max: 838
     /// - Unit: "m/s"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn virtual_3_vel_ned_n(&self) -> f32 {
         self.virtual_3_vel_ned_n_raw()
@@ -23555,7 +23555,7 @@ impl RtSbInsVpt3Offset {
     /// - Min: -32.768
     /// - Max: 32.767
     /// - Unit: "m"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn virtual_3_offset_z(&self) -> f32 {
         self.virtual_3_offset_z_raw()
@@ -23597,7 +23597,7 @@ impl RtSbInsVpt3Offset {
     /// - Min: -32.768
     /// - Max: 32.767
     /// - Unit: "m"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn virtual_3_offset_y(&self) -> f32 {
         self.virtual_3_offset_y_raw()
@@ -23639,7 +23639,7 @@ impl RtSbInsVpt3Offset {
     /// - Min: -32.768
     /// - Max: 32.767
     /// - Unit: "m"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn virtual_3_offset_x(&self) -> f32 {
         self.virtual_3_offset_x_raw()
@@ -23763,7 +23763,7 @@ impl RtSbInsVpt2VelNed2 {
     /// - Min: -180
     /// - Max: 180
     /// - Unit: "degrees"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn virtual_2_slip(&self) -> f32 {
         self.virtual_2_slip_raw()
@@ -23805,7 +23805,7 @@ impl RtSbInsVpt2VelNed2 {
     /// - Min: -180
     /// - Max: 180
     /// - Unit: "degrees"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn virtual_2_heading(&self) -> f32 {
         self.virtual_2_heading_raw()
@@ -23847,7 +23847,7 @@ impl RtSbInsVpt2VelNed2 {
     /// - Min: -838
     /// - Max: 838
     /// - Unit: "m/s"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn virtual_2_vel_ned_d(&self) -> f32 {
         self.virtual_2_vel_ned_d_raw()
@@ -23967,7 +23967,7 @@ impl RtSbInsVpt2VelNed1 {
     /// - Min: -838
     /// - Max: 838
     /// - Unit: "m/s"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn virtual_2_vel_ned_e(&self) -> f32 {
         self.virtual_2_vel_ned_e_raw()
@@ -24009,7 +24009,7 @@ impl RtSbInsVpt2VelNed1 {
     /// - Min: -838
     /// - Max: 838
     /// - Unit: "m/s"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn virtual_2_vel_ned_n(&self) -> f32 {
         self.virtual_2_vel_ned_n_raw()
@@ -24133,7 +24133,7 @@ impl RtSbInsVpt2Offset {
     /// - Min: -32.768
     /// - Max: 32.767
     /// - Unit: "m"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn virtual_2_offset_z(&self) -> f32 {
         self.virtual_2_offset_z_raw()
@@ -24175,7 +24175,7 @@ impl RtSbInsVpt2Offset {
     /// - Min: -32.768
     /// - Max: 32.767
     /// - Unit: "m"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn virtual_2_offset_y(&self) -> f32 {
         self.virtual_2_offset_y_raw()
@@ -24217,7 +24217,7 @@ impl RtSbInsVpt2Offset {
     /// - Min: -32.768
     /// - Max: 32.767
     /// - Unit: "m"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn virtual_2_offset_x(&self) -> f32 {
         self.virtual_2_offset_x_raw()
@@ -24341,7 +24341,7 @@ impl RtSbInsVpt1VelNed2 {
     /// - Min: -180
     /// - Max: 180
     /// - Unit: "degrees"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn virtual_1_slip(&self) -> f32 {
         self.virtual_1_slip_raw()
@@ -24383,7 +24383,7 @@ impl RtSbInsVpt1VelNed2 {
     /// - Min: -180
     /// - Max: 180
     /// - Unit: "degrees"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn virtual_1_heading(&self) -> f32 {
         self.virtual_1_heading_raw()
@@ -24425,7 +24425,7 @@ impl RtSbInsVpt1VelNed2 {
     /// - Min: -838
     /// - Max: 838
     /// - Unit: "m/s"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn virtual_1_vel_ned_d(&self) -> f32 {
         self.virtual_1_vel_ned_d_raw()
@@ -24545,7 +24545,7 @@ impl RtSbInsVpt1VelNed1 {
     /// - Min: -838
     /// - Max: 838
     /// - Unit: "m/s"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn virtual_1_vel_ned_e(&self) -> f32 {
         self.virtual_1_vel_ned_e_raw()
@@ -24587,7 +24587,7 @@ impl RtSbInsVpt1VelNed1 {
     /// - Min: -838
     /// - Max: 838
     /// - Unit: "m/s"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn virtual_1_vel_ned_n(&self) -> f32 {
         self.virtual_1_vel_ned_n_raw()
@@ -24711,7 +24711,7 @@ impl RtSbInsVpt1Offset {
     /// - Min: -32.768
     /// - Max: 32.767
     /// - Unit: "m"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn virtual_1_offset_z(&self) -> f32 {
         self.virtual_1_offset_z_raw()
@@ -24753,7 +24753,7 @@ impl RtSbInsVpt1Offset {
     /// - Min: -32.768
     /// - Max: 32.767
     /// - Unit: "m"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn virtual_1_offset_y(&self) -> f32 {
         self.virtual_1_offset_y_raw()
@@ -24795,7 +24795,7 @@ impl RtSbInsVpt1Offset {
     /// - Min: -32.768
     /// - Max: 32.767
     /// - Unit: "m"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn virtual_1_offset_x(&self) -> f32 {
         self.virtual_1_offset_x_raw()
@@ -24927,7 +24927,7 @@ impl RtSbInsSlip {
     /// - Min: -360
     /// - Max: 360
     /// - Unit: "degrees"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ins_squat(&self) -> f32 {
         self.ins_squat_raw()
@@ -24969,7 +24969,7 @@ impl RtSbInsSlip {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn accuracy_ins_squat(&self) -> u8 {
         self.accuracy_ins_squat_raw()
@@ -25013,7 +25013,7 @@ impl RtSbInsSlip {
     /// - Min: -360
     /// - Max: 360
     /// - Unit: "degrees"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ins_slip(&self) -> f32 {
         self.ins_slip_raw()
@@ -25055,7 +25055,7 @@ impl RtSbInsSlip {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn accuracy_ins_slip(&self) -> u8 {
         self.accuracy_ins_slip_raw()
@@ -25097,7 +25097,7 @@ impl RtSbInsSlip {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_ins_squat(&self) -> bool {
         self.validity_ins_squat_raw()
@@ -25127,7 +25127,7 @@ impl RtSbInsSlip {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_ins_slip(&self) -> bool {
         self.validity_ins_slip_raw()
@@ -25241,7 +25241,7 @@ impl RtSbInsVelEcef2 {
     /// - Min: -838
     /// - Max: 838
     /// - Unit: "m/s"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ins_vel_ecef_z(&self) -> f32 {
         self.ins_vel_ecef_z_raw()
@@ -25283,7 +25283,7 @@ impl RtSbInsVelEcef2 {
     /// - Min: -838
     /// - Max: 838
     /// - Unit: "m/s"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ins_vel_ecef_y(&self) -> f32 {
         self.ins_vel_ecef_y_raw()
@@ -25325,7 +25325,7 @@ impl RtSbInsVelEcef2 {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_ins_vel_ecef_z(&self) -> bool {
         self.validity_ins_vel_ecef_z_raw()
@@ -25357,7 +25357,7 @@ impl RtSbInsVelEcef2 {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_ins_vel_ecef_y(&self) -> bool {
         self.validity_ins_vel_ecef_y_raw()
@@ -25477,7 +25477,7 @@ impl RtSbInsVelEcef1 {
     /// - Min: -838
     /// - Max: 838
     /// - Unit: "m/s"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ins_vel_ecef_x(&self) -> f32 {
         self.ins_vel_ecef_x_raw()
@@ -25517,7 +25517,7 @@ impl RtSbInsVelEcef1 {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn accuracy_ins_vel_ecef_z(&self) -> u8 {
         self.accuracy_ins_vel_ecef_z_raw()
@@ -25559,7 +25559,7 @@ impl RtSbInsVelEcef1 {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn accuracy_ins_vel_ecef_y(&self) -> u8 {
         self.accuracy_ins_vel_ecef_y_raw()
@@ -25601,7 +25601,7 @@ impl RtSbInsVelEcef1 {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn accuracy_ins_vel_ecef_x(&self) -> u8 {
         self.accuracy_ins_vel_ecef_x_raw()
@@ -25645,7 +25645,7 @@ impl RtSbInsVelEcef1 {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_ins_vel_ecef_x(&self) -> bool {
         self.validity_ins_vel_ecef_x_raw()
@@ -25757,7 +25757,7 @@ impl RtSbInsVelNed2 {
     /// - Min: -838
     /// - Max: 838
     /// - Unit: "m/s"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ins_vel_ned_d(&self) -> f32 {
         self.ins_vel_ned_d_raw()
@@ -25797,7 +25797,7 @@ impl RtSbInsVelNed2 {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn accuracy_ins_vel_d(&self) -> u8 {
         self.accuracy_ins_vel_d_raw()
@@ -25841,7 +25841,7 @@ impl RtSbInsVelNed2 {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_ins_vel_ned_d(&self) -> bool {
         self.validity_ins_vel_ned_d_raw()
@@ -25959,7 +25959,7 @@ impl RtSbInsVelNed1 {
     /// - Min: -838
     /// - Max: 838
     /// - Unit: "m/s"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ins_vel_ned_e(&self) -> f32 {
         self.ins_vel_ned_e_raw()
@@ -26001,7 +26001,7 @@ impl RtSbInsVelNed1 {
     /// - Min: -838
     /// - Max: 838
     /// - Unit: "m/s"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ins_vel_ned_n(&self) -> f32 {
         self.ins_vel_ned_n_raw()
@@ -26041,7 +26041,7 @@ impl RtSbInsVelNed1 {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn accuracy_ins_vel_ne(&self) -> u8 {
         self.accuracy_ins_vel_ne_raw()
@@ -26085,7 +26085,7 @@ impl RtSbInsVelNed1 {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_ins_vel_ned_e(&self) -> bool {
         self.validity_ins_vel_ned_e_raw()
@@ -26117,7 +26117,7 @@ impl RtSbInsVelNed1 {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_ins_vel_ned_n(&self) -> bool {
         self.validity_ins_vel_ned_n_raw()
@@ -26224,7 +26224,7 @@ impl RtSbInsPosEcef2 {
     /// - Min: -10000000
     /// - Max: 10000000
     /// - Unit: "m"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ins_pos_ecef_z(&self) -> f32 {
         self.ins_pos_ecef_z_raw()
@@ -26266,7 +26266,7 @@ impl RtSbInsPosEcef2 {
     /// - Min: -10000000
     /// - Max: 10000000
     /// - Unit: "m"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ins_pos_ecef_y(&self) -> f32 {
         self.ins_pos_ecef_y_raw()
@@ -26400,7 +26400,7 @@ impl RtSbInsPosEcef1 {
     /// - Min: -10000000
     /// - Max: 10000000
     /// - Unit: "m"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ins_pos_ecef_x(&self) -> f32 {
         self.ins_pos_ecef_x_raw()
@@ -26442,7 +26442,7 @@ impl RtSbInsPosEcef1 {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn accuracy_ins_pos_ecef_z(&self) -> u8 {
         self.accuracy_ins_pos_ecef_z_raw()
@@ -26486,7 +26486,7 @@ impl RtSbInsPosEcef1 {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn accuracy_ins_pos_ecef_y(&self) -> u8 {
         self.accuracy_ins_pos_ecef_y_raw()
@@ -26530,7 +26530,7 @@ impl RtSbInsPosEcef1 {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn accuracy_ins_pos_ecef_x(&self) -> u8 {
         self.accuracy_ins_pos_ecef_x_raw()
@@ -26574,7 +26574,7 @@ impl RtSbInsPosEcef1 {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_ins_pos_ecef_z(&self) -> bool {
         self.validity_ins_pos_ecef_z_raw()
@@ -26606,7 +26606,7 @@ impl RtSbInsPosEcef1 {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_ins_pos_ecef_y(&self) -> bool {
         self.validity_ins_pos_ecef_y_raw()
@@ -26638,7 +26638,7 @@ impl RtSbInsPosEcef1 {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_ins_pos_ecef_x(&self) -> bool {
         self.validity_ins_pos_ecef_x_raw()
@@ -26746,7 +26746,7 @@ impl RtSbInsPosLlh2 {
     /// - Min: -1000
     /// - Max: 100000
     /// - Unit: "m"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ins_pos_llh_altitude(&self) -> f32 {
         self.ins_pos_llh_altitude_raw()
@@ -26786,7 +26786,7 @@ impl RtSbInsPosLlh2 {
     /// - Min: -180
     /// - Max: 180
     /// - Unit: "degrees"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ins_pos_llh_longitude(&self) -> f32 {
         self.ins_pos_llh_longitude_raw()
@@ -26918,7 +26918,7 @@ impl RtSbInsPosLlh1 {
     /// - Min: -90
     /// - Max: 90
     /// - Unit: "degrees"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ins_pos_llh_latitude(&self) -> f32 {
         self.ins_pos_llh_latitude_raw()
@@ -26960,7 +26960,7 @@ impl RtSbInsPosLlh1 {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn accuracy_ins_pos_llh_altitude(&self) -> u8 {
         self.accuracy_ins_pos_llh_altitude_raw()
@@ -27007,7 +27007,7 @@ impl RtSbInsPosLlh1 {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn accuracy_ins_pos_llh_longitude(&self) -> u8 {
         self.accuracy_ins_pos_llh_longitude_raw()
@@ -27054,7 +27054,7 @@ impl RtSbInsPosLlh1 {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn accuracy_ins_pos_llh_latitude(&self) -> u8 {
         self.accuracy_ins_pos_llh_latitude_raw()
@@ -27101,7 +27101,7 @@ impl RtSbInsPosLlh1 {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_ins_pos_llh_altitude(&self) -> bool {
         self.validity_ins_pos_llh_altitude_raw()
@@ -27136,7 +27136,7 @@ impl RtSbInsPosLlh1 {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_ins_pos_llh_longitude(&self) -> bool {
         self.validity_ins_pos_llh_longitude_raw()
@@ -27171,7 +27171,7 @@ impl RtSbInsPosLlh1 {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_ins_pos_llh_latitude(&self) -> bool {
         self.validity_ins_pos_llh_latitude_raw()
@@ -27296,7 +27296,7 @@ impl RtSbInsHeadingGradient2 {
     /// - Min: -90
     /// - Max: 90
     /// - Unit: "degrees"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ins_gradient(&self) -> f32 {
         self.ins_gradient_raw()
@@ -27338,7 +27338,7 @@ impl RtSbInsHeadingGradient2 {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn accuracy_ins_gradient(&self) -> u8 {
         self.accuracy_ins_gradient_raw()
@@ -27382,7 +27382,7 @@ impl RtSbInsHeadingGradient2 {
     /// - Min: 0
     /// - Max: 360
     /// - Unit: "degrees"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ins_heading_2(&self) -> f32 {
         self.ins_heading_2_raw()
@@ -27423,7 +27423,7 @@ impl RtSbInsHeadingGradient2 {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn accuracy_ins_heading(&self) -> u8 {
         self.accuracy_ins_heading_raw()
@@ -27467,7 +27467,7 @@ impl RtSbInsHeadingGradient2 {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_ins_gradient(&self) -> bool {
         self.validity_ins_gradient_raw()
@@ -27499,7 +27499,7 @@ impl RtSbInsHeadingGradient2 {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_ins_heading(&self) -> bool {
         self.validity_ins_heading_raw()
@@ -27621,7 +27621,7 @@ impl RtSbInsHeadingGradient {
     /// - Min: -90
     /// - Max: 90
     /// - Unit: "degrees"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ins_gradient(&self) -> f32 {
         self.ins_gradient_raw()
@@ -27663,7 +27663,7 @@ impl RtSbInsHeadingGradient {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn accuracy_ins_gradient(&self) -> u8 {
         self.accuracy_ins_gradient_raw()
@@ -27707,7 +27707,7 @@ impl RtSbInsHeadingGradient {
     /// - Min: -180
     /// - Max: 180
     /// - Unit: "degrees"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ins_heading(&self) -> f32 {
         self.ins_heading_raw()
@@ -27749,7 +27749,7 @@ impl RtSbInsHeadingGradient {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn accuracy_ins_heading(&self) -> u8 {
         self.accuracy_ins_heading_raw()
@@ -27793,7 +27793,7 @@ impl RtSbInsHeadingGradient {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_ins_gradient(&self) -> bool {
         self.validity_ins_gradient_raw()
@@ -27825,7 +27825,7 @@ impl RtSbInsHeadingGradient {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_ins_heading(&self) -> bool {
         self.validity_ins_heading_raw()
@@ -27927,7 +27927,7 @@ impl RtSbInsStatus {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn ins_status(&self) -> RtSbInsStatusInsStatus {
         let signal = self.raw.view_bits::<Lsb0>()[0..8].load_le::<u8>();
@@ -28094,7 +28094,7 @@ impl RtSbInsAttitude {
     /// - Min: -360
     /// - Max: 360
     /// - Unit: "degrees"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn attitude_roll(&self) -> f32 {
         self.attitude_roll_raw()
@@ -28134,7 +28134,7 @@ impl RtSbInsAttitude {
     /// - Min: -360
     /// - Max: 360
     /// - Unit: "degrees"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn attitude_pitch(&self) -> f32 {
         self.attitude_pitch_raw()
@@ -28174,7 +28174,7 @@ impl RtSbInsAttitude {
     /// - Min: -360
     /// - Max: 360
     /// - Unit: "degrees"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn attitude_yaw(&self) -> f32 {
         self.attitude_yaw_raw()
@@ -28214,7 +28214,7 @@ impl RtSbInsAttitude {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn accuracy_attitude(&self) -> u8 {
         self.accuracy_attitude_raw()
@@ -28256,7 +28256,7 @@ impl RtSbInsAttitude {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_roll(&self) -> RtSbInsAttitudeValidityRoll {
         let signal = self.raw.view_bits::<Lsb0>()[2..3].load_le::<u8>();
@@ -28291,7 +28291,7 @@ impl RtSbInsAttitude {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_pitch(&self) -> RtSbInsAttitudeValidityPitch {
         let signal = self.raw.view_bits::<Lsb0>()[1..2].load_le::<u8>();
@@ -28326,7 +28326,7 @@ impl RtSbInsAttitude {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_yaw(&self) -> RtSbInsAttitudeValidityYaw {
         let signal = self.raw.view_bits::<Lsb0>()[0..1].load_le::<u8>();
@@ -28530,7 +28530,7 @@ impl RtSbOutputStatus {
     /// - Min: 0
     /// - Max: 604800
     /// - Unit: "s"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn gps_time(&self) -> f32 {
         self.gps_time_raw()
@@ -28571,7 +28571,7 @@ impl RtSbOutputStatus {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn status_trigger(&self) -> RtSbOutputStatusStatusTrigger {
         let signal = self.raw.view_bits::<Lsb0>()[15..16].load_le::<u8>();
@@ -28608,7 +28608,7 @@ impl RtSbOutputStatus {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn status_serial_output_2(&self) -> RtSbOutputStatusStatusSerialOutput2 {
         let signal = self.raw.view_bits::<Lsb0>()[14..15].load_le::<u8>();
@@ -28649,7 +28649,7 @@ impl RtSbOutputStatus {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn status_serial_output_1(&self) -> RtSbOutputStatusStatusSerialOutput1 {
         let signal = self.raw.view_bits::<Lsb0>()[13..14].load_le::<u8>();
@@ -28690,7 +28690,7 @@ impl RtSbOutputStatus {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn status_pulse_output(&self) -> RtSbOutputStatusStatusPulseOutput {
         let signal = self.raw.view_bits::<Lsb0>()[12..13].load_le::<u8>();
@@ -28729,7 +28729,7 @@ impl RtSbOutputStatus {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn status_analogue_4(&self) -> RtSbOutputStatusStatusAnalogue4 {
         let signal = self.raw.view_bits::<Lsb0>()[11..12].load_le::<u8>();
@@ -28766,7 +28766,7 @@ impl RtSbOutputStatus {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn status_analogue_3(&self) -> RtSbOutputStatusStatusAnalogue3 {
         let signal = self.raw.view_bits::<Lsb0>()[10..11].load_le::<u8>();
@@ -28803,7 +28803,7 @@ impl RtSbOutputStatus {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn status_analogue_2(&self) -> RtSbOutputStatusStatusAnalogue2 {
         let signal = self.raw.view_bits::<Lsb0>()[9..10].load_le::<u8>();
@@ -28840,7 +28840,7 @@ impl RtSbOutputStatus {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn status_analogue_1(&self) -> RtSbOutputStatusStatusAnalogue1 {
         let signal = self.raw.view_bits::<Lsb0>()[8..9].load_le::<u8>();
@@ -28877,7 +28877,7 @@ impl RtSbOutputStatus {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_status_timestamp(&self) -> bool {
         self.validity_status_timestamp_raw()
@@ -29202,7 +29202,7 @@ impl RtSbGpsHeadingGradient2 {
     /// - Min: -90
     /// - Max: 90
     /// - Unit: "degrees"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn gps_gradient(&self) -> f32 {
         self.gps_gradient_raw()
@@ -29244,7 +29244,7 @@ impl RtSbGpsHeadingGradient2 {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn accuracy_gps_gradient(&self) -> u8 {
         self.accuracy_gps_gradient_raw()
@@ -29288,7 +29288,7 @@ impl RtSbGpsHeadingGradient2 {
     /// - Min: 0
     /// - Max: 360
     /// - Unit: "degrees"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn gps_heading_2(&self) -> f32 {
         self.gps_heading_2_raw()
@@ -29329,7 +29329,7 @@ impl RtSbGpsHeadingGradient2 {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn accuracy_gps_heading(&self) -> u8 {
         self.accuracy_gps_heading_raw()
@@ -29373,7 +29373,7 @@ impl RtSbGpsHeadingGradient2 {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_gps_gradient(&self) -> bool {
         self.validity_gps_gradient_raw()
@@ -29405,7 +29405,7 @@ impl RtSbGpsHeadingGradient2 {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_gps_heading(&self) -> bool {
         self.validity_gps_heading_raw()
@@ -29519,7 +29519,7 @@ impl RtSbCumulativeDistance2 {
     /// - Min: 0
     /// - Max: 4294967
     /// - Unit: "m"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn cumulative_distance(&self) -> f32 {
         self.cumulative_distance_raw()
@@ -29558,7 +29558,7 @@ impl RtSbCumulativeDistance2 {
     /// - Min: 0
     /// - Max: 167772
     /// - Unit: "s"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn cumulative_time(&self) -> f32 {
         self.cumulative_time_raw()
@@ -29599,7 +29599,7 @@ impl RtSbCumulativeDistance2 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_cumulative_distance(&self) -> bool {
         self.validity_cumulative_distance_raw()
@@ -29634,7 +29634,7 @@ impl RtSbCumulativeDistance2 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_cumulative_time(&self) -> bool {
         self.validity_cumulative_time_raw()
@@ -29748,7 +29748,7 @@ impl RtSbCumulativeDistance1 {
     /// - Min: 0
     /// - Max: 4294967
     /// - Unit: "m"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn cumulative_distance(&self) -> f32 {
         self.cumulative_distance_raw()
@@ -29787,7 +29787,7 @@ impl RtSbCumulativeDistance1 {
     /// - Min: 0
     /// - Max: 167772
     /// - Unit: "s"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn cumulative_time(&self) -> f32 {
         self.cumulative_time_raw()
@@ -29828,7 +29828,7 @@ impl RtSbCumulativeDistance1 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_cumulative_distance(&self) -> bool {
         self.validity_cumulative_distance_raw()
@@ -29863,7 +29863,7 @@ impl RtSbCumulativeDistance1 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_cumulative_time(&self) -> bool {
         self.validity_cumulative_time_raw()
@@ -29981,7 +29981,7 @@ impl RtSbTriggerTimestamp {
     /// - Min: 0
     /// - Max: 604800
     /// - Unit: "s"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn gps_high_resolution_time(&self) -> f32 {
         self.gps_high_resolution_time_raw()
@@ -30020,7 +30020,7 @@ impl RtSbTriggerTimestamp {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn trigger_timestamp_type(&self) -> RtSbTriggerTimestampTriggerTimestampType {
         let signal = self.raw.view_bits::<Lsb0>()[23..24].load_le::<u8>();
@@ -30061,7 +30061,7 @@ impl RtSbTriggerTimestamp {
     /// - Min: 0
     /// - Max: 128
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn trigger_number(&self) -> u8 {
         self.trigger_number_raw()
@@ -30105,7 +30105,7 @@ impl RtSbTriggerTimestamp {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn accuracy_trigger_timestamp(&self) -> u8 {
         self.accuracy_trigger_timestamp_raw()
@@ -30149,7 +30149,7 @@ impl RtSbTriggerTimestamp {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_trigger_timestamp(&self) -> bool {
         self.validity_trigger_timestamp_raw()
@@ -30301,7 +30301,7 @@ impl RtImu06GyroRates {
     /// - Min: -327
     /// - Max: 327
     /// - Unit: "degrees/s"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn gyro_rate_roll(&self) -> f32 {
         self.gyro_rate_roll_raw()
@@ -30343,7 +30343,7 @@ impl RtImu06GyroRates {
     /// - Min: -327
     /// - Max: 327
     /// - Unit: "degrees/s"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn gyro_rate_pitch(&self) -> f32 {
         self.gyro_rate_pitch_raw()
@@ -30385,7 +30385,7 @@ impl RtImu06GyroRates {
     /// - Min: -327
     /// - Max: 327
     /// - Unit: "degrees/s"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn gyro_rate_yaw(&self) -> f32 {
         self.gyro_rate_yaw_raw()
@@ -30427,7 +30427,7 @@ impl RtImu06GyroRates {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn accuracy_gyro_rates(&self) -> u8 {
         self.accuracy_gyro_rates_raw()
@@ -30471,7 +30471,7 @@ impl RtImu06GyroRates {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_gyro_rate_roll(&self) -> bool {
         self.validity_gyro_rate_roll_raw()
@@ -30503,7 +30503,7 @@ impl RtImu06GyroRates {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_gyro_rate_pitch(&self) -> bool {
         self.validity_gyro_rate_pitch_raw()
@@ -30535,7 +30535,7 @@ impl RtImu06GyroRates {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_gyro_rate_yaw(&self) -> bool {
         self.validity_gyro_rate_yaw_raw()
@@ -30659,7 +30659,7 @@ impl RtImu06Accel {
     /// - Min: -65
     /// - Max: 65
     /// - Unit: "g"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn accel_vertical(&self) -> f32 {
         self.accel_vertical_raw()
@@ -30701,7 +30701,7 @@ impl RtImu06Accel {
     /// - Min: -65
     /// - Max: 65
     /// - Unit: "g"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn accel_lateral(&self) -> f32 {
         self.accel_lateral_raw()
@@ -30743,7 +30743,7 @@ impl RtImu06Accel {
     /// - Min: -65
     /// - Max: 65
     /// - Unit: "g"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn accel_longitudinal(&self) -> f32 {
         self.accel_longitudinal_raw()
@@ -30785,7 +30785,7 @@ impl RtImu06Accel {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn accuracy_accel(&self) -> u8 {
         self.accuracy_accel_raw()
@@ -30829,7 +30829,7 @@ impl RtImu06Accel {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_accel_vertical(&self) -> bool {
         self.validity_accel_vertical_raw()
@@ -30861,7 +30861,7 @@ impl RtImu06Accel {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_accel_lateral(&self) -> bool {
         self.validity_accel_lateral_raw()
@@ -30893,7 +30893,7 @@ impl RtImu06Accel {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_accel_longitudinal(&self) -> bool {
         self.validity_accel_longitudinal_raw()
@@ -31006,7 +31006,7 @@ impl RtSbSpeed {
     /// - Min: -20000
     /// - Max: 20000
     /// - Unit: "m/s"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn speed(&self) -> f32 {
         self.speed_raw()
@@ -31048,7 +31048,7 @@ impl RtSbSpeed {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn accuracy_speed(&self) -> u8 {
         self.accuracy_speed_raw()
@@ -31092,7 +31092,7 @@ impl RtSbSpeed {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_speed(&self) -> bool {
         self.validity_speed_raw()
@@ -31216,7 +31216,7 @@ impl RtSbRtkSlip {
     /// - Min: 0
     /// - Max: 65535
     /// - Unit: "mm"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn rtk_baseline(&self) -> u16 {
         self.rtk_baseline_raw()
@@ -31260,7 +31260,7 @@ impl RtSbRtkSlip {
     /// - Min: -360
     /// - Max: 360
     /// - Unit: "degrees"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn rtk_squat(&self) -> f32 {
         self.rtk_squat_raw()
@@ -31302,7 +31302,7 @@ impl RtSbRtkSlip {
     /// - Min: -360
     /// - Max: 360
     /// - Unit: "degrees"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn rtk_slip(&self) -> f32 {
         self.rtk_slip_raw()
@@ -31342,7 +31342,7 @@ impl RtSbRtkSlip {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn accuracy_rtk_baseline(&self) -> u8 {
         self.accuracy_rtk_baseline_raw()
@@ -31386,7 +31386,7 @@ impl RtSbRtkSlip {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_rtk_baseline(&self) -> bool {
         self.validity_rtk_baseline_raw()
@@ -31418,7 +31418,7 @@ impl RtSbRtkSlip {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_rtk_squat(&self) -> bool {
         self.validity_rtk_squat_raw()
@@ -31450,7 +31450,7 @@ impl RtSbRtkSlip {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_rtk_slip(&self) -> bool {
         self.validity_rtk_slip_raw()
@@ -31574,7 +31574,7 @@ impl RtSbRtkAttitude {
     /// - Min: -90
     /// - Max: 90
     /// - Unit: "degrees"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn rtk_attitude_roll(&self) -> f32 {
         self.rtk_attitude_roll_raw()
@@ -31616,7 +31616,7 @@ impl RtSbRtkAttitude {
     /// - Min: -90
     /// - Max: 90
     /// - Unit: "degrees"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn rtk_attitude_pitch(&self) -> f32 {
         self.rtk_attitude_pitch_raw()
@@ -31658,7 +31658,7 @@ impl RtSbRtkAttitude {
     /// - Min: -360
     /// - Max: 360
     /// - Unit: "degrees"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn rtk_attitude_yaw(&self) -> f32 {
         self.rtk_attitude_yaw_raw()
@@ -31700,7 +31700,7 @@ impl RtSbRtkAttitude {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn accuracy_rtk_attitude(&self) -> u8 {
         self.accuracy_rtk_attitude_raw()
@@ -31744,7 +31744,7 @@ impl RtSbRtkAttitude {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_rtk_roll(&self) -> bool {
         self.validity_rtk_roll_raw()
@@ -31776,7 +31776,7 @@ impl RtSbRtkAttitude {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_rtk_pitch(&self) -> bool {
         self.validity_rtk_pitch_raw()
@@ -31808,7 +31808,7 @@ impl RtSbRtkAttitude {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_rtk_yaw(&self) -> bool {
         self.validity_rtk_yaw_raw()
@@ -31926,7 +31926,7 @@ impl RtSbGpsMcycleLean {
     /// - Min: -90
     /// - Max: 90
     /// - Unit: "degrees"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn gps_mcycle_lean_angle(&self) -> f32 {
         self.gps_mcycle_lean_angle_raw()
@@ -31968,7 +31968,7 @@ impl RtSbGpsMcycleLean {
     /// - Min: -65
     /// - Max: 65
     /// - Unit: "g"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn gps_lateral_accel(&self) -> f32 {
         self.gps_lateral_accel_raw()
@@ -32010,7 +32010,7 @@ impl RtSbGpsMcycleLean {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn accuracy_gps_lateral_accel(&self) -> u8 {
         self.accuracy_gps_lateral_accel_raw()
@@ -32054,7 +32054,7 @@ impl RtSbGpsMcycleLean {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_gps_mcycle_lean(&self) -> bool {
         self.validity_gps_mcycle_lean_raw()
@@ -32086,7 +32086,7 @@ impl RtSbGpsMcycleLean {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_gps_lateral_accel(&self) -> bool {
         self.validity_gps_lateral_accel_raw()
@@ -32221,7 +32221,7 @@ impl RtSbGpsStatus {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn rtk_status(&self) -> RtSbGpsStatusRtkStatus {
         let signal = self.raw.view_bits::<Lsb0>()[56..64].load_le::<u8>();
@@ -32273,7 +32273,7 @@ impl RtSbGpsStatus {
     /// - Min: 0
     /// - Max: 16
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn gps_n_sv_rtk(&self) -> u8 {
         self.gps_n_sv_rtk_raw()
@@ -32317,7 +32317,7 @@ impl RtSbGpsStatus {
     /// - Min: 0
     /// - Max: 16
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn gps_n_sv_2(&self) -> u8 {
         self.gps_n_sv_2_raw()
@@ -32361,7 +32361,7 @@ impl RtSbGpsStatus {
     /// - Min: 0
     /// - Max: 16
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn gps_n_sv(&self) -> u8 {
         self.gps_n_sv_raw()
@@ -32403,7 +32403,7 @@ impl RtSbGpsStatus {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn firmware_version_minor(&self) -> u8 {
         self.firmware_version_minor_raw()
@@ -32445,7 +32445,7 @@ impl RtSbGpsStatus {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn firmware_version_intermediate(&self) -> u8 {
         self.firmware_version_intermediate_raw()
@@ -32490,7 +32490,7 @@ impl RtSbGpsStatus {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn firmware_version_major(&self) -> u8 {
         self.firmware_version_major_raw()
@@ -32532,7 +32532,7 @@ impl RtSbGpsStatus {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn gps_status(&self) -> RtSbGpsStatusGpsStatus {
         let signal = self.raw.view_bits::<Lsb0>()[0..8].load_le::<u8>();
@@ -32739,7 +32739,7 @@ impl RtSbGpsPosEcef2 {
     /// - Min: -10000000
     /// - Max: 10000000
     /// - Unit: "m"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn gps_pos_ecef_z(&self) -> f32 {
         self.gps_pos_ecef_z_raw()
@@ -32781,7 +32781,7 @@ impl RtSbGpsPosEcef2 {
     /// - Min: -10000000
     /// - Max: 10000000
     /// - Unit: "m"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn gps_pos_ecef_y(&self) -> f32 {
         self.gps_pos_ecef_y_raw()
@@ -32915,7 +32915,7 @@ impl RtSbGpsPosEcef1 {
     /// - Min: -10000000
     /// - Max: 10000000
     /// - Unit: "m"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn gps_pos_ecef_x(&self) -> f32 {
         self.gps_pos_ecef_x_raw()
@@ -32957,7 +32957,7 @@ impl RtSbGpsPosEcef1 {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn accuracy_gps_pos_ecef_z(&self) -> u8 {
         self.accuracy_gps_pos_ecef_z_raw()
@@ -33001,7 +33001,7 @@ impl RtSbGpsPosEcef1 {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn accuracy_gps_pos_ecef_y(&self) -> u8 {
         self.accuracy_gps_pos_ecef_y_raw()
@@ -33045,7 +33045,7 @@ impl RtSbGpsPosEcef1 {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn accuracy_gps_pos_ecef_x(&self) -> u8 {
         self.accuracy_gps_pos_ecef_x_raw()
@@ -33089,7 +33089,7 @@ impl RtSbGpsPosEcef1 {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_gps_pos_ecef_z(&self) -> bool {
         self.validity_gps_pos_ecef_z_raw()
@@ -33121,7 +33121,7 @@ impl RtSbGpsPosEcef1 {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_gps_pos_ecef_y(&self) -> bool {
         self.validity_gps_pos_ecef_y_raw()
@@ -33153,7 +33153,7 @@ impl RtSbGpsPosEcef1 {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_gps_pos_ecef_x(&self) -> bool {
         self.validity_gps_pos_ecef_x_raw()
@@ -33261,7 +33261,7 @@ impl RtSbGpsPosLlh2 {
     /// - Min: -1000
     /// - Max: 100000
     /// - Unit: "m"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn gps_pos_llh_altitude(&self) -> f32 {
         self.gps_pos_llh_altitude_raw()
@@ -33301,7 +33301,7 @@ impl RtSbGpsPosLlh2 {
     /// - Min: -180
     /// - Max: 180
     /// - Unit: "degrees"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn gps_pos_llh_longitude(&self) -> f32 {
         self.gps_pos_llh_longitude_raw()
@@ -33433,7 +33433,7 @@ impl RtSbGpsPosLlh1 {
     /// - Min: -90
     /// - Max: 90
     /// - Unit: "degrees"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn gps_pos_llh_latitude(&self) -> f32 {
         self.gps_pos_llh_latitude_raw()
@@ -33475,7 +33475,7 @@ impl RtSbGpsPosLlh1 {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn accuracy_gps_pos_llh_altitude(&self) -> u8 {
         self.accuracy_gps_pos_llh_altitude_raw()
@@ -33522,7 +33522,7 @@ impl RtSbGpsPosLlh1 {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn accuracy_gps_pos_llh_longitude(&self) -> u8 {
         self.accuracy_gps_pos_llh_longitude_raw()
@@ -33569,7 +33569,7 @@ impl RtSbGpsPosLlh1 {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn accuracy_gps_pos_llh_latitude(&self) -> u8 {
         self.accuracy_gps_pos_llh_latitude_raw()
@@ -33616,7 +33616,7 @@ impl RtSbGpsPosLlh1 {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_gps_pos_llh_altitude(&self) -> bool {
         self.validity_gps_pos_llh_altitude_raw()
@@ -33651,7 +33651,7 @@ impl RtSbGpsPosLlh1 {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_gps_pos_llh_longitude(&self) -> bool {
         self.validity_gps_pos_llh_longitude_raw()
@@ -33686,7 +33686,7 @@ impl RtSbGpsPosLlh1 {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_gps_pos_llh_latitude(&self) -> bool {
         self.validity_gps_pos_llh_latitude_raw()
@@ -33811,7 +33811,7 @@ impl RtSbGpsHeadingGradient {
     /// - Min: -90
     /// - Max: 90
     /// - Unit: "degrees"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn gps_gradient(&self) -> f32 {
         self.gps_gradient_raw()
@@ -33853,7 +33853,7 @@ impl RtSbGpsHeadingGradient {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn accuracy_gps_gradient(&self) -> u8 {
         self.accuracy_gps_gradient_raw()
@@ -33897,7 +33897,7 @@ impl RtSbGpsHeadingGradient {
     /// - Min: -180
     /// - Max: 180
     /// - Unit: "degrees"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn gps_heading(&self) -> f32 {
         self.gps_heading_raw()
@@ -33939,7 +33939,7 @@ impl RtSbGpsHeadingGradient {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn accuracy_gps_heading(&self) -> u8 {
         self.accuracy_gps_heading_raw()
@@ -33983,7 +33983,7 @@ impl RtSbGpsHeadingGradient {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_gps_gradient(&self) -> bool {
         self.validity_gps_gradient_raw()
@@ -34015,7 +34015,7 @@ impl RtSbGpsHeadingGradient {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_gps_heading(&self) -> bool {
         self.validity_gps_heading_raw()
@@ -34129,7 +34129,7 @@ impl RtSbGpsVelEcef2 {
     /// - Min: -838
     /// - Max: 838
     /// - Unit: "m/s"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn gps_vel_ecef_z(&self) -> f32 {
         self.gps_vel_ecef_z_raw()
@@ -34171,7 +34171,7 @@ impl RtSbGpsVelEcef2 {
     /// - Min: -838
     /// - Max: 838
     /// - Unit: "m/s"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn gps_vel_ecef_y(&self) -> f32 {
         self.gps_vel_ecef_y_raw()
@@ -34213,7 +34213,7 @@ impl RtSbGpsVelEcef2 {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_gps_vel_ecef_z(&self) -> bool {
         self.validity_gps_vel_ecef_z_raw()
@@ -34245,7 +34245,7 @@ impl RtSbGpsVelEcef2 {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_gps_vel_ecef_y(&self) -> bool {
         self.validity_gps_vel_ecef_y_raw()
@@ -34365,7 +34365,7 @@ impl RtSbGpsVelEcef1 {
     /// - Min: -838
     /// - Max: 838
     /// - Unit: "m/s"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn gps_vel_ecef_x(&self) -> f32 {
         self.gps_vel_ecef_x_raw()
@@ -34405,7 +34405,7 @@ impl RtSbGpsVelEcef1 {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn accuracy_gps_vel_ecef_z(&self) -> u8 {
         self.accuracy_gps_vel_ecef_z_raw()
@@ -34447,7 +34447,7 @@ impl RtSbGpsVelEcef1 {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn accuracy_gps_vel_ecef_y(&self) -> u8 {
         self.accuracy_gps_vel_ecef_y_raw()
@@ -34489,7 +34489,7 @@ impl RtSbGpsVelEcef1 {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn accuracy_gps_vel_ecef_x(&self) -> u8 {
         self.accuracy_gps_vel_ecef_x_raw()
@@ -34533,7 +34533,7 @@ impl RtSbGpsVelEcef1 {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_gps_vel_ecef_x(&self) -> bool {
         self.validity_gps_vel_ecef_x_raw()
@@ -34645,7 +34645,7 @@ impl RtSbGpsVelNed2 {
     /// - Min: -838
     /// - Max: 838
     /// - Unit: "m/s"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn gps_vel_ned_d(&self) -> f32 {
         self.gps_vel_ned_d_raw()
@@ -34685,7 +34685,7 @@ impl RtSbGpsVelNed2 {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn accuracy_gps_vel_d(&self) -> u8 {
         self.accuracy_gps_vel_d_raw()
@@ -34729,7 +34729,7 @@ impl RtSbGpsVelNed2 {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_gps_vel_ned_d(&self) -> bool {
         self.validity_gps_vel_ned_d_raw()
@@ -34847,7 +34847,7 @@ impl RtSbGpsVelNed1 {
     /// - Min: -838
     /// - Max: 838
     /// - Unit: "m/s"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn gps_vel_ned_e(&self) -> f32 {
         self.gps_vel_ned_e_raw()
@@ -34889,7 +34889,7 @@ impl RtSbGpsVelNed1 {
     /// - Min: -838
     /// - Max: 838
     /// - Unit: "m/s"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn gps_vel_ned_n(&self) -> f32 {
         self.gps_vel_ned_n_raw()
@@ -34929,7 +34929,7 @@ impl RtSbGpsVelNed1 {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn accuracy_gps_vel_ne(&self) -> u8 {
         self.accuracy_gps_vel_ne_raw()
@@ -34973,7 +34973,7 @@ impl RtSbGpsVelNed1 {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_gps_vel_ned_e(&self) -> bool {
         self.validity_gps_vel_ned_e_raw()
@@ -35005,7 +35005,7 @@ impl RtSbGpsVelNed1 {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_gps_vel_ned_n(&self) -> bool {
         self.validity_gps_vel_ned_n_raw()
@@ -35123,7 +35123,7 @@ impl RtSbGpsSpeed {
     /// - Min: 0
     /// - Max: 1675
     /// - Unit: "m/s"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn gps_speed_3d(&self) -> f32 {
         self.gps_speed_3d_raw()
@@ -35164,7 +35164,7 @@ impl RtSbGpsSpeed {
     /// - Min: 0
     /// - Max: 1675
     /// - Unit: "m/s"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn gps_speed_2d(&self) -> f32 {
         self.gps_speed_2d_raw()
@@ -35205,7 +35205,7 @@ impl RtSbGpsSpeed {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn accuracy_gps_speed(&self) -> u8 {
         self.accuracy_gps_speed_raw()
@@ -35249,7 +35249,7 @@ impl RtSbGpsSpeed {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_gps_speed_3d(&self) -> bool {
         self.validity_gps_speed_3d_raw()
@@ -35281,7 +35281,7 @@ impl RtSbGpsSpeed {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_gps_speed_2d(&self) -> bool {
         self.validity_gps_speed_2d_raw()
@@ -35397,7 +35397,7 @@ impl RtSbGpsTime {
     /// - Min: 0
     /// - Max: 65535
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn gps_week(&self) -> u16 {
         self.gps_week_raw()
@@ -35441,7 +35441,7 @@ impl RtSbGpsTime {
     /// - Min: 0
     /// - Max: 604800
     /// - Unit: "s"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn gps_time(&self) -> f32 {
         self.gps_time_raw()
@@ -35480,7 +35480,7 @@ impl RtSbGpsTime {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn accuracy_gps_time(&self) -> u8 {
         self.accuracy_gps_time_raw()
@@ -35524,7 +35524,7 @@ impl RtSbGpsTime {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_gps_week(&self) -> bool {
         self.validity_gps_week_raw()
@@ -35556,7 +35556,7 @@ impl RtSbGpsTime {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_gps_time(&self) -> bool {
         self.validity_gps_time_raw()
@@ -35680,7 +35680,7 @@ impl RtSbAccel {
     /// - Min: -65
     /// - Max: 65
     /// - Unit: "g"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn accel_vertical(&self) -> f32 {
         self.accel_vertical_raw()
@@ -35722,7 +35722,7 @@ impl RtSbAccel {
     /// - Min: -65
     /// - Max: 65
     /// - Unit: "g"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn accel_lateral(&self) -> f32 {
         self.accel_lateral_raw()
@@ -35764,7 +35764,7 @@ impl RtSbAccel {
     /// - Min: -65
     /// - Max: 65
     /// - Unit: "g"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn accel_longitudinal(&self) -> f32 {
         self.accel_longitudinal_raw()
@@ -35806,7 +35806,7 @@ impl RtSbAccel {
     /// - Min: 0
     /// - Max: 255
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn accuracy_accel(&self) -> u8 {
         self.accuracy_accel_raw()
@@ -35850,7 +35850,7 @@ impl RtSbAccel {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_accel_vertical(&self) -> bool {
         self.validity_accel_vertical_raw()
@@ -35882,7 +35882,7 @@ impl RtSbAccel {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_accel_lateral(&self) -> bool {
         self.validity_accel_lateral_raw()
@@ -35914,7 +35914,7 @@ impl RtSbAccel {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_accel_longitudinal(&self) -> bool {
         self.validity_accel_longitudinal_raw()
@@ -36041,7 +36041,7 @@ impl RtSbGyroRates {
     /// - Min: -327
     /// - Max: 327
     /// - Unit: "degrees/s"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn gyro_rate_roll(&self) -> f32 {
         self.gyro_rate_roll_raw()
@@ -36083,7 +36083,7 @@ impl RtSbGyroRates {
     /// - Min: -327
     /// - Max: 327
     /// - Unit: "degrees/s"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn gyro_rate_pitch(&self) -> f32 {
         self.gyro_rate_pitch_raw()
@@ -36125,7 +36125,7 @@ impl RtSbGyroRates {
     /// - Min: -327
     /// - Max: 327
     /// - Unit: "degrees/s"
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn gyro_rate_yaw(&self) -> f32 {
         self.gyro_rate_yaw_raw()
@@ -36167,7 +36167,7 @@ impl RtSbGyroRates {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn accuracy_gyro_rates(&self) -> u8 {
         self.accuracy_gyro_rates_raw()
@@ -36211,7 +36211,7 @@ impl RtSbGyroRates {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_gyro_rate_roll(&self) -> bool {
         self.validity_gyro_rate_roll_raw()
@@ -36243,7 +36243,7 @@ impl RtSbGyroRates {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_gyro_rate_pitch(&self) -> bool {
         self.validity_gyro_rate_pitch_raw()
@@ -36275,7 +36275,7 @@ impl RtSbGyroRates {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn validity_gyro_rate_yaw(&self) -> bool {
         self.validity_gyro_rate_yaw_raw()

@@ -90,7 +90,7 @@ impl MuxedFrame {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn unmultiplexed_sig(&self) -> i8 {
         self.unmultiplexed_sig_raw()
@@ -275,7 +275,7 @@ impl MuxedFrameMultiplexorSigM42 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn multiplexed_sig(&self) -> i8 {
         self.multiplexed_sig_raw()

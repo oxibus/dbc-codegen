@@ -89,7 +89,7 @@ impl MyMsg {
     /// - Min: -128
     /// - Max: 127
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn my_extra_sig_with_plus(&self) -> i16 {
         self.my_extra_sig_with_plus_raw()
@@ -132,7 +132,7 @@ impl MyMsg {
     /// - Min: -128
     /// - Max: 127
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn my_normal_sig(&self) -> i16 {
         self.my_normal_sig_raw()

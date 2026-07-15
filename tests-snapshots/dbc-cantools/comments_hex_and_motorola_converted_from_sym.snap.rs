@@ -234,7 +234,7 @@ impl Msg1Sig1M1 {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn sig12(&self) -> u8 {
         self.sig12_raw()
@@ -305,7 +305,7 @@ impl Msg1Sig1M2 {
     /// - Min: 0
     /// - Max: 1
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn sig22(&self) -> u8 {
         self.sig22_raw()
@@ -414,7 +414,7 @@ impl Msg2 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn test7(&self) -> Msg2Test7 {
         let signal = self.raw.view_bits::<Msb0>()[56..64].load_be::<u8>();
@@ -463,7 +463,7 @@ impl Msg2 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn test6(&self) -> u8 {
         self.test6_raw()
@@ -505,7 +505,7 @@ impl Msg2 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn test5(&self) -> u8 {
         self.test5_raw()
@@ -547,7 +547,7 @@ impl Msg2 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn test4(&self) -> u8 {
         self.test4_raw()
@@ -589,7 +589,7 @@ impl Msg2 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn test3(&self) -> u8 {
         self.test3_raw()
@@ -631,7 +631,7 @@ impl Msg2 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn test2(&self) -> u8 {
         self.test2_raw()
@@ -673,7 +673,7 @@ impl Msg2 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn test1(&self) -> u8 {
         self.test1_raw()
@@ -715,7 +715,7 @@ impl Msg2 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn test0(&self) -> u8 {
         self.test0_raw()

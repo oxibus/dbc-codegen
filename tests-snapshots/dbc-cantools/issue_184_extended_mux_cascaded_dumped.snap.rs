@@ -333,7 +333,7 @@ impl ExtMuxCascadedMuxedA2MuxBM0 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn muxed_b_0(&self) -> i8 {
         self.muxed_b_0_raw()
@@ -404,7 +404,7 @@ impl ExtMuxCascadedMuxedA2MuxBM1 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn muxed_b_1(&self) -> i8 {
         self.muxed_b_1_raw()
@@ -448,7 +448,7 @@ impl ExtMuxCascadedMuxedA2MuxBM1 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn muxed_a_1(&self) -> i8 {
         self.muxed_a_1_raw()

@@ -98,7 +98,7 @@ impl TestMsgEx {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn test_sig_copy_1(&self) -> i8 {
         self.test_sig_copy_1_raw()
@@ -214,7 +214,7 @@ impl TestMsgStd {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn test_sig_copy_3(&self) -> i8 {
         self.test_sig_copy_3_raw()
@@ -330,7 +330,7 @@ impl TestMsgFdStd {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn test_sig_copy_2(&self) -> i8 {
         self.test_sig_copy_2_raw()
@@ -446,7 +446,7 @@ impl TestMsgFdEx {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers: Vector__XXX
+    /// - Receivers:
     #[inline(always)]
     pub fn test_sig(&self) -> i8 {
         self.test_sig_raw()
