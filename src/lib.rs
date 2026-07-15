@@ -612,15 +612,13 @@ impl Config<'_> {
 
             {
                 let mut w = PadAdapter::wrap(&mut w);
-                for multiplexer_index in &multiplexer_indexes {
+                for idx in &multiplexer_indexes {
                     writeln!(
                         w,
                         "{idx} => Ok({enum_name}::{multiplexed_wrapper_name}({multiplexed_name}{{ raw: self.raw }})),",
-                        idx = multiplexer_index,
                         enum_name = multiplex_enum_name(msg, signal)?,
-                        multiplexed_wrapper_name = multiplexed_enum_variant_wrapper_name(*multiplexer_index),
-                        multiplexed_name =
-                        multiplexed_enum_variant_name(msg, signal, *multiplexer_index)?,
+                        multiplexed_wrapper_name = multiplexed_enum_variant_wrapper_name(*idx),
+                        multiplexed_name = multiplexed_enum_variant_name(msg, signal, *idx)?,
                     )?;
                 }
                 let to_u16 = match signal_typ {
@@ -771,7 +769,7 @@ fn be_start_end_bit(signal: &Signal, msg: &Message) -> Result<(u64, u64)> {
         .checked_add(signal.size)
         .context("calculating last bit position")?;
 
-    let msg_bits = msg.size.checked_mul(8).unwrap();
+    let msg_bits = msg.size.checked_mul(8).context("message size overflow")?;
 
     ensure!(
         start_bit <= msg_bits,
@@ -785,7 +783,7 @@ fn be_start_end_bit(signal: &Signal, msg: &Message) -> Result<(u64, u64)> {
 }
 
 fn le_start_end_bit(signal: &Signal, msg: &Message) -> Result<(u64, u64)> {
-    let msg_bits = msg.size.checked_mul(8).unwrap();
+    let msg_bits = msg.size.checked_mul(8).context("message size overflow")?;
     let start_bit = signal.start_bit;
     ensure!(
         start_bit <= msg_bits,

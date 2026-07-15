@@ -27,7 +27,7 @@ impl Write for PadAdapter<'_> {
 
             let split = if let Some(pos) = s.iter().position(|&v| v == b'\n') {
                 self.on_newline = true;
-                pos.checked_add(1).unwrap()
+                pos.checked_add(1).expect("newline position overflowed")
             } else {
                 self.on_newline = false;
                 s.len()

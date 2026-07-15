@@ -87,16 +87,21 @@ impl Test {
 /// function for a test file path
 fn get_test_info(path: &Path) -> Test {
     let path_str = path.display().to_string();
-    let parent = path.parent().unwrap();
+    let parent = path.parent().expect("path has no parent");
     for item in TEST_DIRS {
         // Ensure slashes are there for easier matching
+        // Note that all slashes are in Linux style, automatically converted on Windows
         let test_root = format!("/{}/", item.test_root);
-        let mut path_dir = parent.to_str().unwrap().to_string();
+        let mut path_dir = parent.to_str().expect("path is not utf8").to_string();
         if !path_dir.ends_with('/') {
             path_dir.push('/');
         }
         if let Some(pos) = path_dir.find(&test_root) {
-            let file_name = path.file_stem().unwrap().to_string_lossy().to_string();
+            let file_name = path
+                .file_stem()
+                .expect("path has no file stem")
+                .to_string_lossy()
+                .to_string();
             let path = PathBuf::from(&path_dir[pos + test_root.len()..]);
             return Test::new(item, path, file_name);
         }

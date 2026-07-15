@@ -7,7 +7,7 @@ authors = [
     "Marcel Buesing <buesing.marcel@googlemail.com>",
     "Andres Vahter <andres@vahter.me>",
 ]
-categories = ["embedded", "code-generation", "automotive"]
+repository = "https://github.com/oxibus/dbc-codegen"
 edition = "2021"
 exclude = [
     "fuzz/*",
@@ -15,9 +15,9 @@ exclude = [
     "tests/*",
     "tests-snapshots/*",
 ]
-keywords = ["dbc", "can", "automotive", "codegen", "embedded"]
 license = "MIT OR Apache-2.0"
-repository = "https://github.com/oxibus/dbc-codegen"
+keywords = ["dbc", "can", "automotive", "codegen", "embedded"]
+categories = ["embedded", "code-generation", "automotive"]
 rust-version = "1.88"
 
 [features]
@@ -46,6 +46,12 @@ unsafe_code = "forbid"
 unused_qualifications = "warn"
 
 [lints.clippy]
+# Restrictions
+disallowed_methods = "deny"
+panic_in_result_fn = "warn"
+todo = "warn"
+unwrap_used = "warn"
+# Pedantics without being too noisy
 cargo = { level = "warn", priority = -1 }
 pedantic = { level = "warn", priority = -1 }
 cast_possible_truncation = "allow"

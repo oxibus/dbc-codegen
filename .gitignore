@@ -1,10 +1,16 @@
 **/*.bak
 **/*.rs.bk
+*.iml
 *.pdb
+.DS_Store
 .envrc
 .idea/
 .vscode/
+codecov
+codecov.SHA256SUM*
 debug/
+flamegraph*.svg
+perf.data*
 target/
 temp/
 tmp/
@@ -12,6 +18,3 @@ venv/
 tests-snapshots/opendbc/**/*.snap
 !tests-snapshots/opendbc/**/!error_*.snap
 tests-snapshots/opendbc/**/*.rs
-
-# FIXME: This is a library, we may consider removing the lock file
-#Cargo.lock

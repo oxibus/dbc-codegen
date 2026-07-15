@@ -160,6 +160,7 @@ pub fn xtype(&self) -> BarType {
 * This project is easier to develop with [just](https://just.systems/man/en/), a modern alternative to `make`.
 * To get a list of available commands, run `just`.
 * To run tests, use `just test`.
+* This project uses [insta](https://insta.rs) for snapshot testing. To update the snapshots run `just bless`
 
 ### lorri for Nix
 
