@@ -22,5 +22,5 @@ embedded-can = "0.4.1"
 can-messages = { path = "../can-messages", optional = true }
 
 [build-dependencies]
-anyhow = "1.0"
+anyhow = "1.0.101"
 dbc-codegen = { path = "../.." }

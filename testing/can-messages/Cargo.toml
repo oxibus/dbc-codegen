@@ -17,5 +17,5 @@ defmt = "1.1.0"
 embedded-can = "0.4.1"
 
 [build-dependencies]
-anyhow = "1.0"
+anyhow = "1.0.101"
 dbc-codegen = { path = "../.." }
