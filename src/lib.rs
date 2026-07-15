@@ -20,12 +20,12 @@ use std::path::Path;
 
 use anyhow::{anyhow, ensure, Context, Error, Result};
 use can_dbc::ByteOrder::{BigEndian, LittleEndian};
-use can_dbc::MultsiplexIndicator::{
+use can_dbc::MultiplexIndicator::{
     MultiplexedSignal, Multiplexor, MultiplexorAndMultiplexedSignal, Plain,
 };
 use can_dbc::ValueType::Signed;
-use can_dbc::{Dbc, Message, MessageId, Signal, ValDescription, ValueDescription};
-use heck::ToSnaskeCase;
+use can_dbc::{AttributeValue, Dbc, Message, MessageId, Signal, ValDescription, ValueDescription};
+use heck::ToSnakeCase;
 use quote::ToTokens;
 use typed_builder::TypedBuilder;
 
