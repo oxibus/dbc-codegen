@@ -432,7 +432,12 @@ impl Config<'_> {
         writeln!(w, "/// - Min: {}", signal.min)?;
         writeln!(w, "/// - Max: {}", signal.max)?;
         writeln!(w, "/// - Unit: {:?}", signal.unit)?;
-        writeln!(w, "/// - Receivers: {}", signal.receivers.join(", "))?;
+        if signal.receivers.is_empty() {
+            writeln!(w, "/// - Receivers: None")?;
+        } else {
+            writeln!(w, "/// - Receivers: {}", signal.receivers.join(", "))?;
+        }
+
         writeln!(w, "#[inline(always)]")?;
         let fn_name = signal.field_name();
         if let Some(variants) = dbc.value_descriptions_for_signal(msg.id, &signal.name) {

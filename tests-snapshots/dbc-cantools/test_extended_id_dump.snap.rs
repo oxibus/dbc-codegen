@@ -88,7 +88,7 @@ impl SomeFrame {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers:
+    /// - Receivers: None
     #[inline(always)]
     pub fn some_different_sig(&self) -> i8 {
         self.some_different_sig_raw()
@@ -204,7 +204,7 @@ impl SomeExtFrame {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers:
+    /// - Receivers: None
     #[inline(always)]
     pub fn some_sig(&self) -> i8 {
         self.some_sig_raw()

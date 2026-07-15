@@ -134,7 +134,7 @@ impl MsgLongName5678912345678912 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers:
+    /// - Receivers: None
     #[inline(always)]
     pub fn rx_twice_11111111111111111111111(&self) -> i8 {
         self.rx_twice_11111111111111111111111_raw()
@@ -181,7 +181,7 @@ impl MsgLongName5678912345678912 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers:
+    /// - Receivers: None
     #[inline(always)]
     pub fn rx_twice_short(&self) -> i32 {
         self.rx_twice_short_raw()
@@ -225,7 +225,7 @@ impl MsgLongName5678912345678912 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers:
+    /// - Receivers: None
     #[inline(always)]
     pub fn sig_used_twice_efgh_abcdefghi_ab(&self) -> i8 {
         self.sig_used_twice_efgh_abcdefghi_ab_raw()
@@ -515,7 +515,7 @@ impl RxTx1 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers:
+    /// - Receivers: None
     #[inline(always)]
     pub fn sig_used_twice_efgh_abcdefg_0000(&self) -> i16 {
         self.sig_used_twice_efgh_abcdefg_0000_raw()
@@ -782,7 +782,7 @@ impl MsgWithValueTableSigs {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers:
+    /// - Receivers: None
     #[inline(always)]
     pub fn sig_with_short_val_table(&self) -> MsgWithValueTableSigsSigWithShortValTable {
         let signal = self.raw.view_bits::<Lsb0>()[16..24].load_le::<u8>();
@@ -839,7 +839,7 @@ impl MsgWithValueTableSigs {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers:
+    /// - Receivers: None
     #[inline(always)]
     pub fn sig_with_long_val_table_2(
         &self,
@@ -906,7 +906,7 @@ impl MsgWithValueTableSigs {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers:
+    /// - Receivers: None
     #[inline(always)]
     pub fn sig_with_long_val_table_1(
         &self,
@@ -1148,7 +1148,7 @@ impl MsgLongName5678912345670000 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers:
+    /// - Receivers: None
     #[inline(always)]
     pub fn rx_twice_11111111111111111111111(&self) -> i8 {
         self.rx_twice_11111111111111111111111_raw()
@@ -1195,7 +1195,7 @@ impl MsgLongName5678912345670000 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers:
+    /// - Receivers: None
     #[inline(always)]
     pub fn sig_used_twice_efgh_abcdefg_0001(&self) -> i8 {
         self.sig_used_twice_efgh_abcdefg_0001_raw()
@@ -1320,7 +1320,7 @@ impl MsgLongName5678912345670001 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers:
+    /// - Receivers: None
     #[inline(always)]
     pub fn rx_twice_short(&self) -> i8 {
         self.rx_twice_short_raw()
@@ -1364,7 +1364,7 @@ impl MsgLongName5678912345670001 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers:
+    /// - Receivers: None
     #[inline(always)]
     pub fn sig_used_twice_efgh_abcdefg_0002(&self) -> i8 {
         self.sig_used_twice_efgh_abcdefg_0002_raw()

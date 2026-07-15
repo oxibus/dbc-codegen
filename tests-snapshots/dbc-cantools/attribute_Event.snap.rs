@@ -86,7 +86,7 @@ impl Inv2EventMsg1 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers:
+    /// - Receivers: None
     #[inline(always)]
     pub fn the_signal(&self) -> i8 {
         self.the_signal_raw()

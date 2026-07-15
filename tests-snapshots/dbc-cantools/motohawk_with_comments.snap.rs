@@ -140,7 +140,7 @@ impl ExampleMessage {
     /// - Min: 0
     /// - Max: 5
     /// - Unit: "m"
-    /// - Receivers:
+    /// - Receivers: None
     #[inline(always)]
     pub fn average_radius(&self) -> f32 {
         self.average_radius_raw()
@@ -181,7 +181,7 @@ impl ExampleMessage {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: "-"
-    /// - Receivers:
+    /// - Receivers: None
     #[inline(always)]
     pub fn enable(&self) -> ExampleMessageEnable {
         let signal = self.raw.view_bits::<Msb0>()[0..1].load_be::<u8>();

@@ -612,7 +612,7 @@ impl CanFd {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers:
+    /// - Receivers: None
     #[inline(always)]
     pub fn fas(&self) -> u64 {
         self.fas_raw()

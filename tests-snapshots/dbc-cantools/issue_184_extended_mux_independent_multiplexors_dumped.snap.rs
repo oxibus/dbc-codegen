@@ -380,7 +380,7 @@ impl ExtMuxIndepMultiplexorsMuxBM0 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers:
+    /// - Receivers: None
     #[inline(always)]
     pub fn muxed_a_0(&self) -> i8 {
         self.muxed_a_0_raw()
@@ -451,7 +451,7 @@ impl ExtMuxIndepMultiplexorsMuxBM1 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers:
+    /// - Receivers: None
     #[inline(always)]
     pub fn muxed_b_1(&self) -> i8 {
         self.muxed_b_1_raw()
@@ -495,7 +495,7 @@ impl ExtMuxIndepMultiplexorsMuxBM1 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers:
+    /// - Receivers: None
     #[inline(always)]
     pub fn muxed_a_1(&self) -> i8 {
         self.muxed_a_1_raw()
@@ -566,7 +566,7 @@ impl ExtMuxIndepMultiplexorsMuxBM2 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers:
+    /// - Receivers: None
     #[inline(always)]
     pub fn muxed_b_2(&self) -> i8 {
         self.muxed_b_2_raw()

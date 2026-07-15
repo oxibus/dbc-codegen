@@ -83,7 +83,7 @@ impl Foo {
     /// - Min: -128
     /// - Max: 127
     /// - Unit: ""
-    /// - Receivers:
+    /// - Receivers: None
     #[inline(always)]
     pub fn foo(&self) -> FooFoo {
         let signal = self.raw.view_bits::<Lsb0>()[0..8].load_le::<i8>();

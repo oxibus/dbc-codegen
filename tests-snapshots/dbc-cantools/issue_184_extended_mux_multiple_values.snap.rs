@@ -263,7 +263,7 @@ impl ExtMuxMultipleValuesMuxM0 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers:
+    /// - Receivers: None
     #[inline(always)]
     pub fn muxed_0_3_4_5(&self) -> i8 {
         self.muxed_0_3_4_5_raw()
@@ -334,7 +334,7 @@ impl ExtMuxMultipleValuesMuxM1 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers:
+    /// - Receivers: None
     #[inline(always)]
     pub fn muxed_1(&self) -> i8 {
         self.muxed_1_raw()
@@ -405,7 +405,7 @@ impl ExtMuxMultipleValuesMuxM2 {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers:
+    /// - Receivers: None
     #[inline(always)]
     pub fn muxed_2(&self) -> i8 {
         self.muxed_2_raw()

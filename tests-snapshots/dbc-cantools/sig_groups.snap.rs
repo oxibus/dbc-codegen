@@ -223,7 +223,7 @@ impl SgMsgM {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers:
+    /// - Receivers: None
     #[inline(always)]
     pub fn dupsig(&self) -> i8 {
         self.dupsig_raw()
@@ -267,7 +267,7 @@ impl SgMsgM {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers:
+    /// - Receivers: None
     #[inline(always)]
     pub fn sub_sig2_1(&self) -> i8 {
         self.sub_sig2_1_raw()
@@ -311,7 +311,7 @@ impl SgMsgM {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers:
+    /// - Receivers: None
     #[inline(always)]
     pub fn sub_sig1_2(&self) -> i8 {
         self.sub_sig1_2_raw()
@@ -355,7 +355,7 @@ impl SgMsgM {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers:
+    /// - Receivers: None
     #[inline(always)]
     pub fn sub_sig1_1(&self) -> i8 {
         self.sub_sig1_1_raw()
@@ -477,7 +477,7 @@ impl SgMsg {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers:
+    /// - Receivers: None
     #[inline(always)]
     pub fn dupsig(&self) -> i8 {
         self.dupsig_raw()
@@ -521,7 +521,7 @@ impl SgMsg {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers:
+    /// - Receivers: None
     #[inline(always)]
     pub fn sg2(&self) -> i8 {
         self.sg2_raw()
@@ -565,7 +565,7 @@ impl SgMsg {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers:
+    /// - Receivers: None
     #[inline(always)]
     pub fn sg1(&self) -> i8 {
         self.sg1_raw()
@@ -684,7 +684,7 @@ impl NormalMsg {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers:
+    /// - Receivers: None
     #[inline(always)]
     pub fn sig_2(&self) -> i8 {
         self.sig_2_raw()
@@ -728,7 +728,7 @@ impl NormalMsg {
     /// - Min: 0
     /// - Max: 0
     /// - Unit: ""
-    /// - Receivers:
+    /// - Receivers: None
     #[inline(always)]
     pub fn sig_1(&self) -> i8 {
         self.sig_1_raw()

@@ -105,7 +105,7 @@ impl Aft1psi2 {
     /// - Min: 0
     /// - Max: 6425.5
     /// - Unit: "ohm"
-    /// - Receivers:
+    /// - Receivers: None
     #[inline(always)]
     pub fn htr_res(&self) -> f32 {
         self.htr_res_raw()
@@ -144,7 +144,7 @@ impl Aft1psi2 {
     /// - Min: 0
     /// - Max: 62500
     /// - Unit: "kohm"
-    /// - Receivers:
+    /// - Receivers: None
     #[inline(always)]
     pub fn max_res(&self) -> u32 {
         self.max_res_raw()
@@ -186,7 +186,7 @@ impl Aft1psi2 {
     /// - Min: -273
     /// - Max: 1734.96875
     /// - Unit: "ï¿½C"
-    /// - Receivers:
+    /// - Receivers: None
     #[inline(always)]
     pub fn temp(&self) -> f32 {
         self.temp_raw()
@@ -225,7 +225,7 @@ impl Aft1psi2 {
     /// - Min: 0
     /// - Max: 250
     /// - Unit: ""
-    /// - Receivers:
+    /// - Receivers: None
     #[inline(always)]
     pub fn regen_failed_count(&self) -> u8 {
         self.regen_failed_count_raw()
@@ -267,7 +267,7 @@ impl Aft1psi2 {
     /// - Min: 0
     /// - Max: 3
     /// - Unit: ""
-    /// - Receivers:
+    /// - Receivers: None
     #[inline(always)]
     pub fn pwr_supply(&self) -> u8 {
         self.pwr_supply_raw()
@@ -309,7 +309,7 @@ impl Aft1psi2 {
     /// - Min: 0
     /// - Max: 15
     /// - Unit: ""
-    /// - Receivers:
+    /// - Receivers: None
     #[inline(always)]
     pub fn detection_status(&self) -> u8 {
         self.detection_status_raw()
