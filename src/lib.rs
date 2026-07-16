@@ -501,42 +501,43 @@ impl Config<'_> {
             );
             ensure!(
                 is_valid_type_path(spec.type_path),
-                "attribute_structs: 'type_path' {:?} for '{}' is not a valid Rust type path",
+                "attribute_structs: 'type_path' {:?} for {:?} is not a valid Rust type path",
                 spec.type_path,
                 spec.const_name
             );
             ensure!(
                 !spec.require.is_empty(),
-                "attribute_structs: 'require' must not be empty for '{}'",
+                "attribute_structs: 'require' must not be empty for {:?}",
                 spec.const_name
             );
             ensure!(
                 !spec.fields.is_empty(),
-                "attribute_structs: '{}' declares no fields",
+                "attribute_structs: {:?} declares no fields",
                 spec.const_name
             );
 
+            let message_scope = matches!(spec.scope, AttributeScope::Message);
             let mut seen = BTreeSet::new();
             for field in spec.fields {
                 ensure!(
                     is_valid_ident(field.name),
-                    "attribute_structs: field name {:?} in '{}' is not a valid Rust identifier",
+                    "attribute_structs: field name {:?} in {:?} is not a valid Rust identifier",
                     field.name,
                     spec.const_name
                 );
                 ensure!(
                     seen.insert(field.name),
-                    "attribute_structs: duplicate field '{}' in '{}'",
+                    "attribute_structs: duplicate field {:?} in {:?}",
                     field.name,
                     spec.const_name
                 );
-                if matches!(spec.scope, AttributeScope::Message) {
+                if message_scope {
                     ensure!(
                         !matches!(
                             field.source,
                             FieldSource::StartBit | FieldSource::StartByte | FieldSource::BitWidth
                         ),
-                        "attribute_structs: field '{}' of '{}' uses a signal-only source \
+                        "attribute_structs: field {:?} of {:?} uses a signal-only source \
                          (StartBit/StartByte/BitWidth) but the struct has message scope",
                         field.name,
                         spec.const_name
@@ -620,7 +621,7 @@ impl Config<'_> {
     ) -> Result<()> {
         ensure!(
             used.insert(const_name.to_string()),
-            "attribute_structs: generated const '{const_name}' on message '{}' collides with \
+            "attribute_structs: generated const '{const_name}' on message {:?} collides with \
              another const. Use a distinct 'const_name'.",
             msg.name
         );
@@ -629,7 +630,7 @@ impl Config<'_> {
         for field in spec.fields {
             let lit = resolve_field_source(&field.source, msg, dbc, signal).ok_or_else(|| {
                 anyhow!(
-                    "attribute_structs: const '{const_name}' field '{}' has no value in the DBC \
+                    "attribute_structs: const '{const_name}' field {:?} has no value in the DBC \
                      and no default (source: {:?})",
                     field.name,
                     field.source
