@@ -639,7 +639,7 @@ impl Config<'_> {
         }
 
         let ty = spec.type_path;
-        writeln!(w, "/// Generated from DBC attributes '{}'", spec.require)?;
+        writeln!(w, "/// Generated from DBC attributes `{}`", spec.require)?;
         writeln!(w, "pub const {const_name}: {ty} = {ty} {{")?;
         {
             let mut w = PadAdapter::wrap(w);
