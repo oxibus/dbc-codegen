@@ -555,7 +555,7 @@ impl Config<'_> {
 
         // Track every associated item already emitted for this message type so
         // that colliding const names are rejected here instead of producing code
-        // that fails to build.
+        // that fails to build. Using a BTree to ensure deterministic output.
         let mut used: BTreeSet<String> = BTreeSet::new();
         used.insert("MESSAGE_ID".to_string());
         for signal in &msg.signals {
