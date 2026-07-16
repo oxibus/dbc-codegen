@@ -1591,17 +1591,14 @@ fn resolve_field_source(
     signal: Option<&Signal>,
 ) -> Option<String> {
     match source {
-        FieldSource::Attr(name) => {
-            let value = match signal {
-                Some(s) => dbc.resolved_signal_attribute(msg.id, &s.name, name),
-                None => dbc.resolved_message_attribute(msg.id, name),
-            }?;
-            Some(attr_value_literal(value))
+        FieldSource::Attr(name) => match signal {
+            Some(s) => dbc.resolved_signal_attribute(msg.id, &s.name, name),
+            None => dbc.resolved_message_attribute(msg.id, name),
         }
-        FieldSource::MessageAttr(name) => {
-            let value = dbc.resolved_message_attribute(msg.id, name)?;
-            Some(attr_value_literal(value))
-        }
+        .map(attr_value_literal),
+        FieldSource::MessageAttr(name) => dbc
+            .resolved_message_attribute(msg.id, name)
+            .map(attr_value_literal),
         FieldSource::StartBit => signal.map(|s| s.start_bit.to_string()),
         FieldSource::StartByte => signal.map(|s| signal_start_byte(s).to_string()),
         FieldSource::BitWidth => signal.map(|s| s.size.to_string()),
@@ -1626,8 +1623,8 @@ fn attr_value_literal(value: &AttributeValue) -> String {
     }
 }
 
-/// Cycle time in milliseconds from an assigned `GenMsgCycleTime` (`BA_`)
-/// attribute, if present and non-negative.
+/// Cycle time in milliseconds from an assigned and valid
+// `GenMsgCycleTime` (`BA_`) attribute.
 fn message_cycle_time_ms(dbc: &Dbc, id: MessageId) -> Option<u64> {
     match dbc.message_attribute(id, "GenMsgCycleTime")? {
         AttributeValue::Uint(v) => Some(*v),
