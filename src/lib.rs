@@ -796,15 +796,15 @@ impl Config<'_> {
 
         let field = signal.field_name();
         let typ = ValType::from_signal(signal);
-        let param_ty = signal_pub_type(dbc, msg, signal);
-        let is_enum_backed = param_ty != typ.to_string();
+        let param_type = signal_pub_type(dbc, msg, signal);
+        let is_enum_backed = param_type != typ.to_string();
 
         if is_enum_backed {
             writeln!(w, "/// Set value of '{}'", signal.name)?;
             writeln!(w, "#[inline(always)]")?;
             writeln!(
                 w,
-                "{visibility}fn set_{field}(&mut self, value: {param_ty}) -> Result<(), CanError> {{",
+                "{visibility}fn set_{field}(&mut self, value: {param_type}) -> Result<(), CanError> {{",
             )?;
             {
                 let mut w = PadAdapter::wrap(w);
