@@ -89,3 +89,59 @@ pub fn enum_variant_name(x: &str) -> String {
 pub fn is_integer(val: f64) -> bool {
     val.fract().abs() < f64::EPSILON
 }
+
+/// Check whether `s` is usable as a Rust identifier (const or field name).
+/// `syn` accepts exactly valid, non-keyword identifiers, so it also rejects
+/// keywords, the bare wildcard `_`, and anything not identifier-shaped.
+pub fn is_valid_ident(s: &str) -> bool {
+    syn::parse_str::<syn::Ident>(s).is_ok()
+}
+
+/// Check whether `s` is valid with no lowercase letters.
+pub fn is_screaming_snake_case(s: &str) -> bool {
+    is_valid_ident(s) && !s.bytes().any(|b| b.is_ascii_lowercase())
+}
+
+/// Check whether `s` is a usable Rust type path, e.g. `crate::Foo`.
+/// `syn` validates the whole path (including generics), while we
+/// reject a qualified self-type (`<T as Trait>::X`) and a leading `::`,
+/// since neither makes sense as an emitted constant's type.
+pub fn is_valid_type_path(s: &str) -> bool {
+    matches!(
+        syn::parse_str::<syn::TypePath>(s),
+        Ok(tp) if tp.qself.is_none() && tp.path.leading_colon.is_none()
+    )
+}
+
+#[cfg(test)]
+mod tests {
+    use super::{is_screaming_snake_case, is_valid_ident, is_valid_type_path};
+
+    #[test]
+    fn idents() {
+        assert!(is_valid_ident("data_id"));
+        assert!(is_valid_ident("E2E"));
+        assert!(!is_valid_ident("1bad"));
+        assert!(!is_valid_ident("_"));
+        assert!(!is_valid_ident("type")); // keyword
+        assert!(!is_valid_ident("with-dash"));
+    }
+
+    #[test]
+    fn screaming_snake_case() {
+        assert!(is_screaming_snake_case("E2E_DATA_ID"));
+        assert!(!is_screaming_snake_case("mixedCase"));
+        assert!(!is_screaming_snake_case("new"));
+    }
+
+    #[test]
+    fn type_paths() {
+        assert!(is_valid_type_path("data_protection::E2EDataIdInfo"));
+        assert!(is_valid_type_path("crate::Foo"));
+        assert!(is_valid_type_path("my::Wrapper<u8>")); // generics now accepted
+        assert!(!is_valid_type_path("1bad::Type")); // digit-leading segment
+        assert!(!is_valid_type_path("")); // empty
+        assert!(!is_valid_type_path("::foo")); // leading `::`
+        assert!(!is_valid_type_path("<T as Trait>::X")); // qualified self-type
+    }
+}

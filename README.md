@@ -112,6 +112,47 @@ Config::builder()
     .check_ranges(FeatureConfig::Never);
 ```
 
+### Attribute-driven constants
+
+Many DBCs contain additional metadata in `BA_` attributes - for example, parameters describing an AUTOSAR E2E protection scheme for specific CAN signals. `attribute_structs` lets you expose this metadata as typed constants in the generated message types.
+
+You can declare a struct in your own crate and map each field to a DBC attribute, derived signal, or a literal:
+
+```rust,no_run
+use dbc_codegen::{AttributeField, AttributeScope, AttributeStruct, Config, FieldSource};
+
+// `data_protection::E2EDataIdInfo { data_id, start_byte, width_bit }` is a type defined in your crate.
+let e2e = AttributeStruct {
+    type_path: "data_protection::E2EDataIdInfo",
+    const_name: "E2E",
+    scope: AttributeScope::Signal,   // One const per matching signal
+    require: "E2EDataId",            // Only signals carrying this attribute
+    fields: &[
+        AttributeField { name: "data_id",    source: FieldSource::Attr("E2EDataId") },
+        AttributeField { name: "start_byte",  source: FieldSource::StartByte },
+        AttributeField { name: "width_bit",   source: FieldSource::Attr("E2EDataLength") },
+    ],
+};
+
+let dbc_file = "";
+Config::builder()
+    .dbc_name("example.dbc")
+    .dbc_content(dbc_file)
+    .attribute_structs(&[e2e])
+    .build()
+    .generate()
+    .unwrap();
+```
+
+For every signal that carries an `E2EDataId` attribute, this generates:
+
+```rust,ignore
+impl SomeMessage {
+    pub const SOME_SIGNAL_E2E: data_protection::E2EDataIdInfo =
+        data_protection::E2EDataIdInfo { data_id: 373, start_byte: 0, width_bit: 48 };
+}
+```
+
 ### `no_std`
 
 The generated code is `no_std` compatible, unless you enable `impl_error`.
