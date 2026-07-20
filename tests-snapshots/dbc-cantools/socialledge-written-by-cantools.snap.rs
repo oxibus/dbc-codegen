@@ -10,7 +10,6 @@ use core::ops::BitOr;
 use bitvec::prelude::*;
 #[allow(unused_imports)]
 use embedded_can::{Id, StandardId, ExtendedId};
-use core::time::Duration;
 /// All messages
 #[allow(
     clippy::absurd_extreme_comparisons,
@@ -89,7 +88,7 @@ impl DriverHeartbeat {
         StandardId::new_unchecked(0x64)
     });
     pub const MESSAGE_SIZE: usize = 1;
-    pub const MESSAGE_CYCLE_TIME: Duration = Duration::from_millis(1000);
+    pub const MESSAGE_CYCLE_TIME_MS: u32 = 1000;
     pub const DRIVER_HEARTBEAT_CMD_MIN: u8 = 0_u8;
     pub const DRIVER_HEARTBEAT_CMD_MAX: u8 = 0_u8;
     /// Construct new DRIVER_HEARTBEAT from values
@@ -243,7 +242,7 @@ impl IoDebug {
         StandardId::new_unchecked(0x1f4)
     });
     pub const MESSAGE_SIZE: usize = 4;
-    pub const MESSAGE_CYCLE_TIME: Duration = Duration::from_millis(100);
+    pub const MESSAGE_CYCLE_TIME_MS: u32 = 100;
     pub const IO_DEBUG_TEST_UNSIGNED_MIN: u8 = 0_u8;
     pub const IO_DEBUG_TEST_UNSIGNED_MAX: u8 = 0_u8;
     pub const IO_DEBUG_TEST_ENUM_MIN: u8 = 0_u8;
@@ -529,7 +528,7 @@ impl MotorCmd {
         StandardId::new_unchecked(0x65)
     });
     pub const MESSAGE_SIZE: usize = 1;
-    pub const MESSAGE_CYCLE_TIME: Duration = Duration::from_millis(100);
+    pub const MESSAGE_CYCLE_TIME_MS: u32 = 100;
     pub const MOTOR_CMD_STEER_MIN: i8 = -5_i8;
     pub const MOTOR_CMD_STEER_MAX: i8 = 5_i8;
     pub const MOTOR_CMD_DRIVE_MIN: u8 = 0_u8;
@@ -693,7 +692,7 @@ impl MotorStatus {
         StandardId::new_unchecked(0x190)
     });
     pub const MESSAGE_SIZE: usize = 3;
-    pub const MESSAGE_CYCLE_TIME: Duration = Duration::from_millis(100);
+    pub const MESSAGE_CYCLE_TIME_MS: u32 = 100;
     pub const MOTOR_STATUS_SPEED_KPH_MIN: f32 = 0_f32;
     pub const MOTOR_STATUS_SPEED_KPH_MAX: f32 = 0_f32;
     /// Construct new MOTOR_STATUS from values
@@ -841,7 +840,7 @@ impl SensorSonars {
         StandardId::new_unchecked(0xc8)
     });
     pub const MESSAGE_SIZE: usize = 8;
-    pub const MESSAGE_CYCLE_TIME: Duration = Duration::from_millis(100);
+    pub const MESSAGE_CYCLE_TIME_MS: u32 = 100;
     pub const SENSOR_SONARS_MUX_MIN: u8 = 0_u8;
     pub const SENSOR_SONARS_MUX_MAX: u8 = 0_u8;
     pub const SENSOR_SONARS_ERR_COUNT_MIN: u16 = 0_u16;

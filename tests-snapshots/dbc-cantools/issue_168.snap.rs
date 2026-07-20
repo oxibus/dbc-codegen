@@ -10,7 +10,6 @@ use core::ops::BitOr;
 use bitvec::prelude::*;
 #[allow(unused_imports)]
 use embedded_can::{Id, StandardId, ExtendedId};
-use core::time::Duration;
 /// All messages
 #[allow(
     clippy::absurd_extreme_comparisons,
@@ -242,7 +241,7 @@ impl Fum {
         ExtendedId::new_unchecked(0x12331)
     });
     pub const MESSAGE_SIZE: usize = 5;
-    pub const MESSAGE_CYCLE_TIME: Duration = Duration::from_millis(1);
+    pub const MESSAGE_CYCLE_TIME_MS: u32 = 1;
     pub const FUM_MIN: i16 = 0_i16;
     pub const FUM_MAX: i16 = 10_i16;
     pub const FAM_MIN: i16 = 0_i16;

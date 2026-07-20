@@ -10,7 +10,6 @@ use core::ops::BitOr;
 use bitvec::prelude::*;
 #[allow(unused_imports)]
 use embedded_can::{Id, StandardId, ExtendedId};
-use core::time::Duration;
 /// All messages
 #[allow(
     clippy::absurd_extreme_comparisons,
@@ -72,7 +71,7 @@ impl Foo {
         StandardId::new_unchecked(0x1)
     });
     pub const MESSAGE_SIZE: usize = 8;
-    pub const MESSAGE_CYCLE_TIME: Duration = Duration::from_millis(200);
+    pub const MESSAGE_CYCLE_TIME_MS: u32 = 200;
     pub const FOO_MIN: f32 = 229.53_f32;
     pub const FOO_MAX: f32 = 270.47_f32;
     /// Construct new Foo from values
