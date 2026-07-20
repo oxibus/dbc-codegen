@@ -209,9 +209,6 @@ impl Config<'_> {
         writeln!(w, "use bitvec::prelude::*;")?;
         writeln!(w, "#[allow(unused_imports)]")?;
         writeln!(w, "use embedded_can::{{Id, StandardId, ExtendedId}};")?;
-        if get_relevant_messages(&dbc).any(|m| message_cycle_time_ms(&dbc, m.id).is_some()) {
-            writeln!(w, "use core::time::Duration;")?;
-        }
 
         self.impl_arbitrary.fmt_cfg(&mut w, |w| {
             writeln!(w, "use arbitrary::{{Arbitrary, Unstructured}};")
@@ -677,10 +674,7 @@ impl Config<'_> {
         let Some(ms) = message_cycle_time_ms(dbc, msg.id) else {
             return Ok(());
         };
-        writeln!(
-            w,
-            "pub const MESSAGE_CYCLE_TIME: Duration = Duration::from_millis({ms});"
-        )?;
+        writeln!(w, "pub const MESSAGE_CYCLE_TIME_MS: u32 = {ms};")?;
         Ok(())
     }
 
@@ -1635,12 +1629,12 @@ fn attr_value_literal(value: &AttributeValue) -> String {
     }
 }
 
-/// Cycle time in milliseconds from an assigned and valid
-// `GenMsgCycleTime` (`BA_`) attribute.
-fn message_cycle_time_ms(dbc: &Dbc, id: MessageId) -> Option<u64> {
+/// Cycle time in milliseconds from an assigned `GenMsgCycleTime` (`BA_`)
+/// attribute, if it is present and a non-negative integer that fits within a `u32`.
+fn message_cycle_time_ms(dbc: &Dbc, id: MessageId) -> Option<u32> {
     match dbc.message_attribute(id, "GenMsgCycleTime")? {
-        AttributeValue::Uint(v) => Some(*v),
-        AttributeValue::Int(v) => u64::try_from(*v).ok(),
+        AttributeValue::Uint(v) => u32::try_from(*v).ok(),
+        AttributeValue::Int(v) => u32::try_from(*v).ok(),
         AttributeValue::Double(_) | AttributeValue::String(_) => None,
     }
 }
