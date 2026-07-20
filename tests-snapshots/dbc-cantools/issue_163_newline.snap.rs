@@ -69,7 +69,7 @@ impl DummyMsg {
     });
     /// Construct new dummy_msg from values
     pub fn new() -> Result<Self, CanError> {
-        let res = Self { raw: [0u8; 8] };
+        let res = Self { raw: [0x00; 8] };
         Ok(res)
     }
     /// Access message payload raw value

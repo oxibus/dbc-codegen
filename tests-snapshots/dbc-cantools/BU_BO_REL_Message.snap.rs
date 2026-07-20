@@ -71,7 +71,7 @@ impl Message1 {
     pub const SIGNAL_1_MAX: u8 = 100_u8;
     /// Construct new message_1 from values
     pub fn new(signal_1: u8) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 7] };
+        let mut res = Self { raw: [0x00; 7] };
         res.set_signal_1(signal_1)?;
         Ok(res)
     }

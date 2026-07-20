@@ -76,7 +76,7 @@ impl Message1 {
     pub const MULTIPLEXOR_MAX: u8 = 0_u8;
     /// Construct new Message1 from values
     pub fn new(multiplexor: u8) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_multiplexor(multiplexor)?;
         Ok(res)
     }
@@ -677,7 +677,7 @@ impl Message2 {
     pub const MULTIPLEXOR_MAX: u8 = 0_u8;
     /// Construct new Message2 from values
     pub fn new(multiplexor: u8) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_multiplexor(multiplexor)?;
         Ok(res)
     }
@@ -1250,7 +1250,7 @@ impl Message3 {
     pub const MULTIPLEXOR_MAX: u8 = 0_u8;
     /// Construct new Message3 from values
     pub fn new(multiplexor: u8) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_multiplexor(multiplexor)?;
         Ok(res)
     }

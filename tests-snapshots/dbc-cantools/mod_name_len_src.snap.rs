@@ -75,7 +75,7 @@ impl MsgWillBeShortened345678912 {
     pub const SIG_WILL_BE_SHORTENED_3456789_12_MAX: u8 = 0_u8;
     /// Construct new Msg_will_be_shortened_3456789_12 from values
     pub fn new(sig_will_be_shortened_3456789_12: u8) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_sig_will_be_shortened_3456789_12(sig_will_be_shortened_3456789_12)?;
         Ok(res)
     }

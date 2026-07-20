@@ -70,7 +70,7 @@ impl TestMessage {
     });
     /// Construct new TestMessage from values
     pub fn new(signal_with_choices: bool) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 1] };
+        let mut res = Self { raw: [0x00; 1] };
         res.set_signal_with_choices(signal_with_choices)?;
         Ok(res)
     }

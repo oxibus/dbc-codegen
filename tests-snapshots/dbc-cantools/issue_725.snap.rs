@@ -73,7 +73,7 @@ impl TestMessage {
     pub const SIGNAL1_MAX: u8 = 250_u8;
     /// Construct new TestMessage from values
     pub fn new(signal1: u8) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 1] };
+        let mut res = Self { raw: [0x00; 1] };
         res.set_signal1(signal1)?;
         Ok(res)
     }

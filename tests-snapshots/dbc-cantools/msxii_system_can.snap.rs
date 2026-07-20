@@ -215,7 +215,7 @@ impl BatteryVt {
     pub const BATTERY_VT_INDEX_MAX: u16 = 0_u16;
     /// Construct new BATTERY_VT from values
     pub fn new(battery_vt_index: u16) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 6] };
+        let mut res = Self { raw: [0x00; 6] };
         res.set_battery_vt_index(battery_vt_index)?;
         Ok(res)
     }

@@ -111,7 +111,7 @@ impl ControlCmd {
         torque_command_8: f32,
         torque_close_loop_max_32: f32,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 7] };
+        let mut res = Self { raw: [0x00; 7] };
         res.set_crc8_cmd1(crc8_cmd1)?;
         res.set_counter_cmd1(counter_cmd1)?;
         res.set_target_motor_id_cmd1(target_motor_id_cmd1)?;
@@ -541,7 +541,7 @@ impl LimitsCmd {
         velocity_limit: u16,
         accel_limit: u16,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 6] };
+        let mut res = Self { raw: [0x00; 6] };
         res.set_crc8_cmd2(crc8_cmd2)?;
         res.set_counter_cmd2(counter_cmd2)?;
         res.set_velocity_limit(velocity_limit)?;
@@ -796,7 +796,7 @@ impl ControlStatus {
         torque_actual: f32,
         torque_close_loop_actual: f32,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 4] };
+        let mut res = Self { raw: [0x00; 4] };
         res.set_crc8_stat1(crc8_stat1)?;
         res.set_counter_stat1(counter_stat1)?;
         res.set_torque_actual(torque_actual)?;
@@ -1043,7 +1043,7 @@ impl SystemStatus {
         counter_stat2: u8,
         chip_temp: i16,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 3] };
+        let mut res = Self { raw: [0x00; 3] };
         res.set_crc8_stat2(crc8_stat2)?;
         res.set_counter_stat2(counter_stat2)?;
         res.set_chip_temp(chip_temp)?;
@@ -1252,7 +1252,7 @@ impl TorqueSensorData {
         counter_data1: u8,
         torque_sense: f32,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 3] };
+        let mut res = Self { raw: [0x00; 3] };
         res.set_crc8_data1(crc8_data1)?;
         res.set_counter_data1(counter_data1)?;
         res.set_torque_sense(torque_sense)?;

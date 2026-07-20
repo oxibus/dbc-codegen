@@ -81,7 +81,7 @@ impl ExampleMessage {
         average_radius: f32,
         enable: bool,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_temperature(temperature)?;
         res.set_average_radius(average_radius)?;
         res.set_enable(enable)?;

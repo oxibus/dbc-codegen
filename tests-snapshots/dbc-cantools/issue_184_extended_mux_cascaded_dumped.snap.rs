@@ -80,7 +80,7 @@ impl ExtMuxCascaded {
     pub const MUX_A_MAX: i8 = 0_i8;
     /// Construct new ext_MUX_cascaded from values
     pub fn new(muxed_a_2_mux_b: i8, mux_a: i8) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_muxed_a_2_mux_b(muxed_a_2_mux_b)?;
         res.set_mux_a(mux_a)?;
         Ok(res)

@@ -77,7 +77,7 @@ impl TheMessage {
     pub const THE_SIGNAL_MAX: i8 = 0_i8;
     /// Construct new TheMessage from values
     pub fn new(the_signal: i8) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_the_signal(the_signal)?;
         Ok(res)
     }
@@ -193,7 +193,7 @@ impl TheOtherMessage {
     pub const THE_SIGNAL_MAX: i8 = 0_i8;
     /// Construct new TheOtherMessage from values
     pub fn new(the_signal: i8) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_the_signal(the_signal)?;
         Ok(res)
     }

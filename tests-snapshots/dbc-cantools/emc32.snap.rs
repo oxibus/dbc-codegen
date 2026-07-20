@@ -75,7 +75,7 @@ impl EmvStati {
         emv_aktion_status_2: bool,
         emv_aktion_status_1: bool,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_emv_aktion_status_5(emv_aktion_status_5)?;
         res.set_emv_aktion_status_4(emv_aktion_status_4)?;
         res.set_emv_aktion_status_3(emv_aktion_status_3)?;

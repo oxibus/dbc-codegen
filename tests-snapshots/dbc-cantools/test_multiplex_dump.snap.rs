@@ -76,7 +76,7 @@ impl MuxedFrame {
     pub const MULTIPLEXOR_SIG_MAX: u8 = 0_u8;
     /// Construct new MuxedFrame from values
     pub fn new(unmultiplexed_sig: i8, multiplexor_sig: u8) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_unmultiplexed_sig(unmultiplexed_sig)?;
         res.set_multiplexor_sig(multiplexor_sig)?;
         Ok(res)

@@ -119,7 +119,7 @@ impl DriverDoorStatus {
     });
     /// Construct new DriverDoorStatus from values
     pub fn new(driver_door_opened: bool) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 1] };
+        let mut res = Self { raw: [0x00; 1] };
         res.set_driver_door_opened(driver_door_opened)?;
         Ok(res)
     }
@@ -266,7 +266,7 @@ impl Chime {
         chime_byte5: u8,
         chime_byte4: u8,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 5] };
+        let mut res = Self { raw: [0x00; 5] };
         res.set_chime_type(chime_type)?;
         res.set_chime_repeat(chime_repeat)?;
         res.set_chime_duration(chime_duration)?;
@@ -555,7 +555,7 @@ impl BlinkerStatus {
         left_blinker: bool,
         blinker_light: bool,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 5] };
+        let mut res = Self { raw: [0x00; 5] };
         res.set_right_blinker(right_blinker)?;
         res.set_left_blinker(left_blinker)?;
         res.set_blinker_light(blinker_light)?;
@@ -810,7 +810,7 @@ impl SteeringWheelAngle {
     pub const STEERING_WHEEL_ANGLE_MAX: f32 = 540_f32;
     /// Construct new SteeringWheelAngle from values
     pub fn new(steering_wheel_angle: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_steering_wheel_angle(steering_wheel_angle)?;
         Ok(res)
     }
@@ -923,7 +923,7 @@ impl GearShifter {
     pub const GEAR_SHIFTER_MAX: u8 = 3_u8;
     /// Construct new GearShifter from values
     pub fn new(gear_shifter: u8) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_gear_shifter(gear_shifter)?;
         Ok(res)
     }
@@ -1125,7 +1125,7 @@ impl GasPedalRegenCruise {
         gas_pedal: u8,
         gear_shifter2_not_used: u8,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_cruise_control_active(cruise_control_active)?;
         res.set_max_regen(max_regen)?;
         res.set_gas_pedal(gas_pedal)?;
@@ -1381,7 +1381,7 @@ impl BrakePedal {
     pub const BRAKE_SENSOR_MAX: u8 = 255_u8;
     /// Construct new BrakePedal from values
     pub fn new(brake_level: u8, brake_sensor: u8) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_brake_level(brake_level)?;
         res.set_brake_sensor(brake_sensor)?;
         Ok(res)
@@ -1550,7 +1550,7 @@ impl WheelSpeed {
         wheel_speed_rl: f32,
         wheel_speed_rr: f32,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_wheel_speed_fl(wheel_speed_fl)?;
         res.set_wheel_speed_fr(wheel_speed_fr)?;
         res.set_wheel_speed_rl(wheel_speed_rl)?;
@@ -1784,7 +1784,7 @@ impl VehicleSpeed {
     pub const VEHICLE_SPEED2_MAX: f32 = 100_f32;
     /// Construct new VehicleSpeed from values
     pub fn new(vehicle_speed1: f32, vehicle_speed2: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_vehicle_speed1(vehicle_speed1)?;
         res.set_vehicle_speed2(vehicle_speed2)?;
         Ok(res)
@@ -1936,7 +1936,7 @@ impl CruiseButtons {
     pub const CRUISE_BUTTONS_MAX: u8 = 12_u8;
     /// Construct new CruiseButtons from values
     pub fn new(cruise_buttons: u8) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 3] };
+        let mut res = Self { raw: [0x00; 3] };
         res.set_cruise_buttons(cruise_buttons)?;
         Ok(res)
     }
@@ -2059,7 +2059,7 @@ impl CruiseButtons2 {
     pub const LKA_GAP_BUTTON_MAX: u8 = 2_u8;
     /// Construct new CruiseButtons2 from values
     pub fn new(lka_gap_button: u8) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 1] };
+        let mut res = Self { raw: [0x00; 1] };
         res.set_lka_gap_button(lka_gap_button)?;
         Ok(res)
     }

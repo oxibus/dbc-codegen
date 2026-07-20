@@ -82,7 +82,7 @@ impl TestMessage1 {
     pub const SIGNAL3_MAX: u8 = 0_u8;
     /// Construct new TestMessage1 from values
     pub fn new(signal1: u8, signal2: u8, signal3: u8) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 3] };
+        let mut res = Self { raw: [0x00; 3] };
         res.set_signal1(signal1)?;
         res.set_signal2(signal2)?;
         res.set_signal3(signal3)?;
@@ -297,7 +297,7 @@ impl TestMessage2 {
         signal7: u16,
         signal8: u16,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 10] };
+        let mut res = Self { raw: [0x00; 10] };
         res.set_signal4(signal4)?;
         res.set_signal5(signal5)?;
         res.set_signal6(signal6)?;

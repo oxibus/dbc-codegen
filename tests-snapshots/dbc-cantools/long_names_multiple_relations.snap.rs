@@ -119,7 +119,7 @@ impl MsgLongName5678912345678912 {
         rx_twice_short: i32,
         sig_used_twice_efgh_abcdefghi_ab: i8,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_rx_twice_11111111111111111111111(rx_twice_11111111111111111111111)?;
         res.set_rx_twice_short(rx_twice_short)?;
         res.set_sig_used_twice_efgh_abcdefghi_ab(sig_used_twice_efgh_abcdefghi_ab)?;
@@ -337,7 +337,7 @@ impl TxTwice {
         rx_twice_long_yyyyyyyyyyyyyyyyyy: i8,
         rx_twice_short: i8,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_rx_twice_long_yyyyyyyyyyyyyyyyyy(rx_twice_long_yyyyyyyyyyyyyyyyyy)?;
         res.set_rx_twice_short(rx_twice_short)?;
         Ok(res)
@@ -502,7 +502,7 @@ impl RxTx1 {
     pub const SIG_USED_TWICE_EFGH_ABCDEFG_0000_MAX: i16 = 0_i16;
     /// Construct new RX_TX_1 from values
     pub fn new(sig_used_twice_efgh_abcdefg_0000: i16) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_sig_used_twice_efgh_abcdefg_0000(sig_used_twice_efgh_abcdefg_0000)?;
         Ok(res)
     }
@@ -619,7 +619,7 @@ impl MsgCaseTest {
     });
     /// Construct new MSG_CASE_TEST from values
     pub fn new() -> Result<Self, CanError> {
-        let res = Self { raw: [0u8; 8] };
+        let res = Self { raw: [0x00; 8] };
         Ok(res)
     }
     /// Access message payload raw value
@@ -688,7 +688,7 @@ impl MsgCaseTest {
     });
     /// Construct new msg_case_test from values
     pub fn new() -> Result<Self, CanError> {
-        let res = Self { raw: [0u8; 8] };
+        let res = Self { raw: [0x00; 8] };
         Ok(res)
     }
     /// Access message payload raw value
@@ -767,7 +767,7 @@ impl MsgWithValueTableSigs {
         sig_with_long_val_table_2: i8,
         sig_with_long_val_table_1: i8,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 3] };
+        let mut res = Self { raw: [0x00; 3] };
         res.set_sig_with_short_val_table(sig_with_short_val_table)?;
         res.set_sig_with_long_val_table_2(sig_with_long_val_table_2)?;
         res.set_sig_with_long_val_table_1(sig_with_long_val_table_1)?;
@@ -1134,7 +1134,7 @@ impl MsgLongName5678912345670000 {
         rx_twice_11111111111111111111111: i8,
         sig_used_twice_efgh_abcdefg_0001: i8,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_rx_twice_11111111111111111111111(rx_twice_11111111111111111111111)?;
         res.set_sig_used_twice_efgh_abcdefg_0001(sig_used_twice_efgh_abcdefg_0001)?;
         Ok(res)
@@ -1306,7 +1306,7 @@ impl MsgLongName5678912345670001 {
         rx_twice_short: i8,
         sig_used_twice_efgh_abcdefg_0002: i8,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_rx_twice_short(rx_twice_short)?;
         res.set_sig_used_twice_efgh_abcdefg_0002(sig_used_twice_efgh_abcdefg_0002)?;
         Ok(res)

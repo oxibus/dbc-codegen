@@ -72,7 +72,7 @@ impl Foo {
     pub const SIGNAL_WITHOUT_SENDER_MAX: i8 = 0_i8;
     /// Construct new Foo from values
     pub fn new(signal_without_sender: i8) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 1] };
+        let mut res = Self { raw: [0x00; 1] };
         res.set_signal_without_sender(signal_without_sender)?;
         Ok(res)
     }

@@ -75,7 +75,7 @@ impl SomeFrame {
     pub const SOME_DIFFERENT_SIG_MAX: i8 = 0_i8;
     /// Construct new SomeFrame from values
     pub fn new(some_different_sig: i8) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_some_different_sig(some_different_sig)?;
         Ok(res)
     }
@@ -191,7 +191,7 @@ impl SomeExtFrame {
     pub const SOME_SIG_MAX: i8 = 0_i8;
     /// Construct new SomeExtFrame from values
     pub fn new(some_sig: i8) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_some_sig(some_sig)?;
         Ok(res)
     }

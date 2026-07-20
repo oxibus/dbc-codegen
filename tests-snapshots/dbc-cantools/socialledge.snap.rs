@@ -91,7 +91,7 @@ impl DriverHeartbeat {
     pub const DRIVER_HEARTBEAT_CMD_MAX: u8 = 0_u8;
     /// Construct new DRIVER_HEARTBEAT from values
     pub fn new(driver_heartbeat_cmd: u8) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 1] };
+        let mut res = Self { raw: [0x00; 1] };
         res.set_driver_heartbeat_cmd(driver_heartbeat_cmd)?;
         Ok(res)
     }
@@ -254,7 +254,7 @@ impl IoDebug {
         io_debug_test_signed: i8,
         io_debug_test_float: f32,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 4] };
+        let mut res = Self { raw: [0x00; 4] };
         res.set_io_debug_test_unsigned(io_debug_test_unsigned)?;
         res.set_io_debug_test_enum(io_debug_test_enum)?;
         res.set_io_debug_test_signed(io_debug_test_signed)?;
@@ -529,7 +529,7 @@ impl MotorCmd {
     pub const MOTOR_CMD_DRIVE_MAX: u8 = 9_u8;
     /// Construct new MOTOR_CMD from values
     pub fn new(motor_cmd_steer: i8, motor_cmd_drive: u8) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 1] };
+        let mut res = Self { raw: [0x00; 1] };
         res.set_motor_cmd_steer(motor_cmd_steer)?;
         res.set_motor_cmd_drive(motor_cmd_drive)?;
         Ok(res)
@@ -692,7 +692,7 @@ impl MotorStatus {
         motor_status_wheel_error: bool,
         motor_status_speed_kph: f32,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 3] };
+        let mut res = Self { raw: [0x00; 3] };
         res.set_motor_status_wheel_error(motor_status_wheel_error)?;
         res.set_motor_status_speed_kph(motor_status_speed_kph)?;
         Ok(res)
@@ -856,7 +856,7 @@ impl SensorSonars {
         sensor_sonars_mux: u8,
         sensor_sonars_err_count: u16,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_sensor_sonars_mux(sensor_sonars_mux)?;
         res.set_sensor_sonars_err_count(sensor_sonars_err_count)?;
         Ok(res)

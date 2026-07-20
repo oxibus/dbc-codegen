@@ -85,7 +85,7 @@ impl TestMsgEx {
     pub const TEST_SIG_COPY_1_MAX: i8 = 0_i8;
     /// Construct new TestMsg_Ex from values
     pub fn new(test_sig_copy_1: i8) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_test_sig_copy_1(test_sig_copy_1)?;
         Ok(res)
     }
@@ -201,7 +201,7 @@ impl TestMsgStd {
     pub const TEST_SIG_COPY_3_MAX: i8 = 0_i8;
     /// Construct new TestMsg_Std from values
     pub fn new(test_sig_copy_3: i8) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_test_sig_copy_3(test_sig_copy_3)?;
         Ok(res)
     }
@@ -317,7 +317,7 @@ impl TestMsgFdStd {
     pub const TEST_SIG_COPY_2_MAX: i8 = 0_i8;
     /// Construct new TestMsg_FDStd from values
     pub fn new(test_sig_copy_2: i8) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_test_sig_copy_2(test_sig_copy_2)?;
         Ok(res)
     }
@@ -433,7 +433,7 @@ impl TestMsgFdEx {
     pub const TEST_SIG_MAX: i8 = 0_i8;
     /// Construct new TestMsg_FDEx from values
     pub fn new(test_sig: i8) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_test_sig(test_sig)?;
         Ok(res)
     }

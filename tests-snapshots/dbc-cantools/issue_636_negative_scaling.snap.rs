@@ -75,7 +75,7 @@ impl ExampleMessage {
     pub const TEMPERATURE_MAX: f32 = 4100_f32;
     /// Construct new ExampleMessage from values
     pub fn new(temperature: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_temperature(temperature)?;
         Ok(res)
     }

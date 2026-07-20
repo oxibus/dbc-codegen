@@ -83,7 +83,7 @@ impl TestInput {
     pub const VAR4_MAX: u16 = 65535_u16;
     /// Construct new Test_input from values
     pub fn new(test_input_mux: u8) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_test_input_mux(test_input_mux)?;
         Ok(res)
     }
@@ -590,7 +590,7 @@ impl TestOutput {
     pub const VAR8_MAX: u16 = 65535_u16;
     /// Construct new Test_output from values
     pub fn new(test_output_mux: u8) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_test_output_mux(test_output_mux)?;
         Ok(res)
     }

@@ -133,7 +133,7 @@ impl Bremse33 {
         whlspeed_rl: f32,
         whlspeed_rr: f32,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_whlspeed_fl(whlspeed_fl)?;
         res.set_whlspeed_fr(whlspeed_fr)?;
         res.set_whlspeed_rl(whlspeed_rl)?;
@@ -371,7 +371,7 @@ impl Bremse10 {
     });
     /// Construct new BREMSE_10 from values
     pub fn new() -> Result<Self, CanError> {
-        let res = Self { raw: [0u8; 8] };
+        let res = Self { raw: [0x00; 8] };
         Ok(res)
     }
     /// Access message payload raw value
@@ -441,7 +441,7 @@ impl Bremse11 {
     });
     /// Construct new BREMSE_11 from values
     pub fn new() -> Result<Self, CanError> {
-        let res = Self { raw: [0u8; 8] };
+        let res = Self { raw: [0x00; 8] };
         Ok(res)
     }
     /// Access message payload raw value
@@ -511,7 +511,7 @@ impl Bremse12 {
     });
     /// Construct new BREMSE_12 from values
     pub fn new() -> Result<Self, CanError> {
-        let res = Self { raw: [0u8; 8] };
+        let res = Self { raw: [0x00; 8] };
         Ok(res)
     }
     /// Access message payload raw value
@@ -581,7 +581,7 @@ impl Bremse13 {
     });
     /// Construct new BREMSE_13 from values
     pub fn new() -> Result<Self, CanError> {
-        let res = Self { raw: [0u8; 8] };
+        let res = Self { raw: [0x00; 8] };
         Ok(res)
     }
     /// Access message payload raw value
@@ -651,7 +651,7 @@ impl DrsRxId0 {
     });
     /// Construct new DRS_RX_ID0 from values
     pub fn new() -> Result<Self, CanError> {
-        let res = Self { raw: [0u8; 8] };
+        let res = Self { raw: [0x00; 8] };
         Ok(res)
     }
     /// Access message payload raw value
@@ -725,7 +725,7 @@ impl Mm510Tx1 {
     pub const AY1_MAX: f32 = 4.1765_f32;
     /// Construct new MM5_10_TX1 from values
     pub fn new(yaw_rate: f32, ay1: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_yaw_rate(yaw_rate)?;
         res.set_ay1(ay1)?;
         Ok(res)
@@ -883,7 +883,7 @@ impl Mm510Tx2 {
     pub const AX1_MAX: f32 = 4.1765_f32;
     /// Construct new MM5_10_TX2 from values
     pub fn new(roll_rate: f32, ax1: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_roll_rate(roll_rate)?;
         res.set_ax1(ax1)?;
         Ok(res)
@@ -1039,7 +1039,7 @@ impl Mm510Tx3 {
     pub const AZ_MAX: f32 = 4.1765_f32;
     /// Construct new MM5_10_TX3 from values
     pub fn new(az: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_az(az)?;
         Ok(res)
     }
@@ -1164,7 +1164,7 @@ impl Bremse2 {
         whlspeed_rl_bremse2: f32,
         whlspeed_rr_bremse2: f32,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_whlspeed_fl_bremse2(whlspeed_fl_bremse2)?;
         res.set_whlspeed_fr_bremse2(whlspeed_fr_bremse2)?;
         res.set_whlspeed_rl_bremse2(whlspeed_rl_bremse2)?;
@@ -1403,7 +1403,7 @@ impl AbsSwitch {
     pub const ABS_SWITCHPOSITION_MAX: u8 = 11_u8;
     /// Construct new ABS_Switch from values
     pub fn new(abs_switchposition: u8) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_abs_switchposition(abs_switchposition)?;
         Ok(res)
     }
@@ -1518,7 +1518,7 @@ impl Bremse30 {
     });
     /// Construct new BREMSE_30 from values
     pub fn new() -> Result<Self, CanError> {
-        let res = Self { raw: [0u8; 8] };
+        let res = Self { raw: [0x00; 8] };
         Ok(res)
     }
     /// Access message payload raw value
@@ -1590,7 +1590,7 @@ impl Bremse31 {
     pub const IDLE_TIME_MAX: u16 = 0_u16;
     /// Construct new BREMSE_31 from values
     pub fn new(idle_time: u16) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_idle_time(idle_time)?;
         Ok(res)
     }
@@ -1722,7 +1722,7 @@ impl Bremse32 {
         wheel_quality_rl: u8,
         wheel_quality_rr: u8,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_acc_fa(acc_fa)?;
         res.set_acc_ra(acc_ra)?;
         res.set_wheel_quality_fl(wheel_quality_fl)?;
@@ -2104,7 +2104,7 @@ impl Bremse51 {
         if_revision: u8,
         if_chksum: u8,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_ax1_abs_int(ax1_abs_int)?;
         res.set_ay1_abs_int(ay1_abs_int)?;
         res.set_if_variant(if_variant)?;
@@ -2471,7 +2471,7 @@ impl Bremse52 {
     pub const ECU_SERIAL_MAX: u32 = 99999_u32;
     /// Construct new BREMSE_52 from values
     pub fn new(mplx_sw_info: u8) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_mplx_sw_info(mplx_sw_info)?;
         Ok(res)
     }
@@ -4537,7 +4537,7 @@ impl Bremse50 {
         brake_bal_pct: f32,
         brake_bal_pct_advice: u8,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_brake_bal_at50(brake_bal_at50)?;
         res.set_brake_bal_at50_advice(brake_bal_at50_advice)?;
         res.set_brake_bal_pct(brake_bal_pct)?;
@@ -4820,7 +4820,7 @@ impl Bremse53 {
         abs_fault_info: u8,
         p_ra: f32,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_switch_position(switch_position)?;
         res.set_p_fa(p_fa)?;
         res.set_bls(bls)?;

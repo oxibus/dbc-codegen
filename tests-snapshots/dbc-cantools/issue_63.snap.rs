@@ -87,7 +87,7 @@ impl Aft1psi2 {
         pwr_supply: u8,
         detection_status: u8,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_htr_res(htr_res)?;
         res.set_max_res(max_res)?;
         res.set_temp(temp)?;

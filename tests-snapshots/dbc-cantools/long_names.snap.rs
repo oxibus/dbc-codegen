@@ -135,7 +135,7 @@ impl Ss123456789012345678901234587890 {
     });
     /// Construct new SS123456789012345678901234587890 from values
     pub fn new() -> Result<Self, CanError> {
-        let res = Self { raw: [0u8; 8] };
+        let res = Self { raw: [0x00; 8] };
         Ok(res)
     }
     /// Access message payload raw value
@@ -204,7 +204,7 @@ impl Ss12345678901234567890123450000 {
     });
     /// Construct new SS1234567890123456789012345_0000 from values
     pub fn new() -> Result<Self, CanError> {
-        let res = Self { raw: [0u8; 8] };
+        let res = Self { raw: [0x00; 8] };
         Ok(res)
     }
     /// Access message payload raw value
@@ -273,7 +273,7 @@ impl Ss12345678901234567890123450001 {
     });
     /// Construct new SS1234567890123456789012345_0001 from values
     pub fn new() -> Result<Self, CanError> {
-        let res = Self { raw: [0u8; 8] };
+        let res = Self { raw: [0x00; 8] };
         Ok(res)
     }
     /// Access message payload raw value
@@ -342,7 +342,7 @@ impl Ss123456789012345678901234577890 {
     });
     /// Construct new SS123456789012345678901234577890 from values
     pub fn new() -> Result<Self, CanError> {
-        let res = Self { raw: [0u8; 8] };
+        let res = Self { raw: [0x00; 8] };
         Ok(res)
     }
     /// Access message payload raw value
@@ -411,7 +411,7 @@ impl Ss123456789012345678901234567890 {
     });
     /// Construct new SS123456789012345678901234567890 from values
     pub fn new() -> Result<Self, CanError> {
-        let res = Self { raw: [0u8; 8] };
+        let res = Self { raw: [0x00; 8] };
         Ok(res)
     }
     /// Access message payload raw value
@@ -482,7 +482,7 @@ impl S1234567890123456789012345678901 {
     pub const SS123456789012345678901234567890_MAX: i8 = 0_i8;
     /// Construct new S1234567890123456789012345678901 from values
     pub fn new(ss123456789012345678901234567890: i8) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_ss123456789012345678901234567890(ss123456789012345678901234567890)?;
         Ok(res)
     }
@@ -601,7 +601,7 @@ impl M123456789012345678901234560000 {
     pub const SSS12345678901234567890123456789_MAX: i8 = 0_i8;
     /// Construct new M12345678901234567890123456_0000 from values
     pub fn new(sss12345678901234567890123456789: i8) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_sss12345678901234567890123456789(sss12345678901234567890123456789)?;
         Ok(res)
     }
@@ -735,7 +735,7 @@ impl M1234567890123456789012345678901 {
         s12345678901234567890123456_0000: i8,
         s1234567890123456789012345678901: i8,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_ss1234567890123456789012345_0000(ss1234567890123456789012345_0000)?;
         res.set_ss1234567890123456789012345_0001(ss1234567890123456789012345_0001)?;
         res.set_ss1234567890123456789012345_0002(ss1234567890123456789012345_0002)?;
@@ -1058,7 +1058,7 @@ impl M123456789012345678901234560001 {
         s12345678901234567890123456_0001: i8,
         s12345678901234567890123456_0002: i8,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_ss1234567890123456789012345_0003(ss1234567890123456789012345_0003)?;
         res.set_ss1234567890123456789012345_0004(ss1234567890123456789012345_0004)?;
         res.set_s12345678901234567890123456_0001(s12345678901234567890123456_0001)?;
@@ -1326,7 +1326,7 @@ impl Mm123456789012345678901234567890 {
         sss123456789012345678901234_0000: i8,
         ss1234567890123456789012345_0005: i8,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_sss123456789012345678901234_0000(sss123456789012345678901234_0000)?;
         res.set_ss1234567890123456789012345_0005(ss1234567890123456789012345_0005)?;
         Ok(res)
