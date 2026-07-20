@@ -76,7 +76,7 @@ impl Foo {
     pub const FOO_MAX: f32 = 270.47_f32;
     /// Construct new Foo from values
     pub fn new(foo: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_foo(foo)?;
         Ok(res)
     }
@@ -190,7 +190,7 @@ impl Bar {
     pub const FOO_MAX: f32 = 270.47_f32;
     /// Construct new Bar from values
     pub fn new(foo: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_foo(foo)?;
         Ok(res)
     }

@@ -82,7 +82,7 @@ impl ExampleMessage {
         empty_choice: i8,
         non_empty_choice: i8,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 3] };
+        let mut res = Self { raw: [0x00; 3] };
         res.set_no_choice(no_choice)?;
         res.set_empty_choice(empty_choice)?;
         res.set_non_empty_choice(non_empty_choice)?;

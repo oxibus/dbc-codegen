@@ -88,7 +88,7 @@ impl Foo {
     pub const BAR_MAX: f32 = 5_f32;
     /// Construct new Foo from values
     pub fn new(foo: f32, bar: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_foo(foo)?;
         res.set_bar(bar)?;
         Ok(res)
@@ -248,7 +248,7 @@ impl Fum {
     pub const FAM_MAX: i16 = 8_i16;
     /// Construct new Fum from values
     pub fn new(fum: i16, fam: i16) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 5] };
+        let mut res = Self { raw: [0x00; 5] };
         res.set_fum(fum)?;
         res.set_fam(fam)?;
         Ok(res)
@@ -441,7 +441,7 @@ impl Bar {
     pub const BINARY32_MAX: i32 = 0_i32;
     /// Construct new Bar from values
     pub fn new(binary32: i32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 4] };
+        let mut res = Self { raw: [0x00; 4] };
         res.set_binary32(binary32)?;
         Ok(res)
     }
@@ -561,7 +561,7 @@ impl CanFd {
     pub const FAS_MAX: u64 = 0_u64;
     /// Construct new CanFd from values
     pub fn new(fie: u64, fas: u64) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 64] };
+        let mut res = Self { raw: [0x00; 64] };
         res.set_fie(fie)?;
         res.set_fas(fas)?;
         Ok(res)
@@ -720,7 +720,7 @@ impl Foobar {
     pub const ACC_02_CRC_MAX: i16 = 1_i16;
     /// Construct new FOOBAR from values
     pub fn new(acc_02_crc: i16) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_acc_02_crc(acc_02_crc)?;
         Ok(res)
     }

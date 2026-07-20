@@ -72,7 +72,7 @@ impl Bar {
     pub const BINARY32_MAX: i32 = 0_i32;
     /// Construct new Bar from values
     pub fn new(binary32: i32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 4] };
+        let mut res = Self { raw: [0x00; 4] };
         res.set_binary32(binary32)?;
         Ok(res)
     }

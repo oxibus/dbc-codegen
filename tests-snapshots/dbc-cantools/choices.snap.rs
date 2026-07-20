@@ -71,7 +71,7 @@ impl Foo {
     pub const FOO_MAX: i8 = 127_i8;
     /// Construct new Foo from values
     pub fn new(foo: i8) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_foo(foo)?;
         Ok(res)
     }

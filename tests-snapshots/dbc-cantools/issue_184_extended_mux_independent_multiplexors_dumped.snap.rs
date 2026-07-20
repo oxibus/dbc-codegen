@@ -85,7 +85,7 @@ impl ExtMuxIndepMultiplexors {
     pub const MUX_A_MAX: i8 = 0_i8;
     /// Construct new ext_MUX_indep_multiplexors from values
     pub fn new(mux_b: i8, mux_a: i8) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_mux_b(mux_b)?;
         res.set_mux_a(mux_a)?;
         Ok(res)

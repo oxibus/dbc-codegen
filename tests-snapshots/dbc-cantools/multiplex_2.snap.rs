@@ -86,7 +86,7 @@ impl Shared {
     pub const S0_MAX: i8 = 0_i8;
     /// Construct new Shared from values
     pub fn new(s0: i8) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_s0(s0)?;
         Ok(res)
     }
@@ -383,7 +383,7 @@ impl Normal {
     pub const S0_MAX: i8 = 0_i8;
     /// Construct new Normal from values
     pub fn new(s0: i8) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_s0(s0)?;
         Ok(res)
     }
@@ -692,7 +692,7 @@ impl Extended {
     pub const S0_MAX: i8 = 0_i8;
     /// Construct new Extended from values
     pub fn new(s6: i8, s0: i8) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_s6(s6)?;
         res.set_s0(s0)?;
         Ok(res)
@@ -1280,7 +1280,7 @@ impl ExtendedTypes {
     pub const S11_MAX: u8 = 6_u8;
     /// Construct new ExtendedTypes from values
     pub fn new(s11: u8) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_s11(s11)?;
         Ok(res)
     }

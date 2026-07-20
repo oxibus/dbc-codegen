@@ -95,6 +95,10 @@ pub struct Config<'a> {
     #[builder(default)]
     pub allow_dead_code: bool,
 
+    /// Optional: Padding bit value used; set all unused bits to 1 if true else to 0. Default: `false`.
+    #[builder(default)]
+    pub padding_bit_value: bool,
+
     /// Optional: User-defined structs populated from DBC attributes.
     /// These are emitted as associated constants in the generated message types.
     /// Default: empty.
@@ -387,8 +391,16 @@ impl Config<'_> {
             {
                 let mut w = PadAdapter::wrap(&mut w);
                 let mutable = if msg.signals.is_empty() { "" } else { "mut " };
+                let padding_value = if self.padding_bit_value {
+                    "0xFF"
+                } else {
+                    "0x00"
+                };
                 let size = msg.size;
-                writeln!(w, "let {mutable}res = Self {{ raw: [0u8; {size}] }};")?;
+                writeln!(
+                    w,
+                    "let {mutable}res = Self {{ raw: [{padding_value}; {size}] }};"
+                )?;
                 for signal in &msg.signals {
                     if matches!(signal.multiplexer_indicator, Plain | Multiplexor) {
                         writeln!(w, "res.set_{0}({0})?;", signal.field_name())?;

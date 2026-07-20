@@ -138,7 +138,7 @@ impl Message378910 {
         s8: i8,
         s7: i8,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_s3big(s3big)?;
         res.set_s3(s3)?;
         res.set_s10big(s10big)?;
@@ -570,7 +570,7 @@ impl Message63big1 {
     pub const S63BIG_MAX: i64 = 0_i64;
     /// Construct new Message63big_1 from values
     pub fn new(s63big: i64) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_s63big(s63big)?;
         Ok(res)
     }
@@ -687,7 +687,7 @@ impl Message631 {
     pub const S63_MAX: i64 = 0_i64;
     /// Construct new Message63_1 from values
     pub fn new(s63: i64) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_s63(s63)?;
         Ok(res)
     }
@@ -804,7 +804,7 @@ impl Message63big {
     pub const S63BIG_MAX: i64 = 0_i64;
     /// Construct new Message63big from values
     pub fn new(s63big: i64) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_s63big(s63big)?;
         Ok(res)
     }
@@ -921,7 +921,7 @@ impl Message63 {
     pub const S63_MAX: i64 = 0_i64;
     /// Construct new Message63 from values
     pub fn new(s63: i64) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_s63(s63)?;
         Ok(res)
     }
@@ -1038,7 +1038,7 @@ impl Message32big {
     pub const S32BIG_MAX: i32 = 0_i32;
     /// Construct new Message32big from values
     pub fn new(s32big: i32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_s32big(s32big)?;
         Ok(res)
     }
@@ -1155,7 +1155,7 @@ impl Message33big {
     pub const S33BIG_MAX: i64 = 0_i64;
     /// Construct new Message33big from values
     pub fn new(s33big: i64) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_s33big(s33big)?;
         Ok(res)
     }
@@ -1272,7 +1272,7 @@ impl Message64big {
     pub const S64BIG_MAX: i64 = 0_i64;
     /// Construct new Message64big from values
     pub fn new(s64big: i64) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_s64big(s64big)?;
         Ok(res)
     }
@@ -1389,7 +1389,7 @@ impl Message64 {
     pub const S64_MAX: i64 = 9223372036854780000_i64;
     /// Construct new Message64 from values
     pub fn new(s64: i64) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_s64(s64)?;
         Ok(res)
     }
@@ -1506,7 +1506,7 @@ impl Message33 {
     pub const S33_MAX: i64 = 4294967295_i64;
     /// Construct new Message33 from values
     pub fn new(s33: i64) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_s33(s33)?;
         Ok(res)
     }
@@ -1623,7 +1623,7 @@ impl Message32 {
     pub const S32_MAX: i32 = 0_i32;
     /// Construct new Message32 from values
     pub fn new(s32: i32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_s32(s32)?;
         Ok(res)
     }

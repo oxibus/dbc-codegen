@@ -79,7 +79,7 @@ impl Msg1 {
     pub const SIG1_MAX: u8 = 0_u8;
     /// Construct new Msg1 from values
     pub fn new(sig1: u8) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_sig1(sig1)?;
         Ok(res)
     }
@@ -396,7 +396,7 @@ impl Msg2 {
         test1: u8,
         test0: u8,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_test7(test7)?;
         res.set_test6(test6)?;
         res.set_test5(test5)?;

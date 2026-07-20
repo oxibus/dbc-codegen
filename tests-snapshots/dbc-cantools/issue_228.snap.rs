@@ -78,7 +78,7 @@ impl SgMsg {
     pub const SG1_MAX: i8 = 0_i8;
     /// Construct new SGMsg from values
     pub fn new(dupsig: i8, sg2: i8, sg1: i8) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_dupsig(dupsig)?;
         res.set_sg2(sg2)?;
         res.set_sg1(sg1)?;
@@ -287,7 +287,7 @@ impl NormalMsg {
     pub const SIG_1_MAX: i8 = 0_i8;
     /// Construct new NormalMsg from values
     pub fn new(sig_2: i8, sig_1: i8) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_sig_2(sig_2)?;
         res.set_sig_1(sig_1)?;
         Ok(res)

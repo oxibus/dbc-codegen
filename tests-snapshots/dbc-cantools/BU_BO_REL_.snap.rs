@@ -72,7 +72,7 @@ impl Control {
     pub const STATE_MAX: u8 = 100_u8;
     /// Construct new CONTROL from values
     pub fn new(state: u8) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 7] };
+        let mut res = Self { raw: [0x00; 7] };
         res.set_state(state)?;
         Ok(res)
     }

@@ -85,7 +85,7 @@ impl CanMultiplexed {
     pub const MULTIPLEXER_MAX: u8 = 0_u8;
     /// Construct new CANMultiplexed from values
     pub fn new(multiplexer: u8) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_multiplexer(multiplexer)?;
         Ok(res)
     }
@@ -462,7 +462,7 @@ impl CanMessage {
     pub const SIGNAL0_MAX: i32 = 0_i32;
     /// Construct new CANMessage from values
     pub fn new(signal1: u64, signal0: i32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_signal1(signal1)?;
         res.set_signal0(signal0)?;
         Ok(res)

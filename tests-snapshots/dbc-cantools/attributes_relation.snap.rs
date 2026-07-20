@@ -76,7 +76,7 @@ impl Message2 {
     pub const SIGNAL_2_MAX: i8 = 0_i8;
     /// Construct new Message_2 from values
     pub fn new(signal_2: i8) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_signal_2(signal_2)?;
         Ok(res)
     }
@@ -194,7 +194,7 @@ impl Message1 {
     pub const SIGNAL_1_MAX: i8 = 0_i8;
     /// Construct new Message_1 from values
     pub fn new(signal_1: i8) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_signal_1(signal_1)?;
         Ok(res)
     }

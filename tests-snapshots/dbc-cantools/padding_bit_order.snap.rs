@@ -86,7 +86,7 @@ impl Msg0 {
     pub const C_MAX: u16 = 32767_u16;
     /// Construct new MSG0 from values
     pub fn new(a: u16, b: bool, c: u16, d: bool) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_a(a)?;
         res.set_b(b)?;
         res.set_c(c)?;
@@ -309,7 +309,7 @@ impl Msg1 {
     pub const H_MAX: u16 = 32767_u16;
     /// Construct new MSG1 from values
     pub fn new(e: bool, f: u16, g: bool, h: u16) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_e(e)?;
         res.set_f(f)?;
         res.set_g(g)?;
@@ -534,7 +534,7 @@ impl Msg2 {
     pub const K_MAX: u8 = 15_u8;
     /// Construct new MSG2 from values
     pub fn new(i: u8, j: u8, k: u8) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_i(i)?;
         res.set_j(j)?;
         res.set_k(k)?;
@@ -736,7 +736,7 @@ impl Msg3 {
     pub const L_MAX: u64 = 18446744073709551615_u64;
     /// Construct new MSG3 from values
     pub fn new(l: u64) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_l(l)?;
         Ok(res)
     }
@@ -852,7 +852,7 @@ impl Msg4 {
     pub const M_MAX: u64 = 18446744073709551615_u64;
     /// Construct new MSG4 from values
     pub fn new(m: u64) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_m(m)?;
         Ok(res)
     }

@@ -70,7 +70,7 @@ impl Message1 {
     pub const MESSAGE_SIZE: usize = 5;
     /// Construct new Message1 from values
     pub fn new() -> Result<Self, CanError> {
-        let res = Self { raw: [0u8; 5] };
+        let res = Self { raw: [0x00; 5] };
         Ok(res)
     }
     /// Access message payload raw value

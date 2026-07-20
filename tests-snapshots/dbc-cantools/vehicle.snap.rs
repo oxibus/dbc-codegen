@@ -1181,7 +1181,7 @@ impl RtSbInsVelBodyAxes {
         validity_ins_vel_sideways: bool,
         validity_ins_vel_forwards: bool,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_ins_vel_sideways_2d(ins_vel_sideways_2d)?;
         res.set_ins_vel_forwards_2d(ins_vel_forwards_2d)?;
         res.set_accuracy_ins_vel_body(accuracy_ins_vel_body)?;
@@ -1462,7 +1462,7 @@ impl RtDl1mk3Speed {
         accuracy_speed: u8,
         validity_speed: bool,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_speed(speed)?;
         res.set_accuracy_speed(accuracy_speed)?;
         res.set_validity_speed(validity_speed)?;
@@ -1663,7 +1663,7 @@ impl RtDl1mk3GpsTime {
         validity_gps_week: bool,
         validity_gps_time: bool,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_gps_week(gps_week)?;
         res.set_gps_time(gps_time)?;
         res.set_accuracy_gps_time(accuracy_gps_time)?;
@@ -1934,7 +1934,7 @@ impl RtDl1mk3GpsPosLlh2 {
         gps_pos_llh_altitude: f32,
         gps_pos_llh_longitude: f32,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_gps_pos_llh_altitude(gps_pos_llh_altitude)?;
         res.set_gps_pos_llh_longitude(gps_pos_llh_longitude)?;
         Ok(res)
@@ -2102,7 +2102,7 @@ impl RtDl1mk3GpsPosLlh1 {
         validity_gps_pos_llh_longitude: bool,
         validity_gps_pos_llh_latitude: bool,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_gps_pos_llh_latitude(gps_pos_llh_latitude)?;
         res.set_accuracy_gps_pos_llh_altitude(accuracy_gps_pos_llh_altitude)?;
         res.set_accuracy_gps_pos_llh_longitude(accuracy_gps_pos_llh_longitude)?;
@@ -2477,7 +2477,7 @@ impl RtDl1mk3GpsSpeed {
         validity_gps_speed_3d: bool,
         validity_gps_speed_2d: bool,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_gps_speed_3d(gps_speed_3d)?;
         res.set_gps_speed_2d(gps_speed_2d)?;
         res.set_accuracy_gps_speed(accuracy_gps_speed)?;
@@ -2744,7 +2744,7 @@ impl RtIrTempTemp7 {
     pub const IR_TEMPERATURE_7_MAX: f32 = 0_f32;
     /// Construct new RT_IRTemp_Temp_7 from values
     pub fn new(ir_temperature_7: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_ir_temperature_7(ir_temperature_7)?;
         Ok(res)
     }
@@ -2868,7 +2868,7 @@ impl RtIrTempTempRr2 {
         ir_temperature_30: f32,
         ir_temperature_29: f32,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_ir_temperature_32(ir_temperature_32)?;
         res.set_ir_temperature_31(ir_temperature_31)?;
         res.set_ir_temperature_30(ir_temperature_30)?;
@@ -3115,7 +3115,7 @@ impl RtIrTempTempRl2 {
         ir_temperature_22: f32,
         ir_temperature_21: f32,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_ir_temperature_24(ir_temperature_24)?;
         res.set_ir_temperature_23(ir_temperature_23)?;
         res.set_ir_temperature_22(ir_temperature_22)?;
@@ -3362,7 +3362,7 @@ impl RtIrTempTempFr2 {
         ir_temperature_14: f32,
         ir_temperature_13: f32,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_ir_temperature_16(ir_temperature_16)?;
         res.set_ir_temperature_15(ir_temperature_15)?;
         res.set_ir_temperature_14(ir_temperature_14)?;
@@ -3609,7 +3609,7 @@ impl RtIrTempTempFl2 {
         ir_temperature_6: f32,
         ir_temperature_5: f32,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_ir_temperature_8(ir_temperature_8)?;
         res.set_ir_temperature_7(ir_temperature_7)?;
         res.set_ir_temperature_6(ir_temperature_6)?;
@@ -3856,7 +3856,7 @@ impl RtIrTempTempRr1 {
         ir_temperature_26: f32,
         ir_temperature_25: f32,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_ir_temperature_28(ir_temperature_28)?;
         res.set_ir_temperature_27(ir_temperature_27)?;
         res.set_ir_temperature_26(ir_temperature_26)?;
@@ -4103,7 +4103,7 @@ impl RtIrTempTempRl1 {
         ir_temperature_18: f32,
         ir_temperature_17: f32,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_ir_temperature_20(ir_temperature_20)?;
         res.set_ir_temperature_19(ir_temperature_19)?;
         res.set_ir_temperature_18(ir_temperature_18)?;
@@ -4350,7 +4350,7 @@ impl RtIrTempTempFr1 {
         ir_temperature_10: f32,
         ir_temperature_9: f32,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_ir_temperature_12(ir_temperature_12)?;
         res.set_ir_temperature_11(ir_temperature_11)?;
         res.set_ir_temperature_10(ir_temperature_10)?;
@@ -4597,7 +4597,7 @@ impl RtIrTempTempFl1 {
         ir_temperature_2: f32,
         ir_temperature_1: f32,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_ir_temperature_4(ir_temperature_4)?;
         res.set_ir_temperature_3(ir_temperature_3)?;
         res.set_ir_temperature_2(ir_temperature_2)?;
@@ -4833,7 +4833,7 @@ impl RtIrTempTemp32 {
     pub const IR_TEMPERATURE_32_MAX: f32 = 0_f32;
     /// Construct new RT_IRTemp_Temp_32 from values
     pub fn new(ir_temperature_32: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_ir_temperature_32(ir_temperature_32)?;
         Ok(res)
     }
@@ -4946,7 +4946,7 @@ impl RtIrTempTemp31 {
     pub const IR_TEMPERATURE_31_MAX: f32 = 0_f32;
     /// Construct new RT_IRTemp_Temp_31 from values
     pub fn new(ir_temperature_31: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_ir_temperature_31(ir_temperature_31)?;
         Ok(res)
     }
@@ -5059,7 +5059,7 @@ impl RtIrTempTemp30 {
     pub const IR_TEMPERATURE_30_MAX: f32 = 0_f32;
     /// Construct new RT_IRTemp_Temp_30 from values
     pub fn new(ir_temperature_30: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_ir_temperature_30(ir_temperature_30)?;
         Ok(res)
     }
@@ -5172,7 +5172,7 @@ impl RtIrTempTemp29 {
     pub const IR_TEMPERATURE_29_MAX: f32 = 0_f32;
     /// Construct new RT_IRTemp_Temp_29 from values
     pub fn new(ir_temperature_29: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_ir_temperature_29(ir_temperature_29)?;
         Ok(res)
     }
@@ -5285,7 +5285,7 @@ impl RtIrTempTemp28 {
     pub const IR_TEMPERATURE_28_MAX: f32 = 0_f32;
     /// Construct new RT_IRTemp_Temp_28 from values
     pub fn new(ir_temperature_28: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_ir_temperature_28(ir_temperature_28)?;
         Ok(res)
     }
@@ -5398,7 +5398,7 @@ impl RtIrTempTemp27 {
     pub const IR_TEMPERATURE_27_MAX: f32 = 0_f32;
     /// Construct new RT_IRTemp_Temp_27 from values
     pub fn new(ir_temperature_27: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_ir_temperature_27(ir_temperature_27)?;
         Ok(res)
     }
@@ -5511,7 +5511,7 @@ impl RtIrTempTemp26 {
     pub const IR_TEMPERATURE_26_MAX: f32 = 0_f32;
     /// Construct new RT_IRTemp_Temp_26 from values
     pub fn new(ir_temperature_26: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_ir_temperature_26(ir_temperature_26)?;
         Ok(res)
     }
@@ -5624,7 +5624,7 @@ impl RtIrTempTemp25 {
     pub const IR_TEMPERATURE_25_MAX: f32 = 0_f32;
     /// Construct new RT_IRTemp_Temp_25 from values
     pub fn new(ir_temperature_25: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_ir_temperature_25(ir_temperature_25)?;
         Ok(res)
     }
@@ -5737,7 +5737,7 @@ impl RtIrTempTemp24 {
     pub const IR_TEMPERATURE_24_MAX: f32 = 0_f32;
     /// Construct new RT_IRTemp_Temp_24 from values
     pub fn new(ir_temperature_24: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_ir_temperature_24(ir_temperature_24)?;
         Ok(res)
     }
@@ -5850,7 +5850,7 @@ impl RtIrTempTemp22 {
     pub const IR_TEMPERATURE_22_MAX: f32 = 0_f32;
     /// Construct new RT_IRTemp_Temp_22 from values
     pub fn new(ir_temperature_22: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_ir_temperature_22(ir_temperature_22)?;
         Ok(res)
     }
@@ -5963,7 +5963,7 @@ impl RtIrTempTemp23 {
     pub const IR_TEMPERATURE_23_MAX: f32 = 0_f32;
     /// Construct new RT_IRTemp_Temp_23 from values
     pub fn new(ir_temperature_23: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_ir_temperature_23(ir_temperature_23)?;
         Ok(res)
     }
@@ -6076,7 +6076,7 @@ impl RtIrTempTemp21 {
     pub const IR_TEMPERATURE_21_MAX: f32 = 0_f32;
     /// Construct new RT_IRTemp_Temp_21 from values
     pub fn new(ir_temperature_21: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_ir_temperature_21(ir_temperature_21)?;
         Ok(res)
     }
@@ -6189,7 +6189,7 @@ impl RtIrTempTemp20 {
     pub const IR_TEMPERATURE_20_MAX: f32 = 0_f32;
     /// Construct new RT_IRTemp_Temp_20 from values
     pub fn new(ir_temperature_20: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_ir_temperature_20(ir_temperature_20)?;
         Ok(res)
     }
@@ -6302,7 +6302,7 @@ impl RtIrTempTemp19 {
     pub const IR_TEMPERATURE_19_MAX: f32 = 0_f32;
     /// Construct new RT_IRTemp_Temp_19 from values
     pub fn new(ir_temperature_19: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_ir_temperature_19(ir_temperature_19)?;
         Ok(res)
     }
@@ -6415,7 +6415,7 @@ impl RtIrTempTemp18 {
     pub const IR_TEMPERATURE_18_MAX: f32 = 0_f32;
     /// Construct new RT_IRTemp_Temp_18 from values
     pub fn new(ir_temperature_18: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_ir_temperature_18(ir_temperature_18)?;
         Ok(res)
     }
@@ -6528,7 +6528,7 @@ impl RtIrTempTemp16 {
     pub const IR_TEMPERATURE_16_MAX: f32 = 0_f32;
     /// Construct new RT_IRTemp_Temp_16 from values
     pub fn new(ir_temperature_16: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_ir_temperature_16(ir_temperature_16)?;
         Ok(res)
     }
@@ -6641,7 +6641,7 @@ impl RtIrTempTemp15 {
     pub const IR_TEMPERATURE_15_MAX: f32 = 0_f32;
     /// Construct new RT_IRTemp_Temp_15 from values
     pub fn new(ir_temperature_15: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_ir_temperature_15(ir_temperature_15)?;
         Ok(res)
     }
@@ -6754,7 +6754,7 @@ impl RtIrTempTemp14 {
     pub const IR_TEMPERATURE_14_MAX: f32 = 0_f32;
     /// Construct new RT_IRTemp_Temp_14 from values
     pub fn new(ir_temperature_14: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_ir_temperature_14(ir_temperature_14)?;
         Ok(res)
     }
@@ -6867,7 +6867,7 @@ impl RtIrTempTemp13 {
     pub const IR_TEMPERATURE_13_MAX: f32 = 0_f32;
     /// Construct new RT_IRTemp_Temp_13 from values
     pub fn new(ir_temperature_13: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_ir_temperature_13(ir_temperature_13)?;
         Ok(res)
     }
@@ -6980,7 +6980,7 @@ impl RtIrTempTemp12 {
     pub const IR_TEMPERATURE_12_MAX: f32 = 0_f32;
     /// Construct new RT_IRTemp_Temp_12 from values
     pub fn new(ir_temperature_12: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_ir_temperature_12(ir_temperature_12)?;
         Ok(res)
     }
@@ -7093,7 +7093,7 @@ impl RtIrTempTemp11 {
     pub const IR_TEMPERATURE_11_MAX: f32 = 0_f32;
     /// Construct new RT_IRTemp_Temp_11 from values
     pub fn new(ir_temperature_11: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_ir_temperature_11(ir_temperature_11)?;
         Ok(res)
     }
@@ -7206,7 +7206,7 @@ impl RtIrTempTemp10 {
     pub const IR_TEMPERATURE_10_MAX: f32 = 0_f32;
     /// Construct new RT_IRTemp_Temp_10 from values
     pub fn new(ir_temperature_10: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_ir_temperature_10(ir_temperature_10)?;
         Ok(res)
     }
@@ -7319,7 +7319,7 @@ impl RtIrTempTemp8 {
     pub const IR_TEMPERATURE_8_MAX: f32 = 0_f32;
     /// Construct new RT_IRTemp_Temp_8 from values
     pub fn new(ir_temperature_8: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_ir_temperature_8(ir_temperature_8)?;
         Ok(res)
     }
@@ -7432,7 +7432,7 @@ impl RtIrTempTemp9 {
     pub const IR_TEMPERATURE_9_MAX: f32 = 0_f32;
     /// Construct new RT_IRTemp_Temp_9 from values
     pub fn new(ir_temperature_9: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_ir_temperature_9(ir_temperature_9)?;
         Ok(res)
     }
@@ -7545,7 +7545,7 @@ impl RtIrTempTemp17 {
     pub const IR_TEMPERATURE_17_MAX: f32 = 0_f32;
     /// Construct new RT_IRTemp_Temp_17 from values
     pub fn new(ir_temperature_17: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_ir_temperature_17(ir_temperature_17)?;
         Ok(res)
     }
@@ -7658,7 +7658,7 @@ impl RtIrTempTemp6 {
     pub const IR_TEMPERATURE_6_MAX: f32 = 0_f32;
     /// Construct new RT_IRTemp_Temp_6 from values
     pub fn new(ir_temperature_6: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_ir_temperature_6(ir_temperature_6)?;
         Ok(res)
     }
@@ -7771,7 +7771,7 @@ impl RtIrTempTemp5 {
     pub const IR_TEMPERATURE_5_MAX: f32 = 0_f32;
     /// Construct new RT_IRTemp_Temp_5 from values
     pub fn new(ir_temperature_5: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_ir_temperature_5(ir_temperature_5)?;
         Ok(res)
     }
@@ -7884,7 +7884,7 @@ impl RtIrTempTemp4 {
     pub const IR_TEMPERATURE_4_MAX: f32 = 0_f32;
     /// Construct new RT_IRTemp_Temp_4 from values
     pub fn new(ir_temperature_4: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_ir_temperature_4(ir_temperature_4)?;
         Ok(res)
     }
@@ -7997,7 +7997,7 @@ impl RtIrTempTemp3 {
     pub const IR_TEMPERATURE_3_MAX: f32 = 0_f32;
     /// Construct new RT_IRTemp_Temp_3 from values
     pub fn new(ir_temperature_3: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_ir_temperature_3(ir_temperature_3)?;
         Ok(res)
     }
@@ -8110,7 +8110,7 @@ impl RtIrTempTemp2 {
     pub const IR_TEMPERATURE_2_MAX: f32 = 0_f32;
     /// Construct new RT_IRTemp_Temp_2 from values
     pub fn new(ir_temperature_2: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_ir_temperature_2(ir_temperature_2)?;
         Ok(res)
     }
@@ -8223,7 +8223,7 @@ impl RtIrTempTemp1 {
     pub const IR_TEMPERATURE_1_MAX: f32 = 0_f32;
     /// Construct new RT_IRTemp_Temp_1 from values
     pub fn new(ir_temperature_1: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_ir_temperature_1(ir_temperature_1)?;
         Ok(res)
     }
@@ -8336,7 +8336,7 @@ impl RtSbTrigFinalCondition {
     pub const FINAL_SPEED_MAX: f32 = 1675_f32;
     /// Construct new RT_SB_Trig_Final_Condition from values
     pub fn new(final_speed: f32, validity_final_speed: bool) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_final_speed(final_speed)?;
         res.set_validity_final_speed(validity_final_speed)?;
         Ok(res)
@@ -8496,7 +8496,7 @@ impl RtSbTrigInitialCondition {
         validity_initial_heading: bool,
         validity_initial_speed: bool,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_mfdd_end_threshold(mfdd_end_threshold)?;
         res.set_mfdd_start_threshold(mfdd_start_threshold)?;
         res.set_initial_heading(initial_heading)?;
@@ -8807,7 +8807,7 @@ impl RtSbTrigDirectDist {
     pub const DIRECT_DISTANCE_MAX: f32 = 4294967_f32;
     /// Construct new RT_SB_Trig_Direct_Dist from values
     pub fn new(path_distance_2d: f32, direct_distance: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_path_distance_2d(path_distance_2d)?;
         res.set_direct_distance(direct_distance)?;
         Ok(res)
@@ -8968,7 +8968,7 @@ impl RtSbTrigForwardDist {
         deviation_distance: f32,
         forward_distance: f32,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_deviation_distance(deviation_distance)?;
         res.set_forward_distance(forward_distance)?;
         Ok(res)
@@ -9126,7 +9126,7 @@ impl RtSbTrigPathDist {
     pub const PATH_DISTANCE_3D_MAX: f32 = 4294967_f32;
     /// Construct new RT_SB_Trig_Path_Dist from values
     pub fn new(path_distance_3d: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_path_distance_3d(path_distance_3d)?;
         Ok(res)
     }
@@ -9251,7 +9251,7 @@ impl RtSbTrigAccel {
         validity_average_accel: bool,
         validity_mfdd: bool,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_triggered_time(triggered_time)?;
         res.set_average_accel(average_accel)?;
         res.set_mfdd(mfdd)?;
@@ -9550,7 +9550,7 @@ impl RtDl1mk3MeasureTime12 {
     pub const MEASURED_TIME_12_MAX: u32 = 0_u32;
     /// Construct new RT_DL1MK3_Measure_Time_12 from values
     pub fn new(measured_time_12: u32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 3] };
+        let mut res = Self { raw: [0x00; 3] };
         res.set_measured_time_12(measured_time_12)?;
         Ok(res)
     }
@@ -9665,7 +9665,7 @@ impl RtDl1mk3MeasureTime11 {
     pub const MEASURED_TIME_11_MAX: u32 = 0_u32;
     /// Construct new RT_DL1MK3_Measure_Time_11 from values
     pub fn new(measured_time_11: u32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 3] };
+        let mut res = Self { raw: [0x00; 3] };
         res.set_measured_time_11(measured_time_11)?;
         Ok(res)
     }
@@ -9780,7 +9780,7 @@ impl RtDl1mk3MeasureTime10 {
     pub const MEASURED_TIME_10_MAX: u32 = 0_u32;
     /// Construct new RT_DL1MK3_Measure_Time_10 from values
     pub fn new(measured_time_10: u32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 3] };
+        let mut res = Self { raw: [0x00; 3] };
         res.set_measured_time_10(measured_time_10)?;
         Ok(res)
     }
@@ -9895,7 +9895,7 @@ impl RtDl1mk3MeasureTime9 {
     pub const MEASURED_TIME_9_MAX: u32 = 0_u32;
     /// Construct new RT_DL1MK3_Measure_Time_9 from values
     pub fn new(measured_time_9: u32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 3] };
+        let mut res = Self { raw: [0x00; 3] };
         res.set_measured_time_9(measured_time_9)?;
         Ok(res)
     }
@@ -10010,7 +10010,7 @@ impl RtDl1mk3MeasureTime8 {
     pub const MEASURED_TIME_8_MAX: u32 = 0_u32;
     /// Construct new RT_DL1MK3_Measure_Time_8 from values
     pub fn new(measured_time_8: u32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 3] };
+        let mut res = Self { raw: [0x00; 3] };
         res.set_measured_time_8(measured_time_8)?;
         Ok(res)
     }
@@ -10125,7 +10125,7 @@ impl RtDl1mk3MeasureTime7 {
     pub const MEASURED_TIME_7_MAX: u32 = 0_u32;
     /// Construct new RT_DL1MK3_Measure_Time_7 from values
     pub fn new(measured_time_7: u32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 3] };
+        let mut res = Self { raw: [0x00; 3] };
         res.set_measured_time_7(measured_time_7)?;
         Ok(res)
     }
@@ -10240,7 +10240,7 @@ impl RtDl1mk3MeasureTime6 {
     pub const MEASURED_TIME_6_MAX: u32 = 0_u32;
     /// Construct new RT_DL1MK3_Measure_Time_6 from values
     pub fn new(measured_time_6: u32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 3] };
+        let mut res = Self { raw: [0x00; 3] };
         res.set_measured_time_6(measured_time_6)?;
         Ok(res)
     }
@@ -10355,7 +10355,7 @@ impl RtDl1mk3MeasureTime5 {
     pub const MEASURED_TIME_5_MAX: u32 = 0_u32;
     /// Construct new RT_DL1MK3_Measure_Time_5 from values
     pub fn new(measured_time_5: u32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 3] };
+        let mut res = Self { raw: [0x00; 3] };
         res.set_measured_time_5(measured_time_5)?;
         Ok(res)
     }
@@ -10470,7 +10470,7 @@ impl RtDl1mk3MeasureTime4 {
     pub const MEASURED_TIME_4_MAX: u32 = 0_u32;
     /// Construct new RT_DL1MK3_Measure_Time_4 from values
     pub fn new(measured_time_4: u32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 3] };
+        let mut res = Self { raw: [0x00; 3] };
         res.set_measured_time_4(measured_time_4)?;
         Ok(res)
     }
@@ -10585,7 +10585,7 @@ impl RtDl1mk3MeasureTime3 {
     pub const MEASURED_TIME_3_MAX: u32 = 0_u32;
     /// Construct new RT_DL1MK3_Measure_Time_3 from values
     pub fn new(measured_time_3: u32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 3] };
+        let mut res = Self { raw: [0x00; 3] };
         res.set_measured_time_3(measured_time_3)?;
         Ok(res)
     }
@@ -10700,7 +10700,7 @@ impl RtDl1mk3MeasureTime2 {
     pub const MEASURED_TIME_2_MAX: u32 = 0_u32;
     /// Construct new RT_DL1MK3_Measure_Time_2 from values
     pub fn new(measured_time_2: u32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 3] };
+        let mut res = Self { raw: [0x00; 3] };
         res.set_measured_time_2(measured_time_2)?;
         Ok(res)
     }
@@ -10815,7 +10815,7 @@ impl RtDl1mk3MeasureTime1 {
     pub const MEASURED_TIME_1_MAX: u32 = 0_u32;
     /// Construct new RT_DL1MK3_Measure_Time_1 from values
     pub fn new(measured_time_1: u32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 3] };
+        let mut res = Self { raw: [0x00; 3] };
         res.set_measured_time_1(measured_time_1)?;
         Ok(res)
     }
@@ -10930,7 +10930,7 @@ impl RtDl1mk3Rpm {
     pub const RPM_MAX: u16 = 0_u16;
     /// Construct new RT_DL1MK3_RPM from values
     pub fn new(rpm: u16) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_rpm(rpm)?;
         Ok(res)
     }
@@ -11045,7 +11045,7 @@ impl RtDl1mk3Freq4 {
     pub const FREQUENCY_4_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Freq_4 from values
     pub fn new(frequency_4: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_frequency_4(frequency_4)?;
         Ok(res)
     }
@@ -11157,7 +11157,7 @@ impl RtDl1mk3Freq3 {
     pub const FREQUENCY_3_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Freq_3 from values
     pub fn new(frequency_3: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_frequency_3(frequency_3)?;
         Ok(res)
     }
@@ -11269,7 +11269,7 @@ impl RtDl1mk3Freq2 {
     pub const FREQUENCY_2_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Freq_2 from values
     pub fn new(frequency_2: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_frequency_2(frequency_2)?;
         Ok(res)
     }
@@ -11381,7 +11381,7 @@ impl RtDl1mk3Misc3 {
     pub const MISC_3_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Misc_3 from values
     pub fn new(misc_3: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_misc_3(misc_3)?;
         Ok(res)
     }
@@ -11493,7 +11493,7 @@ impl RtDl1mk3Misc2 {
     pub const MISC_2_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Misc_2 from values
     pub fn new(misc_2: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_misc_2(misc_2)?;
         Ok(res)
     }
@@ -11605,7 +11605,7 @@ impl RtDl1mk3Misc1 {
     pub const MISC_1_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Misc_1 from values
     pub fn new(misc_1: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_misc_1(misc_1)?;
         Ok(res)
     }
@@ -11717,7 +11717,7 @@ impl RtDl1mk3Aux31 {
     pub const AUX_31_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Aux_31 from values
     pub fn new(aux_31: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_aux_31(aux_31)?;
         Ok(res)
     }
@@ -11829,7 +11829,7 @@ impl RtDl1mk3Aux30 {
     pub const AUX_30_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Aux_30 from values
     pub fn new(aux_30: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_aux_30(aux_30)?;
         Ok(res)
     }
@@ -11941,7 +11941,7 @@ impl RtDl1mk3Aux29 {
     pub const AUX_29_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Aux_29 from values
     pub fn new(aux_29: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_aux_29(aux_29)?;
         Ok(res)
     }
@@ -12053,7 +12053,7 @@ impl RtDl1mk3Aux28 {
     pub const AUX_28_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Aux_28 from values
     pub fn new(aux_28: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_aux_28(aux_28)?;
         Ok(res)
     }
@@ -12165,7 +12165,7 @@ impl RtDl1mk3Aux27 {
     pub const AUX_27_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Aux_27 from values
     pub fn new(aux_27: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_aux_27(aux_27)?;
         Ok(res)
     }
@@ -12277,7 +12277,7 @@ impl RtDl1mk3Aux26 {
     pub const AUX_26_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Aux_26 from values
     pub fn new(aux_26: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_aux_26(aux_26)?;
         Ok(res)
     }
@@ -12389,7 +12389,7 @@ impl RtDl1mk3Aux25 {
     pub const AUX_25_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Aux_25 from values
     pub fn new(aux_25: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_aux_25(aux_25)?;
         Ok(res)
     }
@@ -12501,7 +12501,7 @@ impl RtDl1mk3Aux24 {
     pub const AUX_24_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Aux_24 from values
     pub fn new(aux_24: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_aux_24(aux_24)?;
         Ok(res)
     }
@@ -12613,7 +12613,7 @@ impl RtDl1mk3Aux23 {
     pub const AUX_23_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Aux_23 from values
     pub fn new(aux_23: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_aux_23(aux_23)?;
         Ok(res)
     }
@@ -12725,7 +12725,7 @@ impl RtDl1mk3Aux22 {
     pub const AUX_22_MAX: u32 = 0_u32;
     /// Construct new RT_DL1MK3_Aux_22 from values
     pub fn new(aux_22: u32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_aux_22(aux_22)?;
         Ok(res)
     }
@@ -12840,7 +12840,7 @@ impl RtDl1mk3Aux21 {
     pub const AUX_21_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Aux_21 from values
     pub fn new(aux_21: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_aux_21(aux_21)?;
         Ok(res)
     }
@@ -12952,7 +12952,7 @@ impl RtDl1mk3Aux20 {
     pub const AUX_20_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Aux_20 from values
     pub fn new(aux_20: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_aux_20(aux_20)?;
         Ok(res)
     }
@@ -13064,7 +13064,7 @@ impl RtDl1mk3Aux19 {
     pub const AUX_19_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Aux_19 from values
     pub fn new(aux_19: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_aux_19(aux_19)?;
         Ok(res)
     }
@@ -13176,7 +13176,7 @@ impl RtDl1mk3Aux18 {
     pub const AUX_18_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Aux_18 from values
     pub fn new(aux_18: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_aux_18(aux_18)?;
         Ok(res)
     }
@@ -13288,7 +13288,7 @@ impl RtDl1mk3Aux17 {
     pub const AUX_17_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Aux_17 from values
     pub fn new(aux_17: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_aux_17(aux_17)?;
         Ok(res)
     }
@@ -13400,7 +13400,7 @@ impl RtDl1mk3Aux16 {
     pub const AUX_16_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Aux_16 from values
     pub fn new(aux_16: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_aux_16(aux_16)?;
         Ok(res)
     }
@@ -13512,7 +13512,7 @@ impl RtDl1mk3Aux15 {
     pub const AUX_15_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Aux_15 from values
     pub fn new(aux_15: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_aux_15(aux_15)?;
         Ok(res)
     }
@@ -13624,7 +13624,7 @@ impl RtDl1mk3Aux14 {
     pub const AUX_14_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Aux_14 from values
     pub fn new(aux_14: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_aux_14(aux_14)?;
         Ok(res)
     }
@@ -13736,7 +13736,7 @@ impl RtDl1mk3Aux13 {
     pub const AUX_13_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Aux_13 from values
     pub fn new(aux_13: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_aux_13(aux_13)?;
         Ok(res)
     }
@@ -13848,7 +13848,7 @@ impl RtDl1mk3Aux12 {
     pub const AUX_12_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Aux_12 from values
     pub fn new(aux_12: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_aux_12(aux_12)?;
         Ok(res)
     }
@@ -13960,7 +13960,7 @@ impl RtDl1mk3Aux11 {
     pub const AUX_11_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Aux_11 from values
     pub fn new(aux_11: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_aux_11(aux_11)?;
         Ok(res)
     }
@@ -14072,7 +14072,7 @@ impl RtDl1mk3Aux9 {
     pub const AUX_9_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Aux_9 from values
     pub fn new(aux_9: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_aux_9(aux_9)?;
         Ok(res)
     }
@@ -14184,7 +14184,7 @@ impl RtDl1mk3Aux10 {
     pub const AUX_10_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Aux_10 from values
     pub fn new(aux_10: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_aux_10(aux_10)?;
         Ok(res)
     }
@@ -14296,7 +14296,7 @@ impl RtDl1mk3Aux8 {
     pub const AUX_8_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Aux_8 from values
     pub fn new(aux_8: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_aux_8(aux_8)?;
         Ok(res)
     }
@@ -14408,7 +14408,7 @@ impl RtDl1mk3Aux7 {
     pub const AUX_7_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Aux_7 from values
     pub fn new(aux_7: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_aux_7(aux_7)?;
         Ok(res)
     }
@@ -14520,7 +14520,7 @@ impl RtDl1mk3Aux6 {
     pub const AUX_6_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Aux_6 from values
     pub fn new(aux_6: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_aux_6(aux_6)?;
         Ok(res)
     }
@@ -14632,7 +14632,7 @@ impl RtDl1mk3Aux5 {
     pub const AUX_5_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Aux_5 from values
     pub fn new(aux_5: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_aux_5(aux_5)?;
         Ok(res)
     }
@@ -14744,7 +14744,7 @@ impl RtDl1mk3Aux4 {
     pub const AUX_4_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Aux_4 from values
     pub fn new(aux_4: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_aux_4(aux_4)?;
         Ok(res)
     }
@@ -14856,7 +14856,7 @@ impl RtDl1mk3Aux3 {
     pub const AUX_3_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Aux_3 from values
     pub fn new(aux_3: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_aux_3(aux_3)?;
         Ok(res)
     }
@@ -14968,7 +14968,7 @@ impl RtDl1mk3Aux2 {
     pub const AUX_2_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Aux_2 from values
     pub fn new(aux_2: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_aux_2(aux_2)?;
         Ok(res)
     }
@@ -15080,7 +15080,7 @@ impl RtDl1mk3Aux1 {
     pub const AUX_1_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Aux_1 from values
     pub fn new(aux_1: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_aux_1(aux_1)?;
         Ok(res)
     }
@@ -15192,7 +15192,7 @@ impl RtDl1mk3Pressure5 {
     pub const PRESSURE_5_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Pressure_5 from values
     pub fn new(pressure_5: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 3] };
+        let mut res = Self { raw: [0x00; 3] };
         res.set_pressure_5(pressure_5)?;
         Ok(res)
     }
@@ -15304,7 +15304,7 @@ impl RtDl1mk3Pressure4 {
     pub const PRESSURE_4_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Pressure_4 from values
     pub fn new(pressure_4: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 3] };
+        let mut res = Self { raw: [0x00; 3] };
         res.set_pressure_4(pressure_4)?;
         Ok(res)
     }
@@ -15416,7 +15416,7 @@ impl RtDl1mk3Pressure3 {
     pub const PRESSURE_3_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Pressure_3 from values
     pub fn new(pressure_3: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 3] };
+        let mut res = Self { raw: [0x00; 3] };
         res.set_pressure_3(pressure_3)?;
         Ok(res)
     }
@@ -15528,7 +15528,7 @@ impl RtDl1mk3Pressure2 {
     pub const PRESSURE_2_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Pressure_2 from values
     pub fn new(pressure_2: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 3] };
+        let mut res = Self { raw: [0x00; 3] };
         res.set_pressure_2(pressure_2)?;
         Ok(res)
     }
@@ -15640,7 +15640,7 @@ impl RtDl1mk3Pressure1 {
     pub const PRESSURE_1_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Pressure_1 from values
     pub fn new(pressure_1: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 3] };
+        let mut res = Self { raw: [0x00; 3] };
         res.set_pressure_1(pressure_1)?;
         Ok(res)
     }
@@ -15752,7 +15752,7 @@ impl RtDl1mk3Angle3 {
     pub const ANGLE_3_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Angle_3 from values
     pub fn new(angle_3: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_angle_3(angle_3)?;
         Ok(res)
     }
@@ -15865,7 +15865,7 @@ impl RtDl1mk3Angle2 {
     pub const ANGLE_2_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Angle_2 from values
     pub fn new(angle_2: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_angle_2(angle_2)?;
         Ok(res)
     }
@@ -15978,7 +15978,7 @@ impl RtDl1mk3Angle1 {
     pub const ANGLE_1_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Angle_1 from values
     pub fn new(angle_1: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_angle_1(angle_1)?;
         Ok(res)
     }
@@ -16091,7 +16091,7 @@ impl RtDl1mk3Temp25 {
     pub const TEMPERATURE_25_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Temp_25 from values
     pub fn new(temperature_25: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_temperature_25(temperature_25)?;
         Ok(res)
     }
@@ -16204,7 +16204,7 @@ impl RtDl1mk3Temp24 {
     pub const TEMPERATURE_24_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Temp_24 from values
     pub fn new(temperature_24: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_temperature_24(temperature_24)?;
         Ok(res)
     }
@@ -16317,7 +16317,7 @@ impl RtDl1mk3Temp23 {
     pub const TEMPERATURE_23_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Temp_23 from values
     pub fn new(temperature_23: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_temperature_23(temperature_23)?;
         Ok(res)
     }
@@ -16430,7 +16430,7 @@ impl RtDl1mk3Temp22 {
     pub const TEMPERATURE_22_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Temp_22 from values
     pub fn new(temperature_22: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_temperature_22(temperature_22)?;
         Ok(res)
     }
@@ -16543,7 +16543,7 @@ impl RtDl1mk3Temp21 {
     pub const TEMPERATURE_21_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Temp_21 from values
     pub fn new(temperature_21: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_temperature_21(temperature_21)?;
         Ok(res)
     }
@@ -16656,7 +16656,7 @@ impl RtDl1mk3Temp20 {
     pub const TEMPERATURE_20_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Temp_20 from values
     pub fn new(temperature_20: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_temperature_20(temperature_20)?;
         Ok(res)
     }
@@ -16769,7 +16769,7 @@ impl RtDl1mk3Temp19 {
     pub const TEMPERATURE_19_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Temp_19 from values
     pub fn new(temperature_19: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_temperature_19(temperature_19)?;
         Ok(res)
     }
@@ -16882,7 +16882,7 @@ impl RtDl1mk3Temp18 {
     pub const TEMPERATURE_18_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Temp_18 from values
     pub fn new(temperature_18: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_temperature_18(temperature_18)?;
         Ok(res)
     }
@@ -16995,7 +16995,7 @@ impl RtDl1mk3Temp17 {
     pub const TEMPERATURE_17_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Temp_17 from values
     pub fn new(temperature_17: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_temperature_17(temperature_17)?;
         Ok(res)
     }
@@ -17108,7 +17108,7 @@ impl RtDl1mk3Temp16 {
     pub const TEMPERATURE_16_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Temp_16 from values
     pub fn new(temperature_16: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_temperature_16(temperature_16)?;
         Ok(res)
     }
@@ -17221,7 +17221,7 @@ impl RtDl1mk3Temp15 {
     pub const TEMPERATURE_15_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Temp_15 from values
     pub fn new(temperature_15: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_temperature_15(temperature_15)?;
         Ok(res)
     }
@@ -17334,7 +17334,7 @@ impl RtDl1mk3Temp14 {
     pub const TEMPERATURE_14_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Temp_14 from values
     pub fn new(temperature_14: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_temperature_14(temperature_14)?;
         Ok(res)
     }
@@ -17447,7 +17447,7 @@ impl RtDl1mk3Temp13 {
     pub const TEMPERATURE_13_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Temp_13 from values
     pub fn new(temperature_13: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_temperature_13(temperature_13)?;
         Ok(res)
     }
@@ -17560,7 +17560,7 @@ impl RtDl1mk3Temp12 {
     pub const TEMPERATURE_12_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Temp_12 from values
     pub fn new(temperature_12: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_temperature_12(temperature_12)?;
         Ok(res)
     }
@@ -17673,7 +17673,7 @@ impl RtDl1mk3Temp11 {
     pub const TEMPERATURE_11_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Temp_11 from values
     pub fn new(temperature_11: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_temperature_11(temperature_11)?;
         Ok(res)
     }
@@ -17786,7 +17786,7 @@ impl RtDl1mk3Temp10 {
     pub const TEMPERATURE_10_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Temp_10 from values
     pub fn new(temperature_10: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_temperature_10(temperature_10)?;
         Ok(res)
     }
@@ -17899,7 +17899,7 @@ impl RtDl1mk3Temp9 {
     pub const TEMPERATURE_9_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Temp_9 from values
     pub fn new(temperature_9: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_temperature_9(temperature_9)?;
         Ok(res)
     }
@@ -18012,7 +18012,7 @@ impl RtDl1mk3Temp8 {
     pub const TEMPERATURE_8_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Temp_8 from values
     pub fn new(temperature_8: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_temperature_8(temperature_8)?;
         Ok(res)
     }
@@ -18125,7 +18125,7 @@ impl RtDl1mk3Temp7 {
     pub const TEMPERATURE_7_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Temp_7 from values
     pub fn new(temperature_7: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_temperature_7(temperature_7)?;
         Ok(res)
     }
@@ -18238,7 +18238,7 @@ impl RtDl1mk3Temp6 {
     pub const TEMPERATURE_6_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Temp_6 from values
     pub fn new(temperature_6: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_temperature_6(temperature_6)?;
         Ok(res)
     }
@@ -18351,7 +18351,7 @@ impl RtDl1mk3Temp5 {
     pub const TEMPERATURE_5_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Temp_5 from values
     pub fn new(temperature_5: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_temperature_5(temperature_5)?;
         Ok(res)
     }
@@ -18464,7 +18464,7 @@ impl RtDl1mk3Temp4 {
     pub const TEMPERATURE_4_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Temp_4 from values
     pub fn new(temperature_4: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_temperature_4(temperature_4)?;
         Ok(res)
     }
@@ -18577,7 +18577,7 @@ impl RtDl1mk3Temp3 {
     pub const TEMPERATURE_3_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Temp_3 from values
     pub fn new(temperature_3: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_temperature_3(temperature_3)?;
         Ok(res)
     }
@@ -18690,7 +18690,7 @@ impl RtDl1mk3Temp2 {
     pub const TEMPERATURE_2_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Temp_2 from values
     pub fn new(temperature_2: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_temperature_2(temperature_2)?;
         Ok(res)
     }
@@ -18803,7 +18803,7 @@ impl RtDl1mk3Temp1 {
     pub const TEMPERATURE_1_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Temp_1 from values
     pub fn new(temperature_1: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_temperature_1(temperature_1)?;
         Ok(res)
     }
@@ -18916,7 +18916,7 @@ impl RtDl1mk3Analog32 {
     pub const ANALOG_32_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Analog_32 from values
     pub fn new(analog_32: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_analog_32(analog_32)?;
         Ok(res)
     }
@@ -19028,7 +19028,7 @@ impl RtDl1mk3Analog31 {
     pub const ANALOG_31_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Analog_31 from values
     pub fn new(analog_31: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_analog_31(analog_31)?;
         Ok(res)
     }
@@ -19140,7 +19140,7 @@ impl RtDl1mk3Analog30 {
     pub const ANALOG_30_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Analog_30 from values
     pub fn new(analog_30: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_analog_30(analog_30)?;
         Ok(res)
     }
@@ -19252,7 +19252,7 @@ impl RtDl1mk3Analog29 {
     pub const ANALOG_29_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Analog_29 from values
     pub fn new(analog_29: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_analog_29(analog_29)?;
         Ok(res)
     }
@@ -19364,7 +19364,7 @@ impl RtDl1mk3Analog28 {
     pub const ANALOG_28_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Analog_28 from values
     pub fn new(analog_28: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_analog_28(analog_28)?;
         Ok(res)
     }
@@ -19476,7 +19476,7 @@ impl RtDl1mk3Analog27 {
     pub const ANALOG_27_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Analog_27 from values
     pub fn new(analog_27: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_analog_27(analog_27)?;
         Ok(res)
     }
@@ -19588,7 +19588,7 @@ impl RtDl1mk3Analog26 {
     pub const ANALOG_26_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Analog_26 from values
     pub fn new(analog_26: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_analog_26(analog_26)?;
         Ok(res)
     }
@@ -19700,7 +19700,7 @@ impl RtDl1mk3Analog25 {
     pub const ANALOG_25_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Analog_25 from values
     pub fn new(analog_25: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_analog_25(analog_25)?;
         Ok(res)
     }
@@ -19812,7 +19812,7 @@ impl RtDl1mk3Analog15 {
     pub const ANALOG_15_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Analog_15 from values
     pub fn new(analog_15: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_analog_15(analog_15)?;
         Ok(res)
     }
@@ -19924,7 +19924,7 @@ impl RtDl1mk3Analog14 {
     pub const ANALOG_14_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Analog_14 from values
     pub fn new(analog_14: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_analog_14(analog_14)?;
         Ok(res)
     }
@@ -20036,7 +20036,7 @@ impl RtDl1mk3Analog17 {
     pub const ANALOG_17_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Analog_17 from values
     pub fn new(analog_17: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_analog_17(analog_17)?;
         Ok(res)
     }
@@ -20148,7 +20148,7 @@ impl RtDl1mk3Analog24 {
     pub const ANALOG_24_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Analog_24 from values
     pub fn new(analog_24: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_analog_24(analog_24)?;
         Ok(res)
     }
@@ -20260,7 +20260,7 @@ impl RtDl1mk3Analog23 {
     pub const ANALOG_23_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Analog_23 from values
     pub fn new(analog_23: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_analog_23(analog_23)?;
         Ok(res)
     }
@@ -20372,7 +20372,7 @@ impl RtDl1mk3Analog22 {
     pub const ANALOG_22_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Analog_22 from values
     pub fn new(analog_22: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_analog_22(analog_22)?;
         Ok(res)
     }
@@ -20484,7 +20484,7 @@ impl RtDl1mk3Analog21 {
     pub const ANALOG_21_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Analog_21 from values
     pub fn new(analog_21: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_analog_21(analog_21)?;
         Ok(res)
     }
@@ -20596,7 +20596,7 @@ impl RtDl1mk3Analog20 {
     pub const ANALOG_20_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Analog_20 from values
     pub fn new(analog_20: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_analog_20(analog_20)?;
         Ok(res)
     }
@@ -20708,7 +20708,7 @@ impl RtDl1mk3Analog19 {
     pub const ANALOG_19_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Analog_19 from values
     pub fn new(analog_19: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_analog_19(analog_19)?;
         Ok(res)
     }
@@ -20820,7 +20820,7 @@ impl RtDl1mk3Analog16 {
     pub const ANALOG_16_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Analog_16 from values
     pub fn new(analog_16: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_analog_16(analog_16)?;
         Ok(res)
     }
@@ -20932,7 +20932,7 @@ impl RtDl1mk3Analog18 {
     pub const ANALOG_18_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Analog_18 from values
     pub fn new(analog_18: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_analog_18(analog_18)?;
         Ok(res)
     }
@@ -21044,7 +21044,7 @@ impl RtDl1mk3Analog12 {
     pub const ANALOG_12_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Analog_12 from values
     pub fn new(analog_12: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_analog_12(analog_12)?;
         Ok(res)
     }
@@ -21156,7 +21156,7 @@ impl RtDl1mk3Analog11 {
     pub const ANALOG_11_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Analog_11 from values
     pub fn new(analog_11: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_analog_11(analog_11)?;
         Ok(res)
     }
@@ -21268,7 +21268,7 @@ impl RtDl1mk3Analog10 {
     pub const ANALOG_10_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Analog_10 from values
     pub fn new(analog_10: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_analog_10(analog_10)?;
         Ok(res)
     }
@@ -21380,7 +21380,7 @@ impl RtDl1mk3Analog9 {
     pub const ANALOG_9_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Analog_9 from values
     pub fn new(analog_9: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_analog_9(analog_9)?;
         Ok(res)
     }
@@ -21492,7 +21492,7 @@ impl RtDl1mk3Analog8 {
     pub const ANALOG_8_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Analog_8 from values
     pub fn new(analog_8: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_analog_8(analog_8)?;
         Ok(res)
     }
@@ -21604,7 +21604,7 @@ impl RtDl1mk3Analog7 {
     pub const ANALOG_7_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Analog_7 from values
     pub fn new(analog_7: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_analog_7(analog_7)?;
         Ok(res)
     }
@@ -21716,7 +21716,7 @@ impl RtDl1mk3Analog6 {
     pub const ANALOG_6_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Analog_6 from values
     pub fn new(analog_6: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_analog_6(analog_6)?;
         Ok(res)
     }
@@ -21828,7 +21828,7 @@ impl RtDl1mk3Analog5 {
     pub const ANALOG_5_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Analog_5 from values
     pub fn new(analog_5: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_analog_5(analog_5)?;
         Ok(res)
     }
@@ -21940,7 +21940,7 @@ impl RtDl1mk3Analog4 {
     pub const ANALOG_4_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Analog_4 from values
     pub fn new(analog_4: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_analog_4(analog_4)?;
         Ok(res)
     }
@@ -22052,7 +22052,7 @@ impl RtDl1mk3Analog3 {
     pub const ANALOG_3_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Analog_3 from values
     pub fn new(analog_3: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_analog_3(analog_3)?;
         Ok(res)
     }
@@ -22164,7 +22164,7 @@ impl RtDl1mk3Analog2 {
     pub const ANALOG_2_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Analog_2 from values
     pub fn new(analog_2: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_analog_2(analog_2)?;
         Ok(res)
     }
@@ -22276,7 +22276,7 @@ impl RtDl1mk3Analog1 {
     pub const ANALOG_1_MAX: f32 = 0_f32;
     /// Construct new RT_DL1MK3_Analog_1 from values
     pub fn new(analog_1: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 2] };
+        let mut res = Self { raw: [0x00; 2] };
         res.set_analog_1(analog_1)?;
         Ok(res)
     }
@@ -22402,7 +22402,7 @@ impl RtDl1mk3Accel {
         validity_accel_lateral: bool,
         validity_accel_longitudinal: bool,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_accel_vertical(accel_vertical)?;
         res.set_accel_lateral(accel_lateral)?;
         res.set_accel_longitudinal(accel_longitudinal)?;
@@ -22758,7 +22758,7 @@ impl RtSbInsVpt4VelNed2 {
         virtual_4_heading: f32,
         virtual_4_vel_ned_d: f32,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_virtual_4_slip(virtual_4_slip)?;
         res.set_virtual_4_heading(virtual_4_heading)?;
         res.set_virtual_4_vel_ned_d(virtual_4_vel_ned_d)?;
@@ -22964,7 +22964,7 @@ impl RtSbInsVpt4VelNed1 {
         virtual_4_vel_ned_e: f32,
         virtual_4_vel_ned_n: f32,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_virtual_4_vel_ned_e(virtual_4_vel_ned_e)?;
         res.set_virtual_4_vel_ned_n(virtual_4_vel_ned_n)?;
         Ok(res)
@@ -23130,7 +23130,7 @@ impl RtSbInsVpt4Offset {
         virtual_4_offset_y: f32,
         virtual_4_offset_x: f32,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_virtual_4_offset_z(virtual_4_offset_z)?;
         res.set_virtual_4_offset_y(virtual_4_offset_y)?;
         res.set_virtual_4_offset_x(virtual_4_offset_x)?;
@@ -23339,7 +23339,7 @@ impl RtSbInsVpt3VelNed2 {
         virtual_3_heading: f32,
         virtual_3_vel_ned_d: f32,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_virtual_3_slip(virtual_3_slip)?;
         res.set_virtual_3_heading(virtual_3_heading)?;
         res.set_virtual_3_vel_ned_d(virtual_3_vel_ned_d)?;
@@ -23545,7 +23545,7 @@ impl RtSbInsVpt3VelNed1 {
         virtual_3_vel_ned_e: f32,
         virtual_3_vel_ned_n: f32,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_virtual_3_vel_ned_e(virtual_3_vel_ned_e)?;
         res.set_virtual_3_vel_ned_n(virtual_3_vel_ned_n)?;
         Ok(res)
@@ -23711,7 +23711,7 @@ impl RtSbInsVpt3Offset {
         virtual_3_offset_y: f32,
         virtual_3_offset_x: f32,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_virtual_3_offset_z(virtual_3_offset_z)?;
         res.set_virtual_3_offset_y(virtual_3_offset_y)?;
         res.set_virtual_3_offset_x(virtual_3_offset_x)?;
@@ -23920,7 +23920,7 @@ impl RtSbInsVpt2VelNed2 {
         virtual_2_heading: f32,
         virtual_2_vel_ned_d: f32,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_virtual_2_slip(virtual_2_slip)?;
         res.set_virtual_2_heading(virtual_2_heading)?;
         res.set_virtual_2_vel_ned_d(virtual_2_vel_ned_d)?;
@@ -24126,7 +24126,7 @@ impl RtSbInsVpt2VelNed1 {
         virtual_2_vel_ned_e: f32,
         virtual_2_vel_ned_n: f32,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_virtual_2_vel_ned_e(virtual_2_vel_ned_e)?;
         res.set_virtual_2_vel_ned_n(virtual_2_vel_ned_n)?;
         Ok(res)
@@ -24292,7 +24292,7 @@ impl RtSbInsVpt2Offset {
         virtual_2_offset_y: f32,
         virtual_2_offset_x: f32,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_virtual_2_offset_z(virtual_2_offset_z)?;
         res.set_virtual_2_offset_y(virtual_2_offset_y)?;
         res.set_virtual_2_offset_x(virtual_2_offset_x)?;
@@ -24501,7 +24501,7 @@ impl RtSbInsVpt1VelNed2 {
         virtual_1_heading: f32,
         virtual_1_vel_ned_d: f32,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_virtual_1_slip(virtual_1_slip)?;
         res.set_virtual_1_heading(virtual_1_heading)?;
         res.set_virtual_1_vel_ned_d(virtual_1_vel_ned_d)?;
@@ -24707,7 +24707,7 @@ impl RtSbInsVpt1VelNed1 {
         virtual_1_vel_ned_e: f32,
         virtual_1_vel_ned_n: f32,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_virtual_1_vel_ned_e(virtual_1_vel_ned_e)?;
         res.set_virtual_1_vel_ned_n(virtual_1_vel_ned_n)?;
         Ok(res)
@@ -24873,7 +24873,7 @@ impl RtSbInsVpt1Offset {
         virtual_1_offset_y: f32,
         virtual_1_offset_x: f32,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_virtual_1_offset_z(virtual_1_offset_z)?;
         res.set_virtual_1_offset_y(virtual_1_offset_y)?;
         res.set_virtual_1_offset_x(virtual_1_offset_x)?;
@@ -25087,7 +25087,7 @@ impl RtSbInsSlip {
         validity_ins_squat: bool,
         validity_ins_slip: bool,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_ins_squat(ins_squat)?;
         res.set_accuracy_ins_squat(accuracy_ins_squat)?;
         res.set_ins_slip(ins_slip)?;
@@ -25404,7 +25404,7 @@ impl RtSbInsVelEcef2 {
         validity_ins_vel_ecef_z: bool,
         validity_ins_vel_ecef_y: bool,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_ins_vel_ecef_z(ins_vel_ecef_z)?;
         res.set_ins_vel_ecef_y(ins_vel_ecef_y)?;
         res.set_validity_ins_vel_ecef_z(validity_ins_vel_ecef_z)?;
@@ -25640,7 +25640,7 @@ impl RtSbInsVelEcef1 {
         accuracy_ins_vel_ecef_x: u8,
         validity_ins_vel_ecef_x: bool,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_ins_vel_ecef_x(ins_vel_ecef_x)?;
         res.set_accuracy_ins_vel_ecef_z(accuracy_ins_vel_ecef_z)?;
         res.set_accuracy_ins_vel_ecef_y(accuracy_ins_vel_ecef_y)?;
@@ -25923,7 +25923,7 @@ impl RtSbInsVelNed2 {
         accuracy_ins_vel_d: u8,
         validity_ins_vel_ned_d: bool,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_ins_vel_ned_d(ins_vel_ned_d)?;
         res.set_accuracy_ins_vel_d(accuracy_ins_vel_d)?;
         res.set_validity_ins_vel_ned_d(validity_ins_vel_ned_d)?;
@@ -26124,7 +26124,7 @@ impl RtSbInsVelNed1 {
         validity_ins_vel_ned_e: bool,
         validity_ins_vel_ned_n: bool,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_ins_vel_ned_e(ins_vel_ned_e)?;
         res.set_ins_vel_ned_n(ins_vel_ned_n)?;
         res.set_accuracy_ins_vel_ne(accuracy_ins_vel_ne)?;
@@ -26393,7 +26393,7 @@ impl RtSbInsPosEcef2 {
     pub const INS_POS_ECEF_Y_MAX: f32 = 10000000_f32;
     /// Construct new RT_SB_INS_Pos_ECEF_2 from values
     pub fn new(ins_pos_ecef_z: f32, ins_pos_ecef_y: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_ins_pos_ecef_z(ins_pos_ecef_z)?;
         res.set_ins_pos_ecef_y(ins_pos_ecef_y)?;
         Ok(res)
@@ -26565,7 +26565,7 @@ impl RtSbInsPosEcef1 {
         validity_ins_pos_ecef_y: bool,
         validity_ins_pos_ecef_x: bool,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_ins_pos_ecef_x(ins_pos_ecef_x)?;
         res.set_accuracy_ins_pos_ecef_z(accuracy_ins_pos_ecef_z)?;
         res.set_accuracy_ins_pos_ecef_y(accuracy_ins_pos_ecef_y)?;
@@ -26919,7 +26919,7 @@ impl RtSbInsPosLlh2 {
         ins_pos_llh_altitude: f32,
         ins_pos_llh_longitude: f32,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_ins_pos_llh_altitude(ins_pos_llh_altitude)?;
         res.set_ins_pos_llh_longitude(ins_pos_llh_longitude)?;
         Ok(res)
@@ -27087,7 +27087,7 @@ impl RtSbInsPosLlh1 {
         validity_ins_pos_llh_longitude: bool,
         validity_ins_pos_llh_latitude: bool,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_ins_pos_llh_latitude(ins_pos_llh_latitude)?;
         res.set_accuracy_ins_pos_llh_altitude(accuracy_ins_pos_llh_altitude)?;
         res.set_accuracy_ins_pos_llh_longitude(accuracy_ins_pos_llh_longitude)?;
@@ -27465,7 +27465,7 @@ impl RtSbInsHeadingGradient2 {
         validity_ins_gradient: bool,
         validity_ins_heading: bool,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_ins_gradient(ins_gradient)?;
         res.set_accuracy_ins_gradient(accuracy_ins_gradient)?;
         res.set_ins_heading_2(ins_heading_2)?;
@@ -27791,7 +27791,7 @@ impl RtSbInsHeadingGradient {
         validity_ins_gradient: bool,
         validity_ins_heading: bool,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_ins_gradient(ins_gradient)?;
         res.set_accuracy_ins_gradient(accuracy_ins_gradient)?;
         res.set_ins_heading(ins_heading)?;
@@ -28105,7 +28105,7 @@ impl RtSbInsStatus {
     pub const INS_STATUS_MAX: u8 = 255_u8;
     /// Construct new RT_SB_INS_Status from values
     pub fn new(ins_status: u8) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_ins_status(ins_status)?;
         Ok(res)
     }
@@ -28267,7 +28267,7 @@ impl RtSbInsAttitude {
         validity_pitch: bool,
         validity_yaw: bool,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_attitude_roll(attitude_roll)?;
         res.set_attitude_pitch(attitude_pitch)?;
         res.set_attitude_yaw(attitude_yaw)?;
@@ -28699,7 +28699,7 @@ impl RtSbOutputStatus {
         status_analogue_1: bool,
         validity_status_timestamp: bool,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_gps_time(gps_time)?;
         res.set_status_trigger(status_trigger)?;
         res.set_status_serial_output_2(status_serial_output_2)?;
@@ -29376,7 +29376,7 @@ impl RtSbGpsHeadingGradient2 {
         validity_gps_gradient: bool,
         validity_gps_heading: bool,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_gps_gradient(gps_gradient)?;
         res.set_accuracy_gps_gradient(accuracy_gps_gradient)?;
         res.set_gps_heading_2(gps_heading_2)?;
@@ -29698,7 +29698,7 @@ impl RtSbCumulativeDistance2 {
         validity_cumulative_distance: bool,
         validity_cumulative_time: bool,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_cumulative_distance(cumulative_distance)?;
         res.set_cumulative_time(cumulative_time)?;
         res.set_validity_cumulative_distance(validity_cumulative_distance)?;
@@ -29928,7 +29928,7 @@ impl RtSbCumulativeDistance1 {
         validity_cumulative_distance: bool,
         validity_cumulative_time: bool,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_cumulative_distance(cumulative_distance)?;
         res.set_cumulative_time(cumulative_time)?;
         res.set_validity_cumulative_distance(validity_cumulative_distance)?;
@@ -30159,7 +30159,7 @@ impl RtSbTriggerTimestamp {
         accuracy_trigger_timestamp: u8,
         validity_trigger_timestamp: bool,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_gps_high_resolution_time(gps_high_resolution_time)?;
         res.set_trigger_timestamp_type(trigger_timestamp_type)?;
         res.set_trigger_number(trigger_number)?;
@@ -30478,7 +30478,7 @@ impl RtImu06GyroRates {
         validity_gyro_rate_pitch: bool,
         validity_gyro_rate_yaw: bool,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_gyro_rate_roll(gyro_rate_roll)?;
         res.set_gyro_rate_pitch(gyro_rate_pitch)?;
         res.set_gyro_rate_yaw(gyro_rate_yaw)?;
@@ -30837,7 +30837,7 @@ impl RtImu06Accel {
         validity_accel_lateral: bool,
         validity_accel_longitudinal: bool,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_accel_vertical(accel_vertical)?;
         res.set_accel_lateral(accel_lateral)?;
         res.set_accel_longitudinal(accel_longitudinal)?;
@@ -31191,7 +31191,7 @@ impl RtSbSpeed {
         accuracy_speed: u8,
         validity_speed: bool,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_speed(speed)?;
         res.set_accuracy_speed(accuracy_speed)?;
         res.set_validity_speed(validity_speed)?;
@@ -31396,7 +31396,7 @@ impl RtSbRtkSlip {
         validity_rtk_squat: bool,
         validity_rtk_slip: bool,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_rtk_baseline(rtk_baseline)?;
         res.set_rtk_squat(rtk_squat)?;
         res.set_rtk_slip(rtk_slip)?;
@@ -31755,7 +31755,7 @@ impl RtSbRtkAttitude {
         validity_rtk_pitch: bool,
         validity_rtk_yaw: bool,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_rtk_attitude_roll(rtk_attitude_roll)?;
         res.set_rtk_attitude_pitch(rtk_attitude_pitch)?;
         res.set_rtk_attitude_yaw(rtk_attitude_yaw)?;
@@ -32110,7 +32110,7 @@ impl RtSbGpsMcycleLean {
         validity_gps_mcycle_lean: bool,
         validity_gps_lateral_accel: bool,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_gps_mcycle_lean_angle(gps_mcycle_lean_angle)?;
         res.set_gps_lateral_accel(gps_lateral_accel)?;
         res.set_accuracy_gps_lateral_accel(accuracy_gps_lateral_accel)?;
@@ -32405,7 +32405,7 @@ impl RtSbGpsStatus {
         firmware_version_major: u8,
         gps_status: u8,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_rtk_status(rtk_status)?;
         res.set_gps_n_sv_rtk(gps_n_sv_rtk)?;
         res.set_gps_n_sv_2(gps_n_sv_2)?;
@@ -32928,7 +32928,7 @@ impl RtSbGpsPosEcef2 {
     pub const GPS_POS_ECEF_Y_MAX: f32 = 10000000_f32;
     /// Construct new RT_SB_GPS_Pos_ECEF_2 from values
     pub fn new(gps_pos_ecef_z: f32, gps_pos_ecef_y: f32) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_gps_pos_ecef_z(gps_pos_ecef_z)?;
         res.set_gps_pos_ecef_y(gps_pos_ecef_y)?;
         Ok(res)
@@ -33100,7 +33100,7 @@ impl RtSbGpsPosEcef1 {
         validity_gps_pos_ecef_y: bool,
         validity_gps_pos_ecef_x: bool,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_gps_pos_ecef_x(gps_pos_ecef_x)?;
         res.set_accuracy_gps_pos_ecef_z(accuracy_gps_pos_ecef_z)?;
         res.set_accuracy_gps_pos_ecef_y(accuracy_gps_pos_ecef_y)?;
@@ -33454,7 +33454,7 @@ impl RtSbGpsPosLlh2 {
         gps_pos_llh_altitude: f32,
         gps_pos_llh_longitude: f32,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_gps_pos_llh_altitude(gps_pos_llh_altitude)?;
         res.set_gps_pos_llh_longitude(gps_pos_llh_longitude)?;
         Ok(res)
@@ -33622,7 +33622,7 @@ impl RtSbGpsPosLlh1 {
         validity_gps_pos_llh_longitude: bool,
         validity_gps_pos_llh_latitude: bool,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_gps_pos_llh_latitude(gps_pos_llh_latitude)?;
         res.set_accuracy_gps_pos_llh_altitude(accuracy_gps_pos_llh_altitude)?;
         res.set_accuracy_gps_pos_llh_longitude(accuracy_gps_pos_llh_longitude)?;
@@ -34000,7 +34000,7 @@ impl RtSbGpsHeadingGradient {
         validity_gps_gradient: bool,
         validity_gps_heading: bool,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_gps_gradient(gps_gradient)?;
         res.set_accuracy_gps_gradient(accuracy_gps_gradient)?;
         res.set_gps_heading(gps_heading)?;
@@ -34321,7 +34321,7 @@ impl RtSbGpsVelEcef2 {
         validity_gps_vel_ecef_z: bool,
         validity_gps_vel_ecef_y: bool,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_gps_vel_ecef_z(gps_vel_ecef_z)?;
         res.set_gps_vel_ecef_y(gps_vel_ecef_y)?;
         res.set_validity_gps_vel_ecef_z(validity_gps_vel_ecef_z)?;
@@ -34557,7 +34557,7 @@ impl RtSbGpsVelEcef1 {
         accuracy_gps_vel_ecef_x: u8,
         validity_gps_vel_ecef_x: bool,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_gps_vel_ecef_x(gps_vel_ecef_x)?;
         res.set_accuracy_gps_vel_ecef_z(accuracy_gps_vel_ecef_z)?;
         res.set_accuracy_gps_vel_ecef_y(accuracy_gps_vel_ecef_y)?;
@@ -34840,7 +34840,7 @@ impl RtSbGpsVelNed2 {
         accuracy_gps_vel_d: u8,
         validity_gps_vel_ned_d: bool,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_gps_vel_ned_d(gps_vel_ned_d)?;
         res.set_accuracy_gps_vel_d(accuracy_gps_vel_d)?;
         res.set_validity_gps_vel_ned_d(validity_gps_vel_ned_d)?;
@@ -35041,7 +35041,7 @@ impl RtSbGpsVelNed1 {
         validity_gps_vel_ned_e: bool,
         validity_gps_vel_ned_n: bool,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_gps_vel_ned_e(gps_vel_ned_e)?;
         res.set_gps_vel_ned_n(gps_vel_ned_n)?;
         res.set_accuracy_gps_vel_ne(accuracy_gps_vel_ne)?;
@@ -35318,7 +35318,7 @@ impl RtSbGpsSpeed {
         validity_gps_speed_3d: bool,
         validity_gps_speed_2d: bool,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_gps_speed_3d(gps_speed_3d)?;
         res.set_gps_speed_2d(gps_speed_2d)?;
         res.set_accuracy_gps_speed(accuracy_gps_speed)?;
@@ -35595,7 +35595,7 @@ impl RtSbGpsTime {
         validity_gps_week: bool,
         validity_gps_time: bool,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_gps_week(gps_week)?;
         res.set_gps_time(gps_time)?;
         res.set_accuracy_gps_time(accuracy_gps_time)?;
@@ -35875,7 +35875,7 @@ impl RtSbAccel {
         validity_accel_lateral: bool,
         validity_accel_longitudinal: bool,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_accel_vertical(accel_vertical)?;
         res.set_accel_lateral(accel_lateral)?;
         res.set_accel_longitudinal(accel_longitudinal)?;
@@ -36237,7 +36237,7 @@ impl RtSbGyroRates {
         validity_gyro_rate_pitch: bool,
         validity_gyro_rate_yaw: bool,
     ) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_gyro_rate_roll(gyro_rate_roll)?;
         res.set_gyro_rate_pitch(gyro_rate_pitch)?;
         res.set_gyro_rate_yaw(gyro_rate_yaw)?;

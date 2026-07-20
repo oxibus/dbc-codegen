@@ -74,7 +74,7 @@ impl MsgNowShort {
     pub const SIG_NOW_SHORT_MAX: u8 = 0_u8;
     /// Construct new msg_now_short from values
     pub fn new(sig_now_short: u8) -> Result<Self, CanError> {
-        let mut res = Self { raw: [0u8; 8] };
+        let mut res = Self { raw: [0x00; 8] };
         res.set_sig_now_short(sig_now_short)?;
         Ok(res)
     }
