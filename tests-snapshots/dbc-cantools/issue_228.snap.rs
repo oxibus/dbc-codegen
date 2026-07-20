@@ -69,6 +69,7 @@ impl SgMsg {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
         StandardId::new_unchecked(0x1)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const DUPSIG_MIN: i8 = 0_i8;
     pub const DUPSIG_MAX: i8 = 0_i8;
     pub const SG2_MIN: i8 = 0_i8;
@@ -279,6 +280,7 @@ impl NormalMsg {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
         StandardId::new_unchecked(0x0)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const SIG_2_MIN: i8 = 0_i8;
     pub const SIG_2_MAX: i8 = 0_i8;
     pub const SIG_1_MIN: i8 = 0_i8;

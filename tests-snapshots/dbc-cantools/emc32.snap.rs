@@ -67,6 +67,7 @@ impl EmvStati {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
         StandardId::new_unchecked(0x222)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     /// Construct new EMV_Stati from values
     pub fn new(
         emv_aktion_status_5: bool,

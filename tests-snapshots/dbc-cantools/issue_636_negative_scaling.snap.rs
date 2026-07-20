@@ -71,6 +71,7 @@ impl ExampleMessage {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
         StandardId::new_unchecked(0x1f0)
     });
+    pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_MIN: f32 = 4070_f32;
     pub const TEMPERATURE_MAX: f32 = 4100_f32;
     /// Construct new ExampleMessage from values

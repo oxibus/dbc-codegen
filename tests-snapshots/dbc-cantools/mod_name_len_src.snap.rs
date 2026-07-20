@@ -71,6 +71,7 @@ impl MsgWillBeShortened345678912 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
         StandardId::new_unchecked(0x1)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const SIG_WILL_BE_SHORTENED_3456789_12_MIN: u8 = 0_u8;
     pub const SIG_WILL_BE_SHORTENED_3456789_12_MAX: u8 = 0_u8;
     /// Construct new Msg_will_be_shortened_3456789_12 from values

@@ -24,7 +24,7 @@ use can_dbc::MultiplexIndicator::{
     MultiplexedSignal, Multiplexor, MultiplexorAndMultiplexedSignal, Plain,
 };
 use can_dbc::ValueType::Signed;
-use can_dbc::{Dbc, Message, MessageId, Signal, ValDescription, ValueDescription};
+use can_dbc::{AttributeValue, Dbc, Message, MessageId, Signal, ValDescription, ValueDescription};
 use heck::ToSnakeCase;
 use quote::ToTokens;
 use typed_builder::TypedBuilder;
@@ -33,8 +33,9 @@ pub use crate::feature_config::FeatureConfig;
 use crate::pad::PadAdapter;
 use crate::signal_type::{IntSize, ValType};
 use crate::utils::{
-    enum_name, enum_variant_name, multiplex_enum_name, multiplexed_enum_variant_name,
-    multiplexed_enum_variant_wrapper_name, MessageExt as _, SignalExt as _,
+    enum_name, enum_variant_name, is_screaming_snake_case, is_valid_ident, is_valid_type_path,
+    multiplex_enum_name, multiplexed_enum_variant_name, multiplexed_enum_variant_wrapper_name,
+    MessageExt as _, SignalExt as _,
 };
 
 static ALLOW_DEADCODE: &str = "#[allow(dead_code)]";
@@ -78,9 +79,7 @@ pub struct Config<'a> {
     #[builder(default)]
     pub impl_serde: FeatureConfig<'a>,
 
-    /// Optional: `impl Error` for generated error type. Default: `Never`.
-    ///
-    /// Note: this feature depends on `std`.
+    /// Optional: `impl core::error::Error` for the generated `CanError` type. Default: `Never`.
     #[builder(default)]
     pub impl_error: FeatureConfig<'a>,
 
@@ -99,11 +98,83 @@ pub struct Config<'a> {
     /// Optional: Padding bit value used; set all unused bits to 1 if true else to 0. Default: `false`.
     #[builder(default)]
     pub padding_bit_value: bool,
+  
+    /// Optional: User-defined structs populated from DBC attributes.
+    /// These are emitted as associated constants in the generated message types.
+    /// Default: empty.
+    #[builder(default)]
+    pub attribute_structs: &'a [AttributeStruct<'a>],
+}
+
+/// A user-defined struct that [`Config`] fills from DBC attributes and emits as an
+/// associated constant in the generated message type.
+#[derive(Debug, Clone)]
+pub struct AttributeStruct<'a> {
+    /// Fully-qualified path of the target Rust type.
+    pub type_path: &'a str,
+
+    /// Base name of the emitted associated constant.
+    pub const_name: &'a str,
+
+    /// Whether one constant is emitted per message or per matching signal.
+    pub scope: AttributeScope,
+
+    /// Only emit the constant when this attribute has an assigned value on the
+    /// scoped object (the message for [`AttributeScope::Message`] or the signal
+    /// for [`AttributeScope::Signal`]).
+    pub require: &'a str,
+
+    /// The struct fields, written in this order.
+    pub fields: &'a [AttributeField<'a>],
+}
+
+/// Whether an [`AttributeStruct`] is emitted once per message or once per signal.
+#[derive(Debug, Clone, Copy)]
+#[non_exhaustive]
+pub enum AttributeScope {
+    /// One const per message (BO_ attribute).
+    Message,
+    /// One const per signal (SG_ attribute).
+    Signal,
+}
+
+/// One field of an [`AttributeStruct`] and where its value comes from.
+#[derive(Debug, Clone)]
+pub struct AttributeField<'a> {
+    /// The target struct field name.
+    pub name: &'a str,
+    /// Where the field's value comes from.
+    pub source: FieldSource<'a>,
+}
+
+/// Source of a generated [`AttributeField`] value.
+#[derive(Debug, Clone)]
+#[non_exhaustive]
+pub enum FieldSource<'a> {
+    /// Value of an attribute on the scoped object: a signal-level attribute in
+    /// [`AttributeScope::Signal`] or a message-level attribute in
+    /// [`AttributeScope::Message`].
+    Attr(&'a str),
+    /// Value of a message-level attribute.
+    MessageAttr(&'a str),
+    /// The signal's raw DBC start bit. [`AttributeScope::Signal`] only.
+    StartBit,
+    /// The signal's start byte. [`AttributeScope::Signal`] only.
+    StartByte,
+    /// The signal's width in bits. [`AttributeScope::Signal`] only.
+    BitWidth,
+    /// The message size in bytes.
+    MessageSize,
+    /// A literal integer.
+    Int(i64),
+    /// A literal string.
+    Str(&'a str),
 }
 
 impl Config<'_> {
     /// Write Rust structs matching DBC input description to `out` buffer
     fn codegen(&self, out: impl Write) -> Result<()> {
+        self.validate_attribute_structs()?;
         let dbc = Dbc::try_from(self.dbc_content).map_err(|e| {
             let msg = "Could not parse dbc file";
             if self.debug_prints {
@@ -138,6 +209,9 @@ impl Config<'_> {
         writeln!(w, "use bitvec::prelude::*;")?;
         writeln!(w, "#[allow(unused_imports)]")?;
         writeln!(w, "use embedded_can::{{Id, StandardId, ExtendedId}};")?;
+        if get_relevant_messages(&dbc).any(|m| message_cycle_time_ms(&dbc, m.id).is_some()) {
+            writeln!(w, "use core::time::Duration;")?;
+        }
 
         self.impl_arbitrary.fmt_cfg(&mut w, |w| {
             writeln!(w, "use arbitrary::{{Arbitrary, Unstructured}};")
@@ -282,6 +356,11 @@ impl Config<'_> {
             )?;
             writeln!(w)?;
 
+            writeln!(w, "pub const MESSAGE_SIZE: usize = {};", msg.size)?;
+            writeln!(w)?;
+
+            Self::render_cycle_time(&mut w, msg, dbc)?;
+
             for signal in &msg.signals {
                 let typ = ValType::from_signal(signal);
                 if typ != ValType::Bool {
@@ -293,6 +372,8 @@ impl Config<'_> {
                 }
             }
             writeln!(w)?;
+
+            self.render_attribute_structs(&mut w, msg, dbc)?;
 
             writeln!(w, "/// Construct new {} from values", msg.name)?;
             let args = msg
@@ -423,6 +504,183 @@ impl Config<'_> {
             self.render_multiplexor_enums(w, dbc, msg, multiplexor_signal)?;
         }
 
+        Ok(())
+    }
+
+    /// Validate the [`AttributeStruct`] specs.
+    fn validate_attribute_structs(&self) -> Result<()> {
+        for spec in self.attribute_structs {
+            // Require SCREAMING_SNAKE_CASE to guarantee that the name never collides
+            // with a generated method (all `snake_case`).
+            ensure!(
+                is_screaming_snake_case(spec.const_name),
+                "attribute_structs: 'const_name' {:?} must be SCREAMING_SNAKE_CASE",
+                spec.const_name
+            );
+            ensure!(
+                is_valid_type_path(spec.type_path),
+                "attribute_structs: 'type_path' {:?} for {:?} is not a valid Rust type path",
+                spec.type_path,
+                spec.const_name
+            );
+            ensure!(
+                !spec.require.is_empty(),
+                "attribute_structs: 'require' must not be empty for {:?}",
+                spec.const_name
+            );
+            ensure!(
+                !spec.fields.is_empty(),
+                "attribute_structs: {:?} declares no fields",
+                spec.const_name
+            );
+
+            let message_scope = matches!(spec.scope, AttributeScope::Message);
+            let mut seen = BTreeSet::new();
+            for field in spec.fields {
+                ensure!(
+                    is_valid_ident(field.name),
+                    "attribute_structs: field name {:?} in {:?} is not a valid Rust identifier",
+                    field.name,
+                    spec.const_name
+                );
+                ensure!(
+                    seen.insert(field.name),
+                    "attribute_structs: duplicate field {:?} in {:?}",
+                    field.name,
+                    spec.const_name
+                );
+                if message_scope {
+                    ensure!(
+                        !matches!(
+                            field.source,
+                            FieldSource::StartBit | FieldSource::StartByte | FieldSource::BitWidth
+                        ),
+                        "attribute_structs: field {:?} of {:?} uses a signal-only source \
+                         (StartBit/StartByte/BitWidth) but the struct has message scope",
+                        field.name,
+                        spec.const_name
+                    );
+                }
+            }
+        }
+        Ok(())
+    }
+
+    /// Emit the configured [`AttributeStruct`]s as associated constants.
+    fn render_attribute_structs(&self, w: &mut impl Write, msg: &Message, dbc: &Dbc) -> Result<()> {
+        if self.attribute_structs.is_empty() {
+            return Ok(());
+        }
+
+        // Track every associated item already emitted for this message type so
+        // that colliding const names are rejected here instead of producing code
+        // that fails to build. Using a BTree to ensure deterministic output.
+        let mut used: BTreeSet<String> = BTreeSet::new();
+        used.insert("MESSAGE_ID".to_string());
+        for signal in &msg.signals {
+            if ValType::from_signal(signal) != ValType::Bool {
+                let sig = signal.field_name().to_uppercase();
+                used.insert(format!("{sig}_MIN"));
+                used.insert(format!("{sig}_MAX"));
+            }
+        }
+
+        for spec in self.attribute_structs {
+            match spec.scope {
+                AttributeScope::Message => {
+                    if dbc.message_attribute(msg.id, spec.require).is_none() {
+                        continue;
+                    }
+                    Self::render_attribute_struct(
+                        w,
+                        spec,
+                        spec.const_name,
+                        msg,
+                        dbc,
+                        None,
+                        &mut used,
+                    )?;
+                }
+                AttributeScope::Signal => {
+                    for signal in &msg.signals {
+                        if dbc
+                            .signal_attribute(msg.id, &signal.name, spec.require)
+                            .is_none()
+                        {
+                            continue;
+                        }
+                        let name =
+                            format!("{}_{}", signal.field_name().to_uppercase(), spec.const_name);
+                        Self::render_attribute_struct(
+                            w,
+                            spec,
+                            &name,
+                            msg,
+                            dbc,
+                            Some(signal),
+                            &mut used,
+                        )?;
+                    }
+                }
+            }
+        }
+        Ok(())
+    }
+
+    /// Emit a single struct constant.
+    fn render_attribute_struct(
+        w: &mut impl Write,
+        spec: &AttributeStruct<'_>,
+        const_name: &str,
+        msg: &Message,
+        dbc: &Dbc,
+        signal: Option<&Signal>,
+        used: &mut BTreeSet<String>,
+    ) -> Result<()> {
+        ensure!(
+            used.insert(const_name.to_string()),
+            "attribute_structs: generated const '{const_name}' on message {:?} collides with \
+             another const. Use a distinct 'const_name'.",
+            msg.name
+        );
+
+        let mut fields = Vec::with_capacity(spec.fields.len());
+        for field in spec.fields {
+            let lit = resolve_field_source(&field.source, msg, dbc, signal).ok_or_else(|| {
+                anyhow!(
+                    "attribute_structs: const '{const_name}' field {:?} has no value in the DBC \
+                     and no default (source: {:?})",
+                    field.name,
+                    field.source
+                )
+            })?;
+            fields.push((field.name, lit));
+        }
+
+        let ty = spec.type_path;
+        writeln!(w, "/// Generated from DBC attributes `{}`", spec.require)?;
+        writeln!(w, "pub const {const_name}: {ty} = {ty} {{")?;
+        {
+            let mut w = PadAdapter::wrap(w);
+            for (name, lit) in fields {
+                writeln!(w, "{name}: {lit},")?;
+            }
+        }
+        writeln!(w, "}};")?;
+        writeln!(w)?;
+        Ok(())
+    }
+
+    /// Emit the cycle time as a constant for messages that have an assigned
+    /// `GenMsgCycleTime` (`BA_`) attribute.
+    fn render_cycle_time(w: &mut impl Write, msg: &Message, dbc: &Dbc) -> Result<()> {
+        let Some(ms) = message_cycle_time_ms(dbc, msg.id) else {
+            return Ok(());
+        };
+        writeln!(
+            w,
+            "pub const MESSAGE_CYCLE_TIME: Duration = Duration::from_millis({ms});"
+        )?;
         Ok(())
     }
 
@@ -1335,6 +1593,56 @@ fn get_relevant_messages(dbc: &Dbc) -> impl Iterator<Item = &Message> {
 fn message_ignored(message: &Message) -> bool {
     // DBC internal message containing signals unassigned to any real message
     message.name == "VECTOR__INDEPENDENT_SIG_MSG"
+}
+
+/// Resolve a [`FieldSource`] to a Rust literal.
+fn resolve_field_source(
+    source: &FieldSource<'_>,
+    msg: &Message,
+    dbc: &Dbc,
+    signal: Option<&Signal>,
+) -> Option<String> {
+    match source {
+        FieldSource::Attr(name) => match signal {
+            Some(s) => dbc.resolved_signal_attribute(msg.id, &s.name, name),
+            None => dbc.resolved_message_attribute(msg.id, name),
+        }
+        .map(attr_value_literal),
+        FieldSource::MessageAttr(name) => dbc
+            .resolved_message_attribute(msg.id, name)
+            .map(attr_value_literal),
+        FieldSource::StartBit => signal.map(|s| s.start_bit.to_string()),
+        FieldSource::StartByte => signal.map(|s| signal_start_byte(s).to_string()),
+        FieldSource::BitWidth => signal.map(|s| s.size.to_string()),
+        FieldSource::MessageSize => Some(msg.size.to_string()),
+        FieldSource::Int(v) => Some(v.to_string()),
+        FieldSource::Str(v) => Some(format!("{v:?}")),
+    }
+}
+
+/// Byte index of a signal's start bit.
+fn signal_start_byte(signal: &Signal) -> u64 {
+    signal.start_bit.checked_div(8).unwrap_or(0)
+}
+
+/// Render an attribute value as an un-suffixed Rust literal.
+fn attr_value_literal(value: &AttributeValue) -> String {
+    match value {
+        AttributeValue::Uint(v) => v.to_string(),
+        AttributeValue::Int(v) => v.to_string(),
+        AttributeValue::Double(v) => format!("{v:?}"),
+        AttributeValue::String(v) => format!("{v:?}"),
+    }
+}
+
+/// Cycle time in milliseconds from an assigned and valid
+// `GenMsgCycleTime` (`BA_`) attribute.
+fn message_cycle_time_ms(dbc: &Dbc, id: MessageId) -> Option<u64> {
+    match dbc.message_attribute(id, "GenMsgCycleTime")? {
+        AttributeValue::Uint(v) => Some(*v),
+        AttributeValue::Int(v) => u64::try_from(*v).ok(),
+        AttributeValue::Double(_) | AttributeValue::String(_) => None,
+    }
 }
 
 impl Config<'_> {

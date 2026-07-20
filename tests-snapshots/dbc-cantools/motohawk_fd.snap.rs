@@ -71,6 +71,7 @@ impl ExampleMessage {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x1f0)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const TEMPERATURE_MIN: f32 = 229.52_f32;
     pub const TEMPERATURE_MAX: f32 = 270.47_f32;
     pub const AVERAGE_RADIUS_MIN: f32 = 0_f32;

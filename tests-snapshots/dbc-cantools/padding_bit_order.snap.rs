@@ -79,6 +79,7 @@ impl Msg0 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
         StandardId::new_unchecked(0x1)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const A_MIN: u16 = 0_u16;
     pub const A_MAX: u16 = 32767_u16;
     pub const C_MIN: u16 = 0_u16;
@@ -301,6 +302,7 @@ impl Msg1 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
         StandardId::new_unchecked(0x2)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const F_MIN: u16 = 0_u16;
     pub const F_MAX: u16 = 32767_u16;
     pub const H_MIN: u16 = 0_u16;
@@ -523,6 +525,7 @@ impl Msg2 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
         StandardId::new_unchecked(0x3)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const I_MIN: u8 = 0_u8;
     pub const I_MAX: u8 = 15_u8;
     pub const J_MIN: u8 = 0_u8;
@@ -728,6 +731,7 @@ impl Msg3 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
         StandardId::new_unchecked(0x4)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const L_MIN: u64 = 0_u64;
     pub const L_MAX: u64 = 18446744073709551615_u64;
     /// Construct new MSG3 from values
@@ -843,6 +847,7 @@ impl Msg4 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
         StandardId::new_unchecked(0x5)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const M_MIN: u64 = 0_u64;
     pub const M_MAX: u64 = 18446744073709551615_u64;
     /// Construct new MSG4 from values

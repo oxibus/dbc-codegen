@@ -69,6 +69,7 @@ impl ExampleMessage {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
         StandardId::new_unchecked(0xa)
     });
+    pub const MESSAGE_SIZE: usize = 3;
     pub const NO_CHOICE_MIN: i8 = 0_i8;
     pub const NO_CHOICE_MAX: i8 = 0_i8;
     pub const EMPTY_CHOICE_MIN: i8 = 0_i8;

@@ -66,6 +66,7 @@ impl MyMsg {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
         StandardId::new_unchecked(0x1)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const MY_EXTRA_SIG_WITH_PLUS_MIN: i16 = -128_i16;
     pub const MY_EXTRA_SIG_WITH_PLUS_MAX: i16 = 127_i16;
     pub const MY_NORMAL_SIG_MIN: i16 = -128_i16;

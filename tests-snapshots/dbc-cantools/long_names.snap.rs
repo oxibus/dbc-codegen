@@ -133,6 +133,7 @@ impl Ss123456789012345678901234587890 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
         StandardId::new_unchecked(0x9)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     /// Construct new SS123456789012345678901234587890 from values
     pub fn new() -> Result<Self, CanError> {
         let res = Self { raw: [0x00; 8] };
@@ -202,6 +203,7 @@ impl Ss12345678901234567890123450000 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
         StandardId::new_unchecked(0x8)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     /// Construct new SS1234567890123456789012345_0000 from values
     pub fn new() -> Result<Self, CanError> {
         let res = Self { raw: [0x00; 8] };
@@ -271,6 +273,7 @@ impl Ss12345678901234567890123450001 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
         StandardId::new_unchecked(0x7)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     /// Construct new SS1234567890123456789012345_0001 from values
     pub fn new() -> Result<Self, CanError> {
         let res = Self { raw: [0x00; 8] };
@@ -340,6 +343,7 @@ impl Ss123456789012345678901234577890 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
         StandardId::new_unchecked(0x6)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     /// Construct new SS123456789012345678901234577890 from values
     pub fn new() -> Result<Self, CanError> {
         let res = Self { raw: [0x00; 8] };
@@ -409,6 +413,7 @@ impl Ss123456789012345678901234567890 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
         StandardId::new_unchecked(0x5)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     /// Construct new SS123456789012345678901234567890 from values
     pub fn new() -> Result<Self, CanError> {
         let res = Self { raw: [0x00; 8] };
@@ -478,6 +483,7 @@ impl S1234567890123456789012345678901 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
         StandardId::new_unchecked(0x4)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const SS123456789012345678901234567890_MIN: i8 = 0_i8;
     pub const SS123456789012345678901234567890_MAX: i8 = 0_i8;
     /// Construct new S1234567890123456789012345678901 from values
@@ -597,6 +603,7 @@ impl M123456789012345678901234560000 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
         StandardId::new_unchecked(0x0)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const SSS12345678901234567890123456789_MIN: i8 = 0_i8;
     pub const SSS12345678901234567890123456789_MAX: i8 = 0_i8;
     /// Construct new M12345678901234567890123456_0000 from values
@@ -717,6 +724,7 @@ impl M1234567890123456789012345678901 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
         StandardId::new_unchecked(0x1)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const SS1234567890123456789012345_0000_MIN: i8 = 0_i8;
     pub const SS1234567890123456789012345_0000_MAX: i8 = 0_i8;
     pub const SS1234567890123456789012345_0001_MIN: i8 = 0_i8;
@@ -1043,6 +1051,7 @@ impl M123456789012345678901234560001 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
         StandardId::new_unchecked(0x2)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const SS1234567890123456789012345_0003_MIN: i8 = 0_i8;
     pub const SS1234567890123456789012345_0003_MAX: i8 = 0_i8;
     pub const SS1234567890123456789012345_0004_MIN: i8 = 0_i8;
@@ -1317,6 +1326,7 @@ impl Mm123456789012345678901234567890 {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
         StandardId::new_unchecked(0x3)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const SSS123456789012345678901234_0000_MIN: i8 = 0_i8;
     pub const SSS123456789012345678901234_0000_MAX: i8 = 0_i8;
     pub const SS1234567890123456789012345_0005_MIN: i8 = 0_i8;

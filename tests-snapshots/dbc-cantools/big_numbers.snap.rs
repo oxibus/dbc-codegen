@@ -10,6 +10,7 @@ use core::ops::BitOr;
 use bitvec::prelude::*;
 #[allow(unused_imports)]
 use embedded_can::{Id, StandardId, ExtendedId};
+use core::time::Duration;
 /// All messages
 #[allow(
     clippy::absurd_extreme_comparisons,
@@ -73,6 +74,8 @@ impl TheMessage {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x39)
     });
+    pub const MESSAGE_SIZE: usize = 8;
+    pub const MESSAGE_CYCLE_TIME: Duration = Duration::from_millis(1000);
     pub const THE_SIGNAL_MIN: i8 = 0_i8;
     pub const THE_SIGNAL_MAX: i8 = 0_i8;
     /// Construct new TheMessage from values
@@ -189,6 +192,7 @@ impl TheOtherMessage {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
         StandardId::new_unchecked(0x2a)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const THE_SIGNAL_MIN: i8 = 0_i8;
     pub const THE_SIGNAL_MAX: i8 = 0_i8;
     /// Construct new TheOtherMessage from values

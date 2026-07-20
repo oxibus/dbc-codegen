@@ -195,3 +195,12 @@ fn test_extended_id() {
         Id::Extended(ExtendedId::new(0x1234).unwrap())
     );
 }
+
+#[test]
+fn test_message_size() {
+    assert_eq!(Foo::MESSAGE_SIZE, 4);
+    assert_eq!(MsgExtendedId::MESSAGE_SIZE, 8);
+
+    let m = Foo::new(0.0, 0.0).unwrap();
+    assert_eq!(m.raw().len(), Foo::MESSAGE_SIZE);
+}

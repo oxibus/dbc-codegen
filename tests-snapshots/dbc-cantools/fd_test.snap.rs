@@ -81,6 +81,7 @@ impl TestMsgEx {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x3)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const TEST_SIG_COPY_1_MIN: i8 = 0_i8;
     pub const TEST_SIG_COPY_1_MAX: i8 = 0_i8;
     /// Construct new TestMsg_Ex from values
@@ -197,6 +198,7 @@ impl TestMsgStd {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
         StandardId::new_unchecked(0x2)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const TEST_SIG_COPY_3_MIN: i8 = 0_i8;
     pub const TEST_SIG_COPY_3_MAX: i8 = 0_i8;
     /// Construct new TestMsg_Std from values
@@ -313,6 +315,7 @@ impl TestMsgFdStd {
     pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
         StandardId::new_unchecked(0x1)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const TEST_SIG_COPY_2_MIN: i8 = 0_i8;
     pub const TEST_SIG_COPY_2_MAX: i8 = 0_i8;
     /// Construct new TestMsg_FDStd from values
@@ -429,6 +432,7 @@ impl TestMsgFdEx {
     pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
         ExtendedId::new_unchecked(0x0)
     });
+    pub const MESSAGE_SIZE: usize = 8;
     pub const TEST_SIG_MIN: i8 = 0_i8;
     pub const TEST_SIG_MAX: i8 = 0_i8;
     /// Construct new TestMsg_FDEx from values
