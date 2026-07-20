@@ -98,7 +98,7 @@ pub struct Config<'a> {
     /// Optional: Padding bit value used; set all unused bits to 1 if true else to 0. Default: `false`.
     #[builder(default)]
     pub padding_bit_value: bool,
-  
+
     /// Optional: User-defined structs populated from DBC attributes.
     /// These are emitted as associated constants in the generated message types.
     /// Default: empty.
