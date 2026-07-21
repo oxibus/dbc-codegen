@@ -28149,11 +28149,7 @@ impl RtSbInsStatus {
         &mut self,
         value: RtSbInsStatusInsStatus,
     ) -> Result<(), CanError> {
-        self.set_ins_status_raw(u8::from(value))
-    }
-    /// Set raw value of 'INS_Status'
-    #[inline(always)]
-    pub fn set_ins_status_raw(&mut self, value: u8) -> Result<(), CanError> {
+        let value = u8::from(value);
         if value < 0_u8 || 255_u8 < value {
             return Err(CanError::ParameterOutOfRange {
                 message_id: RtSbInsStatus::MESSAGE_ID,
@@ -28485,11 +28481,7 @@ impl RtSbInsAttitude {
         &mut self,
         value: RtSbInsAttitudeValidityRoll,
     ) -> Result<(), CanError> {
-        self.set_validity_roll_raw(bool::from(value))
-    }
-    /// Set raw value of 'Validity_Roll'
-    #[inline(always)]
-    pub fn set_validity_roll_raw(&mut self, value: bool) -> Result<(), CanError> {
+        let value = bool::from(value);
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[2..3].store_le(value);
         Ok(())
@@ -28528,11 +28520,7 @@ impl RtSbInsAttitude {
         &mut self,
         value: RtSbInsAttitudeValidityPitch,
     ) -> Result<(), CanError> {
-        self.set_validity_pitch_raw(bool::from(value))
-    }
-    /// Set raw value of 'Validity_Pitch'
-    #[inline(always)]
-    pub fn set_validity_pitch_raw(&mut self, value: bool) -> Result<(), CanError> {
+        let value = bool::from(value);
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[1..2].store_le(value);
         Ok(())
@@ -28571,11 +28559,7 @@ impl RtSbInsAttitude {
         &mut self,
         value: RtSbInsAttitudeValidityYaw,
     ) -> Result<(), CanError> {
-        self.set_validity_yaw_raw(bool::from(value))
-    }
-    /// Set raw value of 'Validity_Yaw'
-    #[inline(always)]
-    pub fn set_validity_yaw_raw(&mut self, value: bool) -> Result<(), CanError> {
+        let value = bool::from(value);
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[0..1].store_le(value);
         Ok(())
@@ -28825,11 +28809,7 @@ impl RtSbOutputStatus {
         &mut self,
         value: RtSbOutputStatusStatusTrigger,
     ) -> Result<(), CanError> {
-        self.set_status_trigger_raw(bool::from(value))
-    }
-    /// Set raw value of 'Status_Trigger'
-    #[inline(always)]
-    pub fn set_status_trigger_raw(&mut self, value: bool) -> Result<(), CanError> {
+        let value = bool::from(value);
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[15..16].store_le(value);
         Ok(())
@@ -28874,14 +28854,7 @@ impl RtSbOutputStatus {
         &mut self,
         value: RtSbOutputStatusStatusSerialOutput2,
     ) -> Result<(), CanError> {
-        self.set_status_serial_output_2_raw(bool::from(value))
-    }
-    /// Set raw value of 'Status_Serial_Output_2'
-    #[inline(always)]
-    pub fn set_status_serial_output_2_raw(
-        &mut self,
-        value: bool,
-    ) -> Result<(), CanError> {
+        let value = bool::from(value);
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[14..15].store_le(value);
         Ok(())
@@ -28926,14 +28899,7 @@ impl RtSbOutputStatus {
         &mut self,
         value: RtSbOutputStatusStatusSerialOutput1,
     ) -> Result<(), CanError> {
-        self.set_status_serial_output_1_raw(bool::from(value))
-    }
-    /// Set raw value of 'Status_Serial_Output_1'
-    #[inline(always)]
-    pub fn set_status_serial_output_1_raw(
-        &mut self,
-        value: bool,
-    ) -> Result<(), CanError> {
+        let value = bool::from(value);
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[13..14].store_le(value);
         Ok(())
@@ -28976,11 +28942,7 @@ impl RtSbOutputStatus {
         &mut self,
         value: RtSbOutputStatusStatusPulseOutput,
     ) -> Result<(), CanError> {
-        self.set_status_pulse_output_raw(bool::from(value))
-    }
-    /// Set raw value of 'Status_Pulse_Output'
-    #[inline(always)]
-    pub fn set_status_pulse_output_raw(&mut self, value: bool) -> Result<(), CanError> {
+        let value = bool::from(value);
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[12..13].store_le(value);
         Ok(())
@@ -29021,11 +28983,7 @@ impl RtSbOutputStatus {
         &mut self,
         value: RtSbOutputStatusStatusAnalogue4,
     ) -> Result<(), CanError> {
-        self.set_status_analogue_4_raw(bool::from(value))
-    }
-    /// Set raw value of 'Status_Analogue_4'
-    #[inline(always)]
-    pub fn set_status_analogue_4_raw(&mut self, value: bool) -> Result<(), CanError> {
+        let value = bool::from(value);
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[11..12].store_le(value);
         Ok(())
@@ -29066,11 +29024,7 @@ impl RtSbOutputStatus {
         &mut self,
         value: RtSbOutputStatusStatusAnalogue3,
     ) -> Result<(), CanError> {
-        self.set_status_analogue_3_raw(bool::from(value))
-    }
-    /// Set raw value of 'Status_Analogue_3'
-    #[inline(always)]
-    pub fn set_status_analogue_3_raw(&mut self, value: bool) -> Result<(), CanError> {
+        let value = bool::from(value);
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[10..11].store_le(value);
         Ok(())
@@ -29111,11 +29065,7 @@ impl RtSbOutputStatus {
         &mut self,
         value: RtSbOutputStatusStatusAnalogue2,
     ) -> Result<(), CanError> {
-        self.set_status_analogue_2_raw(bool::from(value))
-    }
-    /// Set raw value of 'Status_Analogue_2'
-    #[inline(always)]
-    pub fn set_status_analogue_2_raw(&mut self, value: bool) -> Result<(), CanError> {
+        let value = bool::from(value);
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[9..10].store_le(value);
         Ok(())
@@ -29156,11 +29106,7 @@ impl RtSbOutputStatus {
         &mut self,
         value: RtSbOutputStatusStatusAnalogue1,
     ) -> Result<(), CanError> {
-        self.set_status_analogue_1_raw(bool::from(value))
-    }
-    /// Set raw value of 'Status_Analogue_1'
-    #[inline(always)]
-    pub fn set_status_analogue_1_raw(&mut self, value: bool) -> Result<(), CanError> {
+        let value = bool::from(value);
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[8..9].store_le(value);
         Ok(())
@@ -30352,14 +30298,7 @@ impl RtSbTriggerTimestamp {
         &mut self,
         value: RtSbTriggerTimestampTriggerTimestampType,
     ) -> Result<(), CanError> {
-        self.set_trigger_timestamp_type_raw(bool::from(value))
-    }
-    /// Set raw value of 'Trigger_Timestamp_Type'
-    #[inline(always)]
-    pub fn set_trigger_timestamp_type_raw(
-        &mut self,
-        value: bool,
-    ) -> Result<(), CanError> {
+        let value = bool::from(value);
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[23..24].store_le(value);
         Ok(())
@@ -32571,11 +32510,7 @@ impl RtSbGpsStatus {
         &mut self,
         value: RtSbGpsStatusRtkStatus,
     ) -> Result<(), CanError> {
-        self.set_rtk_status_raw(u8::from(value))
-    }
-    /// Set raw value of 'RTK_Status'
-    #[inline(always)]
-    pub fn set_rtk_status_raw(&mut self, value: u8) -> Result<(), CanError> {
+        let value = u8::from(value);
         if value < 0_u8 || 255_u8 < value {
             return Err(CanError::ParameterOutOfRange {
                 message_id: RtSbGpsStatus::MESSAGE_ID,
@@ -32898,11 +32833,7 @@ impl RtSbGpsStatus {
         &mut self,
         value: RtSbGpsStatusGpsStatus,
     ) -> Result<(), CanError> {
-        self.set_gps_status_raw(u8::from(value))
-    }
-    /// Set raw value of 'GPS_Status'
-    #[inline(always)]
-    pub fn set_gps_status_raw(&mut self, value: u8) -> Result<(), CanError> {
+        let value = u8::from(value);
         if value < 0_u8 || 255_u8 < value {
             return Err(CanError::ParameterOutOfRange {
                 message_id: RtSbGpsStatus::MESSAGE_ID,

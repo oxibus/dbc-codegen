@@ -827,14 +827,7 @@ impl MsgWithValueTableSigs {
         &mut self,
         value: MsgWithValueTableSigsSigWithShortValTable,
     ) -> Result<(), CanError> {
-        self.set_sig_with_short_val_table_raw(i8::from(value))
-    }
-    /// Set raw value of 'Sig_with_short_val_table'
-    #[inline(always)]
-    pub fn set_sig_with_short_val_table_raw(
-        &mut self,
-        value: i8,
-    ) -> Result<(), CanError> {
+        let value = i8::from(value);
         if value < 0_i8 || 0_i8 < value {
             return Err(CanError::ParameterOutOfRange {
                 message_id: MsgWithValueTableSigs::MESSAGE_ID,
@@ -905,14 +898,7 @@ impl MsgWithValueTableSigs {
         &mut self,
         value: MsgWithValueTableSigsSigWithLongValTable2,
     ) -> Result<(), CanError> {
-        self.set_sig_with_long_val_table_2_raw(i8::from(value))
-    }
-    /// Set raw value of 'Sig_with_long_val_table_2'
-    #[inline(always)]
-    pub fn set_sig_with_long_val_table_2_raw(
-        &mut self,
-        value: i8,
-    ) -> Result<(), CanError> {
+        let value = i8::from(value);
         if value < 0_i8 || 0_i8 < value {
             return Err(CanError::ParameterOutOfRange {
                 message_id: MsgWithValueTableSigs::MESSAGE_ID,
@@ -973,14 +959,7 @@ impl MsgWithValueTableSigs {
         &mut self,
         value: MsgWithValueTableSigsSigWithLongValTable1,
     ) -> Result<(), CanError> {
-        self.set_sig_with_long_val_table_1_raw(i8::from(value))
-    }
-    /// Set raw value of 'Sig_with_long_val_table_1'
-    #[inline(always)]
-    pub fn set_sig_with_long_val_table_1_raw(
-        &mut self,
-        value: i8,
-    ) -> Result<(), CanError> {
+        let value = i8::from(value);
         if value < 0_i8 || 0_i8 < value {
             return Err(CanError::ParameterOutOfRange {
                 message_id: MsgWithValueTableSigs::MESSAGE_ID,

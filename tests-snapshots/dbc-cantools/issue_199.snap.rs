@@ -164,11 +164,7 @@ impl DriverDoorStatus {
         &mut self,
         value: DriverDoorStatusDriverDoorOpened,
     ) -> Result<(), CanError> {
-        self.set_driver_door_opened_raw(bool::from(value))
-    }
-    /// Set raw value of 'DriverDoorOpened'
-    #[inline(always)]
-    pub fn set_driver_door_opened_raw(&mut self, value: bool) -> Result<(), CanError> {
+        let value = bool::from(value);
         let value = value as u8;
         self.raw.view_bits_mut::<Msb0>()[7..8].store_be(value);
         Ok(())
@@ -637,11 +633,7 @@ impl BlinkerStatus {
         &mut self,
         value: BlinkerStatusRightBlinker,
     ) -> Result<(), CanError> {
-        self.set_right_blinker_raw(bool::from(value))
-    }
-    /// Set raw value of 'RightBlinker'
-    #[inline(always)]
-    pub fn set_right_blinker_raw(&mut self, value: bool) -> Result<(), CanError> {
+        let value = bool::from(value);
         let value = value as u8;
         self.raw.view_bits_mut::<Msb0>()[1..2].store_be(value);
         Ok(())
@@ -680,11 +672,7 @@ impl BlinkerStatus {
         &mut self,
         value: BlinkerStatusLeftBlinker,
     ) -> Result<(), CanError> {
-        self.set_left_blinker_raw(bool::from(value))
-    }
-    /// Set raw value of 'LeftBlinker'
-    #[inline(always)]
-    pub fn set_left_blinker_raw(&mut self, value: bool) -> Result<(), CanError> {
+        let value = bool::from(value);
         let value = value as u8;
         self.raw.view_bits_mut::<Msb0>()[0..1].store_be(value);
         Ok(())
@@ -723,11 +711,7 @@ impl BlinkerStatus {
         &mut self,
         value: BlinkerStatusBlinkerLight,
     ) -> Result<(), CanError> {
-        self.set_blinker_light_raw(bool::from(value))
-    }
-    /// Set raw value of 'BlinkerLight'
-    #[inline(always)]
-    pub fn set_blinker_light_raw(&mut self, value: bool) -> Result<(), CanError> {
+        let value = bool::from(value);
         let value = value as u8;
         self.raw.view_bits_mut::<Msb0>()[30..31].store_be(value);
         Ok(())
@@ -1055,11 +1039,7 @@ impl GearShifter {
         &mut self,
         value: GearShifterGearShifter,
     ) -> Result<(), CanError> {
-        self.set_gear_shifter_raw(u8::from(value))
-    }
-    /// Set raw value of 'GearShifter'
-    #[inline(always)]
-    pub fn set_gear_shifter_raw(&mut self, value: u8) -> Result<(), CanError> {
+        let value = u8::from(value);
         if value < 0_u8 || 3_u8 < value {
             return Err(CanError::ParameterOutOfRange {
                 message_id: GearShifter::MESSAGE_ID,
@@ -1272,14 +1252,7 @@ impl GasPedalRegenCruise {
         &mut self,
         value: GasPedalRegenCruiseCruiseControlActive,
     ) -> Result<(), CanError> {
-        self.set_cruise_control_active_raw(bool::from(value))
-    }
-    /// Set raw value of 'CruiseControlActive'
-    #[inline(always)]
-    pub fn set_cruise_control_active_raw(
-        &mut self,
-        value: bool,
-    ) -> Result<(), CanError> {
+        let value = bool::from(value);
         let value = value as u8;
         self.raw.view_bits_mut::<Msb0>()[63..64].store_be(value);
         Ok(())
@@ -2145,11 +2118,7 @@ impl CruiseButtons {
         &mut self,
         value: CruiseButtonsCruiseButtons,
     ) -> Result<(), CanError> {
-        self.set_cruise_buttons_raw(u8::from(value))
-    }
-    /// Set raw value of 'CruiseButtons'
-    #[inline(always)]
-    pub fn set_cruise_buttons_raw(&mut self, value: u8) -> Result<(), CanError> {
+        let value = u8::from(value);
         if value < 0_u8 || 12_u8 < value {
             return Err(CanError::ParameterOutOfRange {
                 message_id: CruiseButtons::MESSAGE_ID,
@@ -2275,11 +2244,7 @@ impl CruiseButtons2 {
         &mut self,
         value: CruiseButtons2LkaGapButton,
     ) -> Result<(), CanError> {
-        self.set_lka_gap_button_raw(u8::from(value))
-    }
-    /// Set raw value of 'LKAGapButton'
-    #[inline(always)]
-    pub fn set_lka_gap_button_raw(&mut self, value: u8) -> Result<(), CanError> {
+        let value = u8::from(value);
         if value < 0_u8 || 2_u8 < value {
             return Err(CanError::ParameterOutOfRange {
                 message_id: CruiseButtons2::MESSAGE_ID,

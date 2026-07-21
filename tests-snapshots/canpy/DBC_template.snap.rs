@@ -341,11 +341,7 @@ impl CanMultiplexedMultiplexerM0 {
     /// Set value of 'Value0'
     #[inline(always)]
     pub fn set_value0(&mut self, value: CanMultiplexedValue0) -> Result<(), CanError> {
-        self.set_value0_raw(u8::from(value))
-    }
-    /// Set raw value of 'Value0'
-    #[inline(always)]
-    pub fn set_value0_raw(&mut self, value: u8) -> Result<(), CanError> {
+        let value = u8::from(value);
         if value < 0_u8 || 0_u8 < value {
             return Err(CanError::ParameterOutOfRange {
                 message_id: CanMultiplexed::MESSAGE_ID,
@@ -422,11 +418,7 @@ impl CanMultiplexedMultiplexerM1 {
     /// Set value of 'Value1'
     #[inline(always)]
     pub fn set_value1(&mut self, value: CanMultiplexedValue1) -> Result<(), CanError> {
-        self.set_value1_raw(u8::from(value))
-    }
-    /// Set raw value of 'Value1'
-    #[inline(always)]
-    pub fn set_value1_raw(&mut self, value: u8) -> Result<(), CanError> {
+        let value = u8::from(value);
         if value < 0_u8 || 0_u8 < value {
             return Err(CanError::ParameterOutOfRange {
                 message_id: CanMultiplexed::MESSAGE_ID,

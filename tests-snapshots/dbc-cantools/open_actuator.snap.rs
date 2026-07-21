@@ -290,11 +290,7 @@ impl ControlCmd {
         &mut self,
         value: ControlCmdTargetMode,
     ) -> Result<(), CanError> {
-        self.set_target_mode_raw(u8::from(value))
-    }
-    /// Set raw value of 'TargetMode'
-    #[inline(always)]
-    pub fn set_target_mode_raw(&mut self, value: u8) -> Result<(), CanError> {
+        let value = u8::from(value);
         if value < 0_u8 || 3_u8 < value {
             return Err(CanError::ParameterOutOfRange {
                 message_id: ControlCmd::MESSAGE_ID,

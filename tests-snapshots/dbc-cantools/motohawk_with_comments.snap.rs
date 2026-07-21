@@ -208,11 +208,7 @@ impl ExampleMessage {
     /// Set value of 'Enable'
     #[inline(always)]
     pub fn set_enable(&mut self, value: ExampleMessageEnable) -> Result<(), CanError> {
-        self.set_enable_raw(bool::from(value))
-    }
-    /// Set raw value of 'Enable'
-    #[inline(always)]
-    pub fn set_enable_raw(&mut self, value: bool) -> Result<(), CanError> {
+        let value = bool::from(value);
         let value = value as u8;
         self.raw.view_bits_mut::<Msb0>()[0..1].store_be(value);
         Ok(())

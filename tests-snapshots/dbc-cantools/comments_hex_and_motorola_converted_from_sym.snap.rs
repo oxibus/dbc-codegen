@@ -445,11 +445,7 @@ impl Msg2 {
     /// Set value of 'Test7'
     #[inline(always)]
     pub fn set_test7(&mut self, value: Msg2Test7) -> Result<(), CanError> {
-        self.set_test7_raw(u8::from(value))
-    }
-    /// Set raw value of 'Test7'
-    #[inline(always)]
-    pub fn set_test7_raw(&mut self, value: u8) -> Result<(), CanError> {
+        let value = u8::from(value);
         if value < 0_u8 || 0_u8 < value {
             return Err(CanError::ParameterOutOfRange {
                 message_id: Msg2::MESSAGE_ID,

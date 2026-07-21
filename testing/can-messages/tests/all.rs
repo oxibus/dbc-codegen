@@ -184,25 +184,6 @@ fn enum_setters_and_getters_are_symmetrical() {
 }
 
 #[test]
-fn raw_setter_mirrors_raw_getter() {
-    let mut bar = Bar::new(1, 2.0, BarThree::Onest, BarFour::Onest, BarType::X1on).unwrap();
-
-    bar.set_three_raw(2).unwrap();
-    assert_eq!(bar.three_raw(), 2);
-    assert_eq!(bar.three(), BarThree::Oner);
-
-    assert_eq!(
-        bar.set_three_raw(8),
-        Err(CanError::ParameterOutOfRange {
-            message_id: Id::Standard(StandardId::new(512).unwrap())
-        })
-    );
-
-    bar.set_xtype_raw(false).unwrap();
-    assert_eq!(bar.xtype(), BarType::X0off);
-}
-
-#[test]
 fn negative_factor() {
     assert_eq!(
         NegativeFactorTest::UNSIGNED_NEGATIVE_FACTOR_SIGNAL_MIN,

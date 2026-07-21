@@ -120,11 +120,7 @@ impl Message0 {
     /// Set value of 'FooSignal'
     #[inline(always)]
     pub fn set_foo_signal(&mut self, value: Message0FooSignal) -> Result<(), CanError> {
-        self.set_foo_signal_raw(u8::from(value))
-    }
-    /// Set raw value of 'FooSignal'
-    #[inline(always)]
-    pub fn set_foo_signal_raw(&mut self, value: u8) -> Result<(), CanError> {
+        let value = u8::from(value);
         if value < 0_u8 || 0_u8 < value {
             return Err(CanError::ParameterOutOfRange {
                 message_id: Message0::MESSAGE_ID,
@@ -178,11 +174,7 @@ impl Message0 {
     /// Set value of 'BarSignal'
     #[inline(always)]
     pub fn set_bar_signal(&mut self, value: Message0BarSignal) -> Result<(), CanError> {
-        self.set_bar_signal_raw(u8::from(value))
-    }
-    /// Set raw value of 'BarSignal'
-    #[inline(always)]
-    pub fn set_bar_signal_raw(&mut self, value: u8) -> Result<(), CanError> {
+        let value = u8::from(value);
         if value < 0_u8 || 0_u8 < value {
             return Err(CanError::ParameterOutOfRange {
                 message_id: Message0::MESSAGE_ID,

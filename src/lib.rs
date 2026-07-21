@@ -799,46 +799,23 @@ impl Config<'_> {
         let param_type = signal_pub_type(dbc, msg, signal);
         let is_enum_backed = param_type != typ.to_string();
 
-        if is_enum_backed {
-            writeln!(w, "/// Set value of '{}'", signal.name)?;
-            writeln!(w, "#[inline(always)]")?;
-            writeln!(
-                w,
-                "{visibility}fn set_{field}(&mut self, value: {param_type}) -> Result<(), CanError> {{",
-            )?;
-            {
-                let mut w = PadAdapter::wrap(w);
-                writeln!(w, "self.set_{field}_raw({typ}::from(value))")?;
+        writeln!(w, "/// Set value of '{}'", signal.name)?;
+        writeln!(w, "#[inline(always)]")?;
+        writeln!(
+            w,
+            "{visibility}fn set_{field}(&mut self, value: {param_type}) -> Result<(), CanError> {{",
+        )?;
+        {
+            let mut w = PadAdapter::wrap(w);
+            // Enum-backed signals accept the value-description enum; convert it to
+            // the raw primitive before range checks and packing.
+            if is_enum_backed {
+                writeln!(w, "let value = {typ}::from(value);")?;
             }
-            writeln!(w, "}}")?;
-            writeln!(w)?;
-
-            writeln!(w, "/// Set raw value of '{}'", signal.name)?;
-            writeln!(w, "#[inline(always)]")?;
-            writeln!(
-                w,
-                "{visibility}fn set_{field}_raw(&mut self, value: {typ}) -> Result<(), CanError> {{",
-            )?;
-            {
-                let mut w = PadAdapter::wrap(w);
-                self.render_set_signal_body(&mut w, signal, msg)?;
-            }
-            writeln!(w, "}}")?;
-            writeln!(w)?;
-        } else {
-            writeln!(w, "/// Set value of '{}'", signal.name)?;
-            writeln!(w, "#[inline(always)]")?;
-            writeln!(
-                w,
-                "{visibility}fn set_{field}(&mut self, value: {typ}) -> Result<(), CanError> {{",
-            )?;
-            {
-                let mut w = PadAdapter::wrap(w);
-                self.render_set_signal_body(&mut w, signal, msg)?;
-            }
-            writeln!(w, "}}")?;
-            writeln!(w)?;
+            self.render_set_signal_body(&mut w, signal, msg)?;
         }
+        writeln!(w, "}}")?;
+        writeln!(w)?;
 
         Ok(())
     }

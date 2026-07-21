@@ -118,11 +118,7 @@ impl Foo {
     /// Set value of 'Foo'
     #[inline(always)]
     pub fn set_foo(&mut self, value: FooFoo) -> Result<(), CanError> {
-        self.set_foo_raw(i8::from(value))
-    }
-    /// Set raw value of 'Foo'
-    #[inline(always)]
-    pub fn set_foo_raw(&mut self, value: i8) -> Result<(), CanError> {
+        let value = i8::from(value);
         if value < -128_i8 || 127_i8 < value {
             return Err(CanError::ParameterOutOfRange {
                 message_id: Foo::MESSAGE_ID,

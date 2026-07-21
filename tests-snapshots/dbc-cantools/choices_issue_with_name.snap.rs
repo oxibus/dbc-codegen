@@ -115,11 +115,7 @@ impl TestMessage {
         &mut self,
         value: TestMessageSignalWithChoices,
     ) -> Result<(), CanError> {
-        self.set_signal_with_choices_raw(bool::from(value))
-    }
-    /// Set raw value of 'SignalWithChoices'
-    #[inline(always)]
-    pub fn set_signal_with_choices_raw(&mut self, value: bool) -> Result<(), CanError> {
+        let value = bool::from(value);
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[0..1].store_le(value);
         Ok(())

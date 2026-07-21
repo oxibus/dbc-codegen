@@ -170,11 +170,7 @@ impl ExampleMessage {
         &mut self,
         value: ExampleMessageEmptyChoice,
     ) -> Result<(), CanError> {
-        self.set_empty_choice_raw(i8::from(value))
-    }
-    /// Set raw value of 'empty_choice'
-    #[inline(always)]
-    pub fn set_empty_choice_raw(&mut self, value: i8) -> Result<(), CanError> {
+        let value = i8::from(value);
         if value < 0_i8 || 0_i8 < value {
             return Err(CanError::ParameterOutOfRange {
                 message_id: ExampleMessage::MESSAGE_ID,
@@ -227,11 +223,7 @@ impl ExampleMessage {
         &mut self,
         value: ExampleMessageNonEmptyChoice,
     ) -> Result<(), CanError> {
-        self.set_non_empty_choice_raw(i8::from(value))
-    }
-    /// Set raw value of 'non_empty_choice'
-    #[inline(always)]
-    pub fn set_non_empty_choice_raw(&mut self, value: i8) -> Result<(), CanError> {
+        let value = i8::from(value);
         if value < 0_i8 || 0_i8 < value {
             return Err(CanError::ParameterOutOfRange {
                 message_id: ExampleMessage::MESSAGE_ID,

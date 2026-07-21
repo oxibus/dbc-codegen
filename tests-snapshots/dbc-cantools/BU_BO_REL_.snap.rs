@@ -111,11 +111,7 @@ impl Control {
     /// Set value of 'state'
     #[inline(always)]
     pub fn set_state(&mut self, value: ControlState) -> Result<(), CanError> {
-        self.set_state_raw(u8::from(value))
-    }
-    /// Set raw value of 'state'
-    #[inline(always)]
-    pub fn set_state_raw(&mut self, value: u8) -> Result<(), CanError> {
+        let value = u8::from(value);
         if value < 0_u8 || 100_u8 < value {
             return Err(CanError::ParameterOutOfRange {
                 message_id: Control::MESSAGE_ID,

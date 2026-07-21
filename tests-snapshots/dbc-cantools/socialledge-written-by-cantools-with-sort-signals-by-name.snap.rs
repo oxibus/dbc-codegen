@@ -143,11 +143,7 @@ impl DriverHeartbeat {
         &mut self,
         value: DriverHeartbeatDriverHeartbeatCmd,
     ) -> Result<(), CanError> {
-        self.set_driver_heartbeat_cmd_raw(u8::from(value))
-    }
-    /// Set raw value of 'DRIVER_HEARTBEAT_cmd'
-    #[inline(always)]
-    pub fn set_driver_heartbeat_cmd_raw(&mut self, value: u8) -> Result<(), CanError> {
+        let value = u8::from(value);
         if value < 0_u8 || 0_u8 < value {
             return Err(CanError::ParameterOutOfRange {
                 message_id: DriverHeartbeat::MESSAGE_ID,
@@ -314,11 +310,7 @@ impl IoDebug {
         &mut self,
         value: IoDebugIoDebugTestEnum,
     ) -> Result<(), CanError> {
-        self.set_io_debug_test_enum_raw(u8::from(value))
-    }
-    /// Set raw value of 'IO_DEBUG_test_enum'
-    #[inline(always)]
-    pub fn set_io_debug_test_enum_raw(&mut self, value: u8) -> Result<(), CanError> {
+        let value = u8::from(value);
         if value < 0_u8 || 0_u8 < value {
             return Err(CanError::ParameterOutOfRange {
                 message_id: IoDebug::MESSAGE_ID,

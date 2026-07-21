@@ -111,11 +111,7 @@ impl Message1 {
     /// Set value of 'signal_1'
     #[inline(always)]
     pub fn set_signal_1(&mut self, value: Message1Signal1) -> Result<(), CanError> {
-        self.set_signal_1_raw(u8::from(value))
-    }
-    /// Set raw value of 'signal_1'
-    #[inline(always)]
-    pub fn set_signal_1_raw(&mut self, value: u8) -> Result<(), CanError> {
+        let value = u8::from(value);
         if value < 0_u8 || 100_u8 < value {
             return Err(CanError::ParameterOutOfRange {
                 message_id: Message1::MESSAGE_ID,

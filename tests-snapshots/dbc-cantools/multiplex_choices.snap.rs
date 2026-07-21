@@ -321,11 +321,7 @@ impl Message1MultiplexorM8 {
     /// Set value of 'BIT_L'
     #[inline(always)]
     pub fn set_bit_l(&mut self, value: Message1BitL) -> Result<(), CanError> {
-        self.set_bit_l_raw(bool::from(value))
-    }
-    /// Set raw value of 'BIT_L'
-    #[inline(always)]
-    pub fn set_bit_l_raw(&mut self, value: bool) -> Result<(), CanError> {
+        let value = bool::from(value);
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[24..25].store_le(value);
         Ok(())

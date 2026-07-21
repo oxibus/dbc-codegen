@@ -120,11 +120,7 @@ impl ExampleMessage {
         &mut self,
         value: ExampleMessageTemperature,
     ) -> Result<(), CanError> {
-        self.set_temperature_raw(f32::from(value))
-    }
-    /// Set raw value of 'Temperature'
-    #[inline(always)]
-    pub fn set_temperature_raw(&mut self, value: f32) -> Result<(), CanError> {
+        let value = f32::from(value);
         if value < 4070_f32 || 4100_f32 < value {
             return Err(CanError::ParameterOutOfRange {
                 message_id: ExampleMessage::MESSAGE_ID,

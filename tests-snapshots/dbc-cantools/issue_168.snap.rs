@@ -334,11 +334,7 @@ impl Fum {
     /// Set value of 'Fam'
     #[inline(always)]
     pub fn set_fam(&mut self, value: FumFam) -> Result<(), CanError> {
-        self.set_fam_raw(i16::from(value))
-    }
-    /// Set raw value of 'Fam'
-    #[inline(always)]
-    pub fn set_fam_raw(&mut self, value: i16) -> Result<(), CanError> {
+        let value = i16::from(value);
         if value < 0_i16 || 8_i16 < value {
             return Err(CanError::ParameterOutOfRange {
                 message_id: Fum::MESSAGE_ID,

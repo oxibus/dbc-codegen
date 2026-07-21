@@ -5189,11 +5189,7 @@ impl Bremse53 {
     /// Set value of 'Diag_FL'
     #[inline(always)]
     pub fn set_diag_fl(&mut self, value: Bremse53DiagFl) -> Result<(), CanError> {
-        self.set_diag_fl_raw(u8::from(value))
-    }
-    /// Set raw value of 'Diag_FL'
-    #[inline(always)]
-    pub fn set_diag_fl_raw(&mut self, value: u8) -> Result<(), CanError> {
+        let value = u8::from(value);
         if value < 0_u8 || 3_u8 < value {
             return Err(CanError::ParameterOutOfRange {
                 message_id: Bremse53::MESSAGE_ID,
@@ -5245,11 +5241,7 @@ impl Bremse53 {
     /// Set value of 'Diag_FR'
     #[inline(always)]
     pub fn set_diag_fr(&mut self, value: Bremse53DiagFr) -> Result<(), CanError> {
-        self.set_diag_fr_raw(u8::from(value))
-    }
-    /// Set raw value of 'Diag_FR'
-    #[inline(always)]
-    pub fn set_diag_fr_raw(&mut self, value: u8) -> Result<(), CanError> {
+        let value = u8::from(value);
         if value < 0_u8 || 3_u8 < value {
             return Err(CanError::ParameterOutOfRange {
                 message_id: Bremse53::MESSAGE_ID,
@@ -5301,11 +5293,7 @@ impl Bremse53 {
     /// Set value of 'Diag_RL'
     #[inline(always)]
     pub fn set_diag_rl(&mut self, value: Bremse53DiagRl) -> Result<(), CanError> {
-        self.set_diag_rl_raw(u8::from(value))
-    }
-    /// Set raw value of 'Diag_RL'
-    #[inline(always)]
-    pub fn set_diag_rl_raw(&mut self, value: u8) -> Result<(), CanError> {
+        let value = u8::from(value);
         if value < 0_u8 || 3_u8 < value {
             return Err(CanError::ParameterOutOfRange {
                 message_id: Bremse53::MESSAGE_ID,
@@ -5357,11 +5345,7 @@ impl Bremse53 {
     /// Set value of 'Diag_RR'
     #[inline(always)]
     pub fn set_diag_rr(&mut self, value: Bremse53DiagRr) -> Result<(), CanError> {
-        self.set_diag_rr_raw(u8::from(value))
-    }
-    /// Set raw value of 'Diag_RR'
-    #[inline(always)]
-    pub fn set_diag_rr_raw(&mut self, value: u8) -> Result<(), CanError> {
+        let value = u8::from(value);
         if value < 0_u8 || 3_u8 < value {
             return Err(CanError::ParameterOutOfRange {
                 message_id: Bremse53::MESSAGE_ID,
@@ -5607,11 +5591,7 @@ impl Bremse53 {
         &mut self,
         value: Bremse53AbsFaultInfo,
     ) -> Result<(), CanError> {
-        self.set_abs_fault_info_raw(u8::from(value))
-    }
-    /// Set raw value of 'ABS_fault_info'
-    #[inline(always)]
-    pub fn set_abs_fault_info_raw(&mut self, value: u8) -> Result<(), CanError> {
+        let value = u8::from(value);
         if value < 0_u8 || 3_u8 < value {
             return Err(CanError::ParameterOutOfRange {
                 message_id: Bremse53::MESSAGE_ID,
