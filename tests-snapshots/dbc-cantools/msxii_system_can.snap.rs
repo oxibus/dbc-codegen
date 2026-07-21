@@ -214,7 +214,7 @@ impl BatteryVt {
     pub const MODULE_VOLTAGE_00_MAX: u16 = 0_u16;
     pub const BATTERY_VT_INDEX_MIN: u16 = 0_u16;
     pub const BATTERY_VT_INDEX_MAX: u16 = 0_u16;
-    /// Construct new BATTERY_VT from values
+    /// Construct new 'BATTERY_VT' from values
     pub fn new(battery_vt_index: u16) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 6] };
         res.set_battery_vt_index(battery_vt_index)?;
@@ -224,7 +224,7 @@ impl BatteryVt {
     pub fn raw(&self) -> &[u8; 6] {
         &self.raw
     }
-    /// Get raw value of BATTERY_VT_INDEX
+    /// Get raw value of 'BATTERY_VT_INDEX'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -502,7 +502,7 @@ impl BatteryVt {
             }
         }
     }
-    /// Set value of BATTERY_VT_INDEX
+    /// Set value of 'BATTERY_VT_INDEX'
     #[inline(always)]
     fn set_battery_vt_index(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -520,7 +520,7 @@ impl BatteryVt {
         self.raw.view_bits_mut::<Lsb0>()[0..16].store_le(value);
         Ok(())
     }
-    /// Set value of BATTERY_VT_INDEX
+    /// Set value of 'BATTERY_VT_INDEX'
     #[inline(always)]
     pub fn set_m0(&mut self, value: BatteryVtBatteryVtIndexM0) -> Result<(), CanError> {
         let b0 = BitArray::<_, LocalBits>::new(self.raw);
@@ -529,7 +529,7 @@ impl BatteryVt {
         self.set_battery_vt_index(0)?;
         Ok(())
     }
-    /// Set value of BATTERY_VT_INDEX
+    /// Set value of 'BATTERY_VT_INDEX'
     #[inline(always)]
     pub fn set_m1(&mut self, value: BatteryVtBatteryVtIndexM1) -> Result<(), CanError> {
         let b0 = BitArray::<_, LocalBits>::new(self.raw);
@@ -538,7 +538,7 @@ impl BatteryVt {
         self.set_battery_vt_index(1)?;
         Ok(())
     }
-    /// Set value of BATTERY_VT_INDEX
+    /// Set value of 'BATTERY_VT_INDEX'
     #[inline(always)]
     pub fn set_m2(&mut self, value: BatteryVtBatteryVtIndexM2) -> Result<(), CanError> {
         let b0 = BitArray::<_, LocalBits>::new(self.raw);
@@ -547,7 +547,7 @@ impl BatteryVt {
         self.set_battery_vt_index(2)?;
         Ok(())
     }
-    /// Set value of BATTERY_VT_INDEX
+    /// Set value of 'BATTERY_VT_INDEX'
     #[inline(always)]
     pub fn set_m3(&mut self, value: BatteryVtBatteryVtIndexM3) -> Result<(), CanError> {
         let b0 = BitArray::<_, LocalBits>::new(self.raw);
@@ -556,7 +556,7 @@ impl BatteryVt {
         self.set_battery_vt_index(3)?;
         Ok(())
     }
-    /// Set value of BATTERY_VT_INDEX
+    /// Set value of 'BATTERY_VT_INDEX'
     #[inline(always)]
     pub fn set_m4(&mut self, value: BatteryVtBatteryVtIndexM4) -> Result<(), CanError> {
         let b0 = BitArray::<_, LocalBits>::new(self.raw);
@@ -565,7 +565,7 @@ impl BatteryVt {
         self.set_battery_vt_index(4)?;
         Ok(())
     }
-    /// Set value of BATTERY_VT_INDEX
+    /// Set value of 'BATTERY_VT_INDEX'
     #[inline(always)]
     pub fn set_m5(&mut self, value: BatteryVtBatteryVtIndexM5) -> Result<(), CanError> {
         let b0 = BitArray::<_, LocalBits>::new(self.raw);
@@ -574,7 +574,7 @@ impl BatteryVt {
         self.set_battery_vt_index(5)?;
         Ok(())
     }
-    /// Set value of BATTERY_VT_INDEX
+    /// Set value of 'BATTERY_VT_INDEX'
     #[inline(always)]
     pub fn set_m6(&mut self, value: BatteryVtBatteryVtIndexM6) -> Result<(), CanError> {
         let b0 = BitArray::<_, LocalBits>::new(self.raw);
@@ -583,7 +583,7 @@ impl BatteryVt {
         self.set_battery_vt_index(6)?;
         Ok(())
     }
-    /// Set value of BATTERY_VT_INDEX
+    /// Set value of 'BATTERY_VT_INDEX'
     #[inline(always)]
     pub fn set_m7(&mut self, value: BatteryVtBatteryVtIndexM7) -> Result<(), CanError> {
         let b0 = BitArray::<_, LocalBits>::new(self.raw);
@@ -592,7 +592,7 @@ impl BatteryVt {
         self.set_battery_vt_index(7)?;
         Ok(())
     }
-    /// Set value of BATTERY_VT_INDEX
+    /// Set value of 'BATTERY_VT_INDEX'
     #[inline(always)]
     pub fn set_m8(&mut self, value: BatteryVtBatteryVtIndexM8) -> Result<(), CanError> {
         let b0 = BitArray::<_, LocalBits>::new(self.raw);
@@ -601,7 +601,7 @@ impl BatteryVt {
         self.set_battery_vt_index(8)?;
         Ok(())
     }
-    /// Set value of BATTERY_VT_INDEX
+    /// Set value of 'BATTERY_VT_INDEX'
     #[inline(always)]
     pub fn set_m9(&mut self, value: BatteryVtBatteryVtIndexM9) -> Result<(), CanError> {
         let b0 = BitArray::<_, LocalBits>::new(self.raw);
@@ -610,7 +610,7 @@ impl BatteryVt {
         self.set_battery_vt_index(9)?;
         Ok(())
     }
-    /// Set value of BATTERY_VT_INDEX
+    /// Set value of 'BATTERY_VT_INDEX'
     #[inline(always)]
     pub fn set_m10(
         &mut self,
@@ -622,7 +622,7 @@ impl BatteryVt {
         self.set_battery_vt_index(10)?;
         Ok(())
     }
-    /// Set value of BATTERY_VT_INDEX
+    /// Set value of 'BATTERY_VT_INDEX'
     #[inline(always)]
     pub fn set_m11(
         &mut self,
@@ -634,7 +634,7 @@ impl BatteryVt {
         self.set_battery_vt_index(11)?;
         Ok(())
     }
-    /// Set value of BATTERY_VT_INDEX
+    /// Set value of 'BATTERY_VT_INDEX'
     #[inline(always)]
     pub fn set_m12(
         &mut self,
@@ -646,7 +646,7 @@ impl BatteryVt {
         self.set_battery_vt_index(12)?;
         Ok(())
     }
-    /// Set value of BATTERY_VT_INDEX
+    /// Set value of 'BATTERY_VT_INDEX'
     #[inline(always)]
     pub fn set_m13(
         &mut self,
@@ -658,7 +658,7 @@ impl BatteryVt {
         self.set_battery_vt_index(13)?;
         Ok(())
     }
-    /// Set value of BATTERY_VT_INDEX
+    /// Set value of 'BATTERY_VT_INDEX'
     #[inline(always)]
     pub fn set_m14(
         &mut self,
@@ -670,7 +670,7 @@ impl BatteryVt {
         self.set_battery_vt_index(14)?;
         Ok(())
     }
-    /// Set value of BATTERY_VT_INDEX
+    /// Set value of 'BATTERY_VT_INDEX'
     #[inline(always)]
     pub fn set_m15(
         &mut self,
@@ -682,7 +682,7 @@ impl BatteryVt {
         self.set_battery_vt_index(15)?;
         Ok(())
     }
-    /// Set value of BATTERY_VT_INDEX
+    /// Set value of 'BATTERY_VT_INDEX'
     #[inline(always)]
     pub fn set_m16(
         &mut self,
@@ -694,7 +694,7 @@ impl BatteryVt {
         self.set_battery_vt_index(16)?;
         Ok(())
     }
-    /// Set value of BATTERY_VT_INDEX
+    /// Set value of 'BATTERY_VT_INDEX'
     #[inline(always)]
     pub fn set_m17(
         &mut self,
@@ -706,7 +706,7 @@ impl BatteryVt {
         self.set_battery_vt_index(17)?;
         Ok(())
     }
-    /// Set value of BATTERY_VT_INDEX
+    /// Set value of 'BATTERY_VT_INDEX'
     #[inline(always)]
     pub fn set_m18(
         &mut self,
@@ -718,7 +718,7 @@ impl BatteryVt {
         self.set_battery_vt_index(18)?;
         Ok(())
     }
-    /// Set value of BATTERY_VT_INDEX
+    /// Set value of 'BATTERY_VT_INDEX'
     #[inline(always)]
     pub fn set_m19(
         &mut self,
@@ -730,7 +730,7 @@ impl BatteryVt {
         self.set_battery_vt_index(19)?;
         Ok(())
     }
-    /// Set value of BATTERY_VT_INDEX
+    /// Set value of 'BATTERY_VT_INDEX'
     #[inline(always)]
     pub fn set_m20(
         &mut self,
@@ -742,7 +742,7 @@ impl BatteryVt {
         self.set_battery_vt_index(20)?;
         Ok(())
     }
-    /// Set value of BATTERY_VT_INDEX
+    /// Set value of 'BATTERY_VT_INDEX'
     #[inline(always)]
     pub fn set_m21(
         &mut self,
@@ -754,7 +754,7 @@ impl BatteryVt {
         self.set_battery_vt_index(21)?;
         Ok(())
     }
-    /// Set value of BATTERY_VT_INDEX
+    /// Set value of 'BATTERY_VT_INDEX'
     #[inline(always)]
     pub fn set_m22(
         &mut self,
@@ -766,7 +766,7 @@ impl BatteryVt {
         self.set_battery_vt_index(22)?;
         Ok(())
     }
-    /// Set value of BATTERY_VT_INDEX
+    /// Set value of 'BATTERY_VT_INDEX'
     #[inline(always)]
     pub fn set_m23(
         &mut self,
@@ -778,7 +778,7 @@ impl BatteryVt {
         self.set_battery_vt_index(23)?;
         Ok(())
     }
-    /// Set value of BATTERY_VT_INDEX
+    /// Set value of 'BATTERY_VT_INDEX'
     #[inline(always)]
     pub fn set_m24(
         &mut self,
@@ -790,7 +790,7 @@ impl BatteryVt {
         self.set_battery_vt_index(24)?;
         Ok(())
     }
-    /// Set value of BATTERY_VT_INDEX
+    /// Set value of 'BATTERY_VT_INDEX'
     #[inline(always)]
     pub fn set_m25(
         &mut self,
@@ -802,7 +802,7 @@ impl BatteryVt {
         self.set_battery_vt_index(25)?;
         Ok(())
     }
-    /// Set value of BATTERY_VT_INDEX
+    /// Set value of 'BATTERY_VT_INDEX'
     #[inline(always)]
     pub fn set_m26(
         &mut self,
@@ -814,7 +814,7 @@ impl BatteryVt {
         self.set_battery_vt_index(26)?;
         Ok(())
     }
-    /// Set value of BATTERY_VT_INDEX
+    /// Set value of 'BATTERY_VT_INDEX'
     #[inline(always)]
     pub fn set_m27(
         &mut self,
@@ -826,7 +826,7 @@ impl BatteryVt {
         self.set_battery_vt_index(27)?;
         Ok(())
     }
-    /// Set value of BATTERY_VT_INDEX
+    /// Set value of 'BATTERY_VT_INDEX'
     #[inline(always)]
     pub fn set_m28(
         &mut self,
@@ -838,7 +838,7 @@ impl BatteryVt {
         self.set_battery_vt_index(28)?;
         Ok(())
     }
-    /// Set value of BATTERY_VT_INDEX
+    /// Set value of 'BATTERY_VT_INDEX'
     #[inline(always)]
     pub fn set_m29(
         &mut self,
@@ -850,7 +850,7 @@ impl BatteryVt {
         self.set_battery_vt_index(29)?;
         Ok(())
     }
-    /// Set value of BATTERY_VT_INDEX
+    /// Set value of 'BATTERY_VT_INDEX'
     #[inline(always)]
     pub fn set_m30(
         &mut self,
@@ -862,7 +862,7 @@ impl BatteryVt {
         self.set_battery_vt_index(30)?;
         Ok(())
     }
-    /// Set value of BATTERY_VT_INDEX
+    /// Set value of 'BATTERY_VT_INDEX'
     #[inline(always)]
     pub fn set_m31(
         &mut self,
@@ -874,7 +874,7 @@ impl BatteryVt {
         self.set_battery_vt_index(31)?;
         Ok(())
     }
-    /// Set value of BATTERY_VT_INDEX
+    /// Set value of 'BATTERY_VT_INDEX'
     #[inline(always)]
     pub fn set_m32(
         &mut self,
@@ -886,7 +886,7 @@ impl BatteryVt {
         self.set_battery_vt_index(32)?;
         Ok(())
     }
-    /// Set value of BATTERY_VT_INDEX
+    /// Set value of 'BATTERY_VT_INDEX'
     #[inline(always)]
     pub fn set_m33(
         &mut self,
@@ -898,7 +898,7 @@ impl BatteryVt {
         self.set_battery_vt_index(33)?;
         Ok(())
     }
-    /// Set value of BATTERY_VT_INDEX
+    /// Set value of 'BATTERY_VT_INDEX'
     #[inline(always)]
     pub fn set_m34(
         &mut self,
@@ -910,7 +910,7 @@ impl BatteryVt {
         self.set_battery_vt_index(34)?;
         Ok(())
     }
-    /// Set value of BATTERY_VT_INDEX
+    /// Set value of 'BATTERY_VT_INDEX'
     #[inline(always)]
     pub fn set_m35(
         &mut self,
@@ -1035,7 +1035,7 @@ impl BatteryVtBatteryVtIndexM0 {
     pub fn new() -> Self {
         Self { raw: [0u8; 6] }
     }
-    /// MODULE_TEMP_00
+    /// Get value of 'MODULE_TEMP_00'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -1045,7 +1045,7 @@ impl BatteryVtBatteryVtIndexM0 {
     pub fn module_temp_00(&self) -> u16 {
         self.module_temp_00_raw()
     }
-    /// Get raw value of MODULE_TEMP_00
+    /// Get raw value of 'MODULE_TEMP_00'
     ///
     /// - Start bit: 32
     /// - Signal size: 16 bits
@@ -1059,7 +1059,7 @@ impl BatteryVtBatteryVtIndexM0 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_TEMP_00
+    /// Set value of 'MODULE_TEMP_00'
     #[inline(always)]
     pub fn set_module_temp_00(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -1077,7 +1077,7 @@ impl BatteryVtBatteryVtIndexM0 {
         self.raw.view_bits_mut::<Lsb0>()[32..48].store_le(value);
         Ok(())
     }
-    /// MODULE_VOLTAGE_00
+    /// Get value of 'MODULE_VOLTAGE_00'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -1087,7 +1087,7 @@ impl BatteryVtBatteryVtIndexM0 {
     pub fn module_voltage_00(&self) -> u16 {
         self.module_voltage_00_raw()
     }
-    /// Get raw value of MODULE_VOLTAGE_00
+    /// Get raw value of 'MODULE_VOLTAGE_00'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -1101,7 +1101,7 @@ impl BatteryVtBatteryVtIndexM0 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_VOLTAGE_00
+    /// Set value of 'MODULE_VOLTAGE_00'
     #[inline(always)]
     pub fn set_module_voltage_00(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -1146,7 +1146,7 @@ impl BatteryVtBatteryVtIndexM1 {
     pub fn new() -> Self {
         Self { raw: [0u8; 6] }
     }
-    /// MODULE_TEMP_01
+    /// Get value of 'MODULE_TEMP_01'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -1156,7 +1156,7 @@ impl BatteryVtBatteryVtIndexM1 {
     pub fn module_temp_01(&self) -> u16 {
         self.module_temp_01_raw()
     }
-    /// Get raw value of MODULE_TEMP_01
+    /// Get raw value of 'MODULE_TEMP_01'
     ///
     /// - Start bit: 32
     /// - Signal size: 16 bits
@@ -1170,7 +1170,7 @@ impl BatteryVtBatteryVtIndexM1 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_TEMP_01
+    /// Set value of 'MODULE_TEMP_01'
     #[inline(always)]
     pub fn set_module_temp_01(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -1188,7 +1188,7 @@ impl BatteryVtBatteryVtIndexM1 {
         self.raw.view_bits_mut::<Lsb0>()[32..48].store_le(value);
         Ok(())
     }
-    /// MODULE_VOLTAGE_01
+    /// Get value of 'MODULE_VOLTAGE_01'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -1198,7 +1198,7 @@ impl BatteryVtBatteryVtIndexM1 {
     pub fn module_voltage_01(&self) -> u16 {
         self.module_voltage_01_raw()
     }
-    /// Get raw value of MODULE_VOLTAGE_01
+    /// Get raw value of 'MODULE_VOLTAGE_01'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -1212,7 +1212,7 @@ impl BatteryVtBatteryVtIndexM1 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_VOLTAGE_01
+    /// Set value of 'MODULE_VOLTAGE_01'
     #[inline(always)]
     pub fn set_module_voltage_01(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -1257,7 +1257,7 @@ impl BatteryVtBatteryVtIndexM2 {
     pub fn new() -> Self {
         Self { raw: [0u8; 6] }
     }
-    /// MODULE_TEMP_02
+    /// Get value of 'MODULE_TEMP_02'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -1267,7 +1267,7 @@ impl BatteryVtBatteryVtIndexM2 {
     pub fn module_temp_02(&self) -> u16 {
         self.module_temp_02_raw()
     }
-    /// Get raw value of MODULE_TEMP_02
+    /// Get raw value of 'MODULE_TEMP_02'
     ///
     /// - Start bit: 32
     /// - Signal size: 16 bits
@@ -1281,7 +1281,7 @@ impl BatteryVtBatteryVtIndexM2 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_TEMP_02
+    /// Set value of 'MODULE_TEMP_02'
     #[inline(always)]
     pub fn set_module_temp_02(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -1299,7 +1299,7 @@ impl BatteryVtBatteryVtIndexM2 {
         self.raw.view_bits_mut::<Lsb0>()[32..48].store_le(value);
         Ok(())
     }
-    /// MODULE_VOLTAGE_02
+    /// Get value of 'MODULE_VOLTAGE_02'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -1309,7 +1309,7 @@ impl BatteryVtBatteryVtIndexM2 {
     pub fn module_voltage_02(&self) -> u16 {
         self.module_voltage_02_raw()
     }
-    /// Get raw value of MODULE_VOLTAGE_02
+    /// Get raw value of 'MODULE_VOLTAGE_02'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -1323,7 +1323,7 @@ impl BatteryVtBatteryVtIndexM2 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_VOLTAGE_02
+    /// Set value of 'MODULE_VOLTAGE_02'
     #[inline(always)]
     pub fn set_module_voltage_02(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -1368,7 +1368,7 @@ impl BatteryVtBatteryVtIndexM3 {
     pub fn new() -> Self {
         Self { raw: [0u8; 6] }
     }
-    /// MODULE_TEMP_03
+    /// Get value of 'MODULE_TEMP_03'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -1378,7 +1378,7 @@ impl BatteryVtBatteryVtIndexM3 {
     pub fn module_temp_03(&self) -> u16 {
         self.module_temp_03_raw()
     }
-    /// Get raw value of MODULE_TEMP_03
+    /// Get raw value of 'MODULE_TEMP_03'
     ///
     /// - Start bit: 32
     /// - Signal size: 16 bits
@@ -1392,7 +1392,7 @@ impl BatteryVtBatteryVtIndexM3 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_TEMP_03
+    /// Set value of 'MODULE_TEMP_03'
     #[inline(always)]
     pub fn set_module_temp_03(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -1410,7 +1410,7 @@ impl BatteryVtBatteryVtIndexM3 {
         self.raw.view_bits_mut::<Lsb0>()[32..48].store_le(value);
         Ok(())
     }
-    /// MODULE_VOLTAGE_03
+    /// Get value of 'MODULE_VOLTAGE_03'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -1420,7 +1420,7 @@ impl BatteryVtBatteryVtIndexM3 {
     pub fn module_voltage_03(&self) -> u16 {
         self.module_voltage_03_raw()
     }
-    /// Get raw value of MODULE_VOLTAGE_03
+    /// Get raw value of 'MODULE_VOLTAGE_03'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -1434,7 +1434,7 @@ impl BatteryVtBatteryVtIndexM3 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_VOLTAGE_03
+    /// Set value of 'MODULE_VOLTAGE_03'
     #[inline(always)]
     pub fn set_module_voltage_03(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -1479,7 +1479,7 @@ impl BatteryVtBatteryVtIndexM4 {
     pub fn new() -> Self {
         Self { raw: [0u8; 6] }
     }
-    /// MODULE_TEMP_04
+    /// Get value of 'MODULE_TEMP_04'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -1489,7 +1489,7 @@ impl BatteryVtBatteryVtIndexM4 {
     pub fn module_temp_04(&self) -> u16 {
         self.module_temp_04_raw()
     }
-    /// Get raw value of MODULE_TEMP_04
+    /// Get raw value of 'MODULE_TEMP_04'
     ///
     /// - Start bit: 32
     /// - Signal size: 16 bits
@@ -1503,7 +1503,7 @@ impl BatteryVtBatteryVtIndexM4 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_TEMP_04
+    /// Set value of 'MODULE_TEMP_04'
     #[inline(always)]
     pub fn set_module_temp_04(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -1521,7 +1521,7 @@ impl BatteryVtBatteryVtIndexM4 {
         self.raw.view_bits_mut::<Lsb0>()[32..48].store_le(value);
         Ok(())
     }
-    /// MODULE_VOLTAGE_04
+    /// Get value of 'MODULE_VOLTAGE_04'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -1531,7 +1531,7 @@ impl BatteryVtBatteryVtIndexM4 {
     pub fn module_voltage_04(&self) -> u16 {
         self.module_voltage_04_raw()
     }
-    /// Get raw value of MODULE_VOLTAGE_04
+    /// Get raw value of 'MODULE_VOLTAGE_04'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -1545,7 +1545,7 @@ impl BatteryVtBatteryVtIndexM4 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_VOLTAGE_04
+    /// Set value of 'MODULE_VOLTAGE_04'
     #[inline(always)]
     pub fn set_module_voltage_04(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -1590,7 +1590,7 @@ impl BatteryVtBatteryVtIndexM5 {
     pub fn new() -> Self {
         Self { raw: [0u8; 6] }
     }
-    /// MODULE_TEMP_05
+    /// Get value of 'MODULE_TEMP_05'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -1600,7 +1600,7 @@ impl BatteryVtBatteryVtIndexM5 {
     pub fn module_temp_05(&self) -> u16 {
         self.module_temp_05_raw()
     }
-    /// Get raw value of MODULE_TEMP_05
+    /// Get raw value of 'MODULE_TEMP_05'
     ///
     /// - Start bit: 32
     /// - Signal size: 16 bits
@@ -1614,7 +1614,7 @@ impl BatteryVtBatteryVtIndexM5 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_TEMP_05
+    /// Set value of 'MODULE_TEMP_05'
     #[inline(always)]
     pub fn set_module_temp_05(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -1632,7 +1632,7 @@ impl BatteryVtBatteryVtIndexM5 {
         self.raw.view_bits_mut::<Lsb0>()[32..48].store_le(value);
         Ok(())
     }
-    /// MODULE_VOLTAGE_05
+    /// Get value of 'MODULE_VOLTAGE_05'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -1642,7 +1642,7 @@ impl BatteryVtBatteryVtIndexM5 {
     pub fn module_voltage_05(&self) -> u16 {
         self.module_voltage_05_raw()
     }
-    /// Get raw value of MODULE_VOLTAGE_05
+    /// Get raw value of 'MODULE_VOLTAGE_05'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -1656,7 +1656,7 @@ impl BatteryVtBatteryVtIndexM5 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_VOLTAGE_05
+    /// Set value of 'MODULE_VOLTAGE_05'
     #[inline(always)]
     pub fn set_module_voltage_05(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -1701,7 +1701,7 @@ impl BatteryVtBatteryVtIndexM6 {
     pub fn new() -> Self {
         Self { raw: [0u8; 6] }
     }
-    /// MODULE_TEMP_06
+    /// Get value of 'MODULE_TEMP_06'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -1711,7 +1711,7 @@ impl BatteryVtBatteryVtIndexM6 {
     pub fn module_temp_06(&self) -> u16 {
         self.module_temp_06_raw()
     }
-    /// Get raw value of MODULE_TEMP_06
+    /// Get raw value of 'MODULE_TEMP_06'
     ///
     /// - Start bit: 32
     /// - Signal size: 16 bits
@@ -1725,7 +1725,7 @@ impl BatteryVtBatteryVtIndexM6 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_TEMP_06
+    /// Set value of 'MODULE_TEMP_06'
     #[inline(always)]
     pub fn set_module_temp_06(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -1743,7 +1743,7 @@ impl BatteryVtBatteryVtIndexM6 {
         self.raw.view_bits_mut::<Lsb0>()[32..48].store_le(value);
         Ok(())
     }
-    /// MODULE_VOLTAGE_06
+    /// Get value of 'MODULE_VOLTAGE_06'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -1753,7 +1753,7 @@ impl BatteryVtBatteryVtIndexM6 {
     pub fn module_voltage_06(&self) -> u16 {
         self.module_voltage_06_raw()
     }
-    /// Get raw value of MODULE_VOLTAGE_06
+    /// Get raw value of 'MODULE_VOLTAGE_06'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -1767,7 +1767,7 @@ impl BatteryVtBatteryVtIndexM6 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_VOLTAGE_06
+    /// Set value of 'MODULE_VOLTAGE_06'
     #[inline(always)]
     pub fn set_module_voltage_06(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -1812,7 +1812,7 @@ impl BatteryVtBatteryVtIndexM7 {
     pub fn new() -> Self {
         Self { raw: [0u8; 6] }
     }
-    /// MODULE_TEMP_07
+    /// Get value of 'MODULE_TEMP_07'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -1822,7 +1822,7 @@ impl BatteryVtBatteryVtIndexM7 {
     pub fn module_temp_07(&self) -> u16 {
         self.module_temp_07_raw()
     }
-    /// Get raw value of MODULE_TEMP_07
+    /// Get raw value of 'MODULE_TEMP_07'
     ///
     /// - Start bit: 32
     /// - Signal size: 16 bits
@@ -1836,7 +1836,7 @@ impl BatteryVtBatteryVtIndexM7 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_TEMP_07
+    /// Set value of 'MODULE_TEMP_07'
     #[inline(always)]
     pub fn set_module_temp_07(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -1854,7 +1854,7 @@ impl BatteryVtBatteryVtIndexM7 {
         self.raw.view_bits_mut::<Lsb0>()[32..48].store_le(value);
         Ok(())
     }
-    /// MODULE_VOLTAGE_07
+    /// Get value of 'MODULE_VOLTAGE_07'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -1864,7 +1864,7 @@ impl BatteryVtBatteryVtIndexM7 {
     pub fn module_voltage_07(&self) -> u16 {
         self.module_voltage_07_raw()
     }
-    /// Get raw value of MODULE_VOLTAGE_07
+    /// Get raw value of 'MODULE_VOLTAGE_07'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -1878,7 +1878,7 @@ impl BatteryVtBatteryVtIndexM7 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_VOLTAGE_07
+    /// Set value of 'MODULE_VOLTAGE_07'
     #[inline(always)]
     pub fn set_module_voltage_07(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -1923,7 +1923,7 @@ impl BatteryVtBatteryVtIndexM8 {
     pub fn new() -> Self {
         Self { raw: [0u8; 6] }
     }
-    /// MODULE_TEMP_08
+    /// Get value of 'MODULE_TEMP_08'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -1933,7 +1933,7 @@ impl BatteryVtBatteryVtIndexM8 {
     pub fn module_temp_08(&self) -> u16 {
         self.module_temp_08_raw()
     }
-    /// Get raw value of MODULE_TEMP_08
+    /// Get raw value of 'MODULE_TEMP_08'
     ///
     /// - Start bit: 32
     /// - Signal size: 16 bits
@@ -1947,7 +1947,7 @@ impl BatteryVtBatteryVtIndexM8 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_TEMP_08
+    /// Set value of 'MODULE_TEMP_08'
     #[inline(always)]
     pub fn set_module_temp_08(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -1965,7 +1965,7 @@ impl BatteryVtBatteryVtIndexM8 {
         self.raw.view_bits_mut::<Lsb0>()[32..48].store_le(value);
         Ok(())
     }
-    /// MODULE_VOLTAGE_08
+    /// Get value of 'MODULE_VOLTAGE_08'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -1975,7 +1975,7 @@ impl BatteryVtBatteryVtIndexM8 {
     pub fn module_voltage_08(&self) -> u16 {
         self.module_voltage_08_raw()
     }
-    /// Get raw value of MODULE_VOLTAGE_08
+    /// Get raw value of 'MODULE_VOLTAGE_08'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -1989,7 +1989,7 @@ impl BatteryVtBatteryVtIndexM8 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_VOLTAGE_08
+    /// Set value of 'MODULE_VOLTAGE_08'
     #[inline(always)]
     pub fn set_module_voltage_08(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -2034,7 +2034,7 @@ impl BatteryVtBatteryVtIndexM9 {
     pub fn new() -> Self {
         Self { raw: [0u8; 6] }
     }
-    /// MODULE_TEMP_09
+    /// Get value of 'MODULE_TEMP_09'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -2044,7 +2044,7 @@ impl BatteryVtBatteryVtIndexM9 {
     pub fn module_temp_09(&self) -> u16 {
         self.module_temp_09_raw()
     }
-    /// Get raw value of MODULE_TEMP_09
+    /// Get raw value of 'MODULE_TEMP_09'
     ///
     /// - Start bit: 32
     /// - Signal size: 16 bits
@@ -2058,7 +2058,7 @@ impl BatteryVtBatteryVtIndexM9 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_TEMP_09
+    /// Set value of 'MODULE_TEMP_09'
     #[inline(always)]
     pub fn set_module_temp_09(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -2076,7 +2076,7 @@ impl BatteryVtBatteryVtIndexM9 {
         self.raw.view_bits_mut::<Lsb0>()[32..48].store_le(value);
         Ok(())
     }
-    /// MODULE_VOLTAGE_09
+    /// Get value of 'MODULE_VOLTAGE_09'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -2086,7 +2086,7 @@ impl BatteryVtBatteryVtIndexM9 {
     pub fn module_voltage_09(&self) -> u16 {
         self.module_voltage_09_raw()
     }
-    /// Get raw value of MODULE_VOLTAGE_09
+    /// Get raw value of 'MODULE_VOLTAGE_09'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -2100,7 +2100,7 @@ impl BatteryVtBatteryVtIndexM9 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_VOLTAGE_09
+    /// Set value of 'MODULE_VOLTAGE_09'
     #[inline(always)]
     pub fn set_module_voltage_09(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -2145,7 +2145,7 @@ impl BatteryVtBatteryVtIndexM10 {
     pub fn new() -> Self {
         Self { raw: [0u8; 6] }
     }
-    /// MODULE_TEMP_10
+    /// Get value of 'MODULE_TEMP_10'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -2155,7 +2155,7 @@ impl BatteryVtBatteryVtIndexM10 {
     pub fn module_temp_10(&self) -> u16 {
         self.module_temp_10_raw()
     }
-    /// Get raw value of MODULE_TEMP_10
+    /// Get raw value of 'MODULE_TEMP_10'
     ///
     /// - Start bit: 32
     /// - Signal size: 16 bits
@@ -2169,7 +2169,7 @@ impl BatteryVtBatteryVtIndexM10 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_TEMP_10
+    /// Set value of 'MODULE_TEMP_10'
     #[inline(always)]
     pub fn set_module_temp_10(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -2187,7 +2187,7 @@ impl BatteryVtBatteryVtIndexM10 {
         self.raw.view_bits_mut::<Lsb0>()[32..48].store_le(value);
         Ok(())
     }
-    /// MODULE_VOLTAGE_10
+    /// Get value of 'MODULE_VOLTAGE_10'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -2197,7 +2197,7 @@ impl BatteryVtBatteryVtIndexM10 {
     pub fn module_voltage_10(&self) -> u16 {
         self.module_voltage_10_raw()
     }
-    /// Get raw value of MODULE_VOLTAGE_10
+    /// Get raw value of 'MODULE_VOLTAGE_10'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -2211,7 +2211,7 @@ impl BatteryVtBatteryVtIndexM10 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_VOLTAGE_10
+    /// Set value of 'MODULE_VOLTAGE_10'
     #[inline(always)]
     pub fn set_module_voltage_10(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -2256,7 +2256,7 @@ impl BatteryVtBatteryVtIndexM11 {
     pub fn new() -> Self {
         Self { raw: [0u8; 6] }
     }
-    /// MODULE_TEMP_11
+    /// Get value of 'MODULE_TEMP_11'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -2266,7 +2266,7 @@ impl BatteryVtBatteryVtIndexM11 {
     pub fn module_temp_11(&self) -> u16 {
         self.module_temp_11_raw()
     }
-    /// Get raw value of MODULE_TEMP_11
+    /// Get raw value of 'MODULE_TEMP_11'
     ///
     /// - Start bit: 32
     /// - Signal size: 16 bits
@@ -2280,7 +2280,7 @@ impl BatteryVtBatteryVtIndexM11 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_TEMP_11
+    /// Set value of 'MODULE_TEMP_11'
     #[inline(always)]
     pub fn set_module_temp_11(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -2298,7 +2298,7 @@ impl BatteryVtBatteryVtIndexM11 {
         self.raw.view_bits_mut::<Lsb0>()[32..48].store_le(value);
         Ok(())
     }
-    /// MODULE_VOLTAGE_11
+    /// Get value of 'MODULE_VOLTAGE_11'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -2308,7 +2308,7 @@ impl BatteryVtBatteryVtIndexM11 {
     pub fn module_voltage_11(&self) -> u16 {
         self.module_voltage_11_raw()
     }
-    /// Get raw value of MODULE_VOLTAGE_11
+    /// Get raw value of 'MODULE_VOLTAGE_11'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -2322,7 +2322,7 @@ impl BatteryVtBatteryVtIndexM11 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_VOLTAGE_11
+    /// Set value of 'MODULE_VOLTAGE_11'
     #[inline(always)]
     pub fn set_module_voltage_11(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -2367,7 +2367,7 @@ impl BatteryVtBatteryVtIndexM12 {
     pub fn new() -> Self {
         Self { raw: [0u8; 6] }
     }
-    /// MODULE_TEMP_12
+    /// Get value of 'MODULE_TEMP_12'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -2377,7 +2377,7 @@ impl BatteryVtBatteryVtIndexM12 {
     pub fn module_temp_12(&self) -> u16 {
         self.module_temp_12_raw()
     }
-    /// Get raw value of MODULE_TEMP_12
+    /// Get raw value of 'MODULE_TEMP_12'
     ///
     /// - Start bit: 32
     /// - Signal size: 16 bits
@@ -2391,7 +2391,7 @@ impl BatteryVtBatteryVtIndexM12 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_TEMP_12
+    /// Set value of 'MODULE_TEMP_12'
     #[inline(always)]
     pub fn set_module_temp_12(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -2409,7 +2409,7 @@ impl BatteryVtBatteryVtIndexM12 {
         self.raw.view_bits_mut::<Lsb0>()[32..48].store_le(value);
         Ok(())
     }
-    /// MODULE_VOLTAGE_12
+    /// Get value of 'MODULE_VOLTAGE_12'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -2419,7 +2419,7 @@ impl BatteryVtBatteryVtIndexM12 {
     pub fn module_voltage_12(&self) -> u16 {
         self.module_voltage_12_raw()
     }
-    /// Get raw value of MODULE_VOLTAGE_12
+    /// Get raw value of 'MODULE_VOLTAGE_12'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -2433,7 +2433,7 @@ impl BatteryVtBatteryVtIndexM12 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_VOLTAGE_12
+    /// Set value of 'MODULE_VOLTAGE_12'
     #[inline(always)]
     pub fn set_module_voltage_12(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -2478,7 +2478,7 @@ impl BatteryVtBatteryVtIndexM13 {
     pub fn new() -> Self {
         Self { raw: [0u8; 6] }
     }
-    /// MODULE_TEMP_13
+    /// Get value of 'MODULE_TEMP_13'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -2488,7 +2488,7 @@ impl BatteryVtBatteryVtIndexM13 {
     pub fn module_temp_13(&self) -> u16 {
         self.module_temp_13_raw()
     }
-    /// Get raw value of MODULE_TEMP_13
+    /// Get raw value of 'MODULE_TEMP_13'
     ///
     /// - Start bit: 32
     /// - Signal size: 16 bits
@@ -2502,7 +2502,7 @@ impl BatteryVtBatteryVtIndexM13 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_TEMP_13
+    /// Set value of 'MODULE_TEMP_13'
     #[inline(always)]
     pub fn set_module_temp_13(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -2520,7 +2520,7 @@ impl BatteryVtBatteryVtIndexM13 {
         self.raw.view_bits_mut::<Lsb0>()[32..48].store_le(value);
         Ok(())
     }
-    /// MODULE_VOLTAGE_13
+    /// Get value of 'MODULE_VOLTAGE_13'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -2530,7 +2530,7 @@ impl BatteryVtBatteryVtIndexM13 {
     pub fn module_voltage_13(&self) -> u16 {
         self.module_voltage_13_raw()
     }
-    /// Get raw value of MODULE_VOLTAGE_13
+    /// Get raw value of 'MODULE_VOLTAGE_13'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -2544,7 +2544,7 @@ impl BatteryVtBatteryVtIndexM13 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_VOLTAGE_13
+    /// Set value of 'MODULE_VOLTAGE_13'
     #[inline(always)]
     pub fn set_module_voltage_13(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -2589,7 +2589,7 @@ impl BatteryVtBatteryVtIndexM14 {
     pub fn new() -> Self {
         Self { raw: [0u8; 6] }
     }
-    /// MODULE_TEMP_14
+    /// Get value of 'MODULE_TEMP_14'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -2599,7 +2599,7 @@ impl BatteryVtBatteryVtIndexM14 {
     pub fn module_temp_14(&self) -> u16 {
         self.module_temp_14_raw()
     }
-    /// Get raw value of MODULE_TEMP_14
+    /// Get raw value of 'MODULE_TEMP_14'
     ///
     /// - Start bit: 32
     /// - Signal size: 16 bits
@@ -2613,7 +2613,7 @@ impl BatteryVtBatteryVtIndexM14 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_TEMP_14
+    /// Set value of 'MODULE_TEMP_14'
     #[inline(always)]
     pub fn set_module_temp_14(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -2631,7 +2631,7 @@ impl BatteryVtBatteryVtIndexM14 {
         self.raw.view_bits_mut::<Lsb0>()[32..48].store_le(value);
         Ok(())
     }
-    /// MODULE_VOLTAGE_14
+    /// Get value of 'MODULE_VOLTAGE_14'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -2641,7 +2641,7 @@ impl BatteryVtBatteryVtIndexM14 {
     pub fn module_voltage_14(&self) -> u16 {
         self.module_voltage_14_raw()
     }
-    /// Get raw value of MODULE_VOLTAGE_14
+    /// Get raw value of 'MODULE_VOLTAGE_14'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -2655,7 +2655,7 @@ impl BatteryVtBatteryVtIndexM14 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_VOLTAGE_14
+    /// Set value of 'MODULE_VOLTAGE_14'
     #[inline(always)]
     pub fn set_module_voltage_14(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -2700,7 +2700,7 @@ impl BatteryVtBatteryVtIndexM15 {
     pub fn new() -> Self {
         Self { raw: [0u8; 6] }
     }
-    /// MODULE_TEMP_15
+    /// Get value of 'MODULE_TEMP_15'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -2710,7 +2710,7 @@ impl BatteryVtBatteryVtIndexM15 {
     pub fn module_temp_15(&self) -> u16 {
         self.module_temp_15_raw()
     }
-    /// Get raw value of MODULE_TEMP_15
+    /// Get raw value of 'MODULE_TEMP_15'
     ///
     /// - Start bit: 32
     /// - Signal size: 16 bits
@@ -2724,7 +2724,7 @@ impl BatteryVtBatteryVtIndexM15 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_TEMP_15
+    /// Set value of 'MODULE_TEMP_15'
     #[inline(always)]
     pub fn set_module_temp_15(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -2742,7 +2742,7 @@ impl BatteryVtBatteryVtIndexM15 {
         self.raw.view_bits_mut::<Lsb0>()[32..48].store_le(value);
         Ok(())
     }
-    /// MODULE_VOLTAGE_15
+    /// Get value of 'MODULE_VOLTAGE_15'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -2752,7 +2752,7 @@ impl BatteryVtBatteryVtIndexM15 {
     pub fn module_voltage_15(&self) -> u16 {
         self.module_voltage_15_raw()
     }
-    /// Get raw value of MODULE_VOLTAGE_15
+    /// Get raw value of 'MODULE_VOLTAGE_15'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -2766,7 +2766,7 @@ impl BatteryVtBatteryVtIndexM15 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_VOLTAGE_15
+    /// Set value of 'MODULE_VOLTAGE_15'
     #[inline(always)]
     pub fn set_module_voltage_15(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -2811,7 +2811,7 @@ impl BatteryVtBatteryVtIndexM16 {
     pub fn new() -> Self {
         Self { raw: [0u8; 6] }
     }
-    /// MODULE_TEMP_16
+    /// Get value of 'MODULE_TEMP_16'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -2821,7 +2821,7 @@ impl BatteryVtBatteryVtIndexM16 {
     pub fn module_temp_16(&self) -> u16 {
         self.module_temp_16_raw()
     }
-    /// Get raw value of MODULE_TEMP_16
+    /// Get raw value of 'MODULE_TEMP_16'
     ///
     /// - Start bit: 32
     /// - Signal size: 16 bits
@@ -2835,7 +2835,7 @@ impl BatteryVtBatteryVtIndexM16 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_TEMP_16
+    /// Set value of 'MODULE_TEMP_16'
     #[inline(always)]
     pub fn set_module_temp_16(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -2853,7 +2853,7 @@ impl BatteryVtBatteryVtIndexM16 {
         self.raw.view_bits_mut::<Lsb0>()[32..48].store_le(value);
         Ok(())
     }
-    /// MODULE_VOLTAGE_16
+    /// Get value of 'MODULE_VOLTAGE_16'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -2863,7 +2863,7 @@ impl BatteryVtBatteryVtIndexM16 {
     pub fn module_voltage_16(&self) -> u16 {
         self.module_voltage_16_raw()
     }
-    /// Get raw value of MODULE_VOLTAGE_16
+    /// Get raw value of 'MODULE_VOLTAGE_16'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -2877,7 +2877,7 @@ impl BatteryVtBatteryVtIndexM16 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_VOLTAGE_16
+    /// Set value of 'MODULE_VOLTAGE_16'
     #[inline(always)]
     pub fn set_module_voltage_16(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -2922,7 +2922,7 @@ impl BatteryVtBatteryVtIndexM17 {
     pub fn new() -> Self {
         Self { raw: [0u8; 6] }
     }
-    /// MODULE_TEMP_17
+    /// Get value of 'MODULE_TEMP_17'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -2932,7 +2932,7 @@ impl BatteryVtBatteryVtIndexM17 {
     pub fn module_temp_17(&self) -> u16 {
         self.module_temp_17_raw()
     }
-    /// Get raw value of MODULE_TEMP_17
+    /// Get raw value of 'MODULE_TEMP_17'
     ///
     /// - Start bit: 32
     /// - Signal size: 16 bits
@@ -2946,7 +2946,7 @@ impl BatteryVtBatteryVtIndexM17 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_TEMP_17
+    /// Set value of 'MODULE_TEMP_17'
     #[inline(always)]
     pub fn set_module_temp_17(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -2964,7 +2964,7 @@ impl BatteryVtBatteryVtIndexM17 {
         self.raw.view_bits_mut::<Lsb0>()[32..48].store_le(value);
         Ok(())
     }
-    /// MODULE_VOLTAGE_17
+    /// Get value of 'MODULE_VOLTAGE_17'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -2974,7 +2974,7 @@ impl BatteryVtBatteryVtIndexM17 {
     pub fn module_voltage_17(&self) -> u16 {
         self.module_voltage_17_raw()
     }
-    /// Get raw value of MODULE_VOLTAGE_17
+    /// Get raw value of 'MODULE_VOLTAGE_17'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -2988,7 +2988,7 @@ impl BatteryVtBatteryVtIndexM17 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_VOLTAGE_17
+    /// Set value of 'MODULE_VOLTAGE_17'
     #[inline(always)]
     pub fn set_module_voltage_17(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -3033,7 +3033,7 @@ impl BatteryVtBatteryVtIndexM18 {
     pub fn new() -> Self {
         Self { raw: [0u8; 6] }
     }
-    /// MODULE_TEMP_18
+    /// Get value of 'MODULE_TEMP_18'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -3043,7 +3043,7 @@ impl BatteryVtBatteryVtIndexM18 {
     pub fn module_temp_18(&self) -> u16 {
         self.module_temp_18_raw()
     }
-    /// Get raw value of MODULE_TEMP_18
+    /// Get raw value of 'MODULE_TEMP_18'
     ///
     /// - Start bit: 32
     /// - Signal size: 16 bits
@@ -3057,7 +3057,7 @@ impl BatteryVtBatteryVtIndexM18 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_TEMP_18
+    /// Set value of 'MODULE_TEMP_18'
     #[inline(always)]
     pub fn set_module_temp_18(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -3075,7 +3075,7 @@ impl BatteryVtBatteryVtIndexM18 {
         self.raw.view_bits_mut::<Lsb0>()[32..48].store_le(value);
         Ok(())
     }
-    /// MODULE_VOLTAGE_18
+    /// Get value of 'MODULE_VOLTAGE_18'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -3085,7 +3085,7 @@ impl BatteryVtBatteryVtIndexM18 {
     pub fn module_voltage_18(&self) -> u16 {
         self.module_voltage_18_raw()
     }
-    /// Get raw value of MODULE_VOLTAGE_18
+    /// Get raw value of 'MODULE_VOLTAGE_18'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -3099,7 +3099,7 @@ impl BatteryVtBatteryVtIndexM18 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_VOLTAGE_18
+    /// Set value of 'MODULE_VOLTAGE_18'
     #[inline(always)]
     pub fn set_module_voltage_18(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -3144,7 +3144,7 @@ impl BatteryVtBatteryVtIndexM19 {
     pub fn new() -> Self {
         Self { raw: [0u8; 6] }
     }
-    /// MODULE_TEMP_19
+    /// Get value of 'MODULE_TEMP_19'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -3154,7 +3154,7 @@ impl BatteryVtBatteryVtIndexM19 {
     pub fn module_temp_19(&self) -> u16 {
         self.module_temp_19_raw()
     }
-    /// Get raw value of MODULE_TEMP_19
+    /// Get raw value of 'MODULE_TEMP_19'
     ///
     /// - Start bit: 32
     /// - Signal size: 16 bits
@@ -3168,7 +3168,7 @@ impl BatteryVtBatteryVtIndexM19 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_TEMP_19
+    /// Set value of 'MODULE_TEMP_19'
     #[inline(always)]
     pub fn set_module_temp_19(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -3186,7 +3186,7 @@ impl BatteryVtBatteryVtIndexM19 {
         self.raw.view_bits_mut::<Lsb0>()[32..48].store_le(value);
         Ok(())
     }
-    /// MODULE_VOLTAGE_19
+    /// Get value of 'MODULE_VOLTAGE_19'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -3196,7 +3196,7 @@ impl BatteryVtBatteryVtIndexM19 {
     pub fn module_voltage_19(&self) -> u16 {
         self.module_voltage_19_raw()
     }
-    /// Get raw value of MODULE_VOLTAGE_19
+    /// Get raw value of 'MODULE_VOLTAGE_19'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -3210,7 +3210,7 @@ impl BatteryVtBatteryVtIndexM19 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_VOLTAGE_19
+    /// Set value of 'MODULE_VOLTAGE_19'
     #[inline(always)]
     pub fn set_module_voltage_19(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -3255,7 +3255,7 @@ impl BatteryVtBatteryVtIndexM20 {
     pub fn new() -> Self {
         Self { raw: [0u8; 6] }
     }
-    /// MODULE_TEMP_20
+    /// Get value of 'MODULE_TEMP_20'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -3265,7 +3265,7 @@ impl BatteryVtBatteryVtIndexM20 {
     pub fn module_temp_20(&self) -> u16 {
         self.module_temp_20_raw()
     }
-    /// Get raw value of MODULE_TEMP_20
+    /// Get raw value of 'MODULE_TEMP_20'
     ///
     /// - Start bit: 32
     /// - Signal size: 16 bits
@@ -3279,7 +3279,7 @@ impl BatteryVtBatteryVtIndexM20 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_TEMP_20
+    /// Set value of 'MODULE_TEMP_20'
     #[inline(always)]
     pub fn set_module_temp_20(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -3297,7 +3297,7 @@ impl BatteryVtBatteryVtIndexM20 {
         self.raw.view_bits_mut::<Lsb0>()[32..48].store_le(value);
         Ok(())
     }
-    /// MODULE_VOLTAGE_20
+    /// Get value of 'MODULE_VOLTAGE_20'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -3307,7 +3307,7 @@ impl BatteryVtBatteryVtIndexM20 {
     pub fn module_voltage_20(&self) -> u16 {
         self.module_voltage_20_raw()
     }
-    /// Get raw value of MODULE_VOLTAGE_20
+    /// Get raw value of 'MODULE_VOLTAGE_20'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -3321,7 +3321,7 @@ impl BatteryVtBatteryVtIndexM20 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_VOLTAGE_20
+    /// Set value of 'MODULE_VOLTAGE_20'
     #[inline(always)]
     pub fn set_module_voltage_20(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -3366,7 +3366,7 @@ impl BatteryVtBatteryVtIndexM21 {
     pub fn new() -> Self {
         Self { raw: [0u8; 6] }
     }
-    /// MODULE_TEMP_21
+    /// Get value of 'MODULE_TEMP_21'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -3376,7 +3376,7 @@ impl BatteryVtBatteryVtIndexM21 {
     pub fn module_temp_21(&self) -> u16 {
         self.module_temp_21_raw()
     }
-    /// Get raw value of MODULE_TEMP_21
+    /// Get raw value of 'MODULE_TEMP_21'
     ///
     /// - Start bit: 32
     /// - Signal size: 16 bits
@@ -3390,7 +3390,7 @@ impl BatteryVtBatteryVtIndexM21 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_TEMP_21
+    /// Set value of 'MODULE_TEMP_21'
     #[inline(always)]
     pub fn set_module_temp_21(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -3408,7 +3408,7 @@ impl BatteryVtBatteryVtIndexM21 {
         self.raw.view_bits_mut::<Lsb0>()[32..48].store_le(value);
         Ok(())
     }
-    /// MODULE_VOLTAGE_21
+    /// Get value of 'MODULE_VOLTAGE_21'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -3418,7 +3418,7 @@ impl BatteryVtBatteryVtIndexM21 {
     pub fn module_voltage_21(&self) -> u16 {
         self.module_voltage_21_raw()
     }
-    /// Get raw value of MODULE_VOLTAGE_21
+    /// Get raw value of 'MODULE_VOLTAGE_21'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -3432,7 +3432,7 @@ impl BatteryVtBatteryVtIndexM21 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_VOLTAGE_21
+    /// Set value of 'MODULE_VOLTAGE_21'
     #[inline(always)]
     pub fn set_module_voltage_21(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -3477,7 +3477,7 @@ impl BatteryVtBatteryVtIndexM22 {
     pub fn new() -> Self {
         Self { raw: [0u8; 6] }
     }
-    /// MODULE_TEMP_22
+    /// Get value of 'MODULE_TEMP_22'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -3487,7 +3487,7 @@ impl BatteryVtBatteryVtIndexM22 {
     pub fn module_temp_22(&self) -> u16 {
         self.module_temp_22_raw()
     }
-    /// Get raw value of MODULE_TEMP_22
+    /// Get raw value of 'MODULE_TEMP_22'
     ///
     /// - Start bit: 32
     /// - Signal size: 16 bits
@@ -3501,7 +3501,7 @@ impl BatteryVtBatteryVtIndexM22 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_TEMP_22
+    /// Set value of 'MODULE_TEMP_22'
     #[inline(always)]
     pub fn set_module_temp_22(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -3519,7 +3519,7 @@ impl BatteryVtBatteryVtIndexM22 {
         self.raw.view_bits_mut::<Lsb0>()[32..48].store_le(value);
         Ok(())
     }
-    /// MODULE_VOLTAGE_22
+    /// Get value of 'MODULE_VOLTAGE_22'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -3529,7 +3529,7 @@ impl BatteryVtBatteryVtIndexM22 {
     pub fn module_voltage_22(&self) -> u16 {
         self.module_voltage_22_raw()
     }
-    /// Get raw value of MODULE_VOLTAGE_22
+    /// Get raw value of 'MODULE_VOLTAGE_22'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -3543,7 +3543,7 @@ impl BatteryVtBatteryVtIndexM22 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_VOLTAGE_22
+    /// Set value of 'MODULE_VOLTAGE_22'
     #[inline(always)]
     pub fn set_module_voltage_22(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -3588,7 +3588,7 @@ impl BatteryVtBatteryVtIndexM23 {
     pub fn new() -> Self {
         Self { raw: [0u8; 6] }
     }
-    /// MODULE_TEMP_23
+    /// Get value of 'MODULE_TEMP_23'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -3598,7 +3598,7 @@ impl BatteryVtBatteryVtIndexM23 {
     pub fn module_temp_23(&self) -> u16 {
         self.module_temp_23_raw()
     }
-    /// Get raw value of MODULE_TEMP_23
+    /// Get raw value of 'MODULE_TEMP_23'
     ///
     /// - Start bit: 32
     /// - Signal size: 16 bits
@@ -3612,7 +3612,7 @@ impl BatteryVtBatteryVtIndexM23 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_TEMP_23
+    /// Set value of 'MODULE_TEMP_23'
     #[inline(always)]
     pub fn set_module_temp_23(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -3630,7 +3630,7 @@ impl BatteryVtBatteryVtIndexM23 {
         self.raw.view_bits_mut::<Lsb0>()[32..48].store_le(value);
         Ok(())
     }
-    /// MODULE_VOLTAGE_23
+    /// Get value of 'MODULE_VOLTAGE_23'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -3640,7 +3640,7 @@ impl BatteryVtBatteryVtIndexM23 {
     pub fn module_voltage_23(&self) -> u16 {
         self.module_voltage_23_raw()
     }
-    /// Get raw value of MODULE_VOLTAGE_23
+    /// Get raw value of 'MODULE_VOLTAGE_23'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -3654,7 +3654,7 @@ impl BatteryVtBatteryVtIndexM23 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_VOLTAGE_23
+    /// Set value of 'MODULE_VOLTAGE_23'
     #[inline(always)]
     pub fn set_module_voltage_23(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -3699,7 +3699,7 @@ impl BatteryVtBatteryVtIndexM24 {
     pub fn new() -> Self {
         Self { raw: [0u8; 6] }
     }
-    /// MODULE_TEMP_24
+    /// Get value of 'MODULE_TEMP_24'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -3709,7 +3709,7 @@ impl BatteryVtBatteryVtIndexM24 {
     pub fn module_temp_24(&self) -> u16 {
         self.module_temp_24_raw()
     }
-    /// Get raw value of MODULE_TEMP_24
+    /// Get raw value of 'MODULE_TEMP_24'
     ///
     /// - Start bit: 32
     /// - Signal size: 16 bits
@@ -3723,7 +3723,7 @@ impl BatteryVtBatteryVtIndexM24 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_TEMP_24
+    /// Set value of 'MODULE_TEMP_24'
     #[inline(always)]
     pub fn set_module_temp_24(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -3741,7 +3741,7 @@ impl BatteryVtBatteryVtIndexM24 {
         self.raw.view_bits_mut::<Lsb0>()[32..48].store_le(value);
         Ok(())
     }
-    /// MODULE_VOLTAGE_24
+    /// Get value of 'MODULE_VOLTAGE_24'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -3751,7 +3751,7 @@ impl BatteryVtBatteryVtIndexM24 {
     pub fn module_voltage_24(&self) -> u16 {
         self.module_voltage_24_raw()
     }
-    /// Get raw value of MODULE_VOLTAGE_24
+    /// Get raw value of 'MODULE_VOLTAGE_24'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -3765,7 +3765,7 @@ impl BatteryVtBatteryVtIndexM24 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_VOLTAGE_24
+    /// Set value of 'MODULE_VOLTAGE_24'
     #[inline(always)]
     pub fn set_module_voltage_24(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -3810,7 +3810,7 @@ impl BatteryVtBatteryVtIndexM25 {
     pub fn new() -> Self {
         Self { raw: [0u8; 6] }
     }
-    /// MODULE_TEMP_25
+    /// Get value of 'MODULE_TEMP_25'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -3820,7 +3820,7 @@ impl BatteryVtBatteryVtIndexM25 {
     pub fn module_temp_25(&self) -> u16 {
         self.module_temp_25_raw()
     }
-    /// Get raw value of MODULE_TEMP_25
+    /// Get raw value of 'MODULE_TEMP_25'
     ///
     /// - Start bit: 32
     /// - Signal size: 16 bits
@@ -3834,7 +3834,7 @@ impl BatteryVtBatteryVtIndexM25 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_TEMP_25
+    /// Set value of 'MODULE_TEMP_25'
     #[inline(always)]
     pub fn set_module_temp_25(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -3852,7 +3852,7 @@ impl BatteryVtBatteryVtIndexM25 {
         self.raw.view_bits_mut::<Lsb0>()[32..48].store_le(value);
         Ok(())
     }
-    /// MODULE_VOLTAGE_25
+    /// Get value of 'MODULE_VOLTAGE_25'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -3862,7 +3862,7 @@ impl BatteryVtBatteryVtIndexM25 {
     pub fn module_voltage_25(&self) -> u16 {
         self.module_voltage_25_raw()
     }
-    /// Get raw value of MODULE_VOLTAGE_25
+    /// Get raw value of 'MODULE_VOLTAGE_25'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -3876,7 +3876,7 @@ impl BatteryVtBatteryVtIndexM25 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_VOLTAGE_25
+    /// Set value of 'MODULE_VOLTAGE_25'
     #[inline(always)]
     pub fn set_module_voltage_25(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -3921,7 +3921,7 @@ impl BatteryVtBatteryVtIndexM26 {
     pub fn new() -> Self {
         Self { raw: [0u8; 6] }
     }
-    /// MODULE_TEMP_26
+    /// Get value of 'MODULE_TEMP_26'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -3931,7 +3931,7 @@ impl BatteryVtBatteryVtIndexM26 {
     pub fn module_temp_26(&self) -> u16 {
         self.module_temp_26_raw()
     }
-    /// Get raw value of MODULE_TEMP_26
+    /// Get raw value of 'MODULE_TEMP_26'
     ///
     /// - Start bit: 32
     /// - Signal size: 16 bits
@@ -3945,7 +3945,7 @@ impl BatteryVtBatteryVtIndexM26 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_TEMP_26
+    /// Set value of 'MODULE_TEMP_26'
     #[inline(always)]
     pub fn set_module_temp_26(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -3963,7 +3963,7 @@ impl BatteryVtBatteryVtIndexM26 {
         self.raw.view_bits_mut::<Lsb0>()[32..48].store_le(value);
         Ok(())
     }
-    /// MODULE_VOLTAGE_26
+    /// Get value of 'MODULE_VOLTAGE_26'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -3973,7 +3973,7 @@ impl BatteryVtBatteryVtIndexM26 {
     pub fn module_voltage_26(&self) -> u16 {
         self.module_voltage_26_raw()
     }
-    /// Get raw value of MODULE_VOLTAGE_26
+    /// Get raw value of 'MODULE_VOLTAGE_26'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -3987,7 +3987,7 @@ impl BatteryVtBatteryVtIndexM26 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_VOLTAGE_26
+    /// Set value of 'MODULE_VOLTAGE_26'
     #[inline(always)]
     pub fn set_module_voltage_26(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -4032,7 +4032,7 @@ impl BatteryVtBatteryVtIndexM27 {
     pub fn new() -> Self {
         Self { raw: [0u8; 6] }
     }
-    /// MODULE_TEMP_27
+    /// Get value of 'MODULE_TEMP_27'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -4042,7 +4042,7 @@ impl BatteryVtBatteryVtIndexM27 {
     pub fn module_temp_27(&self) -> u16 {
         self.module_temp_27_raw()
     }
-    /// Get raw value of MODULE_TEMP_27
+    /// Get raw value of 'MODULE_TEMP_27'
     ///
     /// - Start bit: 32
     /// - Signal size: 16 bits
@@ -4056,7 +4056,7 @@ impl BatteryVtBatteryVtIndexM27 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_TEMP_27
+    /// Set value of 'MODULE_TEMP_27'
     #[inline(always)]
     pub fn set_module_temp_27(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -4074,7 +4074,7 @@ impl BatteryVtBatteryVtIndexM27 {
         self.raw.view_bits_mut::<Lsb0>()[32..48].store_le(value);
         Ok(())
     }
-    /// MODULE_VOLTAGE_27
+    /// Get value of 'MODULE_VOLTAGE_27'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -4084,7 +4084,7 @@ impl BatteryVtBatteryVtIndexM27 {
     pub fn module_voltage_27(&self) -> u16 {
         self.module_voltage_27_raw()
     }
-    /// Get raw value of MODULE_VOLTAGE_27
+    /// Get raw value of 'MODULE_VOLTAGE_27'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -4098,7 +4098,7 @@ impl BatteryVtBatteryVtIndexM27 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_VOLTAGE_27
+    /// Set value of 'MODULE_VOLTAGE_27'
     #[inline(always)]
     pub fn set_module_voltage_27(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -4143,7 +4143,7 @@ impl BatteryVtBatteryVtIndexM28 {
     pub fn new() -> Self {
         Self { raw: [0u8; 6] }
     }
-    /// MODULE_TEMP_28
+    /// Get value of 'MODULE_TEMP_28'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -4153,7 +4153,7 @@ impl BatteryVtBatteryVtIndexM28 {
     pub fn module_temp_28(&self) -> u16 {
         self.module_temp_28_raw()
     }
-    /// Get raw value of MODULE_TEMP_28
+    /// Get raw value of 'MODULE_TEMP_28'
     ///
     /// - Start bit: 32
     /// - Signal size: 16 bits
@@ -4167,7 +4167,7 @@ impl BatteryVtBatteryVtIndexM28 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_TEMP_28
+    /// Set value of 'MODULE_TEMP_28'
     #[inline(always)]
     pub fn set_module_temp_28(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -4185,7 +4185,7 @@ impl BatteryVtBatteryVtIndexM28 {
         self.raw.view_bits_mut::<Lsb0>()[32..48].store_le(value);
         Ok(())
     }
-    /// MODULE_VOLTAGE_28
+    /// Get value of 'MODULE_VOLTAGE_28'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -4195,7 +4195,7 @@ impl BatteryVtBatteryVtIndexM28 {
     pub fn module_voltage_28(&self) -> u16 {
         self.module_voltage_28_raw()
     }
-    /// Get raw value of MODULE_VOLTAGE_28
+    /// Get raw value of 'MODULE_VOLTAGE_28'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -4209,7 +4209,7 @@ impl BatteryVtBatteryVtIndexM28 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_VOLTAGE_28
+    /// Set value of 'MODULE_VOLTAGE_28'
     #[inline(always)]
     pub fn set_module_voltage_28(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -4254,7 +4254,7 @@ impl BatteryVtBatteryVtIndexM29 {
     pub fn new() -> Self {
         Self { raw: [0u8; 6] }
     }
-    /// MODULE_TEMP_29
+    /// Get value of 'MODULE_TEMP_29'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -4264,7 +4264,7 @@ impl BatteryVtBatteryVtIndexM29 {
     pub fn module_temp_29(&self) -> u16 {
         self.module_temp_29_raw()
     }
-    /// Get raw value of MODULE_TEMP_29
+    /// Get raw value of 'MODULE_TEMP_29'
     ///
     /// - Start bit: 32
     /// - Signal size: 16 bits
@@ -4278,7 +4278,7 @@ impl BatteryVtBatteryVtIndexM29 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_TEMP_29
+    /// Set value of 'MODULE_TEMP_29'
     #[inline(always)]
     pub fn set_module_temp_29(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -4296,7 +4296,7 @@ impl BatteryVtBatteryVtIndexM29 {
         self.raw.view_bits_mut::<Lsb0>()[32..48].store_le(value);
         Ok(())
     }
-    /// MODULE_VOLTAGE_29
+    /// Get value of 'MODULE_VOLTAGE_29'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -4306,7 +4306,7 @@ impl BatteryVtBatteryVtIndexM29 {
     pub fn module_voltage_29(&self) -> u16 {
         self.module_voltage_29_raw()
     }
-    /// Get raw value of MODULE_VOLTAGE_29
+    /// Get raw value of 'MODULE_VOLTAGE_29'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -4320,7 +4320,7 @@ impl BatteryVtBatteryVtIndexM29 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_VOLTAGE_29
+    /// Set value of 'MODULE_VOLTAGE_29'
     #[inline(always)]
     pub fn set_module_voltage_29(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -4365,7 +4365,7 @@ impl BatteryVtBatteryVtIndexM30 {
     pub fn new() -> Self {
         Self { raw: [0u8; 6] }
     }
-    /// MODULE_TEMP_30
+    /// Get value of 'MODULE_TEMP_30'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -4375,7 +4375,7 @@ impl BatteryVtBatteryVtIndexM30 {
     pub fn module_temp_30(&self) -> u16 {
         self.module_temp_30_raw()
     }
-    /// Get raw value of MODULE_TEMP_30
+    /// Get raw value of 'MODULE_TEMP_30'
     ///
     /// - Start bit: 32
     /// - Signal size: 16 bits
@@ -4389,7 +4389,7 @@ impl BatteryVtBatteryVtIndexM30 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_TEMP_30
+    /// Set value of 'MODULE_TEMP_30'
     #[inline(always)]
     pub fn set_module_temp_30(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -4407,7 +4407,7 @@ impl BatteryVtBatteryVtIndexM30 {
         self.raw.view_bits_mut::<Lsb0>()[32..48].store_le(value);
         Ok(())
     }
-    /// MODULE_VOLTAGE_30
+    /// Get value of 'MODULE_VOLTAGE_30'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -4417,7 +4417,7 @@ impl BatteryVtBatteryVtIndexM30 {
     pub fn module_voltage_30(&self) -> u16 {
         self.module_voltage_30_raw()
     }
-    /// Get raw value of MODULE_VOLTAGE_30
+    /// Get raw value of 'MODULE_VOLTAGE_30'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -4431,7 +4431,7 @@ impl BatteryVtBatteryVtIndexM30 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_VOLTAGE_30
+    /// Set value of 'MODULE_VOLTAGE_30'
     #[inline(always)]
     pub fn set_module_voltage_30(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -4476,7 +4476,7 @@ impl BatteryVtBatteryVtIndexM31 {
     pub fn new() -> Self {
         Self { raw: [0u8; 6] }
     }
-    /// MODULE_TEMP_31
+    /// Get value of 'MODULE_TEMP_31'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -4486,7 +4486,7 @@ impl BatteryVtBatteryVtIndexM31 {
     pub fn module_temp_31(&self) -> u16 {
         self.module_temp_31_raw()
     }
-    /// Get raw value of MODULE_TEMP_31
+    /// Get raw value of 'MODULE_TEMP_31'
     ///
     /// - Start bit: 32
     /// - Signal size: 16 bits
@@ -4500,7 +4500,7 @@ impl BatteryVtBatteryVtIndexM31 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_TEMP_31
+    /// Set value of 'MODULE_TEMP_31'
     #[inline(always)]
     pub fn set_module_temp_31(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -4518,7 +4518,7 @@ impl BatteryVtBatteryVtIndexM31 {
         self.raw.view_bits_mut::<Lsb0>()[32..48].store_le(value);
         Ok(())
     }
-    /// MODULE_VOLTAGE_31
+    /// Get value of 'MODULE_VOLTAGE_31'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -4528,7 +4528,7 @@ impl BatteryVtBatteryVtIndexM31 {
     pub fn module_voltage_31(&self) -> u16 {
         self.module_voltage_31_raw()
     }
-    /// Get raw value of MODULE_VOLTAGE_31
+    /// Get raw value of 'MODULE_VOLTAGE_31'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -4542,7 +4542,7 @@ impl BatteryVtBatteryVtIndexM31 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_VOLTAGE_31
+    /// Set value of 'MODULE_VOLTAGE_31'
     #[inline(always)]
     pub fn set_module_voltage_31(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -4587,7 +4587,7 @@ impl BatteryVtBatteryVtIndexM32 {
     pub fn new() -> Self {
         Self { raw: [0u8; 6] }
     }
-    /// MODULE_TEMP_32
+    /// Get value of 'MODULE_TEMP_32'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -4597,7 +4597,7 @@ impl BatteryVtBatteryVtIndexM32 {
     pub fn module_temp_32(&self) -> u16 {
         self.module_temp_32_raw()
     }
-    /// Get raw value of MODULE_TEMP_32
+    /// Get raw value of 'MODULE_TEMP_32'
     ///
     /// - Start bit: 32
     /// - Signal size: 16 bits
@@ -4611,7 +4611,7 @@ impl BatteryVtBatteryVtIndexM32 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_TEMP_32
+    /// Set value of 'MODULE_TEMP_32'
     #[inline(always)]
     pub fn set_module_temp_32(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -4629,7 +4629,7 @@ impl BatteryVtBatteryVtIndexM32 {
         self.raw.view_bits_mut::<Lsb0>()[32..48].store_le(value);
         Ok(())
     }
-    /// MODULE_VOLTAGE_32
+    /// Get value of 'MODULE_VOLTAGE_32'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -4639,7 +4639,7 @@ impl BatteryVtBatteryVtIndexM32 {
     pub fn module_voltage_32(&self) -> u16 {
         self.module_voltage_32_raw()
     }
-    /// Get raw value of MODULE_VOLTAGE_32
+    /// Get raw value of 'MODULE_VOLTAGE_32'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -4653,7 +4653,7 @@ impl BatteryVtBatteryVtIndexM32 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_VOLTAGE_32
+    /// Set value of 'MODULE_VOLTAGE_32'
     #[inline(always)]
     pub fn set_module_voltage_32(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -4698,7 +4698,7 @@ impl BatteryVtBatteryVtIndexM33 {
     pub fn new() -> Self {
         Self { raw: [0u8; 6] }
     }
-    /// MODULE_TEMP_33
+    /// Get value of 'MODULE_TEMP_33'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -4708,7 +4708,7 @@ impl BatteryVtBatteryVtIndexM33 {
     pub fn module_temp_33(&self) -> u16 {
         self.module_temp_33_raw()
     }
-    /// Get raw value of MODULE_TEMP_33
+    /// Get raw value of 'MODULE_TEMP_33'
     ///
     /// - Start bit: 32
     /// - Signal size: 16 bits
@@ -4722,7 +4722,7 @@ impl BatteryVtBatteryVtIndexM33 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_TEMP_33
+    /// Set value of 'MODULE_TEMP_33'
     #[inline(always)]
     pub fn set_module_temp_33(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -4740,7 +4740,7 @@ impl BatteryVtBatteryVtIndexM33 {
         self.raw.view_bits_mut::<Lsb0>()[32..48].store_le(value);
         Ok(())
     }
-    /// MODULE_VOLTAGE_33
+    /// Get value of 'MODULE_VOLTAGE_33'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -4750,7 +4750,7 @@ impl BatteryVtBatteryVtIndexM33 {
     pub fn module_voltage_33(&self) -> u16 {
         self.module_voltage_33_raw()
     }
-    /// Get raw value of MODULE_VOLTAGE_33
+    /// Get raw value of 'MODULE_VOLTAGE_33'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -4764,7 +4764,7 @@ impl BatteryVtBatteryVtIndexM33 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_VOLTAGE_33
+    /// Set value of 'MODULE_VOLTAGE_33'
     #[inline(always)]
     pub fn set_module_voltage_33(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -4809,7 +4809,7 @@ impl BatteryVtBatteryVtIndexM34 {
     pub fn new() -> Self {
         Self { raw: [0u8; 6] }
     }
-    /// MODULE_TEMP_34
+    /// Get value of 'MODULE_TEMP_34'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -4819,7 +4819,7 @@ impl BatteryVtBatteryVtIndexM34 {
     pub fn module_temp_34(&self) -> u16 {
         self.module_temp_34_raw()
     }
-    /// Get raw value of MODULE_TEMP_34
+    /// Get raw value of 'MODULE_TEMP_34'
     ///
     /// - Start bit: 32
     /// - Signal size: 16 bits
@@ -4833,7 +4833,7 @@ impl BatteryVtBatteryVtIndexM34 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_TEMP_34
+    /// Set value of 'MODULE_TEMP_34'
     #[inline(always)]
     pub fn set_module_temp_34(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -4851,7 +4851,7 @@ impl BatteryVtBatteryVtIndexM34 {
         self.raw.view_bits_mut::<Lsb0>()[32..48].store_le(value);
         Ok(())
     }
-    /// MODULE_VOLTAGE_34
+    /// Get value of 'MODULE_VOLTAGE_34'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -4861,7 +4861,7 @@ impl BatteryVtBatteryVtIndexM34 {
     pub fn module_voltage_34(&self) -> u16 {
         self.module_voltage_34_raw()
     }
-    /// Get raw value of MODULE_VOLTAGE_34
+    /// Get raw value of 'MODULE_VOLTAGE_34'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -4875,7 +4875,7 @@ impl BatteryVtBatteryVtIndexM34 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_VOLTAGE_34
+    /// Set value of 'MODULE_VOLTAGE_34'
     #[inline(always)]
     pub fn set_module_voltage_34(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -4920,7 +4920,7 @@ impl BatteryVtBatteryVtIndexM35 {
     pub fn new() -> Self {
         Self { raw: [0u8; 6] }
     }
-    /// MODULE_TEMP_35
+    /// Get value of 'MODULE_TEMP_35'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -4930,7 +4930,7 @@ impl BatteryVtBatteryVtIndexM35 {
     pub fn module_temp_35(&self) -> u16 {
         self.module_temp_35_raw()
     }
-    /// Get raw value of MODULE_TEMP_35
+    /// Get raw value of 'MODULE_TEMP_35'
     ///
     /// - Start bit: 32
     /// - Signal size: 16 bits
@@ -4944,7 +4944,7 @@ impl BatteryVtBatteryVtIndexM35 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_TEMP_35
+    /// Set value of 'MODULE_TEMP_35'
     #[inline(always)]
     pub fn set_module_temp_35(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -4962,7 +4962,7 @@ impl BatteryVtBatteryVtIndexM35 {
         self.raw.view_bits_mut::<Lsb0>()[32..48].store_le(value);
         Ok(())
     }
-    /// MODULE_VOLTAGE_35
+    /// Get value of 'MODULE_VOLTAGE_35'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -4972,7 +4972,7 @@ impl BatteryVtBatteryVtIndexM35 {
     pub fn module_voltage_35(&self) -> u16 {
         self.module_voltage_35_raw()
     }
-    /// Get raw value of MODULE_VOLTAGE_35
+    /// Get raw value of 'MODULE_VOLTAGE_35'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -4986,7 +4986,7 @@ impl BatteryVtBatteryVtIndexM35 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MODULE_VOLTAGE_35
+    /// Set value of 'MODULE_VOLTAGE_35'
     #[inline(always)]
     pub fn set_module_voltage_35(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {

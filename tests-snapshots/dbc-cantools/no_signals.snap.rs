@@ -71,7 +71,7 @@ impl Message1 {
         StandardId::new_unchecked(0x400)
     });
     pub const MESSAGE_SIZE: usize = 5;
-    /// Construct new Message1 from values
+    /// Construct new 'Message1' from values
     pub fn new() -> Result<Self, CanError> {
         let res = Self { raw: [0x00; 5] };
         Ok(res)
@@ -142,7 +142,7 @@ impl Message2 {
         StandardId::new_unchecked(0x401)
     });
     pub const MESSAGE_SIZE: usize = 0;
-    /// Construct new Message2 from values
+    /// Construct new 'Message2' from values
     pub fn new() -> Result<Self, CanError> {
         let res = Self { raw: [0x00; 0] };
         Ok(res)

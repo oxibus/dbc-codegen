@@ -73,7 +73,7 @@ impl Message1 {
     pub const MESSAGE_SIZE: usize = 8;
     pub const SIGNAL1_MIN: i64 = 0_i64;
     pub const SIGNAL1_MAX: i64 = 0_i64;
-    /// Construct new Message1 from values
+    /// Construct new 'Message1' from values
     pub fn new(signal1: i64) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 8] };
         res.set_signal1(signal1)?;
@@ -83,7 +83,7 @@ impl Message1 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// Signal1
+    /// Get value of 'Signal1'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -93,7 +93,7 @@ impl Message1 {
     pub fn signal1(&self) -> i64 {
         self.signal1_raw()
     }
-    /// Get raw value of Signal1
+    /// Get raw value of 'Signal1'
     ///
     /// - Start bit: 0
     /// - Signal size: 64 bits
@@ -108,7 +108,7 @@ impl Message1 {
         let signal = signal as i64;
         i64::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Signal1
+    /// Set value of 'Signal1'
     #[inline(always)]
     pub fn set_signal1(&mut self, value: i64) -> Result<(), CanError> {
         if value < 0_i64 || 0_i64 < value {
@@ -193,7 +193,7 @@ impl Message2 {
     pub const SIGNAL2_MAX: i32 = 0_i32;
     pub const SIGNAL1_MIN: i32 = 0_i32;
     pub const SIGNAL1_MAX: i32 = 0_i32;
-    /// Construct new Message2 from values
+    /// Construct new 'Message2' from values
     pub fn new(signal2: i32, signal1: i32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 8] };
         res.set_signal2(signal2)?;
@@ -204,7 +204,7 @@ impl Message2 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// Signal2
+    /// Get value of 'Signal2'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -214,7 +214,7 @@ impl Message2 {
     pub fn signal2(&self) -> i32 {
         self.signal2_raw()
     }
-    /// Get raw value of Signal2
+    /// Get raw value of 'Signal2'
     ///
     /// - Start bit: 32
     /// - Signal size: 32 bits
@@ -229,7 +229,7 @@ impl Message2 {
         let signal = signal as i32;
         i32::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Signal2
+    /// Set value of 'Signal2'
     #[inline(always)]
     pub fn set_signal2(&mut self, value: i32) -> Result<(), CanError> {
         if value < 0_i32 || 0_i32 < value {
@@ -248,7 +248,7 @@ impl Message2 {
         self.raw.view_bits_mut::<Lsb0>()[32..64].store_le(value);
         Ok(())
     }
-    /// Signal1
+    /// Get value of 'Signal1'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -258,7 +258,7 @@ impl Message2 {
     pub fn signal1(&self) -> i32 {
         self.signal1_raw()
     }
-    /// Get raw value of Signal1
+    /// Get raw value of 'Signal1'
     ///
     /// - Start bit: 0
     /// - Signal size: 32 bits
@@ -273,7 +273,7 @@ impl Message2 {
         let signal = signal as i32;
         i32::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Signal1
+    /// Set value of 'Signal1'
     #[inline(always)]
     pub fn set_signal1(&mut self, value: i32) -> Result<(), CanError> {
         if value < 0_i32 || 0_i32 < value {

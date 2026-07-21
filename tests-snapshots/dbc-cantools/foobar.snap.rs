@@ -86,7 +86,7 @@ impl Foo {
     pub const FOO_MAX: f32 = 270.47_f32;
     pub const BAR_MIN: f32 = 0_f32;
     pub const BAR_MAX: f32 = 5_f32;
-    /// Construct new Foo from values
+    /// Construct new 'Foo' from values
     pub fn new(foo: f32, bar: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 8] };
         res.set_foo(foo)?;
@@ -97,7 +97,7 @@ impl Foo {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// Foo
+    /// Get value of 'Foo'
     ///
     /// - Min: 229.53
     /// - Max: 270.47
@@ -107,7 +107,7 @@ impl Foo {
     pub fn foo(&self) -> f32 {
         self.foo_raw()
     }
-    /// Get raw value of Foo
+    /// Get raw value of 'Foo'
     ///
     /// - Start bit: 0
     /// - Signal size: 12 bits
@@ -122,7 +122,7 @@ impl Foo {
         let offset = 250_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Foo
+    /// Set value of 'Foo'
     #[inline(always)]
     pub fn set_foo(&mut self, value: f32) -> Result<(), CanError> {
         if value < 229.53_f32 || 270.47_f32 < value {
@@ -137,7 +137,7 @@ impl Foo {
         self.raw.view_bits_mut::<Msb0>()[7..19].store_be(value);
         Ok(())
     }
-    /// Bar
+    /// Get value of 'Bar'
     ///
     /// Bar.
     ///
@@ -149,7 +149,7 @@ impl Foo {
     pub fn bar(&self) -> f32 {
         self.bar_raw()
     }
-    /// Get raw value of Bar
+    /// Get raw value of 'Bar'
     ///
     /// - Start bit: 24
     /// - Signal size: 32 bits
@@ -164,7 +164,7 @@ impl Foo {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Bar
+    /// Set value of 'Bar'
     #[inline(always)]
     pub fn set_bar(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 5_f32 < value {
@@ -246,8 +246,8 @@ impl Fum {
     pub const FUM_MAX: i16 = 10_i16;
     pub const FAM_MIN: i16 = 0_i16;
     pub const FAM_MAX: i16 = 8_i16;
-    /// Construct new Fum from values
-    pub fn new(fum: i16, fam: i16) -> Result<Self, CanError> {
+    /// Construct new 'Fum' from values
+    pub fn new(fum: i16, fam: FumFam) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 5] };
         res.set_fum(fum)?;
         res.set_fam(fam)?;
@@ -257,7 +257,7 @@ impl Fum {
     pub fn raw(&self) -> &[u8; 5] {
         &self.raw
     }
-    /// Fum
+    /// Get value of 'Fum'
     ///
     /// - Min: 0
     /// - Max: 10
@@ -267,7 +267,7 @@ impl Fum {
     pub fn fum(&self) -> i16 {
         self.fum_raw()
     }
-    /// Get raw value of Fum
+    /// Get raw value of 'Fum'
     ///
     /// - Start bit: 0
     /// - Signal size: 12 bits
@@ -282,7 +282,7 @@ impl Fum {
         let signal = signal as i16;
         i16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Fum
+    /// Set value of 'Fum'
     #[inline(always)]
     pub fn set_fum(&mut self, value: i16) -> Result<(), CanError> {
         if value < 0_i16 || 10_i16 < value {
@@ -301,7 +301,7 @@ impl Fum {
         self.raw.view_bits_mut::<Lsb0>()[0..12].store_le(value);
         Ok(())
     }
-    /// Fam
+    /// Get value of 'Fam'
     ///
     /// - Min: 0
     /// - Max: 8
@@ -316,7 +316,7 @@ impl Fum {
             _ => FumFam::_Other(self.fam_raw()),
         }
     }
-    /// Get raw value of Fam
+    /// Get raw value of 'Fam'
     ///
     /// - Start bit: 12
     /// - Signal size: 12 bits
@@ -331,9 +331,10 @@ impl Fum {
         let signal = signal as i16;
         i16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Fam
+    /// Set value of 'Fam'
     #[inline(always)]
-    pub fn set_fam(&mut self, value: i16) -> Result<(), CanError> {
+    pub fn set_fam(&mut self, value: FumFam) -> Result<(), CanError> {
+        let value = i16::from(value);
         if value < 0_i16 || 8_i16 < value {
             return Err(CanError::ParameterOutOfRange {
                 message_id: Fum::MESSAGE_ID,
@@ -439,7 +440,7 @@ impl Bar {
     pub const MESSAGE_SIZE: usize = 4;
     pub const BINARY32_MIN: i32 = 0_i32;
     pub const BINARY32_MAX: i32 = 0_i32;
-    /// Construct new Bar from values
+    /// Construct new 'Bar' from values
     pub fn new(binary32: i32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 4] };
         res.set_binary32(binary32)?;
@@ -449,7 +450,7 @@ impl Bar {
     pub fn raw(&self) -> &[u8; 4] {
         &self.raw
     }
-    /// Binary32
+    /// Get value of 'Binary32'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -459,7 +460,7 @@ impl Bar {
     pub fn binary32(&self) -> i32 {
         self.binary32_raw()
     }
-    /// Get raw value of Binary32
+    /// Get raw value of 'Binary32'
     ///
     /// - Start bit: 0
     /// - Signal size: 32 bits
@@ -474,7 +475,7 @@ impl Bar {
         let signal = signal as i32;
         i32::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Binary32
+    /// Set value of 'Binary32'
     #[inline(always)]
     pub fn set_binary32(&mut self, value: i32) -> Result<(), CanError> {
         if value < 0_i32 || 0_i32 < value {
@@ -559,7 +560,7 @@ impl CanFd {
     pub const FIE_MAX: u64 = 0_u64;
     pub const FAS_MIN: u64 = 0_u64;
     pub const FAS_MAX: u64 = 0_u64;
-    /// Construct new CanFd from values
+    /// Construct new 'CanFd' from values
     pub fn new(fie: u64, fas: u64) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 64] };
         res.set_fie(fie)?;
@@ -570,7 +571,7 @@ impl CanFd {
     pub fn raw(&self) -> &[u8; 64] {
         &self.raw
     }
-    /// Fie
+    /// Get value of 'Fie'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -580,7 +581,7 @@ impl CanFd {
     pub fn fie(&self) -> u64 {
         self.fie_raw()
     }
-    /// Get raw value of Fie
+    /// Get raw value of 'Fie'
     ///
     /// - Start bit: 0
     /// - Signal size: 64 bits
@@ -594,7 +595,7 @@ impl CanFd {
         let factor = 1;
         u64::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Fie
+    /// Set value of 'Fie'
     #[inline(always)]
     pub fn set_fie(&mut self, value: u64) -> Result<(), CanError> {
         if value < 0_u64 || 0_u64 < value {
@@ -612,7 +613,7 @@ impl CanFd {
         self.raw.view_bits_mut::<Lsb0>()[0..64].store_le(value);
         Ok(())
     }
-    /// Fas
+    /// Get value of 'Fas'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -622,7 +623,7 @@ impl CanFd {
     pub fn fas(&self) -> u64 {
         self.fas_raw()
     }
-    /// Get raw value of Fas
+    /// Get raw value of 'Fas'
     ///
     /// - Start bit: 64
     /// - Signal size: 64 bits
@@ -636,7 +637,7 @@ impl CanFd {
         let factor = 1;
         u64::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Fas
+    /// Set value of 'Fas'
     #[inline(always)]
     pub fn set_fas(&mut self, value: u64) -> Result<(), CanError> {
         if value < 0_u64 || 0_u64 < value {
@@ -718,7 +719,7 @@ impl Foobar {
     pub const MESSAGE_SIZE: usize = 8;
     pub const ACC_02_CRC_MIN: i16 = 0_i16;
     pub const ACC_02_CRC_MAX: i16 = 1_i16;
-    /// Construct new FOOBAR from values
+    /// Construct new 'FOOBAR' from values
     pub fn new(acc_02_crc: i16) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 8] };
         res.set_acc_02_crc(acc_02_crc)?;
@@ -728,7 +729,7 @@ impl Foobar {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// ACC_02_CRC
+    /// Get value of 'ACC_02_CRC'
     ///
     /// - Min: 0
     /// - Max: 1
@@ -738,7 +739,7 @@ impl Foobar {
     pub fn acc_02_crc(&self) -> i16 {
         self.acc_02_crc_raw()
     }
-    /// Get raw value of ACC_02_CRC
+    /// Get raw value of 'ACC_02_CRC'
     ///
     /// - Start bit: 0
     /// - Signal size: 12 bits
@@ -753,7 +754,7 @@ impl Foobar {
         let signal = signal as i16;
         i16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of ACC_02_CRC
+    /// Set value of 'ACC_02_CRC'
     #[inline(always)]
     pub fn set_acc_02_crc(&mut self, value: i16) -> Result<(), CanError> {
         if value < 0_i16 || 1_i16 < value {

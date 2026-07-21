@@ -134,7 +134,7 @@ impl Ss123456789012345678901234587890 {
         StandardId::new_unchecked(0x9)
     });
     pub const MESSAGE_SIZE: usize = 8;
-    /// Construct new SS123456789012345678901234587890 from values
+    /// Construct new 'SS123456789012345678901234587890' from values
     pub fn new() -> Result<Self, CanError> {
         let res = Self { raw: [0x00; 8] };
         Ok(res)
@@ -204,7 +204,7 @@ impl Ss12345678901234567890123450000 {
         StandardId::new_unchecked(0x8)
     });
     pub const MESSAGE_SIZE: usize = 8;
-    /// Construct new SS1234567890123456789012345_0000 from values
+    /// Construct new 'SS1234567890123456789012345_0000' from values
     pub fn new() -> Result<Self, CanError> {
         let res = Self { raw: [0x00; 8] };
         Ok(res)
@@ -274,7 +274,7 @@ impl Ss12345678901234567890123450001 {
         StandardId::new_unchecked(0x7)
     });
     pub const MESSAGE_SIZE: usize = 8;
-    /// Construct new SS1234567890123456789012345_0001 from values
+    /// Construct new 'SS1234567890123456789012345_0001' from values
     pub fn new() -> Result<Self, CanError> {
         let res = Self { raw: [0x00; 8] };
         Ok(res)
@@ -344,7 +344,7 @@ impl Ss123456789012345678901234577890 {
         StandardId::new_unchecked(0x6)
     });
     pub const MESSAGE_SIZE: usize = 8;
-    /// Construct new SS123456789012345678901234577890 from values
+    /// Construct new 'SS123456789012345678901234577890' from values
     pub fn new() -> Result<Self, CanError> {
         let res = Self { raw: [0x00; 8] };
         Ok(res)
@@ -414,7 +414,7 @@ impl Ss123456789012345678901234567890 {
         StandardId::new_unchecked(0x5)
     });
     pub const MESSAGE_SIZE: usize = 8;
-    /// Construct new SS123456789012345678901234567890 from values
+    /// Construct new 'SS123456789012345678901234567890' from values
     pub fn new() -> Result<Self, CanError> {
         let res = Self { raw: [0x00; 8] };
         Ok(res)
@@ -486,7 +486,7 @@ impl S1234567890123456789012345678901 {
     pub const MESSAGE_SIZE: usize = 8;
     pub const SS123456789012345678901234567890_MIN: i8 = 0_i8;
     pub const SS123456789012345678901234567890_MAX: i8 = 0_i8;
-    /// Construct new S1234567890123456789012345678901 from values
+    /// Construct new 'S1234567890123456789012345678901' from values
     pub fn new(ss123456789012345678901234567890: i8) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 8] };
         res.set_ss123456789012345678901234567890(ss123456789012345678901234567890)?;
@@ -496,7 +496,7 @@ impl S1234567890123456789012345678901 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// SS123456789012345678901234567890
+    /// Get value of 'SS123456789012345678901234567890'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -506,7 +506,7 @@ impl S1234567890123456789012345678901 {
     pub fn ss123456789012345678901234567890(&self) -> i8 {
         self.ss123456789012345678901234567890_raw()
     }
-    /// Get raw value of SS123456789012345678901234567890
+    /// Get raw value of 'SS123456789012345678901234567890'
     ///
     /// - Start bit: 0
     /// - Signal size: 8 bits
@@ -521,7 +521,7 @@ impl S1234567890123456789012345678901 {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of SS123456789012345678901234567890
+    /// Set value of 'SS123456789012345678901234567890'
     #[inline(always)]
     pub fn set_ss123456789012345678901234567890(
         &mut self,
@@ -606,7 +606,7 @@ impl M123456789012345678901234560000 {
     pub const MESSAGE_SIZE: usize = 8;
     pub const SSS12345678901234567890123456789_MIN: i8 = 0_i8;
     pub const SSS12345678901234567890123456789_MAX: i8 = 0_i8;
-    /// Construct new M12345678901234567890123456_0000 from values
+    /// Construct new 'M12345678901234567890123456_0000' from values
     pub fn new(sss12345678901234567890123456789: i8) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 8] };
         res.set_sss12345678901234567890123456789(sss12345678901234567890123456789)?;
@@ -616,7 +616,7 @@ impl M123456789012345678901234560000 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// SSS12345678901234567890123456789
+    /// Get value of 'SSS12345678901234567890123456789'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -626,7 +626,7 @@ impl M123456789012345678901234560000 {
     pub fn sss12345678901234567890123456789(&self) -> i8 {
         self.sss12345678901234567890123456789_raw()
     }
-    /// Get raw value of SSS12345678901234567890123456789
+    /// Get raw value of 'SSS12345678901234567890123456789'
     ///
     /// - Start bit: 0
     /// - Signal size: 8 bits
@@ -641,7 +641,7 @@ impl M123456789012345678901234560000 {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of SSS12345678901234567890123456789
+    /// Set value of 'SSS12345678901234567890123456789'
     #[inline(always)]
     pub fn set_sss12345678901234567890123456789(
         &mut self,
@@ -735,7 +735,7 @@ impl M1234567890123456789012345678901 {
     pub const S12345678901234567890123456_0000_MAX: i8 = 0_i8;
     pub const S1234567890123456789012345678901_MIN: i8 = 0_i8;
     pub const S1234567890123456789012345678901_MAX: i8 = 0_i8;
-    /// Construct new M1234567890123456789012345678901 from values
+    /// Construct new 'M1234567890123456789012345678901' from values
     pub fn new(
         ss1234567890123456789012345_0000: i8,
         ss1234567890123456789012345_0001: i8,
@@ -755,7 +755,7 @@ impl M1234567890123456789012345678901 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// SS1234567890123456789012345_0000
+    /// Get value of 'SS1234567890123456789012345_0000'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -765,7 +765,7 @@ impl M1234567890123456789012345678901 {
     pub fn ss1234567890123456789012345_0000(&self) -> i8 {
         self.ss1234567890123456789012345_0000_raw()
     }
-    /// Get raw value of SS1234567890123456789012345_0000
+    /// Get raw value of 'SS1234567890123456789012345_0000'
     ///
     /// - Start bit: 32
     /// - Signal size: 8 bits
@@ -780,7 +780,7 @@ impl M1234567890123456789012345678901 {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of SS1234567890123456789012345_0000
+    /// Set value of 'SS1234567890123456789012345_0000'
     #[inline(always)]
     pub fn set_ss1234567890123456789012345_0000(
         &mut self,
@@ -802,7 +802,7 @@ impl M1234567890123456789012345678901 {
         self.raw.view_bits_mut::<Lsb0>()[32..40].store_le(value);
         Ok(())
     }
-    /// SS1234567890123456789012345_0001
+    /// Get value of 'SS1234567890123456789012345_0001'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -812,7 +812,7 @@ impl M1234567890123456789012345678901 {
     pub fn ss1234567890123456789012345_0001(&self) -> i8 {
         self.ss1234567890123456789012345_0001_raw()
     }
-    /// Get raw value of SS1234567890123456789012345_0001
+    /// Get raw value of 'SS1234567890123456789012345_0001'
     ///
     /// - Start bit: 24
     /// - Signal size: 8 bits
@@ -827,7 +827,7 @@ impl M1234567890123456789012345678901 {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of SS1234567890123456789012345_0001
+    /// Set value of 'SS1234567890123456789012345_0001'
     #[inline(always)]
     pub fn set_ss1234567890123456789012345_0001(
         &mut self,
@@ -849,7 +849,7 @@ impl M1234567890123456789012345678901 {
         self.raw.view_bits_mut::<Lsb0>()[24..32].store_le(value);
         Ok(())
     }
-    /// SS1234567890123456789012345_0002
+    /// Get value of 'SS1234567890123456789012345_0002'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -859,7 +859,7 @@ impl M1234567890123456789012345678901 {
     pub fn ss1234567890123456789012345_0002(&self) -> i8 {
         self.ss1234567890123456789012345_0002_raw()
     }
-    /// Get raw value of SS1234567890123456789012345_0002
+    /// Get raw value of 'SS1234567890123456789012345_0002'
     ///
     /// - Start bit: 16
     /// - Signal size: 8 bits
@@ -874,7 +874,7 @@ impl M1234567890123456789012345678901 {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of SS1234567890123456789012345_0002
+    /// Set value of 'SS1234567890123456789012345_0002'
     #[inline(always)]
     pub fn set_ss1234567890123456789012345_0002(
         &mut self,
@@ -896,7 +896,7 @@ impl M1234567890123456789012345678901 {
         self.raw.view_bits_mut::<Lsb0>()[16..24].store_le(value);
         Ok(())
     }
-    /// S12345678901234567890123456_0000
+    /// Get value of 'S12345678901234567890123456_0000'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -906,7 +906,7 @@ impl M1234567890123456789012345678901 {
     pub fn s12345678901234567890123456_0000(&self) -> i8 {
         self.s12345678901234567890123456_0000_raw()
     }
-    /// Get raw value of S12345678901234567890123456_0000
+    /// Get raw value of 'S12345678901234567890123456_0000'
     ///
     /// - Start bit: 8
     /// - Signal size: 8 bits
@@ -921,7 +921,7 @@ impl M1234567890123456789012345678901 {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of S12345678901234567890123456_0000
+    /// Set value of 'S12345678901234567890123456_0000'
     #[inline(always)]
     pub fn set_s12345678901234567890123456_0000(
         &mut self,
@@ -943,7 +943,7 @@ impl M1234567890123456789012345678901 {
         self.raw.view_bits_mut::<Lsb0>()[8..16].store_le(value);
         Ok(())
     }
-    /// S1234567890123456789012345678901
+    /// Get value of 'S1234567890123456789012345678901'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -953,7 +953,7 @@ impl M1234567890123456789012345678901 {
     pub fn s1234567890123456789012345678901(&self) -> i8 {
         self.s1234567890123456789012345678901_raw()
     }
-    /// Get raw value of S1234567890123456789012345678901
+    /// Get raw value of 'S1234567890123456789012345678901'
     ///
     /// - Start bit: 0
     /// - Signal size: 8 bits
@@ -968,7 +968,7 @@ impl M1234567890123456789012345678901 {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of S1234567890123456789012345678901
+    /// Set value of 'S1234567890123456789012345678901'
     #[inline(always)]
     pub fn set_s1234567890123456789012345678901(
         &mut self,
@@ -1060,7 +1060,7 @@ impl M123456789012345678901234560001 {
     pub const S12345678901234567890123456_0001_MAX: i8 = 0_i8;
     pub const S12345678901234567890123456_0002_MIN: i8 = 0_i8;
     pub const S12345678901234567890123456_0002_MAX: i8 = 0_i8;
-    /// Construct new M12345678901234567890123456_0001 from values
+    /// Construct new 'M12345678901234567890123456_0001' from values
     pub fn new(
         ss1234567890123456789012345_0003: i8,
         ss1234567890123456789012345_0004: i8,
@@ -1078,7 +1078,7 @@ impl M123456789012345678901234560001 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// SS1234567890123456789012345_0003
+    /// Get value of 'SS1234567890123456789012345_0003'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -1088,7 +1088,7 @@ impl M123456789012345678901234560001 {
     pub fn ss1234567890123456789012345_0003(&self) -> i8 {
         self.ss1234567890123456789012345_0003_raw()
     }
-    /// Get raw value of SS1234567890123456789012345_0003
+    /// Get raw value of 'SS1234567890123456789012345_0003'
     ///
     /// - Start bit: 24
     /// - Signal size: 8 bits
@@ -1103,7 +1103,7 @@ impl M123456789012345678901234560001 {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of SS1234567890123456789012345_0003
+    /// Set value of 'SS1234567890123456789012345_0003'
     #[inline(always)]
     pub fn set_ss1234567890123456789012345_0003(
         &mut self,
@@ -1125,7 +1125,7 @@ impl M123456789012345678901234560001 {
         self.raw.view_bits_mut::<Lsb0>()[24..32].store_le(value);
         Ok(())
     }
-    /// SS1234567890123456789012345_0004
+    /// Get value of 'SS1234567890123456789012345_0004'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -1135,7 +1135,7 @@ impl M123456789012345678901234560001 {
     pub fn ss1234567890123456789012345_0004(&self) -> i8 {
         self.ss1234567890123456789012345_0004_raw()
     }
-    /// Get raw value of SS1234567890123456789012345_0004
+    /// Get raw value of 'SS1234567890123456789012345_0004'
     ///
     /// - Start bit: 16
     /// - Signal size: 8 bits
@@ -1150,7 +1150,7 @@ impl M123456789012345678901234560001 {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of SS1234567890123456789012345_0004
+    /// Set value of 'SS1234567890123456789012345_0004'
     #[inline(always)]
     pub fn set_ss1234567890123456789012345_0004(
         &mut self,
@@ -1172,7 +1172,7 @@ impl M123456789012345678901234560001 {
         self.raw.view_bits_mut::<Lsb0>()[16..24].store_le(value);
         Ok(())
     }
-    /// S12345678901234567890123456_0001
+    /// Get value of 'S12345678901234567890123456_0001'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -1182,7 +1182,7 @@ impl M123456789012345678901234560001 {
     pub fn s12345678901234567890123456_0001(&self) -> i8 {
         self.s12345678901234567890123456_0001_raw()
     }
-    /// Get raw value of S12345678901234567890123456_0001
+    /// Get raw value of 'S12345678901234567890123456_0001'
     ///
     /// - Start bit: 8
     /// - Signal size: 8 bits
@@ -1197,7 +1197,7 @@ impl M123456789012345678901234560001 {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of S12345678901234567890123456_0001
+    /// Set value of 'S12345678901234567890123456_0001'
     #[inline(always)]
     pub fn set_s12345678901234567890123456_0001(
         &mut self,
@@ -1219,7 +1219,7 @@ impl M123456789012345678901234560001 {
         self.raw.view_bits_mut::<Lsb0>()[8..16].store_le(value);
         Ok(())
     }
-    /// S12345678901234567890123456_0002
+    /// Get value of 'S12345678901234567890123456_0002'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -1229,7 +1229,7 @@ impl M123456789012345678901234560001 {
     pub fn s12345678901234567890123456_0002(&self) -> i8 {
         self.s12345678901234567890123456_0002_raw()
     }
-    /// Get raw value of S12345678901234567890123456_0002
+    /// Get raw value of 'S12345678901234567890123456_0002'
     ///
     /// - Start bit: 0
     /// - Signal size: 8 bits
@@ -1244,7 +1244,7 @@ impl M123456789012345678901234560001 {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of S12345678901234567890123456_0002
+    /// Set value of 'S12345678901234567890123456_0002'
     #[inline(always)]
     pub fn set_s12345678901234567890123456_0002(
         &mut self,
@@ -1331,7 +1331,7 @@ impl Mm123456789012345678901234567890 {
     pub const SSS123456789012345678901234_0000_MAX: i8 = 0_i8;
     pub const SS1234567890123456789012345_0005_MIN: i8 = 0_i8;
     pub const SS1234567890123456789012345_0005_MAX: i8 = 0_i8;
-    /// Construct new MM123456789012345678901234567890 from values
+    /// Construct new 'MM123456789012345678901234567890' from values
     pub fn new(
         sss123456789012345678901234_0000: i8,
         ss1234567890123456789012345_0005: i8,
@@ -1345,7 +1345,7 @@ impl Mm123456789012345678901234567890 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// SSS123456789012345678901234_0000
+    /// Get value of 'SSS123456789012345678901234_0000'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -1355,7 +1355,7 @@ impl Mm123456789012345678901234567890 {
     pub fn sss123456789012345678901234_0000(&self) -> i8 {
         self.sss123456789012345678901234_0000_raw()
     }
-    /// Get raw value of SSS123456789012345678901234_0000
+    /// Get raw value of 'SSS123456789012345678901234_0000'
     ///
     /// - Start bit: 8
     /// - Signal size: 8 bits
@@ -1370,7 +1370,7 @@ impl Mm123456789012345678901234567890 {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of SSS123456789012345678901234_0000
+    /// Set value of 'SSS123456789012345678901234_0000'
     #[inline(always)]
     pub fn set_sss123456789012345678901234_0000(
         &mut self,
@@ -1392,7 +1392,7 @@ impl Mm123456789012345678901234567890 {
         self.raw.view_bits_mut::<Lsb0>()[8..16].store_le(value);
         Ok(())
     }
-    /// SS1234567890123456789012345_0005
+    /// Get value of 'SS1234567890123456789012345_0005'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -1402,7 +1402,7 @@ impl Mm123456789012345678901234567890 {
     pub fn ss1234567890123456789012345_0005(&self) -> i8 {
         self.ss1234567890123456789012345_0005_raw()
     }
-    /// Get raw value of SS1234567890123456789012345_0005
+    /// Get raw value of 'SS1234567890123456789012345_0005'
     ///
     /// - Start bit: 0
     /// - Signal size: 8 bits
@@ -1417,7 +1417,7 @@ impl Mm123456789012345678901234567890 {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of SS1234567890123456789012345_0005
+    /// Set value of 'SS1234567890123456789012345_0005'
     #[inline(always)]
     pub fn set_ss1234567890123456789012345_0005(
         &mut self,

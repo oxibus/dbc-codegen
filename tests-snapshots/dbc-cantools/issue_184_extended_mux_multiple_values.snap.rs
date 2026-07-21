@@ -77,7 +77,7 @@ impl ExtMuxMultipleValues {
     pub const MUXED_0_3_4_5_MAX: i8 = 0_i8;
     pub const MUX_MIN: i8 = 0_i8;
     pub const MUX_MAX: i8 = 0_i8;
-    /// Construct new ext_MUX_multiple_values from values
+    /// Construct new 'ext_MUX_multiple_values' from values
     pub fn new(mux: i8) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 8] };
         res.set_mux(mux)?;
@@ -87,7 +87,7 @@ impl ExtMuxMultipleValues {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// Get raw value of MUX
+    /// Get raw value of 'MUX'
     ///
     /// - Start bit: 0
     /// - Signal size: 8 bits
@@ -133,7 +133,7 @@ impl ExtMuxMultipleValues {
             }
         }
     }
-    /// Set value of MUX
+    /// Set value of 'MUX'
     #[inline(always)]
     fn set_mux(&mut self, value: i8) -> Result<(), CanError> {
         if value < 0_i8 || 0_i8 < value {
@@ -152,7 +152,7 @@ impl ExtMuxMultipleValues {
         self.raw.view_bits_mut::<Lsb0>()[0..8].store_le(value);
         Ok(())
     }
-    /// Set value of MUX
+    /// Set value of 'MUX'
     #[inline(always)]
     pub fn set_m0(&mut self, value: ExtMuxMultipleValuesMuxM0) -> Result<(), CanError> {
         let b0 = BitArray::<_, LocalBits>::new(self.raw);
@@ -161,7 +161,7 @@ impl ExtMuxMultipleValues {
         self.set_mux(0)?;
         Ok(())
     }
-    /// Set value of MUX
+    /// Set value of 'MUX'
     #[inline(always)]
     pub fn set_m1(&mut self, value: ExtMuxMultipleValuesMuxM1) -> Result<(), CanError> {
         let b0 = BitArray::<_, LocalBits>::new(self.raw);
@@ -170,7 +170,7 @@ impl ExtMuxMultipleValues {
         self.set_mux(1)?;
         Ok(())
     }
-    /// Set value of MUX
+    /// Set value of 'MUX'
     #[inline(always)]
     pub fn set_m2(&mut self, value: ExtMuxMultipleValuesMuxM2) -> Result<(), CanError> {
         let b0 = BitArray::<_, LocalBits>::new(self.raw);
@@ -259,7 +259,7 @@ impl ExtMuxMultipleValuesMuxM0 {
     pub fn new() -> Self {
         Self { raw: [0u8; 8] }
     }
-    /// muxed_0_3_4_5
+    /// Get value of 'muxed_0_3_4_5'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -269,7 +269,7 @@ impl ExtMuxMultipleValuesMuxM0 {
     pub fn muxed_0_3_4_5(&self) -> i8 {
         self.muxed_0_3_4_5_raw()
     }
-    /// Get raw value of muxed_0_3_4_5
+    /// Get raw value of 'muxed_0_3_4_5'
     ///
     /// - Start bit: 8
     /// - Signal size: 8 bits
@@ -284,7 +284,7 @@ impl ExtMuxMultipleValuesMuxM0 {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of muxed_0_3_4_5
+    /// Set value of 'muxed_0_3_4_5'
     #[inline(always)]
     pub fn set_muxed_0_3_4_5(&mut self, value: i8) -> Result<(), CanError> {
         if value < 0_i8 || 0_i8 < value {
@@ -330,7 +330,7 @@ impl ExtMuxMultipleValuesMuxM1 {
     pub fn new() -> Self {
         Self { raw: [0u8; 8] }
     }
-    /// muxed_1
+    /// Get value of 'muxed_1'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -340,7 +340,7 @@ impl ExtMuxMultipleValuesMuxM1 {
     pub fn muxed_1(&self) -> i8 {
         self.muxed_1_raw()
     }
-    /// Get raw value of muxed_1
+    /// Get raw value of 'muxed_1'
     ///
     /// - Start bit: 8
     /// - Signal size: 8 bits
@@ -355,7 +355,7 @@ impl ExtMuxMultipleValuesMuxM1 {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of muxed_1
+    /// Set value of 'muxed_1'
     #[inline(always)]
     pub fn set_muxed_1(&mut self, value: i8) -> Result<(), CanError> {
         if value < 0_i8 || 0_i8 < value {
@@ -401,7 +401,7 @@ impl ExtMuxMultipleValuesMuxM2 {
     pub fn new() -> Self {
         Self { raw: [0u8; 8] }
     }
-    /// muxed_2
+    /// Get value of 'muxed_2'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -411,7 +411,7 @@ impl ExtMuxMultipleValuesMuxM2 {
     pub fn muxed_2(&self) -> i8 {
         self.muxed_2_raw()
     }
-    /// Get raw value of muxed_2
+    /// Get raw value of 'muxed_2'
     ///
     /// - Start bit: 8
     /// - Signal size: 8 bits
@@ -426,7 +426,7 @@ impl ExtMuxMultipleValuesMuxM2 {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of muxed_2
+    /// Set value of 'muxed_2'
     #[inline(always)]
     pub fn set_muxed_2(&mut self, value: i8) -> Result<(), CanError> {
         if value < 0_i8 || 0_i8 < value {

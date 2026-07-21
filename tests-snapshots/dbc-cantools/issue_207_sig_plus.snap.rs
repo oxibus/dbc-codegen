@@ -71,7 +71,7 @@ impl MyMsg {
     pub const MY_EXTRA_SIG_WITH_PLUS_MAX: i16 = 127_i16;
     pub const MY_NORMAL_SIG_MIN: i16 = -128_i16;
     pub const MY_NORMAL_SIG_MAX: i16 = 127_i16;
-    /// Construct new myMsg from values
+    /// Construct new 'myMsg' from values
     pub fn new(
         my_extra_sig_with_plus: i16,
         my_normal_sig: i16,
@@ -85,7 +85,7 @@ impl MyMsg {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// myExtraSigWithPlus
+    /// Get value of 'myExtraSigWithPlus'
     ///
     /// - Min: -128
     /// - Max: 127
@@ -95,7 +95,7 @@ impl MyMsg {
     pub fn my_extra_sig_with_plus(&self) -> i16 {
         self.my_extra_sig_with_plus_raw()
     }
-    /// Get raw value of myExtraSigWithPlus
+    /// Get raw value of 'myExtraSigWithPlus'
     ///
     /// - Start bit: 8
     /// - Signal size: 8 bits
@@ -109,7 +109,7 @@ impl MyMsg {
         let factor = 1;
         i16::from(signal).saturating_mul(factor).saturating_sub(128)
     }
-    /// Set value of myExtraSigWithPlus
+    /// Set value of 'myExtraSigWithPlus'
     #[inline(always)]
     pub fn set_my_extra_sig_with_plus(&mut self, value: i16) -> Result<(), CanError> {
         if value < -128_i16 || 127_i16 < value {
@@ -128,7 +128,7 @@ impl MyMsg {
         self.raw.view_bits_mut::<Lsb0>()[8..16].store_le(value);
         Ok(())
     }
-    /// myNormalSig
+    /// Get value of 'myNormalSig'
     ///
     /// - Min: -128
     /// - Max: 127
@@ -138,7 +138,7 @@ impl MyMsg {
     pub fn my_normal_sig(&self) -> i16 {
         self.my_normal_sig_raw()
     }
-    /// Get raw value of myNormalSig
+    /// Get raw value of 'myNormalSig'
     ///
     /// - Start bit: 0
     /// - Signal size: 8 bits
@@ -152,7 +152,7 @@ impl MyMsg {
         let factor = 1;
         i16::from(signal).saturating_mul(factor).saturating_sub(128)
     }
-    /// Set value of myNormalSig
+    /// Set value of 'myNormalSig'
     #[inline(always)]
     pub fn set_my_normal_sig(&mut self, value: i16) -> Result<(), CanError> {
         if value < -128_i16 || 127_i16 < value {

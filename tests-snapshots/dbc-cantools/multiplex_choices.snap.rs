@@ -75,7 +75,7 @@ impl Message1 {
     pub const MESSAGE_SIZE: usize = 8;
     pub const MULTIPLEXOR_MIN: u8 = 0_u8;
     pub const MULTIPLEXOR_MAX: u8 = 0_u8;
-    /// Construct new Message1 from values
+    /// Construct new 'Message1' from values
     pub fn new(multiplexor: u8) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 8] };
         res.set_multiplexor(multiplexor)?;
@@ -85,7 +85,7 @@ impl Message1 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// Get raw value of Multiplexor
+    /// Get raw value of 'Multiplexor'
     ///
     /// - Start bit: 2
     /// - Signal size: 6 bits
@@ -123,7 +123,7 @@ impl Message1 {
             }
         }
     }
-    /// Set value of Multiplexor
+    /// Set value of 'Multiplexor'
     #[inline(always)]
     fn set_multiplexor(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 0_u8 < value {
@@ -141,7 +141,7 @@ impl Message1 {
         self.raw.view_bits_mut::<Lsb0>()[2..8].store_le(value);
         Ok(())
     }
-    /// Set value of Multiplexor
+    /// Set value of 'Multiplexor'
     #[inline(always)]
     pub fn set_m8(&mut self, value: Message1MultiplexorM8) -> Result<(), CanError> {
         let b0 = BitArray::<_, LocalBits>::new(self.raw);
@@ -150,7 +150,7 @@ impl Message1 {
         self.set_multiplexor(8)?;
         Ok(())
     }
-    /// Set value of Multiplexor
+    /// Set value of 'Multiplexor'
     #[inline(always)]
     pub fn set_m24(&mut self, value: Message1MultiplexorM24) -> Result<(), CanError> {
         let b0 = BitArray::<_, LocalBits>::new(self.raw);
@@ -290,7 +290,7 @@ impl Message1MultiplexorM8 {
     pub fn new() -> Self {
         Self { raw: [0u8; 8] }
     }
-    /// BIT_L
+    /// Get value of 'BIT_L'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -305,7 +305,7 @@ impl Message1MultiplexorM8 {
             _ => Message1BitL::_Other(self.bit_l_raw()),
         }
     }
-    /// Get raw value of BIT_L
+    /// Get raw value of 'BIT_L'
     ///
     /// - Start bit: 24
     /// - Signal size: 1 bits
@@ -318,14 +318,15 @@ impl Message1MultiplexorM8 {
         let signal = self.raw.view_bits::<Lsb0>()[24..25].load_le::<u8>();
         signal == 1
     }
-    /// Set value of BIT_L
+    /// Set value of 'BIT_L'
     #[inline(always)]
-    pub fn set_bit_l(&mut self, value: bool) -> Result<(), CanError> {
+    pub fn set_bit_l(&mut self, value: Message1BitL) -> Result<(), CanError> {
+        let value = bool::from(value);
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[24..25].store_le(value);
         Ok(())
     }
-    /// BIT_G
+    /// Get value of 'BIT_G'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -335,7 +336,7 @@ impl Message1MultiplexorM8 {
     pub fn bit_g(&self) -> bool {
         self.bit_g_raw()
     }
-    /// Get raw value of BIT_G
+    /// Get raw value of 'BIT_G'
     ///
     /// - Start bit: 23
     /// - Signal size: 1 bits
@@ -348,14 +349,14 @@ impl Message1MultiplexorM8 {
         let signal = self.raw.view_bits::<Lsb0>()[23..24].load_le::<u8>();
         signal == 1
     }
-    /// Set value of BIT_G
+    /// Set value of 'BIT_G'
     #[inline(always)]
     pub fn set_bit_g(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[23..24].store_le(value);
         Ok(())
     }
-    /// BIT_C
+    /// Get value of 'BIT_C'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -365,7 +366,7 @@ impl Message1MultiplexorM8 {
     pub fn bit_c(&self) -> bool {
         self.bit_c_raw()
     }
-    /// Get raw value of BIT_C
+    /// Get raw value of 'BIT_C'
     ///
     /// - Start bit: 19
     /// - Signal size: 1 bits
@@ -378,14 +379,14 @@ impl Message1MultiplexorM8 {
         let signal = self.raw.view_bits::<Lsb0>()[19..20].load_le::<u8>();
         signal == 1
     }
-    /// Set value of BIT_C
+    /// Set value of 'BIT_C'
     #[inline(always)]
     pub fn set_bit_c(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[19..20].store_le(value);
         Ok(())
     }
-    /// BIT_J
+    /// Get value of 'BIT_J'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -395,7 +396,7 @@ impl Message1MultiplexorM8 {
     pub fn bit_j(&self) -> bool {
         self.bit_j_raw()
     }
-    /// Get raw value of BIT_J
+    /// Get raw value of 'BIT_J'
     ///
     /// - Start bit: 18
     /// - Signal size: 1 bits
@@ -408,7 +409,7 @@ impl Message1MultiplexorM8 {
         let signal = self.raw.view_bits::<Lsb0>()[18..19].load_le::<u8>();
         signal == 1
     }
-    /// Set value of BIT_J
+    /// Set value of 'BIT_J'
     #[inline(always)]
     pub fn set_bit_j(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
@@ -442,7 +443,7 @@ impl Message1MultiplexorM24 {
     pub fn new() -> Self {
         Self { raw: [0u8; 8] }
     }
-    /// BIT_K
+    /// Get value of 'BIT_K'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -452,7 +453,7 @@ impl Message1MultiplexorM24 {
     pub fn bit_k(&self) -> bool {
         self.bit_k_raw()
     }
-    /// Get raw value of BIT_K
+    /// Get raw value of 'BIT_K'
     ///
     /// - Start bit: 28
     /// - Signal size: 1 bits
@@ -465,14 +466,14 @@ impl Message1MultiplexorM24 {
         let signal = self.raw.view_bits::<Lsb0>()[28..29].load_le::<u8>();
         signal == 1
     }
-    /// Set value of BIT_K
+    /// Set value of 'BIT_K'
     #[inline(always)]
     pub fn set_bit_k(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[28..29].store_le(value);
         Ok(())
     }
-    /// BIT_D
+    /// Get value of 'BIT_D'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -482,7 +483,7 @@ impl Message1MultiplexorM24 {
     pub fn bit_d(&self) -> bool {
         self.bit_d_raw()
     }
-    /// Get raw value of BIT_D
+    /// Get raw value of 'BIT_D'
     ///
     /// - Start bit: 32
     /// - Signal size: 1 bits
@@ -495,14 +496,14 @@ impl Message1MultiplexorM24 {
         let signal = self.raw.view_bits::<Lsb0>()[32..33].load_le::<u8>();
         signal == 1
     }
-    /// Set value of BIT_D
+    /// Set value of 'BIT_D'
     #[inline(always)]
     pub fn set_bit_d(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[32..33].store_le(value);
         Ok(())
     }
-    /// BIT_B
+    /// Get value of 'BIT_B'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -512,7 +513,7 @@ impl Message1MultiplexorM24 {
     pub fn bit_b(&self) -> bool {
         self.bit_b_raw()
     }
-    /// Get raw value of BIT_B
+    /// Get raw value of 'BIT_B'
     ///
     /// - Start bit: 33
     /// - Signal size: 1 bits
@@ -525,14 +526,14 @@ impl Message1MultiplexorM24 {
         let signal = self.raw.view_bits::<Lsb0>()[33..34].load_le::<u8>();
         signal == 1
     }
-    /// Set value of BIT_B
+    /// Set value of 'BIT_B'
     #[inline(always)]
     pub fn set_bit_b(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[33..34].store_le(value);
         Ok(())
     }
-    /// BIT_F
+    /// Get value of 'BIT_F'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -542,7 +543,7 @@ impl Message1MultiplexorM24 {
     pub fn bit_f(&self) -> bool {
         self.bit_f_raw()
     }
-    /// Get raw value of BIT_F
+    /// Get raw value of 'BIT_F'
     ///
     /// - Start bit: 39
     /// - Signal size: 1 bits
@@ -555,14 +556,14 @@ impl Message1MultiplexorM24 {
         let signal = self.raw.view_bits::<Lsb0>()[39..40].load_le::<u8>();
         signal == 1
     }
-    /// Set value of BIT_F
+    /// Set value of 'BIT_F'
     #[inline(always)]
     pub fn set_bit_f(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[39..40].store_le(value);
         Ok(())
     }
-    /// BIT_H
+    /// Get value of 'BIT_H'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -572,7 +573,7 @@ impl Message1MultiplexorM24 {
     pub fn bit_h(&self) -> bool {
         self.bit_h_raw()
     }
-    /// Get raw value of BIT_H
+    /// Get raw value of 'BIT_H'
     ///
     /// - Start bit: 38
     /// - Signal size: 1 bits
@@ -585,14 +586,14 @@ impl Message1MultiplexorM24 {
         let signal = self.raw.view_bits::<Lsb0>()[38..39].load_le::<u8>();
         signal == 1
     }
-    /// Set value of BIT_H
+    /// Set value of 'BIT_H'
     #[inline(always)]
     pub fn set_bit_h(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[38..39].store_le(value);
         Ok(())
     }
-    /// BIT_E
+    /// Get value of 'BIT_E'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -602,7 +603,7 @@ impl Message1MultiplexorM24 {
     pub fn bit_e(&self) -> bool {
         self.bit_e_raw()
     }
-    /// Get raw value of BIT_E
+    /// Get raw value of 'BIT_E'
     ///
     /// - Start bit: 29
     /// - Signal size: 1 bits
@@ -615,14 +616,14 @@ impl Message1MultiplexorM24 {
         let signal = self.raw.view_bits::<Lsb0>()[29..30].load_le::<u8>();
         signal == 1
     }
-    /// Set value of BIT_E
+    /// Set value of 'BIT_E'
     #[inline(always)]
     pub fn set_bit_e(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[29..30].store_le(value);
         Ok(())
     }
-    /// BIT_A
+    /// Get value of 'BIT_A'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -632,7 +633,7 @@ impl Message1MultiplexorM24 {
     pub fn bit_a(&self) -> bool {
         self.bit_a_raw()
     }
-    /// Get raw value of BIT_A
+    /// Get raw value of 'BIT_A'
     ///
     /// - Start bit: 26
     /// - Signal size: 1 bits
@@ -645,7 +646,7 @@ impl Message1MultiplexorM24 {
         let signal = self.raw.view_bits::<Lsb0>()[26..27].load_le::<u8>();
         signal == 1
     }
-    /// Set value of BIT_A
+    /// Set value of 'BIT_A'
     #[inline(always)]
     pub fn set_bit_a(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
@@ -677,7 +678,7 @@ impl Message2 {
     pub const MESSAGE_SIZE: usize = 8;
     pub const MULTIPLEXOR_MIN: u8 = 0_u8;
     pub const MULTIPLEXOR_MAX: u8 = 0_u8;
-    /// Construct new Message2 from values
+    /// Construct new 'Message2' from values
     pub fn new(multiplexor: u8) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 8] };
         res.set_multiplexor(multiplexor)?;
@@ -687,7 +688,7 @@ impl Message2 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// Get raw value of Multiplexor
+    /// Get raw value of 'Multiplexor'
     ///
     /// - Start bit: 2
     /// - Signal size: 6 bits
@@ -725,7 +726,7 @@ impl Message2 {
             }
         }
     }
-    /// Set value of Multiplexor
+    /// Set value of 'Multiplexor'
     #[inline(always)]
     fn set_multiplexor(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 0_u8 < value {
@@ -743,7 +744,7 @@ impl Message2 {
         self.raw.view_bits_mut::<Lsb0>()[2..8].store_le(value);
         Ok(())
     }
-    /// Set value of Multiplexor
+    /// Set value of 'Multiplexor'
     #[inline(always)]
     pub fn set_m8(&mut self, value: Message2MultiplexorM8) -> Result<(), CanError> {
         let b0 = BitArray::<_, LocalBits>::new(self.raw);
@@ -752,7 +753,7 @@ impl Message2 {
         self.set_multiplexor(8)?;
         Ok(())
     }
-    /// Set value of Multiplexor
+    /// Set value of 'Multiplexor'
     #[inline(always)]
     pub fn set_m24(&mut self, value: Message2MultiplexorM24) -> Result<(), CanError> {
         let b0 = BitArray::<_, LocalBits>::new(self.raw);
@@ -869,7 +870,7 @@ impl Message2MultiplexorM8 {
     pub fn new() -> Self {
         Self { raw: [0u8; 8] }
     }
-    /// BIT_L
+    /// Get value of 'BIT_L'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -879,7 +880,7 @@ impl Message2MultiplexorM8 {
     pub fn bit_l(&self) -> bool {
         self.bit_l_raw()
     }
-    /// Get raw value of BIT_L
+    /// Get raw value of 'BIT_L'
     ///
     /// - Start bit: 24
     /// - Signal size: 1 bits
@@ -892,14 +893,14 @@ impl Message2MultiplexorM8 {
         let signal = self.raw.view_bits::<Lsb0>()[24..25].load_le::<u8>();
         signal == 1
     }
-    /// Set value of BIT_L
+    /// Set value of 'BIT_L'
     #[inline(always)]
     pub fn set_bit_l(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[24..25].store_le(value);
         Ok(())
     }
-    /// BIT_G
+    /// Get value of 'BIT_G'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -909,7 +910,7 @@ impl Message2MultiplexorM8 {
     pub fn bit_g(&self) -> bool {
         self.bit_g_raw()
     }
-    /// Get raw value of BIT_G
+    /// Get raw value of 'BIT_G'
     ///
     /// - Start bit: 23
     /// - Signal size: 1 bits
@@ -922,14 +923,14 @@ impl Message2MultiplexorM8 {
         let signal = self.raw.view_bits::<Lsb0>()[23..24].load_le::<u8>();
         signal == 1
     }
-    /// Set value of BIT_G
+    /// Set value of 'BIT_G'
     #[inline(always)]
     pub fn set_bit_g(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[23..24].store_le(value);
         Ok(())
     }
-    /// BIT_C
+    /// Get value of 'BIT_C'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -939,7 +940,7 @@ impl Message2MultiplexorM8 {
     pub fn bit_c(&self) -> bool {
         self.bit_c_raw()
     }
-    /// Get raw value of BIT_C
+    /// Get raw value of 'BIT_C'
     ///
     /// - Start bit: 19
     /// - Signal size: 1 bits
@@ -952,14 +953,14 @@ impl Message2MultiplexorM8 {
         let signal = self.raw.view_bits::<Lsb0>()[19..20].load_le::<u8>();
         signal == 1
     }
-    /// Set value of BIT_C
+    /// Set value of 'BIT_C'
     #[inline(always)]
     pub fn set_bit_c(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[19..20].store_le(value);
         Ok(())
     }
-    /// BIT_J
+    /// Get value of 'BIT_J'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -969,7 +970,7 @@ impl Message2MultiplexorM8 {
     pub fn bit_j(&self) -> bool {
         self.bit_j_raw()
     }
-    /// Get raw value of BIT_J
+    /// Get raw value of 'BIT_J'
     ///
     /// - Start bit: 18
     /// - Signal size: 1 bits
@@ -982,7 +983,7 @@ impl Message2MultiplexorM8 {
         let signal = self.raw.view_bits::<Lsb0>()[18..19].load_le::<u8>();
         signal == 1
     }
-    /// Set value of BIT_J
+    /// Set value of 'BIT_J'
     #[inline(always)]
     pub fn set_bit_j(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
@@ -1016,7 +1017,7 @@ impl Message2MultiplexorM24 {
     pub fn new() -> Self {
         Self { raw: [0u8; 8] }
     }
-    /// BIT_K
+    /// Get value of 'BIT_K'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -1026,7 +1027,7 @@ impl Message2MultiplexorM24 {
     pub fn bit_k(&self) -> bool {
         self.bit_k_raw()
     }
-    /// Get raw value of BIT_K
+    /// Get raw value of 'BIT_K'
     ///
     /// - Start bit: 28
     /// - Signal size: 1 bits
@@ -1039,14 +1040,14 @@ impl Message2MultiplexorM24 {
         let signal = self.raw.view_bits::<Lsb0>()[28..29].load_le::<u8>();
         signal == 1
     }
-    /// Set value of BIT_K
+    /// Set value of 'BIT_K'
     #[inline(always)]
     pub fn set_bit_k(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[28..29].store_le(value);
         Ok(())
     }
-    /// BIT_D
+    /// Get value of 'BIT_D'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -1056,7 +1057,7 @@ impl Message2MultiplexorM24 {
     pub fn bit_d(&self) -> bool {
         self.bit_d_raw()
     }
-    /// Get raw value of BIT_D
+    /// Get raw value of 'BIT_D'
     ///
     /// - Start bit: 32
     /// - Signal size: 1 bits
@@ -1069,14 +1070,14 @@ impl Message2MultiplexorM24 {
         let signal = self.raw.view_bits::<Lsb0>()[32..33].load_le::<u8>();
         signal == 1
     }
-    /// Set value of BIT_D
+    /// Set value of 'BIT_D'
     #[inline(always)]
     pub fn set_bit_d(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[32..33].store_le(value);
         Ok(())
     }
-    /// BIT_B
+    /// Get value of 'BIT_B'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -1086,7 +1087,7 @@ impl Message2MultiplexorM24 {
     pub fn bit_b(&self) -> bool {
         self.bit_b_raw()
     }
-    /// Get raw value of BIT_B
+    /// Get raw value of 'BIT_B'
     ///
     /// - Start bit: 33
     /// - Signal size: 1 bits
@@ -1099,14 +1100,14 @@ impl Message2MultiplexorM24 {
         let signal = self.raw.view_bits::<Lsb0>()[33..34].load_le::<u8>();
         signal == 1
     }
-    /// Set value of BIT_B
+    /// Set value of 'BIT_B'
     #[inline(always)]
     pub fn set_bit_b(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[33..34].store_le(value);
         Ok(())
     }
-    /// BIT_F
+    /// Get value of 'BIT_F'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -1116,7 +1117,7 @@ impl Message2MultiplexorM24 {
     pub fn bit_f(&self) -> bool {
         self.bit_f_raw()
     }
-    /// Get raw value of BIT_F
+    /// Get raw value of 'BIT_F'
     ///
     /// - Start bit: 39
     /// - Signal size: 1 bits
@@ -1129,14 +1130,14 @@ impl Message2MultiplexorM24 {
         let signal = self.raw.view_bits::<Lsb0>()[39..40].load_le::<u8>();
         signal == 1
     }
-    /// Set value of BIT_F
+    /// Set value of 'BIT_F'
     #[inline(always)]
     pub fn set_bit_f(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[39..40].store_le(value);
         Ok(())
     }
-    /// BIT_H
+    /// Get value of 'BIT_H'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -1146,7 +1147,7 @@ impl Message2MultiplexorM24 {
     pub fn bit_h(&self) -> bool {
         self.bit_h_raw()
     }
-    /// Get raw value of BIT_H
+    /// Get raw value of 'BIT_H'
     ///
     /// - Start bit: 38
     /// - Signal size: 1 bits
@@ -1159,14 +1160,14 @@ impl Message2MultiplexorM24 {
         let signal = self.raw.view_bits::<Lsb0>()[38..39].load_le::<u8>();
         signal == 1
     }
-    /// Set value of BIT_H
+    /// Set value of 'BIT_H'
     #[inline(always)]
     pub fn set_bit_h(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[38..39].store_le(value);
         Ok(())
     }
-    /// BIT_E
+    /// Get value of 'BIT_E'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -1176,7 +1177,7 @@ impl Message2MultiplexorM24 {
     pub fn bit_e(&self) -> bool {
         self.bit_e_raw()
     }
-    /// Get raw value of BIT_E
+    /// Get raw value of 'BIT_E'
     ///
     /// - Start bit: 29
     /// - Signal size: 1 bits
@@ -1189,14 +1190,14 @@ impl Message2MultiplexorM24 {
         let signal = self.raw.view_bits::<Lsb0>()[29..30].load_le::<u8>();
         signal == 1
     }
-    /// Set value of BIT_E
+    /// Set value of 'BIT_E'
     #[inline(always)]
     pub fn set_bit_e(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[29..30].store_le(value);
         Ok(())
     }
-    /// BIT_A
+    /// Get value of 'BIT_A'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -1206,7 +1207,7 @@ impl Message2MultiplexorM24 {
     pub fn bit_a(&self) -> bool {
         self.bit_a_raw()
     }
-    /// Get raw value of BIT_A
+    /// Get raw value of 'BIT_A'
     ///
     /// - Start bit: 26
     /// - Signal size: 1 bits
@@ -1219,7 +1220,7 @@ impl Message2MultiplexorM24 {
         let signal = self.raw.view_bits::<Lsb0>()[26..27].load_le::<u8>();
         signal == 1
     }
-    /// Set value of BIT_A
+    /// Set value of 'BIT_A'
     #[inline(always)]
     pub fn set_bit_a(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
@@ -1251,7 +1252,7 @@ impl Message3 {
     pub const MESSAGE_SIZE: usize = 8;
     pub const MULTIPLEXOR_MIN: u8 = 0_u8;
     pub const MULTIPLEXOR_MAX: u8 = 0_u8;
-    /// Construct new Message3 from values
+    /// Construct new 'Message3' from values
     pub fn new(multiplexor: u8) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 8] };
         res.set_multiplexor(multiplexor)?;
@@ -1261,7 +1262,7 @@ impl Message3 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// Get raw value of Multiplexor
+    /// Get raw value of 'Multiplexor'
     ///
     /// - Start bit: 2
     /// - Signal size: 6 bits
@@ -1292,7 +1293,7 @@ impl Message3 {
             }
         }
     }
-    /// Set value of Multiplexor
+    /// Set value of 'Multiplexor'
     #[inline(always)]
     fn set_multiplexor(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 0_u8 < value {
@@ -1310,7 +1311,7 @@ impl Message3 {
         self.raw.view_bits_mut::<Lsb0>()[2..8].store_le(value);
         Ok(())
     }
-    /// Set value of Multiplexor
+    /// Set value of 'Multiplexor'
     #[inline(always)]
     pub fn set_m8(&mut self, value: Message3MultiplexorM8) -> Result<(), CanError> {
         let b0 = BitArray::<_, LocalBits>::new(self.raw);
@@ -1397,7 +1398,7 @@ impl Message3MultiplexorM8 {
     pub fn new() -> Self {
         Self { raw: [0u8; 8] }
     }
-    /// BIT_L
+    /// Get value of 'BIT_L'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -1407,7 +1408,7 @@ impl Message3MultiplexorM8 {
     pub fn bit_l(&self) -> bool {
         self.bit_l_raw()
     }
-    /// Get raw value of BIT_L
+    /// Get raw value of 'BIT_L'
     ///
     /// - Start bit: 24
     /// - Signal size: 1 bits
@@ -1420,14 +1421,14 @@ impl Message3MultiplexorM8 {
         let signal = self.raw.view_bits::<Lsb0>()[24..25].load_le::<u8>();
         signal == 1
     }
-    /// Set value of BIT_L
+    /// Set value of 'BIT_L'
     #[inline(always)]
     pub fn set_bit_l(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[24..25].store_le(value);
         Ok(())
     }
-    /// BIT_G
+    /// Get value of 'BIT_G'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -1437,7 +1438,7 @@ impl Message3MultiplexorM8 {
     pub fn bit_g(&self) -> bool {
         self.bit_g_raw()
     }
-    /// Get raw value of BIT_G
+    /// Get raw value of 'BIT_G'
     ///
     /// - Start bit: 23
     /// - Signal size: 1 bits
@@ -1450,14 +1451,14 @@ impl Message3MultiplexorM8 {
         let signal = self.raw.view_bits::<Lsb0>()[23..24].load_le::<u8>();
         signal == 1
     }
-    /// Set value of BIT_G
+    /// Set value of 'BIT_G'
     #[inline(always)]
     pub fn set_bit_g(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[23..24].store_le(value);
         Ok(())
     }
-    /// BIT_C
+    /// Get value of 'BIT_C'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -1467,7 +1468,7 @@ impl Message3MultiplexorM8 {
     pub fn bit_c(&self) -> bool {
         self.bit_c_raw()
     }
-    /// Get raw value of BIT_C
+    /// Get raw value of 'BIT_C'
     ///
     /// - Start bit: 19
     /// - Signal size: 1 bits
@@ -1480,14 +1481,14 @@ impl Message3MultiplexorM8 {
         let signal = self.raw.view_bits::<Lsb0>()[19..20].load_le::<u8>();
         signal == 1
     }
-    /// Set value of BIT_C
+    /// Set value of 'BIT_C'
     #[inline(always)]
     pub fn set_bit_c(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[19..20].store_le(value);
         Ok(())
     }
-    /// BIT_J
+    /// Get value of 'BIT_J'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -1497,7 +1498,7 @@ impl Message3MultiplexorM8 {
     pub fn bit_j(&self) -> bool {
         self.bit_j_raw()
     }
-    /// Get raw value of BIT_J
+    /// Get raw value of 'BIT_J'
     ///
     /// - Start bit: 18
     /// - Signal size: 1 bits
@@ -1510,7 +1511,7 @@ impl Message3MultiplexorM8 {
         let signal = self.raw.view_bits::<Lsb0>()[18..19].load_le::<u8>();
         signal == 1
     }
-    /// Set value of BIT_J
+    /// Set value of 'BIT_J'
     #[inline(always)]
     pub fn set_bit_j(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;

@@ -79,7 +79,7 @@ impl ExtMuxCascaded {
     pub const MUXED_A_1_MAX: i8 = 0_i8;
     pub const MUX_A_MIN: i8 = 0_i8;
     pub const MUX_A_MAX: i8 = 0_i8;
-    /// Construct new ext_MUX_cascaded from values
+    /// Construct new 'ext_MUX_cascaded' from values
     pub fn new(mux_a: i8) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 8] };
         res.set_mux_a(mux_a)?;
@@ -89,7 +89,7 @@ impl ExtMuxCascaded {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// Get raw value of MUX_A
+    /// Get raw value of 'MUX_A'
     ///
     /// - Start bit: 0
     /// - Signal size: 8 bits
@@ -128,7 +128,7 @@ impl ExtMuxCascaded {
             }
         }
     }
-    /// Set value of MUX_A
+    /// Set value of 'MUX_A'
     #[inline(always)]
     fn set_mux_a(&mut self, value: i8) -> Result<(), CanError> {
         if value < 0_i8 || 0_i8 < value {
@@ -147,7 +147,7 @@ impl ExtMuxCascaded {
         self.raw.view_bits_mut::<Lsb0>()[0..8].store_le(value);
         Ok(())
     }
-    /// Set value of MUX_A
+    /// Set value of 'MUX_A'
     #[inline(always)]
     pub fn set_m0(&mut self, value: ExtMuxCascadedMuxAM0) -> Result<(), CanError> {
         let b0 = BitArray::<_, LocalBits>::new(self.raw);
@@ -156,7 +156,7 @@ impl ExtMuxCascaded {
         self.set_mux_a(0)?;
         Ok(())
     }
-    /// Set value of MUX_A
+    /// Set value of 'MUX_A'
     #[inline(always)]
     pub fn set_m1(&mut self, value: ExtMuxCascadedMuxAM1) -> Result<(), CanError> {
         let b0 = BitArray::<_, LocalBits>::new(self.raw);
@@ -244,7 +244,7 @@ impl ExtMuxCascadedMuxAM0 {
     pub fn new() -> Self {
         Self { raw: [0u8; 8] }
     }
-    /// muxed_B_0
+    /// Get value of 'muxed_B_0'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -254,7 +254,7 @@ impl ExtMuxCascadedMuxAM0 {
     pub fn muxed_b_0(&self) -> i8 {
         self.muxed_b_0_raw()
     }
-    /// Get raw value of muxed_B_0
+    /// Get raw value of 'muxed_B_0'
     ///
     /// - Start bit: 16
     /// - Signal size: 8 bits
@@ -269,7 +269,7 @@ impl ExtMuxCascadedMuxAM0 {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of muxed_B_0
+    /// Set value of 'muxed_B_0'
     #[inline(always)]
     pub fn set_muxed_b_0(&mut self, value: i8) -> Result<(), CanError> {
         if value < 0_i8 || 0_i8 < value {
@@ -315,7 +315,7 @@ impl ExtMuxCascadedMuxAM1 {
     pub fn new() -> Self {
         Self { raw: [0u8; 8] }
     }
-    /// muxed_B_1
+    /// Get value of 'muxed_B_1'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -325,7 +325,7 @@ impl ExtMuxCascadedMuxAM1 {
     pub fn muxed_b_1(&self) -> i8 {
         self.muxed_b_1_raw()
     }
-    /// Get raw value of muxed_B_1
+    /// Get raw value of 'muxed_B_1'
     ///
     /// - Start bit: 24
     /// - Signal size: 8 bits
@@ -340,7 +340,7 @@ impl ExtMuxCascadedMuxAM1 {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of muxed_B_1
+    /// Set value of 'muxed_B_1'
     #[inline(always)]
     pub fn set_muxed_b_1(&mut self, value: i8) -> Result<(), CanError> {
         if value < 0_i8 || 0_i8 < value {
@@ -359,7 +359,7 @@ impl ExtMuxCascadedMuxAM1 {
         self.raw.view_bits_mut::<Lsb0>()[24..32].store_le(value);
         Ok(())
     }
-    /// muxed_A_1
+    /// Get value of 'muxed_A_1'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -369,7 +369,7 @@ impl ExtMuxCascadedMuxAM1 {
     pub fn muxed_a_1(&self) -> i8 {
         self.muxed_a_1_raw()
     }
-    /// Get raw value of muxed_A_1
+    /// Get raw value of 'muxed_A_1'
     ///
     /// - Start bit: 8
     /// - Signal size: 8 bits
@@ -384,7 +384,7 @@ impl ExtMuxCascadedMuxAM1 {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of muxed_A_1
+    /// Set value of 'muxed_A_1'
     #[inline(always)]
     pub fn set_muxed_a_1(&mut self, value: i8) -> Result<(), CanError> {
         if value < 0_i8 || 0_i8 < value {

@@ -69,8 +69,10 @@ impl TestMessage {
         ExtendedId::new_unchecked(0x90000)
     });
     pub const MESSAGE_SIZE: usize = 1;
-    /// Construct new TestMessage from values
-    pub fn new(signal_with_choices: bool) -> Result<Self, CanError> {
+    /// Construct new 'TestMessage' from values
+    pub fn new(
+        signal_with_choices: TestMessageSignalWithChoices,
+    ) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 1] };
         res.set_signal_with_choices(signal_with_choices)?;
         Ok(res)
@@ -79,7 +81,7 @@ impl TestMessage {
     pub fn raw(&self) -> &[u8; 1] {
         &self.raw
     }
-    /// SignalWithChoices
+    /// Get value of 'SignalWithChoices'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -94,7 +96,7 @@ impl TestMessage {
             _ => TestMessageSignalWithChoices::_Other(self.signal_with_choices_raw()),
         }
     }
-    /// Get raw value of SignalWithChoices
+    /// Get raw value of 'SignalWithChoices'
     ///
     /// - Start bit: 0
     /// - Signal size: 1 bits
@@ -107,9 +109,13 @@ impl TestMessage {
         let signal = self.raw.view_bits::<Lsb0>()[0..1].load_le::<u8>();
         signal == 1
     }
-    /// Set value of SignalWithChoices
+    /// Set value of 'SignalWithChoices'
     #[inline(always)]
-    pub fn set_signal_with_choices(&mut self, value: bool) -> Result<(), CanError> {
+    pub fn set_signal_with_choices(
+        &mut self,
+        value: TestMessageSignalWithChoices,
+    ) -> Result<(), CanError> {
+        let value = bool::from(value);
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[0..1].store_le(value);
         Ok(())

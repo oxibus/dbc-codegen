@@ -76,11 +76,11 @@ impl ExampleMessage {
     pub const EMPTY_CHOICE_MAX: i8 = 0_i8;
     pub const NON_EMPTY_CHOICE_MIN: i8 = 0_i8;
     pub const NON_EMPTY_CHOICE_MAX: i8 = 0_i8;
-    /// Construct new example_message from values
+    /// Construct new 'example_message' from values
     pub fn new(
         no_choice: i8,
-        empty_choice: i8,
-        non_empty_choice: i8,
+        empty_choice: ExampleMessageEmptyChoice,
+        non_empty_choice: ExampleMessageNonEmptyChoice,
     ) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 3] };
         res.set_no_choice(no_choice)?;
@@ -92,7 +92,7 @@ impl ExampleMessage {
     pub fn raw(&self) -> &[u8; 3] {
         &self.raw
     }
-    /// no_choice
+    /// Get value of 'no_choice'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -102,7 +102,7 @@ impl ExampleMessage {
     pub fn no_choice(&self) -> i8 {
         self.no_choice_raw()
     }
-    /// Get raw value of no_choice
+    /// Get raw value of 'no_choice'
     ///
     /// - Start bit: 16
     /// - Signal size: 8 bits
@@ -117,7 +117,7 @@ impl ExampleMessage {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of no_choice
+    /// Set value of 'no_choice'
     #[inline(always)]
     pub fn set_no_choice(&mut self, value: i8) -> Result<(), CanError> {
         if value < 0_i8 || 0_i8 < value {
@@ -136,7 +136,7 @@ impl ExampleMessage {
         self.raw.view_bits_mut::<Lsb0>()[16..24].store_le(value);
         Ok(())
     }
-    /// empty_choice
+    /// Get value of 'empty_choice'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -149,7 +149,7 @@ impl ExampleMessage {
             _ => ExampleMessageEmptyChoice::_Other(self.empty_choice_raw()),
         }
     }
-    /// Get raw value of empty_choice
+    /// Get raw value of 'empty_choice'
     ///
     /// - Start bit: 8
     /// - Signal size: 8 bits
@@ -164,9 +164,13 @@ impl ExampleMessage {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of empty_choice
+    /// Set value of 'empty_choice'
     #[inline(always)]
-    pub fn set_empty_choice(&mut self, value: i8) -> Result<(), CanError> {
+    pub fn set_empty_choice(
+        &mut self,
+        value: ExampleMessageEmptyChoice,
+    ) -> Result<(), CanError> {
+        let value = i8::from(value);
         if value < 0_i8 || 0_i8 < value {
             return Err(CanError::ParameterOutOfRange {
                 message_id: ExampleMessage::MESSAGE_ID,
@@ -183,7 +187,7 @@ impl ExampleMessage {
         self.raw.view_bits_mut::<Lsb0>()[8..16].store_le(value);
         Ok(())
     }
-    /// non_empty_choice
+    /// Get value of 'non_empty_choice'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -198,7 +202,7 @@ impl ExampleMessage {
             _ => ExampleMessageNonEmptyChoice::_Other(self.non_empty_choice_raw()),
         }
     }
-    /// Get raw value of non_empty_choice
+    /// Get raw value of 'non_empty_choice'
     ///
     /// - Start bit: 0
     /// - Signal size: 8 bits
@@ -213,9 +217,13 @@ impl ExampleMessage {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of non_empty_choice
+    /// Set value of 'non_empty_choice'
     #[inline(always)]
-    pub fn set_non_empty_choice(&mut self, value: i8) -> Result<(), CanError> {
+    pub fn set_non_empty_choice(
+        &mut self,
+        value: ExampleMessageNonEmptyChoice,
+    ) -> Result<(), CanError> {
+        let value = i8::from(value);
         if value < 0_i8 || 0_i8 < value {
             return Err(CanError::ParameterOutOfRange {
                 message_id: ExampleMessage::MESSAGE_ID,

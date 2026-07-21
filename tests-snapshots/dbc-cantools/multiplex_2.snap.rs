@@ -84,7 +84,7 @@ impl Shared {
     pub const S1_MAX: i8 = 0_i8;
     pub const S0_MIN: i8 = 0_i8;
     pub const S0_MAX: i8 = 0_i8;
-    /// Construct new Shared from values
+    /// Construct new 'Shared' from values
     pub fn new(s0: i8) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 8] };
         res.set_s0(s0)?;
@@ -94,7 +94,7 @@ impl Shared {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// Get raw value of S0
+    /// Get raw value of 'S0'
     ///
     /// - Start bit: 0
     /// - Signal size: 4 bits
@@ -121,7 +121,7 @@ impl Shared {
             }
         }
     }
-    /// Set value of S0
+    /// Set value of 'S0'
     #[inline(always)]
     fn set_s0(&mut self, value: i8) -> Result<(), CanError> {
         if value < 0_i8 || 0_i8 < value {
@@ -140,7 +140,7 @@ impl Shared {
         self.raw.view_bits_mut::<Lsb0>()[0..4].store_le(value);
         Ok(())
     }
-    /// Set value of S0
+    /// Set value of 'S0'
     #[inline(always)]
     pub fn set_m1(&mut self, value: SharedS0M1) -> Result<(), CanError> {
         let b0 = BitArray::<_, LocalBits>::new(self.raw);
@@ -149,7 +149,7 @@ impl Shared {
         self.set_s0(1)?;
         Ok(())
     }
-    /// Set value of S0
+    /// Set value of 'S0'
     #[inline(always)]
     pub fn set_m2(&mut self, value: SharedS0M2) -> Result<(), CanError> {
         let b0 = BitArray::<_, LocalBits>::new(self.raw);
@@ -237,7 +237,7 @@ impl SharedS0M1 {
     pub fn new() -> Self {
         Self { raw: [0u8; 8] }
     }
-    /// S1
+    /// Get value of 'S1'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -247,7 +247,7 @@ impl SharedS0M1 {
     pub fn s1(&self) -> i8 {
         self.s1_raw()
     }
-    /// Get raw value of S1
+    /// Get raw value of 'S1'
     ///
     /// - Start bit: 4
     /// - Signal size: 4 bits
@@ -262,7 +262,7 @@ impl SharedS0M1 {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of S1
+    /// Set value of 'S1'
     #[inline(always)]
     pub fn set_s1(&mut self, value: i8) -> Result<(), CanError> {
         if value < 0_i8 || 0_i8 < value {
@@ -308,7 +308,7 @@ impl SharedS0M2 {
     pub fn new() -> Self {
         Self { raw: [0u8; 8] }
     }
-    /// S2
+    /// Get value of 'S2'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -318,7 +318,7 @@ impl SharedS0M2 {
     pub fn s2(&self) -> i8 {
         self.s2_raw()
     }
-    /// Get raw value of S2
+    /// Get raw value of 'S2'
     ///
     /// - Start bit: 8
     /// - Signal size: 8 bits
@@ -333,7 +333,7 @@ impl SharedS0M2 {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of S2
+    /// Set value of 'S2'
     #[inline(always)]
     pub fn set_s2(&mut self, value: i8) -> Result<(), CanError> {
         if value < 0_i8 || 0_i8 < value {
@@ -381,7 +381,7 @@ impl Normal {
     pub const S1_MAX: i8 = 0_i8;
     pub const S0_MIN: i8 = 0_i8;
     pub const S0_MAX: i8 = 0_i8;
-    /// Construct new Normal from values
+    /// Construct new 'Normal' from values
     pub fn new(s0: i8) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 8] };
         res.set_s0(s0)?;
@@ -391,7 +391,7 @@ impl Normal {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// Get raw value of S0
+    /// Get raw value of 'S0'
     ///
     /// - Start bit: 0
     /// - Signal size: 4 bits
@@ -418,7 +418,7 @@ impl Normal {
             }
         }
     }
-    /// Set value of S0
+    /// Set value of 'S0'
     #[inline(always)]
     fn set_s0(&mut self, value: i8) -> Result<(), CanError> {
         if value < 0_i8 || 0_i8 < value {
@@ -437,7 +437,7 @@ impl Normal {
         self.raw.view_bits_mut::<Lsb0>()[0..4].store_le(value);
         Ok(())
     }
-    /// Set value of S0
+    /// Set value of 'S0'
     #[inline(always)]
     pub fn set_m0(&mut self, value: NormalS0M0) -> Result<(), CanError> {
         let b0 = BitArray::<_, LocalBits>::new(self.raw);
@@ -446,7 +446,7 @@ impl Normal {
         self.set_s0(0)?;
         Ok(())
     }
-    /// Set value of S0
+    /// Set value of 'S0'
     #[inline(always)]
     pub fn set_m1(&mut self, value: NormalS0M1) -> Result<(), CanError> {
         let b0 = BitArray::<_, LocalBits>::new(self.raw);
@@ -534,7 +534,7 @@ impl NormalS0M0 {
     pub fn new() -> Self {
         Self { raw: [0u8; 8] }
     }
-    /// S1
+    /// Get value of 'S1'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -544,7 +544,7 @@ impl NormalS0M0 {
     pub fn s1(&self) -> i8 {
         self.s1_raw()
     }
-    /// Get raw value of S1
+    /// Get raw value of 'S1'
     ///
     /// - Start bit: 4
     /// - Signal size: 4 bits
@@ -559,7 +559,7 @@ impl NormalS0M0 {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of S1
+    /// Set value of 'S1'
     #[inline(always)]
     pub fn set_s1(&mut self, value: i8) -> Result<(), CanError> {
         if value < 0_i8 || 0_i8 < value {
@@ -605,7 +605,7 @@ impl NormalS0M1 {
     pub fn new() -> Self {
         Self { raw: [0u8; 8] }
     }
-    /// S2
+    /// Get value of 'S2'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -615,7 +615,7 @@ impl NormalS0M1 {
     pub fn s2(&self) -> i8 {
         self.s2_raw()
     }
-    /// Get raw value of S2
+    /// Get raw value of 'S2'
     ///
     /// - Start bit: 8
     /// - Signal size: 8 bits
@@ -630,7 +630,7 @@ impl NormalS0M1 {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of S2
+    /// Set value of 'S2'
     #[inline(always)]
     pub fn set_s2(&mut self, value: i8) -> Result<(), CanError> {
         if value < 0_i8 || 0_i8 < value {
@@ -690,7 +690,7 @@ impl Extended {
     pub const S1_MAX: i8 = 0_i8;
     pub const S0_MIN: i8 = 0_i8;
     pub const S0_MAX: i8 = 0_i8;
-    /// Construct new Extended from values
+    /// Construct new 'Extended' from values
     pub fn new(s6: i8, s0: i8) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 8] };
         res.set_s6(s6)?;
@@ -701,7 +701,7 @@ impl Extended {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// Get raw value of S6
+    /// Get raw value of 'S6'
     ///
     /// - Start bit: 32
     /// - Signal size: 8 bits
@@ -729,7 +729,7 @@ impl Extended {
             }
         }
     }
-    /// Set value of S6
+    /// Set value of 'S6'
     #[inline(always)]
     fn set_s6(&mut self, value: i8) -> Result<(), CanError> {
         if value < 0_i8 || 0_i8 < value {
@@ -748,7 +748,7 @@ impl Extended {
         self.raw.view_bits_mut::<Lsb0>()[32..40].store_le(value);
         Ok(())
     }
-    /// Set value of S6
+    /// Set value of 'S6'
     #[inline(always)]
     pub fn set_m0(&mut self, value: ExtendedS6M0) -> Result<(), CanError> {
         let b0 = BitArray::<_, LocalBits>::new(self.raw);
@@ -757,7 +757,7 @@ impl Extended {
         self.set_s6(0)?;
         Ok(())
     }
-    /// Set value of S6
+    /// Set value of 'S6'
     #[inline(always)]
     pub fn set_m1(&mut self, value: ExtendedS6M1) -> Result<(), CanError> {
         let b0 = BitArray::<_, LocalBits>::new(self.raw);
@@ -766,7 +766,7 @@ impl Extended {
         self.set_s6(1)?;
         Ok(())
     }
-    /// Set value of S6
+    /// Set value of 'S6'
     #[inline(always)]
     pub fn set_m2(&mut self, value: ExtendedS6M2) -> Result<(), CanError> {
         let b0 = BitArray::<_, LocalBits>::new(self.raw);
@@ -775,7 +775,7 @@ impl Extended {
         self.set_s6(2)?;
         Ok(())
     }
-    /// Get raw value of S0
+    /// Get raw value of 'S0'
     ///
     /// - Start bit: 0
     /// - Signal size: 4 bits
@@ -803,7 +803,7 @@ impl Extended {
             }
         }
     }
-    /// Set value of S0
+    /// Set value of 'S0'
     #[inline(always)]
     fn set_s0(&mut self, value: i8) -> Result<(), CanError> {
         if value < 0_i8 || 0_i8 < value {
@@ -822,7 +822,7 @@ impl Extended {
         self.raw.view_bits_mut::<Lsb0>()[0..4].store_le(value);
         Ok(())
     }
-    /// Set value of S0
+    /// Set value of 'S0'
     #[inline(always)]
     pub fn set_m0(&mut self, value: ExtendedS0M0) -> Result<(), CanError> {
         let b0 = BitArray::<_, LocalBits>::new(self.raw);
@@ -831,7 +831,7 @@ impl Extended {
         self.set_s0(0)?;
         Ok(())
     }
-    /// Set value of S0
+    /// Set value of 'S0'
     #[inline(always)]
     pub fn set_m1(&mut self, value: ExtendedS0M1) -> Result<(), CanError> {
         let b0 = BitArray::<_, LocalBits>::new(self.raw);
@@ -840,7 +840,7 @@ impl Extended {
         self.set_s0(1)?;
         Ok(())
     }
-    /// Set value of S0
+    /// Set value of 'S0'
     #[inline(always)]
     pub fn set_m2(&mut self, value: ExtendedS0M2) -> Result<(), CanError> {
         let b0 = BitArray::<_, LocalBits>::new(self.raw);
@@ -929,7 +929,7 @@ impl ExtendedS6M0 {
     pub fn new() -> Self {
         Self { raw: [0u8; 8] }
     }
-    /// S3
+    /// Get value of 'S3'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -939,7 +939,7 @@ impl ExtendedS6M0 {
     pub fn s3(&self) -> i16 {
         self.s3_raw()
     }
-    /// Get raw value of S3
+    /// Get raw value of 'S3'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -954,7 +954,7 @@ impl ExtendedS6M0 {
         let signal = signal as i16;
         i16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of S3
+    /// Set value of 'S3'
     #[inline(always)]
     pub fn set_s3(&mut self, value: i16) -> Result<(), CanError> {
         if value < 0_i16 || 0_i16 < value {
@@ -973,7 +973,7 @@ impl ExtendedS6M0 {
         self.raw.view_bits_mut::<Lsb0>()[16..32].store_le(value);
         Ok(())
     }
-    /// S2
+    /// Get value of 'S2'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -983,7 +983,7 @@ impl ExtendedS6M0 {
     pub fn s2(&self) -> i8 {
         self.s2_raw()
     }
-    /// Get raw value of S2
+    /// Get raw value of 'S2'
     ///
     /// - Start bit: 8
     /// - Signal size: 8 bits
@@ -998,7 +998,7 @@ impl ExtendedS6M0 {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of S2
+    /// Set value of 'S2'
     #[inline(always)]
     pub fn set_s2(&mut self, value: i8) -> Result<(), CanError> {
         if value < 0_i8 || 0_i8 < value {
@@ -1044,7 +1044,7 @@ impl ExtendedS6M1 {
     pub fn new() -> Self {
         Self { raw: [0u8; 8] }
     }
-    /// S7
+    /// Get value of 'S7'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -1054,7 +1054,7 @@ impl ExtendedS6M1 {
     pub fn s7(&self) -> i32 {
         self.s7_raw()
     }
-    /// Get raw value of S7
+    /// Get raw value of 'S7'
     ///
     /// - Start bit: 40
     /// - Signal size: 24 bits
@@ -1069,7 +1069,7 @@ impl ExtendedS6M1 {
         let signal = signal as i32;
         i32::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of S7
+    /// Set value of 'S7'
     #[inline(always)]
     pub fn set_s7(&mut self, value: i32) -> Result<(), CanError> {
         if value < 0_i32 || 0_i32 < value {
@@ -1088,7 +1088,7 @@ impl ExtendedS6M1 {
         self.raw.view_bits_mut::<Lsb0>()[40..64].store_le(value);
         Ok(())
     }
-    /// S5
+    /// Get value of 'S5'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -1098,7 +1098,7 @@ impl ExtendedS6M1 {
     pub fn s5(&self) -> i32 {
         self.s5_raw()
     }
-    /// Get raw value of S5
+    /// Get raw value of 'S5'
     ///
     /// - Start bit: 4
     /// - Signal size: 28 bits
@@ -1113,7 +1113,7 @@ impl ExtendedS6M1 {
         let signal = signal as i32;
         i32::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of S5
+    /// Set value of 'S5'
     #[inline(always)]
     pub fn set_s5(&mut self, value: i32) -> Result<(), CanError> {
         if value < 0_i32 || 0_i32 < value {
@@ -1159,7 +1159,7 @@ impl ExtendedS6M2 {
     pub fn new() -> Self {
         Self { raw: [0u8; 8] }
     }
-    /// S8
+    /// Get value of 'S8'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -1169,7 +1169,7 @@ impl ExtendedS6M2 {
     pub fn s8(&self) -> i8 {
         self.s8_raw()
     }
-    /// Get raw value of S8
+    /// Get raw value of 'S8'
     ///
     /// - Start bit: 40
     /// - Signal size: 8 bits
@@ -1184,7 +1184,7 @@ impl ExtendedS6M2 {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of S8
+    /// Set value of 'S8'
     #[inline(always)]
     pub fn set_s8(&mut self, value: i8) -> Result<(), CanError> {
         if value < 0_i8 || 0_i8 < value {
@@ -1203,7 +1203,7 @@ impl ExtendedS6M2 {
         self.raw.view_bits_mut::<Lsb0>()[40..48].store_le(value);
         Ok(())
     }
-    /// S4
+    /// Get value of 'S4'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -1213,7 +1213,7 @@ impl ExtendedS6M2 {
     pub fn s4(&self) -> i32 {
         self.s4_raw()
     }
-    /// Get raw value of S4
+    /// Get raw value of 'S4'
     ///
     /// - Start bit: 8
     /// - Signal size: 24 bits
@@ -1228,7 +1228,7 @@ impl ExtendedS6M2 {
         let signal = signal as i32;
         i32::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of S4
+    /// Set value of 'S4'
     #[inline(always)]
     pub fn set_s4(&mut self, value: i32) -> Result<(), CanError> {
         if value < 0_i32 || 0_i32 < value {
@@ -1278,7 +1278,7 @@ impl ExtendedTypes {
     pub const S0_MAX: i8 = 0_i8;
     pub const S11_MIN: u8 = 2_u8;
     pub const S11_MAX: u8 = 6_u8;
-    /// Construct new ExtendedTypes from values
+    /// Construct new 'ExtendedTypes' from values
     pub fn new(s11: u8) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 8] };
         res.set_s11(s11)?;
@@ -1288,7 +1288,7 @@ impl ExtendedTypes {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// Get raw value of S11
+    /// Get raw value of 'S11'
     ///
     /// - Start bit: 0
     /// - Signal size: 5 bits
@@ -1326,7 +1326,7 @@ impl ExtendedTypes {
             }
         }
     }
-    /// Set value of S11
+    /// Set value of 'S11'
     #[inline(always)]
     fn set_s11(&mut self, value: u8) -> Result<(), CanError> {
         if value < 2_u8 || 6_u8 < value {
@@ -1344,7 +1344,7 @@ impl ExtendedTypes {
         self.raw.view_bits_mut::<Lsb0>()[0..5].store_le(value);
         Ok(())
     }
-    /// Set value of S11
+    /// Set value of 'S11'
     #[inline(always)]
     pub fn set_m0(&mut self, value: ExtendedTypesS11M0) -> Result<(), CanError> {
         let b0 = BitArray::<_, LocalBits>::new(self.raw);
@@ -1353,7 +1353,7 @@ impl ExtendedTypes {
         self.set_s11(0)?;
         Ok(())
     }
-    /// Set value of S11
+    /// Set value of 'S11'
     #[inline(always)]
     pub fn set_m5(&mut self, value: ExtendedTypesS11M5) -> Result<(), CanError> {
         let b0 = BitArray::<_, LocalBits>::new(self.raw);
@@ -1441,7 +1441,7 @@ impl ExtendedTypesS11M0 {
     pub fn new() -> Self {
         Self { raw: [0u8; 8] }
     }
-    /// S10
+    /// Get value of 'S10'
     ///
     /// - Min: -340000000000000000000000000000000000000
     /// - Max: 340000000000000000000000000000000000000
@@ -1451,7 +1451,7 @@ impl ExtendedTypesS11M0 {
     pub fn s10(&self) -> i32 {
         self.s10_raw()
     }
-    /// Get raw value of S10
+    /// Get raw value of 'S10'
     ///
     /// - Start bit: 16
     /// - Signal size: 32 bits
@@ -1466,7 +1466,7 @@ impl ExtendedTypesS11M0 {
         let signal = signal as i32;
         i32::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of S10
+    /// Set value of 'S10'
     #[inline(always)]
     pub fn set_s10(&mut self, value: i32) -> Result<(), CanError> {
         if value < -340000000000000000000000000000000000000_i32
@@ -1514,7 +1514,7 @@ impl ExtendedTypesS11M5 {
     pub fn new() -> Self {
         Self { raw: [0u8; 8] }
     }
-    /// S9
+    /// Get value of 'S9'
     ///
     /// - Min: -1.34
     /// - Max: 1235
@@ -1524,7 +1524,7 @@ impl ExtendedTypesS11M5 {
     pub fn s9(&self) -> i32 {
         self.s9_raw()
     }
-    /// Get raw value of S9
+    /// Get raw value of 'S9'
     ///
     /// - Start bit: 24
     /// - Signal size: 32 bits
@@ -1539,7 +1539,7 @@ impl ExtendedTypesS11M5 {
         let signal = signal as i32;
         i32::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of S9
+    /// Set value of 'S9'
     #[inline(always)]
     pub fn set_s9(&mut self, value: i32) -> Result<(), CanError> {
         if value < -1.34_i32 || 1235_i32 < value {

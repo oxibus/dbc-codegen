@@ -118,8 +118,10 @@ impl DriverDoorStatus {
         StandardId::new_unchecked(0x0)
     });
     pub const MESSAGE_SIZE: usize = 1;
-    /// Construct new DriverDoorStatus from values
-    pub fn new(driver_door_opened: bool) -> Result<Self, CanError> {
+    /// Construct new 'DriverDoorStatus' from values
+    pub fn new(
+        driver_door_opened: DriverDoorStatusDriverDoorOpened,
+    ) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 1] };
         res.set_driver_door_opened(driver_door_opened)?;
         Ok(res)
@@ -128,7 +130,7 @@ impl DriverDoorStatus {
     pub fn raw(&self) -> &[u8; 1] {
         &self.raw
     }
-    /// DriverDoorOpened
+    /// Get value of 'DriverDoorOpened'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -143,7 +145,7 @@ impl DriverDoorStatus {
             _ => DriverDoorStatusDriverDoorOpened::_Other(self.driver_door_opened_raw()),
         }
     }
-    /// Get raw value of DriverDoorOpened
+    /// Get raw value of 'DriverDoorOpened'
     ///
     /// - Start bit: 0
     /// - Signal size: 1 bits
@@ -156,9 +158,13 @@ impl DriverDoorStatus {
         let signal = self.raw.view_bits::<Msb0>()[7..8].load_be::<u8>();
         signal == 1
     }
-    /// Set value of DriverDoorOpened
+    /// Set value of 'DriverDoorOpened'
     #[inline(always)]
-    pub fn set_driver_door_opened(&mut self, value: bool) -> Result<(), CanError> {
+    pub fn set_driver_door_opened(
+        &mut self,
+        value: DriverDoorStatusDriverDoorOpened,
+    ) -> Result<(), CanError> {
+        let value = bool::from(value);
         let value = value as u8;
         self.raw.view_bits_mut::<Msb0>()[7..8].store_be(value);
         Ok(())
@@ -260,7 +266,7 @@ impl Chime {
     pub const CHIME_BYTE5_MAX: u8 = 0_u8;
     pub const CHIME_BYTE4_MIN: u8 = 0_u8;
     pub const CHIME_BYTE4_MAX: u8 = 0_u8;
-    /// Construct new Chime from values
+    /// Construct new 'Chime' from values
     pub fn new(
         chime_type: u8,
         chime_repeat: u8,
@@ -280,7 +286,7 @@ impl Chime {
     pub fn raw(&self) -> &[u8; 5] {
         &self.raw
     }
-    /// ChimeType
+    /// Get value of 'ChimeType'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -290,7 +296,7 @@ impl Chime {
     pub fn chime_type(&self) -> u8 {
         self.chime_type_raw()
     }
-    /// Get raw value of ChimeType
+    /// Get raw value of 'ChimeType'
     ///
     /// - Start bit: 7
     /// - Signal size: 8 bits
@@ -304,7 +310,7 @@ impl Chime {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of ChimeType
+    /// Set value of 'ChimeType'
     #[inline(always)]
     pub fn set_chime_type(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 0_u8 < value {
@@ -322,7 +328,7 @@ impl Chime {
         self.raw.view_bits_mut::<Msb0>()[0..8].store_be(value);
         Ok(())
     }
-    /// ChimeRepeat
+    /// Get value of 'ChimeRepeat'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -332,7 +338,7 @@ impl Chime {
     pub fn chime_repeat(&self) -> u8 {
         self.chime_repeat_raw()
     }
-    /// Get raw value of ChimeRepeat
+    /// Get raw value of 'ChimeRepeat'
     ///
     /// - Start bit: 23
     /// - Signal size: 8 bits
@@ -346,7 +352,7 @@ impl Chime {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of ChimeRepeat
+    /// Set value of 'ChimeRepeat'
     #[inline(always)]
     pub fn set_chime_repeat(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 0_u8 < value {
@@ -364,7 +370,7 @@ impl Chime {
         self.raw.view_bits_mut::<Msb0>()[16..24].store_be(value);
         Ok(())
     }
-    /// ChimeDuration
+    /// Get value of 'ChimeDuration'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -374,7 +380,7 @@ impl Chime {
     pub fn chime_duration(&self) -> u8 {
         self.chime_duration_raw()
     }
-    /// Get raw value of ChimeDuration
+    /// Get raw value of 'ChimeDuration'
     ///
     /// - Start bit: 15
     /// - Signal size: 8 bits
@@ -388,7 +394,7 @@ impl Chime {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of ChimeDuration
+    /// Set value of 'ChimeDuration'
     #[inline(always)]
     pub fn set_chime_duration(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 0_u8 < value {
@@ -406,7 +412,7 @@ impl Chime {
         self.raw.view_bits_mut::<Msb0>()[8..16].store_be(value);
         Ok(())
     }
-    /// ChimeByte5
+    /// Get value of 'ChimeByte5'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -416,7 +422,7 @@ impl Chime {
     pub fn chime_byte5(&self) -> u8 {
         self.chime_byte5_raw()
     }
-    /// Get raw value of ChimeByte5
+    /// Get raw value of 'ChimeByte5'
     ///
     /// - Start bit: 39
     /// - Signal size: 8 bits
@@ -430,7 +436,7 @@ impl Chime {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of ChimeByte5
+    /// Set value of 'ChimeByte5'
     #[inline(always)]
     pub fn set_chime_byte5(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 0_u8 < value {
@@ -448,7 +454,7 @@ impl Chime {
         self.raw.view_bits_mut::<Msb0>()[32..40].store_be(value);
         Ok(())
     }
-    /// ChimeByte4
+    /// Get value of 'ChimeByte4'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -458,7 +464,7 @@ impl Chime {
     pub fn chime_byte4(&self) -> u8 {
         self.chime_byte4_raw()
     }
-    /// Get raw value of ChimeByte4
+    /// Get raw value of 'ChimeByte4'
     ///
     /// - Start bit: 31
     /// - Signal size: 8 bits
@@ -472,7 +478,7 @@ impl Chime {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of ChimeByte4
+    /// Set value of 'ChimeByte4'
     #[inline(always)]
     pub fn set_chime_byte4(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 0_u8 < value {
@@ -577,11 +583,11 @@ impl BlinkerStatus {
         StandardId::new_unchecked(0xc000)
     });
     pub const MESSAGE_SIZE: usize = 5;
-    /// Construct new BlinkerStatus from values
+    /// Construct new 'BlinkerStatus' from values
     pub fn new(
-        right_blinker: bool,
-        left_blinker: bool,
-        blinker_light: bool,
+        right_blinker: BlinkerStatusRightBlinker,
+        left_blinker: BlinkerStatusLeftBlinker,
+        blinker_light: BlinkerStatusBlinkerLight,
     ) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 5] };
         res.set_right_blinker(right_blinker)?;
@@ -593,7 +599,7 @@ impl BlinkerStatus {
     pub fn raw(&self) -> &[u8; 5] {
         &self.raw
     }
-    /// RightBlinker
+    /// Get value of 'RightBlinker'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -608,7 +614,7 @@ impl BlinkerStatus {
             _ => BlinkerStatusRightBlinker::_Other(self.right_blinker_raw()),
         }
     }
-    /// Get raw value of RightBlinker
+    /// Get raw value of 'RightBlinker'
     ///
     /// - Start bit: 6
     /// - Signal size: 1 bits
@@ -621,14 +627,18 @@ impl BlinkerStatus {
         let signal = self.raw.view_bits::<Msb0>()[1..2].load_be::<u8>();
         signal == 1
     }
-    /// Set value of RightBlinker
+    /// Set value of 'RightBlinker'
     #[inline(always)]
-    pub fn set_right_blinker(&mut self, value: bool) -> Result<(), CanError> {
+    pub fn set_right_blinker(
+        &mut self,
+        value: BlinkerStatusRightBlinker,
+    ) -> Result<(), CanError> {
+        let value = bool::from(value);
         let value = value as u8;
         self.raw.view_bits_mut::<Msb0>()[1..2].store_be(value);
         Ok(())
     }
-    /// LeftBlinker
+    /// Get value of 'LeftBlinker'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -643,7 +653,7 @@ impl BlinkerStatus {
             _ => BlinkerStatusLeftBlinker::_Other(self.left_blinker_raw()),
         }
     }
-    /// Get raw value of LeftBlinker
+    /// Get raw value of 'LeftBlinker'
     ///
     /// - Start bit: 7
     /// - Signal size: 1 bits
@@ -656,14 +666,18 @@ impl BlinkerStatus {
         let signal = self.raw.view_bits::<Msb0>()[0..1].load_be::<u8>();
         signal == 1
     }
-    /// Set value of LeftBlinker
+    /// Set value of 'LeftBlinker'
     #[inline(always)]
-    pub fn set_left_blinker(&mut self, value: bool) -> Result<(), CanError> {
+    pub fn set_left_blinker(
+        &mut self,
+        value: BlinkerStatusLeftBlinker,
+    ) -> Result<(), CanError> {
+        let value = bool::from(value);
         let value = value as u8;
         self.raw.view_bits_mut::<Msb0>()[0..1].store_be(value);
         Ok(())
     }
-    /// BlinkerLight
+    /// Get value of 'BlinkerLight'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -678,7 +692,7 @@ impl BlinkerStatus {
             _ => BlinkerStatusBlinkerLight::_Other(self.blinker_light_raw()),
         }
     }
-    /// Get raw value of BlinkerLight
+    /// Get raw value of 'BlinkerLight'
     ///
     /// - Start bit: 25
     /// - Signal size: 1 bits
@@ -691,9 +705,13 @@ impl BlinkerStatus {
         let signal = self.raw.view_bits::<Msb0>()[30..31].load_be::<u8>();
         signal == 1
     }
-    /// Set value of BlinkerLight
+    /// Set value of 'BlinkerLight'
     #[inline(always)]
-    pub fn set_blinker_light(&mut self, value: bool) -> Result<(), CanError> {
+    pub fn set_blinker_light(
+        &mut self,
+        value: BlinkerStatusBlinkerLight,
+    ) -> Result<(), CanError> {
+        let value = bool::from(value);
         let value = value as u8;
         self.raw.view_bits_mut::<Msb0>()[30..31].store_be(value);
         Ok(())
@@ -837,7 +855,7 @@ impl SteeringWheelAngle {
     pub const MESSAGE_SIZE: usize = 8;
     pub const STEERING_WHEEL_ANGLE_MIN: f32 = -540_f32;
     pub const STEERING_WHEEL_ANGLE_MAX: f32 = 540_f32;
-    /// Construct new SteeringWheelAngle from values
+    /// Construct new 'SteeringWheelAngle' from values
     pub fn new(steering_wheel_angle: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 8] };
         res.set_steering_wheel_angle(steering_wheel_angle)?;
@@ -847,7 +865,7 @@ impl SteeringWheelAngle {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// SteeringWheelAngle
+    /// Get value of 'SteeringWheelAngle'
     ///
     /// - Min: -540
     /// - Max: 540
@@ -857,7 +875,7 @@ impl SteeringWheelAngle {
     pub fn steering_wheel_angle(&self) -> f32 {
         self.steering_wheel_angle_raw()
     }
-    /// Get raw value of SteeringWheelAngle
+    /// Get raw value of 'SteeringWheelAngle'
     ///
     /// - Start bit: 39
     /// - Signal size: 16 bits
@@ -872,7 +890,7 @@ impl SteeringWheelAngle {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of SteeringWheelAngle
+    /// Set value of 'SteeringWheelAngle'
     #[inline(always)]
     pub fn set_steering_wheel_angle(&mut self, value: f32) -> Result<(), CanError> {
         if value < -540_f32 || 540_f32 < value {
@@ -976,8 +994,8 @@ impl GearShifter {
     pub const MESSAGE_SIZE: usize = 8;
     pub const GEAR_SHIFTER_MIN: u8 = 0_u8;
     pub const GEAR_SHIFTER_MAX: u8 = 3_u8;
-    /// Construct new GearShifter from values
-    pub fn new(gear_shifter: u8) -> Result<Self, CanError> {
+    /// Construct new 'GearShifter' from values
+    pub fn new(gear_shifter: GearShifterGearShifter) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 8] };
         res.set_gear_shifter(gear_shifter)?;
         Ok(res)
@@ -986,7 +1004,7 @@ impl GearShifter {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// GearShifter
+    /// Get value of 'GearShifter'
     ///
     /// - Min: 0
     /// - Max: 3
@@ -1001,7 +1019,7 @@ impl GearShifter {
             _ => GearShifterGearShifter::_Other(self.gear_shifter_raw()),
         }
     }
-    /// Get raw value of GearShifter
+    /// Get raw value of 'GearShifter'
     ///
     /// - Start bit: 17
     /// - Signal size: 2 bits
@@ -1015,9 +1033,13 @@ impl GearShifter {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of GearShifter
+    /// Set value of 'GearShifter'
     #[inline(always)]
-    pub fn set_gear_shifter(&mut self, value: u8) -> Result<(), CanError> {
+    pub fn set_gear_shifter(
+        &mut self,
+        value: GearShifterGearShifter,
+    ) -> Result<(), CanError> {
+        let value = u8::from(value);
         if value < 0_u8 || 3_u8 < value {
             return Err(CanError::ParameterOutOfRange {
                 message_id: GearShifter::MESSAGE_ID,
@@ -1174,9 +1196,9 @@ impl GasPedalRegenCruise {
     pub const GAS_PEDAL_MAX: u8 = 254_u8;
     pub const GEAR_SHIFTER2_NOT_USED_MIN: u8 = 0_u8;
     pub const GEAR_SHIFTER2_NOT_USED_MAX: u8 = 255_u8;
-    /// Construct new GasPedalRegenCruise from values
+    /// Construct new 'GasPedalRegenCruise' from values
     pub fn new(
-        cruise_control_active: bool,
+        cruise_control_active: GasPedalRegenCruiseCruiseControlActive,
         max_regen: bool,
         gas_pedal: u8,
         gear_shifter2_not_used: u8,
@@ -1192,7 +1214,7 @@ impl GasPedalRegenCruise {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// CruiseControlActive
+    /// Get value of 'CruiseControlActive'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -1211,7 +1233,7 @@ impl GasPedalRegenCruise {
             }
         }
     }
-    /// Get raw value of CruiseControlActive
+    /// Get raw value of 'CruiseControlActive'
     ///
     /// - Start bit: 56
     /// - Signal size: 1 bits
@@ -1224,14 +1246,18 @@ impl GasPedalRegenCruise {
         let signal = self.raw.view_bits::<Msb0>()[63..64].load_be::<u8>();
         signal == 1
     }
-    /// Set value of CruiseControlActive
+    /// Set value of 'CruiseControlActive'
     #[inline(always)]
-    pub fn set_cruise_control_active(&mut self, value: bool) -> Result<(), CanError> {
+    pub fn set_cruise_control_active(
+        &mut self,
+        value: GasPedalRegenCruiseCruiseControlActive,
+    ) -> Result<(), CanError> {
+        let value = bool::from(value);
         let value = value as u8;
         self.raw.view_bits_mut::<Msb0>()[63..64].store_be(value);
         Ok(())
     }
-    /// MaxRegen
+    /// Get value of 'MaxRegen'
     ///
     /// - Min: 0
     /// - Max: 1
@@ -1241,7 +1267,7 @@ impl GasPedalRegenCruise {
     pub fn max_regen(&self) -> bool {
         self.max_regen_raw()
     }
-    /// Get raw value of MaxRegen
+    /// Get raw value of 'MaxRegen'
     ///
     /// - Start bit: 12
     /// - Signal size: 1 bits
@@ -1254,14 +1280,14 @@ impl GasPedalRegenCruise {
         let signal = self.raw.view_bits::<Msb0>()[11..12].load_be::<u8>();
         signal == 1
     }
-    /// Set value of MaxRegen
+    /// Set value of 'MaxRegen'
     #[inline(always)]
     pub fn set_max_regen(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
         self.raw.view_bits_mut::<Msb0>()[11..12].store_be(value);
         Ok(())
     }
-    /// GasPedal
+    /// Get value of 'GasPedal'
     ///
     /// - Min: 0
     /// - Max: 254
@@ -1271,7 +1297,7 @@ impl GasPedalRegenCruise {
     pub fn gas_pedal(&self) -> u8 {
         self.gas_pedal_raw()
     }
-    /// Get raw value of GasPedal
+    /// Get raw value of 'GasPedal'
     ///
     /// - Start bit: 47
     /// - Signal size: 8 bits
@@ -1285,7 +1311,7 @@ impl GasPedalRegenCruise {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of GasPedal
+    /// Set value of 'GasPedal'
     #[inline(always)]
     pub fn set_gas_pedal(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 254_u8 < value {
@@ -1303,7 +1329,7 @@ impl GasPedalRegenCruise {
         self.raw.view_bits_mut::<Msb0>()[40..48].store_be(value);
         Ok(())
     }
-    /// GearShifter2NotUsed
+    /// Get value of 'GearShifter2NotUsed'
     ///
     /// - Min: 0
     /// - Max: 255
@@ -1313,7 +1339,7 @@ impl GasPedalRegenCruise {
     pub fn gear_shifter2_not_used(&self) -> u8 {
         self.gear_shifter2_not_used_raw()
     }
-    /// Get raw value of GearShifter2NotUsed
+    /// Get raw value of 'GearShifter2NotUsed'
     ///
     /// - Start bit: 55
     /// - Signal size: 8 bits
@@ -1327,7 +1353,7 @@ impl GasPedalRegenCruise {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of GearShifter2NotUsed
+    /// Set value of 'GearShifter2NotUsed'
     #[inline(always)]
     pub fn set_gear_shifter2_not_used(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 255_u8 < value {
@@ -1436,7 +1462,7 @@ impl BrakePedal {
     pub const BRAKE_LEVEL_MAX: u8 = 3_u8;
     pub const BRAKE_SENSOR_MIN: u8 = 0_u8;
     pub const BRAKE_SENSOR_MAX: u8 = 255_u8;
-    /// Construct new BrakePedal from values
+    /// Construct new 'BrakePedal' from values
     pub fn new(brake_level: u8, brake_sensor: u8) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_brake_level(brake_level)?;
@@ -1447,7 +1473,7 @@ impl BrakePedal {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// BrakeLevel
+    /// Get value of 'BrakeLevel'
     ///
     /// - Min: 0
     /// - Max: 3
@@ -1457,7 +1483,7 @@ impl BrakePedal {
     pub fn brake_level(&self) -> u8 {
         self.brake_level_raw()
     }
-    /// Get raw value of BrakeLevel
+    /// Get raw value of 'BrakeLevel'
     ///
     /// - Start bit: 2
     /// - Signal size: 2 bits
@@ -1471,7 +1497,7 @@ impl BrakePedal {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of BrakeLevel
+    /// Set value of 'BrakeLevel'
     #[inline(always)]
     pub fn set_brake_level(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 3_u8 < value {
@@ -1489,7 +1515,7 @@ impl BrakePedal {
         self.raw.view_bits_mut::<Msb0>()[5..7].store_be(value);
         Ok(())
     }
-    /// BrakeSensor
+    /// Get value of 'BrakeSensor'
     ///
     /// - Min: 0
     /// - Max: 255
@@ -1499,7 +1525,7 @@ impl BrakePedal {
     pub fn brake_sensor(&self) -> u8 {
         self.brake_sensor_raw()
     }
-    /// Get raw value of BrakeSensor
+    /// Get raw value of 'BrakeSensor'
     ///
     /// - Start bit: 15
     /// - Signal size: 8 bits
@@ -1513,7 +1539,7 @@ impl BrakePedal {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of BrakeSensor
+    /// Set value of 'BrakeSensor'
     #[inline(always)]
     pub fn set_brake_sensor(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 255_u8 < value {
@@ -1626,7 +1652,7 @@ impl WheelSpeed {
     pub const WHEEL_SPEED_RL_MAX: f32 = 70_f32;
     pub const WHEEL_SPEED_RR_MIN: f32 = 0_f32;
     pub const WHEEL_SPEED_RR_MAX: f32 = 70_f32;
-    /// Construct new WheelSpeed from values
+    /// Construct new 'WheelSpeed' from values
     pub fn new(
         wheel_speed_fl: f32,
         wheel_speed_fr: f32,
@@ -1644,7 +1670,7 @@ impl WheelSpeed {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// WheelSpeedFL
+    /// Get value of 'WheelSpeedFL'
     ///
     /// - Min: 0
     /// - Max: 70
@@ -1654,7 +1680,7 @@ impl WheelSpeed {
     pub fn wheel_speed_fl(&self) -> f32 {
         self.wheel_speed_fl_raw()
     }
-    /// Get raw value of WheelSpeedFL
+    /// Get raw value of 'WheelSpeedFL'
     ///
     /// - Start bit: 7
     /// - Signal size: 16 bits
@@ -1669,7 +1695,7 @@ impl WheelSpeed {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of WheelSpeedFL
+    /// Set value of 'WheelSpeedFL'
     #[inline(always)]
     pub fn set_wheel_speed_fl(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 70_f32 < value {
@@ -1683,7 +1709,7 @@ impl WheelSpeed {
         self.raw.view_bits_mut::<Msb0>()[0..16].store_be(value);
         Ok(())
     }
-    /// WheelSpeedFR
+    /// Get value of 'WheelSpeedFR'
     ///
     /// - Min: 0
     /// - Max: 70
@@ -1693,7 +1719,7 @@ impl WheelSpeed {
     pub fn wheel_speed_fr(&self) -> f32 {
         self.wheel_speed_fr_raw()
     }
-    /// Get raw value of WheelSpeedFR
+    /// Get raw value of 'WheelSpeedFR'
     ///
     /// - Start bit: 39
     /// - Signal size: 16 bits
@@ -1708,7 +1734,7 @@ impl WheelSpeed {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of WheelSpeedFR
+    /// Set value of 'WheelSpeedFR'
     #[inline(always)]
     pub fn set_wheel_speed_fr(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 70_f32 < value {
@@ -1722,7 +1748,7 @@ impl WheelSpeed {
         self.raw.view_bits_mut::<Msb0>()[32..48].store_be(value);
         Ok(())
     }
-    /// WheelSpeedRL
+    /// Get value of 'WheelSpeedRL'
     ///
     /// - Min: 0
     /// - Max: 70
@@ -1732,7 +1758,7 @@ impl WheelSpeed {
     pub fn wheel_speed_rl(&self) -> f32 {
         self.wheel_speed_rl_raw()
     }
-    /// Get raw value of WheelSpeedRL
+    /// Get raw value of 'WheelSpeedRL'
     ///
     /// - Start bit: 23
     /// - Signal size: 16 bits
@@ -1747,7 +1773,7 @@ impl WheelSpeed {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of WheelSpeedRL
+    /// Set value of 'WheelSpeedRL'
     #[inline(always)]
     pub fn set_wheel_speed_rl(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 70_f32 < value {
@@ -1761,7 +1787,7 @@ impl WheelSpeed {
         self.raw.view_bits_mut::<Msb0>()[16..32].store_be(value);
         Ok(())
     }
-    /// WheelSpeedRR
+    /// Get value of 'WheelSpeedRR'
     ///
     /// - Min: 0
     /// - Max: 70
@@ -1771,7 +1797,7 @@ impl WheelSpeed {
     pub fn wheel_speed_rr(&self) -> f32 {
         self.wheel_speed_rr_raw()
     }
-    /// Get raw value of WheelSpeedRR
+    /// Get raw value of 'WheelSpeedRR'
     ///
     /// - Start bit: 55
     /// - Signal size: 16 bits
@@ -1786,7 +1812,7 @@ impl WheelSpeed {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of WheelSpeedRR
+    /// Set value of 'WheelSpeedRR'
     #[inline(always)]
     pub fn set_wheel_speed_rr(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 70_f32 < value {
@@ -1866,7 +1892,7 @@ impl VehicleSpeed {
     pub const VEHICLE_SPEED1_MAX: f32 = 100_f32;
     pub const VEHICLE_SPEED2_MIN: f32 = 0_f32;
     pub const VEHICLE_SPEED2_MAX: f32 = 100_f32;
-    /// Construct new VehicleSpeed from values
+    /// Construct new 'VehicleSpeed' from values
     pub fn new(vehicle_speed1: f32, vehicle_speed2: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 8] };
         res.set_vehicle_speed1(vehicle_speed1)?;
@@ -1877,7 +1903,7 @@ impl VehicleSpeed {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// VehicleSpeed1
+    /// Get value of 'VehicleSpeed1'
     ///
     /// - Min: 0
     /// - Max: 100
@@ -1887,7 +1913,7 @@ impl VehicleSpeed {
     pub fn vehicle_speed1(&self) -> f32 {
         self.vehicle_speed1_raw()
     }
-    /// Get raw value of VehicleSpeed1
+    /// Get raw value of 'VehicleSpeed1'
     ///
     /// - Start bit: 7
     /// - Signal size: 16 bits
@@ -1902,7 +1928,7 @@ impl VehicleSpeed {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of VehicleSpeed1
+    /// Set value of 'VehicleSpeed1'
     #[inline(always)]
     pub fn set_vehicle_speed1(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 100_f32 < value {
@@ -1916,7 +1942,7 @@ impl VehicleSpeed {
         self.raw.view_bits_mut::<Msb0>()[0..16].store_be(value);
         Ok(())
     }
-    /// VehicleSpeed2
+    /// Get value of 'VehicleSpeed2'
     ///
     /// - Min: 0
     /// - Max: 100
@@ -1926,7 +1952,7 @@ impl VehicleSpeed {
     pub fn vehicle_speed2(&self) -> f32 {
         self.vehicle_speed2_raw()
     }
-    /// Get raw value of VehicleSpeed2
+    /// Get raw value of 'VehicleSpeed2'
     ///
     /// - Start bit: 39
     /// - Signal size: 16 bits
@@ -1941,7 +1967,7 @@ impl VehicleSpeed {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of VehicleSpeed2
+    /// Set value of 'VehicleSpeed2'
     #[inline(always)]
     pub fn set_vehicle_speed2(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 100_f32 < value {
@@ -2044,8 +2070,8 @@ impl CruiseButtons {
     pub const MESSAGE_SIZE: usize = 3;
     pub const CRUISE_BUTTONS_MIN: u8 = 0_u8;
     pub const CRUISE_BUTTONS_MAX: u8 = 12_u8;
-    /// Construct new CruiseButtons from values
-    pub fn new(cruise_buttons: u8) -> Result<Self, CanError> {
+    /// Construct new 'CruiseButtons' from values
+    pub fn new(cruise_buttons: CruiseButtonsCruiseButtons) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 3] };
         res.set_cruise_buttons(cruise_buttons)?;
         Ok(res)
@@ -2054,7 +2080,7 @@ impl CruiseButtons {
     pub fn raw(&self) -> &[u8; 3] {
         &self.raw
     }
-    /// CruiseButtons
+    /// Get value of 'CruiseButtons'
     ///
     /// - Min: 0
     /// - Max: 12
@@ -2072,7 +2098,7 @@ impl CruiseButtons {
             _ => CruiseButtonsCruiseButtons::_Other(self.cruise_buttons_raw()),
         }
     }
-    /// Get raw value of CruiseButtons
+    /// Get raw value of 'CruiseButtons'
     ///
     /// - Start bit: 3
     /// - Signal size: 3 bits
@@ -2086,9 +2112,13 @@ impl CruiseButtons {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of CruiseButtons
+    /// Set value of 'CruiseButtons'
     #[inline(always)]
-    pub fn set_cruise_buttons(&mut self, value: u8) -> Result<(), CanError> {
+    pub fn set_cruise_buttons(
+        &mut self,
+        value: CruiseButtonsCruiseButtons,
+    ) -> Result<(), CanError> {
+        let value = u8::from(value);
         if value < 0_u8 || 12_u8 < value {
             return Err(CanError::ParameterOutOfRange {
                 message_id: CruiseButtons::MESSAGE_ID,
@@ -2168,8 +2198,8 @@ impl CruiseButtons2 {
     pub const MESSAGE_SIZE: usize = 1;
     pub const LKA_GAP_BUTTON_MIN: u8 = 0_u8;
     pub const LKA_GAP_BUTTON_MAX: u8 = 2_u8;
-    /// Construct new CruiseButtons2 from values
-    pub fn new(lka_gap_button: u8) -> Result<Self, CanError> {
+    /// Construct new 'CruiseButtons2' from values
+    pub fn new(lka_gap_button: CruiseButtons2LkaGapButton) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 1] };
         res.set_lka_gap_button(lka_gap_button)?;
         Ok(res)
@@ -2178,7 +2208,7 @@ impl CruiseButtons2 {
     pub fn raw(&self) -> &[u8; 1] {
         &self.raw
     }
-    /// LKAGapButton
+    /// Get value of 'LKAGapButton'
     ///
     /// - Min: 0
     /// - Max: 2
@@ -2194,7 +2224,7 @@ impl CruiseButtons2 {
             _ => CruiseButtons2LkaGapButton::_Other(self.lka_gap_button_raw()),
         }
     }
-    /// Get raw value of LKAGapButton
+    /// Get raw value of 'LKAGapButton'
     ///
     /// - Start bit: 1
     /// - Signal size: 2 bits
@@ -2208,9 +2238,13 @@ impl CruiseButtons2 {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of LKAGapButton
+    /// Set value of 'LKAGapButton'
     #[inline(always)]
-    pub fn set_lka_gap_button(&mut self, value: u8) -> Result<(), CanError> {
+    pub fn set_lka_gap_button(
+        &mut self,
+        value: CruiseButtons2LkaGapButton,
+    ) -> Result<(), CanError> {
+        let value = u8::from(value);
         if value < 0_u8 || 2_u8 < value {
             return Err(CanError::ParameterOutOfRange {
                 message_id: CruiseButtons2::MESSAGE_ID,

@@ -77,7 +77,7 @@ impl TheMessage {
     pub const MESSAGE_CYCLE_TIME_MS: u32 = 1000;
     pub const THE_SIGNAL_MIN: i8 = 0_i8;
     pub const THE_SIGNAL_MAX: i8 = 0_i8;
-    /// Construct new TheMessage from values
+    /// Construct new 'TheMessage' from values
     pub fn new(the_signal: i8) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 8] };
         res.set_the_signal(the_signal)?;
@@ -87,7 +87,7 @@ impl TheMessage {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// TheSignal
+    /// Get value of 'TheSignal'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -97,7 +97,7 @@ impl TheMessage {
     pub fn the_signal(&self) -> i8 {
         self.the_signal_raw()
     }
-    /// Get raw value of TheSignal
+    /// Get raw value of 'TheSignal'
     ///
     /// - Start bit: 0
     /// - Signal size: 8 bits
@@ -112,7 +112,7 @@ impl TheMessage {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of TheSignal
+    /// Set value of 'TheSignal'
     #[inline(always)]
     pub fn set_the_signal(&mut self, value: i8) -> Result<(), CanError> {
         if value < 0_i8 || 0_i8 < value {
@@ -194,7 +194,7 @@ impl TheOtherMessage {
     pub const MESSAGE_SIZE: usize = 8;
     pub const THE_SIGNAL_MIN: i8 = 0_i8;
     pub const THE_SIGNAL_MAX: i8 = 0_i8;
-    /// Construct new TheOtherMessage from values
+    /// Construct new 'TheOtherMessage' from values
     pub fn new(the_signal: i8) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 8] };
         res.set_the_signal(the_signal)?;
@@ -204,7 +204,7 @@ impl TheOtherMessage {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// TheSignal
+    /// Get value of 'TheSignal'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -214,7 +214,7 @@ impl TheOtherMessage {
     pub fn the_signal(&self) -> i8 {
         self.the_signal_raw()
     }
-    /// Get raw value of TheSignal
+    /// Get raw value of 'TheSignal'
     ///
     /// - Start bit: 0
     /// - Signal size: 8 bits
@@ -229,7 +229,7 @@ impl TheOtherMessage {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of TheSignal
+    /// Set value of 'TheSignal'
     #[inline(always)]
     pub fn set_the_signal(&mut self, value: i8) -> Result<(), CanError> {
         if value < 0_i8 || 0_i8 < value {

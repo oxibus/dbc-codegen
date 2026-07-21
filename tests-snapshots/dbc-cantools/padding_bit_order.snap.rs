@@ -84,7 +84,7 @@ impl Msg0 {
     pub const A_MAX: u16 = 32767_u16;
     pub const C_MIN: u16 = 0_u16;
     pub const C_MAX: u16 = 32767_u16;
-    /// Construct new MSG0 from values
+    /// Construct new 'MSG0' from values
     pub fn new(a: u16, b: bool, c: u16, d: bool) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 8] };
         res.set_a(a)?;
@@ -97,7 +97,7 @@ impl Msg0 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// A
+    /// Get value of 'A'
     ///
     /// - Min: 0
     /// - Max: 32767
@@ -107,7 +107,7 @@ impl Msg0 {
     pub fn a(&self) -> u16 {
         self.a_raw()
     }
-    /// Get raw value of A
+    /// Get raw value of 'A'
     ///
     /// - Start bit: 6
     /// - Signal size: 15 bits
@@ -121,7 +121,7 @@ impl Msg0 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of A
+    /// Set value of 'A'
     #[inline(always)]
     pub fn set_a(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 32767_u16 < value {
@@ -139,7 +139,7 @@ impl Msg0 {
         self.raw.view_bits_mut::<Msb0>()[1..16].store_be(value);
         Ok(())
     }
-    /// B
+    /// Get value of 'B'
     ///
     /// - Min: 0
     /// - Max: 1
@@ -149,7 +149,7 @@ impl Msg0 {
     pub fn b(&self) -> bool {
         self.b_raw()
     }
-    /// Get raw value of B
+    /// Get raw value of 'B'
     ///
     /// - Start bit: 7
     /// - Signal size: 1 bits
@@ -162,14 +162,14 @@ impl Msg0 {
         let signal = self.raw.view_bits::<Msb0>()[0..1].load_be::<u8>();
         signal == 1
     }
-    /// Set value of B
+    /// Set value of 'B'
     #[inline(always)]
     pub fn set_b(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
         self.raw.view_bits_mut::<Msb0>()[0..1].store_be(value);
         Ok(())
     }
-    /// C
+    /// Get value of 'C'
     ///
     /// - Min: 0
     /// - Max: 32767
@@ -179,7 +179,7 @@ impl Msg0 {
     pub fn c(&self) -> u16 {
         self.c_raw()
     }
-    /// Get raw value of C
+    /// Get raw value of 'C'
     ///
     /// - Start bit: 38
     /// - Signal size: 15 bits
@@ -193,7 +193,7 @@ impl Msg0 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of C
+    /// Set value of 'C'
     #[inline(always)]
     pub fn set_c(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 32767_u16 < value {
@@ -211,7 +211,7 @@ impl Msg0 {
         self.raw.view_bits_mut::<Msb0>()[33..48].store_be(value);
         Ok(())
     }
-    /// D
+    /// Get value of 'D'
     ///
     /// - Min: 0
     /// - Max: 1
@@ -221,7 +221,7 @@ impl Msg0 {
     pub fn d(&self) -> bool {
         self.d_raw()
     }
-    /// Get raw value of D
+    /// Get raw value of 'D'
     ///
     /// - Start bit: 39
     /// - Signal size: 1 bits
@@ -234,7 +234,7 @@ impl Msg0 {
         let signal = self.raw.view_bits::<Msb0>()[32..33].load_be::<u8>();
         signal == 1
     }
-    /// Set value of D
+    /// Set value of 'D'
     #[inline(always)]
     pub fn set_d(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
@@ -307,7 +307,7 @@ impl Msg1 {
     pub const F_MAX: u16 = 32767_u16;
     pub const H_MIN: u16 = 0_u16;
     pub const H_MAX: u16 = 32767_u16;
-    /// Construct new MSG1 from values
+    /// Construct new 'MSG1' from values
     pub fn new(e: bool, f: u16, g: bool, h: u16) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 8] };
         res.set_e(e)?;
@@ -320,7 +320,7 @@ impl Msg1 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// E
+    /// Get value of 'E'
     ///
     /// - Min: 0
     /// - Max: 1
@@ -330,7 +330,7 @@ impl Msg1 {
     pub fn e(&self) -> bool {
         self.e_raw()
     }
-    /// Get raw value of E
+    /// Get raw value of 'E'
     ///
     /// - Start bit: 0
     /// - Signal size: 1 bits
@@ -343,14 +343,14 @@ impl Msg1 {
         let signal = self.raw.view_bits::<Lsb0>()[0..1].load_le::<u8>();
         signal == 1
     }
-    /// Set value of E
+    /// Set value of 'E'
     #[inline(always)]
     pub fn set_e(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[0..1].store_le(value);
         Ok(())
     }
-    /// F
+    /// Get value of 'F'
     ///
     /// - Min: 0
     /// - Max: 32767
@@ -360,7 +360,7 @@ impl Msg1 {
     pub fn f(&self) -> u16 {
         self.f_raw()
     }
-    /// Get raw value of F
+    /// Get raw value of 'F'
     ///
     /// - Start bit: 1
     /// - Signal size: 15 bits
@@ -374,7 +374,7 @@ impl Msg1 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of F
+    /// Set value of 'F'
     #[inline(always)]
     pub fn set_f(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 32767_u16 < value {
@@ -392,7 +392,7 @@ impl Msg1 {
         self.raw.view_bits_mut::<Lsb0>()[1..16].store_le(value);
         Ok(())
     }
-    /// G
+    /// Get value of 'G'
     ///
     /// - Min: 0
     /// - Max: 1
@@ -402,7 +402,7 @@ impl Msg1 {
     pub fn g(&self) -> bool {
         self.g_raw()
     }
-    /// Get raw value of G
+    /// Get raw value of 'G'
     ///
     /// - Start bit: 32
     /// - Signal size: 1 bits
@@ -415,14 +415,14 @@ impl Msg1 {
         let signal = self.raw.view_bits::<Lsb0>()[32..33].load_le::<u8>();
         signal == 1
     }
-    /// Set value of G
+    /// Set value of 'G'
     #[inline(always)]
     pub fn set_g(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[32..33].store_le(value);
         Ok(())
     }
-    /// H
+    /// Get value of 'H'
     ///
     /// - Min: 0
     /// - Max: 32767
@@ -432,7 +432,7 @@ impl Msg1 {
     pub fn h(&self) -> u16 {
         self.h_raw()
     }
-    /// Get raw value of H
+    /// Get raw value of 'H'
     ///
     /// - Start bit: 33
     /// - Signal size: 15 bits
@@ -446,7 +446,7 @@ impl Msg1 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of H
+    /// Set value of 'H'
     #[inline(always)]
     pub fn set_h(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 32767_u16 < value {
@@ -532,7 +532,7 @@ impl Msg2 {
     pub const J_MAX: u8 = 15_u8;
     pub const K_MIN: u8 = 0_u8;
     pub const K_MAX: u8 = 15_u8;
-    /// Construct new MSG2 from values
+    /// Construct new 'MSG2' from values
     pub fn new(i: u8, j: u8, k: u8) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 8] };
         res.set_i(i)?;
@@ -544,7 +544,7 @@ impl Msg2 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// I
+    /// Get value of 'I'
     ///
     /// - Min: 0
     /// - Max: 15
@@ -554,7 +554,7 @@ impl Msg2 {
     pub fn i(&self) -> u8 {
         self.i_raw()
     }
-    /// Get raw value of I
+    /// Get raw value of 'I'
     ///
     /// - Start bit: 0
     /// - Signal size: 4 bits
@@ -568,7 +568,7 @@ impl Msg2 {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of I
+    /// Set value of 'I'
     #[inline(always)]
     pub fn set_i(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 15_u8 < value {
@@ -586,7 +586,7 @@ impl Msg2 {
         self.raw.view_bits_mut::<Lsb0>()[0..4].store_le(value);
         Ok(())
     }
-    /// J
+    /// Get value of 'J'
     ///
     /// - Min: 0
     /// - Max: 15
@@ -596,7 +596,7 @@ impl Msg2 {
     pub fn j(&self) -> u8 {
         self.j_raw()
     }
-    /// Get raw value of J
+    /// Get raw value of 'J'
     ///
     /// - Start bit: 4
     /// - Signal size: 4 bits
@@ -610,7 +610,7 @@ impl Msg2 {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of J
+    /// Set value of 'J'
     #[inline(always)]
     pub fn set_j(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 15_u8 < value {
@@ -628,7 +628,7 @@ impl Msg2 {
         self.raw.view_bits_mut::<Lsb0>()[4..8].store_le(value);
         Ok(())
     }
-    /// K
+    /// Get value of 'K'
     ///
     /// - Min: 0
     /// - Max: 15
@@ -638,7 +638,7 @@ impl Msg2 {
     pub fn k(&self) -> u8 {
         self.k_raw()
     }
-    /// Get raw value of K
+    /// Get raw value of 'K'
     ///
     /// - Start bit: 8
     /// - Signal size: 4 bits
@@ -652,7 +652,7 @@ impl Msg2 {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of K
+    /// Set value of 'K'
     #[inline(always)]
     pub fn set_k(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 15_u8 < value {
@@ -734,7 +734,7 @@ impl Msg3 {
     pub const MESSAGE_SIZE: usize = 8;
     pub const L_MIN: u64 = 0_u64;
     pub const L_MAX: u64 = 18446744073709551615_u64;
-    /// Construct new MSG3 from values
+    /// Construct new 'MSG3' from values
     pub fn new(l: u64) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 8] };
         res.set_l(l)?;
@@ -744,7 +744,7 @@ impl Msg3 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// L
+    /// Get value of 'L'
     ///
     /// - Min: 0
     /// - Max: 18446744073709551615
@@ -754,7 +754,7 @@ impl Msg3 {
     pub fn l(&self) -> u64 {
         self.l_raw()
     }
-    /// Get raw value of L
+    /// Get raw value of 'L'
     ///
     /// - Start bit: 7
     /// - Signal size: 64 bits
@@ -768,7 +768,7 @@ impl Msg3 {
         let factor = 1;
         u64::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of L
+    /// Set value of 'L'
     #[inline(always)]
     pub fn set_l(&mut self, value: u64) -> Result<(), CanError> {
         if value < 0_u64 || 18446744073709551615_u64 < value {
@@ -850,7 +850,7 @@ impl Msg4 {
     pub const MESSAGE_SIZE: usize = 8;
     pub const M_MIN: u64 = 0_u64;
     pub const M_MAX: u64 = 18446744073709551615_u64;
-    /// Construct new MSG4 from values
+    /// Construct new 'MSG4' from values
     pub fn new(m: u64) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 8] };
         res.set_m(m)?;
@@ -860,7 +860,7 @@ impl Msg4 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// M
+    /// Get value of 'M'
     ///
     /// - Min: 0
     /// - Max: 18446744073709551615
@@ -870,7 +870,7 @@ impl Msg4 {
     pub fn m(&self) -> u64 {
         self.m_raw()
     }
-    /// Get raw value of M
+    /// Get raw value of 'M'
     ///
     /// - Start bit: 0
     /// - Signal size: 64 bits
@@ -884,7 +884,7 @@ impl Msg4 {
         let factor = 1;
         u64::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of M
+    /// Set value of 'M'
     #[inline(always)]
     pub fn set_m(&mut self, value: u64) -> Result<(), CanError> {
         if value < 0_u64 || 18446744073709551615_u64 < value {

@@ -91,8 +91,10 @@ impl DriverHeartbeat {
     pub const MESSAGE_CYCLE_TIME_MS: u32 = 1000;
     pub const DRIVER_HEARTBEAT_CMD_MIN: u8 = 0_u8;
     pub const DRIVER_HEARTBEAT_CMD_MAX: u8 = 0_u8;
-    /// Construct new DRIVER_HEARTBEAT from values
-    pub fn new(driver_heartbeat_cmd: u8) -> Result<Self, CanError> {
+    /// Construct new 'DRIVER_HEARTBEAT' from values
+    pub fn new(
+        driver_heartbeat_cmd: DriverHeartbeatDriverHeartbeatCmd,
+    ) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 1] };
         res.set_driver_heartbeat_cmd(driver_heartbeat_cmd)?;
         Ok(res)
@@ -101,7 +103,7 @@ impl DriverHeartbeat {
     pub fn raw(&self) -> &[u8; 1] {
         &self.raw
     }
-    /// DRIVER_HEARTBEAT_cmd
+    /// Get value of 'DRIVER_HEARTBEAT_cmd'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -121,7 +123,7 @@ impl DriverHeartbeat {
             }
         }
     }
-    /// Get raw value of DRIVER_HEARTBEAT_cmd
+    /// Get raw value of 'DRIVER_HEARTBEAT_cmd'
     ///
     /// - Start bit: 0
     /// - Signal size: 8 bits
@@ -135,9 +137,13 @@ impl DriverHeartbeat {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of DRIVER_HEARTBEAT_cmd
+    /// Set value of 'DRIVER_HEARTBEAT_cmd'
     #[inline(always)]
-    pub fn set_driver_heartbeat_cmd(&mut self, value: u8) -> Result<(), CanError> {
+    pub fn set_driver_heartbeat_cmd(
+        &mut self,
+        value: DriverHeartbeatDriverHeartbeatCmd,
+    ) -> Result<(), CanError> {
+        let value = u8::from(value);
         if value < 0_u8 || 0_u8 < value {
             return Err(CanError::ParameterOutOfRange {
                 message_id: DriverHeartbeat::MESSAGE_ID,
@@ -251,9 +257,9 @@ impl IoDebug {
     pub const IO_DEBUG_TEST_SIGNED_MAX: i8 = 0_i8;
     pub const IO_DEBUG_TEST_UNSIGNED_MIN: u8 = 0_u8;
     pub const IO_DEBUG_TEST_UNSIGNED_MAX: u8 = 0_u8;
-    /// Construct new IO_DEBUG from values
+    /// Construct new 'IO_DEBUG' from values
     pub fn new(
-        io_debug_test_enum: u8,
+        io_debug_test_enum: IoDebugIoDebugTestEnum,
         io_debug_test_float: f32,
         io_debug_test_signed: i8,
         io_debug_test_unsigned: u8,
@@ -269,7 +275,7 @@ impl IoDebug {
     pub fn raw(&self) -> &[u8; 4] {
         &self.raw
     }
-    /// IO_DEBUG_test_enum
+    /// Get value of 'IO_DEBUG_test_enum'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -284,7 +290,7 @@ impl IoDebug {
             _ => IoDebugIoDebugTestEnum::_Other(self.io_debug_test_enum_raw()),
         }
     }
-    /// Get raw value of IO_DEBUG_test_enum
+    /// Get raw value of 'IO_DEBUG_test_enum'
     ///
     /// - Start bit: 8
     /// - Signal size: 8 bits
@@ -298,9 +304,13 @@ impl IoDebug {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of IO_DEBUG_test_enum
+    /// Set value of 'IO_DEBUG_test_enum'
     #[inline(always)]
-    pub fn set_io_debug_test_enum(&mut self, value: u8) -> Result<(), CanError> {
+    pub fn set_io_debug_test_enum(
+        &mut self,
+        value: IoDebugIoDebugTestEnum,
+    ) -> Result<(), CanError> {
+        let value = u8::from(value);
         if value < 0_u8 || 0_u8 < value {
             return Err(CanError::ParameterOutOfRange {
                 message_id: IoDebug::MESSAGE_ID,
@@ -316,7 +326,7 @@ impl IoDebug {
         self.raw.view_bits_mut::<Lsb0>()[8..16].store_le(value);
         Ok(())
     }
-    /// IO_DEBUG_test_float
+    /// Get value of 'IO_DEBUG_test_float'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -326,7 +336,7 @@ impl IoDebug {
     pub fn io_debug_test_float(&self) -> f32 {
         self.io_debug_test_float_raw()
     }
-    /// Get raw value of IO_DEBUG_test_float
+    /// Get raw value of 'IO_DEBUG_test_float'
     ///
     /// - Start bit: 24
     /// - Signal size: 8 bits
@@ -341,7 +351,7 @@ impl IoDebug {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of IO_DEBUG_test_float
+    /// Set value of 'IO_DEBUG_test_float'
     #[inline(always)]
     pub fn set_io_debug_test_float(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -355,7 +365,7 @@ impl IoDebug {
         self.raw.view_bits_mut::<Lsb0>()[24..32].store_le(value);
         Ok(())
     }
-    /// IO_DEBUG_test_signed
+    /// Get value of 'IO_DEBUG_test_signed'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -365,7 +375,7 @@ impl IoDebug {
     pub fn io_debug_test_signed(&self) -> i8 {
         self.io_debug_test_signed_raw()
     }
-    /// Get raw value of IO_DEBUG_test_signed
+    /// Get raw value of 'IO_DEBUG_test_signed'
     ///
     /// - Start bit: 16
     /// - Signal size: 8 bits
@@ -380,7 +390,7 @@ impl IoDebug {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of IO_DEBUG_test_signed
+    /// Set value of 'IO_DEBUG_test_signed'
     #[inline(always)]
     pub fn set_io_debug_test_signed(&mut self, value: i8) -> Result<(), CanError> {
         if value < 0_i8 || 0_i8 < value {
@@ -399,7 +409,7 @@ impl IoDebug {
         self.raw.view_bits_mut::<Lsb0>()[16..24].store_le(value);
         Ok(())
     }
-    /// IO_DEBUG_test_unsigned
+    /// Get value of 'IO_DEBUG_test_unsigned'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -409,7 +419,7 @@ impl IoDebug {
     pub fn io_debug_test_unsigned(&self) -> u8 {
         self.io_debug_test_unsigned_raw()
     }
-    /// Get raw value of IO_DEBUG_test_unsigned
+    /// Get raw value of 'IO_DEBUG_test_unsigned'
     ///
     /// - Start bit: 0
     /// - Signal size: 8 bits
@@ -423,7 +433,7 @@ impl IoDebug {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of IO_DEBUG_test_unsigned
+    /// Set value of 'IO_DEBUG_test_unsigned'
     #[inline(always)]
     pub fn set_io_debug_test_unsigned(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 0_u8 < value {
@@ -533,7 +543,7 @@ impl MotorCmd {
     pub const MOTOR_CMD_DRIVE_MAX: u8 = 9_u8;
     pub const MOTOR_CMD_STEER_MIN: i8 = -5_i8;
     pub const MOTOR_CMD_STEER_MAX: i8 = 5_i8;
-    /// Construct new MOTOR_CMD from values
+    /// Construct new 'MOTOR_CMD' from values
     pub fn new(motor_cmd_drive: u8, motor_cmd_steer: i8) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 1] };
         res.set_motor_cmd_drive(motor_cmd_drive)?;
@@ -544,7 +554,7 @@ impl MotorCmd {
     pub fn raw(&self) -> &[u8; 1] {
         &self.raw
     }
-    /// MOTOR_CMD_drive
+    /// Get value of 'MOTOR_CMD_drive'
     ///
     /// - Min: 0
     /// - Max: 9
@@ -554,7 +564,7 @@ impl MotorCmd {
     pub fn motor_cmd_drive(&self) -> u8 {
         self.motor_cmd_drive_raw()
     }
-    /// Get raw value of MOTOR_CMD_drive
+    /// Get raw value of 'MOTOR_CMD_drive'
     ///
     /// - Start bit: 4
     /// - Signal size: 4 bits
@@ -568,7 +578,7 @@ impl MotorCmd {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MOTOR_CMD_drive
+    /// Set value of 'MOTOR_CMD_drive'
     #[inline(always)]
     pub fn set_motor_cmd_drive(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 9_u8 < value {
@@ -586,7 +596,7 @@ impl MotorCmd {
         self.raw.view_bits_mut::<Lsb0>()[4..8].store_le(value);
         Ok(())
     }
-    /// MOTOR_CMD_steer
+    /// Get value of 'MOTOR_CMD_steer'
     ///
     /// - Min: -5
     /// - Max: 5
@@ -596,7 +606,7 @@ impl MotorCmd {
     pub fn motor_cmd_steer(&self) -> i8 {
         self.motor_cmd_steer_raw()
     }
-    /// Get raw value of MOTOR_CMD_steer
+    /// Get raw value of 'MOTOR_CMD_steer'
     ///
     /// - Start bit: 0
     /// - Signal size: 4 bits
@@ -611,7 +621,7 @@ impl MotorCmd {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_sub(5)
     }
-    /// Set value of MOTOR_CMD_steer
+    /// Set value of 'MOTOR_CMD_steer'
     #[inline(always)]
     pub fn set_motor_cmd_steer(&mut self, value: i8) -> Result<(), CanError> {
         if value < -5_i8 || 5_i8 < value {
@@ -695,7 +705,7 @@ impl MotorStatus {
     pub const MESSAGE_CYCLE_TIME_MS: u32 = 100;
     pub const MOTOR_STATUS_SPEED_KPH_MIN: f32 = 0_f32;
     pub const MOTOR_STATUS_SPEED_KPH_MAX: f32 = 0_f32;
-    /// Construct new MOTOR_STATUS from values
+    /// Construct new 'MOTOR_STATUS' from values
     pub fn new(
         motor_status_speed_kph: f32,
         motor_status_wheel_error: bool,
@@ -709,7 +719,7 @@ impl MotorStatus {
     pub fn raw(&self) -> &[u8; 3] {
         &self.raw
     }
-    /// MOTOR_STATUS_speed_kph
+    /// Get value of 'MOTOR_STATUS_speed_kph'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -719,7 +729,7 @@ impl MotorStatus {
     pub fn motor_status_speed_kph(&self) -> f32 {
         self.motor_status_speed_kph_raw()
     }
-    /// Get raw value of MOTOR_STATUS_speed_kph
+    /// Get raw value of 'MOTOR_STATUS_speed_kph'
     ///
     /// - Start bit: 8
     /// - Signal size: 16 bits
@@ -734,7 +744,7 @@ impl MotorStatus {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of MOTOR_STATUS_speed_kph
+    /// Set value of 'MOTOR_STATUS_speed_kph'
     #[inline(always)]
     pub fn set_motor_status_speed_kph(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -748,7 +758,7 @@ impl MotorStatus {
         self.raw.view_bits_mut::<Lsb0>()[8..24].store_le(value);
         Ok(())
     }
-    /// MOTOR_STATUS_wheel_error
+    /// Get value of 'MOTOR_STATUS_wheel_error'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -758,7 +768,7 @@ impl MotorStatus {
     pub fn motor_status_wheel_error(&self) -> bool {
         self.motor_status_wheel_error_raw()
     }
-    /// Get raw value of MOTOR_STATUS_wheel_error
+    /// Get raw value of 'MOTOR_STATUS_wheel_error'
     ///
     /// - Start bit: 0
     /// - Signal size: 1 bits
@@ -771,7 +781,7 @@ impl MotorStatus {
         let signal = self.raw.view_bits::<Lsb0>()[0..1].load_le::<u8>();
         signal == 1
     }
-    /// Set value of MOTOR_STATUS_wheel_error
+    /// Set value of 'MOTOR_STATUS_wheel_error'
     #[inline(always)]
     pub fn set_motor_status_wheel_error(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
@@ -861,7 +871,7 @@ impl SensorSonars {
     pub const SENSOR_SONARS_REAR_MAX: f32 = 0_f32;
     pub const SENSOR_SONARS_RIGHT_MIN: f32 = 0_f32;
     pub const SENSOR_SONARS_RIGHT_MAX: f32 = 0_f32;
-    /// Construct new SENSOR_SONARS from values
+    /// Construct new 'SENSOR_SONARS' from values
     pub fn new(
         sensor_sonars_err_count: u16,
         sensor_sonars_mux: u8,
@@ -875,7 +885,7 @@ impl SensorSonars {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// SENSOR_SONARS_err_count
+    /// Get value of 'SENSOR_SONARS_err_count'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -885,7 +895,7 @@ impl SensorSonars {
     pub fn sensor_sonars_err_count(&self) -> u16 {
         self.sensor_sonars_err_count_raw()
     }
-    /// Get raw value of SENSOR_SONARS_err_count
+    /// Get raw value of 'SENSOR_SONARS_err_count'
     ///
     /// - Start bit: 4
     /// - Signal size: 12 bits
@@ -899,7 +909,7 @@ impl SensorSonars {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of SENSOR_SONARS_err_count
+    /// Set value of 'SENSOR_SONARS_err_count'
     #[inline(always)]
     pub fn set_sensor_sonars_err_count(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -917,7 +927,7 @@ impl SensorSonars {
         self.raw.view_bits_mut::<Lsb0>()[4..16].store_le(value);
         Ok(())
     }
-    /// Get raw value of SENSOR_SONARS_mux
+    /// Get raw value of 'SENSOR_SONARS_mux'
     ///
     /// - Start bit: 0
     /// - Signal size: 4 bits
@@ -957,7 +967,7 @@ impl SensorSonars {
             }
         }
     }
-    /// Set value of SENSOR_SONARS_mux
+    /// Set value of 'SENSOR_SONARS_mux'
     #[inline(always)]
     fn set_sensor_sonars_mux(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 0_u8 < value {
@@ -975,7 +985,7 @@ impl SensorSonars {
         self.raw.view_bits_mut::<Lsb0>()[0..4].store_le(value);
         Ok(())
     }
-    /// Set value of SENSOR_SONARS_mux
+    /// Set value of 'SENSOR_SONARS_mux'
     #[inline(always)]
     pub fn set_m0(
         &mut self,
@@ -987,7 +997,7 @@ impl SensorSonars {
         self.set_sensor_sonars_mux(0)?;
         Ok(())
     }
-    /// Set value of SENSOR_SONARS_mux
+    /// Set value of 'SENSOR_SONARS_mux'
     #[inline(always)]
     pub fn set_m1(
         &mut self,
@@ -1078,7 +1088,7 @@ impl SensorSonarsSensorSonarsMuxM0 {
     pub fn new() -> Self {
         Self { raw: [0u8; 8] }
     }
-    /// SENSOR_SONARS_left
+    /// Get value of 'SENSOR_SONARS_left'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -1088,7 +1098,7 @@ impl SensorSonarsSensorSonarsMuxM0 {
     pub fn sensor_sonars_left(&self) -> f32 {
         self.sensor_sonars_left_raw()
     }
-    /// Get raw value of SENSOR_SONARS_left
+    /// Get raw value of 'SENSOR_SONARS_left'
     ///
     /// - Start bit: 16
     /// - Signal size: 12 bits
@@ -1103,7 +1113,7 @@ impl SensorSonarsSensorSonarsMuxM0 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of SENSOR_SONARS_left
+    /// Set value of 'SENSOR_SONARS_left'
     #[inline(always)]
     pub fn set_sensor_sonars_left(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -1117,7 +1127,7 @@ impl SensorSonarsSensorSonarsMuxM0 {
         self.raw.view_bits_mut::<Lsb0>()[16..28].store_le(value);
         Ok(())
     }
-    /// SENSOR_SONARS_middle
+    /// Get value of 'SENSOR_SONARS_middle'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -1127,7 +1137,7 @@ impl SensorSonarsSensorSonarsMuxM0 {
     pub fn sensor_sonars_middle(&self) -> f32 {
         self.sensor_sonars_middle_raw()
     }
-    /// Get raw value of SENSOR_SONARS_middle
+    /// Get raw value of 'SENSOR_SONARS_middle'
     ///
     /// - Start bit: 28
     /// - Signal size: 12 bits
@@ -1142,7 +1152,7 @@ impl SensorSonarsSensorSonarsMuxM0 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of SENSOR_SONARS_middle
+    /// Set value of 'SENSOR_SONARS_middle'
     #[inline(always)]
     pub fn set_sensor_sonars_middle(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -1156,7 +1166,7 @@ impl SensorSonarsSensorSonarsMuxM0 {
         self.raw.view_bits_mut::<Lsb0>()[28..40].store_le(value);
         Ok(())
     }
-    /// SENSOR_SONARS_rear
+    /// Get value of 'SENSOR_SONARS_rear'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -1166,7 +1176,7 @@ impl SensorSonarsSensorSonarsMuxM0 {
     pub fn sensor_sonars_rear(&self) -> f32 {
         self.sensor_sonars_rear_raw()
     }
-    /// Get raw value of SENSOR_SONARS_rear
+    /// Get raw value of 'SENSOR_SONARS_rear'
     ///
     /// - Start bit: 52
     /// - Signal size: 12 bits
@@ -1181,7 +1191,7 @@ impl SensorSonarsSensorSonarsMuxM0 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of SENSOR_SONARS_rear
+    /// Set value of 'SENSOR_SONARS_rear'
     #[inline(always)]
     pub fn set_sensor_sonars_rear(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -1195,7 +1205,7 @@ impl SensorSonarsSensorSonarsMuxM0 {
         self.raw.view_bits_mut::<Lsb0>()[52..64].store_le(value);
         Ok(())
     }
-    /// SENSOR_SONARS_right
+    /// Get value of 'SENSOR_SONARS_right'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -1205,7 +1215,7 @@ impl SensorSonarsSensorSonarsMuxM0 {
     pub fn sensor_sonars_right(&self) -> f32 {
         self.sensor_sonars_right_raw()
     }
-    /// Get raw value of SENSOR_SONARS_right
+    /// Get raw value of 'SENSOR_SONARS_right'
     ///
     /// - Start bit: 40
     /// - Signal size: 12 bits
@@ -1220,7 +1230,7 @@ impl SensorSonarsSensorSonarsMuxM0 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of SENSOR_SONARS_right
+    /// Set value of 'SENSOR_SONARS_right'
     #[inline(always)]
     pub fn set_sensor_sonars_right(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -1261,7 +1271,7 @@ impl SensorSonarsSensorSonarsMuxM1 {
     pub fn new() -> Self {
         Self { raw: [0u8; 8] }
     }
-    /// SENSOR_SONARS_no_filt_left
+    /// Get value of 'SENSOR_SONARS_no_filt_left'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -1271,7 +1281,7 @@ impl SensorSonarsSensorSonarsMuxM1 {
     pub fn sensor_sonars_no_filt_left(&self) -> f32 {
         self.sensor_sonars_no_filt_left_raw()
     }
-    /// Get raw value of SENSOR_SONARS_no_filt_left
+    /// Get raw value of 'SENSOR_SONARS_no_filt_left'
     ///
     /// - Start bit: 16
     /// - Signal size: 12 bits
@@ -1286,7 +1296,7 @@ impl SensorSonarsSensorSonarsMuxM1 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of SENSOR_SONARS_no_filt_left
+    /// Set value of 'SENSOR_SONARS_no_filt_left'
     #[inline(always)]
     pub fn set_sensor_sonars_no_filt_left(
         &mut self,
@@ -1303,7 +1313,7 @@ impl SensorSonarsSensorSonarsMuxM1 {
         self.raw.view_bits_mut::<Lsb0>()[16..28].store_le(value);
         Ok(())
     }
-    /// SENSOR_SONARS_no_filt_middle
+    /// Get value of 'SENSOR_SONARS_no_filt_middle'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -1313,7 +1323,7 @@ impl SensorSonarsSensorSonarsMuxM1 {
     pub fn sensor_sonars_no_filt_middle(&self) -> f32 {
         self.sensor_sonars_no_filt_middle_raw()
     }
-    /// Get raw value of SENSOR_SONARS_no_filt_middle
+    /// Get raw value of 'SENSOR_SONARS_no_filt_middle'
     ///
     /// - Start bit: 28
     /// - Signal size: 12 bits
@@ -1328,7 +1338,7 @@ impl SensorSonarsSensorSonarsMuxM1 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of SENSOR_SONARS_no_filt_middle
+    /// Set value of 'SENSOR_SONARS_no_filt_middle'
     #[inline(always)]
     pub fn set_sensor_sonars_no_filt_middle(
         &mut self,
@@ -1345,7 +1355,7 @@ impl SensorSonarsSensorSonarsMuxM1 {
         self.raw.view_bits_mut::<Lsb0>()[28..40].store_le(value);
         Ok(())
     }
-    /// SENSOR_SONARS_no_filt_rear
+    /// Get value of 'SENSOR_SONARS_no_filt_rear'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -1355,7 +1365,7 @@ impl SensorSonarsSensorSonarsMuxM1 {
     pub fn sensor_sonars_no_filt_rear(&self) -> f32 {
         self.sensor_sonars_no_filt_rear_raw()
     }
-    /// Get raw value of SENSOR_SONARS_no_filt_rear
+    /// Get raw value of 'SENSOR_SONARS_no_filt_rear'
     ///
     /// - Start bit: 52
     /// - Signal size: 12 bits
@@ -1370,7 +1380,7 @@ impl SensorSonarsSensorSonarsMuxM1 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of SENSOR_SONARS_no_filt_rear
+    /// Set value of 'SENSOR_SONARS_no_filt_rear'
     #[inline(always)]
     pub fn set_sensor_sonars_no_filt_rear(
         &mut self,
@@ -1387,7 +1397,7 @@ impl SensorSonarsSensorSonarsMuxM1 {
         self.raw.view_bits_mut::<Lsb0>()[52..64].store_le(value);
         Ok(())
     }
-    /// SENSOR_SONARS_no_filt_right
+    /// Get value of 'SENSOR_SONARS_no_filt_right'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -1397,7 +1407,7 @@ impl SensorSonarsSensorSonarsMuxM1 {
     pub fn sensor_sonars_no_filt_right(&self) -> f32 {
         self.sensor_sonars_no_filt_right_raw()
     }
-    /// Get raw value of SENSOR_SONARS_no_filt_right
+    /// Get raw value of 'SENSOR_SONARS_no_filt_right'
     ///
     /// - Start bit: 40
     /// - Signal size: 12 bits
@@ -1412,7 +1422,7 @@ impl SensorSonarsSensorSonarsMuxM1 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of SENSOR_SONARS_no_filt_right
+    /// Set value of 'SENSOR_SONARS_no_filt_right'
     #[inline(always)]
     pub fn set_sensor_sonars_no_filt_right(
         &mut self,

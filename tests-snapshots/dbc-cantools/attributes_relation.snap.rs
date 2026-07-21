@@ -74,7 +74,7 @@ impl Message2 {
     pub const MESSAGE_CYCLE_TIME_MS: u32 = 50;
     pub const SIGNAL_2_MIN: i8 = 0_i8;
     pub const SIGNAL_2_MAX: i8 = 0_i8;
-    /// Construct new Message_2 from values
+    /// Construct new 'Message_2' from values
     pub fn new(signal_2: i8) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 8] };
         res.set_signal_2(signal_2)?;
@@ -84,7 +84,7 @@ impl Message2 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// signal_2
+    /// Get value of 'signal_2'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -94,7 +94,7 @@ impl Message2 {
     pub fn signal_2(&self) -> i8 {
         self.signal_2_raw()
     }
-    /// Get raw value of signal_2
+    /// Get raw value of 'signal_2'
     ///
     /// - Start bit: 0
     /// - Signal size: 8 bits
@@ -109,7 +109,7 @@ impl Message2 {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of signal_2
+    /// Set value of 'signal_2'
     #[inline(always)]
     pub fn set_signal_2(&mut self, value: i8) -> Result<(), CanError> {
         if value < 0_i8 || 0_i8 < value {
@@ -192,7 +192,7 @@ impl Message1 {
     pub const MESSAGE_SIZE: usize = 8;
     pub const SIGNAL_1_MIN: i8 = 0_i8;
     pub const SIGNAL_1_MAX: i8 = 0_i8;
-    /// Construct new Message_1 from values
+    /// Construct new 'Message_1' from values
     pub fn new(signal_1: i8) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 8] };
         res.set_signal_1(signal_1)?;
@@ -202,7 +202,7 @@ impl Message1 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// signal_1
+    /// Get value of 'signal_1'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -212,7 +212,7 @@ impl Message1 {
     pub fn signal_1(&self) -> i8 {
         self.signal_1_raw()
     }
-    /// Get raw value of signal_1
+    /// Get raw value of 'signal_1'
     ///
     /// - Start bit: 0
     /// - Signal size: 8 bits
@@ -227,7 +227,7 @@ impl Message1 {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of signal_1
+    /// Set value of 'signal_1'
     #[inline(always)]
     pub fn set_signal_1(&mut self, value: i8) -> Result<(), CanError> {
         if value < 0_i8 || 0_i8 < value {

@@ -72,7 +72,7 @@ impl TestMessage {
     pub const MESSAGE_SIZE: usize = 1;
     pub const SIGNAL1_MIN: u8 = 0_u8;
     pub const SIGNAL1_MAX: u8 = 250_u8;
-    /// Construct new TestMessage from values
+    /// Construct new 'TestMessage' from values
     pub fn new(signal1: u8) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 1] };
         res.set_signal1(signal1)?;
@@ -82,7 +82,7 @@ impl TestMessage {
     pub fn raw(&self) -> &[u8; 1] {
         &self.raw
     }
-    /// Signal1
+    /// Get value of 'Signal1'
     ///
     /// - Min: 0
     /// - Max: 250
@@ -92,7 +92,7 @@ impl TestMessage {
     pub fn signal1(&self) -> u8 {
         self.signal1_raw()
     }
-    /// Get raw value of Signal1
+    /// Get raw value of 'Signal1'
     ///
     /// - Start bit: 0
     /// - Signal size: 8 bits
@@ -106,7 +106,7 @@ impl TestMessage {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Signal1
+    /// Set value of 'Signal1'
     #[inline(always)]
     pub fn set_signal1(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 250_u8 < value {

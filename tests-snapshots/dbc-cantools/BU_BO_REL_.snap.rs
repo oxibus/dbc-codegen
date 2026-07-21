@@ -70,8 +70,8 @@ impl Control {
     pub const MESSAGE_SIZE: usize = 7;
     pub const STATE_MIN: u8 = 0_u8;
     pub const STATE_MAX: u8 = 100_u8;
-    /// Construct new CONTROL from values
-    pub fn new(state: u8) -> Result<Self, CanError> {
+    /// Construct new 'CONTROL' from values
+    pub fn new(state: ControlState) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 7] };
         res.set_state(state)?;
         Ok(res)
@@ -80,7 +80,7 @@ impl Control {
     pub fn raw(&self) -> &[u8; 7] {
         &self.raw
     }
-    /// state
+    /// Get value of 'state'
     ///
     /// - Min: 0
     /// - Max: 100
@@ -94,7 +94,7 @@ impl Control {
             _ => ControlState::_Other(self.state_raw()),
         }
     }
-    /// Get raw value of state
+    /// Get raw value of 'state'
     ///
     /// - Start bit: 0
     /// - Signal size: 8 bits
@@ -108,9 +108,10 @@ impl Control {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of state
+    /// Set value of 'state'
     #[inline(always)]
-    pub fn set_state(&mut self, value: u8) -> Result<(), CanError> {
+    pub fn set_state(&mut self, value: ControlState) -> Result<(), CanError> {
+        let value = u8::from(value);
         if value < 0_u8 || 100_u8 < value {
             return Err(CanError::ParameterOutOfRange {
                 message_id: Control::MESSAGE_ID,

@@ -83,7 +83,7 @@ impl ExtMuxIndepMultiplexors {
     pub const MUXED_A_1_MAX: i8 = 0_i8;
     pub const MUX_A_MIN: i8 = 0_i8;
     pub const MUX_A_MAX: i8 = 0_i8;
-    /// Construct new ext_MUX_indep_multiplexors from values
+    /// Construct new 'ext_MUX_indep_multiplexors' from values
     pub fn new(mux_b: i8, mux_a: i8) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 8] };
         res.set_mux_b(mux_b)?;
@@ -94,7 +94,7 @@ impl ExtMuxIndepMultiplexors {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// Get raw value of MUX_B
+    /// Get raw value of 'MUX_B'
     ///
     /// - Start bit: 16
     /// - Signal size: 8 bits
@@ -140,7 +140,7 @@ impl ExtMuxIndepMultiplexors {
             }
         }
     }
-    /// Set value of MUX_B
+    /// Set value of 'MUX_B'
     #[inline(always)]
     fn set_mux_b(&mut self, value: i8) -> Result<(), CanError> {
         if value < 0_i8 || 0_i8 < value {
@@ -159,7 +159,7 @@ impl ExtMuxIndepMultiplexors {
         self.raw.view_bits_mut::<Lsb0>()[16..24].store_le(value);
         Ok(())
     }
-    /// Set value of MUX_B
+    /// Set value of 'MUX_B'
     #[inline(always)]
     pub fn set_m0(
         &mut self,
@@ -171,7 +171,7 @@ impl ExtMuxIndepMultiplexors {
         self.set_mux_b(0)?;
         Ok(())
     }
-    /// Set value of MUX_B
+    /// Set value of 'MUX_B'
     #[inline(always)]
     pub fn set_m1(
         &mut self,
@@ -183,7 +183,7 @@ impl ExtMuxIndepMultiplexors {
         self.set_mux_b(1)?;
         Ok(())
     }
-    /// Set value of MUX_B
+    /// Set value of 'MUX_B'
     #[inline(always)]
     pub fn set_m2(
         &mut self,
@@ -195,7 +195,7 @@ impl ExtMuxIndepMultiplexors {
         self.set_mux_b(2)?;
         Ok(())
     }
-    /// Get raw value of MUX_A
+    /// Get raw value of 'MUX_A'
     ///
     /// - Start bit: 0
     /// - Signal size: 8 bits
@@ -241,7 +241,7 @@ impl ExtMuxIndepMultiplexors {
             }
         }
     }
-    /// Set value of MUX_A
+    /// Set value of 'MUX_A'
     #[inline(always)]
     fn set_mux_a(&mut self, value: i8) -> Result<(), CanError> {
         if value < 0_i8 || 0_i8 < value {
@@ -260,7 +260,7 @@ impl ExtMuxIndepMultiplexors {
         self.raw.view_bits_mut::<Lsb0>()[0..8].store_le(value);
         Ok(())
     }
-    /// Set value of MUX_A
+    /// Set value of 'MUX_A'
     #[inline(always)]
     pub fn set_m0(
         &mut self,
@@ -272,7 +272,7 @@ impl ExtMuxIndepMultiplexors {
         self.set_mux_a(0)?;
         Ok(())
     }
-    /// Set value of MUX_A
+    /// Set value of 'MUX_A'
     #[inline(always)]
     pub fn set_m1(
         &mut self,
@@ -284,7 +284,7 @@ impl ExtMuxIndepMultiplexors {
         self.set_mux_a(1)?;
         Ok(())
     }
-    /// Set value of MUX_A
+    /// Set value of 'MUX_A'
     #[inline(always)]
     pub fn set_m2(
         &mut self,
@@ -376,7 +376,7 @@ impl ExtMuxIndepMultiplexorsMuxBM0 {
     pub fn new() -> Self {
         Self { raw: [0u8; 8] }
     }
-    /// muxed_A_0
+    /// Get value of 'muxed_A_0'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -386,7 +386,7 @@ impl ExtMuxIndepMultiplexorsMuxBM0 {
     pub fn muxed_a_0(&self) -> i8 {
         self.muxed_a_0_raw()
     }
-    /// Get raw value of muxed_A_0
+    /// Get raw value of 'muxed_A_0'
     ///
     /// - Start bit: 8
     /// - Signal size: 8 bits
@@ -401,7 +401,7 @@ impl ExtMuxIndepMultiplexorsMuxBM0 {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of muxed_A_0
+    /// Set value of 'muxed_A_0'
     #[inline(always)]
     pub fn set_muxed_a_0(&mut self, value: i8) -> Result<(), CanError> {
         if value < 0_i8 || 0_i8 < value {
@@ -447,7 +447,7 @@ impl ExtMuxIndepMultiplexorsMuxBM1 {
     pub fn new() -> Self {
         Self { raw: [0u8; 8] }
     }
-    /// muxed_B_1
+    /// Get value of 'muxed_B_1'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -457,7 +457,7 @@ impl ExtMuxIndepMultiplexorsMuxBM1 {
     pub fn muxed_b_1(&self) -> i8 {
         self.muxed_b_1_raw()
     }
-    /// Get raw value of muxed_B_1
+    /// Get raw value of 'muxed_B_1'
     ///
     /// - Start bit: 24
     /// - Signal size: 8 bits
@@ -472,7 +472,7 @@ impl ExtMuxIndepMultiplexorsMuxBM1 {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of muxed_B_1
+    /// Set value of 'muxed_B_1'
     #[inline(always)]
     pub fn set_muxed_b_1(&mut self, value: i8) -> Result<(), CanError> {
         if value < 0_i8 || 0_i8 < value {
@@ -491,7 +491,7 @@ impl ExtMuxIndepMultiplexorsMuxBM1 {
         self.raw.view_bits_mut::<Lsb0>()[24..32].store_le(value);
         Ok(())
     }
-    /// muxed_A_1
+    /// Get value of 'muxed_A_1'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -501,7 +501,7 @@ impl ExtMuxIndepMultiplexorsMuxBM1 {
     pub fn muxed_a_1(&self) -> i8 {
         self.muxed_a_1_raw()
     }
-    /// Get raw value of muxed_A_1
+    /// Get raw value of 'muxed_A_1'
     ///
     /// - Start bit: 8
     /// - Signal size: 8 bits
@@ -516,7 +516,7 @@ impl ExtMuxIndepMultiplexorsMuxBM1 {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of muxed_A_1
+    /// Set value of 'muxed_A_1'
     #[inline(always)]
     pub fn set_muxed_a_1(&mut self, value: i8) -> Result<(), CanError> {
         if value < 0_i8 || 0_i8 < value {
@@ -562,7 +562,7 @@ impl ExtMuxIndepMultiplexorsMuxBM2 {
     pub fn new() -> Self {
         Self { raw: [0u8; 8] }
     }
-    /// muxed_B_2
+    /// Get value of 'muxed_B_2'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -572,7 +572,7 @@ impl ExtMuxIndepMultiplexorsMuxBM2 {
     pub fn muxed_b_2(&self) -> i8 {
         self.muxed_b_2_raw()
     }
-    /// Get raw value of muxed_B_2
+    /// Get raw value of 'muxed_B_2'
     ///
     /// - Start bit: 24
     /// - Signal size: 8 bits
@@ -587,7 +587,7 @@ impl ExtMuxIndepMultiplexorsMuxBM2 {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of muxed_B_2
+    /// Set value of 'muxed_B_2'
     #[inline(always)]
     pub fn set_muxed_b_2(&mut self, value: i8) -> Result<(), CanError> {
         if value < 0_i8 || 0_i8 < value {

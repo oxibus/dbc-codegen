@@ -69,8 +69,8 @@ impl Message1 {
     pub const MESSAGE_SIZE: usize = 8;
     pub const SIGNAL1_MIN: i8 = 0_i8;
     pub const SIGNAL1_MAX: i8 = 0_i8;
-    /// Construct new Message1 from values
-    pub fn new(signal1: i8) -> Result<Self, CanError> {
+    /// Construct new 'Message1' from values
+    pub fn new(signal1: Message1Signal1) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 8] };
         res.set_signal1(signal1)?;
         Ok(res)
@@ -79,7 +79,7 @@ impl Message1 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// Signal1
+    /// Get value of 'Signal1'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -94,7 +94,7 @@ impl Message1 {
             _ => Message1Signal1::_Other(self.signal1_raw()),
         }
     }
-    /// Get raw value of Signal1
+    /// Get raw value of 'Signal1'
     ///
     /// - Start bit: 0
     /// - Signal size: 8 bits
@@ -109,9 +109,10 @@ impl Message1 {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Signal1
+    /// Set value of 'Signal1'
     #[inline(always)]
-    pub fn set_signal1(&mut self, value: i8) -> Result<(), CanError> {
+    pub fn set_signal1(&mut self, value: Message1Signal1) -> Result<(), CanError> {
+        let value = i8::from(value);
         if value < 0_i8 || 0_i8 < value {
             return Err(CanError::ParameterOutOfRange {
                 message_id: Message1::MESSAGE_ID,

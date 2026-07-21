@@ -83,7 +83,7 @@ impl CanMultiplexed {
     pub const VALUE0_MAX: u8 = 0_u8;
     pub const MULTIPLEXER_MIN: u8 = 0_u8;
     pub const MULTIPLEXER_MAX: u8 = 0_u8;
-    /// Construct new CANMultiplexed from values
+    /// Construct new 'CANMultiplexed' from values
     pub fn new(multiplexer: u8) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_multiplexer(multiplexer)?;
@@ -93,7 +93,7 @@ impl CanMultiplexed {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Get raw value of Multiplexer
+    /// Get raw value of 'Multiplexer'
     ///
     /// - Start bit: 0
     /// - Signal size: 8 bits
@@ -131,7 +131,7 @@ impl CanMultiplexed {
             }
         }
     }
-    /// Set value of Multiplexer
+    /// Set value of 'Multiplexer'
     #[inline(always)]
     fn set_multiplexer(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 0_u8 < value {
@@ -149,7 +149,7 @@ impl CanMultiplexed {
         self.raw.view_bits_mut::<Lsb0>()[0..8].store_le(value);
         Ok(())
     }
-    /// Set value of Multiplexer
+    /// Set value of 'Multiplexer'
     #[inline(always)]
     pub fn set_m0(
         &mut self,
@@ -161,7 +161,7 @@ impl CanMultiplexed {
         self.set_multiplexer(0)?;
         Ok(())
     }
-    /// Set value of Multiplexer
+    /// Set value of 'Multiplexer'
     #[inline(always)]
     pub fn set_m1(
         &mut self,
@@ -308,7 +308,7 @@ impl CanMultiplexedMultiplexerM0 {
     pub fn new() -> Self {
         Self { raw: [0u8; 2] }
     }
-    /// Value0
+    /// Get value of 'Value0'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -324,7 +324,7 @@ impl CanMultiplexedMultiplexerM0 {
             _ => CanMultiplexedValue0::_Other(self.value0_raw()),
         }
     }
-    /// Get raw value of Value0
+    /// Get raw value of 'Value0'
     ///
     /// - Start bit: 8
     /// - Signal size: 8 bits
@@ -338,9 +338,10 @@ impl CanMultiplexedMultiplexerM0 {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Value0
+    /// Set value of 'Value0'
     #[inline(always)]
-    pub fn set_value0(&mut self, value: u8) -> Result<(), CanError> {
+    pub fn set_value0(&mut self, value: CanMultiplexedValue0) -> Result<(), CanError> {
+        let value = u8::from(value);
         if value < 0_u8 || 0_u8 < value {
             return Err(CanError::ParameterOutOfRange {
                 message_id: CanMultiplexed::MESSAGE_ID,
@@ -383,7 +384,7 @@ impl CanMultiplexedMultiplexerM1 {
     pub fn new() -> Self {
         Self { raw: [0u8; 2] }
     }
-    /// Value1
+    /// Get value of 'Value1'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -400,7 +401,7 @@ impl CanMultiplexedMultiplexerM1 {
             _ => CanMultiplexedValue1::_Other(self.value1_raw()),
         }
     }
-    /// Get raw value of Value1
+    /// Get raw value of 'Value1'
     ///
     /// - Start bit: 8
     /// - Signal size: 8 bits
@@ -414,9 +415,10 @@ impl CanMultiplexedMultiplexerM1 {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Value1
+    /// Set value of 'Value1'
     #[inline(always)]
-    pub fn set_value1(&mut self, value: u8) -> Result<(), CanError> {
+    pub fn set_value1(&mut self, value: CanMultiplexedValue1) -> Result<(), CanError> {
+        let value = u8::from(value);
         if value < 0_u8 || 0_u8 < value {
             return Err(CanError::ParameterOutOfRange {
                 message_id: CanMultiplexed::MESSAGE_ID,
@@ -460,7 +462,7 @@ impl CanMessage {
     pub const SIGNAL1_MAX: u64 = 100_u64;
     pub const SIGNAL0_MIN: i32 = 0_i32;
     pub const SIGNAL0_MAX: i32 = 0_i32;
-    /// Construct new CANMessage from values
+    /// Construct new 'CANMessage' from values
     pub fn new(signal1: u64, signal0: i32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 8] };
         res.set_signal1(signal1)?;
@@ -471,7 +473,7 @@ impl CanMessage {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// Signal1
+    /// Get value of 'Signal1'
     ///
     /// - Min: 0
     /// - Max: 100
@@ -481,7 +483,7 @@ impl CanMessage {
     pub fn signal1(&self) -> u64 {
         self.signal1_raw()
     }
-    /// Get raw value of Signal1
+    /// Get raw value of 'Signal1'
     ///
     /// - Start bit: 32
     /// - Signal size: 32 bits
@@ -495,7 +497,7 @@ impl CanMessage {
         let factor = 100;
         u64::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Signal1
+    /// Set value of 'Signal1'
     #[inline(always)]
     pub fn set_signal1(&mut self, value: u64) -> Result<(), CanError> {
         if value < 0_u64 || 100_u64 < value {
@@ -513,7 +515,7 @@ impl CanMessage {
         self.raw.view_bits_mut::<Lsb0>()[32..64].store_le(value);
         Ok(())
     }
-    /// Signal0
+    /// Get value of 'Signal0'
     ///
     /// First signal in this message
     ///
@@ -525,7 +527,7 @@ impl CanMessage {
     pub fn signal0(&self) -> i32 {
         self.signal0_raw()
     }
-    /// Get raw value of Signal0
+    /// Get raw value of 'Signal0'
     ///
     /// - Start bit: 0
     /// - Signal size: 32 bits
@@ -540,7 +542,7 @@ impl CanMessage {
         let signal = signal as i32;
         i32::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Signal0
+    /// Set value of 'Signal0'
     #[inline(always)]
     pub fn set_signal0(&mut self, value: i32) -> Result<(), CanError> {
         if value < 0_i32 || 0_i32 < value {

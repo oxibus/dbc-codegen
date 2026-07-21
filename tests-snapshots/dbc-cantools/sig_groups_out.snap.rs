@@ -79,7 +79,7 @@ impl Test {
     pub const MESSAGE_SIZE: usize = 8;
     pub const TEST_SIG_MIN: i8 = 0_i8;
     pub const TEST_SIG_MAX: i8 = 0_i8;
-    /// Construct new Test from values
+    /// Construct new 'Test' from values
     pub fn new(test_sig: i8) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 8] };
         res.set_test_sig(test_sig)?;
@@ -89,7 +89,7 @@ impl Test {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// TestSig
+    /// Get value of 'TestSig'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -99,7 +99,7 @@ impl Test {
     pub fn test_sig(&self) -> i8 {
         self.test_sig_raw()
     }
-    /// Get raw value of TestSig
+    /// Get raw value of 'TestSig'
     ///
     /// - Start bit: 0
     /// - Signal size: 8 bits
@@ -114,7 +114,7 @@ impl Test {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of TestSig
+    /// Set value of 'TestSig'
     #[inline(always)]
     pub fn set_test_sig(&mut self, value: i8) -> Result<(), CanError> {
         if value < 0_i8 || 0_i8 < value {
@@ -202,7 +202,7 @@ impl SgMsgM {
     pub const SUB_SIG1_2_MAX: i8 = 0_i8;
     pub const SUB_SIG1_1_MIN: i8 = 0_i8;
     pub const SUB_SIG1_1_MAX: i8 = 0_i8;
-    /// Construct new SGMsg_m from values
+    /// Construct new 'SGMsg_m' from values
     pub fn new(
         dupsig: i8,
         sub_sig2_1: i8,
@@ -220,7 +220,7 @@ impl SgMsgM {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// dupsig
+    /// Get value of 'dupsig'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -230,7 +230,7 @@ impl SgMsgM {
     pub fn dupsig(&self) -> i8 {
         self.dupsig_raw()
     }
-    /// Get raw value of dupsig
+    /// Get raw value of 'dupsig'
     ///
     /// - Start bit: 24
     /// - Signal size: 8 bits
@@ -245,7 +245,7 @@ impl SgMsgM {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of dupsig
+    /// Set value of 'dupsig'
     #[inline(always)]
     pub fn set_dupsig(&mut self, value: i8) -> Result<(), CanError> {
         if value < 0_i8 || 0_i8 < value {
@@ -264,7 +264,7 @@ impl SgMsgM {
         self.raw.view_bits_mut::<Lsb0>()[24..32].store_le(value);
         Ok(())
     }
-    /// subSig2_1
+    /// Get value of 'subSig2_1'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -274,7 +274,7 @@ impl SgMsgM {
     pub fn sub_sig2_1(&self) -> i8 {
         self.sub_sig2_1_raw()
     }
-    /// Get raw value of subSig2_1
+    /// Get raw value of 'subSig2_1'
     ///
     /// - Start bit: 16
     /// - Signal size: 8 bits
@@ -289,7 +289,7 @@ impl SgMsgM {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of subSig2_1
+    /// Set value of 'subSig2_1'
     #[inline(always)]
     pub fn set_sub_sig2_1(&mut self, value: i8) -> Result<(), CanError> {
         if value < 0_i8 || 0_i8 < value {
@@ -308,7 +308,7 @@ impl SgMsgM {
         self.raw.view_bits_mut::<Lsb0>()[16..24].store_le(value);
         Ok(())
     }
-    /// subSig1_2
+    /// Get value of 'subSig1_2'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -318,7 +318,7 @@ impl SgMsgM {
     pub fn sub_sig1_2(&self) -> i8 {
         self.sub_sig1_2_raw()
     }
-    /// Get raw value of subSig1_2
+    /// Get raw value of 'subSig1_2'
     ///
     /// - Start bit: 8
     /// - Signal size: 8 bits
@@ -333,7 +333,7 @@ impl SgMsgM {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of subSig1_2
+    /// Set value of 'subSig1_2'
     #[inline(always)]
     pub fn set_sub_sig1_2(&mut self, value: i8) -> Result<(), CanError> {
         if value < 0_i8 || 0_i8 < value {
@@ -352,7 +352,7 @@ impl SgMsgM {
         self.raw.view_bits_mut::<Lsb0>()[8..16].store_le(value);
         Ok(())
     }
-    /// subSig1_1
+    /// Get value of 'subSig1_1'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -362,7 +362,7 @@ impl SgMsgM {
     pub fn sub_sig1_1(&self) -> i8 {
         self.sub_sig1_1_raw()
     }
-    /// Get raw value of subSig1_1
+    /// Get raw value of 'subSig1_1'
     ///
     /// - Start bit: 0
     /// - Signal size: 8 bits
@@ -377,7 +377,7 @@ impl SgMsgM {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of subSig1_1
+    /// Set value of 'subSig1_1'
     #[inline(always)]
     pub fn set_sub_sig1_1(&mut self, value: i8) -> Result<(), CanError> {
         if value < 0_i8 || 0_i8 < value {
@@ -463,7 +463,7 @@ impl SgMsg {
     pub const SG2_MAX: i8 = 0_i8;
     pub const SG1_MIN: i8 = 0_i8;
     pub const SG1_MAX: i8 = 0_i8;
-    /// Construct new SGMsg from values
+    /// Construct new 'SGMsg' from values
     pub fn new(dupsig: i8, sg2: i8, sg1: i8) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 8] };
         res.set_dupsig(dupsig)?;
@@ -475,7 +475,7 @@ impl SgMsg {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// dupsig
+    /// Get value of 'dupsig'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -485,7 +485,7 @@ impl SgMsg {
     pub fn dupsig(&self) -> i8 {
         self.dupsig_raw()
     }
-    /// Get raw value of dupsig
+    /// Get raw value of 'dupsig'
     ///
     /// - Start bit: 16
     /// - Signal size: 8 bits
@@ -500,7 +500,7 @@ impl SgMsg {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of dupsig
+    /// Set value of 'dupsig'
     #[inline(always)]
     pub fn set_dupsig(&mut self, value: i8) -> Result<(), CanError> {
         if value < 0_i8 || 0_i8 < value {
@@ -519,7 +519,7 @@ impl SgMsg {
         self.raw.view_bits_mut::<Lsb0>()[16..24].store_le(value);
         Ok(())
     }
-    /// SG2
+    /// Get value of 'SG2'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -529,7 +529,7 @@ impl SgMsg {
     pub fn sg2(&self) -> i8 {
         self.sg2_raw()
     }
-    /// Get raw value of SG2
+    /// Get raw value of 'SG2'
     ///
     /// - Start bit: 8
     /// - Signal size: 8 bits
@@ -544,7 +544,7 @@ impl SgMsg {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of SG2
+    /// Set value of 'SG2'
     #[inline(always)]
     pub fn set_sg2(&mut self, value: i8) -> Result<(), CanError> {
         if value < 0_i8 || 0_i8 < value {
@@ -563,7 +563,7 @@ impl SgMsg {
         self.raw.view_bits_mut::<Lsb0>()[8..16].store_le(value);
         Ok(())
     }
-    /// SG1
+    /// Get value of 'SG1'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -573,7 +573,7 @@ impl SgMsg {
     pub fn sg1(&self) -> i8 {
         self.sg1_raw()
     }
-    /// Get raw value of SG1
+    /// Get raw value of 'SG1'
     ///
     /// - Start bit: 0
     /// - Signal size: 8 bits
@@ -588,7 +588,7 @@ impl SgMsg {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of SG1
+    /// Set value of 'SG1'
     #[inline(always)]
     pub fn set_sg1(&mut self, value: i8) -> Result<(), CanError> {
         if value < 0_i8 || 0_i8 < value {
@@ -672,7 +672,7 @@ impl NormalMsg {
     pub const SIG_2_MAX: i8 = 0_i8;
     pub const SIG_1_MIN: i8 = 0_i8;
     pub const SIG_1_MAX: i8 = 0_i8;
-    /// Construct new NormalMsg from values
+    /// Construct new 'NormalMsg' from values
     pub fn new(sig_2: i8, sig_1: i8) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 8] };
         res.set_sig_2(sig_2)?;
@@ -683,7 +683,7 @@ impl NormalMsg {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// Sig_2
+    /// Get value of 'Sig_2'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -693,7 +693,7 @@ impl NormalMsg {
     pub fn sig_2(&self) -> i8 {
         self.sig_2_raw()
     }
-    /// Get raw value of Sig_2
+    /// Get raw value of 'Sig_2'
     ///
     /// - Start bit: 8
     /// - Signal size: 8 bits
@@ -708,7 +708,7 @@ impl NormalMsg {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Sig_2
+    /// Set value of 'Sig_2'
     #[inline(always)]
     pub fn set_sig_2(&mut self, value: i8) -> Result<(), CanError> {
         if value < 0_i8 || 0_i8 < value {
@@ -727,7 +727,7 @@ impl NormalMsg {
         self.raw.view_bits_mut::<Lsb0>()[8..16].store_le(value);
         Ok(())
     }
-    /// Sig_1
+    /// Get value of 'Sig_1'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -737,7 +737,7 @@ impl NormalMsg {
     pub fn sig_1(&self) -> i8 {
         self.sig_1_raw()
     }
-    /// Get raw value of Sig_1
+    /// Get raw value of 'Sig_1'
     ///
     /// - Start bit: 0
     /// - Signal size: 8 bits
@@ -752,7 +752,7 @@ impl NormalMsg {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Sig_1
+    /// Set value of 'Sig_1'
     #[inline(always)]
     pub fn set_sig_1(&mut self, value: i8) -> Result<(), CanError> {
         if value < 0_i8 || 0_i8 < value {

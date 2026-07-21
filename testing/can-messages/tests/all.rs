@@ -5,15 +5,15 @@
 )]
 
 use can_messages::{
-    Amet, Bar, BarThree, CanError, Foo, LargerIntsWithOffsets, MsgExtendedId, MultiplexTest,
-    MultiplexTestMultiplexorIndex, MultiplexTestMultiplexorM0, NegativeFactorTest,
+    Amet, Bar, BarFour, BarThree, BarType, CanError, Foo, LargerIntsWithOffsets, MsgExtendedId,
+    MultiplexTest, MultiplexTestMultiplexorIndex, MultiplexTestMultiplexorM0, NegativeFactorTest,
     TruncatedBeSignal, TruncatedLeSignal,
 };
 use embedded_can::{ExtendedId, Id, StandardId};
 
 #[test]
 fn check_range_value_error() {
-    let result = Bar::new(1, 2.0, 3, 4, true);
+    let result = Bar::new(1, 2.0, BarThree::Onest, BarFour::_Other(4), BarType::X1on);
     assert_eq!(
         result.unwrap_err(),
         CanError::ParameterOutOfRange {
@@ -24,7 +24,7 @@ fn check_range_value_error() {
 
 #[test]
 fn check_range_value_valid() {
-    let result = Bar::new(1, 2.0, 3, 3, true);
+    let result = Bar::new(1, 2.0, BarThree::Onest, BarFour::Onest, BarType::X1on);
     assert!(result.is_ok());
 }
 
@@ -141,14 +141,14 @@ fn offset_integers() {
 
 #[test]
 fn debug_impl() {
-    let result = Bar::new(1, 2.0, 3, 3, true).unwrap();
+    let result = Bar::new(1, 2.0, BarThree::Onest, BarFour::Onest, BarType::X1on).unwrap();
     let dbg = format!("{result:?}");
     assert_eq!(&dbg, "Bar([5, 94, 0, 64, 0, 0, 0, 0])");
 }
 
 #[test]
 fn debug_alternative_impl() {
-    let result = Bar::new(1, 2.0, 3, 3, true).unwrap();
+    let result = Bar::new(1, 2.0, BarThree::Onest, BarFour::Onest, BarType::X1on).unwrap();
     let dbg = format!("{result:#?}");
     assert_eq!(
         &dbg,
@@ -160,6 +160,27 @@ fn debug_alternative_impl() {
 fn from_enum_into_raw() {
     let raw: u8 = BarThree::Onest.into();
     assert_eq!(raw, 3);
+}
+
+#[test]
+fn enum_setters_and_getters_are_symmetrical() {
+    let mut bar = Bar::new(1, 2.0, BarThree::Onest, BarFour::Onest, BarType::X1on).unwrap();
+
+    // The setter accepts the enum directly.
+    bar.set_three(BarThree::Oner).unwrap();
+    assert_eq!(bar.three(), BarThree::Oner);
+
+    // Raw / undescribed values remain settable via the `_Other` variant.
+    bar.set_three(BarThree::_Other(3)).unwrap();
+    assert_eq!(bar.three(), BarThree::Onest);
+
+    // Out-of-range raw values still produce an error.
+    assert_eq!(
+        bar.set_three(BarThree::_Other(8)),
+        Err(CanError::ParameterOutOfRange {
+            message_id: Id::Standard(StandardId::new(512).unwrap())
+        })
+    );
 }
 
 #[test]

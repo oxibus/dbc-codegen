@@ -74,7 +74,7 @@ impl SomeFrame {
     pub const MESSAGE_SIZE: usize = 8;
     pub const SOME_DIFFERENT_SIG_MIN: i8 = 0_i8;
     pub const SOME_DIFFERENT_SIG_MAX: i8 = 0_i8;
-    /// Construct new SomeFrame from values
+    /// Construct new 'SomeFrame' from values
     pub fn new(some_different_sig: i8) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 8] };
         res.set_some_different_sig(some_different_sig)?;
@@ -84,7 +84,7 @@ impl SomeFrame {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// SomeDifferentSig
+    /// Get value of 'SomeDifferentSig'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -94,7 +94,7 @@ impl SomeFrame {
     pub fn some_different_sig(&self) -> i8 {
         self.some_different_sig_raw()
     }
-    /// Get raw value of SomeDifferentSig
+    /// Get raw value of 'SomeDifferentSig'
     ///
     /// - Start bit: 0
     /// - Signal size: 8 bits
@@ -109,7 +109,7 @@ impl SomeFrame {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of SomeDifferentSig
+    /// Set value of 'SomeDifferentSig'
     #[inline(always)]
     pub fn set_some_different_sig(&mut self, value: i8) -> Result<(), CanError> {
         if value < 0_i8 || 0_i8 < value {
@@ -191,7 +191,7 @@ impl SomeExtFrame {
     pub const MESSAGE_SIZE: usize = 8;
     pub const SOME_SIG_MIN: i8 = 0_i8;
     pub const SOME_SIG_MAX: i8 = 0_i8;
-    /// Construct new SomeExtFrame from values
+    /// Construct new 'SomeExtFrame' from values
     pub fn new(some_sig: i8) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 8] };
         res.set_some_sig(some_sig)?;
@@ -201,7 +201,7 @@ impl SomeExtFrame {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// SomeSig
+    /// Get value of 'SomeSig'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -211,7 +211,7 @@ impl SomeExtFrame {
     pub fn some_sig(&self) -> i8 {
         self.some_sig_raw()
     }
-    /// Get raw value of SomeSig
+    /// Get raw value of 'SomeSig'
     ///
     /// - Start bit: 0
     /// - Signal size: 8 bits
@@ -226,7 +226,7 @@ impl SomeExtFrame {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of SomeSig
+    /// Set value of 'SomeSig'
     #[inline(always)]
     pub fn set_some_sig(&mut self, value: i8) -> Result<(), CanError> {
         if value < 0_i8 || 0_i8 < value {

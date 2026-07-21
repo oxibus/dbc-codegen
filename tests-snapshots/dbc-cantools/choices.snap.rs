@@ -69,8 +69,8 @@ impl Foo {
     pub const MESSAGE_SIZE: usize = 8;
     pub const FOO_MIN: i8 = -128_i8;
     pub const FOO_MAX: i8 = 127_i8;
-    /// Construct new Foo from values
-    pub fn new(foo: i8) -> Result<Self, CanError> {
+    /// Construct new 'Foo' from values
+    pub fn new(foo: FooFoo) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 8] };
         res.set_foo(foo)?;
         Ok(res)
@@ -79,7 +79,7 @@ impl Foo {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// Foo
+    /// Get value of 'Foo'
     ///
     /// - Min: -128
     /// - Max: 127
@@ -100,7 +100,7 @@ impl Foo {
             _ => FooFoo::_Other(self.foo_raw()),
         }
     }
-    /// Get raw value of Foo
+    /// Get raw value of 'Foo'
     ///
     /// - Start bit: 0
     /// - Signal size: 8 bits
@@ -115,9 +115,10 @@ impl Foo {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Foo
+    /// Set value of 'Foo'
     #[inline(always)]
-    pub fn set_foo(&mut self, value: i8) -> Result<(), CanError> {
+    pub fn set_foo(&mut self, value: FooFoo) -> Result<(), CanError> {
+        let value = i8::from(value);
         if value < -128_i8 || 127_i8 < value {
             return Err(CanError::ParameterOutOfRange {
                 message_id: Foo::MESSAGE_ID,

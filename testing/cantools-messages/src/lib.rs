@@ -16,7 +16,14 @@ use msg_bindings::*;
 
 #[test]
 fn pack_message() {
-    let dbc_codegen_bar = can_messages::Bar::new(3, 2.0, 4, 2, false).unwrap();
+    let dbc_codegen_bar = can_messages::Bar::new(
+        3,
+        2.0,
+        can_messages::BarThree::_Other(4),
+        can_messages::BarFour::Oner,
+        can_messages::BarType::X0off,
+    )
+    .unwrap();
     let one = unsafe { example_bar_one_encode(3.0) };
     let two = unsafe { example_bar_two_encode(2.0) };
     let three = unsafe { example_bar_three_encode(4.0) };
@@ -61,7 +68,8 @@ fn pack_message_signed_positive() {
 
 #[test]
 fn pack_big_endian_signal_with_start_bit_zero() {
-    let dbc_codegen_bar = can_messages::Dolor::new(0.5).unwrap();
+    let dbc_codegen_bar =
+        can_messages::Dolor::new(can_messages::DolorOneFloat::_Other(0.5)).unwrap();
     let one_float = unsafe { example_dolor_one_float_encode(0.5) };
 
     let dolor = example_dolor_t { one_float };

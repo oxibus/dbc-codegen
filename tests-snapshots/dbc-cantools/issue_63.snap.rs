@@ -79,7 +79,7 @@ impl Aft1psi2 {
     pub const PWR_SUPPLY_MAX: u8 = 3_u8;
     pub const DETECTION_STATUS_MIN: u8 = 0_u8;
     pub const DETECTION_STATUS_MAX: u8 = 15_u8;
-    /// Construct new AFT1PSI2 from values
+    /// Construct new 'AFT1PSI2' from values
     pub fn new(
         htr_res: f32,
         max_res: u32,
@@ -101,7 +101,7 @@ impl Aft1psi2 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// HtrRes
+    /// Get value of 'HtrRes'
     ///
     /// - Min: 0
     /// - Max: 6425.5
@@ -111,7 +111,7 @@ impl Aft1psi2 {
     pub fn htr_res(&self) -> f32 {
         self.htr_res_raw()
     }
-    /// Get raw value of HtrRes
+    /// Get raw value of 'HtrRes'
     ///
     /// - Start bit: 40
     /// - Signal size: 16 bits
@@ -126,7 +126,7 @@ impl Aft1psi2 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of HtrRes
+    /// Set value of 'HtrRes'
     #[inline(always)]
     pub fn set_htr_res(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 6425.5_f32 < value {
@@ -140,7 +140,7 @@ impl Aft1psi2 {
         self.raw.view_bits_mut::<Lsb0>()[40..56].store_le(value);
         Ok(())
     }
-    /// MaxRes
+    /// Get value of 'MaxRes'
     ///
     /// - Min: 0
     /// - Max: 62500
@@ -150,7 +150,7 @@ impl Aft1psi2 {
     pub fn max_res(&self) -> u32 {
         self.max_res_raw()
     }
-    /// Get raw value of MaxRes
+    /// Get raw value of 'MaxRes'
     ///
     /// - Start bit: 32
     /// - Signal size: 16 bits
@@ -164,7 +164,7 @@ impl Aft1psi2 {
         let factor = 250;
         u32::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MaxRes
+    /// Set value of 'MaxRes'
     #[inline(always)]
     pub fn set_max_res(&mut self, value: u32) -> Result<(), CanError> {
         if value < 0_u32 || 62500_u32 < value {
@@ -182,7 +182,7 @@ impl Aft1psi2 {
         self.raw.view_bits_mut::<Lsb0>()[32..48].store_le(value);
         Ok(())
     }
-    /// Temp
+    /// Get value of 'Temp'
     ///
     /// - Min: -273
     /// - Max: 1734.96875
@@ -192,7 +192,7 @@ impl Aft1psi2 {
     pub fn temp(&self) -> f32 {
         self.temp_raw()
     }
-    /// Get raw value of Temp
+    /// Get raw value of 'Temp'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -207,7 +207,7 @@ impl Aft1psi2 {
         let offset = -273_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Temp
+    /// Set value of 'Temp'
     #[inline(always)]
     pub fn set_temp(&mut self, value: f32) -> Result<(), CanError> {
         if value < -273_f32 || 1734.96875_f32 < value {
@@ -221,7 +221,7 @@ impl Aft1psi2 {
         self.raw.view_bits_mut::<Lsb0>()[16..32].store_le(value);
         Ok(())
     }
-    /// RegenFailedCount
+    /// Get value of 'RegenFailedCount'
     ///
     /// - Min: 0
     /// - Max: 250
@@ -231,7 +231,7 @@ impl Aft1psi2 {
     pub fn regen_failed_count(&self) -> u8 {
         self.regen_failed_count_raw()
     }
-    /// Get raw value of RegenFailedCount
+    /// Get raw value of 'RegenFailedCount'
     ///
     /// - Start bit: 8
     /// - Signal size: 8 bits
@@ -245,7 +245,7 @@ impl Aft1psi2 {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of RegenFailedCount
+    /// Set value of 'RegenFailedCount'
     #[inline(always)]
     pub fn set_regen_failed_count(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 250_u8 < value {
@@ -263,7 +263,7 @@ impl Aft1psi2 {
         self.raw.view_bits_mut::<Lsb0>()[8..16].store_le(value);
         Ok(())
     }
-    /// PwrSupply
+    /// Get value of 'PwrSupply'
     ///
     /// - Min: 0
     /// - Max: 3
@@ -273,7 +273,7 @@ impl Aft1psi2 {
     pub fn pwr_supply(&self) -> u8 {
         self.pwr_supply_raw()
     }
-    /// Get raw value of PwrSupply
+    /// Get raw value of 'PwrSupply'
     ///
     /// - Start bit: 4
     /// - Signal size: 2 bits
@@ -287,7 +287,7 @@ impl Aft1psi2 {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of PwrSupply
+    /// Set value of 'PwrSupply'
     #[inline(always)]
     pub fn set_pwr_supply(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 3_u8 < value {
@@ -305,7 +305,7 @@ impl Aft1psi2 {
         self.raw.view_bits_mut::<Lsb0>()[4..6].store_le(value);
         Ok(())
     }
-    /// DetectionStatus
+    /// Get value of 'DetectionStatus'
     ///
     /// - Min: 0
     /// - Max: 15
@@ -315,7 +315,7 @@ impl Aft1psi2 {
     pub fn detection_status(&self) -> u8 {
         self.detection_status_raw()
     }
-    /// Get raw value of DetectionStatus
+    /// Get raw value of 'DetectionStatus'
     ///
     /// - Start bit: 0
     /// - Signal size: 4 bits
@@ -329,7 +329,7 @@ impl Aft1psi2 {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of DetectionStatus
+    /// Set value of 'DetectionStatus'
     #[inline(always)]
     pub fn set_detection_status(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 15_u8 < value {

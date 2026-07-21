@@ -71,7 +71,7 @@ impl Foo {
     pub const MESSAGE_SIZE: usize = 1;
     pub const SIGNAL_WITHOUT_SENDER_MIN: i8 = 0_i8;
     pub const SIGNAL_WITHOUT_SENDER_MAX: i8 = 0_i8;
-    /// Construct new Foo from values
+    /// Construct new 'Foo' from values
     pub fn new(signal_without_sender: i8) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 1] };
         res.set_signal_without_sender(signal_without_sender)?;
@@ -81,7 +81,7 @@ impl Foo {
     pub fn raw(&self) -> &[u8; 1] {
         &self.raw
     }
-    /// signal_without_sender
+    /// Get value of 'signal_without_sender'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -91,7 +91,7 @@ impl Foo {
     pub fn signal_without_sender(&self) -> i8 {
         self.signal_without_sender_raw()
     }
-    /// Get raw value of signal_without_sender
+    /// Get raw value of 'signal_without_sender'
     ///
     /// - Start bit: 0
     /// - Signal size: 8 bits
@@ -106,7 +106,7 @@ impl Foo {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of signal_without_sender
+    /// Set value of 'signal_without_sender'
     #[inline(always)]
     pub fn set_signal_without_sender(&mut self, value: i8) -> Result<(), CanError> {
         if value < 0_i8 || 0_i8 < value {

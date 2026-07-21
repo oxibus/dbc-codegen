@@ -68,7 +68,7 @@ impl DummyMsg {
         StandardId::new_unchecked(0x0)
     });
     pub const MESSAGE_SIZE: usize = 8;
-    /// Construct new dummy_msg from values
+    /// Construct new 'dummy_msg' from values
     pub fn new() -> Result<Self, CanError> {
         let res = Self { raw: [0x00; 8] };
         Ok(res)

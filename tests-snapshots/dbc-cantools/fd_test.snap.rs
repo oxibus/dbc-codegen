@@ -84,7 +84,7 @@ impl TestMsgEx {
     pub const MESSAGE_SIZE: usize = 8;
     pub const TEST_SIG_COPY_1_MIN: i8 = 0_i8;
     pub const TEST_SIG_COPY_1_MAX: i8 = 0_i8;
-    /// Construct new TestMsg_Ex from values
+    /// Construct new 'TestMsg_Ex' from values
     pub fn new(test_sig_copy_1: i8) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 8] };
         res.set_test_sig_copy_1(test_sig_copy_1)?;
@@ -94,7 +94,7 @@ impl TestMsgEx {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// TestSig_Copy_1
+    /// Get value of 'TestSig_Copy_1'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -104,7 +104,7 @@ impl TestMsgEx {
     pub fn test_sig_copy_1(&self) -> i8 {
         self.test_sig_copy_1_raw()
     }
-    /// Get raw value of TestSig_Copy_1
+    /// Get raw value of 'TestSig_Copy_1'
     ///
     /// - Start bit: 0
     /// - Signal size: 8 bits
@@ -119,7 +119,7 @@ impl TestMsgEx {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of TestSig_Copy_1
+    /// Set value of 'TestSig_Copy_1'
     #[inline(always)]
     pub fn set_test_sig_copy_1(&mut self, value: i8) -> Result<(), CanError> {
         if value < 0_i8 || 0_i8 < value {
@@ -201,7 +201,7 @@ impl TestMsgStd {
     pub const MESSAGE_SIZE: usize = 8;
     pub const TEST_SIG_COPY_3_MIN: i8 = 0_i8;
     pub const TEST_SIG_COPY_3_MAX: i8 = 0_i8;
-    /// Construct new TestMsg_Std from values
+    /// Construct new 'TestMsg_Std' from values
     pub fn new(test_sig_copy_3: i8) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 8] };
         res.set_test_sig_copy_3(test_sig_copy_3)?;
@@ -211,7 +211,7 @@ impl TestMsgStd {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// TestSig_Copy_3
+    /// Get value of 'TestSig_Copy_3'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -221,7 +221,7 @@ impl TestMsgStd {
     pub fn test_sig_copy_3(&self) -> i8 {
         self.test_sig_copy_3_raw()
     }
-    /// Get raw value of TestSig_Copy_3
+    /// Get raw value of 'TestSig_Copy_3'
     ///
     /// - Start bit: 0
     /// - Signal size: 8 bits
@@ -236,7 +236,7 @@ impl TestMsgStd {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of TestSig_Copy_3
+    /// Set value of 'TestSig_Copy_3'
     #[inline(always)]
     pub fn set_test_sig_copy_3(&mut self, value: i8) -> Result<(), CanError> {
         if value < 0_i8 || 0_i8 < value {
@@ -318,7 +318,7 @@ impl TestMsgFdStd {
     pub const MESSAGE_SIZE: usize = 8;
     pub const TEST_SIG_COPY_2_MIN: i8 = 0_i8;
     pub const TEST_SIG_COPY_2_MAX: i8 = 0_i8;
-    /// Construct new TestMsg_FDStd from values
+    /// Construct new 'TestMsg_FDStd' from values
     pub fn new(test_sig_copy_2: i8) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 8] };
         res.set_test_sig_copy_2(test_sig_copy_2)?;
@@ -328,7 +328,7 @@ impl TestMsgFdStd {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// TestSig_Copy_2
+    /// Get value of 'TestSig_Copy_2'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -338,7 +338,7 @@ impl TestMsgFdStd {
     pub fn test_sig_copy_2(&self) -> i8 {
         self.test_sig_copy_2_raw()
     }
-    /// Get raw value of TestSig_Copy_2
+    /// Get raw value of 'TestSig_Copy_2'
     ///
     /// - Start bit: 0
     /// - Signal size: 8 bits
@@ -353,7 +353,7 @@ impl TestMsgFdStd {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of TestSig_Copy_2
+    /// Set value of 'TestSig_Copy_2'
     #[inline(always)]
     pub fn set_test_sig_copy_2(&mut self, value: i8) -> Result<(), CanError> {
         if value < 0_i8 || 0_i8 < value {
@@ -435,7 +435,7 @@ impl TestMsgFdEx {
     pub const MESSAGE_SIZE: usize = 8;
     pub const TEST_SIG_MIN: i8 = 0_i8;
     pub const TEST_SIG_MAX: i8 = 0_i8;
-    /// Construct new TestMsg_FDEx from values
+    /// Construct new 'TestMsg_FDEx' from values
     pub fn new(test_sig: i8) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 8] };
         res.set_test_sig(test_sig)?;
@@ -445,7 +445,7 @@ impl TestMsgFdEx {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// TestSig
+    /// Get value of 'TestSig'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -455,7 +455,7 @@ impl TestMsgFdEx {
     pub fn test_sig(&self) -> i8 {
         self.test_sig_raw()
     }
-    /// Get raw value of TestSig
+    /// Get raw value of 'TestSig'
     ///
     /// - Start bit: 0
     /// - Signal size: 8 bits
@@ -470,7 +470,7 @@ impl TestMsgFdEx {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of TestSig
+    /// Set value of 'TestSig'
     #[inline(always)]
     pub fn set_test_sig(&mut self, value: i8) -> Result<(), CanError> {
         if value < 0_i8 || 0_i8 < value {

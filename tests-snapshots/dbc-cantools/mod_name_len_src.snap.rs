@@ -74,7 +74,7 @@ impl MsgWillBeShortened345678912 {
     pub const MESSAGE_SIZE: usize = 8;
     pub const SIG_WILL_BE_SHORTENED_3456789_12_MIN: u8 = 0_u8;
     pub const SIG_WILL_BE_SHORTENED_3456789_12_MAX: u8 = 0_u8;
-    /// Construct new Msg_will_be_shortened_3456789_12 from values
+    /// Construct new 'Msg_will_be_shortened_3456789_12' from values
     pub fn new(sig_will_be_shortened_3456789_12: u8) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 8] };
         res.set_sig_will_be_shortened_3456789_12(sig_will_be_shortened_3456789_12)?;
@@ -84,7 +84,7 @@ impl MsgWillBeShortened345678912 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// Sig_will_be_shortened_3456789_12
+    /// Get value of 'Sig_will_be_shortened_3456789_12'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -94,7 +94,7 @@ impl MsgWillBeShortened345678912 {
     pub fn sig_will_be_shortened_3456789_12(&self) -> u8 {
         self.sig_will_be_shortened_3456789_12_raw()
     }
-    /// Get raw value of Sig_will_be_shortened_3456789_12
+    /// Get raw value of 'Sig_will_be_shortened_3456789_12'
     ///
     /// - Start bit: 1
     /// - Signal size: 8 bits
@@ -108,7 +108,7 @@ impl MsgWillBeShortened345678912 {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Sig_will_be_shortened_3456789_12
+    /// Set value of 'Sig_will_be_shortened_3456789_12'
     #[inline(always)]
     pub fn set_sig_will_be_shortened_3456789_12(
         &mut self,

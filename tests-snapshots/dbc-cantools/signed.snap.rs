@@ -127,7 +127,7 @@ impl Message378910 {
     pub const S8_MAX: i8 = 0_i8;
     pub const S7_MIN: i8 = 0_i8;
     pub const S7_MAX: i8 = 0_i8;
-    /// Construct new Message378910 from values
+    /// Construct new 'Message378910' from values
     pub fn new(
         s3big: i8,
         s3: i8,
@@ -153,7 +153,7 @@ impl Message378910 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// s3big
+    /// Get value of 's3big'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -163,7 +163,7 @@ impl Message378910 {
     pub fn s3big(&self) -> i8 {
         self.s3big_raw()
     }
-    /// Get raw value of s3big
+    /// Get raw value of 's3big'
     ///
     /// - Start bit: 39
     /// - Signal size: 3 bits
@@ -178,7 +178,7 @@ impl Message378910 {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of s3big
+    /// Set value of 's3big'
     #[inline(always)]
     pub fn set_s3big(&mut self, value: i8) -> Result<(), CanError> {
         if value < 0_i8 || 0_i8 < value {
@@ -197,7 +197,7 @@ impl Message378910 {
         self.raw.view_bits_mut::<Msb0>()[32..35].store_be(value);
         Ok(())
     }
-    /// s3
+    /// Get value of 's3'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -207,7 +207,7 @@ impl Message378910 {
     pub fn s3(&self) -> i8 {
         self.s3_raw()
     }
-    /// Get raw value of s3
+    /// Get raw value of 's3'
     ///
     /// - Start bit: 34
     /// - Signal size: 3 bits
@@ -222,7 +222,7 @@ impl Message378910 {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of s3
+    /// Set value of 's3'
     #[inline(always)]
     pub fn set_s3(&mut self, value: i8) -> Result<(), CanError> {
         if value < 0_i8 || 0_i8 < value {
@@ -241,7 +241,7 @@ impl Message378910 {
         self.raw.view_bits_mut::<Lsb0>()[34..37].store_le(value);
         Ok(())
     }
-    /// s10big
+    /// Get value of 's10big'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -251,7 +251,7 @@ impl Message378910 {
     pub fn s10big(&self) -> i16 {
         self.s10big_raw()
     }
-    /// Get raw value of s10big
+    /// Get raw value of 's10big'
     ///
     /// - Start bit: 40
     /// - Signal size: 10 bits
@@ -266,7 +266,7 @@ impl Message378910 {
         let signal = signal as i16;
         i16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of s10big
+    /// Set value of 's10big'
     #[inline(always)]
     pub fn set_s10big(&mut self, value: i16) -> Result<(), CanError> {
         if value < 0_i16 || 0_i16 < value {
@@ -285,7 +285,7 @@ impl Message378910 {
         self.raw.view_bits_mut::<Msb0>()[47..57].store_be(value);
         Ok(())
     }
-    /// s8big
+    /// Get value of 's8big'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -295,7 +295,7 @@ impl Message378910 {
     pub fn s8big(&self) -> i8 {
         self.s8big_raw()
     }
-    /// Get raw value of s8big
+    /// Get raw value of 's8big'
     ///
     /// - Start bit: 0
     /// - Signal size: 8 bits
@@ -310,7 +310,7 @@ impl Message378910 {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of s8big
+    /// Set value of 's8big'
     #[inline(always)]
     pub fn set_s8big(&mut self, value: i8) -> Result<(), CanError> {
         if value < 0_i8 || 0_i8 < value {
@@ -329,7 +329,7 @@ impl Message378910 {
         self.raw.view_bits_mut::<Msb0>()[7..15].store_be(value);
         Ok(())
     }
-    /// s7big
+    /// Get value of 's7big'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -339,7 +339,7 @@ impl Message378910 {
     pub fn s7big(&self) -> i8 {
         self.s7big_raw()
     }
-    /// Get raw value of s7big
+    /// Get raw value of 's7big'
     ///
     /// - Start bit: 62
     /// - Signal size: 7 bits
@@ -354,7 +354,7 @@ impl Message378910 {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of s7big
+    /// Set value of 's7big'
     #[inline(always)]
     pub fn set_s7big(&mut self, value: i8) -> Result<(), CanError> {
         if value < 0_i8 || 0_i8 < value {
@@ -373,7 +373,7 @@ impl Message378910 {
         self.raw.view_bits_mut::<Msb0>()[57..64].store_be(value);
         Ok(())
     }
-    /// s9
+    /// Get value of 's9'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -383,7 +383,7 @@ impl Message378910 {
     pub fn s9(&self) -> i16 {
         self.s9_raw()
     }
-    /// Get raw value of s9
+    /// Get raw value of 's9'
     ///
     /// - Start bit: 17
     /// - Signal size: 9 bits
@@ -398,7 +398,7 @@ impl Message378910 {
         let signal = signal as i16;
         i16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of s9
+    /// Set value of 's9'
     #[inline(always)]
     pub fn set_s9(&mut self, value: i16) -> Result<(), CanError> {
         if value < 0_i16 || 0_i16 < value {
@@ -417,7 +417,7 @@ impl Message378910 {
         self.raw.view_bits_mut::<Lsb0>()[17..26].store_le(value);
         Ok(())
     }
-    /// s8
+    /// Get value of 's8'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -427,7 +427,7 @@ impl Message378910 {
     pub fn s8(&self) -> i8 {
         self.s8_raw()
     }
-    /// Get raw value of s8
+    /// Get raw value of 's8'
     ///
     /// - Start bit: 26
     /// - Signal size: 8 bits
@@ -442,7 +442,7 @@ impl Message378910 {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of s8
+    /// Set value of 's8'
     #[inline(always)]
     pub fn set_s8(&mut self, value: i8) -> Result<(), CanError> {
         if value < 0_i8 || 0_i8 < value {
@@ -461,7 +461,7 @@ impl Message378910 {
         self.raw.view_bits_mut::<Lsb0>()[26..34].store_le(value);
         Ok(())
     }
-    /// s7
+    /// Get value of 's7'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -471,7 +471,7 @@ impl Message378910 {
     pub fn s7(&self) -> i8 {
         self.s7_raw()
     }
-    /// Get raw value of s7
+    /// Get raw value of 's7'
     ///
     /// - Start bit: 1
     /// - Signal size: 7 bits
@@ -486,7 +486,7 @@ impl Message378910 {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of s7
+    /// Set value of 's7'
     #[inline(always)]
     pub fn set_s7(&mut self, value: i8) -> Result<(), CanError> {
         if value < 0_i8 || 0_i8 < value {
@@ -568,7 +568,7 @@ impl Message63big1 {
     pub const MESSAGE_SIZE: usize = 8;
     pub const S63BIG_MIN: i64 = 0_i64;
     pub const S63BIG_MAX: i64 = 0_i64;
-    /// Construct new Message63big_1 from values
+    /// Construct new 'Message63big_1' from values
     pub fn new(s63big: i64) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 8] };
         res.set_s63big(s63big)?;
@@ -578,7 +578,7 @@ impl Message63big1 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// s63big
+    /// Get value of 's63big'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -588,7 +588,7 @@ impl Message63big1 {
     pub fn s63big(&self) -> i64 {
         self.s63big_raw()
     }
-    /// Get raw value of s63big
+    /// Get raw value of 's63big'
     ///
     /// - Start bit: 6
     /// - Signal size: 63 bits
@@ -603,7 +603,7 @@ impl Message63big1 {
         let signal = signal as i64;
         i64::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of s63big
+    /// Set value of 's63big'
     #[inline(always)]
     pub fn set_s63big(&mut self, value: i64) -> Result<(), CanError> {
         if value < 0_i64 || 0_i64 < value {
@@ -685,7 +685,7 @@ impl Message631 {
     pub const MESSAGE_SIZE: usize = 8;
     pub const S63_MIN: i64 = 0_i64;
     pub const S63_MAX: i64 = 0_i64;
-    /// Construct new Message63_1 from values
+    /// Construct new 'Message63_1' from values
     pub fn new(s63: i64) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 8] };
         res.set_s63(s63)?;
@@ -695,7 +695,7 @@ impl Message631 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// s63
+    /// Get value of 's63'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -705,7 +705,7 @@ impl Message631 {
     pub fn s63(&self) -> i64 {
         self.s63_raw()
     }
-    /// Get raw value of s63
+    /// Get raw value of 's63'
     ///
     /// - Start bit: 1
     /// - Signal size: 63 bits
@@ -720,7 +720,7 @@ impl Message631 {
         let signal = signal as i64;
         i64::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of s63
+    /// Set value of 's63'
     #[inline(always)]
     pub fn set_s63(&mut self, value: i64) -> Result<(), CanError> {
         if value < 0_i64 || 0_i64 < value {
@@ -802,7 +802,7 @@ impl Message63big {
     pub const MESSAGE_SIZE: usize = 8;
     pub const S63BIG_MIN: i64 = 0_i64;
     pub const S63BIG_MAX: i64 = 0_i64;
-    /// Construct new Message63big from values
+    /// Construct new 'Message63big' from values
     pub fn new(s63big: i64) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 8] };
         res.set_s63big(s63big)?;
@@ -812,7 +812,7 @@ impl Message63big {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// s63big
+    /// Get value of 's63big'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -822,7 +822,7 @@ impl Message63big {
     pub fn s63big(&self) -> i64 {
         self.s63big_raw()
     }
-    /// Get raw value of s63big
+    /// Get raw value of 's63big'
     ///
     /// - Start bit: 7
     /// - Signal size: 63 bits
@@ -837,7 +837,7 @@ impl Message63big {
         let signal = signal as i64;
         i64::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of s63big
+    /// Set value of 's63big'
     #[inline(always)]
     pub fn set_s63big(&mut self, value: i64) -> Result<(), CanError> {
         if value < 0_i64 || 0_i64 < value {
@@ -919,7 +919,7 @@ impl Message63 {
     pub const MESSAGE_SIZE: usize = 8;
     pub const S63_MIN: i64 = 0_i64;
     pub const S63_MAX: i64 = 0_i64;
-    /// Construct new Message63 from values
+    /// Construct new 'Message63' from values
     pub fn new(s63: i64) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 8] };
         res.set_s63(s63)?;
@@ -929,7 +929,7 @@ impl Message63 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// s63
+    /// Get value of 's63'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -939,7 +939,7 @@ impl Message63 {
     pub fn s63(&self) -> i64 {
         self.s63_raw()
     }
-    /// Get raw value of s63
+    /// Get raw value of 's63'
     ///
     /// - Start bit: 0
     /// - Signal size: 63 bits
@@ -954,7 +954,7 @@ impl Message63 {
         let signal = signal as i64;
         i64::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of s63
+    /// Set value of 's63'
     #[inline(always)]
     pub fn set_s63(&mut self, value: i64) -> Result<(), CanError> {
         if value < 0_i64 || 0_i64 < value {
@@ -1036,7 +1036,7 @@ impl Message32big {
     pub const MESSAGE_SIZE: usize = 8;
     pub const S32BIG_MIN: i32 = 0_i32;
     pub const S32BIG_MAX: i32 = 0_i32;
-    /// Construct new Message32big from values
+    /// Construct new 'Message32big' from values
     pub fn new(s32big: i32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 8] };
         res.set_s32big(s32big)?;
@@ -1046,7 +1046,7 @@ impl Message32big {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// s32big
+    /// Get value of 's32big'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -1056,7 +1056,7 @@ impl Message32big {
     pub fn s32big(&self) -> i32 {
         self.s32big_raw()
     }
-    /// Get raw value of s32big
+    /// Get raw value of 's32big'
     ///
     /// - Start bit: 7
     /// - Signal size: 32 bits
@@ -1071,7 +1071,7 @@ impl Message32big {
         let signal = signal as i32;
         i32::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of s32big
+    /// Set value of 's32big'
     #[inline(always)]
     pub fn set_s32big(&mut self, value: i32) -> Result<(), CanError> {
         if value < 0_i32 || 0_i32 < value {
@@ -1153,7 +1153,7 @@ impl Message33big {
     pub const MESSAGE_SIZE: usize = 8;
     pub const S33BIG_MIN: i64 = 0_i64;
     pub const S33BIG_MAX: i64 = 0_i64;
-    /// Construct new Message33big from values
+    /// Construct new 'Message33big' from values
     pub fn new(s33big: i64) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 8] };
         res.set_s33big(s33big)?;
@@ -1163,7 +1163,7 @@ impl Message33big {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// s33big
+    /// Get value of 's33big'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -1173,7 +1173,7 @@ impl Message33big {
     pub fn s33big(&self) -> i64 {
         self.s33big_raw()
     }
-    /// Get raw value of s33big
+    /// Get raw value of 's33big'
     ///
     /// - Start bit: 7
     /// - Signal size: 33 bits
@@ -1188,7 +1188,7 @@ impl Message33big {
         let signal = signal as i64;
         i64::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of s33big
+    /// Set value of 's33big'
     #[inline(always)]
     pub fn set_s33big(&mut self, value: i64) -> Result<(), CanError> {
         if value < 0_i64 || 0_i64 < value {
@@ -1270,7 +1270,7 @@ impl Message64big {
     pub const MESSAGE_SIZE: usize = 8;
     pub const S64BIG_MIN: i64 = 0_i64;
     pub const S64BIG_MAX: i64 = 0_i64;
-    /// Construct new Message64big from values
+    /// Construct new 'Message64big' from values
     pub fn new(s64big: i64) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 8] };
         res.set_s64big(s64big)?;
@@ -1280,7 +1280,7 @@ impl Message64big {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// s64big
+    /// Get value of 's64big'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -1290,7 +1290,7 @@ impl Message64big {
     pub fn s64big(&self) -> i64 {
         self.s64big_raw()
     }
-    /// Get raw value of s64big
+    /// Get raw value of 's64big'
     ///
     /// - Start bit: 7
     /// - Signal size: 64 bits
@@ -1305,7 +1305,7 @@ impl Message64big {
         let signal = signal as i64;
         i64::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of s64big
+    /// Set value of 's64big'
     #[inline(always)]
     pub fn set_s64big(&mut self, value: i64) -> Result<(), CanError> {
         if value < 0_i64 || 0_i64 < value {
@@ -1387,7 +1387,7 @@ impl Message64 {
     pub const MESSAGE_SIZE: usize = 8;
     pub const S64_MIN: i64 = -9223372036854780000_i64;
     pub const S64_MAX: i64 = 9223372036854780000_i64;
-    /// Construct new Message64 from values
+    /// Construct new 'Message64' from values
     pub fn new(s64: i64) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 8] };
         res.set_s64(s64)?;
@@ -1397,7 +1397,7 @@ impl Message64 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// s64
+    /// Get value of 's64'
     ///
     /// - Min: -9223372036854780000
     /// - Max: 9223372036854780000
@@ -1407,7 +1407,7 @@ impl Message64 {
     pub fn s64(&self) -> i64 {
         self.s64_raw()
     }
-    /// Get raw value of s64
+    /// Get raw value of 's64'
     ///
     /// - Start bit: 0
     /// - Signal size: 64 bits
@@ -1422,7 +1422,7 @@ impl Message64 {
         let signal = signal as i64;
         i64::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of s64
+    /// Set value of 's64'
     #[inline(always)]
     pub fn set_s64(&mut self, value: i64) -> Result<(), CanError> {
         if value < -9223372036854780000_i64 || 9223372036854780000_i64 < value {
@@ -1504,7 +1504,7 @@ impl Message33 {
     pub const MESSAGE_SIZE: usize = 8;
     pub const S33_MIN: i64 = -4294967296_i64;
     pub const S33_MAX: i64 = 4294967295_i64;
-    /// Construct new Message33 from values
+    /// Construct new 'Message33' from values
     pub fn new(s33: i64) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 8] };
         res.set_s33(s33)?;
@@ -1514,7 +1514,7 @@ impl Message33 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// s33
+    /// Get value of 's33'
     ///
     /// - Min: -4294967296
     /// - Max: 4294967295
@@ -1524,7 +1524,7 @@ impl Message33 {
     pub fn s33(&self) -> i64 {
         self.s33_raw()
     }
-    /// Get raw value of s33
+    /// Get raw value of 's33'
     ///
     /// - Start bit: 0
     /// - Signal size: 33 bits
@@ -1539,7 +1539,7 @@ impl Message33 {
         let signal = signal as i64;
         i64::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of s33
+    /// Set value of 's33'
     #[inline(always)]
     pub fn set_s33(&mut self, value: i64) -> Result<(), CanError> {
         if value < -4294967296_i64 || 4294967295_i64 < value {
@@ -1621,7 +1621,7 @@ impl Message32 {
     pub const MESSAGE_SIZE: usize = 8;
     pub const S32_MIN: i32 = 0_i32;
     pub const S32_MAX: i32 = 0_i32;
-    /// Construct new Message32 from values
+    /// Construct new 'Message32' from values
     pub fn new(s32: i32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 8] };
         res.set_s32(s32)?;
@@ -1631,7 +1631,7 @@ impl Message32 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// s32
+    /// Get value of 's32'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -1641,7 +1641,7 @@ impl Message32 {
     pub fn s32(&self) -> i32 {
         self.s32_raw()
     }
-    /// Get raw value of s32
+    /// Get raw value of 's32'
     ///
     /// - Start bit: 0
     /// - Signal size: 32 bits
@@ -1656,7 +1656,7 @@ impl Message32 {
         let signal = signal as i32;
         i32::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of s32
+    /// Set value of 's32'
     #[inline(always)]
     pub fn set_s32(&mut self, value: i32) -> Result<(), CanError> {
         if value < 0_i32 || 0_i32 < value {

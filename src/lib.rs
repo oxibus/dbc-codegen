@@ -372,14 +372,14 @@ impl Config<'_> {
 
             self.render_attribute_structs(&mut w, msg, dbc)?;
 
-            writeln!(w, "/// Construct new {} from values", msg.name)?;
+            writeln!(w, "/// Construct new '{}' from values", msg.name)?;
             let args = msg
                 .signals
                 .iter()
                 .filter_map(|signal| {
                     if matches!(signal.multiplexer_indicator, Plain | Multiplexor) {
                         let field = signal.field_name();
-                        let typ = ValType::from_signal(signal);
+                        let typ = signal_pub_type(dbc, msg, signal);
                         Some(format!("{field}: {typ}"))
                     } else {
                         None
@@ -426,7 +426,7 @@ impl Config<'_> {
                         .render_signal(&mut w, signal, dbc, msg)
                         .with_context(|| format!("write signal impl `{}`", signal.name))?,
                     Multiplexor => {
-                        self.render_multiplexor_signal(&mut w, signal, msg)?;
+                        self.render_multiplexor_signal(&mut w, signal, dbc, msg)?;
                     }
                     MultiplexedSignal(_) | MultiplexorAndMultiplexedSignal(_) => {}
                 }
@@ -470,7 +470,7 @@ impl Config<'_> {
         self.impl_defmt
             .fmt_cfg(&mut *w, |w| render_defmt_impl(w, msg))?;
         self.impl_arbitrary
-            .fmt_cfg(&mut *w, |w| self.render_arbitrary(w, msg))?;
+            .fmt_cfg(&mut *w, |w| self.render_arbitrary(w, dbc, msg))?;
 
         let enums_for_this_message = dbc.value_descriptions.iter().filter_map(|x| {
             if let ValueDescription::Signal {
@@ -685,7 +685,7 @@ impl Config<'_> {
         dbc: &Dbc,
         msg: &Message,
     ) -> Result<()> {
-        writeln!(w, "/// {}", signal.name)?;
+        writeln!(w, "/// Get value of '{}'", signal.name)?;
         if let Some(comment) = dbc.signal_comment(msg.id, &signal.name) {
             writeln!(w, "///")?;
             for line in comment.trim().lines() {
@@ -756,7 +756,7 @@ impl Config<'_> {
             writeln!(w)?;
         }
 
-        writeln!(w, "/// Get raw value of {}", signal.name)?;
+        writeln!(w, "/// Get raw value of '{}'", signal.name)?;
         writeln!(w, "///")?;
         writeln!(w, "/// - Start bit: {}", signal.start_bit)?;
         writeln!(w, "/// - Signal size: {} bits", signal.size)?;
@@ -774,15 +774,18 @@ impl Config<'_> {
         writeln!(w, "}}")?;
         writeln!(w)?;
 
-        self.render_set_signal(w, signal, msg)?;
+        self.render_set_signal(w, signal, dbc, msg)?;
 
         Ok(())
     }
 
-    fn render_set_signal(&self, w: &mut impl Write, signal: &Signal, msg: &Message) -> Result<()> {
-        writeln!(w, "/// Set value of {}", signal.name)?;
-        writeln!(w, "#[inline(always)]")?;
-
+    fn render_set_signal(
+        &self,
+        w: &mut impl Write,
+        signal: &Signal,
+        dbc: &Dbc,
+        msg: &Message,
+    ) -> Result<()> {
         // To avoid accidentally changing the multiplexor value without changing
         // the signals accordingly this fn is kept private for multiplexors.
         let visibility = if signal.multiplexer_indicator == Multiplexor {
@@ -793,42 +796,60 @@ impl Config<'_> {
 
         let field = signal.field_name();
         let typ = ValType::from_signal(signal);
+        let param_type = signal_pub_type(dbc, msg, signal);
+        let is_enum_backed = param_type != typ.to_string();
+
+        writeln!(w, "/// Set value of '{}'", signal.name)?;
+        writeln!(w, "#[inline(always)]")?;
         writeln!(
             w,
-            "{visibility}fn set_{field}(&mut self, value: {typ}) -> Result<(), CanError> {{",
+            "{visibility}fn set_{field}(&mut self, value: {param_type}) -> Result<(), CanError> {{",
         )?;
-
         {
             let mut w = PadAdapter::wrap(w);
-
-            if signal.size != 1 {
-                if let FeatureConfig::Gated(gate) = self.check_ranges {
-                    writeln!(w, r"#[cfg(feature = {gate:?})]")?;
-                }
-
-                if let FeatureConfig::Gated(..) | FeatureConfig::Always = self.check_ranges {
-                    let typ = ValType::from_signal(signal);
-                    let min = signal.min;
-                    let max = signal.max;
-                    writeln!(w, r"if value < {min}_{typ} || {max}_{typ} < value {{")?;
-
-                    {
-                        let mut w = PadAdapter::wrap(&mut w);
-                        let typ = msg.type_name();
-                        writeln!(
-                            w,
-                            r"return Err(CanError::ParameterOutOfRange {{ message_id: {typ}::MESSAGE_ID }});",
-                        )?;
-                    }
-
-                    writeln!(w, r"}}")?;
-                }
+            // Enum-backed signals accept the value-description enum; convert it to
+            // the raw primitive before range checks and packing.
+            if is_enum_backed {
+                writeln!(w, "let value = {typ}::from(value);")?;
             }
-            signal_to_payload(&mut w, signal, msg).context("signal to payload")?;
+            self.render_set_signal_body(&mut w, signal, msg)?;
         }
-
         writeln!(w, "}}")?;
         writeln!(w)?;
+
+        Ok(())
+    }
+
+    fn render_set_signal_body(
+        &self,
+        w: &mut impl Write,
+        signal: &Signal,
+        msg: &Message,
+    ) -> Result<()> {
+        if signal.size != 1 {
+            if let FeatureConfig::Gated(gate) = self.check_ranges {
+                writeln!(w, r"#[cfg(feature = {gate:?})]")?;
+            }
+
+            if let FeatureConfig::Gated(..) | FeatureConfig::Always = self.check_ranges {
+                let typ = ValType::from_signal(signal);
+                let min = signal.min;
+                let max = signal.max;
+                writeln!(w, r"if value < {min}_{typ} || {max}_{typ} < value {{")?;
+
+                {
+                    let mut w = PadAdapter::wrap(&mut *w);
+                    let typ = msg.type_name();
+                    writeln!(
+                        w,
+                        r"return Err(CanError::ParameterOutOfRange {{ message_id: {typ}::MESSAGE_ID }});",
+                    )?;
+                }
+
+                writeln!(w, r"}}")?;
+            }
+        }
+        signal_to_payload(&mut *w, signal, msg).context("signal to payload")?;
 
         Ok(())
     }
@@ -837,9 +858,10 @@ impl Config<'_> {
         &self,
         w: &mut impl Write,
         signal: &Signal,
+        dbc: &Dbc,
         msg: &Message,
     ) -> Result<()> {
-        writeln!(w, "/// Get raw value of {}", signal.name)?;
+        writeln!(w, "/// Get raw value of '{}'", signal.name)?;
         writeln!(w, "///")?;
         writeln!(w, "/// - Start bit: {}", signal.start_bit)?;
         writeln!(w, "/// - Signal size: {} bits", signal.size)?;
@@ -906,7 +928,7 @@ impl Config<'_> {
         }
         writeln!(w, "}}")?;
 
-        self.render_set_signal(w, signal, msg)?;
+        self.render_set_signal(w, signal, dbc, msg)?;
 
         for switch_index in multiplexer_indexes {
             render_set_signal_multiplexer(w, signal, msg, switch_index)?;
@@ -999,7 +1021,7 @@ fn render_set_signal_multiplexer(
     msg: &Message,
     switch_index: u64,
 ) -> Result<()> {
-    writeln!(w, "/// Set value of {}", multiplexor.name)?;
+    writeln!(w, "/// Set value of '{}'", multiplexor.name)?;
     writeln!(w, "#[inline(always)]")?;
     writeln!(
         w,
@@ -1068,6 +1090,21 @@ fn le_start_end_bit(signal: &Signal, msg: &Message) -> Result<(u64, u64)> {
         "signal ends at {end_bit}, but message is only {msg_bits} bits",
     );
     Ok((start_bit, end_bit))
+}
+
+/// Public type of a signal as seen by `new()` and `set_*`. This is the
+/// enum when the signal has one (and isn't the multiplexor selector), otherwise
+/// it is the raw primitive type.
+fn signal_pub_type(dbc: &Dbc, msg: &Message, signal: &Signal) -> String {
+    if signal.multiplexer_indicator != Multiplexor
+        && dbc
+            .value_descriptions_for_signal(msg.id, &signal.name)
+            .is_some()
+    {
+        enum_name(msg, signal)
+    } else {
+        ValType::from_signal(signal).to_string()
+    }
 }
 
 fn signal_from_payload(w: &mut impl Write, signal: &Signal, msg: &Message) -> Result<()> {
@@ -1450,7 +1487,7 @@ impl Config<'_> {
         Ok(())
     }
 
-    fn render_arbitrary(&self, w: &mut impl Write, msg: &Message) -> Result<()> {
+    fn render_arbitrary(&self, w: &mut impl Write, dbc: &Dbc, msg: &Message) -> Result<()> {
         writeln!(w, "{ALLOW_LINTS}")?;
         self.write_allow_dead_code(w)?;
         let typ = msg.type_name();
@@ -1481,7 +1518,16 @@ impl Config<'_> {
 
                 let args: Vec<String> = filtered_signals
                     .iter()
-                    .map(|signal| signal.field_name())
+                    .map(|signal| {
+                        let field = signal.field_name();
+                        let is_enum_backed = signal_pub_type(dbc, msg, signal)
+                            != ValType::from_signal(signal).to_string();
+                        if is_enum_backed {
+                            format!("{}::_Other({field})", enum_name(msg, signal))
+                        } else {
+                            field
+                        }
+                    })
                     .collect();
 
                 writeln!(

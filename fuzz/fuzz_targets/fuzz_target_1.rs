@@ -8,7 +8,14 @@ use cantools_messages::{
 };
 
 fuzz_target!(|dbc_codegen_bar: can_messages::Bar| {
-    let dbc_codegen_bar = can_messages::Bar::new(3, 2.0, 4, 5, false).unwrap();
+    let dbc_codegen_bar = can_messages::Bar::new(
+        3,
+        2.0,
+        can_messages::BarThree::_Other(4),
+        can_messages::BarFour::_Other(5),
+        can_messages::BarType::X0off,
+    )
+    .unwrap();
 
     println!(
         "{} {} {} {} {}",

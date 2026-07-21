@@ -74,7 +74,7 @@ impl Foo {
     pub const MESSAGE_CYCLE_TIME_MS: u32 = 200;
     pub const FOO_MIN: f32 = 229.53_f32;
     pub const FOO_MAX: f32 = 270.47_f32;
-    /// Construct new Foo from values
+    /// Construct new 'Foo' from values
     pub fn new(foo: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 8] };
         res.set_foo(foo)?;
@@ -84,7 +84,7 @@ impl Foo {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// Foo
+    /// Get value of 'Foo'
     ///
     /// - Min: 229.53
     /// - Max: 270.47
@@ -94,7 +94,7 @@ impl Foo {
     pub fn foo(&self) -> f32 {
         self.foo_raw()
     }
-    /// Get raw value of Foo
+    /// Get raw value of 'Foo'
     ///
     /// - Start bit: 0
     /// - Signal size: 12 bits
@@ -109,7 +109,7 @@ impl Foo {
         let offset = 250_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Foo
+    /// Set value of 'Foo'
     #[inline(always)]
     pub fn set_foo(&mut self, value: f32) -> Result<(), CanError> {
         if value < 229.53_f32 || 270.47_f32 < value {
@@ -188,7 +188,7 @@ impl Bar {
     pub const MESSAGE_SIZE: usize = 8;
     pub const FOO_MIN: f32 = 229.53_f32;
     pub const FOO_MAX: f32 = 270.47_f32;
-    /// Construct new Bar from values
+    /// Construct new 'Bar' from values
     pub fn new(foo: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 8] };
         res.set_foo(foo)?;
@@ -198,7 +198,7 @@ impl Bar {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// Foo
+    /// Get value of 'Foo'
     ///
     /// - Min: 229.53
     /// - Max: 270.47
@@ -208,7 +208,7 @@ impl Bar {
     pub fn foo(&self) -> f32 {
         self.foo_raw()
     }
-    /// Get raw value of Foo
+    /// Get raw value of 'Foo'
     ///
     /// - Start bit: 0
     /// - Signal size: 12 bits
@@ -223,7 +223,7 @@ impl Bar {
         let offset = 250_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Foo
+    /// Set value of 'Foo'
     #[inline(always)]
     pub fn set_foo(&mut self, value: f32) -> Result<(), CanError> {
         if value < 229.53_f32 || 270.47_f32 < value {

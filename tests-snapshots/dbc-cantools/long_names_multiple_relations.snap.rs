@@ -114,7 +114,7 @@ impl MsgLongName5678912345678912 {
     pub const RX_TWICE_SHORT_MAX: i32 = 0_i32;
     pub const SIG_USED_TWICE_EFGH_ABCDEFGHI_AB_MIN: i8 = 0_i8;
     pub const SIG_USED_TWICE_EFGH_ABCDEFGHI_AB_MAX: i8 = 0_i8;
-    /// Construct new Msg_Long_Name_56789_123456789_12 from values
+    /// Construct new 'Msg_Long_Name_56789_123456789_12' from values
     pub fn new(
         rx_twice_11111111111111111111111: i8,
         rx_twice_short: i32,
@@ -130,7 +130,7 @@ impl MsgLongName5678912345678912 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// rx_twice_11111111111111111111111
+    /// Get value of 'rx_twice_11111111111111111111111'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -140,7 +140,7 @@ impl MsgLongName5678912345678912 {
     pub fn rx_twice_11111111111111111111111(&self) -> i8 {
         self.rx_twice_11111111111111111111111_raw()
     }
-    /// Get raw value of rx_twice_11111111111111111111111
+    /// Get raw value of 'rx_twice_11111111111111111111111'
     ///
     /// - Start bit: 8
     /// - Signal size: 8 bits
@@ -155,7 +155,7 @@ impl MsgLongName5678912345678912 {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of rx_twice_11111111111111111111111
+    /// Set value of 'rx_twice_11111111111111111111111'
     #[inline(always)]
     pub fn set_rx_twice_11111111111111111111111(
         &mut self,
@@ -177,7 +177,7 @@ impl MsgLongName5678912345678912 {
         self.raw.view_bits_mut::<Lsb0>()[8..16].store_le(value);
         Ok(())
     }
-    /// rx_twice_short
+    /// Get value of 'rx_twice_short'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -187,7 +187,7 @@ impl MsgLongName5678912345678912 {
     pub fn rx_twice_short(&self) -> i32 {
         self.rx_twice_short_raw()
     }
-    /// Get raw value of rx_twice_short
+    /// Get raw value of 'rx_twice_short'
     ///
     /// - Start bit: 16
     /// - Signal size: 18 bits
@@ -202,7 +202,7 @@ impl MsgLongName5678912345678912 {
         let signal = signal as i32;
         i32::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of rx_twice_short
+    /// Set value of 'rx_twice_short'
     #[inline(always)]
     pub fn set_rx_twice_short(&mut self, value: i32) -> Result<(), CanError> {
         if value < 0_i32 || 0_i32 < value {
@@ -221,7 +221,7 @@ impl MsgLongName5678912345678912 {
         self.raw.view_bits_mut::<Lsb0>()[16..34].store_le(value);
         Ok(())
     }
-    /// Sig_used_twice_efgh_abcdefghi_ab
+    /// Get value of 'Sig_used_twice_efgh_abcdefghi_ab'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -231,7 +231,7 @@ impl MsgLongName5678912345678912 {
     pub fn sig_used_twice_efgh_abcdefghi_ab(&self) -> i8 {
         self.sig_used_twice_efgh_abcdefghi_ab_raw()
     }
-    /// Get raw value of Sig_used_twice_efgh_abcdefghi_ab
+    /// Get raw value of 'Sig_used_twice_efgh_abcdefghi_ab'
     ///
     /// - Start bit: 0
     /// - Signal size: 6 bits
@@ -246,7 +246,7 @@ impl MsgLongName5678912345678912 {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Sig_used_twice_efgh_abcdefghi_ab
+    /// Set value of 'Sig_used_twice_efgh_abcdefghi_ab'
     #[inline(always)]
     pub fn set_sig_used_twice_efgh_abcdefghi_ab(
         &mut self,
@@ -334,7 +334,7 @@ impl TxTwice {
     pub const RX_TWICE_LONG_YYYYYYYYYYYYYYYYYY_MAX: i8 = 0_i8;
     pub const RX_TWICE_SHORT_MIN: i8 = 0_i8;
     pub const RX_TWICE_SHORT_MAX: i8 = 0_i8;
-    /// Construct new TX_twice from values
+    /// Construct new 'TX_twice' from values
     pub fn new(
         rx_twice_long_yyyyyyyyyyyyyyyyyy: i8,
         rx_twice_short: i8,
@@ -348,7 +348,7 @@ impl TxTwice {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// rx_twice_long_yyyyyyyyyyyyyyyyyy
+    /// Get value of 'rx_twice_long_yyyyyyyyyyyyyyyyyy'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -358,7 +358,7 @@ impl TxTwice {
     pub fn rx_twice_long_yyyyyyyyyyyyyyyyyy(&self) -> i8 {
         self.rx_twice_long_yyyyyyyyyyyyyyyyyy_raw()
     }
-    /// Get raw value of rx_twice_long_yyyyyyyyyyyyyyyyyy
+    /// Get raw value of 'rx_twice_long_yyyyyyyyyyyyyyyyyy'
     ///
     /// - Start bit: 8
     /// - Signal size: 8 bits
@@ -373,7 +373,7 @@ impl TxTwice {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of rx_twice_long_yyyyyyyyyyyyyyyyyy
+    /// Set value of 'rx_twice_long_yyyyyyyyyyyyyyyyyy'
     #[inline(always)]
     pub fn set_rx_twice_long_yyyyyyyyyyyyyyyyyy(
         &mut self,
@@ -395,7 +395,7 @@ impl TxTwice {
         self.raw.view_bits_mut::<Lsb0>()[8..16].store_le(value);
         Ok(())
     }
-    /// rx_twice_short
+    /// Get value of 'rx_twice_short'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -405,7 +405,7 @@ impl TxTwice {
     pub fn rx_twice_short(&self) -> i8 {
         self.rx_twice_short_raw()
     }
-    /// Get raw value of rx_twice_short
+    /// Get raw value of 'rx_twice_short'
     ///
     /// - Start bit: 0
     /// - Signal size: 8 bits
@@ -420,7 +420,7 @@ impl TxTwice {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of rx_twice_short
+    /// Set value of 'rx_twice_short'
     #[inline(always)]
     pub fn set_rx_twice_short(&mut self, value: i8) -> Result<(), CanError> {
         if value < 0_i8 || 0_i8 < value {
@@ -503,7 +503,7 @@ impl RxTx1 {
     pub const MESSAGE_SIZE: usize = 8;
     pub const SIG_USED_TWICE_EFGH_ABCDEFG_0000_MIN: i16 = 0_i16;
     pub const SIG_USED_TWICE_EFGH_ABCDEFG_0000_MAX: i16 = 0_i16;
-    /// Construct new RX_TX_1 from values
+    /// Construct new 'RX_TX_1' from values
     pub fn new(sig_used_twice_efgh_abcdefg_0000: i16) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 8] };
         res.set_sig_used_twice_efgh_abcdefg_0000(sig_used_twice_efgh_abcdefg_0000)?;
@@ -513,7 +513,7 @@ impl RxTx1 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// Sig_used_twice_efgh_abcdefg_0000
+    /// Get value of 'Sig_used_twice_efgh_abcdefg_0000'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -523,7 +523,7 @@ impl RxTx1 {
     pub fn sig_used_twice_efgh_abcdefg_0000(&self) -> i16 {
         self.sig_used_twice_efgh_abcdefg_0000_raw()
     }
-    /// Get raw value of Sig_used_twice_efgh_abcdefg_0000
+    /// Get raw value of 'Sig_used_twice_efgh_abcdefg_0000'
     ///
     /// - Start bit: 0
     /// - Signal size: 9 bits
@@ -538,7 +538,7 @@ impl RxTx1 {
         let signal = signal as i16;
         i16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Sig_used_twice_efgh_abcdefg_0000
+    /// Set value of 'Sig_used_twice_efgh_abcdefg_0000'
     #[inline(always)]
     pub fn set_sig_used_twice_efgh_abcdefg_0000(
         &mut self,
@@ -621,7 +621,7 @@ impl MsgCaseTest {
         StandardId::new_unchecked(0x4)
     });
     pub const MESSAGE_SIZE: usize = 8;
-    /// Construct new MSG_CASE_TEST from values
+    /// Construct new 'MSG_CASE_TEST' from values
     pub fn new() -> Result<Self, CanError> {
         let res = Self { raw: [0x00; 8] };
         Ok(res)
@@ -691,7 +691,7 @@ impl MsgCaseTest {
         StandardId::new_unchecked(0x3)
     });
     pub const MESSAGE_SIZE: usize = 8;
-    /// Construct new msg_case_test from values
+    /// Construct new 'msg_case_test' from values
     pub fn new() -> Result<Self, CanError> {
         let res = Self { raw: [0x00; 8] };
         Ok(res)
@@ -767,11 +767,11 @@ impl MsgWithValueTableSigs {
     pub const SIG_WITH_LONG_VAL_TABLE_2_MAX: i8 = 0_i8;
     pub const SIG_WITH_LONG_VAL_TABLE_1_MIN: i8 = 0_i8;
     pub const SIG_WITH_LONG_VAL_TABLE_1_MAX: i8 = 0_i8;
-    /// Construct new Msg_with_value_table_sigs from values
+    /// Construct new 'Msg_with_value_table_sigs' from values
     pub fn new(
-        sig_with_short_val_table: i8,
-        sig_with_long_val_table_2: i8,
-        sig_with_long_val_table_1: i8,
+        sig_with_short_val_table: MsgWithValueTableSigsSigWithShortValTable,
+        sig_with_long_val_table_2: MsgWithValueTableSigsSigWithLongValTable2,
+        sig_with_long_val_table_1: MsgWithValueTableSigsSigWithLongValTable1,
     ) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 3] };
         res.set_sig_with_short_val_table(sig_with_short_val_table)?;
@@ -783,7 +783,7 @@ impl MsgWithValueTableSigs {
     pub fn raw(&self) -> &[u8; 3] {
         &self.raw
     }
-    /// Sig_with_short_val_table
+    /// Get value of 'Sig_with_short_val_table'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -806,7 +806,7 @@ impl MsgWithValueTableSigs {
             }
         }
     }
-    /// Get raw value of Sig_with_short_val_table
+    /// Get raw value of 'Sig_with_short_val_table'
     ///
     /// - Start bit: 16
     /// - Signal size: 8 bits
@@ -821,9 +821,13 @@ impl MsgWithValueTableSigs {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Sig_with_short_val_table
+    /// Set value of 'Sig_with_short_val_table'
     #[inline(always)]
-    pub fn set_sig_with_short_val_table(&mut self, value: i8) -> Result<(), CanError> {
+    pub fn set_sig_with_short_val_table(
+        &mut self,
+        value: MsgWithValueTableSigsSigWithShortValTable,
+    ) -> Result<(), CanError> {
+        let value = i8::from(value);
         if value < 0_i8 || 0_i8 < value {
             return Err(CanError::ParameterOutOfRange {
                 message_id: MsgWithValueTableSigs::MESSAGE_ID,
@@ -840,7 +844,7 @@ impl MsgWithValueTableSigs {
         self.raw.view_bits_mut::<Lsb0>()[16..24].store_le(value);
         Ok(())
     }
-    /// Sig_with_long_val_table_2
+    /// Get value of 'Sig_with_long_val_table_2'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -873,7 +877,7 @@ impl MsgWithValueTableSigs {
             }
         }
     }
-    /// Get raw value of Sig_with_long_val_table_2
+    /// Get raw value of 'Sig_with_long_val_table_2'
     ///
     /// - Start bit: 8
     /// - Signal size: 8 bits
@@ -888,9 +892,13 @@ impl MsgWithValueTableSigs {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Sig_with_long_val_table_2
+    /// Set value of 'Sig_with_long_val_table_2'
     #[inline(always)]
-    pub fn set_sig_with_long_val_table_2(&mut self, value: i8) -> Result<(), CanError> {
+    pub fn set_sig_with_long_val_table_2(
+        &mut self,
+        value: MsgWithValueTableSigsSigWithLongValTable2,
+    ) -> Result<(), CanError> {
+        let value = i8::from(value);
         if value < 0_i8 || 0_i8 < value {
             return Err(CanError::ParameterOutOfRange {
                 message_id: MsgWithValueTableSigs::MESSAGE_ID,
@@ -907,7 +915,7 @@ impl MsgWithValueTableSigs {
         self.raw.view_bits_mut::<Lsb0>()[8..16].store_le(value);
         Ok(())
     }
-    /// Sig_with_long_val_table_1
+    /// Get value of 'Sig_with_long_val_table_1'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -930,7 +938,7 @@ impl MsgWithValueTableSigs {
             }
         }
     }
-    /// Get raw value of Sig_with_long_val_table_1
+    /// Get raw value of 'Sig_with_long_val_table_1'
     ///
     /// - Start bit: 0
     /// - Signal size: 8 bits
@@ -945,9 +953,13 @@ impl MsgWithValueTableSigs {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Sig_with_long_val_table_1
+    /// Set value of 'Sig_with_long_val_table_1'
     #[inline(always)]
-    pub fn set_sig_with_long_val_table_1(&mut self, value: i8) -> Result<(), CanError> {
+    pub fn set_sig_with_long_val_table_1(
+        &mut self,
+        value: MsgWithValueTableSigsSigWithLongValTable1,
+    ) -> Result<(), CanError> {
+        let value = i8::from(value);
         if value < 0_i8 || 0_i8 < value {
             return Err(CanError::ParameterOutOfRange {
                 message_id: MsgWithValueTableSigs::MESSAGE_ID,
@@ -1136,7 +1148,7 @@ impl MsgLongName5678912345670000 {
     pub const RX_TWICE_11111111111111111111111_MAX: i8 = 0_i8;
     pub const SIG_USED_TWICE_EFGH_ABCDEFG_0001_MIN: i8 = 0_i8;
     pub const SIG_USED_TWICE_EFGH_ABCDEFG_0001_MAX: i8 = 0_i8;
-    /// Construct new Msg_Long_Name_56789_1234567_0000 from values
+    /// Construct new 'Msg_Long_Name_56789_1234567_0000' from values
     pub fn new(
         rx_twice_11111111111111111111111: i8,
         sig_used_twice_efgh_abcdefg_0001: i8,
@@ -1150,7 +1162,7 @@ impl MsgLongName5678912345670000 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// rx_twice_11111111111111111111111
+    /// Get value of 'rx_twice_11111111111111111111111'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -1160,7 +1172,7 @@ impl MsgLongName5678912345670000 {
     pub fn rx_twice_11111111111111111111111(&self) -> i8 {
         self.rx_twice_11111111111111111111111_raw()
     }
-    /// Get raw value of rx_twice_11111111111111111111111
+    /// Get raw value of 'rx_twice_11111111111111111111111'
     ///
     /// - Start bit: 8
     /// - Signal size: 2 bits
@@ -1175,7 +1187,7 @@ impl MsgLongName5678912345670000 {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of rx_twice_11111111111111111111111
+    /// Set value of 'rx_twice_11111111111111111111111'
     #[inline(always)]
     pub fn set_rx_twice_11111111111111111111111(
         &mut self,
@@ -1197,7 +1209,7 @@ impl MsgLongName5678912345670000 {
         self.raw.view_bits_mut::<Lsb0>()[8..10].store_le(value);
         Ok(())
     }
-    /// Sig_used_twice_efgh_abcdefg_0001
+    /// Get value of 'Sig_used_twice_efgh_abcdefg_0001'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -1207,7 +1219,7 @@ impl MsgLongName5678912345670000 {
     pub fn sig_used_twice_efgh_abcdefg_0001(&self) -> i8 {
         self.sig_used_twice_efgh_abcdefg_0001_raw()
     }
-    /// Get raw value of Sig_used_twice_efgh_abcdefg_0001
+    /// Get raw value of 'Sig_used_twice_efgh_abcdefg_0001'
     ///
     /// - Start bit: 0
     /// - Signal size: 8 bits
@@ -1222,7 +1234,7 @@ impl MsgLongName5678912345670000 {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Sig_used_twice_efgh_abcdefg_0001
+    /// Set value of 'Sig_used_twice_efgh_abcdefg_0001'
     #[inline(always)]
     pub fn set_sig_used_twice_efgh_abcdefg_0001(
         &mut self,
@@ -1309,7 +1321,7 @@ impl MsgLongName5678912345670001 {
     pub const RX_TWICE_SHORT_MAX: i8 = 0_i8;
     pub const SIG_USED_TWICE_EFGH_ABCDEFG_0002_MIN: i8 = 0_i8;
     pub const SIG_USED_TWICE_EFGH_ABCDEFG_0002_MAX: i8 = 0_i8;
-    /// Construct new Msg_Long_Name_56789_1234567_0001 from values
+    /// Construct new 'Msg_Long_Name_56789_1234567_0001' from values
     pub fn new(
         rx_twice_short: i8,
         sig_used_twice_efgh_abcdefg_0002: i8,
@@ -1323,7 +1335,7 @@ impl MsgLongName5678912345670001 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// rx_twice_short
+    /// Get value of 'rx_twice_short'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -1333,7 +1345,7 @@ impl MsgLongName5678912345670001 {
     pub fn rx_twice_short(&self) -> i8 {
         self.rx_twice_short_raw()
     }
-    /// Get raw value of rx_twice_short
+    /// Get raw value of 'rx_twice_short'
     ///
     /// - Start bit: 8
     /// - Signal size: 8 bits
@@ -1348,7 +1360,7 @@ impl MsgLongName5678912345670001 {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of rx_twice_short
+    /// Set value of 'rx_twice_short'
     #[inline(always)]
     pub fn set_rx_twice_short(&mut self, value: i8) -> Result<(), CanError> {
         if value < 0_i8 || 0_i8 < value {
@@ -1367,7 +1379,7 @@ impl MsgLongName5678912345670001 {
         self.raw.view_bits_mut::<Lsb0>()[8..16].store_le(value);
         Ok(())
     }
-    /// Sig_used_twice_efgh_abcdefg_0002
+    /// Get value of 'Sig_used_twice_efgh_abcdefg_0002'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -1377,7 +1389,7 @@ impl MsgLongName5678912345670001 {
     pub fn sig_used_twice_efgh_abcdefg_0002(&self) -> i8 {
         self.sig_used_twice_efgh_abcdefg_0002_raw()
     }
-    /// Get raw value of Sig_used_twice_efgh_abcdefg_0002
+    /// Get raw value of 'Sig_used_twice_efgh_abcdefg_0002'
     ///
     /// - Start bit: 0
     /// - Signal size: 6 bits
@@ -1392,7 +1404,7 @@ impl MsgLongName5678912345670001 {
         let signal = signal as i8;
         i8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Sig_used_twice_efgh_abcdefg_0002
+    /// Set value of 'Sig_used_twice_efgh_abcdefg_0002'
     #[inline(always)]
     pub fn set_sig_used_twice_efgh_abcdefg_0002(
         &mut self,

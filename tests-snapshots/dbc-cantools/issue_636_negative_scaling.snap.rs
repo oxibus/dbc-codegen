@@ -74,8 +74,8 @@ impl ExampleMessage {
     pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_MIN: f32 = 4070_f32;
     pub const TEMPERATURE_MAX: f32 = 4100_f32;
-    /// Construct new ExampleMessage from values
-    pub fn new(temperature: f32) -> Result<Self, CanError> {
+    /// Construct new 'ExampleMessage' from values
+    pub fn new(temperature: ExampleMessageTemperature) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_temperature(temperature)?;
         Ok(res)
@@ -84,7 +84,7 @@ impl ExampleMessage {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Temperature
+    /// Get value of 'Temperature'
     ///
     /// - Min: 4070
     /// - Max: 4100
@@ -99,7 +99,7 @@ impl ExampleMessage {
             _ => ExampleMessageTemperature::_Other(self.temperature_raw()),
         }
     }
-    /// Get raw value of Temperature
+    /// Get raw value of 'Temperature'
     ///
     /// - Start bit: 3
     /// - Signal size: 12 bits
@@ -114,9 +114,13 @@ impl ExampleMessage {
         let offset = 4100_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Temperature
+    /// Set value of 'Temperature'
     #[inline(always)]
-    pub fn set_temperature(&mut self, value: f32) -> Result<(), CanError> {
+    pub fn set_temperature(
+        &mut self,
+        value: ExampleMessageTemperature,
+    ) -> Result<(), CanError> {
+        let value = f32::from(value);
         if value < 4070_f32 || 4100_f32 < value {
             return Err(CanError::ParameterOutOfRange {
                 message_id: ExampleMessage::MESSAGE_ID,

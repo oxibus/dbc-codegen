@@ -102,12 +102,12 @@ impl ControlCmd {
     pub const TORQUE_COMMAND_8_MAX: f32 = 8_f32;
     pub const TORQUE_CLOSE_LOOP_MAX_32_MIN: f32 = 0_f32;
     pub const TORQUE_CLOSE_LOOP_MAX_32_MAX: f32 = 8_f32;
-    /// Construct new ControlCmd from values
+    /// Construct new 'ControlCmd' from values
     pub fn new(
         crc8_cmd1: u8,
         counter_cmd1: u8,
         target_motor_id_cmd1: u8,
-        target_mode: u8,
+        target_mode: ControlCmdTargetMode,
         position_cmd_64: f32,
         torque_command_8: f32,
         torque_close_loop_max_32: f32,
@@ -126,7 +126,7 @@ impl ControlCmd {
     pub fn raw(&self) -> &[u8; 7] {
         &self.raw
     }
-    /// CRC8_CMD1
+    /// Get value of 'CRC8_CMD1'
     ///
     /// - Min: 0
     /// - Max: 255
@@ -136,7 +136,7 @@ impl ControlCmd {
     pub fn crc8_cmd1(&self) -> u8 {
         self.crc8_cmd1_raw()
     }
-    /// Get raw value of CRC8_CMD1
+    /// Get raw value of 'CRC8_CMD1'
     ///
     /// - Start bit: 0
     /// - Signal size: 8 bits
@@ -150,7 +150,7 @@ impl ControlCmd {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of CRC8_CMD1
+    /// Set value of 'CRC8_CMD1'
     #[inline(always)]
     pub fn set_crc8_cmd1(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 255_u8 < value {
@@ -168,7 +168,7 @@ impl ControlCmd {
         self.raw.view_bits_mut::<Lsb0>()[0..8].store_le(value);
         Ok(())
     }
-    /// Counter_CMD1
+    /// Get value of 'Counter_CMD1'
     ///
     /// - Min: 0
     /// - Max: 15
@@ -178,7 +178,7 @@ impl ControlCmd {
     pub fn counter_cmd1(&self) -> u8 {
         self.counter_cmd1_raw()
     }
-    /// Get raw value of Counter_CMD1
+    /// Get raw value of 'Counter_CMD1'
     ///
     /// - Start bit: 48
     /// - Signal size: 4 bits
@@ -192,7 +192,7 @@ impl ControlCmd {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Counter_CMD1
+    /// Set value of 'Counter_CMD1'
     #[inline(always)]
     pub fn set_counter_cmd1(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 15_u8 < value {
@@ -210,7 +210,7 @@ impl ControlCmd {
         self.raw.view_bits_mut::<Lsb0>()[48..52].store_le(value);
         Ok(())
     }
-    /// TargetMotorID_CMD1
+    /// Get value of 'TargetMotorID_CMD1'
     ///
     /// - Min: 0
     /// - Max: 3
@@ -220,7 +220,7 @@ impl ControlCmd {
     pub fn target_motor_id_cmd1(&self) -> u8 {
         self.target_motor_id_cmd1_raw()
     }
-    /// Get raw value of TargetMotorID_CMD1
+    /// Get raw value of 'TargetMotorID_CMD1'
     ///
     /// - Start bit: 12
     /// - Signal size: 2 bits
@@ -234,7 +234,7 @@ impl ControlCmd {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of TargetMotorID_CMD1
+    /// Set value of 'TargetMotorID_CMD1'
     #[inline(always)]
     pub fn set_target_motor_id_cmd1(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 3_u8 < value {
@@ -252,7 +252,7 @@ impl ControlCmd {
         self.raw.view_bits_mut::<Lsb0>()[12..14].store_le(value);
         Ok(())
     }
-    /// TargetMode
+    /// Get value of 'TargetMode'
     ///
     /// - Min: 0
     /// - Max: 3
@@ -270,7 +270,7 @@ impl ControlCmd {
             _ => ControlCmdTargetMode::_Other(self.target_mode_raw()),
         }
     }
-    /// Get raw value of TargetMode
+    /// Get raw value of 'TargetMode'
     ///
     /// - Start bit: 8
     /// - Signal size: 3 bits
@@ -284,9 +284,13 @@ impl ControlCmd {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of TargetMode
+    /// Set value of 'TargetMode'
     #[inline(always)]
-    pub fn set_target_mode(&mut self, value: u8) -> Result<(), CanError> {
+    pub fn set_target_mode(
+        &mut self,
+        value: ControlCmdTargetMode,
+    ) -> Result<(), CanError> {
+        let value = u8::from(value);
         if value < 0_u8 || 3_u8 < value {
             return Err(CanError::ParameterOutOfRange {
                 message_id: ControlCmd::MESSAGE_ID,
@@ -302,7 +306,7 @@ impl ControlCmd {
         self.raw.view_bits_mut::<Lsb0>()[8..11].store_le(value);
         Ok(())
     }
-    /// PositionCmd_64
+    /// Get value of 'PositionCmd_64'
     ///
     /// Output relative position.
     /// Alternative usage - absolute output position
@@ -316,7 +320,7 @@ impl ControlCmd {
     pub fn position_cmd_64(&self) -> f32 {
         self.position_cmd_64_raw()
     }
-    /// Get raw value of PositionCmd_64
+    /// Get raw value of 'PositionCmd_64'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -331,7 +335,7 @@ impl ControlCmd {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of PositionCmd_64
+    /// Set value of 'PositionCmd_64'
     #[inline(always)]
     pub fn set_position_cmd_64(&mut self, value: f32) -> Result<(), CanError> {
         if value < -450_f32 || 450_f32 < value {
@@ -346,7 +350,7 @@ impl ControlCmd {
         self.raw.view_bits_mut::<Lsb0>()[16..32].store_le(value);
         Ok(())
     }
-    /// TorqueCommand_8
+    /// Get value of 'TorqueCommand_8'
     ///
     /// Factor:
     /// 8_const * 1A/1000mA * MotorRatedTorque / MotorRatedCurrent * GearboxRatio * FinalGearRatio
@@ -359,7 +363,7 @@ impl ControlCmd {
     pub fn torque_command_8(&self) -> f32 {
         self.torque_command_8_raw()
     }
-    /// Get raw value of TorqueCommand_8
+    /// Get raw value of 'TorqueCommand_8'
     ///
     /// - Start bit: 32
     /// - Signal size: 10 bits
@@ -374,7 +378,7 @@ impl ControlCmd {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of TorqueCommand_8
+    /// Set value of 'TorqueCommand_8'
     #[inline(always)]
     pub fn set_torque_command_8(&mut self, value: f32) -> Result<(), CanError> {
         if value < -8_f32 || 8_f32 < value {
@@ -389,7 +393,7 @@ impl ControlCmd {
         self.raw.view_bits_mut::<Lsb0>()[32..42].store_le(value);
         Ok(())
     }
-    /// TorqueCloseLoopMax_32
+    /// Get value of 'TorqueCloseLoopMax_32'
     ///
     /// For TorqueCmd > 0
     /// Max positive close loop torque on top of TorqueCmd (outward torque) and below 0 (centering torque).
@@ -406,7 +410,7 @@ impl ControlCmd {
     pub fn torque_close_loop_max_32(&self) -> f32 {
         self.torque_close_loop_max_32_raw()
     }
-    /// Get raw value of TorqueCloseLoopMax_32
+    /// Get raw value of 'TorqueCloseLoopMax_32'
     ///
     /// - Start bit: 42
     /// - Signal size: 6 bits
@@ -421,7 +425,7 @@ impl ControlCmd {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of TorqueCloseLoopMax_32
+    /// Set value of 'TorqueCloseLoopMax_32'
     #[inline(always)]
     pub fn set_torque_close_loop_max_32(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 8_f32 < value {
@@ -536,7 +540,7 @@ impl LimitsCmd {
     pub const VELOCITY_LIMIT_MAX: u16 = 0_u16;
     pub const ACCEL_LIMIT_MIN: u16 = 0_u16;
     pub const ACCEL_LIMIT_MAX: u16 = 0_u16;
-    /// Construct new LimitsCmd from values
+    /// Construct new 'LimitsCmd' from values
     pub fn new(
         crc8_cmd2: u8,
         counter_cmd2: u8,
@@ -554,7 +558,7 @@ impl LimitsCmd {
     pub fn raw(&self) -> &[u8; 6] {
         &self.raw
     }
-    /// CRC8_CMD2
+    /// Get value of 'CRC8_CMD2'
     ///
     /// - Min: 0
     /// - Max: 255
@@ -564,7 +568,7 @@ impl LimitsCmd {
     pub fn crc8_cmd2(&self) -> u8 {
         self.crc8_cmd2_raw()
     }
-    /// Get raw value of CRC8_CMD2
+    /// Get raw value of 'CRC8_CMD2'
     ///
     /// - Start bit: 0
     /// - Signal size: 8 bits
@@ -578,7 +582,7 @@ impl LimitsCmd {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of CRC8_CMD2
+    /// Set value of 'CRC8_CMD2'
     #[inline(always)]
     pub fn set_crc8_cmd2(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 255_u8 < value {
@@ -596,7 +600,7 @@ impl LimitsCmd {
         self.raw.view_bits_mut::<Lsb0>()[0..8].store_le(value);
         Ok(())
     }
-    /// Counter_CMD2
+    /// Get value of 'Counter_CMD2'
     ///
     /// - Min: 0
     /// - Max: 15
@@ -606,7 +610,7 @@ impl LimitsCmd {
     pub fn counter_cmd2(&self) -> u8 {
         self.counter_cmd2_raw()
     }
-    /// Get raw value of Counter_CMD2
+    /// Get raw value of 'Counter_CMD2'
     ///
     /// - Start bit: 12
     /// - Signal size: 4 bits
@@ -620,7 +624,7 @@ impl LimitsCmd {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Counter_CMD2
+    /// Set value of 'Counter_CMD2'
     #[inline(always)]
     pub fn set_counter_cmd2(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 15_u8 < value {
@@ -638,7 +642,7 @@ impl LimitsCmd {
         self.raw.view_bits_mut::<Lsb0>()[12..16].store_le(value);
         Ok(())
     }
-    /// VelocityLimit
+    /// Get value of 'VelocityLimit'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -648,7 +652,7 @@ impl LimitsCmd {
     pub fn velocity_limit(&self) -> u16 {
         self.velocity_limit_raw()
     }
-    /// Get raw value of VelocityLimit
+    /// Get raw value of 'VelocityLimit'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -662,7 +666,7 @@ impl LimitsCmd {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of VelocityLimit
+    /// Set value of 'VelocityLimit'
     #[inline(always)]
     pub fn set_velocity_limit(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -680,7 +684,7 @@ impl LimitsCmd {
         self.raw.view_bits_mut::<Lsb0>()[16..32].store_le(value);
         Ok(())
     }
-    /// AccelLimit
+    /// Get value of 'AccelLimit'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -690,7 +694,7 @@ impl LimitsCmd {
     pub fn accel_limit(&self) -> u16 {
         self.accel_limit_raw()
     }
-    /// Get raw value of AccelLimit
+    /// Get raw value of 'AccelLimit'
     ///
     /// - Start bit: 32
     /// - Signal size: 16 bits
@@ -704,7 +708,7 @@ impl LimitsCmd {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of AccelLimit
+    /// Set value of 'AccelLimit'
     #[inline(always)]
     pub fn set_accel_limit(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -792,7 +796,7 @@ impl ControlStatus {
     pub const TORQUE_ACTUAL_MAX: f32 = 8_f32;
     pub const TORQUE_CLOSE_LOOP_ACTUAL_MIN: f32 = 0_f32;
     pub const TORQUE_CLOSE_LOOP_ACTUAL_MAX: f32 = 8_f32;
-    /// Construct new ControlStatus from values
+    /// Construct new 'ControlStatus' from values
     pub fn new(
         crc8_stat1: u8,
         counter_stat1: u8,
@@ -810,7 +814,7 @@ impl ControlStatus {
     pub fn raw(&self) -> &[u8; 4] {
         &self.raw
     }
-    /// CRC8_STAT1
+    /// Get value of 'CRC8_STAT1'
     ///
     /// - Min: 0
     /// - Max: 255
@@ -820,7 +824,7 @@ impl ControlStatus {
     pub fn crc8_stat1(&self) -> u8 {
         self.crc8_stat1_raw()
     }
-    /// Get raw value of CRC8_STAT1
+    /// Get raw value of 'CRC8_STAT1'
     ///
     /// - Start bit: 0
     /// - Signal size: 8 bits
@@ -834,7 +838,7 @@ impl ControlStatus {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of CRC8_STAT1
+    /// Set value of 'CRC8_STAT1'
     #[inline(always)]
     pub fn set_crc8_stat1(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 255_u8 < value {
@@ -852,7 +856,7 @@ impl ControlStatus {
         self.raw.view_bits_mut::<Lsb0>()[0..8].store_le(value);
         Ok(())
     }
-    /// Counter_STAT1
+    /// Get value of 'Counter_STAT1'
     ///
     /// - Min: 0
     /// - Max: 15
@@ -862,7 +866,7 @@ impl ControlStatus {
     pub fn counter_stat1(&self) -> u8 {
         self.counter_stat1_raw()
     }
-    /// Get raw value of Counter_STAT1
+    /// Get raw value of 'Counter_STAT1'
     ///
     /// - Start bit: 12
     /// - Signal size: 4 bits
@@ -876,7 +880,7 @@ impl ControlStatus {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Counter_STAT1
+    /// Set value of 'Counter_STAT1'
     #[inline(always)]
     pub fn set_counter_stat1(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 15_u8 < value {
@@ -894,7 +898,7 @@ impl ControlStatus {
         self.raw.view_bits_mut::<Lsb0>()[12..16].store_le(value);
         Ok(())
     }
-    /// TorqueActual
+    /// Get value of 'TorqueActual'
     ///
     /// - Min: -8
     /// - Max: 8
@@ -904,7 +908,7 @@ impl ControlStatus {
     pub fn torque_actual(&self) -> f32 {
         self.torque_actual_raw()
     }
-    /// Get raw value of TorqueActual
+    /// Get raw value of 'TorqueActual'
     ///
     /// - Start bit: 16
     /// - Signal size: 10 bits
@@ -919,7 +923,7 @@ impl ControlStatus {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of TorqueActual
+    /// Set value of 'TorqueActual'
     #[inline(always)]
     pub fn set_torque_actual(&mut self, value: f32) -> Result<(), CanError> {
         if value < -8_f32 || 8_f32 < value {
@@ -934,7 +938,7 @@ impl ControlStatus {
         self.raw.view_bits_mut::<Lsb0>()[16..26].store_le(value);
         Ok(())
     }
-    /// TorqueCloseLoopActual
+    /// Get value of 'TorqueCloseLoopActual'
     ///
     /// - Min: 0
     /// - Max: 8
@@ -944,7 +948,7 @@ impl ControlStatus {
     pub fn torque_close_loop_actual(&self) -> f32 {
         self.torque_close_loop_actual_raw()
     }
-    /// Get raw value of TorqueCloseLoopActual
+    /// Get raw value of 'TorqueCloseLoopActual'
     ///
     /// - Start bit: 26
     /// - Signal size: 6 bits
@@ -959,7 +963,7 @@ impl ControlStatus {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of TorqueCloseLoopActual
+    /// Set value of 'TorqueCloseLoopActual'
     #[inline(always)]
     pub fn set_torque_close_loop_actual(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 8_f32 < value {
@@ -1041,7 +1045,7 @@ impl SystemStatus {
     pub const COUNTER_STAT2_MAX: u8 = 15_u8;
     pub const CHIP_TEMP_MIN: i16 = -60_i16;
     pub const CHIP_TEMP_MAX: i16 = 195_i16;
-    /// Construct new SystemStatus from values
+    /// Construct new 'SystemStatus' from values
     pub fn new(
         crc8_stat2: u8,
         counter_stat2: u8,
@@ -1057,7 +1061,7 @@ impl SystemStatus {
     pub fn raw(&self) -> &[u8; 3] {
         &self.raw
     }
-    /// CRC8_STAT2
+    /// Get value of 'CRC8_STAT2'
     ///
     /// - Min: 0
     /// - Max: 255
@@ -1067,7 +1071,7 @@ impl SystemStatus {
     pub fn crc8_stat2(&self) -> u8 {
         self.crc8_stat2_raw()
     }
-    /// Get raw value of CRC8_STAT2
+    /// Get raw value of 'CRC8_STAT2'
     ///
     /// - Start bit: 0
     /// - Signal size: 8 bits
@@ -1081,7 +1085,7 @@ impl SystemStatus {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of CRC8_STAT2
+    /// Set value of 'CRC8_STAT2'
     #[inline(always)]
     pub fn set_crc8_stat2(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 255_u8 < value {
@@ -1099,7 +1103,7 @@ impl SystemStatus {
         self.raw.view_bits_mut::<Lsb0>()[0..8].store_le(value);
         Ok(())
     }
-    /// Counter_STAT2
+    /// Get value of 'Counter_STAT2'
     ///
     /// - Min: 0
     /// - Max: 15
@@ -1109,7 +1113,7 @@ impl SystemStatus {
     pub fn counter_stat2(&self) -> u8 {
         self.counter_stat2_raw()
     }
-    /// Get raw value of Counter_STAT2
+    /// Get raw value of 'Counter_STAT2'
     ///
     /// - Start bit: 12
     /// - Signal size: 4 bits
@@ -1123,7 +1127,7 @@ impl SystemStatus {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Counter_STAT2
+    /// Set value of 'Counter_STAT2'
     #[inline(always)]
     pub fn set_counter_stat2(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 15_u8 < value {
@@ -1141,7 +1145,7 @@ impl SystemStatus {
         self.raw.view_bits_mut::<Lsb0>()[12..16].store_le(value);
         Ok(())
     }
-    /// ChipTemp
+    /// Get value of 'ChipTemp'
     ///
     /// - Min: -60
     /// - Max: 195
@@ -1151,7 +1155,7 @@ impl SystemStatus {
     pub fn chip_temp(&self) -> i16 {
         self.chip_temp_raw()
     }
-    /// Get raw value of ChipTemp
+    /// Get raw value of 'ChipTemp'
     ///
     /// - Start bit: 16
     /// - Signal size: 8 bits
@@ -1165,7 +1169,7 @@ impl SystemStatus {
         let factor = 1;
         i16::from(signal).saturating_mul(factor).saturating_sub(60)
     }
-    /// Set value of ChipTemp
+    /// Set value of 'ChipTemp'
     #[inline(always)]
     pub fn set_chip_temp(&mut self, value: i16) -> Result<(), CanError> {
         if value < -60_i16 || 195_i16 < value {
@@ -1251,7 +1255,7 @@ impl TorqueSensorData {
     pub const COUNTER_DATA1_MAX: u8 = 15_u8;
     pub const TORQUE_SENSE_MIN: f32 = -20_f32;
     pub const TORQUE_SENSE_MAX: f32 = 20_f32;
-    /// Construct new TorqueSensorData from values
+    /// Construct new 'TorqueSensorData' from values
     pub fn new(
         crc8_data1: u8,
         counter_data1: u8,
@@ -1267,7 +1271,7 @@ impl TorqueSensorData {
     pub fn raw(&self) -> &[u8; 3] {
         &self.raw
     }
-    /// CRC8_DATA1
+    /// Get value of 'CRC8_DATA1'
     ///
     /// - Min: 0
     /// - Max: 255
@@ -1277,7 +1281,7 @@ impl TorqueSensorData {
     pub fn crc8_data1(&self) -> u8 {
         self.crc8_data1_raw()
     }
-    /// Get raw value of CRC8_DATA1
+    /// Get raw value of 'CRC8_DATA1'
     ///
     /// - Start bit: 0
     /// - Signal size: 8 bits
@@ -1291,7 +1295,7 @@ impl TorqueSensorData {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of CRC8_DATA1
+    /// Set value of 'CRC8_DATA1'
     #[inline(always)]
     pub fn set_crc8_data1(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 255_u8 < value {
@@ -1309,7 +1313,7 @@ impl TorqueSensorData {
         self.raw.view_bits_mut::<Lsb0>()[0..8].store_le(value);
         Ok(())
     }
-    /// Counter_DATA1
+    /// Get value of 'Counter_DATA1'
     ///
     /// - Min: 0
     /// - Max: 15
@@ -1319,7 +1323,7 @@ impl TorqueSensorData {
     pub fn counter_data1(&self) -> u8 {
         self.counter_data1_raw()
     }
-    /// Get raw value of Counter_DATA1
+    /// Get raw value of 'Counter_DATA1'
     ///
     /// - Start bit: 8
     /// - Signal size: 4 bits
@@ -1333,7 +1337,7 @@ impl TorqueSensorData {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Counter_DATA1
+    /// Set value of 'Counter_DATA1'
     #[inline(always)]
     pub fn set_counter_data1(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 15_u8 < value {
@@ -1351,7 +1355,7 @@ impl TorqueSensorData {
         self.raw.view_bits_mut::<Lsb0>()[8..12].store_le(value);
         Ok(())
     }
-    /// TorqueSense
+    /// Get value of 'TorqueSense'
     ///
     /// Strain gauge torque measured
     ///
@@ -1363,7 +1367,7 @@ impl TorqueSensorData {
     pub fn torque_sense(&self) -> f32 {
         self.torque_sense_raw()
     }
-    /// Get raw value of TorqueSense
+    /// Get raw value of 'TorqueSense'
     ///
     /// - Start bit: 12
     /// - Signal size: 12 bits
@@ -1378,7 +1382,7 @@ impl TorqueSensorData {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of TorqueSense
+    /// Set value of 'TorqueSense'
     #[inline(always)]
     pub fn set_torque_sense(&mut self, value: f32) -> Result<(), CanError> {
         if value < -20_f32 || 20_f32 < value {

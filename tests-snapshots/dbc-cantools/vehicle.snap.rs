@@ -1173,7 +1173,7 @@ impl RtSbInsVelBodyAxes {
     pub const INS_VEL_FORWARDS_2D_MAX: f32 = 838_f32;
     pub const ACCURACY_INS_VEL_BODY_MIN: u8 = 0_u8;
     pub const ACCURACY_INS_VEL_BODY_MAX: u8 = 255_u8;
-    /// Construct new RT_SB_INS_Vel_Body_Axes from values
+    /// Construct new 'RT_SB_INS_Vel_Body_Axes' from values
     pub fn new(
         ins_vel_sideways_2d: f32,
         ins_vel_forwards_2d: f32,
@@ -1193,7 +1193,7 @@ impl RtSbInsVelBodyAxes {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// INS_Vel_Sideways_2D
+    /// Get value of 'INS_Vel_Sideways_2D'
     ///
     /// Sideways Velocity in the vehicle body axes, 2D (no vertical component) .  +ve for motion to the vehicle RHS.
     ///
@@ -1205,7 +1205,7 @@ impl RtSbInsVelBodyAxes {
     pub fn ins_vel_sideways_2d(&self) -> f32 {
         self.ins_vel_sideways_2d_raw()
     }
-    /// Get raw value of INS_Vel_Sideways_2D
+    /// Get raw value of 'INS_Vel_Sideways_2D'
     ///
     /// - Start bit: 40
     /// - Signal size: 24 bits
@@ -1220,7 +1220,7 @@ impl RtSbInsVelBodyAxes {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of INS_Vel_Sideways_2D
+    /// Set value of 'INS_Vel_Sideways_2D'
     #[inline(always)]
     pub fn set_ins_vel_sideways_2d(&mut self, value: f32) -> Result<(), CanError> {
         if value < -838_f32 || 838_f32 < value {
@@ -1235,7 +1235,7 @@ impl RtSbInsVelBodyAxes {
         self.raw.view_bits_mut::<Lsb0>()[40..64].store_le(value);
         Ok(())
     }
-    /// INS_Vel_Forwards_2D
+    /// Get value of 'INS_Vel_Forwards_2D'
     ///
     /// Forwards Velocity in the vehicle body axes, 2D (no vertical component) .
     ///
@@ -1247,7 +1247,7 @@ impl RtSbInsVelBodyAxes {
     pub fn ins_vel_forwards_2d(&self) -> f32 {
         self.ins_vel_forwards_2d_raw()
     }
-    /// Get raw value of INS_Vel_Forwards_2D
+    /// Get raw value of 'INS_Vel_Forwards_2D'
     ///
     /// - Start bit: 16
     /// - Signal size: 24 bits
@@ -1262,7 +1262,7 @@ impl RtSbInsVelBodyAxes {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of INS_Vel_Forwards_2D
+    /// Set value of 'INS_Vel_Forwards_2D'
     #[inline(always)]
     pub fn set_ins_vel_forwards_2d(&mut self, value: f32) -> Result<(), CanError> {
         if value < -838_f32 || 838_f32 < value {
@@ -1277,7 +1277,7 @@ impl RtSbInsVelBodyAxes {
         self.raw.view_bits_mut::<Lsb0>()[16..40].store_le(value);
         Ok(())
     }
-    /// Accuracy_INS_Vel_Body
+    /// Get value of 'Accuracy_INS_Vel_Body'
     ///
     /// Accuracy of INS body axis velocities (forward velocity and sideways velocity)
     ///
@@ -1289,7 +1289,7 @@ impl RtSbInsVelBodyAxes {
     pub fn accuracy_ins_vel_body(&self) -> u8 {
         self.accuracy_ins_vel_body_raw()
     }
-    /// Get raw value of Accuracy_INS_Vel_Body
+    /// Get raw value of 'Accuracy_INS_Vel_Body'
     ///
     /// - Start bit: 8
     /// - Signal size: 8 bits
@@ -1303,7 +1303,7 @@ impl RtSbInsVelBodyAxes {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Accuracy_INS_Vel_Body
+    /// Set value of 'Accuracy_INS_Vel_Body'
     #[inline(always)]
     pub fn set_accuracy_ins_vel_body(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 255_u8 < value {
@@ -1321,7 +1321,7 @@ impl RtSbInsVelBodyAxes {
         self.raw.view_bits_mut::<Lsb0>()[8..16].store_le(value);
         Ok(())
     }
-    /// Validity_INS_Vel_Sideways
+    /// Get value of 'Validity_INS_Vel_Sideways'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -1333,7 +1333,7 @@ impl RtSbInsVelBodyAxes {
     pub fn validity_ins_vel_sideways(&self) -> bool {
         self.validity_ins_vel_sideways_raw()
     }
-    /// Get raw value of Validity_INS_Vel_Sideways
+    /// Get raw value of 'Validity_INS_Vel_Sideways'
     ///
     /// - Start bit: 1
     /// - Signal size: 1 bits
@@ -1346,7 +1346,7 @@ impl RtSbInsVelBodyAxes {
         let signal = self.raw.view_bits::<Lsb0>()[1..2].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_INS_Vel_Sideways
+    /// Set value of 'Validity_INS_Vel_Sideways'
     #[inline(always)]
     pub fn set_validity_ins_vel_sideways(
         &mut self,
@@ -1356,7 +1356,7 @@ impl RtSbInsVelBodyAxes {
         self.raw.view_bits_mut::<Lsb0>()[1..2].store_le(value);
         Ok(())
     }
-    /// Validity_INS_Vel_Forwards
+    /// Get value of 'Validity_INS_Vel_Forwards'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -1368,7 +1368,7 @@ impl RtSbInsVelBodyAxes {
     pub fn validity_ins_vel_forwards(&self) -> bool {
         self.validity_ins_vel_forwards_raw()
     }
-    /// Get raw value of Validity_INS_Vel_Forwards
+    /// Get raw value of 'Validity_INS_Vel_Forwards'
     ///
     /// - Start bit: 0
     /// - Signal size: 1 bits
@@ -1381,7 +1381,7 @@ impl RtSbInsVelBodyAxes {
         let signal = self.raw.view_bits::<Lsb0>()[0..1].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_INS_Vel_Forwards
+    /// Set value of 'Validity_INS_Vel_Forwards'
     #[inline(always)]
     pub fn set_validity_ins_vel_forwards(
         &mut self,
@@ -1456,7 +1456,7 @@ impl RtDl1mk3Speed {
     pub const SPEED_MAX: f32 = 20000_f32;
     pub const ACCURACY_SPEED_MIN: u8 = 0_u8;
     pub const ACCURACY_SPEED_MAX: u8 = 255_u8;
-    /// Construct new RT_DL1MK3_Speed from values
+    /// Construct new 'RT_DL1MK3_Speed' from values
     pub fn new(
         speed: f32,
         accuracy_speed: u8,
@@ -1472,7 +1472,7 @@ impl RtDl1mk3Speed {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// Speed
+    /// Get value of 'Speed'
     ///
     /// - Min: -20000
     /// - Max: 20000
@@ -1482,7 +1482,7 @@ impl RtDl1mk3Speed {
     pub fn speed(&self) -> f32 {
         self.speed_raw()
     }
-    /// Get raw value of Speed
+    /// Get raw value of 'Speed'
     ///
     /// - Start bit: 16
     /// - Signal size: 32 bits
@@ -1497,7 +1497,7 @@ impl RtDl1mk3Speed {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Speed
+    /// Set value of 'Speed'
     #[inline(always)]
     pub fn set_speed(&mut self, value: f32) -> Result<(), CanError> {
         if value < -20000_f32 || 20000_f32 < value {
@@ -1512,7 +1512,7 @@ impl RtDl1mk3Speed {
         self.raw.view_bits_mut::<Lsb0>()[16..48].store_le(value);
         Ok(())
     }
-    /// Accuracy_Speed
+    /// Get value of 'Accuracy_Speed'
     ///
     /// Dimensionless.  Lower values imply but do not guarantee better accuracy than higher values.
     ///
@@ -1524,7 +1524,7 @@ impl RtDl1mk3Speed {
     pub fn accuracy_speed(&self) -> u8 {
         self.accuracy_speed_raw()
     }
-    /// Get raw value of Accuracy_Speed
+    /// Get raw value of 'Accuracy_Speed'
     ///
     /// - Start bit: 8
     /// - Signal size: 8 bits
@@ -1538,7 +1538,7 @@ impl RtDl1mk3Speed {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Accuracy_Speed
+    /// Set value of 'Accuracy_Speed'
     #[inline(always)]
     pub fn set_accuracy_speed(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 255_u8 < value {
@@ -1556,7 +1556,7 @@ impl RtDl1mk3Speed {
         self.raw.view_bits_mut::<Lsb0>()[8..16].store_le(value);
         Ok(())
     }
-    /// Validity_Speed
+    /// Get value of 'Validity_Speed'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -1568,7 +1568,7 @@ impl RtDl1mk3Speed {
     pub fn validity_speed(&self) -> bool {
         self.validity_speed_raw()
     }
-    /// Get raw value of Validity_Speed
+    /// Get raw value of 'Validity_Speed'
     ///
     /// - Start bit: 0
     /// - Signal size: 1 bits
@@ -1581,7 +1581,7 @@ impl RtDl1mk3Speed {
         let signal = self.raw.view_bits::<Lsb0>()[0..1].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_Speed
+    /// Set value of 'Validity_Speed'
     #[inline(always)]
     pub fn set_validity_speed(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
@@ -1655,7 +1655,7 @@ impl RtDl1mk3GpsTime {
     pub const GPS_TIME_MAX: f32 = 604800_f32;
     pub const ACCURACY_GPS_TIME_MIN: u8 = 0_u8;
     pub const ACCURACY_GPS_TIME_MAX: u8 = 255_u8;
-    /// Construct new RT_DL1MK3_GPS_Time from values
+    /// Construct new 'RT_DL1MK3_GPS_Time' from values
     pub fn new(
         gps_week: u16,
         gps_time: f32,
@@ -1675,7 +1675,7 @@ impl RtDl1mk3GpsTime {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// GPS_Week
+    /// Get value of 'GPS_Week'
     ///
     /// - Min: 0
     /// - Max: 65535
@@ -1685,7 +1685,7 @@ impl RtDl1mk3GpsTime {
     pub fn gps_week(&self) -> u16 {
         self.gps_week_raw()
     }
-    /// Get raw value of GPS_Week
+    /// Get raw value of 'GPS_Week'
     ///
     /// - Start bit: 48
     /// - Signal size: 16 bits
@@ -1699,7 +1699,7 @@ impl RtDl1mk3GpsTime {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of GPS_Week
+    /// Set value of 'GPS_Week'
     #[inline(always)]
     pub fn set_gps_week(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 65535_u16 < value {
@@ -1717,7 +1717,7 @@ impl RtDl1mk3GpsTime {
         self.raw.view_bits_mut::<Lsb0>()[48..64].store_le(value);
         Ok(())
     }
-    /// GPS_Time
+    /// Get value of 'GPS_Time'
     ///
     /// GPS time is the time in seconds since midnight GMT on Saturday night.
     ///
@@ -1729,7 +1729,7 @@ impl RtDl1mk3GpsTime {
     pub fn gps_time(&self) -> f32 {
         self.gps_time_raw()
     }
-    /// Get raw value of GPS_Time
+    /// Get raw value of 'GPS_Time'
     ///
     /// - Start bit: 16
     /// - Signal size: 32 bits
@@ -1744,7 +1744,7 @@ impl RtDl1mk3GpsTime {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of GPS_Time
+    /// Set value of 'GPS_Time'
     #[inline(always)]
     pub fn set_gps_time(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 604800_f32 < value {
@@ -1758,7 +1758,7 @@ impl RtDl1mk3GpsTime {
         self.raw.view_bits_mut::<Lsb0>()[16..48].store_le(value);
         Ok(())
     }
-    /// Accuracy_GPS_Time
+    /// Get value of 'Accuracy_GPS_Time'
     ///
     /// - Min: 0
     /// - Max: 255
@@ -1768,7 +1768,7 @@ impl RtDl1mk3GpsTime {
     pub fn accuracy_gps_time(&self) -> u8 {
         self.accuracy_gps_time_raw()
     }
-    /// Get raw value of Accuracy_GPS_Time
+    /// Get raw value of 'Accuracy_GPS_Time'
     ///
     /// - Start bit: 8
     /// - Signal size: 8 bits
@@ -1782,7 +1782,7 @@ impl RtDl1mk3GpsTime {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Accuracy_GPS_Time
+    /// Set value of 'Accuracy_GPS_Time'
     #[inline(always)]
     pub fn set_accuracy_gps_time(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 255_u8 < value {
@@ -1800,7 +1800,7 @@ impl RtDl1mk3GpsTime {
         self.raw.view_bits_mut::<Lsb0>()[8..16].store_le(value);
         Ok(())
     }
-    /// Validity_GPS_Week
+    /// Get value of 'Validity_GPS_Week'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -1812,7 +1812,7 @@ impl RtDl1mk3GpsTime {
     pub fn validity_gps_week(&self) -> bool {
         self.validity_gps_week_raw()
     }
-    /// Get raw value of Validity_GPS_Week
+    /// Get raw value of 'Validity_GPS_Week'
     ///
     /// - Start bit: 1
     /// - Signal size: 1 bits
@@ -1825,14 +1825,14 @@ impl RtDl1mk3GpsTime {
         let signal = self.raw.view_bits::<Lsb0>()[1..2].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_GPS_Week
+    /// Set value of 'Validity_GPS_Week'
     #[inline(always)]
     pub fn set_validity_gps_week(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[1..2].store_le(value);
         Ok(())
     }
-    /// Validity_GPS_Time
+    /// Get value of 'Validity_GPS_Time'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -1844,7 +1844,7 @@ impl RtDl1mk3GpsTime {
     pub fn validity_gps_time(&self) -> bool {
         self.validity_gps_time_raw()
     }
-    /// Get raw value of Validity_GPS_Time
+    /// Get raw value of 'Validity_GPS_Time'
     ///
     /// - Start bit: 0
     /// - Signal size: 1 bits
@@ -1857,7 +1857,7 @@ impl RtDl1mk3GpsTime {
         let signal = self.raw.view_bits::<Lsb0>()[0..1].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_GPS_Time
+    /// Set value of 'Validity_GPS_Time'
     #[inline(always)]
     pub fn set_validity_gps_time(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
@@ -1929,7 +1929,7 @@ impl RtDl1mk3GpsPosLlh2 {
     pub const GPS_POS_LLH_ALTITUDE_MAX: f32 = 100000_f32;
     pub const GPS_POS_LLH_LONGITUDE_MIN: f32 = -180_f32;
     pub const GPS_POS_LLH_LONGITUDE_MAX: f32 = 180_f32;
-    /// Construct new RT_DL1MK3_GPS_Pos_LLH_2 from values
+    /// Construct new 'RT_DL1MK3_GPS_Pos_LLH_2' from values
     pub fn new(
         gps_pos_llh_altitude: f32,
         gps_pos_llh_longitude: f32,
@@ -1943,7 +1943,7 @@ impl RtDl1mk3GpsPosLlh2 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// GPS_Pos_LLH_Altitude
+    /// Get value of 'GPS_Pos_LLH_Altitude'
     ///
     /// - Min: -1000
     /// - Max: 100000
@@ -1953,7 +1953,7 @@ impl RtDl1mk3GpsPosLlh2 {
     pub fn gps_pos_llh_altitude(&self) -> f32 {
         self.gps_pos_llh_altitude_raw()
     }
-    /// Get raw value of GPS_Pos_LLH_Altitude
+    /// Get raw value of 'GPS_Pos_LLH_Altitude'
     ///
     /// - Start bit: 32
     /// - Signal size: 32 bits
@@ -1968,7 +1968,7 @@ impl RtDl1mk3GpsPosLlh2 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of GPS_Pos_LLH_Altitude
+    /// Set value of 'GPS_Pos_LLH_Altitude'
     #[inline(always)]
     pub fn set_gps_pos_llh_altitude(&mut self, value: f32) -> Result<(), CanError> {
         if value < -1000_f32 || 100000_f32 < value {
@@ -1983,7 +1983,7 @@ impl RtDl1mk3GpsPosLlh2 {
         self.raw.view_bits_mut::<Lsb0>()[32..64].store_le(value);
         Ok(())
     }
-    /// GPS_Pos_LLH_Longitude
+    /// Get value of 'GPS_Pos_LLH_Longitude'
     ///
     /// - Min: -180
     /// - Max: 180
@@ -1993,7 +1993,7 @@ impl RtDl1mk3GpsPosLlh2 {
     pub fn gps_pos_llh_longitude(&self) -> f32 {
         self.gps_pos_llh_longitude_raw()
     }
-    /// Get raw value of GPS_Pos_LLH_Longitude
+    /// Get raw value of 'GPS_Pos_LLH_Longitude'
     ///
     /// - Start bit: 0
     /// - Signal size: 32 bits
@@ -2008,7 +2008,7 @@ impl RtDl1mk3GpsPosLlh2 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of GPS_Pos_LLH_Longitude
+    /// Set value of 'GPS_Pos_LLH_Longitude'
     #[inline(always)]
     pub fn set_gps_pos_llh_longitude(&mut self, value: f32) -> Result<(), CanError> {
         if value < -180_f32 || 180_f32 < value {
@@ -2092,7 +2092,7 @@ impl RtDl1mk3GpsPosLlh1 {
     pub const ACCURACY_GPS_POS_LLH_LONGITUDE_MAX: u8 = 255_u8;
     pub const ACCURACY_GPS_POS_LLH_LATITUDE_MIN: u8 = 0_u8;
     pub const ACCURACY_GPS_POS_LLH_LATITUDE_MAX: u8 = 255_u8;
-    /// Construct new RT_DL1MK3_GPS_Pos_LLH_1 from values
+    /// Construct new 'RT_DL1MK3_GPS_Pos_LLH_1' from values
     pub fn new(
         gps_pos_llh_latitude: f32,
         accuracy_gps_pos_llh_altitude: u8,
@@ -2116,7 +2116,7 @@ impl RtDl1mk3GpsPosLlh1 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// GPS_Pos_LLH_Latitude
+    /// Get value of 'GPS_Pos_LLH_Latitude'
     ///
     /// - Min: -90
     /// - Max: 90
@@ -2126,7 +2126,7 @@ impl RtDl1mk3GpsPosLlh1 {
     pub fn gps_pos_llh_latitude(&self) -> f32 {
         self.gps_pos_llh_latitude_raw()
     }
-    /// Get raw value of GPS_Pos_LLH_Latitude
+    /// Get raw value of 'GPS_Pos_LLH_Latitude'
     ///
     /// - Start bit: 32
     /// - Signal size: 32 bits
@@ -2141,7 +2141,7 @@ impl RtDl1mk3GpsPosLlh1 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of GPS_Pos_LLH_Latitude
+    /// Set value of 'GPS_Pos_LLH_Latitude'
     #[inline(always)]
     pub fn set_gps_pos_llh_latitude(&mut self, value: f32) -> Result<(), CanError> {
         if value < -90_f32 || 90_f32 < value {
@@ -2156,7 +2156,7 @@ impl RtDl1mk3GpsPosLlh1 {
         self.raw.view_bits_mut::<Lsb0>()[32..64].store_le(value);
         Ok(())
     }
-    /// Accuracy_GPS_Pos_LLH_Altitude
+    /// Get value of 'Accuracy_GPS_Pos_LLH_Altitude'
     ///
     /// This accuracy value applies to both 2D and 3D GPS speed.
     ///
@@ -2168,7 +2168,7 @@ impl RtDl1mk3GpsPosLlh1 {
     pub fn accuracy_gps_pos_llh_altitude(&self) -> u8 {
         self.accuracy_gps_pos_llh_altitude_raw()
     }
-    /// Get raw value of Accuracy_GPS_Pos_LLH_Altitude
+    /// Get raw value of 'Accuracy_GPS_Pos_LLH_Altitude'
     ///
     /// - Start bit: 24
     /// - Signal size: 8 bits
@@ -2182,7 +2182,7 @@ impl RtDl1mk3GpsPosLlh1 {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Accuracy_GPS_Pos_LLH_Altitude
+    /// Set value of 'Accuracy_GPS_Pos_LLH_Altitude'
     #[inline(always)]
     pub fn set_accuracy_gps_pos_llh_altitude(
         &mut self,
@@ -2203,7 +2203,7 @@ impl RtDl1mk3GpsPosLlh1 {
         self.raw.view_bits_mut::<Lsb0>()[24..32].store_le(value);
         Ok(())
     }
-    /// Accuracy_GPS_Pos_LLH_Longitude
+    /// Get value of 'Accuracy_GPS_Pos_LLH_Longitude'
     ///
     /// This accuracy value applies to both 2D and 3D GPS speed.
     ///
@@ -2215,7 +2215,7 @@ impl RtDl1mk3GpsPosLlh1 {
     pub fn accuracy_gps_pos_llh_longitude(&self) -> u8 {
         self.accuracy_gps_pos_llh_longitude_raw()
     }
-    /// Get raw value of Accuracy_GPS_Pos_LLH_Longitude
+    /// Get raw value of 'Accuracy_GPS_Pos_LLH_Longitude'
     ///
     /// - Start bit: 16
     /// - Signal size: 8 bits
@@ -2229,7 +2229,7 @@ impl RtDl1mk3GpsPosLlh1 {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Accuracy_GPS_Pos_LLH_Longitude
+    /// Set value of 'Accuracy_GPS_Pos_LLH_Longitude'
     #[inline(always)]
     pub fn set_accuracy_gps_pos_llh_longitude(
         &mut self,
@@ -2250,7 +2250,7 @@ impl RtDl1mk3GpsPosLlh1 {
         self.raw.view_bits_mut::<Lsb0>()[16..24].store_le(value);
         Ok(())
     }
-    /// Accuracy_GPS_Pos_LLH_Latitude
+    /// Get value of 'Accuracy_GPS_Pos_LLH_Latitude'
     ///
     /// This accuracy value applies to both 2D and 3D GPS speed.
     ///
@@ -2262,7 +2262,7 @@ impl RtDl1mk3GpsPosLlh1 {
     pub fn accuracy_gps_pos_llh_latitude(&self) -> u8 {
         self.accuracy_gps_pos_llh_latitude_raw()
     }
-    /// Get raw value of Accuracy_GPS_Pos_LLH_Latitude
+    /// Get raw value of 'Accuracy_GPS_Pos_LLH_Latitude'
     ///
     /// - Start bit: 8
     /// - Signal size: 8 bits
@@ -2276,7 +2276,7 @@ impl RtDl1mk3GpsPosLlh1 {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Accuracy_GPS_Pos_LLH_Latitude
+    /// Set value of 'Accuracy_GPS_Pos_LLH_Latitude'
     #[inline(always)]
     pub fn set_accuracy_gps_pos_llh_latitude(
         &mut self,
@@ -2297,7 +2297,7 @@ impl RtDl1mk3GpsPosLlh1 {
         self.raw.view_bits_mut::<Lsb0>()[8..16].store_le(value);
         Ok(())
     }
-    /// Validity_GPS_Pos_LLH_Altitude
+    /// Get value of 'Validity_GPS_Pos_LLH_Altitude'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -2309,7 +2309,7 @@ impl RtDl1mk3GpsPosLlh1 {
     pub fn validity_gps_pos_llh_altitude(&self) -> bool {
         self.validity_gps_pos_llh_altitude_raw()
     }
-    /// Get raw value of Validity_GPS_Pos_LLH_Altitude
+    /// Get raw value of 'Validity_GPS_Pos_LLH_Altitude'
     ///
     /// - Start bit: 2
     /// - Signal size: 1 bits
@@ -2322,7 +2322,7 @@ impl RtDl1mk3GpsPosLlh1 {
         let signal = self.raw.view_bits::<Lsb0>()[2..3].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_GPS_Pos_LLH_Altitude
+    /// Set value of 'Validity_GPS_Pos_LLH_Altitude'
     #[inline(always)]
     pub fn set_validity_gps_pos_llh_altitude(
         &mut self,
@@ -2332,7 +2332,7 @@ impl RtDl1mk3GpsPosLlh1 {
         self.raw.view_bits_mut::<Lsb0>()[2..3].store_le(value);
         Ok(())
     }
-    /// Validity_GPS_Pos_LLH_Longitude
+    /// Get value of 'Validity_GPS_Pos_LLH_Longitude'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -2344,7 +2344,7 @@ impl RtDl1mk3GpsPosLlh1 {
     pub fn validity_gps_pos_llh_longitude(&self) -> bool {
         self.validity_gps_pos_llh_longitude_raw()
     }
-    /// Get raw value of Validity_GPS_Pos_LLH_Longitude
+    /// Get raw value of 'Validity_GPS_Pos_LLH_Longitude'
     ///
     /// - Start bit: 1
     /// - Signal size: 1 bits
@@ -2357,7 +2357,7 @@ impl RtDl1mk3GpsPosLlh1 {
         let signal = self.raw.view_bits::<Lsb0>()[1..2].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_GPS_Pos_LLH_Longitude
+    /// Set value of 'Validity_GPS_Pos_LLH_Longitude'
     #[inline(always)]
     pub fn set_validity_gps_pos_llh_longitude(
         &mut self,
@@ -2367,7 +2367,7 @@ impl RtDl1mk3GpsPosLlh1 {
         self.raw.view_bits_mut::<Lsb0>()[1..2].store_le(value);
         Ok(())
     }
-    /// Validity_GPS_Pos_LLH_Latitude
+    /// Get value of 'Validity_GPS_Pos_LLH_Latitude'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -2379,7 +2379,7 @@ impl RtDl1mk3GpsPosLlh1 {
     pub fn validity_gps_pos_llh_latitude(&self) -> bool {
         self.validity_gps_pos_llh_latitude_raw()
     }
-    /// Get raw value of Validity_GPS_Pos_LLH_Latitude
+    /// Get raw value of 'Validity_GPS_Pos_LLH_Latitude'
     ///
     /// - Start bit: 0
     /// - Signal size: 1 bits
@@ -2392,7 +2392,7 @@ impl RtDl1mk3GpsPosLlh1 {
         let signal = self.raw.view_bits::<Lsb0>()[0..1].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_GPS_Pos_LLH_Latitude
+    /// Set value of 'Validity_GPS_Pos_LLH_Latitude'
     #[inline(always)]
     pub fn set_validity_gps_pos_llh_latitude(
         &mut self,
@@ -2469,7 +2469,7 @@ impl RtDl1mk3GpsSpeed {
     pub const GPS_SPEED_2D_MAX: f32 = 1675_f32;
     pub const ACCURACY_GPS_SPEED_MIN: u8 = 0_u8;
     pub const ACCURACY_GPS_SPEED_MAX: u8 = 255_u8;
-    /// Construct new RT_DL1MK3_GPS_Speed from values
+    /// Construct new 'RT_DL1MK3_GPS_Speed' from values
     pub fn new(
         gps_speed_3d: f32,
         gps_speed_2d: f32,
@@ -2489,7 +2489,7 @@ impl RtDl1mk3GpsSpeed {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// GPS_Speed_3D
+    /// Get value of 'GPS_Speed_3D'
     ///
     /// This is GPS scalar 3D speed - scalar speed with the local Z axis component included.
     ///
@@ -2501,7 +2501,7 @@ impl RtDl1mk3GpsSpeed {
     pub fn gps_speed_3d(&self) -> f32 {
         self.gps_speed_3d_raw()
     }
-    /// Get raw value of GPS_Speed_3D
+    /// Get raw value of 'GPS_Speed_3D'
     ///
     /// - Start bit: 40
     /// - Signal size: 24 bits
@@ -2516,7 +2516,7 @@ impl RtDl1mk3GpsSpeed {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of GPS_Speed_3D
+    /// Set value of 'GPS_Speed_3D'
     #[inline(always)]
     pub fn set_gps_speed_3d(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 1675_f32 < value {
@@ -2530,7 +2530,7 @@ impl RtDl1mk3GpsSpeed {
         self.raw.view_bits_mut::<Lsb0>()[40..64].store_le(value);
         Ok(())
     }
-    /// GPS_Speed_2D
+    /// Get value of 'GPS_Speed_2D'
     ///
     /// This is GPS scalar 2D speed - scalar speed with no local Z axis component included.
     ///
@@ -2542,7 +2542,7 @@ impl RtDl1mk3GpsSpeed {
     pub fn gps_speed_2d(&self) -> f32 {
         self.gps_speed_2d_raw()
     }
-    /// Get raw value of GPS_Speed_2D
+    /// Get raw value of 'GPS_Speed_2D'
     ///
     /// - Start bit: 16
     /// - Signal size: 24 bits
@@ -2557,7 +2557,7 @@ impl RtDl1mk3GpsSpeed {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of GPS_Speed_2D
+    /// Set value of 'GPS_Speed_2D'
     #[inline(always)]
     pub fn set_gps_speed_2d(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 1675_f32 < value {
@@ -2571,7 +2571,7 @@ impl RtDl1mk3GpsSpeed {
         self.raw.view_bits_mut::<Lsb0>()[16..40].store_le(value);
         Ok(())
     }
-    /// Accuracy_GPS_Speed
+    /// Get value of 'Accuracy_GPS_Speed'
     ///
     /// This accuracy value applies to both 2D and 3D GPS speed.
     ///
@@ -2583,7 +2583,7 @@ impl RtDl1mk3GpsSpeed {
     pub fn accuracy_gps_speed(&self) -> u8 {
         self.accuracy_gps_speed_raw()
     }
-    /// Get raw value of Accuracy_GPS_Speed
+    /// Get raw value of 'Accuracy_GPS_Speed'
     ///
     /// - Start bit: 8
     /// - Signal size: 8 bits
@@ -2597,7 +2597,7 @@ impl RtDl1mk3GpsSpeed {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Accuracy_GPS_Speed
+    /// Set value of 'Accuracy_GPS_Speed'
     #[inline(always)]
     pub fn set_accuracy_gps_speed(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 255_u8 < value {
@@ -2615,7 +2615,7 @@ impl RtDl1mk3GpsSpeed {
         self.raw.view_bits_mut::<Lsb0>()[8..16].store_le(value);
         Ok(())
     }
-    /// Validity_GPS_Speed_3D
+    /// Get value of 'Validity_GPS_Speed_3D'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -2627,7 +2627,7 @@ impl RtDl1mk3GpsSpeed {
     pub fn validity_gps_speed_3d(&self) -> bool {
         self.validity_gps_speed_3d_raw()
     }
-    /// Get raw value of Validity_GPS_Speed_3D
+    /// Get raw value of 'Validity_GPS_Speed_3D'
     ///
     /// - Start bit: 1
     /// - Signal size: 1 bits
@@ -2640,14 +2640,14 @@ impl RtDl1mk3GpsSpeed {
         let signal = self.raw.view_bits::<Lsb0>()[1..2].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_GPS_Speed_3D
+    /// Set value of 'Validity_GPS_Speed_3D'
     #[inline(always)]
     pub fn set_validity_gps_speed_3d(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[1..2].store_le(value);
         Ok(())
     }
-    /// Validity_GPS_Speed_2D
+    /// Get value of 'Validity_GPS_Speed_2D'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -2659,7 +2659,7 @@ impl RtDl1mk3GpsSpeed {
     pub fn validity_gps_speed_2d(&self) -> bool {
         self.validity_gps_speed_2d_raw()
     }
-    /// Get raw value of Validity_GPS_Speed_2D
+    /// Get raw value of 'Validity_GPS_Speed_2D'
     ///
     /// - Start bit: 0
     /// - Signal size: 1 bits
@@ -2672,7 +2672,7 @@ impl RtDl1mk3GpsSpeed {
         let signal = self.raw.view_bits::<Lsb0>()[0..1].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_GPS_Speed_2D
+    /// Set value of 'Validity_GPS_Speed_2D'
     #[inline(always)]
     pub fn set_validity_gps_speed_2d(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
@@ -2742,7 +2742,7 @@ impl RtIrTempTemp7 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_7_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_7_MAX: f32 = 0_f32;
-    /// Construct new RT_IRTemp_Temp_7 from values
+    /// Construct new 'RT_IRTemp_Temp_7' from values
     pub fn new(ir_temperature_7: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_ir_temperature_7(ir_temperature_7)?;
@@ -2752,7 +2752,7 @@ impl RtIrTempTemp7 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// IR_Temperature_7
+    /// Get value of 'IR_Temperature_7'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -2762,7 +2762,7 @@ impl RtIrTempTemp7 {
     pub fn ir_temperature_7(&self) -> f32 {
         self.ir_temperature_7_raw()
     }
-    /// Get raw value of IR_Temperature_7
+    /// Get raw value of 'IR_Temperature_7'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -2777,7 +2777,7 @@ impl RtIrTempTemp7 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of IR_Temperature_7
+    /// Set value of 'IR_Temperature_7'
     #[inline(always)]
     pub fn set_ir_temperature_7(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -2861,7 +2861,7 @@ impl RtIrTempTempRr2 {
     pub const IR_TEMPERATURE_30_MAX: f32 = 0_f32;
     pub const IR_TEMPERATURE_29_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_29_MAX: f32 = 0_f32;
-    /// Construct new RT_IRTemp_Temp_RR_2 from values
+    /// Construct new 'RT_IRTemp_Temp_RR_2' from values
     pub fn new(
         ir_temperature_32: f32,
         ir_temperature_31: f32,
@@ -2879,7 +2879,7 @@ impl RtIrTempTempRr2 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// IR_Temperature_32
+    /// Get value of 'IR_Temperature_32'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -2889,7 +2889,7 @@ impl RtIrTempTempRr2 {
     pub fn ir_temperature_32(&self) -> f32 {
         self.ir_temperature_32_raw()
     }
-    /// Get raw value of IR_Temperature_32
+    /// Get raw value of 'IR_Temperature_32'
     ///
     /// - Start bit: 48
     /// - Signal size: 16 bits
@@ -2904,7 +2904,7 @@ impl RtIrTempTempRr2 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of IR_Temperature_32
+    /// Set value of 'IR_Temperature_32'
     #[inline(always)]
     pub fn set_ir_temperature_32(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -2919,7 +2919,7 @@ impl RtIrTempTempRr2 {
         self.raw.view_bits_mut::<Lsb0>()[48..64].store_le(value);
         Ok(())
     }
-    /// IR_Temperature_31
+    /// Get value of 'IR_Temperature_31'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -2929,7 +2929,7 @@ impl RtIrTempTempRr2 {
     pub fn ir_temperature_31(&self) -> f32 {
         self.ir_temperature_31_raw()
     }
-    /// Get raw value of IR_Temperature_31
+    /// Get raw value of 'IR_Temperature_31'
     ///
     /// - Start bit: 32
     /// - Signal size: 16 bits
@@ -2944,7 +2944,7 @@ impl RtIrTempTempRr2 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of IR_Temperature_31
+    /// Set value of 'IR_Temperature_31'
     #[inline(always)]
     pub fn set_ir_temperature_31(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -2959,7 +2959,7 @@ impl RtIrTempTempRr2 {
         self.raw.view_bits_mut::<Lsb0>()[32..48].store_le(value);
         Ok(())
     }
-    /// IR_Temperature_30
+    /// Get value of 'IR_Temperature_30'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -2969,7 +2969,7 @@ impl RtIrTempTempRr2 {
     pub fn ir_temperature_30(&self) -> f32 {
         self.ir_temperature_30_raw()
     }
-    /// Get raw value of IR_Temperature_30
+    /// Get raw value of 'IR_Temperature_30'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -2984,7 +2984,7 @@ impl RtIrTempTempRr2 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of IR_Temperature_30
+    /// Set value of 'IR_Temperature_30'
     #[inline(always)]
     pub fn set_ir_temperature_30(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -2999,7 +2999,7 @@ impl RtIrTempTempRr2 {
         self.raw.view_bits_mut::<Lsb0>()[16..32].store_le(value);
         Ok(())
     }
-    /// IR_Temperature_29
+    /// Get value of 'IR_Temperature_29'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -3009,7 +3009,7 @@ impl RtIrTempTempRr2 {
     pub fn ir_temperature_29(&self) -> f32 {
         self.ir_temperature_29_raw()
     }
-    /// Get raw value of IR_Temperature_29
+    /// Get raw value of 'IR_Temperature_29'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -3024,7 +3024,7 @@ impl RtIrTempTempRr2 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of IR_Temperature_29
+    /// Set value of 'IR_Temperature_29'
     #[inline(always)]
     pub fn set_ir_temperature_29(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -3108,7 +3108,7 @@ impl RtIrTempTempRl2 {
     pub const IR_TEMPERATURE_22_MAX: f32 = 0_f32;
     pub const IR_TEMPERATURE_21_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_21_MAX: f32 = 0_f32;
-    /// Construct new RT_IRTemp_Temp_RL_2 from values
+    /// Construct new 'RT_IRTemp_Temp_RL_2' from values
     pub fn new(
         ir_temperature_24: f32,
         ir_temperature_23: f32,
@@ -3126,7 +3126,7 @@ impl RtIrTempTempRl2 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// IR_Temperature_24
+    /// Get value of 'IR_Temperature_24'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -3136,7 +3136,7 @@ impl RtIrTempTempRl2 {
     pub fn ir_temperature_24(&self) -> f32 {
         self.ir_temperature_24_raw()
     }
-    /// Get raw value of IR_Temperature_24
+    /// Get raw value of 'IR_Temperature_24'
     ///
     /// - Start bit: 48
     /// - Signal size: 16 bits
@@ -3151,7 +3151,7 @@ impl RtIrTempTempRl2 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of IR_Temperature_24
+    /// Set value of 'IR_Temperature_24'
     #[inline(always)]
     pub fn set_ir_temperature_24(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -3166,7 +3166,7 @@ impl RtIrTempTempRl2 {
         self.raw.view_bits_mut::<Lsb0>()[48..64].store_le(value);
         Ok(())
     }
-    /// IR_Temperature_23
+    /// Get value of 'IR_Temperature_23'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -3176,7 +3176,7 @@ impl RtIrTempTempRl2 {
     pub fn ir_temperature_23(&self) -> f32 {
         self.ir_temperature_23_raw()
     }
-    /// Get raw value of IR_Temperature_23
+    /// Get raw value of 'IR_Temperature_23'
     ///
     /// - Start bit: 32
     /// - Signal size: 16 bits
@@ -3191,7 +3191,7 @@ impl RtIrTempTempRl2 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of IR_Temperature_23
+    /// Set value of 'IR_Temperature_23'
     #[inline(always)]
     pub fn set_ir_temperature_23(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -3206,7 +3206,7 @@ impl RtIrTempTempRl2 {
         self.raw.view_bits_mut::<Lsb0>()[32..48].store_le(value);
         Ok(())
     }
-    /// IR_Temperature_22
+    /// Get value of 'IR_Temperature_22'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -3216,7 +3216,7 @@ impl RtIrTempTempRl2 {
     pub fn ir_temperature_22(&self) -> f32 {
         self.ir_temperature_22_raw()
     }
-    /// Get raw value of IR_Temperature_22
+    /// Get raw value of 'IR_Temperature_22'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -3231,7 +3231,7 @@ impl RtIrTempTempRl2 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of IR_Temperature_22
+    /// Set value of 'IR_Temperature_22'
     #[inline(always)]
     pub fn set_ir_temperature_22(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -3246,7 +3246,7 @@ impl RtIrTempTempRl2 {
         self.raw.view_bits_mut::<Lsb0>()[16..32].store_le(value);
         Ok(())
     }
-    /// IR_Temperature_21
+    /// Get value of 'IR_Temperature_21'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -3256,7 +3256,7 @@ impl RtIrTempTempRl2 {
     pub fn ir_temperature_21(&self) -> f32 {
         self.ir_temperature_21_raw()
     }
-    /// Get raw value of IR_Temperature_21
+    /// Get raw value of 'IR_Temperature_21'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -3271,7 +3271,7 @@ impl RtIrTempTempRl2 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of IR_Temperature_21
+    /// Set value of 'IR_Temperature_21'
     #[inline(always)]
     pub fn set_ir_temperature_21(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -3355,7 +3355,7 @@ impl RtIrTempTempFr2 {
     pub const IR_TEMPERATURE_14_MAX: f32 = 0_f32;
     pub const IR_TEMPERATURE_13_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_13_MAX: f32 = 0_f32;
-    /// Construct new RT_IRTemp_Temp_FR_2 from values
+    /// Construct new 'RT_IRTemp_Temp_FR_2' from values
     pub fn new(
         ir_temperature_16: f32,
         ir_temperature_15: f32,
@@ -3373,7 +3373,7 @@ impl RtIrTempTempFr2 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// IR_Temperature_16
+    /// Get value of 'IR_Temperature_16'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -3383,7 +3383,7 @@ impl RtIrTempTempFr2 {
     pub fn ir_temperature_16(&self) -> f32 {
         self.ir_temperature_16_raw()
     }
-    /// Get raw value of IR_Temperature_16
+    /// Get raw value of 'IR_Temperature_16'
     ///
     /// - Start bit: 48
     /// - Signal size: 16 bits
@@ -3398,7 +3398,7 @@ impl RtIrTempTempFr2 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of IR_Temperature_16
+    /// Set value of 'IR_Temperature_16'
     #[inline(always)]
     pub fn set_ir_temperature_16(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -3413,7 +3413,7 @@ impl RtIrTempTempFr2 {
         self.raw.view_bits_mut::<Lsb0>()[48..64].store_le(value);
         Ok(())
     }
-    /// IR_Temperature_15
+    /// Get value of 'IR_Temperature_15'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -3423,7 +3423,7 @@ impl RtIrTempTempFr2 {
     pub fn ir_temperature_15(&self) -> f32 {
         self.ir_temperature_15_raw()
     }
-    /// Get raw value of IR_Temperature_15
+    /// Get raw value of 'IR_Temperature_15'
     ///
     /// - Start bit: 32
     /// - Signal size: 16 bits
@@ -3438,7 +3438,7 @@ impl RtIrTempTempFr2 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of IR_Temperature_15
+    /// Set value of 'IR_Temperature_15'
     #[inline(always)]
     pub fn set_ir_temperature_15(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -3453,7 +3453,7 @@ impl RtIrTempTempFr2 {
         self.raw.view_bits_mut::<Lsb0>()[32..48].store_le(value);
         Ok(())
     }
-    /// IR_Temperature_14
+    /// Get value of 'IR_Temperature_14'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -3463,7 +3463,7 @@ impl RtIrTempTempFr2 {
     pub fn ir_temperature_14(&self) -> f32 {
         self.ir_temperature_14_raw()
     }
-    /// Get raw value of IR_Temperature_14
+    /// Get raw value of 'IR_Temperature_14'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -3478,7 +3478,7 @@ impl RtIrTempTempFr2 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of IR_Temperature_14
+    /// Set value of 'IR_Temperature_14'
     #[inline(always)]
     pub fn set_ir_temperature_14(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -3493,7 +3493,7 @@ impl RtIrTempTempFr2 {
         self.raw.view_bits_mut::<Lsb0>()[16..32].store_le(value);
         Ok(())
     }
-    /// IR_Temperature_13
+    /// Get value of 'IR_Temperature_13'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -3503,7 +3503,7 @@ impl RtIrTempTempFr2 {
     pub fn ir_temperature_13(&self) -> f32 {
         self.ir_temperature_13_raw()
     }
-    /// Get raw value of IR_Temperature_13
+    /// Get raw value of 'IR_Temperature_13'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -3518,7 +3518,7 @@ impl RtIrTempTempFr2 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of IR_Temperature_13
+    /// Set value of 'IR_Temperature_13'
     #[inline(always)]
     pub fn set_ir_temperature_13(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -3602,7 +3602,7 @@ impl RtIrTempTempFl2 {
     pub const IR_TEMPERATURE_6_MAX: f32 = 0_f32;
     pub const IR_TEMPERATURE_5_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_5_MAX: f32 = 0_f32;
-    /// Construct new RT_IRTemp_Temp_FL_2 from values
+    /// Construct new 'RT_IRTemp_Temp_FL_2' from values
     pub fn new(
         ir_temperature_8: f32,
         ir_temperature_7: f32,
@@ -3620,7 +3620,7 @@ impl RtIrTempTempFl2 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// IR_Temperature_8
+    /// Get value of 'IR_Temperature_8'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -3630,7 +3630,7 @@ impl RtIrTempTempFl2 {
     pub fn ir_temperature_8(&self) -> f32 {
         self.ir_temperature_8_raw()
     }
-    /// Get raw value of IR_Temperature_8
+    /// Get raw value of 'IR_Temperature_8'
     ///
     /// - Start bit: 48
     /// - Signal size: 16 bits
@@ -3645,7 +3645,7 @@ impl RtIrTempTempFl2 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of IR_Temperature_8
+    /// Set value of 'IR_Temperature_8'
     #[inline(always)]
     pub fn set_ir_temperature_8(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -3660,7 +3660,7 @@ impl RtIrTempTempFl2 {
         self.raw.view_bits_mut::<Lsb0>()[48..64].store_le(value);
         Ok(())
     }
-    /// IR_Temperature_7
+    /// Get value of 'IR_Temperature_7'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -3670,7 +3670,7 @@ impl RtIrTempTempFl2 {
     pub fn ir_temperature_7(&self) -> f32 {
         self.ir_temperature_7_raw()
     }
-    /// Get raw value of IR_Temperature_7
+    /// Get raw value of 'IR_Temperature_7'
     ///
     /// - Start bit: 32
     /// - Signal size: 16 bits
@@ -3685,7 +3685,7 @@ impl RtIrTempTempFl2 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of IR_Temperature_7
+    /// Set value of 'IR_Temperature_7'
     #[inline(always)]
     pub fn set_ir_temperature_7(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -3700,7 +3700,7 @@ impl RtIrTempTempFl2 {
         self.raw.view_bits_mut::<Lsb0>()[32..48].store_le(value);
         Ok(())
     }
-    /// IR_Temperature_6
+    /// Get value of 'IR_Temperature_6'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -3710,7 +3710,7 @@ impl RtIrTempTempFl2 {
     pub fn ir_temperature_6(&self) -> f32 {
         self.ir_temperature_6_raw()
     }
-    /// Get raw value of IR_Temperature_6
+    /// Get raw value of 'IR_Temperature_6'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -3725,7 +3725,7 @@ impl RtIrTempTempFl2 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of IR_Temperature_6
+    /// Set value of 'IR_Temperature_6'
     #[inline(always)]
     pub fn set_ir_temperature_6(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -3740,7 +3740,7 @@ impl RtIrTempTempFl2 {
         self.raw.view_bits_mut::<Lsb0>()[16..32].store_le(value);
         Ok(())
     }
-    /// IR_Temperature_5
+    /// Get value of 'IR_Temperature_5'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -3750,7 +3750,7 @@ impl RtIrTempTempFl2 {
     pub fn ir_temperature_5(&self) -> f32 {
         self.ir_temperature_5_raw()
     }
-    /// Get raw value of IR_Temperature_5
+    /// Get raw value of 'IR_Temperature_5'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -3765,7 +3765,7 @@ impl RtIrTempTempFl2 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of IR_Temperature_5
+    /// Set value of 'IR_Temperature_5'
     #[inline(always)]
     pub fn set_ir_temperature_5(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -3849,7 +3849,7 @@ impl RtIrTempTempRr1 {
     pub const IR_TEMPERATURE_26_MAX: f32 = 0_f32;
     pub const IR_TEMPERATURE_25_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_25_MAX: f32 = 0_f32;
-    /// Construct new RT_IRTemp_Temp_RR_1 from values
+    /// Construct new 'RT_IRTemp_Temp_RR_1' from values
     pub fn new(
         ir_temperature_28: f32,
         ir_temperature_27: f32,
@@ -3867,7 +3867,7 @@ impl RtIrTempTempRr1 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// IR_Temperature_28
+    /// Get value of 'IR_Temperature_28'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -3877,7 +3877,7 @@ impl RtIrTempTempRr1 {
     pub fn ir_temperature_28(&self) -> f32 {
         self.ir_temperature_28_raw()
     }
-    /// Get raw value of IR_Temperature_28
+    /// Get raw value of 'IR_Temperature_28'
     ///
     /// - Start bit: 48
     /// - Signal size: 16 bits
@@ -3892,7 +3892,7 @@ impl RtIrTempTempRr1 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of IR_Temperature_28
+    /// Set value of 'IR_Temperature_28'
     #[inline(always)]
     pub fn set_ir_temperature_28(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -3907,7 +3907,7 @@ impl RtIrTempTempRr1 {
         self.raw.view_bits_mut::<Lsb0>()[48..64].store_le(value);
         Ok(())
     }
-    /// IR_Temperature_27
+    /// Get value of 'IR_Temperature_27'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -3917,7 +3917,7 @@ impl RtIrTempTempRr1 {
     pub fn ir_temperature_27(&self) -> f32 {
         self.ir_temperature_27_raw()
     }
-    /// Get raw value of IR_Temperature_27
+    /// Get raw value of 'IR_Temperature_27'
     ///
     /// - Start bit: 32
     /// - Signal size: 16 bits
@@ -3932,7 +3932,7 @@ impl RtIrTempTempRr1 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of IR_Temperature_27
+    /// Set value of 'IR_Temperature_27'
     #[inline(always)]
     pub fn set_ir_temperature_27(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -3947,7 +3947,7 @@ impl RtIrTempTempRr1 {
         self.raw.view_bits_mut::<Lsb0>()[32..48].store_le(value);
         Ok(())
     }
-    /// IR_Temperature_26
+    /// Get value of 'IR_Temperature_26'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -3957,7 +3957,7 @@ impl RtIrTempTempRr1 {
     pub fn ir_temperature_26(&self) -> f32 {
         self.ir_temperature_26_raw()
     }
-    /// Get raw value of IR_Temperature_26
+    /// Get raw value of 'IR_Temperature_26'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -3972,7 +3972,7 @@ impl RtIrTempTempRr1 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of IR_Temperature_26
+    /// Set value of 'IR_Temperature_26'
     #[inline(always)]
     pub fn set_ir_temperature_26(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -3987,7 +3987,7 @@ impl RtIrTempTempRr1 {
         self.raw.view_bits_mut::<Lsb0>()[16..32].store_le(value);
         Ok(())
     }
-    /// IR_Temperature_25
+    /// Get value of 'IR_Temperature_25'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -3997,7 +3997,7 @@ impl RtIrTempTempRr1 {
     pub fn ir_temperature_25(&self) -> f32 {
         self.ir_temperature_25_raw()
     }
-    /// Get raw value of IR_Temperature_25
+    /// Get raw value of 'IR_Temperature_25'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -4012,7 +4012,7 @@ impl RtIrTempTempRr1 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of IR_Temperature_25
+    /// Set value of 'IR_Temperature_25'
     #[inline(always)]
     pub fn set_ir_temperature_25(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -4096,7 +4096,7 @@ impl RtIrTempTempRl1 {
     pub const IR_TEMPERATURE_18_MAX: f32 = 0_f32;
     pub const IR_TEMPERATURE_17_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_17_MAX: f32 = 0_f32;
-    /// Construct new RT_IRTemp_Temp_RL_1 from values
+    /// Construct new 'RT_IRTemp_Temp_RL_1' from values
     pub fn new(
         ir_temperature_20: f32,
         ir_temperature_19: f32,
@@ -4114,7 +4114,7 @@ impl RtIrTempTempRl1 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// IR_Temperature_20
+    /// Get value of 'IR_Temperature_20'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -4124,7 +4124,7 @@ impl RtIrTempTempRl1 {
     pub fn ir_temperature_20(&self) -> f32 {
         self.ir_temperature_20_raw()
     }
-    /// Get raw value of IR_Temperature_20
+    /// Get raw value of 'IR_Temperature_20'
     ///
     /// - Start bit: 48
     /// - Signal size: 16 bits
@@ -4139,7 +4139,7 @@ impl RtIrTempTempRl1 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of IR_Temperature_20
+    /// Set value of 'IR_Temperature_20'
     #[inline(always)]
     pub fn set_ir_temperature_20(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -4154,7 +4154,7 @@ impl RtIrTempTempRl1 {
         self.raw.view_bits_mut::<Lsb0>()[48..64].store_le(value);
         Ok(())
     }
-    /// IR_Temperature_19
+    /// Get value of 'IR_Temperature_19'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -4164,7 +4164,7 @@ impl RtIrTempTempRl1 {
     pub fn ir_temperature_19(&self) -> f32 {
         self.ir_temperature_19_raw()
     }
-    /// Get raw value of IR_Temperature_19
+    /// Get raw value of 'IR_Temperature_19'
     ///
     /// - Start bit: 32
     /// - Signal size: 16 bits
@@ -4179,7 +4179,7 @@ impl RtIrTempTempRl1 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of IR_Temperature_19
+    /// Set value of 'IR_Temperature_19'
     #[inline(always)]
     pub fn set_ir_temperature_19(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -4194,7 +4194,7 @@ impl RtIrTempTempRl1 {
         self.raw.view_bits_mut::<Lsb0>()[32..48].store_le(value);
         Ok(())
     }
-    /// IR_Temperature_18
+    /// Get value of 'IR_Temperature_18'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -4204,7 +4204,7 @@ impl RtIrTempTempRl1 {
     pub fn ir_temperature_18(&self) -> f32 {
         self.ir_temperature_18_raw()
     }
-    /// Get raw value of IR_Temperature_18
+    /// Get raw value of 'IR_Temperature_18'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -4219,7 +4219,7 @@ impl RtIrTempTempRl1 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of IR_Temperature_18
+    /// Set value of 'IR_Temperature_18'
     #[inline(always)]
     pub fn set_ir_temperature_18(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -4234,7 +4234,7 @@ impl RtIrTempTempRl1 {
         self.raw.view_bits_mut::<Lsb0>()[16..32].store_le(value);
         Ok(())
     }
-    /// IR_Temperature_17
+    /// Get value of 'IR_Temperature_17'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -4244,7 +4244,7 @@ impl RtIrTempTempRl1 {
     pub fn ir_temperature_17(&self) -> f32 {
         self.ir_temperature_17_raw()
     }
-    /// Get raw value of IR_Temperature_17
+    /// Get raw value of 'IR_Temperature_17'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -4259,7 +4259,7 @@ impl RtIrTempTempRl1 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of IR_Temperature_17
+    /// Set value of 'IR_Temperature_17'
     #[inline(always)]
     pub fn set_ir_temperature_17(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -4343,7 +4343,7 @@ impl RtIrTempTempFr1 {
     pub const IR_TEMPERATURE_10_MAX: f32 = 0_f32;
     pub const IR_TEMPERATURE_9_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_9_MAX: f32 = 0_f32;
-    /// Construct new RT_IRTemp_Temp_FR_1 from values
+    /// Construct new 'RT_IRTemp_Temp_FR_1' from values
     pub fn new(
         ir_temperature_12: f32,
         ir_temperature_11: f32,
@@ -4361,7 +4361,7 @@ impl RtIrTempTempFr1 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// IR_Temperature_12
+    /// Get value of 'IR_Temperature_12'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -4371,7 +4371,7 @@ impl RtIrTempTempFr1 {
     pub fn ir_temperature_12(&self) -> f32 {
         self.ir_temperature_12_raw()
     }
-    /// Get raw value of IR_Temperature_12
+    /// Get raw value of 'IR_Temperature_12'
     ///
     /// - Start bit: 48
     /// - Signal size: 16 bits
@@ -4386,7 +4386,7 @@ impl RtIrTempTempFr1 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of IR_Temperature_12
+    /// Set value of 'IR_Temperature_12'
     #[inline(always)]
     pub fn set_ir_temperature_12(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -4401,7 +4401,7 @@ impl RtIrTempTempFr1 {
         self.raw.view_bits_mut::<Lsb0>()[48..64].store_le(value);
         Ok(())
     }
-    /// IR_Temperature_11
+    /// Get value of 'IR_Temperature_11'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -4411,7 +4411,7 @@ impl RtIrTempTempFr1 {
     pub fn ir_temperature_11(&self) -> f32 {
         self.ir_temperature_11_raw()
     }
-    /// Get raw value of IR_Temperature_11
+    /// Get raw value of 'IR_Temperature_11'
     ///
     /// - Start bit: 32
     /// - Signal size: 16 bits
@@ -4426,7 +4426,7 @@ impl RtIrTempTempFr1 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of IR_Temperature_11
+    /// Set value of 'IR_Temperature_11'
     #[inline(always)]
     pub fn set_ir_temperature_11(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -4441,7 +4441,7 @@ impl RtIrTempTempFr1 {
         self.raw.view_bits_mut::<Lsb0>()[32..48].store_le(value);
         Ok(())
     }
-    /// IR_Temperature_10
+    /// Get value of 'IR_Temperature_10'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -4451,7 +4451,7 @@ impl RtIrTempTempFr1 {
     pub fn ir_temperature_10(&self) -> f32 {
         self.ir_temperature_10_raw()
     }
-    /// Get raw value of IR_Temperature_10
+    /// Get raw value of 'IR_Temperature_10'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -4466,7 +4466,7 @@ impl RtIrTempTempFr1 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of IR_Temperature_10
+    /// Set value of 'IR_Temperature_10'
     #[inline(always)]
     pub fn set_ir_temperature_10(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -4481,7 +4481,7 @@ impl RtIrTempTempFr1 {
         self.raw.view_bits_mut::<Lsb0>()[16..32].store_le(value);
         Ok(())
     }
-    /// IR_Temperature_9
+    /// Get value of 'IR_Temperature_9'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -4491,7 +4491,7 @@ impl RtIrTempTempFr1 {
     pub fn ir_temperature_9(&self) -> f32 {
         self.ir_temperature_9_raw()
     }
-    /// Get raw value of IR_Temperature_9
+    /// Get raw value of 'IR_Temperature_9'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -4506,7 +4506,7 @@ impl RtIrTempTempFr1 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of IR_Temperature_9
+    /// Set value of 'IR_Temperature_9'
     #[inline(always)]
     pub fn set_ir_temperature_9(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -4590,7 +4590,7 @@ impl RtIrTempTempFl1 {
     pub const IR_TEMPERATURE_2_MAX: f32 = 0_f32;
     pub const IR_TEMPERATURE_1_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_1_MAX: f32 = 0_f32;
-    /// Construct new RT_IRTemp_Temp_FL_1 from values
+    /// Construct new 'RT_IRTemp_Temp_FL_1' from values
     pub fn new(
         ir_temperature_4: f32,
         ir_temperature_3: f32,
@@ -4608,7 +4608,7 @@ impl RtIrTempTempFl1 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// IR_Temperature_4
+    /// Get value of 'IR_Temperature_4'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -4618,7 +4618,7 @@ impl RtIrTempTempFl1 {
     pub fn ir_temperature_4(&self) -> f32 {
         self.ir_temperature_4_raw()
     }
-    /// Get raw value of IR_Temperature_4
+    /// Get raw value of 'IR_Temperature_4'
     ///
     /// - Start bit: 48
     /// - Signal size: 16 bits
@@ -4633,7 +4633,7 @@ impl RtIrTempTempFl1 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of IR_Temperature_4
+    /// Set value of 'IR_Temperature_4'
     #[inline(always)]
     pub fn set_ir_temperature_4(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -4648,7 +4648,7 @@ impl RtIrTempTempFl1 {
         self.raw.view_bits_mut::<Lsb0>()[48..64].store_le(value);
         Ok(())
     }
-    /// IR_Temperature_3
+    /// Get value of 'IR_Temperature_3'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -4658,7 +4658,7 @@ impl RtIrTempTempFl1 {
     pub fn ir_temperature_3(&self) -> f32 {
         self.ir_temperature_3_raw()
     }
-    /// Get raw value of IR_Temperature_3
+    /// Get raw value of 'IR_Temperature_3'
     ///
     /// - Start bit: 32
     /// - Signal size: 16 bits
@@ -4673,7 +4673,7 @@ impl RtIrTempTempFl1 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of IR_Temperature_3
+    /// Set value of 'IR_Temperature_3'
     #[inline(always)]
     pub fn set_ir_temperature_3(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -4688,7 +4688,7 @@ impl RtIrTempTempFl1 {
         self.raw.view_bits_mut::<Lsb0>()[32..48].store_le(value);
         Ok(())
     }
-    /// IR_Temperature_2
+    /// Get value of 'IR_Temperature_2'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -4698,7 +4698,7 @@ impl RtIrTempTempFl1 {
     pub fn ir_temperature_2(&self) -> f32 {
         self.ir_temperature_2_raw()
     }
-    /// Get raw value of IR_Temperature_2
+    /// Get raw value of 'IR_Temperature_2'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -4713,7 +4713,7 @@ impl RtIrTempTempFl1 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of IR_Temperature_2
+    /// Set value of 'IR_Temperature_2'
     #[inline(always)]
     pub fn set_ir_temperature_2(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -4728,7 +4728,7 @@ impl RtIrTempTempFl1 {
         self.raw.view_bits_mut::<Lsb0>()[16..32].store_le(value);
         Ok(())
     }
-    /// IR_Temperature_1
+    /// Get value of 'IR_Temperature_1'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -4738,7 +4738,7 @@ impl RtIrTempTempFl1 {
     pub fn ir_temperature_1(&self) -> f32 {
         self.ir_temperature_1_raw()
     }
-    /// Get raw value of IR_Temperature_1
+    /// Get raw value of 'IR_Temperature_1'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -4753,7 +4753,7 @@ impl RtIrTempTempFl1 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of IR_Temperature_1
+    /// Set value of 'IR_Temperature_1'
     #[inline(always)]
     pub fn set_ir_temperature_1(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -4831,7 +4831,7 @@ impl RtIrTempTemp32 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_32_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_32_MAX: f32 = 0_f32;
-    /// Construct new RT_IRTemp_Temp_32 from values
+    /// Construct new 'RT_IRTemp_Temp_32' from values
     pub fn new(ir_temperature_32: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_ir_temperature_32(ir_temperature_32)?;
@@ -4841,7 +4841,7 @@ impl RtIrTempTemp32 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// IR_Temperature_32
+    /// Get value of 'IR_Temperature_32'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -4851,7 +4851,7 @@ impl RtIrTempTemp32 {
     pub fn ir_temperature_32(&self) -> f32 {
         self.ir_temperature_32_raw()
     }
-    /// Get raw value of IR_Temperature_32
+    /// Get raw value of 'IR_Temperature_32'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -4866,7 +4866,7 @@ impl RtIrTempTemp32 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of IR_Temperature_32
+    /// Set value of 'IR_Temperature_32'
     #[inline(always)]
     pub fn set_ir_temperature_32(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -4944,7 +4944,7 @@ impl RtIrTempTemp31 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_31_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_31_MAX: f32 = 0_f32;
-    /// Construct new RT_IRTemp_Temp_31 from values
+    /// Construct new 'RT_IRTemp_Temp_31' from values
     pub fn new(ir_temperature_31: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_ir_temperature_31(ir_temperature_31)?;
@@ -4954,7 +4954,7 @@ impl RtIrTempTemp31 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// IR_Temperature_31
+    /// Get value of 'IR_Temperature_31'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -4964,7 +4964,7 @@ impl RtIrTempTemp31 {
     pub fn ir_temperature_31(&self) -> f32 {
         self.ir_temperature_31_raw()
     }
-    /// Get raw value of IR_Temperature_31
+    /// Get raw value of 'IR_Temperature_31'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -4979,7 +4979,7 @@ impl RtIrTempTemp31 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of IR_Temperature_31
+    /// Set value of 'IR_Temperature_31'
     #[inline(always)]
     pub fn set_ir_temperature_31(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -5057,7 +5057,7 @@ impl RtIrTempTemp30 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_30_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_30_MAX: f32 = 0_f32;
-    /// Construct new RT_IRTemp_Temp_30 from values
+    /// Construct new 'RT_IRTemp_Temp_30' from values
     pub fn new(ir_temperature_30: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_ir_temperature_30(ir_temperature_30)?;
@@ -5067,7 +5067,7 @@ impl RtIrTempTemp30 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// IR_Temperature_30
+    /// Get value of 'IR_Temperature_30'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -5077,7 +5077,7 @@ impl RtIrTempTemp30 {
     pub fn ir_temperature_30(&self) -> f32 {
         self.ir_temperature_30_raw()
     }
-    /// Get raw value of IR_Temperature_30
+    /// Get raw value of 'IR_Temperature_30'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -5092,7 +5092,7 @@ impl RtIrTempTemp30 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of IR_Temperature_30
+    /// Set value of 'IR_Temperature_30'
     #[inline(always)]
     pub fn set_ir_temperature_30(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -5170,7 +5170,7 @@ impl RtIrTempTemp29 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_29_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_29_MAX: f32 = 0_f32;
-    /// Construct new RT_IRTemp_Temp_29 from values
+    /// Construct new 'RT_IRTemp_Temp_29' from values
     pub fn new(ir_temperature_29: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_ir_temperature_29(ir_temperature_29)?;
@@ -5180,7 +5180,7 @@ impl RtIrTempTemp29 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// IR_Temperature_29
+    /// Get value of 'IR_Temperature_29'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -5190,7 +5190,7 @@ impl RtIrTempTemp29 {
     pub fn ir_temperature_29(&self) -> f32 {
         self.ir_temperature_29_raw()
     }
-    /// Get raw value of IR_Temperature_29
+    /// Get raw value of 'IR_Temperature_29'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -5205,7 +5205,7 @@ impl RtIrTempTemp29 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of IR_Temperature_29
+    /// Set value of 'IR_Temperature_29'
     #[inline(always)]
     pub fn set_ir_temperature_29(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -5283,7 +5283,7 @@ impl RtIrTempTemp28 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_28_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_28_MAX: f32 = 0_f32;
-    /// Construct new RT_IRTemp_Temp_28 from values
+    /// Construct new 'RT_IRTemp_Temp_28' from values
     pub fn new(ir_temperature_28: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_ir_temperature_28(ir_temperature_28)?;
@@ -5293,7 +5293,7 @@ impl RtIrTempTemp28 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// IR_Temperature_28
+    /// Get value of 'IR_Temperature_28'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -5303,7 +5303,7 @@ impl RtIrTempTemp28 {
     pub fn ir_temperature_28(&self) -> f32 {
         self.ir_temperature_28_raw()
     }
-    /// Get raw value of IR_Temperature_28
+    /// Get raw value of 'IR_Temperature_28'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -5318,7 +5318,7 @@ impl RtIrTempTemp28 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of IR_Temperature_28
+    /// Set value of 'IR_Temperature_28'
     #[inline(always)]
     pub fn set_ir_temperature_28(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -5396,7 +5396,7 @@ impl RtIrTempTemp27 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_27_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_27_MAX: f32 = 0_f32;
-    /// Construct new RT_IRTemp_Temp_27 from values
+    /// Construct new 'RT_IRTemp_Temp_27' from values
     pub fn new(ir_temperature_27: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_ir_temperature_27(ir_temperature_27)?;
@@ -5406,7 +5406,7 @@ impl RtIrTempTemp27 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// IR_Temperature_27
+    /// Get value of 'IR_Temperature_27'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -5416,7 +5416,7 @@ impl RtIrTempTemp27 {
     pub fn ir_temperature_27(&self) -> f32 {
         self.ir_temperature_27_raw()
     }
-    /// Get raw value of IR_Temperature_27
+    /// Get raw value of 'IR_Temperature_27'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -5431,7 +5431,7 @@ impl RtIrTempTemp27 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of IR_Temperature_27
+    /// Set value of 'IR_Temperature_27'
     #[inline(always)]
     pub fn set_ir_temperature_27(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -5509,7 +5509,7 @@ impl RtIrTempTemp26 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_26_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_26_MAX: f32 = 0_f32;
-    /// Construct new RT_IRTemp_Temp_26 from values
+    /// Construct new 'RT_IRTemp_Temp_26' from values
     pub fn new(ir_temperature_26: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_ir_temperature_26(ir_temperature_26)?;
@@ -5519,7 +5519,7 @@ impl RtIrTempTemp26 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// IR_Temperature_26
+    /// Get value of 'IR_Temperature_26'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -5529,7 +5529,7 @@ impl RtIrTempTemp26 {
     pub fn ir_temperature_26(&self) -> f32 {
         self.ir_temperature_26_raw()
     }
-    /// Get raw value of IR_Temperature_26
+    /// Get raw value of 'IR_Temperature_26'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -5544,7 +5544,7 @@ impl RtIrTempTemp26 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of IR_Temperature_26
+    /// Set value of 'IR_Temperature_26'
     #[inline(always)]
     pub fn set_ir_temperature_26(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -5622,7 +5622,7 @@ impl RtIrTempTemp25 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_25_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_25_MAX: f32 = 0_f32;
-    /// Construct new RT_IRTemp_Temp_25 from values
+    /// Construct new 'RT_IRTemp_Temp_25' from values
     pub fn new(ir_temperature_25: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_ir_temperature_25(ir_temperature_25)?;
@@ -5632,7 +5632,7 @@ impl RtIrTempTemp25 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// IR_Temperature_25
+    /// Get value of 'IR_Temperature_25'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -5642,7 +5642,7 @@ impl RtIrTempTemp25 {
     pub fn ir_temperature_25(&self) -> f32 {
         self.ir_temperature_25_raw()
     }
-    /// Get raw value of IR_Temperature_25
+    /// Get raw value of 'IR_Temperature_25'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -5657,7 +5657,7 @@ impl RtIrTempTemp25 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of IR_Temperature_25
+    /// Set value of 'IR_Temperature_25'
     #[inline(always)]
     pub fn set_ir_temperature_25(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -5735,7 +5735,7 @@ impl RtIrTempTemp24 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_24_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_24_MAX: f32 = 0_f32;
-    /// Construct new RT_IRTemp_Temp_24 from values
+    /// Construct new 'RT_IRTemp_Temp_24' from values
     pub fn new(ir_temperature_24: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_ir_temperature_24(ir_temperature_24)?;
@@ -5745,7 +5745,7 @@ impl RtIrTempTemp24 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// IR_Temperature_24
+    /// Get value of 'IR_Temperature_24'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -5755,7 +5755,7 @@ impl RtIrTempTemp24 {
     pub fn ir_temperature_24(&self) -> f32 {
         self.ir_temperature_24_raw()
     }
-    /// Get raw value of IR_Temperature_24
+    /// Get raw value of 'IR_Temperature_24'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -5770,7 +5770,7 @@ impl RtIrTempTemp24 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of IR_Temperature_24
+    /// Set value of 'IR_Temperature_24'
     #[inline(always)]
     pub fn set_ir_temperature_24(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -5848,7 +5848,7 @@ impl RtIrTempTemp22 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_22_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_22_MAX: f32 = 0_f32;
-    /// Construct new RT_IRTemp_Temp_22 from values
+    /// Construct new 'RT_IRTemp_Temp_22' from values
     pub fn new(ir_temperature_22: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_ir_temperature_22(ir_temperature_22)?;
@@ -5858,7 +5858,7 @@ impl RtIrTempTemp22 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// IR_Temperature_22
+    /// Get value of 'IR_Temperature_22'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -5868,7 +5868,7 @@ impl RtIrTempTemp22 {
     pub fn ir_temperature_22(&self) -> f32 {
         self.ir_temperature_22_raw()
     }
-    /// Get raw value of IR_Temperature_22
+    /// Get raw value of 'IR_Temperature_22'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -5883,7 +5883,7 @@ impl RtIrTempTemp22 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of IR_Temperature_22
+    /// Set value of 'IR_Temperature_22'
     #[inline(always)]
     pub fn set_ir_temperature_22(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -5961,7 +5961,7 @@ impl RtIrTempTemp23 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_23_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_23_MAX: f32 = 0_f32;
-    /// Construct new RT_IRTemp_Temp_23 from values
+    /// Construct new 'RT_IRTemp_Temp_23' from values
     pub fn new(ir_temperature_23: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_ir_temperature_23(ir_temperature_23)?;
@@ -5971,7 +5971,7 @@ impl RtIrTempTemp23 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// IR_Temperature_23
+    /// Get value of 'IR_Temperature_23'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -5981,7 +5981,7 @@ impl RtIrTempTemp23 {
     pub fn ir_temperature_23(&self) -> f32 {
         self.ir_temperature_23_raw()
     }
-    /// Get raw value of IR_Temperature_23
+    /// Get raw value of 'IR_Temperature_23'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -5996,7 +5996,7 @@ impl RtIrTempTemp23 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of IR_Temperature_23
+    /// Set value of 'IR_Temperature_23'
     #[inline(always)]
     pub fn set_ir_temperature_23(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -6074,7 +6074,7 @@ impl RtIrTempTemp21 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_21_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_21_MAX: f32 = 0_f32;
-    /// Construct new RT_IRTemp_Temp_21 from values
+    /// Construct new 'RT_IRTemp_Temp_21' from values
     pub fn new(ir_temperature_21: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_ir_temperature_21(ir_temperature_21)?;
@@ -6084,7 +6084,7 @@ impl RtIrTempTemp21 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// IR_Temperature_21
+    /// Get value of 'IR_Temperature_21'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -6094,7 +6094,7 @@ impl RtIrTempTemp21 {
     pub fn ir_temperature_21(&self) -> f32 {
         self.ir_temperature_21_raw()
     }
-    /// Get raw value of IR_Temperature_21
+    /// Get raw value of 'IR_Temperature_21'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -6109,7 +6109,7 @@ impl RtIrTempTemp21 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of IR_Temperature_21
+    /// Set value of 'IR_Temperature_21'
     #[inline(always)]
     pub fn set_ir_temperature_21(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -6187,7 +6187,7 @@ impl RtIrTempTemp20 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_20_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_20_MAX: f32 = 0_f32;
-    /// Construct new RT_IRTemp_Temp_20 from values
+    /// Construct new 'RT_IRTemp_Temp_20' from values
     pub fn new(ir_temperature_20: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_ir_temperature_20(ir_temperature_20)?;
@@ -6197,7 +6197,7 @@ impl RtIrTempTemp20 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// IR_Temperature_20
+    /// Get value of 'IR_Temperature_20'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -6207,7 +6207,7 @@ impl RtIrTempTemp20 {
     pub fn ir_temperature_20(&self) -> f32 {
         self.ir_temperature_20_raw()
     }
-    /// Get raw value of IR_Temperature_20
+    /// Get raw value of 'IR_Temperature_20'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -6222,7 +6222,7 @@ impl RtIrTempTemp20 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of IR_Temperature_20
+    /// Set value of 'IR_Temperature_20'
     #[inline(always)]
     pub fn set_ir_temperature_20(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -6300,7 +6300,7 @@ impl RtIrTempTemp19 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_19_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_19_MAX: f32 = 0_f32;
-    /// Construct new RT_IRTemp_Temp_19 from values
+    /// Construct new 'RT_IRTemp_Temp_19' from values
     pub fn new(ir_temperature_19: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_ir_temperature_19(ir_temperature_19)?;
@@ -6310,7 +6310,7 @@ impl RtIrTempTemp19 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// IR_Temperature_19
+    /// Get value of 'IR_Temperature_19'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -6320,7 +6320,7 @@ impl RtIrTempTemp19 {
     pub fn ir_temperature_19(&self) -> f32 {
         self.ir_temperature_19_raw()
     }
-    /// Get raw value of IR_Temperature_19
+    /// Get raw value of 'IR_Temperature_19'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -6335,7 +6335,7 @@ impl RtIrTempTemp19 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of IR_Temperature_19
+    /// Set value of 'IR_Temperature_19'
     #[inline(always)]
     pub fn set_ir_temperature_19(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -6413,7 +6413,7 @@ impl RtIrTempTemp18 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_18_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_18_MAX: f32 = 0_f32;
-    /// Construct new RT_IRTemp_Temp_18 from values
+    /// Construct new 'RT_IRTemp_Temp_18' from values
     pub fn new(ir_temperature_18: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_ir_temperature_18(ir_temperature_18)?;
@@ -6423,7 +6423,7 @@ impl RtIrTempTemp18 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// IR_Temperature_18
+    /// Get value of 'IR_Temperature_18'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -6433,7 +6433,7 @@ impl RtIrTempTemp18 {
     pub fn ir_temperature_18(&self) -> f32 {
         self.ir_temperature_18_raw()
     }
-    /// Get raw value of IR_Temperature_18
+    /// Get raw value of 'IR_Temperature_18'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -6448,7 +6448,7 @@ impl RtIrTempTemp18 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of IR_Temperature_18
+    /// Set value of 'IR_Temperature_18'
     #[inline(always)]
     pub fn set_ir_temperature_18(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -6526,7 +6526,7 @@ impl RtIrTempTemp16 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_16_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_16_MAX: f32 = 0_f32;
-    /// Construct new RT_IRTemp_Temp_16 from values
+    /// Construct new 'RT_IRTemp_Temp_16' from values
     pub fn new(ir_temperature_16: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_ir_temperature_16(ir_temperature_16)?;
@@ -6536,7 +6536,7 @@ impl RtIrTempTemp16 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// IR_Temperature_16
+    /// Get value of 'IR_Temperature_16'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -6546,7 +6546,7 @@ impl RtIrTempTemp16 {
     pub fn ir_temperature_16(&self) -> f32 {
         self.ir_temperature_16_raw()
     }
-    /// Get raw value of IR_Temperature_16
+    /// Get raw value of 'IR_Temperature_16'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -6561,7 +6561,7 @@ impl RtIrTempTemp16 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of IR_Temperature_16
+    /// Set value of 'IR_Temperature_16'
     #[inline(always)]
     pub fn set_ir_temperature_16(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -6639,7 +6639,7 @@ impl RtIrTempTemp15 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_15_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_15_MAX: f32 = 0_f32;
-    /// Construct new RT_IRTemp_Temp_15 from values
+    /// Construct new 'RT_IRTemp_Temp_15' from values
     pub fn new(ir_temperature_15: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_ir_temperature_15(ir_temperature_15)?;
@@ -6649,7 +6649,7 @@ impl RtIrTempTemp15 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// IR_Temperature_15
+    /// Get value of 'IR_Temperature_15'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -6659,7 +6659,7 @@ impl RtIrTempTemp15 {
     pub fn ir_temperature_15(&self) -> f32 {
         self.ir_temperature_15_raw()
     }
-    /// Get raw value of IR_Temperature_15
+    /// Get raw value of 'IR_Temperature_15'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -6674,7 +6674,7 @@ impl RtIrTempTemp15 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of IR_Temperature_15
+    /// Set value of 'IR_Temperature_15'
     #[inline(always)]
     pub fn set_ir_temperature_15(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -6752,7 +6752,7 @@ impl RtIrTempTemp14 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_14_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_14_MAX: f32 = 0_f32;
-    /// Construct new RT_IRTemp_Temp_14 from values
+    /// Construct new 'RT_IRTemp_Temp_14' from values
     pub fn new(ir_temperature_14: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_ir_temperature_14(ir_temperature_14)?;
@@ -6762,7 +6762,7 @@ impl RtIrTempTemp14 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// IR_Temperature_14
+    /// Get value of 'IR_Temperature_14'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -6772,7 +6772,7 @@ impl RtIrTempTemp14 {
     pub fn ir_temperature_14(&self) -> f32 {
         self.ir_temperature_14_raw()
     }
-    /// Get raw value of IR_Temperature_14
+    /// Get raw value of 'IR_Temperature_14'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -6787,7 +6787,7 @@ impl RtIrTempTemp14 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of IR_Temperature_14
+    /// Set value of 'IR_Temperature_14'
     #[inline(always)]
     pub fn set_ir_temperature_14(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -6865,7 +6865,7 @@ impl RtIrTempTemp13 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_13_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_13_MAX: f32 = 0_f32;
-    /// Construct new RT_IRTemp_Temp_13 from values
+    /// Construct new 'RT_IRTemp_Temp_13' from values
     pub fn new(ir_temperature_13: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_ir_temperature_13(ir_temperature_13)?;
@@ -6875,7 +6875,7 @@ impl RtIrTempTemp13 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// IR_Temperature_13
+    /// Get value of 'IR_Temperature_13'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -6885,7 +6885,7 @@ impl RtIrTempTemp13 {
     pub fn ir_temperature_13(&self) -> f32 {
         self.ir_temperature_13_raw()
     }
-    /// Get raw value of IR_Temperature_13
+    /// Get raw value of 'IR_Temperature_13'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -6900,7 +6900,7 @@ impl RtIrTempTemp13 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of IR_Temperature_13
+    /// Set value of 'IR_Temperature_13'
     #[inline(always)]
     pub fn set_ir_temperature_13(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -6978,7 +6978,7 @@ impl RtIrTempTemp12 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_12_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_12_MAX: f32 = 0_f32;
-    /// Construct new RT_IRTemp_Temp_12 from values
+    /// Construct new 'RT_IRTemp_Temp_12' from values
     pub fn new(ir_temperature_12: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_ir_temperature_12(ir_temperature_12)?;
@@ -6988,7 +6988,7 @@ impl RtIrTempTemp12 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// IR_Temperature_12
+    /// Get value of 'IR_Temperature_12'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -6998,7 +6998,7 @@ impl RtIrTempTemp12 {
     pub fn ir_temperature_12(&self) -> f32 {
         self.ir_temperature_12_raw()
     }
-    /// Get raw value of IR_Temperature_12
+    /// Get raw value of 'IR_Temperature_12'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -7013,7 +7013,7 @@ impl RtIrTempTemp12 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of IR_Temperature_12
+    /// Set value of 'IR_Temperature_12'
     #[inline(always)]
     pub fn set_ir_temperature_12(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -7091,7 +7091,7 @@ impl RtIrTempTemp11 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_11_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_11_MAX: f32 = 0_f32;
-    /// Construct new RT_IRTemp_Temp_11 from values
+    /// Construct new 'RT_IRTemp_Temp_11' from values
     pub fn new(ir_temperature_11: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_ir_temperature_11(ir_temperature_11)?;
@@ -7101,7 +7101,7 @@ impl RtIrTempTemp11 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// IR_Temperature_11
+    /// Get value of 'IR_Temperature_11'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -7111,7 +7111,7 @@ impl RtIrTempTemp11 {
     pub fn ir_temperature_11(&self) -> f32 {
         self.ir_temperature_11_raw()
     }
-    /// Get raw value of IR_Temperature_11
+    /// Get raw value of 'IR_Temperature_11'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -7126,7 +7126,7 @@ impl RtIrTempTemp11 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of IR_Temperature_11
+    /// Set value of 'IR_Temperature_11'
     #[inline(always)]
     pub fn set_ir_temperature_11(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -7204,7 +7204,7 @@ impl RtIrTempTemp10 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_10_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_10_MAX: f32 = 0_f32;
-    /// Construct new RT_IRTemp_Temp_10 from values
+    /// Construct new 'RT_IRTemp_Temp_10' from values
     pub fn new(ir_temperature_10: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_ir_temperature_10(ir_temperature_10)?;
@@ -7214,7 +7214,7 @@ impl RtIrTempTemp10 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// IR_Temperature_10
+    /// Get value of 'IR_Temperature_10'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -7224,7 +7224,7 @@ impl RtIrTempTemp10 {
     pub fn ir_temperature_10(&self) -> f32 {
         self.ir_temperature_10_raw()
     }
-    /// Get raw value of IR_Temperature_10
+    /// Get raw value of 'IR_Temperature_10'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -7239,7 +7239,7 @@ impl RtIrTempTemp10 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of IR_Temperature_10
+    /// Set value of 'IR_Temperature_10'
     #[inline(always)]
     pub fn set_ir_temperature_10(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -7317,7 +7317,7 @@ impl RtIrTempTemp8 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_8_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_8_MAX: f32 = 0_f32;
-    /// Construct new RT_IRTemp_Temp_8 from values
+    /// Construct new 'RT_IRTemp_Temp_8' from values
     pub fn new(ir_temperature_8: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_ir_temperature_8(ir_temperature_8)?;
@@ -7327,7 +7327,7 @@ impl RtIrTempTemp8 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// IR_Temperature_8
+    /// Get value of 'IR_Temperature_8'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -7337,7 +7337,7 @@ impl RtIrTempTemp8 {
     pub fn ir_temperature_8(&self) -> f32 {
         self.ir_temperature_8_raw()
     }
-    /// Get raw value of IR_Temperature_8
+    /// Get raw value of 'IR_Temperature_8'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -7352,7 +7352,7 @@ impl RtIrTempTemp8 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of IR_Temperature_8
+    /// Set value of 'IR_Temperature_8'
     #[inline(always)]
     pub fn set_ir_temperature_8(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -7430,7 +7430,7 @@ impl RtIrTempTemp9 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_9_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_9_MAX: f32 = 0_f32;
-    /// Construct new RT_IRTemp_Temp_9 from values
+    /// Construct new 'RT_IRTemp_Temp_9' from values
     pub fn new(ir_temperature_9: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_ir_temperature_9(ir_temperature_9)?;
@@ -7440,7 +7440,7 @@ impl RtIrTempTemp9 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// IR_Temperature_9
+    /// Get value of 'IR_Temperature_9'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -7450,7 +7450,7 @@ impl RtIrTempTemp9 {
     pub fn ir_temperature_9(&self) -> f32 {
         self.ir_temperature_9_raw()
     }
-    /// Get raw value of IR_Temperature_9
+    /// Get raw value of 'IR_Temperature_9'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -7465,7 +7465,7 @@ impl RtIrTempTemp9 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of IR_Temperature_9
+    /// Set value of 'IR_Temperature_9'
     #[inline(always)]
     pub fn set_ir_temperature_9(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -7543,7 +7543,7 @@ impl RtIrTempTemp17 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_17_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_17_MAX: f32 = 0_f32;
-    /// Construct new RT_IRTemp_Temp_17 from values
+    /// Construct new 'RT_IRTemp_Temp_17' from values
     pub fn new(ir_temperature_17: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_ir_temperature_17(ir_temperature_17)?;
@@ -7553,7 +7553,7 @@ impl RtIrTempTemp17 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// IR_Temperature_17
+    /// Get value of 'IR_Temperature_17'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -7563,7 +7563,7 @@ impl RtIrTempTemp17 {
     pub fn ir_temperature_17(&self) -> f32 {
         self.ir_temperature_17_raw()
     }
-    /// Get raw value of IR_Temperature_17
+    /// Get raw value of 'IR_Temperature_17'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -7578,7 +7578,7 @@ impl RtIrTempTemp17 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of IR_Temperature_17
+    /// Set value of 'IR_Temperature_17'
     #[inline(always)]
     pub fn set_ir_temperature_17(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -7656,7 +7656,7 @@ impl RtIrTempTemp6 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_6_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_6_MAX: f32 = 0_f32;
-    /// Construct new RT_IRTemp_Temp_6 from values
+    /// Construct new 'RT_IRTemp_Temp_6' from values
     pub fn new(ir_temperature_6: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_ir_temperature_6(ir_temperature_6)?;
@@ -7666,7 +7666,7 @@ impl RtIrTempTemp6 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// IR_Temperature_6
+    /// Get value of 'IR_Temperature_6'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -7676,7 +7676,7 @@ impl RtIrTempTemp6 {
     pub fn ir_temperature_6(&self) -> f32 {
         self.ir_temperature_6_raw()
     }
-    /// Get raw value of IR_Temperature_6
+    /// Get raw value of 'IR_Temperature_6'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -7691,7 +7691,7 @@ impl RtIrTempTemp6 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of IR_Temperature_6
+    /// Set value of 'IR_Temperature_6'
     #[inline(always)]
     pub fn set_ir_temperature_6(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -7769,7 +7769,7 @@ impl RtIrTempTemp5 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_5_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_5_MAX: f32 = 0_f32;
-    /// Construct new RT_IRTemp_Temp_5 from values
+    /// Construct new 'RT_IRTemp_Temp_5' from values
     pub fn new(ir_temperature_5: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_ir_temperature_5(ir_temperature_5)?;
@@ -7779,7 +7779,7 @@ impl RtIrTempTemp5 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// IR_Temperature_5
+    /// Get value of 'IR_Temperature_5'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -7789,7 +7789,7 @@ impl RtIrTempTemp5 {
     pub fn ir_temperature_5(&self) -> f32 {
         self.ir_temperature_5_raw()
     }
-    /// Get raw value of IR_Temperature_5
+    /// Get raw value of 'IR_Temperature_5'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -7804,7 +7804,7 @@ impl RtIrTempTemp5 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of IR_Temperature_5
+    /// Set value of 'IR_Temperature_5'
     #[inline(always)]
     pub fn set_ir_temperature_5(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -7882,7 +7882,7 @@ impl RtIrTempTemp4 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_4_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_4_MAX: f32 = 0_f32;
-    /// Construct new RT_IRTemp_Temp_4 from values
+    /// Construct new 'RT_IRTemp_Temp_4' from values
     pub fn new(ir_temperature_4: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_ir_temperature_4(ir_temperature_4)?;
@@ -7892,7 +7892,7 @@ impl RtIrTempTemp4 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// IR_Temperature_4
+    /// Get value of 'IR_Temperature_4'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -7902,7 +7902,7 @@ impl RtIrTempTemp4 {
     pub fn ir_temperature_4(&self) -> f32 {
         self.ir_temperature_4_raw()
     }
-    /// Get raw value of IR_Temperature_4
+    /// Get raw value of 'IR_Temperature_4'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -7917,7 +7917,7 @@ impl RtIrTempTemp4 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of IR_Temperature_4
+    /// Set value of 'IR_Temperature_4'
     #[inline(always)]
     pub fn set_ir_temperature_4(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -7995,7 +7995,7 @@ impl RtIrTempTemp3 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_3_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_3_MAX: f32 = 0_f32;
-    /// Construct new RT_IRTemp_Temp_3 from values
+    /// Construct new 'RT_IRTemp_Temp_3' from values
     pub fn new(ir_temperature_3: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_ir_temperature_3(ir_temperature_3)?;
@@ -8005,7 +8005,7 @@ impl RtIrTempTemp3 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// IR_Temperature_3
+    /// Get value of 'IR_Temperature_3'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -8015,7 +8015,7 @@ impl RtIrTempTemp3 {
     pub fn ir_temperature_3(&self) -> f32 {
         self.ir_temperature_3_raw()
     }
-    /// Get raw value of IR_Temperature_3
+    /// Get raw value of 'IR_Temperature_3'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -8030,7 +8030,7 @@ impl RtIrTempTemp3 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of IR_Temperature_3
+    /// Set value of 'IR_Temperature_3'
     #[inline(always)]
     pub fn set_ir_temperature_3(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -8108,7 +8108,7 @@ impl RtIrTempTemp2 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_2_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_2_MAX: f32 = 0_f32;
-    /// Construct new RT_IRTemp_Temp_2 from values
+    /// Construct new 'RT_IRTemp_Temp_2' from values
     pub fn new(ir_temperature_2: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_ir_temperature_2(ir_temperature_2)?;
@@ -8118,7 +8118,7 @@ impl RtIrTempTemp2 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// IR_Temperature_2
+    /// Get value of 'IR_Temperature_2'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -8128,7 +8128,7 @@ impl RtIrTempTemp2 {
     pub fn ir_temperature_2(&self) -> f32 {
         self.ir_temperature_2_raw()
     }
-    /// Get raw value of IR_Temperature_2
+    /// Get raw value of 'IR_Temperature_2'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -8143,7 +8143,7 @@ impl RtIrTempTemp2 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of IR_Temperature_2
+    /// Set value of 'IR_Temperature_2'
     #[inline(always)]
     pub fn set_ir_temperature_2(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -8221,7 +8221,7 @@ impl RtIrTempTemp1 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_1_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_1_MAX: f32 = 0_f32;
-    /// Construct new RT_IRTemp_Temp_1 from values
+    /// Construct new 'RT_IRTemp_Temp_1' from values
     pub fn new(ir_temperature_1: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_ir_temperature_1(ir_temperature_1)?;
@@ -8231,7 +8231,7 @@ impl RtIrTempTemp1 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// IR_Temperature_1
+    /// Get value of 'IR_Temperature_1'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -8241,7 +8241,7 @@ impl RtIrTempTemp1 {
     pub fn ir_temperature_1(&self) -> f32 {
         self.ir_temperature_1_raw()
     }
-    /// Get raw value of IR_Temperature_1
+    /// Get raw value of 'IR_Temperature_1'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -8256,7 +8256,7 @@ impl RtIrTempTemp1 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of IR_Temperature_1
+    /// Set value of 'IR_Temperature_1'
     #[inline(always)]
     pub fn set_ir_temperature_1(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -8334,7 +8334,7 @@ impl RtSbTrigFinalCondition {
     pub const MESSAGE_SIZE: usize = 8;
     pub const FINAL_SPEED_MIN: f32 = 0_f32;
     pub const FINAL_SPEED_MAX: f32 = 1675_f32;
-    /// Construct new RT_SB_Trig_Final_Condition from values
+    /// Construct new 'RT_SB_Trig_Final_Condition' from values
     pub fn new(final_speed: f32, validity_final_speed: bool) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 8] };
         res.set_final_speed(final_speed)?;
@@ -8345,7 +8345,7 @@ impl RtSbTrigFinalCondition {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// Final_Speed
+    /// Get value of 'Final_Speed'
     ///
     /// Speed at end of triggered test
     ///
@@ -8357,7 +8357,7 @@ impl RtSbTrigFinalCondition {
     pub fn final_speed(&self) -> f32 {
         self.final_speed_raw()
     }
-    /// Get raw value of Final_Speed
+    /// Get raw value of 'Final_Speed'
     ///
     /// - Start bit: 8
     /// - Signal size: 24 bits
@@ -8372,7 +8372,7 @@ impl RtSbTrigFinalCondition {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Final_Speed
+    /// Set value of 'Final_Speed'
     #[inline(always)]
     pub fn set_final_speed(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 1675_f32 < value {
@@ -8386,7 +8386,7 @@ impl RtSbTrigFinalCondition {
         self.raw.view_bits_mut::<Lsb0>()[8..32].store_le(value);
         Ok(())
     }
-    /// Validity_Final_Speed
+    /// Get value of 'Validity_Final_Speed'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -8398,7 +8398,7 @@ impl RtSbTrigFinalCondition {
     pub fn validity_final_speed(&self) -> bool {
         self.validity_final_speed_raw()
     }
-    /// Get raw value of Validity_Final_Speed
+    /// Get raw value of 'Validity_Final_Speed'
     ///
     /// - Start bit: 0
     /// - Signal size: 1 bits
@@ -8411,7 +8411,7 @@ impl RtSbTrigFinalCondition {
         let signal = self.raw.view_bits::<Lsb0>()[0..1].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_Final_Speed
+    /// Set value of 'Validity_Final_Speed'
     #[inline(always)]
     pub fn set_validity_final_speed(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
@@ -8487,7 +8487,7 @@ impl RtSbTrigInitialCondition {
     pub const INITIAL_HEADING_MAX: f32 = 180_f32;
     pub const INITIAL_SPEED_MIN: f32 = 0_f32;
     pub const INITIAL_SPEED_MAX: f32 = 1675_f32;
-    /// Construct new RT_SB_Trig_Initial_Condition from values
+    /// Construct new 'RT_SB_Trig_Initial_Condition' from values
     pub fn new(
         mfdd_end_threshold: u8,
         mfdd_start_threshold: u8,
@@ -8509,7 +8509,7 @@ impl RtSbTrigInitialCondition {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// MFDD_End_Threshold
+    /// Get value of 'MFDD_End_Threshold'
     ///
     /// - Min: 0
     /// - Max: 100
@@ -8519,7 +8519,7 @@ impl RtSbTrigInitialCondition {
     pub fn mfdd_end_threshold(&self) -> u8 {
         self.mfdd_end_threshold_raw()
     }
-    /// Get raw value of MFDD_End_Threshold
+    /// Get raw value of 'MFDD_End_Threshold'
     ///
     /// - Start bit: 56
     /// - Signal size: 8 bits
@@ -8533,7 +8533,7 @@ impl RtSbTrigInitialCondition {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MFDD_End_Threshold
+    /// Set value of 'MFDD_End_Threshold'
     #[inline(always)]
     pub fn set_mfdd_end_threshold(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 100_u8 < value {
@@ -8551,7 +8551,7 @@ impl RtSbTrigInitialCondition {
         self.raw.view_bits_mut::<Lsb0>()[56..64].store_le(value);
         Ok(())
     }
-    /// MFDD_Start_Threshold
+    /// Get value of 'MFDD_Start_Threshold'
     ///
     /// - Min: 0
     /// - Max: 100
@@ -8561,7 +8561,7 @@ impl RtSbTrigInitialCondition {
     pub fn mfdd_start_threshold(&self) -> u8 {
         self.mfdd_start_threshold_raw()
     }
-    /// Get raw value of MFDD_Start_Threshold
+    /// Get raw value of 'MFDD_Start_Threshold'
     ///
     /// - Start bit: 48
     /// - Signal size: 8 bits
@@ -8575,7 +8575,7 @@ impl RtSbTrigInitialCondition {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of MFDD_Start_Threshold
+    /// Set value of 'MFDD_Start_Threshold'
     #[inline(always)]
     pub fn set_mfdd_start_threshold(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 100_u8 < value {
@@ -8593,7 +8593,7 @@ impl RtSbTrigInitialCondition {
         self.raw.view_bits_mut::<Lsb0>()[48..56].store_le(value);
         Ok(())
     }
-    /// Initial_Heading
+    /// Get value of 'Initial_Heading'
     ///
     /// Heading (track) at start of triggered test
     ///
@@ -8605,7 +8605,7 @@ impl RtSbTrigInitialCondition {
     pub fn initial_heading(&self) -> f32 {
         self.initial_heading_raw()
     }
-    /// Get raw value of Initial_Heading
+    /// Get raw value of 'Initial_Heading'
     ///
     /// - Start bit: 32
     /// - Signal size: 16 bits
@@ -8620,7 +8620,7 @@ impl RtSbTrigInitialCondition {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Initial_Heading
+    /// Set value of 'Initial_Heading'
     #[inline(always)]
     pub fn set_initial_heading(&mut self, value: f32) -> Result<(), CanError> {
         if value < -180_f32 || 180_f32 < value {
@@ -8635,7 +8635,7 @@ impl RtSbTrigInitialCondition {
         self.raw.view_bits_mut::<Lsb0>()[32..48].store_le(value);
         Ok(())
     }
-    /// Initial_Speed
+    /// Get value of 'Initial_Speed'
     ///
     /// Speed at start of triggered test
     ///
@@ -8647,7 +8647,7 @@ impl RtSbTrigInitialCondition {
     pub fn initial_speed(&self) -> f32 {
         self.initial_speed_raw()
     }
-    /// Get raw value of Initial_Speed
+    /// Get raw value of 'Initial_Speed'
     ///
     /// - Start bit: 8
     /// - Signal size: 24 bits
@@ -8662,7 +8662,7 @@ impl RtSbTrigInitialCondition {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Initial_Speed
+    /// Set value of 'Initial_Speed'
     #[inline(always)]
     pub fn set_initial_speed(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 1675_f32 < value {
@@ -8676,7 +8676,7 @@ impl RtSbTrigInitialCondition {
         self.raw.view_bits_mut::<Lsb0>()[8..32].store_le(value);
         Ok(())
     }
-    /// Validity_Initial_Heading
+    /// Get value of 'Validity_Initial_Heading'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -8688,7 +8688,7 @@ impl RtSbTrigInitialCondition {
     pub fn validity_initial_heading(&self) -> bool {
         self.validity_initial_heading_raw()
     }
-    /// Get raw value of Validity_Initial_Heading
+    /// Get raw value of 'Validity_Initial_Heading'
     ///
     /// - Start bit: 1
     /// - Signal size: 1 bits
@@ -8701,14 +8701,14 @@ impl RtSbTrigInitialCondition {
         let signal = self.raw.view_bits::<Lsb0>()[1..2].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_Initial_Heading
+    /// Set value of 'Validity_Initial_Heading'
     #[inline(always)]
     pub fn set_validity_initial_heading(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[1..2].store_le(value);
         Ok(())
     }
-    /// Validity_Initial_Speed
+    /// Get value of 'Validity_Initial_Speed'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -8720,7 +8720,7 @@ impl RtSbTrigInitialCondition {
     pub fn validity_initial_speed(&self) -> bool {
         self.validity_initial_speed_raw()
     }
-    /// Get raw value of Validity_Initial_Speed
+    /// Get raw value of 'Validity_Initial_Speed'
     ///
     /// - Start bit: 0
     /// - Signal size: 1 bits
@@ -8733,7 +8733,7 @@ impl RtSbTrigInitialCondition {
         let signal = self.raw.view_bits::<Lsb0>()[0..1].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_Initial_Speed
+    /// Set value of 'Validity_Initial_Speed'
     #[inline(always)]
     pub fn set_validity_initial_speed(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
@@ -8805,7 +8805,7 @@ impl RtSbTrigDirectDist {
     pub const PATH_DISTANCE_2D_MAX: f32 = 4294967_f32;
     pub const DIRECT_DISTANCE_MIN: f32 = 0_f32;
     pub const DIRECT_DISTANCE_MAX: f32 = 4294967_f32;
-    /// Construct new RT_SB_Trig_Direct_Dist from values
+    /// Construct new 'RT_SB_Trig_Direct_Dist' from values
     pub fn new(path_distance_2d: f32, direct_distance: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 8] };
         res.set_path_distance_2d(path_distance_2d)?;
@@ -8816,7 +8816,7 @@ impl RtSbTrigDirectDist {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// Path_Distance_2D
+    /// Get value of 'Path_Distance_2D'
     ///
     /// 2D path distance (horizontal components only)
     ///
@@ -8828,7 +8828,7 @@ impl RtSbTrigDirectDist {
     pub fn path_distance_2d(&self) -> f32 {
         self.path_distance_2d_raw()
     }
-    /// Get raw value of Path_Distance_2D
+    /// Get raw value of 'Path_Distance_2D'
     ///
     /// - Start bit: 32
     /// - Signal size: 32 bits
@@ -8843,7 +8843,7 @@ impl RtSbTrigDirectDist {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Path_Distance_2D
+    /// Set value of 'Path_Distance_2D'
     #[inline(always)]
     pub fn set_path_distance_2d(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 4294967_f32 < value {
@@ -8857,7 +8857,7 @@ impl RtSbTrigDirectDist {
         self.raw.view_bits_mut::<Lsb0>()[32..64].store_le(value);
         Ok(())
     }
-    /// Direct_Distance
+    /// Get value of 'Direct_Distance'
     ///
     /// Direct distance from start of test to current position
     ///
@@ -8869,7 +8869,7 @@ impl RtSbTrigDirectDist {
     pub fn direct_distance(&self) -> f32 {
         self.direct_distance_raw()
     }
-    /// Get raw value of Direct_Distance
+    /// Get raw value of 'Direct_Distance'
     ///
     /// - Start bit: 0
     /// - Signal size: 32 bits
@@ -8884,7 +8884,7 @@ impl RtSbTrigDirectDist {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Direct_Distance
+    /// Set value of 'Direct_Distance'
     #[inline(always)]
     pub fn set_direct_distance(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 4294967_f32 < value {
@@ -8963,7 +8963,7 @@ impl RtSbTrigForwardDist {
     pub const DEVIATION_DISTANCE_MAX: f32 = 2147483.647_f32;
     pub const FORWARD_DISTANCE_MIN: f32 = -2147483.648_f32;
     pub const FORWARD_DISTANCE_MAX: f32 = 2147483.647_f32;
-    /// Construct new RT_SB_Trig_Forward_Dist from values
+    /// Construct new 'RT_SB_Trig_Forward_Dist' from values
     pub fn new(
         deviation_distance: f32,
         forward_distance: f32,
@@ -8977,7 +8977,7 @@ impl RtSbTrigForwardDist {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// Deviation_Distance
+    /// Get value of 'Deviation_Distance'
     ///
     /// Current deviation distance from a line projected along the initial heading at start of test, +ve for deviation to the right.
     ///
@@ -8989,7 +8989,7 @@ impl RtSbTrigForwardDist {
     pub fn deviation_distance(&self) -> f32 {
         self.deviation_distance_raw()
     }
-    /// Get raw value of Deviation_Distance
+    /// Get raw value of 'Deviation_Distance'
     ///
     /// - Start bit: 32
     /// - Signal size: 32 bits
@@ -9004,7 +9004,7 @@ impl RtSbTrigForwardDist {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Deviation_Distance
+    /// Set value of 'Deviation_Distance'
     #[inline(always)]
     pub fn set_deviation_distance(&mut self, value: f32) -> Result<(), CanError> {
         if value < -2147483.648_f32 || 2147483.647_f32 < value {
@@ -9019,7 +9019,7 @@ impl RtSbTrigForwardDist {
         self.raw.view_bits_mut::<Lsb0>()[32..64].store_le(value);
         Ok(())
     }
-    /// Forward_Distance
+    /// Get value of 'Forward_Distance'
     ///
     /// Current forward distance from start of test in direction of initial heading at start of test
     ///
@@ -9031,7 +9031,7 @@ impl RtSbTrigForwardDist {
     pub fn forward_distance(&self) -> f32 {
         self.forward_distance_raw()
     }
-    /// Get raw value of Forward_Distance
+    /// Get raw value of 'Forward_Distance'
     ///
     /// - Start bit: 0
     /// - Signal size: 32 bits
@@ -9046,7 +9046,7 @@ impl RtSbTrigForwardDist {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Forward_Distance
+    /// Set value of 'Forward_Distance'
     #[inline(always)]
     pub fn set_forward_distance(&mut self, value: f32) -> Result<(), CanError> {
         if value < -2147483.648_f32 || 2147483.647_f32 < value {
@@ -9124,7 +9124,7 @@ impl RtSbTrigPathDist {
     pub const MESSAGE_SIZE: usize = 8;
     pub const PATH_DISTANCE_3D_MIN: f32 = 0_f32;
     pub const PATH_DISTANCE_3D_MAX: f32 = 4294967_f32;
-    /// Construct new RT_SB_Trig_Path_Dist from values
+    /// Construct new 'RT_SB_Trig_Path_Dist' from values
     pub fn new(path_distance_3d: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 8] };
         res.set_path_distance_3d(path_distance_3d)?;
@@ -9134,7 +9134,7 @@ impl RtSbTrigPathDist {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// Path_Distance_3D
+    /// Get value of 'Path_Distance_3D'
     ///
     /// 3D path distance
     ///
@@ -9146,7 +9146,7 @@ impl RtSbTrigPathDist {
     pub fn path_distance_3d(&self) -> f32 {
         self.path_distance_3d_raw()
     }
-    /// Get raw value of Path_Distance_3D
+    /// Get raw value of 'Path_Distance_3D'
     ///
     /// - Start bit: 0
     /// - Signal size: 32 bits
@@ -9161,7 +9161,7 @@ impl RtSbTrigPathDist {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Path_Distance_3D
+    /// Set value of 'Path_Distance_3D'
     #[inline(always)]
     pub fn set_path_distance_3d(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 4294967_f32 < value {
@@ -9242,7 +9242,7 @@ impl RtSbTrigAccel {
     pub const AVERAGE_ACCEL_MAX: f32 = 65_f32;
     pub const MFDD_MIN: f32 = -65_f32;
     pub const MFDD_MAX: f32 = 65_f32;
-    /// Construct new RT_SB_Trig_Accel from values
+    /// Construct new 'RT_SB_Trig_Accel' from values
     pub fn new(
         triggered_time: f32,
         average_accel: f32,
@@ -9264,7 +9264,7 @@ impl RtSbTrigAccel {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// Triggered_Time
+    /// Get value of 'Triggered_Time'
     ///
     /// Cumulative time from start of triggered test to current time.
     ///
@@ -9276,7 +9276,7 @@ impl RtSbTrigAccel {
     pub fn triggered_time(&self) -> f32 {
         self.triggered_time_raw()
     }
-    /// Get raw value of Triggered_Time
+    /// Get raw value of 'Triggered_Time'
     ///
     /// - Start bit: 40
     /// - Signal size: 24 bits
@@ -9291,7 +9291,7 @@ impl RtSbTrigAccel {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Triggered_Time
+    /// Set value of 'Triggered_Time'
     #[inline(always)]
     pub fn set_triggered_time(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 167772_f32 < value {
@@ -9305,7 +9305,7 @@ impl RtSbTrigAccel {
         self.raw.view_bits_mut::<Lsb0>()[40..64].store_le(value);
         Ok(())
     }
-    /// Average_Accel
+    /// Get value of 'Average_Accel'
     ///
     /// Average acceleration from start of triggered test to current time.
     ///
@@ -9317,7 +9317,7 @@ impl RtSbTrigAccel {
     pub fn average_accel(&self) -> f32 {
         self.average_accel_raw()
     }
-    /// Get raw value of Average_Accel
+    /// Get raw value of 'Average_Accel'
     ///
     /// - Start bit: 24
     /// - Signal size: 16 bits
@@ -9332,7 +9332,7 @@ impl RtSbTrigAccel {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Average_Accel
+    /// Set value of 'Average_Accel'
     #[inline(always)]
     pub fn set_average_accel(&mut self, value: f32) -> Result<(), CanError> {
         if value < -65_f32 || 65_f32 < value {
@@ -9347,7 +9347,7 @@ impl RtSbTrigAccel {
         self.raw.view_bits_mut::<Lsb0>()[24..40].store_le(value);
         Ok(())
     }
-    /// MFDD
+    /// Get value of 'MFDD'
     ///
     /// Mean fully-developed decelleration of triggered test.  Thresholds used are as set in the logger configuration.
     ///
@@ -9359,7 +9359,7 @@ impl RtSbTrigAccel {
     pub fn mfdd(&self) -> f32 {
         self.mfdd_raw()
     }
-    /// Get raw value of MFDD
+    /// Get raw value of 'MFDD'
     ///
     /// - Start bit: 8
     /// - Signal size: 16 bits
@@ -9374,7 +9374,7 @@ impl RtSbTrigAccel {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of MFDD
+    /// Set value of 'MFDD'
     #[inline(always)]
     pub fn set_mfdd(&mut self, value: f32) -> Result<(), CanError> {
         if value < -65_f32 || 65_f32 < value {
@@ -9389,7 +9389,7 @@ impl RtSbTrigAccel {
         self.raw.view_bits_mut::<Lsb0>()[8..24].store_le(value);
         Ok(())
     }
-    /// Validity_Triggered_Time
+    /// Get value of 'Validity_Triggered_Time'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -9401,7 +9401,7 @@ impl RtSbTrigAccel {
     pub fn validity_triggered_time(&self) -> bool {
         self.validity_triggered_time_raw()
     }
-    /// Get raw value of Validity_Triggered_Time
+    /// Get raw value of 'Validity_Triggered_Time'
     ///
     /// - Start bit: 2
     /// - Signal size: 1 bits
@@ -9414,14 +9414,14 @@ impl RtSbTrigAccel {
         let signal = self.raw.view_bits::<Lsb0>()[2..3].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_Triggered_Time
+    /// Set value of 'Validity_Triggered_Time'
     #[inline(always)]
     pub fn set_validity_triggered_time(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[2..3].store_le(value);
         Ok(())
     }
-    /// Validity_Average_Accel
+    /// Get value of 'Validity_Average_Accel'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -9433,7 +9433,7 @@ impl RtSbTrigAccel {
     pub fn validity_average_accel(&self) -> bool {
         self.validity_average_accel_raw()
     }
-    /// Get raw value of Validity_Average_Accel
+    /// Get raw value of 'Validity_Average_Accel'
     ///
     /// - Start bit: 1
     /// - Signal size: 1 bits
@@ -9446,14 +9446,14 @@ impl RtSbTrigAccel {
         let signal = self.raw.view_bits::<Lsb0>()[1..2].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_Average_Accel
+    /// Set value of 'Validity_Average_Accel'
     #[inline(always)]
     pub fn set_validity_average_accel(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[1..2].store_le(value);
         Ok(())
     }
-    /// Validity_MFDD
+    /// Get value of 'Validity_MFDD'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -9465,7 +9465,7 @@ impl RtSbTrigAccel {
     pub fn validity_mfdd(&self) -> bool {
         self.validity_mfdd_raw()
     }
-    /// Get raw value of Validity_MFDD
+    /// Get raw value of 'Validity_MFDD'
     ///
     /// - Start bit: 0
     /// - Signal size: 1 bits
@@ -9478,7 +9478,7 @@ impl RtSbTrigAccel {
         let signal = self.raw.view_bits::<Lsb0>()[0..1].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_MFDD
+    /// Set value of 'Validity_MFDD'
     #[inline(always)]
     pub fn set_validity_mfdd(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
@@ -9548,7 +9548,7 @@ impl RtDl1mk3MeasureTime12 {
     pub const MESSAGE_SIZE: usize = 3;
     pub const MEASURED_TIME_12_MIN: u32 = 0_u32;
     pub const MEASURED_TIME_12_MAX: u32 = 0_u32;
-    /// Construct new RT_DL1MK3_Measure_Time_12 from values
+    /// Construct new 'RT_DL1MK3_Measure_Time_12' from values
     pub fn new(measured_time_12: u32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 3] };
         res.set_measured_time_12(measured_time_12)?;
@@ -9558,7 +9558,7 @@ impl RtDl1mk3MeasureTime12 {
     pub fn raw(&self) -> &[u8; 3] {
         &self.raw
     }
-    /// Measured_Time_12
+    /// Get value of 'Measured_Time_12'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -9568,7 +9568,7 @@ impl RtDl1mk3MeasureTime12 {
     pub fn measured_time_12(&self) -> u32 {
         self.measured_time_12_raw()
     }
-    /// Get raw value of Measured_Time_12
+    /// Get raw value of 'Measured_Time_12'
     ///
     /// - Start bit: 0
     /// - Signal size: 24 bits
@@ -9582,7 +9582,7 @@ impl RtDl1mk3MeasureTime12 {
         let factor = 1;
         u32::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Measured_Time_12
+    /// Set value of 'Measured_Time_12'
     #[inline(always)]
     pub fn set_measured_time_12(&mut self, value: u32) -> Result<(), CanError> {
         if value < 0_u32 || 0_u32 < value {
@@ -9663,7 +9663,7 @@ impl RtDl1mk3MeasureTime11 {
     pub const MESSAGE_SIZE: usize = 3;
     pub const MEASURED_TIME_11_MIN: u32 = 0_u32;
     pub const MEASURED_TIME_11_MAX: u32 = 0_u32;
-    /// Construct new RT_DL1MK3_Measure_Time_11 from values
+    /// Construct new 'RT_DL1MK3_Measure_Time_11' from values
     pub fn new(measured_time_11: u32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 3] };
         res.set_measured_time_11(measured_time_11)?;
@@ -9673,7 +9673,7 @@ impl RtDl1mk3MeasureTime11 {
     pub fn raw(&self) -> &[u8; 3] {
         &self.raw
     }
-    /// Measured_Time_11
+    /// Get value of 'Measured_Time_11'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -9683,7 +9683,7 @@ impl RtDl1mk3MeasureTime11 {
     pub fn measured_time_11(&self) -> u32 {
         self.measured_time_11_raw()
     }
-    /// Get raw value of Measured_Time_11
+    /// Get raw value of 'Measured_Time_11'
     ///
     /// - Start bit: 0
     /// - Signal size: 24 bits
@@ -9697,7 +9697,7 @@ impl RtDl1mk3MeasureTime11 {
         let factor = 1;
         u32::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Measured_Time_11
+    /// Set value of 'Measured_Time_11'
     #[inline(always)]
     pub fn set_measured_time_11(&mut self, value: u32) -> Result<(), CanError> {
         if value < 0_u32 || 0_u32 < value {
@@ -9778,7 +9778,7 @@ impl RtDl1mk3MeasureTime10 {
     pub const MESSAGE_SIZE: usize = 3;
     pub const MEASURED_TIME_10_MIN: u32 = 0_u32;
     pub const MEASURED_TIME_10_MAX: u32 = 0_u32;
-    /// Construct new RT_DL1MK3_Measure_Time_10 from values
+    /// Construct new 'RT_DL1MK3_Measure_Time_10' from values
     pub fn new(measured_time_10: u32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 3] };
         res.set_measured_time_10(measured_time_10)?;
@@ -9788,7 +9788,7 @@ impl RtDl1mk3MeasureTime10 {
     pub fn raw(&self) -> &[u8; 3] {
         &self.raw
     }
-    /// Measured_Time_10
+    /// Get value of 'Measured_Time_10'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -9798,7 +9798,7 @@ impl RtDl1mk3MeasureTime10 {
     pub fn measured_time_10(&self) -> u32 {
         self.measured_time_10_raw()
     }
-    /// Get raw value of Measured_Time_10
+    /// Get raw value of 'Measured_Time_10'
     ///
     /// - Start bit: 0
     /// - Signal size: 24 bits
@@ -9812,7 +9812,7 @@ impl RtDl1mk3MeasureTime10 {
         let factor = 1;
         u32::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Measured_Time_10
+    /// Set value of 'Measured_Time_10'
     #[inline(always)]
     pub fn set_measured_time_10(&mut self, value: u32) -> Result<(), CanError> {
         if value < 0_u32 || 0_u32 < value {
@@ -9893,7 +9893,7 @@ impl RtDl1mk3MeasureTime9 {
     pub const MESSAGE_SIZE: usize = 3;
     pub const MEASURED_TIME_9_MIN: u32 = 0_u32;
     pub const MEASURED_TIME_9_MAX: u32 = 0_u32;
-    /// Construct new RT_DL1MK3_Measure_Time_9 from values
+    /// Construct new 'RT_DL1MK3_Measure_Time_9' from values
     pub fn new(measured_time_9: u32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 3] };
         res.set_measured_time_9(measured_time_9)?;
@@ -9903,7 +9903,7 @@ impl RtDl1mk3MeasureTime9 {
     pub fn raw(&self) -> &[u8; 3] {
         &self.raw
     }
-    /// Measured_Time_9
+    /// Get value of 'Measured_Time_9'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -9913,7 +9913,7 @@ impl RtDl1mk3MeasureTime9 {
     pub fn measured_time_9(&self) -> u32 {
         self.measured_time_9_raw()
     }
-    /// Get raw value of Measured_Time_9
+    /// Get raw value of 'Measured_Time_9'
     ///
     /// - Start bit: 0
     /// - Signal size: 24 bits
@@ -9927,7 +9927,7 @@ impl RtDl1mk3MeasureTime9 {
         let factor = 1;
         u32::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Measured_Time_9
+    /// Set value of 'Measured_Time_9'
     #[inline(always)]
     pub fn set_measured_time_9(&mut self, value: u32) -> Result<(), CanError> {
         if value < 0_u32 || 0_u32 < value {
@@ -10008,7 +10008,7 @@ impl RtDl1mk3MeasureTime8 {
     pub const MESSAGE_SIZE: usize = 3;
     pub const MEASURED_TIME_8_MIN: u32 = 0_u32;
     pub const MEASURED_TIME_8_MAX: u32 = 0_u32;
-    /// Construct new RT_DL1MK3_Measure_Time_8 from values
+    /// Construct new 'RT_DL1MK3_Measure_Time_8' from values
     pub fn new(measured_time_8: u32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 3] };
         res.set_measured_time_8(measured_time_8)?;
@@ -10018,7 +10018,7 @@ impl RtDl1mk3MeasureTime8 {
     pub fn raw(&self) -> &[u8; 3] {
         &self.raw
     }
-    /// Measured_Time_8
+    /// Get value of 'Measured_Time_8'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -10028,7 +10028,7 @@ impl RtDl1mk3MeasureTime8 {
     pub fn measured_time_8(&self) -> u32 {
         self.measured_time_8_raw()
     }
-    /// Get raw value of Measured_Time_8
+    /// Get raw value of 'Measured_Time_8'
     ///
     /// - Start bit: 0
     /// - Signal size: 24 bits
@@ -10042,7 +10042,7 @@ impl RtDl1mk3MeasureTime8 {
         let factor = 1;
         u32::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Measured_Time_8
+    /// Set value of 'Measured_Time_8'
     #[inline(always)]
     pub fn set_measured_time_8(&mut self, value: u32) -> Result<(), CanError> {
         if value < 0_u32 || 0_u32 < value {
@@ -10123,7 +10123,7 @@ impl RtDl1mk3MeasureTime7 {
     pub const MESSAGE_SIZE: usize = 3;
     pub const MEASURED_TIME_7_MIN: u32 = 0_u32;
     pub const MEASURED_TIME_7_MAX: u32 = 0_u32;
-    /// Construct new RT_DL1MK3_Measure_Time_7 from values
+    /// Construct new 'RT_DL1MK3_Measure_Time_7' from values
     pub fn new(measured_time_7: u32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 3] };
         res.set_measured_time_7(measured_time_7)?;
@@ -10133,7 +10133,7 @@ impl RtDl1mk3MeasureTime7 {
     pub fn raw(&self) -> &[u8; 3] {
         &self.raw
     }
-    /// Measured_Time_7
+    /// Get value of 'Measured_Time_7'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -10143,7 +10143,7 @@ impl RtDl1mk3MeasureTime7 {
     pub fn measured_time_7(&self) -> u32 {
         self.measured_time_7_raw()
     }
-    /// Get raw value of Measured_Time_7
+    /// Get raw value of 'Measured_Time_7'
     ///
     /// - Start bit: 0
     /// - Signal size: 24 bits
@@ -10157,7 +10157,7 @@ impl RtDl1mk3MeasureTime7 {
         let factor = 1;
         u32::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Measured_Time_7
+    /// Set value of 'Measured_Time_7'
     #[inline(always)]
     pub fn set_measured_time_7(&mut self, value: u32) -> Result<(), CanError> {
         if value < 0_u32 || 0_u32 < value {
@@ -10238,7 +10238,7 @@ impl RtDl1mk3MeasureTime6 {
     pub const MESSAGE_SIZE: usize = 3;
     pub const MEASURED_TIME_6_MIN: u32 = 0_u32;
     pub const MEASURED_TIME_6_MAX: u32 = 0_u32;
-    /// Construct new RT_DL1MK3_Measure_Time_6 from values
+    /// Construct new 'RT_DL1MK3_Measure_Time_6' from values
     pub fn new(measured_time_6: u32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 3] };
         res.set_measured_time_6(measured_time_6)?;
@@ -10248,7 +10248,7 @@ impl RtDl1mk3MeasureTime6 {
     pub fn raw(&self) -> &[u8; 3] {
         &self.raw
     }
-    /// Measured_Time_6
+    /// Get value of 'Measured_Time_6'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -10258,7 +10258,7 @@ impl RtDl1mk3MeasureTime6 {
     pub fn measured_time_6(&self) -> u32 {
         self.measured_time_6_raw()
     }
-    /// Get raw value of Measured_Time_6
+    /// Get raw value of 'Measured_Time_6'
     ///
     /// - Start bit: 0
     /// - Signal size: 24 bits
@@ -10272,7 +10272,7 @@ impl RtDl1mk3MeasureTime6 {
         let factor = 1;
         u32::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Measured_Time_6
+    /// Set value of 'Measured_Time_6'
     #[inline(always)]
     pub fn set_measured_time_6(&mut self, value: u32) -> Result<(), CanError> {
         if value < 0_u32 || 0_u32 < value {
@@ -10353,7 +10353,7 @@ impl RtDl1mk3MeasureTime5 {
     pub const MESSAGE_SIZE: usize = 3;
     pub const MEASURED_TIME_5_MIN: u32 = 0_u32;
     pub const MEASURED_TIME_5_MAX: u32 = 0_u32;
-    /// Construct new RT_DL1MK3_Measure_Time_5 from values
+    /// Construct new 'RT_DL1MK3_Measure_Time_5' from values
     pub fn new(measured_time_5: u32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 3] };
         res.set_measured_time_5(measured_time_5)?;
@@ -10363,7 +10363,7 @@ impl RtDl1mk3MeasureTime5 {
     pub fn raw(&self) -> &[u8; 3] {
         &self.raw
     }
-    /// Measured_Time_5
+    /// Get value of 'Measured_Time_5'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -10373,7 +10373,7 @@ impl RtDl1mk3MeasureTime5 {
     pub fn measured_time_5(&self) -> u32 {
         self.measured_time_5_raw()
     }
-    /// Get raw value of Measured_Time_5
+    /// Get raw value of 'Measured_Time_5'
     ///
     /// - Start bit: 0
     /// - Signal size: 24 bits
@@ -10387,7 +10387,7 @@ impl RtDl1mk3MeasureTime5 {
         let factor = 1;
         u32::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Measured_Time_5
+    /// Set value of 'Measured_Time_5'
     #[inline(always)]
     pub fn set_measured_time_5(&mut self, value: u32) -> Result<(), CanError> {
         if value < 0_u32 || 0_u32 < value {
@@ -10468,7 +10468,7 @@ impl RtDl1mk3MeasureTime4 {
     pub const MESSAGE_SIZE: usize = 3;
     pub const MEASURED_TIME_4_MIN: u32 = 0_u32;
     pub const MEASURED_TIME_4_MAX: u32 = 0_u32;
-    /// Construct new RT_DL1MK3_Measure_Time_4 from values
+    /// Construct new 'RT_DL1MK3_Measure_Time_4' from values
     pub fn new(measured_time_4: u32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 3] };
         res.set_measured_time_4(measured_time_4)?;
@@ -10478,7 +10478,7 @@ impl RtDl1mk3MeasureTime4 {
     pub fn raw(&self) -> &[u8; 3] {
         &self.raw
     }
-    /// Measured_Time_4
+    /// Get value of 'Measured_Time_4'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -10488,7 +10488,7 @@ impl RtDl1mk3MeasureTime4 {
     pub fn measured_time_4(&self) -> u32 {
         self.measured_time_4_raw()
     }
-    /// Get raw value of Measured_Time_4
+    /// Get raw value of 'Measured_Time_4'
     ///
     /// - Start bit: 0
     /// - Signal size: 24 bits
@@ -10502,7 +10502,7 @@ impl RtDl1mk3MeasureTime4 {
         let factor = 1;
         u32::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Measured_Time_4
+    /// Set value of 'Measured_Time_4'
     #[inline(always)]
     pub fn set_measured_time_4(&mut self, value: u32) -> Result<(), CanError> {
         if value < 0_u32 || 0_u32 < value {
@@ -10583,7 +10583,7 @@ impl RtDl1mk3MeasureTime3 {
     pub const MESSAGE_SIZE: usize = 3;
     pub const MEASURED_TIME_3_MIN: u32 = 0_u32;
     pub const MEASURED_TIME_3_MAX: u32 = 0_u32;
-    /// Construct new RT_DL1MK3_Measure_Time_3 from values
+    /// Construct new 'RT_DL1MK3_Measure_Time_3' from values
     pub fn new(measured_time_3: u32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 3] };
         res.set_measured_time_3(measured_time_3)?;
@@ -10593,7 +10593,7 @@ impl RtDl1mk3MeasureTime3 {
     pub fn raw(&self) -> &[u8; 3] {
         &self.raw
     }
-    /// Measured_Time_3
+    /// Get value of 'Measured_Time_3'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -10603,7 +10603,7 @@ impl RtDl1mk3MeasureTime3 {
     pub fn measured_time_3(&self) -> u32 {
         self.measured_time_3_raw()
     }
-    /// Get raw value of Measured_Time_3
+    /// Get raw value of 'Measured_Time_3'
     ///
     /// - Start bit: 0
     /// - Signal size: 24 bits
@@ -10617,7 +10617,7 @@ impl RtDl1mk3MeasureTime3 {
         let factor = 1;
         u32::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Measured_Time_3
+    /// Set value of 'Measured_Time_3'
     #[inline(always)]
     pub fn set_measured_time_3(&mut self, value: u32) -> Result<(), CanError> {
         if value < 0_u32 || 0_u32 < value {
@@ -10698,7 +10698,7 @@ impl RtDl1mk3MeasureTime2 {
     pub const MESSAGE_SIZE: usize = 3;
     pub const MEASURED_TIME_2_MIN: u32 = 0_u32;
     pub const MEASURED_TIME_2_MAX: u32 = 0_u32;
-    /// Construct new RT_DL1MK3_Measure_Time_2 from values
+    /// Construct new 'RT_DL1MK3_Measure_Time_2' from values
     pub fn new(measured_time_2: u32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 3] };
         res.set_measured_time_2(measured_time_2)?;
@@ -10708,7 +10708,7 @@ impl RtDl1mk3MeasureTime2 {
     pub fn raw(&self) -> &[u8; 3] {
         &self.raw
     }
-    /// Measured_Time_2
+    /// Get value of 'Measured_Time_2'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -10718,7 +10718,7 @@ impl RtDl1mk3MeasureTime2 {
     pub fn measured_time_2(&self) -> u32 {
         self.measured_time_2_raw()
     }
-    /// Get raw value of Measured_Time_2
+    /// Get raw value of 'Measured_Time_2'
     ///
     /// - Start bit: 0
     /// - Signal size: 24 bits
@@ -10732,7 +10732,7 @@ impl RtDl1mk3MeasureTime2 {
         let factor = 1;
         u32::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Measured_Time_2
+    /// Set value of 'Measured_Time_2'
     #[inline(always)]
     pub fn set_measured_time_2(&mut self, value: u32) -> Result<(), CanError> {
         if value < 0_u32 || 0_u32 < value {
@@ -10813,7 +10813,7 @@ impl RtDl1mk3MeasureTime1 {
     pub const MESSAGE_SIZE: usize = 3;
     pub const MEASURED_TIME_1_MIN: u32 = 0_u32;
     pub const MEASURED_TIME_1_MAX: u32 = 0_u32;
-    /// Construct new RT_DL1MK3_Measure_Time_1 from values
+    /// Construct new 'RT_DL1MK3_Measure_Time_1' from values
     pub fn new(measured_time_1: u32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 3] };
         res.set_measured_time_1(measured_time_1)?;
@@ -10823,7 +10823,7 @@ impl RtDl1mk3MeasureTime1 {
     pub fn raw(&self) -> &[u8; 3] {
         &self.raw
     }
-    /// Measured_Time_1
+    /// Get value of 'Measured_Time_1'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -10833,7 +10833,7 @@ impl RtDl1mk3MeasureTime1 {
     pub fn measured_time_1(&self) -> u32 {
         self.measured_time_1_raw()
     }
-    /// Get raw value of Measured_Time_1
+    /// Get raw value of 'Measured_Time_1'
     ///
     /// - Start bit: 0
     /// - Signal size: 24 bits
@@ -10847,7 +10847,7 @@ impl RtDl1mk3MeasureTime1 {
         let factor = 1;
         u32::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Measured_Time_1
+    /// Set value of 'Measured_Time_1'
     #[inline(always)]
     pub fn set_measured_time_1(&mut self, value: u32) -> Result<(), CanError> {
         if value < 0_u32 || 0_u32 < value {
@@ -10928,7 +10928,7 @@ impl RtDl1mk3Rpm {
     pub const MESSAGE_SIZE: usize = 2;
     pub const RPM_MIN: u16 = 0_u16;
     pub const RPM_MAX: u16 = 0_u16;
-    /// Construct new RT_DL1MK3_RPM from values
+    /// Construct new 'RT_DL1MK3_RPM' from values
     pub fn new(rpm: u16) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_rpm(rpm)?;
@@ -10938,7 +10938,7 @@ impl RtDl1mk3Rpm {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// RPM
+    /// Get value of 'RPM'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -10948,7 +10948,7 @@ impl RtDl1mk3Rpm {
     pub fn rpm(&self) -> u16 {
         self.rpm_raw()
     }
-    /// Get raw value of RPM
+    /// Get raw value of 'RPM'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -10962,7 +10962,7 @@ impl RtDl1mk3Rpm {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of RPM
+    /// Set value of 'RPM'
     #[inline(always)]
     pub fn set_rpm(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 0_u16 < value {
@@ -11043,7 +11043,7 @@ impl RtDl1mk3Freq4 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const FREQUENCY_4_MIN: f32 = 0_f32;
     pub const FREQUENCY_4_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Freq_4 from values
+    /// Construct new 'RT_DL1MK3_Freq_4' from values
     pub fn new(frequency_4: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_frequency_4(frequency_4)?;
@@ -11053,7 +11053,7 @@ impl RtDl1mk3Freq4 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Frequency_4
+    /// Get value of 'Frequency_4'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -11063,7 +11063,7 @@ impl RtDl1mk3Freq4 {
     pub fn frequency_4(&self) -> f32 {
         self.frequency_4_raw()
     }
-    /// Get raw value of Frequency_4
+    /// Get raw value of 'Frequency_4'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -11078,7 +11078,7 @@ impl RtDl1mk3Freq4 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Frequency_4
+    /// Set value of 'Frequency_4'
     #[inline(always)]
     pub fn set_frequency_4(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -11155,7 +11155,7 @@ impl RtDl1mk3Freq3 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const FREQUENCY_3_MIN: f32 = 0_f32;
     pub const FREQUENCY_3_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Freq_3 from values
+    /// Construct new 'RT_DL1MK3_Freq_3' from values
     pub fn new(frequency_3: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_frequency_3(frequency_3)?;
@@ -11165,7 +11165,7 @@ impl RtDl1mk3Freq3 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Frequency_3
+    /// Get value of 'Frequency_3'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -11175,7 +11175,7 @@ impl RtDl1mk3Freq3 {
     pub fn frequency_3(&self) -> f32 {
         self.frequency_3_raw()
     }
-    /// Get raw value of Frequency_3
+    /// Get raw value of 'Frequency_3'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -11190,7 +11190,7 @@ impl RtDl1mk3Freq3 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Frequency_3
+    /// Set value of 'Frequency_3'
     #[inline(always)]
     pub fn set_frequency_3(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -11267,7 +11267,7 @@ impl RtDl1mk3Freq2 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const FREQUENCY_2_MIN: f32 = 0_f32;
     pub const FREQUENCY_2_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Freq_2 from values
+    /// Construct new 'RT_DL1MK3_Freq_2' from values
     pub fn new(frequency_2: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_frequency_2(frequency_2)?;
@@ -11277,7 +11277,7 @@ impl RtDl1mk3Freq2 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Frequency_2
+    /// Get value of 'Frequency_2'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -11287,7 +11287,7 @@ impl RtDl1mk3Freq2 {
     pub fn frequency_2(&self) -> f32 {
         self.frequency_2_raw()
     }
-    /// Get raw value of Frequency_2
+    /// Get raw value of 'Frequency_2'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -11302,7 +11302,7 @@ impl RtDl1mk3Freq2 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Frequency_2
+    /// Set value of 'Frequency_2'
     #[inline(always)]
     pub fn set_frequency_2(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -11379,7 +11379,7 @@ impl RtDl1mk3Misc3 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const MISC_3_MIN: f32 = 0_f32;
     pub const MISC_3_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Misc_3 from values
+    /// Construct new 'RT_DL1MK3_Misc_3' from values
     pub fn new(misc_3: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_misc_3(misc_3)?;
@@ -11389,7 +11389,7 @@ impl RtDl1mk3Misc3 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Misc_3
+    /// Get value of 'Misc_3'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -11399,7 +11399,7 @@ impl RtDl1mk3Misc3 {
     pub fn misc_3(&self) -> f32 {
         self.misc_3_raw()
     }
-    /// Get raw value of Misc_3
+    /// Get raw value of 'Misc_3'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -11414,7 +11414,7 @@ impl RtDl1mk3Misc3 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Misc_3
+    /// Set value of 'Misc_3'
     #[inline(always)]
     pub fn set_misc_3(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -11491,7 +11491,7 @@ impl RtDl1mk3Misc2 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const MISC_2_MIN: f32 = 0_f32;
     pub const MISC_2_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Misc_2 from values
+    /// Construct new 'RT_DL1MK3_Misc_2' from values
     pub fn new(misc_2: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_misc_2(misc_2)?;
@@ -11501,7 +11501,7 @@ impl RtDl1mk3Misc2 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Misc_2
+    /// Get value of 'Misc_2'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -11511,7 +11511,7 @@ impl RtDl1mk3Misc2 {
     pub fn misc_2(&self) -> f32 {
         self.misc_2_raw()
     }
-    /// Get raw value of Misc_2
+    /// Get raw value of 'Misc_2'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -11526,7 +11526,7 @@ impl RtDl1mk3Misc2 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Misc_2
+    /// Set value of 'Misc_2'
     #[inline(always)]
     pub fn set_misc_2(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -11603,7 +11603,7 @@ impl RtDl1mk3Misc1 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const MISC_1_MIN: f32 = 0_f32;
     pub const MISC_1_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Misc_1 from values
+    /// Construct new 'RT_DL1MK3_Misc_1' from values
     pub fn new(misc_1: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_misc_1(misc_1)?;
@@ -11613,7 +11613,7 @@ impl RtDl1mk3Misc1 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Misc_1
+    /// Get value of 'Misc_1'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -11623,7 +11623,7 @@ impl RtDl1mk3Misc1 {
     pub fn misc_1(&self) -> f32 {
         self.misc_1_raw()
     }
-    /// Get raw value of Misc_1
+    /// Get raw value of 'Misc_1'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -11638,7 +11638,7 @@ impl RtDl1mk3Misc1 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Misc_1
+    /// Set value of 'Misc_1'
     #[inline(always)]
     pub fn set_misc_1(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -11715,7 +11715,7 @@ impl RtDl1mk3Aux31 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_31_MIN: f32 = 0_f32;
     pub const AUX_31_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Aux_31 from values
+    /// Construct new 'RT_DL1MK3_Aux_31' from values
     pub fn new(aux_31: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_aux_31(aux_31)?;
@@ -11725,7 +11725,7 @@ impl RtDl1mk3Aux31 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// AUX_31
+    /// Get value of 'AUX_31'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -11735,7 +11735,7 @@ impl RtDl1mk3Aux31 {
     pub fn aux_31(&self) -> f32 {
         self.aux_31_raw()
     }
-    /// Get raw value of AUX_31
+    /// Get raw value of 'AUX_31'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -11750,7 +11750,7 @@ impl RtDl1mk3Aux31 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of AUX_31
+    /// Set value of 'AUX_31'
     #[inline(always)]
     pub fn set_aux_31(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -11827,7 +11827,7 @@ impl RtDl1mk3Aux30 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_30_MIN: f32 = 0_f32;
     pub const AUX_30_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Aux_30 from values
+    /// Construct new 'RT_DL1MK3_Aux_30' from values
     pub fn new(aux_30: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_aux_30(aux_30)?;
@@ -11837,7 +11837,7 @@ impl RtDl1mk3Aux30 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// AUX_30
+    /// Get value of 'AUX_30'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -11847,7 +11847,7 @@ impl RtDl1mk3Aux30 {
     pub fn aux_30(&self) -> f32 {
         self.aux_30_raw()
     }
-    /// Get raw value of AUX_30
+    /// Get raw value of 'AUX_30'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -11862,7 +11862,7 @@ impl RtDl1mk3Aux30 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of AUX_30
+    /// Set value of 'AUX_30'
     #[inline(always)]
     pub fn set_aux_30(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -11939,7 +11939,7 @@ impl RtDl1mk3Aux29 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_29_MIN: f32 = 0_f32;
     pub const AUX_29_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Aux_29 from values
+    /// Construct new 'RT_DL1MK3_Aux_29' from values
     pub fn new(aux_29: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_aux_29(aux_29)?;
@@ -11949,7 +11949,7 @@ impl RtDl1mk3Aux29 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// AUX_29
+    /// Get value of 'AUX_29'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -11959,7 +11959,7 @@ impl RtDl1mk3Aux29 {
     pub fn aux_29(&self) -> f32 {
         self.aux_29_raw()
     }
-    /// Get raw value of AUX_29
+    /// Get raw value of 'AUX_29'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -11974,7 +11974,7 @@ impl RtDl1mk3Aux29 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of AUX_29
+    /// Set value of 'AUX_29'
     #[inline(always)]
     pub fn set_aux_29(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -12051,7 +12051,7 @@ impl RtDl1mk3Aux28 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_28_MIN: f32 = 0_f32;
     pub const AUX_28_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Aux_28 from values
+    /// Construct new 'RT_DL1MK3_Aux_28' from values
     pub fn new(aux_28: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_aux_28(aux_28)?;
@@ -12061,7 +12061,7 @@ impl RtDl1mk3Aux28 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// AUX_28
+    /// Get value of 'AUX_28'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -12071,7 +12071,7 @@ impl RtDl1mk3Aux28 {
     pub fn aux_28(&self) -> f32 {
         self.aux_28_raw()
     }
-    /// Get raw value of AUX_28
+    /// Get raw value of 'AUX_28'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -12086,7 +12086,7 @@ impl RtDl1mk3Aux28 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of AUX_28
+    /// Set value of 'AUX_28'
     #[inline(always)]
     pub fn set_aux_28(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -12163,7 +12163,7 @@ impl RtDl1mk3Aux27 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_27_MIN: f32 = 0_f32;
     pub const AUX_27_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Aux_27 from values
+    /// Construct new 'RT_DL1MK3_Aux_27' from values
     pub fn new(aux_27: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_aux_27(aux_27)?;
@@ -12173,7 +12173,7 @@ impl RtDl1mk3Aux27 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// AUX_27
+    /// Get value of 'AUX_27'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -12183,7 +12183,7 @@ impl RtDl1mk3Aux27 {
     pub fn aux_27(&self) -> f32 {
         self.aux_27_raw()
     }
-    /// Get raw value of AUX_27
+    /// Get raw value of 'AUX_27'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -12198,7 +12198,7 @@ impl RtDl1mk3Aux27 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of AUX_27
+    /// Set value of 'AUX_27'
     #[inline(always)]
     pub fn set_aux_27(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -12275,7 +12275,7 @@ impl RtDl1mk3Aux26 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_26_MIN: f32 = 0_f32;
     pub const AUX_26_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Aux_26 from values
+    /// Construct new 'RT_DL1MK3_Aux_26' from values
     pub fn new(aux_26: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_aux_26(aux_26)?;
@@ -12285,7 +12285,7 @@ impl RtDl1mk3Aux26 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// AUX_26
+    /// Get value of 'AUX_26'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -12295,7 +12295,7 @@ impl RtDl1mk3Aux26 {
     pub fn aux_26(&self) -> f32 {
         self.aux_26_raw()
     }
-    /// Get raw value of AUX_26
+    /// Get raw value of 'AUX_26'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -12310,7 +12310,7 @@ impl RtDl1mk3Aux26 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of AUX_26
+    /// Set value of 'AUX_26'
     #[inline(always)]
     pub fn set_aux_26(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -12387,7 +12387,7 @@ impl RtDl1mk3Aux25 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_25_MIN: f32 = 0_f32;
     pub const AUX_25_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Aux_25 from values
+    /// Construct new 'RT_DL1MK3_Aux_25' from values
     pub fn new(aux_25: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_aux_25(aux_25)?;
@@ -12397,7 +12397,7 @@ impl RtDl1mk3Aux25 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// AUX_25
+    /// Get value of 'AUX_25'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -12407,7 +12407,7 @@ impl RtDl1mk3Aux25 {
     pub fn aux_25(&self) -> f32 {
         self.aux_25_raw()
     }
-    /// Get raw value of AUX_25
+    /// Get raw value of 'AUX_25'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -12422,7 +12422,7 @@ impl RtDl1mk3Aux25 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of AUX_25
+    /// Set value of 'AUX_25'
     #[inline(always)]
     pub fn set_aux_25(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -12499,7 +12499,7 @@ impl RtDl1mk3Aux24 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_24_MIN: f32 = 0_f32;
     pub const AUX_24_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Aux_24 from values
+    /// Construct new 'RT_DL1MK3_Aux_24' from values
     pub fn new(aux_24: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_aux_24(aux_24)?;
@@ -12509,7 +12509,7 @@ impl RtDl1mk3Aux24 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// AUX_24
+    /// Get value of 'AUX_24'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -12519,7 +12519,7 @@ impl RtDl1mk3Aux24 {
     pub fn aux_24(&self) -> f32 {
         self.aux_24_raw()
     }
-    /// Get raw value of AUX_24
+    /// Get raw value of 'AUX_24'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -12534,7 +12534,7 @@ impl RtDl1mk3Aux24 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of AUX_24
+    /// Set value of 'AUX_24'
     #[inline(always)]
     pub fn set_aux_24(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -12611,7 +12611,7 @@ impl RtDl1mk3Aux23 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_23_MIN: f32 = 0_f32;
     pub const AUX_23_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Aux_23 from values
+    /// Construct new 'RT_DL1MK3_Aux_23' from values
     pub fn new(aux_23: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_aux_23(aux_23)?;
@@ -12621,7 +12621,7 @@ impl RtDl1mk3Aux23 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// AUX_23
+    /// Get value of 'AUX_23'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -12631,7 +12631,7 @@ impl RtDl1mk3Aux23 {
     pub fn aux_23(&self) -> f32 {
         self.aux_23_raw()
     }
-    /// Get raw value of AUX_23
+    /// Get raw value of 'AUX_23'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -12646,7 +12646,7 @@ impl RtDl1mk3Aux23 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of AUX_23
+    /// Set value of 'AUX_23'
     #[inline(always)]
     pub fn set_aux_23(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -12723,7 +12723,7 @@ impl RtDl1mk3Aux22 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_22_MIN: u32 = 0_u32;
     pub const AUX_22_MAX: u32 = 0_u32;
-    /// Construct new RT_DL1MK3_Aux_22 from values
+    /// Construct new 'RT_DL1MK3_Aux_22' from values
     pub fn new(aux_22: u32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_aux_22(aux_22)?;
@@ -12733,7 +12733,7 @@ impl RtDl1mk3Aux22 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// AUX_22
+    /// Get value of 'AUX_22'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -12743,7 +12743,7 @@ impl RtDl1mk3Aux22 {
     pub fn aux_22(&self) -> u32 {
         self.aux_22_raw()
     }
-    /// Get raw value of AUX_22
+    /// Get raw value of 'AUX_22'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -12757,7 +12757,7 @@ impl RtDl1mk3Aux22 {
         let factor = 10;
         u32::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of AUX_22
+    /// Set value of 'AUX_22'
     #[inline(always)]
     pub fn set_aux_22(&mut self, value: u32) -> Result<(), CanError> {
         if value < 0_u32 || 0_u32 < value {
@@ -12838,7 +12838,7 @@ impl RtDl1mk3Aux21 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_21_MIN: f32 = 0_f32;
     pub const AUX_21_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Aux_21 from values
+    /// Construct new 'RT_DL1MK3_Aux_21' from values
     pub fn new(aux_21: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_aux_21(aux_21)?;
@@ -12848,7 +12848,7 @@ impl RtDl1mk3Aux21 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// AUX_21
+    /// Get value of 'AUX_21'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -12858,7 +12858,7 @@ impl RtDl1mk3Aux21 {
     pub fn aux_21(&self) -> f32 {
         self.aux_21_raw()
     }
-    /// Get raw value of AUX_21
+    /// Get raw value of 'AUX_21'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -12873,7 +12873,7 @@ impl RtDl1mk3Aux21 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of AUX_21
+    /// Set value of 'AUX_21'
     #[inline(always)]
     pub fn set_aux_21(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -12950,7 +12950,7 @@ impl RtDl1mk3Aux20 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_20_MIN: f32 = 0_f32;
     pub const AUX_20_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Aux_20 from values
+    /// Construct new 'RT_DL1MK3_Aux_20' from values
     pub fn new(aux_20: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_aux_20(aux_20)?;
@@ -12960,7 +12960,7 @@ impl RtDl1mk3Aux20 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// AUX_20
+    /// Get value of 'AUX_20'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -12970,7 +12970,7 @@ impl RtDl1mk3Aux20 {
     pub fn aux_20(&self) -> f32 {
         self.aux_20_raw()
     }
-    /// Get raw value of AUX_20
+    /// Get raw value of 'AUX_20'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -12985,7 +12985,7 @@ impl RtDl1mk3Aux20 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of AUX_20
+    /// Set value of 'AUX_20'
     #[inline(always)]
     pub fn set_aux_20(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -13062,7 +13062,7 @@ impl RtDl1mk3Aux19 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_19_MIN: f32 = 0_f32;
     pub const AUX_19_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Aux_19 from values
+    /// Construct new 'RT_DL1MK3_Aux_19' from values
     pub fn new(aux_19: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_aux_19(aux_19)?;
@@ -13072,7 +13072,7 @@ impl RtDl1mk3Aux19 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// AUX_19
+    /// Get value of 'AUX_19'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -13082,7 +13082,7 @@ impl RtDl1mk3Aux19 {
     pub fn aux_19(&self) -> f32 {
         self.aux_19_raw()
     }
-    /// Get raw value of AUX_19
+    /// Get raw value of 'AUX_19'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -13097,7 +13097,7 @@ impl RtDl1mk3Aux19 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of AUX_19
+    /// Set value of 'AUX_19'
     #[inline(always)]
     pub fn set_aux_19(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -13174,7 +13174,7 @@ impl RtDl1mk3Aux18 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_18_MIN: f32 = 0_f32;
     pub const AUX_18_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Aux_18 from values
+    /// Construct new 'RT_DL1MK3_Aux_18' from values
     pub fn new(aux_18: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_aux_18(aux_18)?;
@@ -13184,7 +13184,7 @@ impl RtDl1mk3Aux18 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// AUX_18
+    /// Get value of 'AUX_18'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -13194,7 +13194,7 @@ impl RtDl1mk3Aux18 {
     pub fn aux_18(&self) -> f32 {
         self.aux_18_raw()
     }
-    /// Get raw value of AUX_18
+    /// Get raw value of 'AUX_18'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -13209,7 +13209,7 @@ impl RtDl1mk3Aux18 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of AUX_18
+    /// Set value of 'AUX_18'
     #[inline(always)]
     pub fn set_aux_18(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -13286,7 +13286,7 @@ impl RtDl1mk3Aux17 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_17_MIN: f32 = 0_f32;
     pub const AUX_17_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Aux_17 from values
+    /// Construct new 'RT_DL1MK3_Aux_17' from values
     pub fn new(aux_17: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_aux_17(aux_17)?;
@@ -13296,7 +13296,7 @@ impl RtDl1mk3Aux17 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// AUX_17
+    /// Get value of 'AUX_17'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -13306,7 +13306,7 @@ impl RtDl1mk3Aux17 {
     pub fn aux_17(&self) -> f32 {
         self.aux_17_raw()
     }
-    /// Get raw value of AUX_17
+    /// Get raw value of 'AUX_17'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -13321,7 +13321,7 @@ impl RtDl1mk3Aux17 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of AUX_17
+    /// Set value of 'AUX_17'
     #[inline(always)]
     pub fn set_aux_17(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -13398,7 +13398,7 @@ impl RtDl1mk3Aux16 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_16_MIN: f32 = 0_f32;
     pub const AUX_16_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Aux_16 from values
+    /// Construct new 'RT_DL1MK3_Aux_16' from values
     pub fn new(aux_16: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_aux_16(aux_16)?;
@@ -13408,7 +13408,7 @@ impl RtDl1mk3Aux16 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// AUX_16
+    /// Get value of 'AUX_16'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -13418,7 +13418,7 @@ impl RtDl1mk3Aux16 {
     pub fn aux_16(&self) -> f32 {
         self.aux_16_raw()
     }
-    /// Get raw value of AUX_16
+    /// Get raw value of 'AUX_16'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -13433,7 +13433,7 @@ impl RtDl1mk3Aux16 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of AUX_16
+    /// Set value of 'AUX_16'
     #[inline(always)]
     pub fn set_aux_16(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -13510,7 +13510,7 @@ impl RtDl1mk3Aux15 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_15_MIN: f32 = 0_f32;
     pub const AUX_15_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Aux_15 from values
+    /// Construct new 'RT_DL1MK3_Aux_15' from values
     pub fn new(aux_15: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_aux_15(aux_15)?;
@@ -13520,7 +13520,7 @@ impl RtDl1mk3Aux15 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// AUX_15
+    /// Get value of 'AUX_15'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -13530,7 +13530,7 @@ impl RtDl1mk3Aux15 {
     pub fn aux_15(&self) -> f32 {
         self.aux_15_raw()
     }
-    /// Get raw value of AUX_15
+    /// Get raw value of 'AUX_15'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -13545,7 +13545,7 @@ impl RtDl1mk3Aux15 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of AUX_15
+    /// Set value of 'AUX_15'
     #[inline(always)]
     pub fn set_aux_15(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -13622,7 +13622,7 @@ impl RtDl1mk3Aux14 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_14_MIN: f32 = 0_f32;
     pub const AUX_14_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Aux_14 from values
+    /// Construct new 'RT_DL1MK3_Aux_14' from values
     pub fn new(aux_14: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_aux_14(aux_14)?;
@@ -13632,7 +13632,7 @@ impl RtDl1mk3Aux14 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// AUX_14
+    /// Get value of 'AUX_14'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -13642,7 +13642,7 @@ impl RtDl1mk3Aux14 {
     pub fn aux_14(&self) -> f32 {
         self.aux_14_raw()
     }
-    /// Get raw value of AUX_14
+    /// Get raw value of 'AUX_14'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -13657,7 +13657,7 @@ impl RtDl1mk3Aux14 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of AUX_14
+    /// Set value of 'AUX_14'
     #[inline(always)]
     pub fn set_aux_14(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -13734,7 +13734,7 @@ impl RtDl1mk3Aux13 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_13_MIN: f32 = 0_f32;
     pub const AUX_13_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Aux_13 from values
+    /// Construct new 'RT_DL1MK3_Aux_13' from values
     pub fn new(aux_13: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_aux_13(aux_13)?;
@@ -13744,7 +13744,7 @@ impl RtDl1mk3Aux13 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// AUX_13
+    /// Get value of 'AUX_13'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -13754,7 +13754,7 @@ impl RtDl1mk3Aux13 {
     pub fn aux_13(&self) -> f32 {
         self.aux_13_raw()
     }
-    /// Get raw value of AUX_13
+    /// Get raw value of 'AUX_13'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -13769,7 +13769,7 @@ impl RtDl1mk3Aux13 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of AUX_13
+    /// Set value of 'AUX_13'
     #[inline(always)]
     pub fn set_aux_13(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -13846,7 +13846,7 @@ impl RtDl1mk3Aux12 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_12_MIN: f32 = 0_f32;
     pub const AUX_12_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Aux_12 from values
+    /// Construct new 'RT_DL1MK3_Aux_12' from values
     pub fn new(aux_12: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_aux_12(aux_12)?;
@@ -13856,7 +13856,7 @@ impl RtDl1mk3Aux12 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// AUX_12
+    /// Get value of 'AUX_12'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -13866,7 +13866,7 @@ impl RtDl1mk3Aux12 {
     pub fn aux_12(&self) -> f32 {
         self.aux_12_raw()
     }
-    /// Get raw value of AUX_12
+    /// Get raw value of 'AUX_12'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -13881,7 +13881,7 @@ impl RtDl1mk3Aux12 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of AUX_12
+    /// Set value of 'AUX_12'
     #[inline(always)]
     pub fn set_aux_12(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -13958,7 +13958,7 @@ impl RtDl1mk3Aux11 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_11_MIN: f32 = 0_f32;
     pub const AUX_11_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Aux_11 from values
+    /// Construct new 'RT_DL1MK3_Aux_11' from values
     pub fn new(aux_11: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_aux_11(aux_11)?;
@@ -13968,7 +13968,7 @@ impl RtDl1mk3Aux11 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// AUX_11
+    /// Get value of 'AUX_11'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -13978,7 +13978,7 @@ impl RtDl1mk3Aux11 {
     pub fn aux_11(&self) -> f32 {
         self.aux_11_raw()
     }
-    /// Get raw value of AUX_11
+    /// Get raw value of 'AUX_11'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -13993,7 +13993,7 @@ impl RtDl1mk3Aux11 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of AUX_11
+    /// Set value of 'AUX_11'
     #[inline(always)]
     pub fn set_aux_11(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -14070,7 +14070,7 @@ impl RtDl1mk3Aux9 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_9_MIN: f32 = 0_f32;
     pub const AUX_9_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Aux_9 from values
+    /// Construct new 'RT_DL1MK3_Aux_9' from values
     pub fn new(aux_9: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_aux_9(aux_9)?;
@@ -14080,7 +14080,7 @@ impl RtDl1mk3Aux9 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// AUX_9
+    /// Get value of 'AUX_9'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -14090,7 +14090,7 @@ impl RtDl1mk3Aux9 {
     pub fn aux_9(&self) -> f32 {
         self.aux_9_raw()
     }
-    /// Get raw value of AUX_9
+    /// Get raw value of 'AUX_9'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -14105,7 +14105,7 @@ impl RtDl1mk3Aux9 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of AUX_9
+    /// Set value of 'AUX_9'
     #[inline(always)]
     pub fn set_aux_9(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -14182,7 +14182,7 @@ impl RtDl1mk3Aux10 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_10_MIN: f32 = 0_f32;
     pub const AUX_10_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Aux_10 from values
+    /// Construct new 'RT_DL1MK3_Aux_10' from values
     pub fn new(aux_10: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_aux_10(aux_10)?;
@@ -14192,7 +14192,7 @@ impl RtDl1mk3Aux10 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// AUX_10
+    /// Get value of 'AUX_10'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -14202,7 +14202,7 @@ impl RtDl1mk3Aux10 {
     pub fn aux_10(&self) -> f32 {
         self.aux_10_raw()
     }
-    /// Get raw value of AUX_10
+    /// Get raw value of 'AUX_10'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -14217,7 +14217,7 @@ impl RtDl1mk3Aux10 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of AUX_10
+    /// Set value of 'AUX_10'
     #[inline(always)]
     pub fn set_aux_10(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -14294,7 +14294,7 @@ impl RtDl1mk3Aux8 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_8_MIN: f32 = 0_f32;
     pub const AUX_8_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Aux_8 from values
+    /// Construct new 'RT_DL1MK3_Aux_8' from values
     pub fn new(aux_8: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_aux_8(aux_8)?;
@@ -14304,7 +14304,7 @@ impl RtDl1mk3Aux8 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// AUX_8
+    /// Get value of 'AUX_8'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -14314,7 +14314,7 @@ impl RtDl1mk3Aux8 {
     pub fn aux_8(&self) -> f32 {
         self.aux_8_raw()
     }
-    /// Get raw value of AUX_8
+    /// Get raw value of 'AUX_8'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -14329,7 +14329,7 @@ impl RtDl1mk3Aux8 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of AUX_8
+    /// Set value of 'AUX_8'
     #[inline(always)]
     pub fn set_aux_8(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -14406,7 +14406,7 @@ impl RtDl1mk3Aux7 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_7_MIN: f32 = 0_f32;
     pub const AUX_7_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Aux_7 from values
+    /// Construct new 'RT_DL1MK3_Aux_7' from values
     pub fn new(aux_7: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_aux_7(aux_7)?;
@@ -14416,7 +14416,7 @@ impl RtDl1mk3Aux7 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// AUX_7
+    /// Get value of 'AUX_7'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -14426,7 +14426,7 @@ impl RtDl1mk3Aux7 {
     pub fn aux_7(&self) -> f32 {
         self.aux_7_raw()
     }
-    /// Get raw value of AUX_7
+    /// Get raw value of 'AUX_7'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -14441,7 +14441,7 @@ impl RtDl1mk3Aux7 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of AUX_7
+    /// Set value of 'AUX_7'
     #[inline(always)]
     pub fn set_aux_7(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -14518,7 +14518,7 @@ impl RtDl1mk3Aux6 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_6_MIN: f32 = 0_f32;
     pub const AUX_6_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Aux_6 from values
+    /// Construct new 'RT_DL1MK3_Aux_6' from values
     pub fn new(aux_6: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_aux_6(aux_6)?;
@@ -14528,7 +14528,7 @@ impl RtDl1mk3Aux6 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// AUX_6
+    /// Get value of 'AUX_6'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -14538,7 +14538,7 @@ impl RtDl1mk3Aux6 {
     pub fn aux_6(&self) -> f32 {
         self.aux_6_raw()
     }
-    /// Get raw value of AUX_6
+    /// Get raw value of 'AUX_6'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -14553,7 +14553,7 @@ impl RtDl1mk3Aux6 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of AUX_6
+    /// Set value of 'AUX_6'
     #[inline(always)]
     pub fn set_aux_6(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -14630,7 +14630,7 @@ impl RtDl1mk3Aux5 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_5_MIN: f32 = 0_f32;
     pub const AUX_5_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Aux_5 from values
+    /// Construct new 'RT_DL1MK3_Aux_5' from values
     pub fn new(aux_5: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_aux_5(aux_5)?;
@@ -14640,7 +14640,7 @@ impl RtDl1mk3Aux5 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// AUX_5
+    /// Get value of 'AUX_5'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -14650,7 +14650,7 @@ impl RtDl1mk3Aux5 {
     pub fn aux_5(&self) -> f32 {
         self.aux_5_raw()
     }
-    /// Get raw value of AUX_5
+    /// Get raw value of 'AUX_5'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -14665,7 +14665,7 @@ impl RtDl1mk3Aux5 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of AUX_5
+    /// Set value of 'AUX_5'
     #[inline(always)]
     pub fn set_aux_5(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -14742,7 +14742,7 @@ impl RtDl1mk3Aux4 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_4_MIN: f32 = 0_f32;
     pub const AUX_4_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Aux_4 from values
+    /// Construct new 'RT_DL1MK3_Aux_4' from values
     pub fn new(aux_4: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_aux_4(aux_4)?;
@@ -14752,7 +14752,7 @@ impl RtDl1mk3Aux4 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// AUX_4
+    /// Get value of 'AUX_4'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -14762,7 +14762,7 @@ impl RtDl1mk3Aux4 {
     pub fn aux_4(&self) -> f32 {
         self.aux_4_raw()
     }
-    /// Get raw value of AUX_4
+    /// Get raw value of 'AUX_4'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -14777,7 +14777,7 @@ impl RtDl1mk3Aux4 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of AUX_4
+    /// Set value of 'AUX_4'
     #[inline(always)]
     pub fn set_aux_4(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -14854,7 +14854,7 @@ impl RtDl1mk3Aux3 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_3_MIN: f32 = 0_f32;
     pub const AUX_3_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Aux_3 from values
+    /// Construct new 'RT_DL1MK3_Aux_3' from values
     pub fn new(aux_3: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_aux_3(aux_3)?;
@@ -14864,7 +14864,7 @@ impl RtDl1mk3Aux3 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// AUX_3
+    /// Get value of 'AUX_3'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -14874,7 +14874,7 @@ impl RtDl1mk3Aux3 {
     pub fn aux_3(&self) -> f32 {
         self.aux_3_raw()
     }
-    /// Get raw value of AUX_3
+    /// Get raw value of 'AUX_3'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -14889,7 +14889,7 @@ impl RtDl1mk3Aux3 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of AUX_3
+    /// Set value of 'AUX_3'
     #[inline(always)]
     pub fn set_aux_3(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -14966,7 +14966,7 @@ impl RtDl1mk3Aux2 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_2_MIN: f32 = 0_f32;
     pub const AUX_2_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Aux_2 from values
+    /// Construct new 'RT_DL1MK3_Aux_2' from values
     pub fn new(aux_2: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_aux_2(aux_2)?;
@@ -14976,7 +14976,7 @@ impl RtDl1mk3Aux2 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// AUX_2
+    /// Get value of 'AUX_2'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -14986,7 +14986,7 @@ impl RtDl1mk3Aux2 {
     pub fn aux_2(&self) -> f32 {
         self.aux_2_raw()
     }
-    /// Get raw value of AUX_2
+    /// Get raw value of 'AUX_2'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -15001,7 +15001,7 @@ impl RtDl1mk3Aux2 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of AUX_2
+    /// Set value of 'AUX_2'
     #[inline(always)]
     pub fn set_aux_2(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -15078,7 +15078,7 @@ impl RtDl1mk3Aux1 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_1_MIN: f32 = 0_f32;
     pub const AUX_1_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Aux_1 from values
+    /// Construct new 'RT_DL1MK3_Aux_1' from values
     pub fn new(aux_1: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_aux_1(aux_1)?;
@@ -15088,7 +15088,7 @@ impl RtDl1mk3Aux1 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// AUX_1
+    /// Get value of 'AUX_1'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -15098,7 +15098,7 @@ impl RtDl1mk3Aux1 {
     pub fn aux_1(&self) -> f32 {
         self.aux_1_raw()
     }
-    /// Get raw value of AUX_1
+    /// Get raw value of 'AUX_1'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -15113,7 +15113,7 @@ impl RtDl1mk3Aux1 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of AUX_1
+    /// Set value of 'AUX_1'
     #[inline(always)]
     pub fn set_aux_1(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -15190,7 +15190,7 @@ impl RtDl1mk3Pressure5 {
     pub const MESSAGE_SIZE: usize = 3;
     pub const PRESSURE_5_MIN: f32 = 0_f32;
     pub const PRESSURE_5_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Pressure_5 from values
+    /// Construct new 'RT_DL1MK3_Pressure_5' from values
     pub fn new(pressure_5: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 3] };
         res.set_pressure_5(pressure_5)?;
@@ -15200,7 +15200,7 @@ impl RtDl1mk3Pressure5 {
     pub fn raw(&self) -> &[u8; 3] {
         &self.raw
     }
-    /// Pressure_5
+    /// Get value of 'Pressure_5'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -15210,7 +15210,7 @@ impl RtDl1mk3Pressure5 {
     pub fn pressure_5(&self) -> f32 {
         self.pressure_5_raw()
     }
-    /// Get raw value of Pressure_5
+    /// Get raw value of 'Pressure_5'
     ///
     /// - Start bit: 0
     /// - Signal size: 24 bits
@@ -15225,7 +15225,7 @@ impl RtDl1mk3Pressure5 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Pressure_5
+    /// Set value of 'Pressure_5'
     #[inline(always)]
     pub fn set_pressure_5(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -15302,7 +15302,7 @@ impl RtDl1mk3Pressure4 {
     pub const MESSAGE_SIZE: usize = 3;
     pub const PRESSURE_4_MIN: f32 = 0_f32;
     pub const PRESSURE_4_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Pressure_4 from values
+    /// Construct new 'RT_DL1MK3_Pressure_4' from values
     pub fn new(pressure_4: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 3] };
         res.set_pressure_4(pressure_4)?;
@@ -15312,7 +15312,7 @@ impl RtDl1mk3Pressure4 {
     pub fn raw(&self) -> &[u8; 3] {
         &self.raw
     }
-    /// Pressure_4
+    /// Get value of 'Pressure_4'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -15322,7 +15322,7 @@ impl RtDl1mk3Pressure4 {
     pub fn pressure_4(&self) -> f32 {
         self.pressure_4_raw()
     }
-    /// Get raw value of Pressure_4
+    /// Get raw value of 'Pressure_4'
     ///
     /// - Start bit: 0
     /// - Signal size: 24 bits
@@ -15337,7 +15337,7 @@ impl RtDl1mk3Pressure4 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Pressure_4
+    /// Set value of 'Pressure_4'
     #[inline(always)]
     pub fn set_pressure_4(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -15414,7 +15414,7 @@ impl RtDl1mk3Pressure3 {
     pub const MESSAGE_SIZE: usize = 3;
     pub const PRESSURE_3_MIN: f32 = 0_f32;
     pub const PRESSURE_3_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Pressure_3 from values
+    /// Construct new 'RT_DL1MK3_Pressure_3' from values
     pub fn new(pressure_3: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 3] };
         res.set_pressure_3(pressure_3)?;
@@ -15424,7 +15424,7 @@ impl RtDl1mk3Pressure3 {
     pub fn raw(&self) -> &[u8; 3] {
         &self.raw
     }
-    /// Pressure_3
+    /// Get value of 'Pressure_3'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -15434,7 +15434,7 @@ impl RtDl1mk3Pressure3 {
     pub fn pressure_3(&self) -> f32 {
         self.pressure_3_raw()
     }
-    /// Get raw value of Pressure_3
+    /// Get raw value of 'Pressure_3'
     ///
     /// - Start bit: 0
     /// - Signal size: 24 bits
@@ -15449,7 +15449,7 @@ impl RtDl1mk3Pressure3 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Pressure_3
+    /// Set value of 'Pressure_3'
     #[inline(always)]
     pub fn set_pressure_3(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -15526,7 +15526,7 @@ impl RtDl1mk3Pressure2 {
     pub const MESSAGE_SIZE: usize = 3;
     pub const PRESSURE_2_MIN: f32 = 0_f32;
     pub const PRESSURE_2_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Pressure_2 from values
+    /// Construct new 'RT_DL1MK3_Pressure_2' from values
     pub fn new(pressure_2: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 3] };
         res.set_pressure_2(pressure_2)?;
@@ -15536,7 +15536,7 @@ impl RtDl1mk3Pressure2 {
     pub fn raw(&self) -> &[u8; 3] {
         &self.raw
     }
-    /// Pressure_2
+    /// Get value of 'Pressure_2'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -15546,7 +15546,7 @@ impl RtDl1mk3Pressure2 {
     pub fn pressure_2(&self) -> f32 {
         self.pressure_2_raw()
     }
-    /// Get raw value of Pressure_2
+    /// Get raw value of 'Pressure_2'
     ///
     /// - Start bit: 0
     /// - Signal size: 24 bits
@@ -15561,7 +15561,7 @@ impl RtDl1mk3Pressure2 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Pressure_2
+    /// Set value of 'Pressure_2'
     #[inline(always)]
     pub fn set_pressure_2(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -15638,7 +15638,7 @@ impl RtDl1mk3Pressure1 {
     pub const MESSAGE_SIZE: usize = 3;
     pub const PRESSURE_1_MIN: f32 = 0_f32;
     pub const PRESSURE_1_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Pressure_1 from values
+    /// Construct new 'RT_DL1MK3_Pressure_1' from values
     pub fn new(pressure_1: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 3] };
         res.set_pressure_1(pressure_1)?;
@@ -15648,7 +15648,7 @@ impl RtDl1mk3Pressure1 {
     pub fn raw(&self) -> &[u8; 3] {
         &self.raw
     }
-    /// Pressure_1
+    /// Get value of 'Pressure_1'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -15658,7 +15658,7 @@ impl RtDl1mk3Pressure1 {
     pub fn pressure_1(&self) -> f32 {
         self.pressure_1_raw()
     }
-    /// Get raw value of Pressure_1
+    /// Get raw value of 'Pressure_1'
     ///
     /// - Start bit: 0
     /// - Signal size: 24 bits
@@ -15673,7 +15673,7 @@ impl RtDl1mk3Pressure1 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Pressure_1
+    /// Set value of 'Pressure_1'
     #[inline(always)]
     pub fn set_pressure_1(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -15750,7 +15750,7 @@ impl RtDl1mk3Angle3 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANGLE_3_MIN: f32 = 0_f32;
     pub const ANGLE_3_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Angle_3 from values
+    /// Construct new 'RT_DL1MK3_Angle_3' from values
     pub fn new(angle_3: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_angle_3(angle_3)?;
@@ -15760,7 +15760,7 @@ impl RtDl1mk3Angle3 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Angle_3
+    /// Get value of 'Angle_3'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -15770,7 +15770,7 @@ impl RtDl1mk3Angle3 {
     pub fn angle_3(&self) -> f32 {
         self.angle_3_raw()
     }
-    /// Get raw value of Angle_3
+    /// Get raw value of 'Angle_3'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -15785,7 +15785,7 @@ impl RtDl1mk3Angle3 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Angle_3
+    /// Set value of 'Angle_3'
     #[inline(always)]
     pub fn set_angle_3(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -15863,7 +15863,7 @@ impl RtDl1mk3Angle2 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANGLE_2_MIN: f32 = 0_f32;
     pub const ANGLE_2_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Angle_2 from values
+    /// Construct new 'RT_DL1MK3_Angle_2' from values
     pub fn new(angle_2: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_angle_2(angle_2)?;
@@ -15873,7 +15873,7 @@ impl RtDl1mk3Angle2 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Angle_2
+    /// Get value of 'Angle_2'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -15883,7 +15883,7 @@ impl RtDl1mk3Angle2 {
     pub fn angle_2(&self) -> f32 {
         self.angle_2_raw()
     }
-    /// Get raw value of Angle_2
+    /// Get raw value of 'Angle_2'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -15898,7 +15898,7 @@ impl RtDl1mk3Angle2 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Angle_2
+    /// Set value of 'Angle_2'
     #[inline(always)]
     pub fn set_angle_2(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -15976,7 +15976,7 @@ impl RtDl1mk3Angle1 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANGLE_1_MIN: f32 = 0_f32;
     pub const ANGLE_1_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Angle_1 from values
+    /// Construct new 'RT_DL1MK3_Angle_1' from values
     pub fn new(angle_1: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_angle_1(angle_1)?;
@@ -15986,7 +15986,7 @@ impl RtDl1mk3Angle1 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Angle_1
+    /// Get value of 'Angle_1'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -15996,7 +15996,7 @@ impl RtDl1mk3Angle1 {
     pub fn angle_1(&self) -> f32 {
         self.angle_1_raw()
     }
-    /// Get raw value of Angle_1
+    /// Get raw value of 'Angle_1'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -16011,7 +16011,7 @@ impl RtDl1mk3Angle1 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Angle_1
+    /// Set value of 'Angle_1'
     #[inline(always)]
     pub fn set_angle_1(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -16089,7 +16089,7 @@ impl RtDl1mk3Temp25 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_25_MIN: f32 = 0_f32;
     pub const TEMPERATURE_25_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Temp_25 from values
+    /// Construct new 'RT_DL1MK3_Temp_25' from values
     pub fn new(temperature_25: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_temperature_25(temperature_25)?;
@@ -16099,7 +16099,7 @@ impl RtDl1mk3Temp25 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Temperature_25
+    /// Get value of 'Temperature_25'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -16109,7 +16109,7 @@ impl RtDl1mk3Temp25 {
     pub fn temperature_25(&self) -> f32 {
         self.temperature_25_raw()
     }
-    /// Get raw value of Temperature_25
+    /// Get raw value of 'Temperature_25'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -16124,7 +16124,7 @@ impl RtDl1mk3Temp25 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Temperature_25
+    /// Set value of 'Temperature_25'
     #[inline(always)]
     pub fn set_temperature_25(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -16202,7 +16202,7 @@ impl RtDl1mk3Temp24 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_24_MIN: f32 = 0_f32;
     pub const TEMPERATURE_24_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Temp_24 from values
+    /// Construct new 'RT_DL1MK3_Temp_24' from values
     pub fn new(temperature_24: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_temperature_24(temperature_24)?;
@@ -16212,7 +16212,7 @@ impl RtDl1mk3Temp24 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Temperature_24
+    /// Get value of 'Temperature_24'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -16222,7 +16222,7 @@ impl RtDl1mk3Temp24 {
     pub fn temperature_24(&self) -> f32 {
         self.temperature_24_raw()
     }
-    /// Get raw value of Temperature_24
+    /// Get raw value of 'Temperature_24'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -16237,7 +16237,7 @@ impl RtDl1mk3Temp24 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Temperature_24
+    /// Set value of 'Temperature_24'
     #[inline(always)]
     pub fn set_temperature_24(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -16315,7 +16315,7 @@ impl RtDl1mk3Temp23 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_23_MIN: f32 = 0_f32;
     pub const TEMPERATURE_23_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Temp_23 from values
+    /// Construct new 'RT_DL1MK3_Temp_23' from values
     pub fn new(temperature_23: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_temperature_23(temperature_23)?;
@@ -16325,7 +16325,7 @@ impl RtDl1mk3Temp23 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Temperature_23
+    /// Get value of 'Temperature_23'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -16335,7 +16335,7 @@ impl RtDl1mk3Temp23 {
     pub fn temperature_23(&self) -> f32 {
         self.temperature_23_raw()
     }
-    /// Get raw value of Temperature_23
+    /// Get raw value of 'Temperature_23'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -16350,7 +16350,7 @@ impl RtDl1mk3Temp23 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Temperature_23
+    /// Set value of 'Temperature_23'
     #[inline(always)]
     pub fn set_temperature_23(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -16428,7 +16428,7 @@ impl RtDl1mk3Temp22 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_22_MIN: f32 = 0_f32;
     pub const TEMPERATURE_22_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Temp_22 from values
+    /// Construct new 'RT_DL1MK3_Temp_22' from values
     pub fn new(temperature_22: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_temperature_22(temperature_22)?;
@@ -16438,7 +16438,7 @@ impl RtDl1mk3Temp22 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Temperature_22
+    /// Get value of 'Temperature_22'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -16448,7 +16448,7 @@ impl RtDl1mk3Temp22 {
     pub fn temperature_22(&self) -> f32 {
         self.temperature_22_raw()
     }
-    /// Get raw value of Temperature_22
+    /// Get raw value of 'Temperature_22'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -16463,7 +16463,7 @@ impl RtDl1mk3Temp22 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Temperature_22
+    /// Set value of 'Temperature_22'
     #[inline(always)]
     pub fn set_temperature_22(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -16541,7 +16541,7 @@ impl RtDl1mk3Temp21 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_21_MIN: f32 = 0_f32;
     pub const TEMPERATURE_21_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Temp_21 from values
+    /// Construct new 'RT_DL1MK3_Temp_21' from values
     pub fn new(temperature_21: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_temperature_21(temperature_21)?;
@@ -16551,7 +16551,7 @@ impl RtDl1mk3Temp21 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Temperature_21
+    /// Get value of 'Temperature_21'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -16561,7 +16561,7 @@ impl RtDl1mk3Temp21 {
     pub fn temperature_21(&self) -> f32 {
         self.temperature_21_raw()
     }
-    /// Get raw value of Temperature_21
+    /// Get raw value of 'Temperature_21'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -16576,7 +16576,7 @@ impl RtDl1mk3Temp21 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Temperature_21
+    /// Set value of 'Temperature_21'
     #[inline(always)]
     pub fn set_temperature_21(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -16654,7 +16654,7 @@ impl RtDl1mk3Temp20 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_20_MIN: f32 = 0_f32;
     pub const TEMPERATURE_20_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Temp_20 from values
+    /// Construct new 'RT_DL1MK3_Temp_20' from values
     pub fn new(temperature_20: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_temperature_20(temperature_20)?;
@@ -16664,7 +16664,7 @@ impl RtDl1mk3Temp20 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Temperature_20
+    /// Get value of 'Temperature_20'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -16674,7 +16674,7 @@ impl RtDl1mk3Temp20 {
     pub fn temperature_20(&self) -> f32 {
         self.temperature_20_raw()
     }
-    /// Get raw value of Temperature_20
+    /// Get raw value of 'Temperature_20'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -16689,7 +16689,7 @@ impl RtDl1mk3Temp20 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Temperature_20
+    /// Set value of 'Temperature_20'
     #[inline(always)]
     pub fn set_temperature_20(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -16767,7 +16767,7 @@ impl RtDl1mk3Temp19 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_19_MIN: f32 = 0_f32;
     pub const TEMPERATURE_19_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Temp_19 from values
+    /// Construct new 'RT_DL1MK3_Temp_19' from values
     pub fn new(temperature_19: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_temperature_19(temperature_19)?;
@@ -16777,7 +16777,7 @@ impl RtDl1mk3Temp19 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Temperature_19
+    /// Get value of 'Temperature_19'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -16787,7 +16787,7 @@ impl RtDl1mk3Temp19 {
     pub fn temperature_19(&self) -> f32 {
         self.temperature_19_raw()
     }
-    /// Get raw value of Temperature_19
+    /// Get raw value of 'Temperature_19'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -16802,7 +16802,7 @@ impl RtDl1mk3Temp19 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Temperature_19
+    /// Set value of 'Temperature_19'
     #[inline(always)]
     pub fn set_temperature_19(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -16880,7 +16880,7 @@ impl RtDl1mk3Temp18 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_18_MIN: f32 = 0_f32;
     pub const TEMPERATURE_18_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Temp_18 from values
+    /// Construct new 'RT_DL1MK3_Temp_18' from values
     pub fn new(temperature_18: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_temperature_18(temperature_18)?;
@@ -16890,7 +16890,7 @@ impl RtDl1mk3Temp18 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Temperature_18
+    /// Get value of 'Temperature_18'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -16900,7 +16900,7 @@ impl RtDl1mk3Temp18 {
     pub fn temperature_18(&self) -> f32 {
         self.temperature_18_raw()
     }
-    /// Get raw value of Temperature_18
+    /// Get raw value of 'Temperature_18'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -16915,7 +16915,7 @@ impl RtDl1mk3Temp18 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Temperature_18
+    /// Set value of 'Temperature_18'
     #[inline(always)]
     pub fn set_temperature_18(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -16993,7 +16993,7 @@ impl RtDl1mk3Temp17 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_17_MIN: f32 = 0_f32;
     pub const TEMPERATURE_17_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Temp_17 from values
+    /// Construct new 'RT_DL1MK3_Temp_17' from values
     pub fn new(temperature_17: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_temperature_17(temperature_17)?;
@@ -17003,7 +17003,7 @@ impl RtDl1mk3Temp17 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Temperature_17
+    /// Get value of 'Temperature_17'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -17013,7 +17013,7 @@ impl RtDl1mk3Temp17 {
     pub fn temperature_17(&self) -> f32 {
         self.temperature_17_raw()
     }
-    /// Get raw value of Temperature_17
+    /// Get raw value of 'Temperature_17'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -17028,7 +17028,7 @@ impl RtDl1mk3Temp17 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Temperature_17
+    /// Set value of 'Temperature_17'
     #[inline(always)]
     pub fn set_temperature_17(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -17106,7 +17106,7 @@ impl RtDl1mk3Temp16 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_16_MIN: f32 = 0_f32;
     pub const TEMPERATURE_16_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Temp_16 from values
+    /// Construct new 'RT_DL1MK3_Temp_16' from values
     pub fn new(temperature_16: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_temperature_16(temperature_16)?;
@@ -17116,7 +17116,7 @@ impl RtDl1mk3Temp16 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Temperature_16
+    /// Get value of 'Temperature_16'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -17126,7 +17126,7 @@ impl RtDl1mk3Temp16 {
     pub fn temperature_16(&self) -> f32 {
         self.temperature_16_raw()
     }
-    /// Get raw value of Temperature_16
+    /// Get raw value of 'Temperature_16'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -17141,7 +17141,7 @@ impl RtDl1mk3Temp16 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Temperature_16
+    /// Set value of 'Temperature_16'
     #[inline(always)]
     pub fn set_temperature_16(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -17219,7 +17219,7 @@ impl RtDl1mk3Temp15 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_15_MIN: f32 = 0_f32;
     pub const TEMPERATURE_15_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Temp_15 from values
+    /// Construct new 'RT_DL1MK3_Temp_15' from values
     pub fn new(temperature_15: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_temperature_15(temperature_15)?;
@@ -17229,7 +17229,7 @@ impl RtDl1mk3Temp15 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Temperature_15
+    /// Get value of 'Temperature_15'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -17239,7 +17239,7 @@ impl RtDl1mk3Temp15 {
     pub fn temperature_15(&self) -> f32 {
         self.temperature_15_raw()
     }
-    /// Get raw value of Temperature_15
+    /// Get raw value of 'Temperature_15'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -17254,7 +17254,7 @@ impl RtDl1mk3Temp15 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Temperature_15
+    /// Set value of 'Temperature_15'
     #[inline(always)]
     pub fn set_temperature_15(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -17332,7 +17332,7 @@ impl RtDl1mk3Temp14 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_14_MIN: f32 = 0_f32;
     pub const TEMPERATURE_14_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Temp_14 from values
+    /// Construct new 'RT_DL1MK3_Temp_14' from values
     pub fn new(temperature_14: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_temperature_14(temperature_14)?;
@@ -17342,7 +17342,7 @@ impl RtDl1mk3Temp14 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Temperature_14
+    /// Get value of 'Temperature_14'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -17352,7 +17352,7 @@ impl RtDl1mk3Temp14 {
     pub fn temperature_14(&self) -> f32 {
         self.temperature_14_raw()
     }
-    /// Get raw value of Temperature_14
+    /// Get raw value of 'Temperature_14'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -17367,7 +17367,7 @@ impl RtDl1mk3Temp14 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Temperature_14
+    /// Set value of 'Temperature_14'
     #[inline(always)]
     pub fn set_temperature_14(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -17445,7 +17445,7 @@ impl RtDl1mk3Temp13 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_13_MIN: f32 = 0_f32;
     pub const TEMPERATURE_13_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Temp_13 from values
+    /// Construct new 'RT_DL1MK3_Temp_13' from values
     pub fn new(temperature_13: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_temperature_13(temperature_13)?;
@@ -17455,7 +17455,7 @@ impl RtDl1mk3Temp13 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Temperature_13
+    /// Get value of 'Temperature_13'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -17465,7 +17465,7 @@ impl RtDl1mk3Temp13 {
     pub fn temperature_13(&self) -> f32 {
         self.temperature_13_raw()
     }
-    /// Get raw value of Temperature_13
+    /// Get raw value of 'Temperature_13'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -17480,7 +17480,7 @@ impl RtDl1mk3Temp13 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Temperature_13
+    /// Set value of 'Temperature_13'
     #[inline(always)]
     pub fn set_temperature_13(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -17558,7 +17558,7 @@ impl RtDl1mk3Temp12 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_12_MIN: f32 = 0_f32;
     pub const TEMPERATURE_12_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Temp_12 from values
+    /// Construct new 'RT_DL1MK3_Temp_12' from values
     pub fn new(temperature_12: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_temperature_12(temperature_12)?;
@@ -17568,7 +17568,7 @@ impl RtDl1mk3Temp12 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Temperature_12
+    /// Get value of 'Temperature_12'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -17578,7 +17578,7 @@ impl RtDl1mk3Temp12 {
     pub fn temperature_12(&self) -> f32 {
         self.temperature_12_raw()
     }
-    /// Get raw value of Temperature_12
+    /// Get raw value of 'Temperature_12'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -17593,7 +17593,7 @@ impl RtDl1mk3Temp12 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Temperature_12
+    /// Set value of 'Temperature_12'
     #[inline(always)]
     pub fn set_temperature_12(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -17671,7 +17671,7 @@ impl RtDl1mk3Temp11 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_11_MIN: f32 = 0_f32;
     pub const TEMPERATURE_11_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Temp_11 from values
+    /// Construct new 'RT_DL1MK3_Temp_11' from values
     pub fn new(temperature_11: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_temperature_11(temperature_11)?;
@@ -17681,7 +17681,7 @@ impl RtDl1mk3Temp11 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Temperature_11
+    /// Get value of 'Temperature_11'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -17691,7 +17691,7 @@ impl RtDl1mk3Temp11 {
     pub fn temperature_11(&self) -> f32 {
         self.temperature_11_raw()
     }
-    /// Get raw value of Temperature_11
+    /// Get raw value of 'Temperature_11'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -17706,7 +17706,7 @@ impl RtDl1mk3Temp11 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Temperature_11
+    /// Set value of 'Temperature_11'
     #[inline(always)]
     pub fn set_temperature_11(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -17784,7 +17784,7 @@ impl RtDl1mk3Temp10 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_10_MIN: f32 = 0_f32;
     pub const TEMPERATURE_10_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Temp_10 from values
+    /// Construct new 'RT_DL1MK3_Temp_10' from values
     pub fn new(temperature_10: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_temperature_10(temperature_10)?;
@@ -17794,7 +17794,7 @@ impl RtDl1mk3Temp10 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Temperature_10
+    /// Get value of 'Temperature_10'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -17804,7 +17804,7 @@ impl RtDl1mk3Temp10 {
     pub fn temperature_10(&self) -> f32 {
         self.temperature_10_raw()
     }
-    /// Get raw value of Temperature_10
+    /// Get raw value of 'Temperature_10'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -17819,7 +17819,7 @@ impl RtDl1mk3Temp10 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Temperature_10
+    /// Set value of 'Temperature_10'
     #[inline(always)]
     pub fn set_temperature_10(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -17897,7 +17897,7 @@ impl RtDl1mk3Temp9 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_9_MIN: f32 = 0_f32;
     pub const TEMPERATURE_9_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Temp_9 from values
+    /// Construct new 'RT_DL1MK3_Temp_9' from values
     pub fn new(temperature_9: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_temperature_9(temperature_9)?;
@@ -17907,7 +17907,7 @@ impl RtDl1mk3Temp9 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Temperature_9
+    /// Get value of 'Temperature_9'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -17917,7 +17917,7 @@ impl RtDl1mk3Temp9 {
     pub fn temperature_9(&self) -> f32 {
         self.temperature_9_raw()
     }
-    /// Get raw value of Temperature_9
+    /// Get raw value of 'Temperature_9'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -17932,7 +17932,7 @@ impl RtDl1mk3Temp9 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Temperature_9
+    /// Set value of 'Temperature_9'
     #[inline(always)]
     pub fn set_temperature_9(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -18010,7 +18010,7 @@ impl RtDl1mk3Temp8 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_8_MIN: f32 = 0_f32;
     pub const TEMPERATURE_8_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Temp_8 from values
+    /// Construct new 'RT_DL1MK3_Temp_8' from values
     pub fn new(temperature_8: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_temperature_8(temperature_8)?;
@@ -18020,7 +18020,7 @@ impl RtDl1mk3Temp8 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Temperature_8
+    /// Get value of 'Temperature_8'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -18030,7 +18030,7 @@ impl RtDl1mk3Temp8 {
     pub fn temperature_8(&self) -> f32 {
         self.temperature_8_raw()
     }
-    /// Get raw value of Temperature_8
+    /// Get raw value of 'Temperature_8'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -18045,7 +18045,7 @@ impl RtDl1mk3Temp8 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Temperature_8
+    /// Set value of 'Temperature_8'
     #[inline(always)]
     pub fn set_temperature_8(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -18123,7 +18123,7 @@ impl RtDl1mk3Temp7 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_7_MIN: f32 = 0_f32;
     pub const TEMPERATURE_7_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Temp_7 from values
+    /// Construct new 'RT_DL1MK3_Temp_7' from values
     pub fn new(temperature_7: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_temperature_7(temperature_7)?;
@@ -18133,7 +18133,7 @@ impl RtDl1mk3Temp7 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Temperature_7
+    /// Get value of 'Temperature_7'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -18143,7 +18143,7 @@ impl RtDl1mk3Temp7 {
     pub fn temperature_7(&self) -> f32 {
         self.temperature_7_raw()
     }
-    /// Get raw value of Temperature_7
+    /// Get raw value of 'Temperature_7'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -18158,7 +18158,7 @@ impl RtDl1mk3Temp7 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Temperature_7
+    /// Set value of 'Temperature_7'
     #[inline(always)]
     pub fn set_temperature_7(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -18236,7 +18236,7 @@ impl RtDl1mk3Temp6 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_6_MIN: f32 = 0_f32;
     pub const TEMPERATURE_6_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Temp_6 from values
+    /// Construct new 'RT_DL1MK3_Temp_6' from values
     pub fn new(temperature_6: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_temperature_6(temperature_6)?;
@@ -18246,7 +18246,7 @@ impl RtDl1mk3Temp6 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Temperature_6
+    /// Get value of 'Temperature_6'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -18256,7 +18256,7 @@ impl RtDl1mk3Temp6 {
     pub fn temperature_6(&self) -> f32 {
         self.temperature_6_raw()
     }
-    /// Get raw value of Temperature_6
+    /// Get raw value of 'Temperature_6'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -18271,7 +18271,7 @@ impl RtDl1mk3Temp6 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Temperature_6
+    /// Set value of 'Temperature_6'
     #[inline(always)]
     pub fn set_temperature_6(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -18349,7 +18349,7 @@ impl RtDl1mk3Temp5 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_5_MIN: f32 = 0_f32;
     pub const TEMPERATURE_5_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Temp_5 from values
+    /// Construct new 'RT_DL1MK3_Temp_5' from values
     pub fn new(temperature_5: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_temperature_5(temperature_5)?;
@@ -18359,7 +18359,7 @@ impl RtDl1mk3Temp5 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Temperature_5
+    /// Get value of 'Temperature_5'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -18369,7 +18369,7 @@ impl RtDl1mk3Temp5 {
     pub fn temperature_5(&self) -> f32 {
         self.temperature_5_raw()
     }
-    /// Get raw value of Temperature_5
+    /// Get raw value of 'Temperature_5'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -18384,7 +18384,7 @@ impl RtDl1mk3Temp5 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Temperature_5
+    /// Set value of 'Temperature_5'
     #[inline(always)]
     pub fn set_temperature_5(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -18462,7 +18462,7 @@ impl RtDl1mk3Temp4 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_4_MIN: f32 = 0_f32;
     pub const TEMPERATURE_4_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Temp_4 from values
+    /// Construct new 'RT_DL1MK3_Temp_4' from values
     pub fn new(temperature_4: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_temperature_4(temperature_4)?;
@@ -18472,7 +18472,7 @@ impl RtDl1mk3Temp4 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Temperature_4
+    /// Get value of 'Temperature_4'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -18482,7 +18482,7 @@ impl RtDl1mk3Temp4 {
     pub fn temperature_4(&self) -> f32 {
         self.temperature_4_raw()
     }
-    /// Get raw value of Temperature_4
+    /// Get raw value of 'Temperature_4'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -18497,7 +18497,7 @@ impl RtDl1mk3Temp4 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Temperature_4
+    /// Set value of 'Temperature_4'
     #[inline(always)]
     pub fn set_temperature_4(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -18575,7 +18575,7 @@ impl RtDl1mk3Temp3 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_3_MIN: f32 = 0_f32;
     pub const TEMPERATURE_3_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Temp_3 from values
+    /// Construct new 'RT_DL1MK3_Temp_3' from values
     pub fn new(temperature_3: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_temperature_3(temperature_3)?;
@@ -18585,7 +18585,7 @@ impl RtDl1mk3Temp3 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Temperature_3
+    /// Get value of 'Temperature_3'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -18595,7 +18595,7 @@ impl RtDl1mk3Temp3 {
     pub fn temperature_3(&self) -> f32 {
         self.temperature_3_raw()
     }
-    /// Get raw value of Temperature_3
+    /// Get raw value of 'Temperature_3'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -18610,7 +18610,7 @@ impl RtDl1mk3Temp3 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Temperature_3
+    /// Set value of 'Temperature_3'
     #[inline(always)]
     pub fn set_temperature_3(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -18688,7 +18688,7 @@ impl RtDl1mk3Temp2 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_2_MIN: f32 = 0_f32;
     pub const TEMPERATURE_2_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Temp_2 from values
+    /// Construct new 'RT_DL1MK3_Temp_2' from values
     pub fn new(temperature_2: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_temperature_2(temperature_2)?;
@@ -18698,7 +18698,7 @@ impl RtDl1mk3Temp2 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Temperature_2
+    /// Get value of 'Temperature_2'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -18708,7 +18708,7 @@ impl RtDl1mk3Temp2 {
     pub fn temperature_2(&self) -> f32 {
         self.temperature_2_raw()
     }
-    /// Get raw value of Temperature_2
+    /// Get raw value of 'Temperature_2'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -18723,7 +18723,7 @@ impl RtDl1mk3Temp2 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Temperature_2
+    /// Set value of 'Temperature_2'
     #[inline(always)]
     pub fn set_temperature_2(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -18801,7 +18801,7 @@ impl RtDl1mk3Temp1 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_1_MIN: f32 = 0_f32;
     pub const TEMPERATURE_1_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Temp_1 from values
+    /// Construct new 'RT_DL1MK3_Temp_1' from values
     pub fn new(temperature_1: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_temperature_1(temperature_1)?;
@@ -18811,7 +18811,7 @@ impl RtDl1mk3Temp1 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Temperature_1
+    /// Get value of 'Temperature_1'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -18821,7 +18821,7 @@ impl RtDl1mk3Temp1 {
     pub fn temperature_1(&self) -> f32 {
         self.temperature_1_raw()
     }
-    /// Get raw value of Temperature_1
+    /// Get raw value of 'Temperature_1'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -18836,7 +18836,7 @@ impl RtDl1mk3Temp1 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Temperature_1
+    /// Set value of 'Temperature_1'
     #[inline(always)]
     pub fn set_temperature_1(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -18914,7 +18914,7 @@ impl RtDl1mk3Analog32 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_32_MIN: f32 = 0_f32;
     pub const ANALOG_32_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Analog_32 from values
+    /// Construct new 'RT_DL1MK3_Analog_32' from values
     pub fn new(analog_32: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_analog_32(analog_32)?;
@@ -18924,7 +18924,7 @@ impl RtDl1mk3Analog32 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Analog_32
+    /// Get value of 'Analog_32'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -18934,7 +18934,7 @@ impl RtDl1mk3Analog32 {
     pub fn analog_32(&self) -> f32 {
         self.analog_32_raw()
     }
-    /// Get raw value of Analog_32
+    /// Get raw value of 'Analog_32'
     ///
     /// - Start bit: 7
     /// - Signal size: 16 bits
@@ -18949,7 +18949,7 @@ impl RtDl1mk3Analog32 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Analog_32
+    /// Set value of 'Analog_32'
     #[inline(always)]
     pub fn set_analog_32(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -19026,7 +19026,7 @@ impl RtDl1mk3Analog31 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_31_MIN: f32 = 0_f32;
     pub const ANALOG_31_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Analog_31 from values
+    /// Construct new 'RT_DL1MK3_Analog_31' from values
     pub fn new(analog_31: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_analog_31(analog_31)?;
@@ -19036,7 +19036,7 @@ impl RtDl1mk3Analog31 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Analog_31
+    /// Get value of 'Analog_31'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -19046,7 +19046,7 @@ impl RtDl1mk3Analog31 {
     pub fn analog_31(&self) -> f32 {
         self.analog_31_raw()
     }
-    /// Get raw value of Analog_31
+    /// Get raw value of 'Analog_31'
     ///
     /// - Start bit: 7
     /// - Signal size: 16 bits
@@ -19061,7 +19061,7 @@ impl RtDl1mk3Analog31 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Analog_31
+    /// Set value of 'Analog_31'
     #[inline(always)]
     pub fn set_analog_31(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -19138,7 +19138,7 @@ impl RtDl1mk3Analog30 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_30_MIN: f32 = 0_f32;
     pub const ANALOG_30_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Analog_30 from values
+    /// Construct new 'RT_DL1MK3_Analog_30' from values
     pub fn new(analog_30: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_analog_30(analog_30)?;
@@ -19148,7 +19148,7 @@ impl RtDl1mk3Analog30 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Analog_30
+    /// Get value of 'Analog_30'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -19158,7 +19158,7 @@ impl RtDl1mk3Analog30 {
     pub fn analog_30(&self) -> f32 {
         self.analog_30_raw()
     }
-    /// Get raw value of Analog_30
+    /// Get raw value of 'Analog_30'
     ///
     /// - Start bit: 7
     /// - Signal size: 16 bits
@@ -19173,7 +19173,7 @@ impl RtDl1mk3Analog30 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Analog_30
+    /// Set value of 'Analog_30'
     #[inline(always)]
     pub fn set_analog_30(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -19250,7 +19250,7 @@ impl RtDl1mk3Analog29 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_29_MIN: f32 = 0_f32;
     pub const ANALOG_29_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Analog_29 from values
+    /// Construct new 'RT_DL1MK3_Analog_29' from values
     pub fn new(analog_29: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_analog_29(analog_29)?;
@@ -19260,7 +19260,7 @@ impl RtDl1mk3Analog29 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Analog_29
+    /// Get value of 'Analog_29'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -19270,7 +19270,7 @@ impl RtDl1mk3Analog29 {
     pub fn analog_29(&self) -> f32 {
         self.analog_29_raw()
     }
-    /// Get raw value of Analog_29
+    /// Get raw value of 'Analog_29'
     ///
     /// - Start bit: 7
     /// - Signal size: 16 bits
@@ -19285,7 +19285,7 @@ impl RtDl1mk3Analog29 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Analog_29
+    /// Set value of 'Analog_29'
     #[inline(always)]
     pub fn set_analog_29(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -19362,7 +19362,7 @@ impl RtDl1mk3Analog28 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_28_MIN: f32 = 0_f32;
     pub const ANALOG_28_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Analog_28 from values
+    /// Construct new 'RT_DL1MK3_Analog_28' from values
     pub fn new(analog_28: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_analog_28(analog_28)?;
@@ -19372,7 +19372,7 @@ impl RtDl1mk3Analog28 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Analog_28
+    /// Get value of 'Analog_28'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -19382,7 +19382,7 @@ impl RtDl1mk3Analog28 {
     pub fn analog_28(&self) -> f32 {
         self.analog_28_raw()
     }
-    /// Get raw value of Analog_28
+    /// Get raw value of 'Analog_28'
     ///
     /// - Start bit: 7
     /// - Signal size: 16 bits
@@ -19397,7 +19397,7 @@ impl RtDl1mk3Analog28 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Analog_28
+    /// Set value of 'Analog_28'
     #[inline(always)]
     pub fn set_analog_28(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -19474,7 +19474,7 @@ impl RtDl1mk3Analog27 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_27_MIN: f32 = 0_f32;
     pub const ANALOG_27_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Analog_27 from values
+    /// Construct new 'RT_DL1MK3_Analog_27' from values
     pub fn new(analog_27: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_analog_27(analog_27)?;
@@ -19484,7 +19484,7 @@ impl RtDl1mk3Analog27 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Analog_27
+    /// Get value of 'Analog_27'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -19494,7 +19494,7 @@ impl RtDl1mk3Analog27 {
     pub fn analog_27(&self) -> f32 {
         self.analog_27_raw()
     }
-    /// Get raw value of Analog_27
+    /// Get raw value of 'Analog_27'
     ///
     /// - Start bit: 7
     /// - Signal size: 16 bits
@@ -19509,7 +19509,7 @@ impl RtDl1mk3Analog27 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Analog_27
+    /// Set value of 'Analog_27'
     #[inline(always)]
     pub fn set_analog_27(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -19586,7 +19586,7 @@ impl RtDl1mk3Analog26 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_26_MIN: f32 = 0_f32;
     pub const ANALOG_26_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Analog_26 from values
+    /// Construct new 'RT_DL1MK3_Analog_26' from values
     pub fn new(analog_26: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_analog_26(analog_26)?;
@@ -19596,7 +19596,7 @@ impl RtDl1mk3Analog26 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Analog_26
+    /// Get value of 'Analog_26'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -19606,7 +19606,7 @@ impl RtDl1mk3Analog26 {
     pub fn analog_26(&self) -> f32 {
         self.analog_26_raw()
     }
-    /// Get raw value of Analog_26
+    /// Get raw value of 'Analog_26'
     ///
     /// - Start bit: 7
     /// - Signal size: 16 bits
@@ -19621,7 +19621,7 @@ impl RtDl1mk3Analog26 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Analog_26
+    /// Set value of 'Analog_26'
     #[inline(always)]
     pub fn set_analog_26(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -19698,7 +19698,7 @@ impl RtDl1mk3Analog25 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_25_MIN: f32 = 0_f32;
     pub const ANALOG_25_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Analog_25 from values
+    /// Construct new 'RT_DL1MK3_Analog_25' from values
     pub fn new(analog_25: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_analog_25(analog_25)?;
@@ -19708,7 +19708,7 @@ impl RtDl1mk3Analog25 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Analog_25
+    /// Get value of 'Analog_25'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -19718,7 +19718,7 @@ impl RtDl1mk3Analog25 {
     pub fn analog_25(&self) -> f32 {
         self.analog_25_raw()
     }
-    /// Get raw value of Analog_25
+    /// Get raw value of 'Analog_25'
     ///
     /// - Start bit: 7
     /// - Signal size: 16 bits
@@ -19733,7 +19733,7 @@ impl RtDl1mk3Analog25 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Analog_25
+    /// Set value of 'Analog_25'
     #[inline(always)]
     pub fn set_analog_25(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -19810,7 +19810,7 @@ impl RtDl1mk3Analog15 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_15_MIN: f32 = 0_f32;
     pub const ANALOG_15_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Analog_15 from values
+    /// Construct new 'RT_DL1MK3_Analog_15' from values
     pub fn new(analog_15: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_analog_15(analog_15)?;
@@ -19820,7 +19820,7 @@ impl RtDl1mk3Analog15 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Analog_15
+    /// Get value of 'Analog_15'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -19830,7 +19830,7 @@ impl RtDl1mk3Analog15 {
     pub fn analog_15(&self) -> f32 {
         self.analog_15_raw()
     }
-    /// Get raw value of Analog_15
+    /// Get raw value of 'Analog_15'
     ///
     /// - Start bit: 7
     /// - Signal size: 16 bits
@@ -19845,7 +19845,7 @@ impl RtDl1mk3Analog15 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Analog_15
+    /// Set value of 'Analog_15'
     #[inline(always)]
     pub fn set_analog_15(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -19922,7 +19922,7 @@ impl RtDl1mk3Analog14 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_14_MIN: f32 = 0_f32;
     pub const ANALOG_14_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Analog_14 from values
+    /// Construct new 'RT_DL1MK3_Analog_14' from values
     pub fn new(analog_14: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_analog_14(analog_14)?;
@@ -19932,7 +19932,7 @@ impl RtDl1mk3Analog14 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Analog_14
+    /// Get value of 'Analog_14'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -19942,7 +19942,7 @@ impl RtDl1mk3Analog14 {
     pub fn analog_14(&self) -> f32 {
         self.analog_14_raw()
     }
-    /// Get raw value of Analog_14
+    /// Get raw value of 'Analog_14'
     ///
     /// - Start bit: 7
     /// - Signal size: 16 bits
@@ -19957,7 +19957,7 @@ impl RtDl1mk3Analog14 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Analog_14
+    /// Set value of 'Analog_14'
     #[inline(always)]
     pub fn set_analog_14(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -20034,7 +20034,7 @@ impl RtDl1mk3Analog17 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_17_MIN: f32 = 0_f32;
     pub const ANALOG_17_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Analog_17 from values
+    /// Construct new 'RT_DL1MK3_Analog_17' from values
     pub fn new(analog_17: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_analog_17(analog_17)?;
@@ -20044,7 +20044,7 @@ impl RtDl1mk3Analog17 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Analog_17
+    /// Get value of 'Analog_17'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -20054,7 +20054,7 @@ impl RtDl1mk3Analog17 {
     pub fn analog_17(&self) -> f32 {
         self.analog_17_raw()
     }
-    /// Get raw value of Analog_17
+    /// Get raw value of 'Analog_17'
     ///
     /// - Start bit: 7
     /// - Signal size: 16 bits
@@ -20069,7 +20069,7 @@ impl RtDl1mk3Analog17 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Analog_17
+    /// Set value of 'Analog_17'
     #[inline(always)]
     pub fn set_analog_17(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -20146,7 +20146,7 @@ impl RtDl1mk3Analog24 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_24_MIN: f32 = 0_f32;
     pub const ANALOG_24_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Analog_24 from values
+    /// Construct new 'RT_DL1MK3_Analog_24' from values
     pub fn new(analog_24: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_analog_24(analog_24)?;
@@ -20156,7 +20156,7 @@ impl RtDl1mk3Analog24 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Analog_24
+    /// Get value of 'Analog_24'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -20166,7 +20166,7 @@ impl RtDl1mk3Analog24 {
     pub fn analog_24(&self) -> f32 {
         self.analog_24_raw()
     }
-    /// Get raw value of Analog_24
+    /// Get raw value of 'Analog_24'
     ///
     /// - Start bit: 7
     /// - Signal size: 16 bits
@@ -20181,7 +20181,7 @@ impl RtDl1mk3Analog24 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Analog_24
+    /// Set value of 'Analog_24'
     #[inline(always)]
     pub fn set_analog_24(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -20258,7 +20258,7 @@ impl RtDl1mk3Analog23 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_23_MIN: f32 = 0_f32;
     pub const ANALOG_23_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Analog_23 from values
+    /// Construct new 'RT_DL1MK3_Analog_23' from values
     pub fn new(analog_23: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_analog_23(analog_23)?;
@@ -20268,7 +20268,7 @@ impl RtDl1mk3Analog23 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Analog_23
+    /// Get value of 'Analog_23'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -20278,7 +20278,7 @@ impl RtDl1mk3Analog23 {
     pub fn analog_23(&self) -> f32 {
         self.analog_23_raw()
     }
-    /// Get raw value of Analog_23
+    /// Get raw value of 'Analog_23'
     ///
     /// - Start bit: 7
     /// - Signal size: 16 bits
@@ -20293,7 +20293,7 @@ impl RtDl1mk3Analog23 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Analog_23
+    /// Set value of 'Analog_23'
     #[inline(always)]
     pub fn set_analog_23(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -20370,7 +20370,7 @@ impl RtDl1mk3Analog22 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_22_MIN: f32 = 0_f32;
     pub const ANALOG_22_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Analog_22 from values
+    /// Construct new 'RT_DL1MK3_Analog_22' from values
     pub fn new(analog_22: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_analog_22(analog_22)?;
@@ -20380,7 +20380,7 @@ impl RtDl1mk3Analog22 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Analog_22
+    /// Get value of 'Analog_22'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -20390,7 +20390,7 @@ impl RtDl1mk3Analog22 {
     pub fn analog_22(&self) -> f32 {
         self.analog_22_raw()
     }
-    /// Get raw value of Analog_22
+    /// Get raw value of 'Analog_22'
     ///
     /// - Start bit: 7
     /// - Signal size: 16 bits
@@ -20405,7 +20405,7 @@ impl RtDl1mk3Analog22 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Analog_22
+    /// Set value of 'Analog_22'
     #[inline(always)]
     pub fn set_analog_22(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -20482,7 +20482,7 @@ impl RtDl1mk3Analog21 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_21_MIN: f32 = 0_f32;
     pub const ANALOG_21_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Analog_21 from values
+    /// Construct new 'RT_DL1MK3_Analog_21' from values
     pub fn new(analog_21: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_analog_21(analog_21)?;
@@ -20492,7 +20492,7 @@ impl RtDl1mk3Analog21 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Analog_21
+    /// Get value of 'Analog_21'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -20502,7 +20502,7 @@ impl RtDl1mk3Analog21 {
     pub fn analog_21(&self) -> f32 {
         self.analog_21_raw()
     }
-    /// Get raw value of Analog_21
+    /// Get raw value of 'Analog_21'
     ///
     /// - Start bit: 7
     /// - Signal size: 16 bits
@@ -20517,7 +20517,7 @@ impl RtDl1mk3Analog21 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Analog_21
+    /// Set value of 'Analog_21'
     #[inline(always)]
     pub fn set_analog_21(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -20594,7 +20594,7 @@ impl RtDl1mk3Analog20 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_20_MIN: f32 = 0_f32;
     pub const ANALOG_20_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Analog_20 from values
+    /// Construct new 'RT_DL1MK3_Analog_20' from values
     pub fn new(analog_20: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_analog_20(analog_20)?;
@@ -20604,7 +20604,7 @@ impl RtDl1mk3Analog20 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Analog_20
+    /// Get value of 'Analog_20'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -20614,7 +20614,7 @@ impl RtDl1mk3Analog20 {
     pub fn analog_20(&self) -> f32 {
         self.analog_20_raw()
     }
-    /// Get raw value of Analog_20
+    /// Get raw value of 'Analog_20'
     ///
     /// - Start bit: 7
     /// - Signal size: 16 bits
@@ -20629,7 +20629,7 @@ impl RtDl1mk3Analog20 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Analog_20
+    /// Set value of 'Analog_20'
     #[inline(always)]
     pub fn set_analog_20(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -20706,7 +20706,7 @@ impl RtDl1mk3Analog19 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_19_MIN: f32 = 0_f32;
     pub const ANALOG_19_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Analog_19 from values
+    /// Construct new 'RT_DL1MK3_Analog_19' from values
     pub fn new(analog_19: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_analog_19(analog_19)?;
@@ -20716,7 +20716,7 @@ impl RtDl1mk3Analog19 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Analog_19
+    /// Get value of 'Analog_19'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -20726,7 +20726,7 @@ impl RtDl1mk3Analog19 {
     pub fn analog_19(&self) -> f32 {
         self.analog_19_raw()
     }
-    /// Get raw value of Analog_19
+    /// Get raw value of 'Analog_19'
     ///
     /// - Start bit: 7
     /// - Signal size: 16 bits
@@ -20741,7 +20741,7 @@ impl RtDl1mk3Analog19 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Analog_19
+    /// Set value of 'Analog_19'
     #[inline(always)]
     pub fn set_analog_19(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -20818,7 +20818,7 @@ impl RtDl1mk3Analog16 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_16_MIN: f32 = 0_f32;
     pub const ANALOG_16_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Analog_16 from values
+    /// Construct new 'RT_DL1MK3_Analog_16' from values
     pub fn new(analog_16: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_analog_16(analog_16)?;
@@ -20828,7 +20828,7 @@ impl RtDl1mk3Analog16 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Analog_16
+    /// Get value of 'Analog_16'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -20838,7 +20838,7 @@ impl RtDl1mk3Analog16 {
     pub fn analog_16(&self) -> f32 {
         self.analog_16_raw()
     }
-    /// Get raw value of Analog_16
+    /// Get raw value of 'Analog_16'
     ///
     /// - Start bit: 7
     /// - Signal size: 16 bits
@@ -20853,7 +20853,7 @@ impl RtDl1mk3Analog16 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Analog_16
+    /// Set value of 'Analog_16'
     #[inline(always)]
     pub fn set_analog_16(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -20930,7 +20930,7 @@ impl RtDl1mk3Analog18 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_18_MIN: f32 = 0_f32;
     pub const ANALOG_18_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Analog_18 from values
+    /// Construct new 'RT_DL1MK3_Analog_18' from values
     pub fn new(analog_18: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_analog_18(analog_18)?;
@@ -20940,7 +20940,7 @@ impl RtDl1mk3Analog18 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Analog_18
+    /// Get value of 'Analog_18'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -20950,7 +20950,7 @@ impl RtDl1mk3Analog18 {
     pub fn analog_18(&self) -> f32 {
         self.analog_18_raw()
     }
-    /// Get raw value of Analog_18
+    /// Get raw value of 'Analog_18'
     ///
     /// - Start bit: 7
     /// - Signal size: 16 bits
@@ -20965,7 +20965,7 @@ impl RtDl1mk3Analog18 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Analog_18
+    /// Set value of 'Analog_18'
     #[inline(always)]
     pub fn set_analog_18(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -21042,7 +21042,7 @@ impl RtDl1mk3Analog12 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_12_MIN: f32 = 0_f32;
     pub const ANALOG_12_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Analog_12 from values
+    /// Construct new 'RT_DL1MK3_Analog_12' from values
     pub fn new(analog_12: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_analog_12(analog_12)?;
@@ -21052,7 +21052,7 @@ impl RtDl1mk3Analog12 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Analog_12
+    /// Get value of 'Analog_12'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -21062,7 +21062,7 @@ impl RtDl1mk3Analog12 {
     pub fn analog_12(&self) -> f32 {
         self.analog_12_raw()
     }
-    /// Get raw value of Analog_12
+    /// Get raw value of 'Analog_12'
     ///
     /// - Start bit: 7
     /// - Signal size: 16 bits
@@ -21077,7 +21077,7 @@ impl RtDl1mk3Analog12 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Analog_12
+    /// Set value of 'Analog_12'
     #[inline(always)]
     pub fn set_analog_12(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -21154,7 +21154,7 @@ impl RtDl1mk3Analog11 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_11_MIN: f32 = 0_f32;
     pub const ANALOG_11_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Analog_11 from values
+    /// Construct new 'RT_DL1MK3_Analog_11' from values
     pub fn new(analog_11: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_analog_11(analog_11)?;
@@ -21164,7 +21164,7 @@ impl RtDl1mk3Analog11 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Analog_11
+    /// Get value of 'Analog_11'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -21174,7 +21174,7 @@ impl RtDl1mk3Analog11 {
     pub fn analog_11(&self) -> f32 {
         self.analog_11_raw()
     }
-    /// Get raw value of Analog_11
+    /// Get raw value of 'Analog_11'
     ///
     /// - Start bit: 7
     /// - Signal size: 16 bits
@@ -21189,7 +21189,7 @@ impl RtDl1mk3Analog11 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Analog_11
+    /// Set value of 'Analog_11'
     #[inline(always)]
     pub fn set_analog_11(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -21266,7 +21266,7 @@ impl RtDl1mk3Analog10 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_10_MIN: f32 = 0_f32;
     pub const ANALOG_10_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Analog_10 from values
+    /// Construct new 'RT_DL1MK3_Analog_10' from values
     pub fn new(analog_10: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_analog_10(analog_10)?;
@@ -21276,7 +21276,7 @@ impl RtDl1mk3Analog10 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Analog_10
+    /// Get value of 'Analog_10'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -21286,7 +21286,7 @@ impl RtDl1mk3Analog10 {
     pub fn analog_10(&self) -> f32 {
         self.analog_10_raw()
     }
-    /// Get raw value of Analog_10
+    /// Get raw value of 'Analog_10'
     ///
     /// - Start bit: 7
     /// - Signal size: 16 bits
@@ -21301,7 +21301,7 @@ impl RtDl1mk3Analog10 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Analog_10
+    /// Set value of 'Analog_10'
     #[inline(always)]
     pub fn set_analog_10(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -21378,7 +21378,7 @@ impl RtDl1mk3Analog9 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_9_MIN: f32 = 0_f32;
     pub const ANALOG_9_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Analog_9 from values
+    /// Construct new 'RT_DL1MK3_Analog_9' from values
     pub fn new(analog_9: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_analog_9(analog_9)?;
@@ -21388,7 +21388,7 @@ impl RtDl1mk3Analog9 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Analog_9
+    /// Get value of 'Analog_9'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -21398,7 +21398,7 @@ impl RtDl1mk3Analog9 {
     pub fn analog_9(&self) -> f32 {
         self.analog_9_raw()
     }
-    /// Get raw value of Analog_9
+    /// Get raw value of 'Analog_9'
     ///
     /// - Start bit: 7
     /// - Signal size: 16 bits
@@ -21413,7 +21413,7 @@ impl RtDl1mk3Analog9 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Analog_9
+    /// Set value of 'Analog_9'
     #[inline(always)]
     pub fn set_analog_9(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -21490,7 +21490,7 @@ impl RtDl1mk3Analog8 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_8_MIN: f32 = 0_f32;
     pub const ANALOG_8_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Analog_8 from values
+    /// Construct new 'RT_DL1MK3_Analog_8' from values
     pub fn new(analog_8: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_analog_8(analog_8)?;
@@ -21500,7 +21500,7 @@ impl RtDl1mk3Analog8 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Analog_8
+    /// Get value of 'Analog_8'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -21510,7 +21510,7 @@ impl RtDl1mk3Analog8 {
     pub fn analog_8(&self) -> f32 {
         self.analog_8_raw()
     }
-    /// Get raw value of Analog_8
+    /// Get raw value of 'Analog_8'
     ///
     /// - Start bit: 7
     /// - Signal size: 16 bits
@@ -21525,7 +21525,7 @@ impl RtDl1mk3Analog8 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Analog_8
+    /// Set value of 'Analog_8'
     #[inline(always)]
     pub fn set_analog_8(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -21602,7 +21602,7 @@ impl RtDl1mk3Analog7 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_7_MIN: f32 = 0_f32;
     pub const ANALOG_7_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Analog_7 from values
+    /// Construct new 'RT_DL1MK3_Analog_7' from values
     pub fn new(analog_7: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_analog_7(analog_7)?;
@@ -21612,7 +21612,7 @@ impl RtDl1mk3Analog7 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Analog_7
+    /// Get value of 'Analog_7'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -21622,7 +21622,7 @@ impl RtDl1mk3Analog7 {
     pub fn analog_7(&self) -> f32 {
         self.analog_7_raw()
     }
-    /// Get raw value of Analog_7
+    /// Get raw value of 'Analog_7'
     ///
     /// - Start bit: 7
     /// - Signal size: 16 bits
@@ -21637,7 +21637,7 @@ impl RtDl1mk3Analog7 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Analog_7
+    /// Set value of 'Analog_7'
     #[inline(always)]
     pub fn set_analog_7(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -21714,7 +21714,7 @@ impl RtDl1mk3Analog6 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_6_MIN: f32 = 0_f32;
     pub const ANALOG_6_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Analog_6 from values
+    /// Construct new 'RT_DL1MK3_Analog_6' from values
     pub fn new(analog_6: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_analog_6(analog_6)?;
@@ -21724,7 +21724,7 @@ impl RtDl1mk3Analog6 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Analog_6
+    /// Get value of 'Analog_6'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -21734,7 +21734,7 @@ impl RtDl1mk3Analog6 {
     pub fn analog_6(&self) -> f32 {
         self.analog_6_raw()
     }
-    /// Get raw value of Analog_6
+    /// Get raw value of 'Analog_6'
     ///
     /// - Start bit: 7
     /// - Signal size: 16 bits
@@ -21749,7 +21749,7 @@ impl RtDl1mk3Analog6 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Analog_6
+    /// Set value of 'Analog_6'
     #[inline(always)]
     pub fn set_analog_6(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -21826,7 +21826,7 @@ impl RtDl1mk3Analog5 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_5_MIN: f32 = 0_f32;
     pub const ANALOG_5_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Analog_5 from values
+    /// Construct new 'RT_DL1MK3_Analog_5' from values
     pub fn new(analog_5: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_analog_5(analog_5)?;
@@ -21836,7 +21836,7 @@ impl RtDl1mk3Analog5 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Analog_5
+    /// Get value of 'Analog_5'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -21846,7 +21846,7 @@ impl RtDl1mk3Analog5 {
     pub fn analog_5(&self) -> f32 {
         self.analog_5_raw()
     }
-    /// Get raw value of Analog_5
+    /// Get raw value of 'Analog_5'
     ///
     /// - Start bit: 7
     /// - Signal size: 16 bits
@@ -21861,7 +21861,7 @@ impl RtDl1mk3Analog5 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Analog_5
+    /// Set value of 'Analog_5'
     #[inline(always)]
     pub fn set_analog_5(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -21938,7 +21938,7 @@ impl RtDl1mk3Analog4 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_4_MIN: f32 = 0_f32;
     pub const ANALOG_4_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Analog_4 from values
+    /// Construct new 'RT_DL1MK3_Analog_4' from values
     pub fn new(analog_4: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_analog_4(analog_4)?;
@@ -21948,7 +21948,7 @@ impl RtDl1mk3Analog4 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Analog_4
+    /// Get value of 'Analog_4'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -21958,7 +21958,7 @@ impl RtDl1mk3Analog4 {
     pub fn analog_4(&self) -> f32 {
         self.analog_4_raw()
     }
-    /// Get raw value of Analog_4
+    /// Get raw value of 'Analog_4'
     ///
     /// - Start bit: 7
     /// - Signal size: 16 bits
@@ -21973,7 +21973,7 @@ impl RtDl1mk3Analog4 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Analog_4
+    /// Set value of 'Analog_4'
     #[inline(always)]
     pub fn set_analog_4(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -22050,7 +22050,7 @@ impl RtDl1mk3Analog3 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_3_MIN: f32 = 0_f32;
     pub const ANALOG_3_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Analog_3 from values
+    /// Construct new 'RT_DL1MK3_Analog_3' from values
     pub fn new(analog_3: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_analog_3(analog_3)?;
@@ -22060,7 +22060,7 @@ impl RtDl1mk3Analog3 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Analog_3
+    /// Get value of 'Analog_3'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -22070,7 +22070,7 @@ impl RtDl1mk3Analog3 {
     pub fn analog_3(&self) -> f32 {
         self.analog_3_raw()
     }
-    /// Get raw value of Analog_3
+    /// Get raw value of 'Analog_3'
     ///
     /// - Start bit: 7
     /// - Signal size: 16 bits
@@ -22085,7 +22085,7 @@ impl RtDl1mk3Analog3 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Analog_3
+    /// Set value of 'Analog_3'
     #[inline(always)]
     pub fn set_analog_3(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -22162,7 +22162,7 @@ impl RtDl1mk3Analog2 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_2_MIN: f32 = 0_f32;
     pub const ANALOG_2_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Analog_2 from values
+    /// Construct new 'RT_DL1MK3_Analog_2' from values
     pub fn new(analog_2: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_analog_2(analog_2)?;
@@ -22172,7 +22172,7 @@ impl RtDl1mk3Analog2 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Analog_2
+    /// Get value of 'Analog_2'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -22182,7 +22182,7 @@ impl RtDl1mk3Analog2 {
     pub fn analog_2(&self) -> f32 {
         self.analog_2_raw()
     }
-    /// Get raw value of Analog_2
+    /// Get raw value of 'Analog_2'
     ///
     /// - Start bit: 7
     /// - Signal size: 16 bits
@@ -22197,7 +22197,7 @@ impl RtDl1mk3Analog2 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Analog_2
+    /// Set value of 'Analog_2'
     #[inline(always)]
     pub fn set_analog_2(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -22274,7 +22274,7 @@ impl RtDl1mk3Analog1 {
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_1_MIN: f32 = 0_f32;
     pub const ANALOG_1_MAX: f32 = 0_f32;
-    /// Construct new RT_DL1MK3_Analog_1 from values
+    /// Construct new 'RT_DL1MK3_Analog_1' from values
     pub fn new(analog_1: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 2] };
         res.set_analog_1(analog_1)?;
@@ -22284,7 +22284,7 @@ impl RtDl1mk3Analog1 {
     pub fn raw(&self) -> &[u8; 2] {
         &self.raw
     }
-    /// Analog_1
+    /// Get value of 'Analog_1'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -22294,7 +22294,7 @@ impl RtDl1mk3Analog1 {
     pub fn analog_1(&self) -> f32 {
         self.analog_1_raw()
     }
-    /// Get raw value of Analog_1
+    /// Get raw value of 'Analog_1'
     ///
     /// - Start bit: 7
     /// - Signal size: 16 bits
@@ -22309,7 +22309,7 @@ impl RtDl1mk3Analog1 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Analog_1
+    /// Set value of 'Analog_1'
     #[inline(always)]
     pub fn set_analog_1(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 0_f32 < value {
@@ -22392,7 +22392,7 @@ impl RtDl1mk3Accel {
     pub const ACCEL_LONGITUDINAL_MAX: f32 = 65_f32;
     pub const ACCURACY_ACCEL_MIN: u8 = 0_u8;
     pub const ACCURACY_ACCEL_MAX: u8 = 255_u8;
-    /// Construct new RT_DL1MK3_Accel from values
+    /// Construct new 'RT_DL1MK3_Accel' from values
     pub fn new(
         accel_vertical: f32,
         accel_lateral: f32,
@@ -22416,7 +22416,7 @@ impl RtDl1mk3Accel {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// Accel_Vertical
+    /// Get value of 'Accel_Vertical'
     ///
     /// Vertical acceleration.  This is positive when the vehicle accelerates in an upwards direction, e.g. when travelling through a dip.
     ///
@@ -22428,7 +22428,7 @@ impl RtDl1mk3Accel {
     pub fn accel_vertical(&self) -> f32 {
         self.accel_vertical_raw()
     }
-    /// Get raw value of Accel_Vertical
+    /// Get raw value of 'Accel_Vertical'
     ///
     /// - Start bit: 48
     /// - Signal size: 16 bits
@@ -22443,7 +22443,7 @@ impl RtDl1mk3Accel {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Accel_Vertical
+    /// Set value of 'Accel_Vertical'
     #[inline(always)]
     pub fn set_accel_vertical(&mut self, value: f32) -> Result<(), CanError> {
         if value < -65_f32 || 65_f32 < value {
@@ -22458,7 +22458,7 @@ impl RtDl1mk3Accel {
         self.raw.view_bits_mut::<Lsb0>()[48..64].store_le(value);
         Ok(())
     }
-    /// Accel_Lateral
+    /// Get value of 'Accel_Lateral'
     ///
     /// Lateral acceleration.  This is positive when the vehicle accelerates towards the right, e.g. when cornering around a right-hand bend.
     ///
@@ -22470,7 +22470,7 @@ impl RtDl1mk3Accel {
     pub fn accel_lateral(&self) -> f32 {
         self.accel_lateral_raw()
     }
-    /// Get raw value of Accel_Lateral
+    /// Get raw value of 'Accel_Lateral'
     ///
     /// - Start bit: 32
     /// - Signal size: 16 bits
@@ -22485,7 +22485,7 @@ impl RtDl1mk3Accel {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Accel_Lateral
+    /// Set value of 'Accel_Lateral'
     #[inline(always)]
     pub fn set_accel_lateral(&mut self, value: f32) -> Result<(), CanError> {
         if value < -65_f32 || 65_f32 < value {
@@ -22500,7 +22500,7 @@ impl RtDl1mk3Accel {
         self.raw.view_bits_mut::<Lsb0>()[32..48].store_le(value);
         Ok(())
     }
-    /// Accel_Longitudinal
+    /// Get value of 'Accel_Longitudinal'
     ///
     /// Longitudinal acceleration.  This is positive when the vehicle accelerates in a forwards direction.
     ///
@@ -22512,7 +22512,7 @@ impl RtDl1mk3Accel {
     pub fn accel_longitudinal(&self) -> f32 {
         self.accel_longitudinal_raw()
     }
-    /// Get raw value of Accel_Longitudinal
+    /// Get raw value of 'Accel_Longitudinal'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -22527,7 +22527,7 @@ impl RtDl1mk3Accel {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Accel_Longitudinal
+    /// Set value of 'Accel_Longitudinal'
     #[inline(always)]
     pub fn set_accel_longitudinal(&mut self, value: f32) -> Result<(), CanError> {
         if value < -65_f32 || 65_f32 < value {
@@ -22542,7 +22542,7 @@ impl RtDl1mk3Accel {
         self.raw.view_bits_mut::<Lsb0>()[16..32].store_le(value);
         Ok(())
     }
-    /// Accuracy_Accel
+    /// Get value of 'Accuracy_Accel'
     ///
     /// Dimensionless.  Lower values imply but do not guarantee better accuracy than higher values.
     ///
@@ -22554,7 +22554,7 @@ impl RtDl1mk3Accel {
     pub fn accuracy_accel(&self) -> u8 {
         self.accuracy_accel_raw()
     }
-    /// Get raw value of Accuracy_Accel
+    /// Get raw value of 'Accuracy_Accel'
     ///
     /// - Start bit: 8
     /// - Signal size: 8 bits
@@ -22568,7 +22568,7 @@ impl RtDl1mk3Accel {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Accuracy_Accel
+    /// Set value of 'Accuracy_Accel'
     #[inline(always)]
     pub fn set_accuracy_accel(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 255_u8 < value {
@@ -22586,7 +22586,7 @@ impl RtDl1mk3Accel {
         self.raw.view_bits_mut::<Lsb0>()[8..16].store_le(value);
         Ok(())
     }
-    /// Validity_Accel_Vertical
+    /// Get value of 'Validity_Accel_Vertical'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -22598,7 +22598,7 @@ impl RtDl1mk3Accel {
     pub fn validity_accel_vertical(&self) -> bool {
         self.validity_accel_vertical_raw()
     }
-    /// Get raw value of Validity_Accel_Vertical
+    /// Get raw value of 'Validity_Accel_Vertical'
     ///
     /// - Start bit: 2
     /// - Signal size: 1 bits
@@ -22611,14 +22611,14 @@ impl RtDl1mk3Accel {
         let signal = self.raw.view_bits::<Lsb0>()[2..3].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_Accel_Vertical
+    /// Set value of 'Validity_Accel_Vertical'
     #[inline(always)]
     pub fn set_validity_accel_vertical(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[2..3].store_le(value);
         Ok(())
     }
-    /// Validity_Accel_Lateral
+    /// Get value of 'Validity_Accel_Lateral'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -22630,7 +22630,7 @@ impl RtDl1mk3Accel {
     pub fn validity_accel_lateral(&self) -> bool {
         self.validity_accel_lateral_raw()
     }
-    /// Get raw value of Validity_Accel_Lateral
+    /// Get raw value of 'Validity_Accel_Lateral'
     ///
     /// - Start bit: 1
     /// - Signal size: 1 bits
@@ -22643,14 +22643,14 @@ impl RtDl1mk3Accel {
         let signal = self.raw.view_bits::<Lsb0>()[1..2].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_Accel_Lateral
+    /// Set value of 'Validity_Accel_Lateral'
     #[inline(always)]
     pub fn set_validity_accel_lateral(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[1..2].store_le(value);
         Ok(())
     }
-    /// Validity_Accel_Longitudinal
+    /// Get value of 'Validity_Accel_Longitudinal'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -22662,7 +22662,7 @@ impl RtDl1mk3Accel {
     pub fn validity_accel_longitudinal(&self) -> bool {
         self.validity_accel_longitudinal_raw()
     }
-    /// Get raw value of Validity_Accel_Longitudinal
+    /// Get raw value of 'Validity_Accel_Longitudinal'
     ///
     /// - Start bit: 0
     /// - Signal size: 1 bits
@@ -22675,7 +22675,7 @@ impl RtDl1mk3Accel {
         let signal = self.raw.view_bits::<Lsb0>()[0..1].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_Accel_Longitudinal
+    /// Set value of 'Validity_Accel_Longitudinal'
     #[inline(always)]
     pub fn set_validity_accel_longitudinal(
         &mut self,
@@ -22752,7 +22752,7 @@ impl RtSbInsVpt4VelNed2 {
     pub const VIRTUAL_4_HEADING_MAX: f32 = 180_f32;
     pub const VIRTUAL_4_VEL_NED_D_MIN: f32 = -838_f32;
     pub const VIRTUAL_4_VEL_NED_D_MAX: f32 = 838_f32;
-    /// Construct new RT_SB_INS_Vpt_4_Vel_NED_2 from values
+    /// Construct new 'RT_SB_INS_Vpt_4_Vel_NED_2' from values
     pub fn new(
         virtual_4_slip: f32,
         virtual_4_heading: f32,
@@ -22768,7 +22768,7 @@ impl RtSbInsVpt4VelNed2 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// Virtual_4_Slip
+    /// Get value of 'Virtual_4_Slip'
     ///
     /// Slip is defined as the difference between yaw and heading.
     ///
@@ -22780,7 +22780,7 @@ impl RtSbInsVpt4VelNed2 {
     pub fn virtual_4_slip(&self) -> f32 {
         self.virtual_4_slip_raw()
     }
-    /// Get raw value of Virtual_4_Slip
+    /// Get raw value of 'Virtual_4_Slip'
     ///
     /// - Start bit: 48
     /// - Signal size: 16 bits
@@ -22795,7 +22795,7 @@ impl RtSbInsVpt4VelNed2 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Virtual_4_Slip
+    /// Set value of 'Virtual_4_Slip'
     #[inline(always)]
     pub fn set_virtual_4_slip(&mut self, value: f32) -> Result<(), CanError> {
         if value < -180_f32 || 180_f32 < value {
@@ -22810,7 +22810,7 @@ impl RtSbInsVpt4VelNed2 {
         self.raw.view_bits_mut::<Lsb0>()[48..64].store_le(value);
         Ok(())
     }
-    /// Virtual_4_Heading
+    /// Get value of 'Virtual_4_Heading'
     ///
     /// This is GPS heading, the direction that the vehicle is travelling in the local horizontal plane.
     ///
@@ -22822,7 +22822,7 @@ impl RtSbInsVpt4VelNed2 {
     pub fn virtual_4_heading(&self) -> f32 {
         self.virtual_4_heading_raw()
     }
-    /// Get raw value of Virtual_4_Heading
+    /// Get raw value of 'Virtual_4_Heading'
     ///
     /// - Start bit: 32
     /// - Signal size: 16 bits
@@ -22837,7 +22837,7 @@ impl RtSbInsVpt4VelNed2 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Virtual_4_Heading
+    /// Set value of 'Virtual_4_Heading'
     #[inline(always)]
     pub fn set_virtual_4_heading(&mut self, value: f32) -> Result<(), CanError> {
         if value < -180_f32 || 180_f32 < value {
@@ -22852,7 +22852,7 @@ impl RtSbInsVpt4VelNed2 {
         self.raw.view_bits_mut::<Lsb0>()[32..48].store_le(value);
         Ok(())
     }
-    /// Virtual_4_Vel_NED_D
+    /// Get value of 'Virtual_4_Vel_NED_D'
     ///
     /// VELNED D velocity.  This is the velocity vector directly downwards towards the Earth centre at the current local Earth surface position.
     ///
@@ -22864,7 +22864,7 @@ impl RtSbInsVpt4VelNed2 {
     pub fn virtual_4_vel_ned_d(&self) -> f32 {
         self.virtual_4_vel_ned_d_raw()
     }
-    /// Get raw value of Virtual_4_Vel_NED_D
+    /// Get raw value of 'Virtual_4_Vel_NED_D'
     ///
     /// - Start bit: 0
     /// - Signal size: 24 bits
@@ -22879,7 +22879,7 @@ impl RtSbInsVpt4VelNed2 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Virtual_4_Vel_NED_D
+    /// Set value of 'Virtual_4_Vel_NED_D'
     #[inline(always)]
     pub fn set_virtual_4_vel_ned_d(&mut self, value: f32) -> Result<(), CanError> {
         if value < -838_f32 || 838_f32 < value {
@@ -22959,7 +22959,7 @@ impl RtSbInsVpt4VelNed1 {
     pub const VIRTUAL_4_VEL_NED_E_MAX: f32 = 838_f32;
     pub const VIRTUAL_4_VEL_NED_N_MIN: f32 = -838_f32;
     pub const VIRTUAL_4_VEL_NED_N_MAX: f32 = 838_f32;
-    /// Construct new RT_SB_INS_Vpt_4_Vel_NED_1 from values
+    /// Construct new 'RT_SB_INS_Vpt_4_Vel_NED_1' from values
     pub fn new(
         virtual_4_vel_ned_e: f32,
         virtual_4_vel_ned_n: f32,
@@ -22973,7 +22973,7 @@ impl RtSbInsVpt4VelNed1 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// Virtual_4_Vel_NED_E
+    /// Get value of 'Virtual_4_Vel_NED_E'
     ///
     /// VELNED E velocity.  This is the velocity vector directly East at the current local Earth surface position.
     ///
@@ -22985,7 +22985,7 @@ impl RtSbInsVpt4VelNed1 {
     pub fn virtual_4_vel_ned_e(&self) -> f32 {
         self.virtual_4_vel_ned_e_raw()
     }
-    /// Get raw value of Virtual_4_Vel_NED_E
+    /// Get raw value of 'Virtual_4_Vel_NED_E'
     ///
     /// - Start bit: 32
     /// - Signal size: 24 bits
@@ -23000,7 +23000,7 @@ impl RtSbInsVpt4VelNed1 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Virtual_4_Vel_NED_E
+    /// Set value of 'Virtual_4_Vel_NED_E'
     #[inline(always)]
     pub fn set_virtual_4_vel_ned_e(&mut self, value: f32) -> Result<(), CanError> {
         if value < -838_f32 || 838_f32 < value {
@@ -23015,7 +23015,7 @@ impl RtSbInsVpt4VelNed1 {
         self.raw.view_bits_mut::<Lsb0>()[32..56].store_le(value);
         Ok(())
     }
-    /// Virtual_4_Vel_NED_N
+    /// Get value of 'Virtual_4_Vel_NED_N'
     ///
     /// VELNED N velocity.  This is the velocity vector directly North at the current local Earth surface position.
     ///
@@ -23027,7 +23027,7 @@ impl RtSbInsVpt4VelNed1 {
     pub fn virtual_4_vel_ned_n(&self) -> f32 {
         self.virtual_4_vel_ned_n_raw()
     }
-    /// Get raw value of Virtual_4_Vel_NED_N
+    /// Get raw value of 'Virtual_4_Vel_NED_N'
     ///
     /// - Start bit: 0
     /// - Signal size: 24 bits
@@ -23042,7 +23042,7 @@ impl RtSbInsVpt4VelNed1 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Virtual_4_Vel_NED_N
+    /// Set value of 'Virtual_4_Vel_NED_N'
     #[inline(always)]
     pub fn set_virtual_4_vel_ned_n(&mut self, value: f32) -> Result<(), CanError> {
         if value < -838_f32 || 838_f32 < value {
@@ -23124,7 +23124,7 @@ impl RtSbInsVpt4Offset {
     pub const VIRTUAL_4_OFFSET_Y_MAX: f32 = 32.767_f32;
     pub const VIRTUAL_4_OFFSET_X_MIN: f32 = -32.768_f32;
     pub const VIRTUAL_4_OFFSET_X_MAX: f32 = 32.767_f32;
-    /// Construct new RT_SB_INS_Vpt_4_Offset from values
+    /// Construct new 'RT_SB_INS_Vpt_4_Offset' from values
     pub fn new(
         virtual_4_offset_z: f32,
         virtual_4_offset_y: f32,
@@ -23140,7 +23140,7 @@ impl RtSbInsVpt4Offset {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// Virtual_4_Offset_Z
+    /// Get value of 'Virtual_4_Offset_Z'
     ///
     /// Z offset (+ve downwards) of the virtual point in the vehicle body frame.
     ///
@@ -23152,7 +23152,7 @@ impl RtSbInsVpt4Offset {
     pub fn virtual_4_offset_z(&self) -> f32 {
         self.virtual_4_offset_z_raw()
     }
-    /// Get raw value of Virtual_4_Offset_Z
+    /// Get raw value of 'Virtual_4_Offset_Z'
     ///
     /// - Start bit: 32
     /// - Signal size: 16 bits
@@ -23167,7 +23167,7 @@ impl RtSbInsVpt4Offset {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Virtual_4_Offset_Z
+    /// Set value of 'Virtual_4_Offset_Z'
     #[inline(always)]
     pub fn set_virtual_4_offset_z(&mut self, value: f32) -> Result<(), CanError> {
         if value < -32.768_f32 || 32.767_f32 < value {
@@ -23182,7 +23182,7 @@ impl RtSbInsVpt4Offset {
         self.raw.view_bits_mut::<Lsb0>()[32..48].store_le(value);
         Ok(())
     }
-    /// Virtual_4_Offset_Y
+    /// Get value of 'Virtual_4_Offset_Y'
     ///
     /// Y offset of the virtual point in the vehicle body frame.
     ///
@@ -23194,7 +23194,7 @@ impl RtSbInsVpt4Offset {
     pub fn virtual_4_offset_y(&self) -> f32 {
         self.virtual_4_offset_y_raw()
     }
-    /// Get raw value of Virtual_4_Offset_Y
+    /// Get raw value of 'Virtual_4_Offset_Y'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -23209,7 +23209,7 @@ impl RtSbInsVpt4Offset {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Virtual_4_Offset_Y
+    /// Set value of 'Virtual_4_Offset_Y'
     #[inline(always)]
     pub fn set_virtual_4_offset_y(&mut self, value: f32) -> Result<(), CanError> {
         if value < -32.768_f32 || 32.767_f32 < value {
@@ -23224,7 +23224,7 @@ impl RtSbInsVpt4Offset {
         self.raw.view_bits_mut::<Lsb0>()[16..32].store_le(value);
         Ok(())
     }
-    /// Virtual_4_Offset_X
+    /// Get value of 'Virtual_4_Offset_X'
     ///
     /// X offset of the virtual point in the vehicle body frame.
     ///
@@ -23236,7 +23236,7 @@ impl RtSbInsVpt4Offset {
     pub fn virtual_4_offset_x(&self) -> f32 {
         self.virtual_4_offset_x_raw()
     }
-    /// Get raw value of Virtual_4_Offset_X
+    /// Get raw value of 'Virtual_4_Offset_X'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -23251,7 +23251,7 @@ impl RtSbInsVpt4Offset {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Virtual_4_Offset_X
+    /// Set value of 'Virtual_4_Offset_X'
     #[inline(always)]
     pub fn set_virtual_4_offset_x(&mut self, value: f32) -> Result<(), CanError> {
         if value < -32.768_f32 || 32.767_f32 < value {
@@ -23333,7 +23333,7 @@ impl RtSbInsVpt3VelNed2 {
     pub const VIRTUAL_3_HEADING_MAX: f32 = 180_f32;
     pub const VIRTUAL_3_VEL_NED_D_MIN: f32 = -838_f32;
     pub const VIRTUAL_3_VEL_NED_D_MAX: f32 = 838_f32;
-    /// Construct new RT_SB_INS_Vpt_3_Vel_NED_2 from values
+    /// Construct new 'RT_SB_INS_Vpt_3_Vel_NED_2' from values
     pub fn new(
         virtual_3_slip: f32,
         virtual_3_heading: f32,
@@ -23349,7 +23349,7 @@ impl RtSbInsVpt3VelNed2 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// Virtual_3_Slip
+    /// Get value of 'Virtual_3_Slip'
     ///
     /// Slip is defined as the difference between yaw and heading.
     ///
@@ -23361,7 +23361,7 @@ impl RtSbInsVpt3VelNed2 {
     pub fn virtual_3_slip(&self) -> f32 {
         self.virtual_3_slip_raw()
     }
-    /// Get raw value of Virtual_3_Slip
+    /// Get raw value of 'Virtual_3_Slip'
     ///
     /// - Start bit: 48
     /// - Signal size: 16 bits
@@ -23376,7 +23376,7 @@ impl RtSbInsVpt3VelNed2 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Virtual_3_Slip
+    /// Set value of 'Virtual_3_Slip'
     #[inline(always)]
     pub fn set_virtual_3_slip(&mut self, value: f32) -> Result<(), CanError> {
         if value < -180_f32 || 180_f32 < value {
@@ -23391,7 +23391,7 @@ impl RtSbInsVpt3VelNed2 {
         self.raw.view_bits_mut::<Lsb0>()[48..64].store_le(value);
         Ok(())
     }
-    /// Virtual_3_Heading
+    /// Get value of 'Virtual_3_Heading'
     ///
     /// This is GPS heading, the direction that the vehicle is travelling in the local horizontal plane.
     ///
@@ -23403,7 +23403,7 @@ impl RtSbInsVpt3VelNed2 {
     pub fn virtual_3_heading(&self) -> f32 {
         self.virtual_3_heading_raw()
     }
-    /// Get raw value of Virtual_3_Heading
+    /// Get raw value of 'Virtual_3_Heading'
     ///
     /// - Start bit: 32
     /// - Signal size: 16 bits
@@ -23418,7 +23418,7 @@ impl RtSbInsVpt3VelNed2 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Virtual_3_Heading
+    /// Set value of 'Virtual_3_Heading'
     #[inline(always)]
     pub fn set_virtual_3_heading(&mut self, value: f32) -> Result<(), CanError> {
         if value < -180_f32 || 180_f32 < value {
@@ -23433,7 +23433,7 @@ impl RtSbInsVpt3VelNed2 {
         self.raw.view_bits_mut::<Lsb0>()[32..48].store_le(value);
         Ok(())
     }
-    /// Virtual_3_Vel_NED_D
+    /// Get value of 'Virtual_3_Vel_NED_D'
     ///
     /// VELNED D velocity.  This is the velocity vector directly downwards towards the Earth centre at the current local Earth surface position.
     ///
@@ -23445,7 +23445,7 @@ impl RtSbInsVpt3VelNed2 {
     pub fn virtual_3_vel_ned_d(&self) -> f32 {
         self.virtual_3_vel_ned_d_raw()
     }
-    /// Get raw value of Virtual_3_Vel_NED_D
+    /// Get raw value of 'Virtual_3_Vel_NED_D'
     ///
     /// - Start bit: 0
     /// - Signal size: 24 bits
@@ -23460,7 +23460,7 @@ impl RtSbInsVpt3VelNed2 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Virtual_3_Vel_NED_D
+    /// Set value of 'Virtual_3_Vel_NED_D'
     #[inline(always)]
     pub fn set_virtual_3_vel_ned_d(&mut self, value: f32) -> Result<(), CanError> {
         if value < -838_f32 || 838_f32 < value {
@@ -23540,7 +23540,7 @@ impl RtSbInsVpt3VelNed1 {
     pub const VIRTUAL_3_VEL_NED_E_MAX: f32 = 838_f32;
     pub const VIRTUAL_3_VEL_NED_N_MIN: f32 = -838_f32;
     pub const VIRTUAL_3_VEL_NED_N_MAX: f32 = 838_f32;
-    /// Construct new RT_SB_INS_Vpt_3_Vel_NED_1 from values
+    /// Construct new 'RT_SB_INS_Vpt_3_Vel_NED_1' from values
     pub fn new(
         virtual_3_vel_ned_e: f32,
         virtual_3_vel_ned_n: f32,
@@ -23554,7 +23554,7 @@ impl RtSbInsVpt3VelNed1 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// Virtual_3_Vel_NED_E
+    /// Get value of 'Virtual_3_Vel_NED_E'
     ///
     /// VELNED E velocity.  This is the velocity vector directly East at the current local Earth surface position.
     ///
@@ -23566,7 +23566,7 @@ impl RtSbInsVpt3VelNed1 {
     pub fn virtual_3_vel_ned_e(&self) -> f32 {
         self.virtual_3_vel_ned_e_raw()
     }
-    /// Get raw value of Virtual_3_Vel_NED_E
+    /// Get raw value of 'Virtual_3_Vel_NED_E'
     ///
     /// - Start bit: 32
     /// - Signal size: 24 bits
@@ -23581,7 +23581,7 @@ impl RtSbInsVpt3VelNed1 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Virtual_3_Vel_NED_E
+    /// Set value of 'Virtual_3_Vel_NED_E'
     #[inline(always)]
     pub fn set_virtual_3_vel_ned_e(&mut self, value: f32) -> Result<(), CanError> {
         if value < -838_f32 || 838_f32 < value {
@@ -23596,7 +23596,7 @@ impl RtSbInsVpt3VelNed1 {
         self.raw.view_bits_mut::<Lsb0>()[32..56].store_le(value);
         Ok(())
     }
-    /// Virtual_3_Vel_NED_N
+    /// Get value of 'Virtual_3_Vel_NED_N'
     ///
     /// VELNED N velocity.  This is the velocity vector directly North at the current local Earth surface position.
     ///
@@ -23608,7 +23608,7 @@ impl RtSbInsVpt3VelNed1 {
     pub fn virtual_3_vel_ned_n(&self) -> f32 {
         self.virtual_3_vel_ned_n_raw()
     }
-    /// Get raw value of Virtual_3_Vel_NED_N
+    /// Get raw value of 'Virtual_3_Vel_NED_N'
     ///
     /// - Start bit: 0
     /// - Signal size: 24 bits
@@ -23623,7 +23623,7 @@ impl RtSbInsVpt3VelNed1 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Virtual_3_Vel_NED_N
+    /// Set value of 'Virtual_3_Vel_NED_N'
     #[inline(always)]
     pub fn set_virtual_3_vel_ned_n(&mut self, value: f32) -> Result<(), CanError> {
         if value < -838_f32 || 838_f32 < value {
@@ -23705,7 +23705,7 @@ impl RtSbInsVpt3Offset {
     pub const VIRTUAL_3_OFFSET_Y_MAX: f32 = 32.767_f32;
     pub const VIRTUAL_3_OFFSET_X_MIN: f32 = -32.768_f32;
     pub const VIRTUAL_3_OFFSET_X_MAX: f32 = 32.767_f32;
-    /// Construct new RT_SB_INS_Vpt_3_Offset from values
+    /// Construct new 'RT_SB_INS_Vpt_3_Offset' from values
     pub fn new(
         virtual_3_offset_z: f32,
         virtual_3_offset_y: f32,
@@ -23721,7 +23721,7 @@ impl RtSbInsVpt3Offset {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// Virtual_3_Offset_Z
+    /// Get value of 'Virtual_3_Offset_Z'
     ///
     /// Z offset (+ve downwards) of the virtual point in the vehicle body frame.
     ///
@@ -23733,7 +23733,7 @@ impl RtSbInsVpt3Offset {
     pub fn virtual_3_offset_z(&self) -> f32 {
         self.virtual_3_offset_z_raw()
     }
-    /// Get raw value of Virtual_3_Offset_Z
+    /// Get raw value of 'Virtual_3_Offset_Z'
     ///
     /// - Start bit: 32
     /// - Signal size: 16 bits
@@ -23748,7 +23748,7 @@ impl RtSbInsVpt3Offset {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Virtual_3_Offset_Z
+    /// Set value of 'Virtual_3_Offset_Z'
     #[inline(always)]
     pub fn set_virtual_3_offset_z(&mut self, value: f32) -> Result<(), CanError> {
         if value < -32.768_f32 || 32.767_f32 < value {
@@ -23763,7 +23763,7 @@ impl RtSbInsVpt3Offset {
         self.raw.view_bits_mut::<Lsb0>()[32..48].store_le(value);
         Ok(())
     }
-    /// Virtual_3_Offset_Y
+    /// Get value of 'Virtual_3_Offset_Y'
     ///
     /// Y offset of the virtual point in the vehicle body frame.
     ///
@@ -23775,7 +23775,7 @@ impl RtSbInsVpt3Offset {
     pub fn virtual_3_offset_y(&self) -> f32 {
         self.virtual_3_offset_y_raw()
     }
-    /// Get raw value of Virtual_3_Offset_Y
+    /// Get raw value of 'Virtual_3_Offset_Y'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -23790,7 +23790,7 @@ impl RtSbInsVpt3Offset {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Virtual_3_Offset_Y
+    /// Set value of 'Virtual_3_Offset_Y'
     #[inline(always)]
     pub fn set_virtual_3_offset_y(&mut self, value: f32) -> Result<(), CanError> {
         if value < -32.768_f32 || 32.767_f32 < value {
@@ -23805,7 +23805,7 @@ impl RtSbInsVpt3Offset {
         self.raw.view_bits_mut::<Lsb0>()[16..32].store_le(value);
         Ok(())
     }
-    /// Virtual_3_Offset_X
+    /// Get value of 'Virtual_3_Offset_X'
     ///
     /// X offset of the virtual point in the vehicle body frame.
     ///
@@ -23817,7 +23817,7 @@ impl RtSbInsVpt3Offset {
     pub fn virtual_3_offset_x(&self) -> f32 {
         self.virtual_3_offset_x_raw()
     }
-    /// Get raw value of Virtual_3_Offset_X
+    /// Get raw value of 'Virtual_3_Offset_X'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -23832,7 +23832,7 @@ impl RtSbInsVpt3Offset {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Virtual_3_Offset_X
+    /// Set value of 'Virtual_3_Offset_X'
     #[inline(always)]
     pub fn set_virtual_3_offset_x(&mut self, value: f32) -> Result<(), CanError> {
         if value < -32.768_f32 || 32.767_f32 < value {
@@ -23914,7 +23914,7 @@ impl RtSbInsVpt2VelNed2 {
     pub const VIRTUAL_2_HEADING_MAX: f32 = 180_f32;
     pub const VIRTUAL_2_VEL_NED_D_MIN: f32 = -838_f32;
     pub const VIRTUAL_2_VEL_NED_D_MAX: f32 = 838_f32;
-    /// Construct new RT_SB_INS_Vpt_2_Vel_NED_2 from values
+    /// Construct new 'RT_SB_INS_Vpt_2_Vel_NED_2' from values
     pub fn new(
         virtual_2_slip: f32,
         virtual_2_heading: f32,
@@ -23930,7 +23930,7 @@ impl RtSbInsVpt2VelNed2 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// Virtual_2_Slip
+    /// Get value of 'Virtual_2_Slip'
     ///
     /// Slip is defined as the difference between yaw and heading.
     ///
@@ -23942,7 +23942,7 @@ impl RtSbInsVpt2VelNed2 {
     pub fn virtual_2_slip(&self) -> f32 {
         self.virtual_2_slip_raw()
     }
-    /// Get raw value of Virtual_2_Slip
+    /// Get raw value of 'Virtual_2_Slip'
     ///
     /// - Start bit: 48
     /// - Signal size: 16 bits
@@ -23957,7 +23957,7 @@ impl RtSbInsVpt2VelNed2 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Virtual_2_Slip
+    /// Set value of 'Virtual_2_Slip'
     #[inline(always)]
     pub fn set_virtual_2_slip(&mut self, value: f32) -> Result<(), CanError> {
         if value < -180_f32 || 180_f32 < value {
@@ -23972,7 +23972,7 @@ impl RtSbInsVpt2VelNed2 {
         self.raw.view_bits_mut::<Lsb0>()[48..64].store_le(value);
         Ok(())
     }
-    /// Virtual_2_Heading
+    /// Get value of 'Virtual_2_Heading'
     ///
     /// This is GPS heading, the direction that the vehicle is travelling in the local horizontal plane.
     ///
@@ -23984,7 +23984,7 @@ impl RtSbInsVpt2VelNed2 {
     pub fn virtual_2_heading(&self) -> f32 {
         self.virtual_2_heading_raw()
     }
-    /// Get raw value of Virtual_2_Heading
+    /// Get raw value of 'Virtual_2_Heading'
     ///
     /// - Start bit: 32
     /// - Signal size: 16 bits
@@ -23999,7 +23999,7 @@ impl RtSbInsVpt2VelNed2 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Virtual_2_Heading
+    /// Set value of 'Virtual_2_Heading'
     #[inline(always)]
     pub fn set_virtual_2_heading(&mut self, value: f32) -> Result<(), CanError> {
         if value < -180_f32 || 180_f32 < value {
@@ -24014,7 +24014,7 @@ impl RtSbInsVpt2VelNed2 {
         self.raw.view_bits_mut::<Lsb0>()[32..48].store_le(value);
         Ok(())
     }
-    /// Virtual_2_Vel_NED_D
+    /// Get value of 'Virtual_2_Vel_NED_D'
     ///
     /// VELNED D velocity.  This is the velocity vector directly downwards towards the Earth centre at the current local Earth surface position.
     ///
@@ -24026,7 +24026,7 @@ impl RtSbInsVpt2VelNed2 {
     pub fn virtual_2_vel_ned_d(&self) -> f32 {
         self.virtual_2_vel_ned_d_raw()
     }
-    /// Get raw value of Virtual_2_Vel_NED_D
+    /// Get raw value of 'Virtual_2_Vel_NED_D'
     ///
     /// - Start bit: 0
     /// - Signal size: 24 bits
@@ -24041,7 +24041,7 @@ impl RtSbInsVpt2VelNed2 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Virtual_2_Vel_NED_D
+    /// Set value of 'Virtual_2_Vel_NED_D'
     #[inline(always)]
     pub fn set_virtual_2_vel_ned_d(&mut self, value: f32) -> Result<(), CanError> {
         if value < -838_f32 || 838_f32 < value {
@@ -24121,7 +24121,7 @@ impl RtSbInsVpt2VelNed1 {
     pub const VIRTUAL_2_VEL_NED_E_MAX: f32 = 838_f32;
     pub const VIRTUAL_2_VEL_NED_N_MIN: f32 = -838_f32;
     pub const VIRTUAL_2_VEL_NED_N_MAX: f32 = 838_f32;
-    /// Construct new RT_SB_INS_Vpt_2_Vel_NED_1 from values
+    /// Construct new 'RT_SB_INS_Vpt_2_Vel_NED_1' from values
     pub fn new(
         virtual_2_vel_ned_e: f32,
         virtual_2_vel_ned_n: f32,
@@ -24135,7 +24135,7 @@ impl RtSbInsVpt2VelNed1 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// Virtual_2_Vel_NED_E
+    /// Get value of 'Virtual_2_Vel_NED_E'
     ///
     /// VELNED E velocity.  This is the velocity vector directly East at the current local Earth surface position.
     ///
@@ -24147,7 +24147,7 @@ impl RtSbInsVpt2VelNed1 {
     pub fn virtual_2_vel_ned_e(&self) -> f32 {
         self.virtual_2_vel_ned_e_raw()
     }
-    /// Get raw value of Virtual_2_Vel_NED_E
+    /// Get raw value of 'Virtual_2_Vel_NED_E'
     ///
     /// - Start bit: 32
     /// - Signal size: 24 bits
@@ -24162,7 +24162,7 @@ impl RtSbInsVpt2VelNed1 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Virtual_2_Vel_NED_E
+    /// Set value of 'Virtual_2_Vel_NED_E'
     #[inline(always)]
     pub fn set_virtual_2_vel_ned_e(&mut self, value: f32) -> Result<(), CanError> {
         if value < -838_f32 || 838_f32 < value {
@@ -24177,7 +24177,7 @@ impl RtSbInsVpt2VelNed1 {
         self.raw.view_bits_mut::<Lsb0>()[32..56].store_le(value);
         Ok(())
     }
-    /// Virtual_2_Vel_NED_N
+    /// Get value of 'Virtual_2_Vel_NED_N'
     ///
     /// VELNED N velocity.  This is the velocity vector directly North at the current local Earth surface position.
     ///
@@ -24189,7 +24189,7 @@ impl RtSbInsVpt2VelNed1 {
     pub fn virtual_2_vel_ned_n(&self) -> f32 {
         self.virtual_2_vel_ned_n_raw()
     }
-    /// Get raw value of Virtual_2_Vel_NED_N
+    /// Get raw value of 'Virtual_2_Vel_NED_N'
     ///
     /// - Start bit: 0
     /// - Signal size: 24 bits
@@ -24204,7 +24204,7 @@ impl RtSbInsVpt2VelNed1 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Virtual_2_Vel_NED_N
+    /// Set value of 'Virtual_2_Vel_NED_N'
     #[inline(always)]
     pub fn set_virtual_2_vel_ned_n(&mut self, value: f32) -> Result<(), CanError> {
         if value < -838_f32 || 838_f32 < value {
@@ -24286,7 +24286,7 @@ impl RtSbInsVpt2Offset {
     pub const VIRTUAL_2_OFFSET_Y_MAX: f32 = 32.767_f32;
     pub const VIRTUAL_2_OFFSET_X_MIN: f32 = -32.768_f32;
     pub const VIRTUAL_2_OFFSET_X_MAX: f32 = 32.767_f32;
-    /// Construct new RT_SB_INS_Vpt_2_Offset from values
+    /// Construct new 'RT_SB_INS_Vpt_2_Offset' from values
     pub fn new(
         virtual_2_offset_z: f32,
         virtual_2_offset_y: f32,
@@ -24302,7 +24302,7 @@ impl RtSbInsVpt2Offset {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// Virtual_2_Offset_Z
+    /// Get value of 'Virtual_2_Offset_Z'
     ///
     /// Z offset (+ve downwards) of the virtual point in the vehicle body frame.
     ///
@@ -24314,7 +24314,7 @@ impl RtSbInsVpt2Offset {
     pub fn virtual_2_offset_z(&self) -> f32 {
         self.virtual_2_offset_z_raw()
     }
-    /// Get raw value of Virtual_2_Offset_Z
+    /// Get raw value of 'Virtual_2_Offset_Z'
     ///
     /// - Start bit: 32
     /// - Signal size: 16 bits
@@ -24329,7 +24329,7 @@ impl RtSbInsVpt2Offset {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Virtual_2_Offset_Z
+    /// Set value of 'Virtual_2_Offset_Z'
     #[inline(always)]
     pub fn set_virtual_2_offset_z(&mut self, value: f32) -> Result<(), CanError> {
         if value < -32.768_f32 || 32.767_f32 < value {
@@ -24344,7 +24344,7 @@ impl RtSbInsVpt2Offset {
         self.raw.view_bits_mut::<Lsb0>()[32..48].store_le(value);
         Ok(())
     }
-    /// Virtual_2_Offset_Y
+    /// Get value of 'Virtual_2_Offset_Y'
     ///
     /// Y offset of the virtual point in the vehicle body frame.
     ///
@@ -24356,7 +24356,7 @@ impl RtSbInsVpt2Offset {
     pub fn virtual_2_offset_y(&self) -> f32 {
         self.virtual_2_offset_y_raw()
     }
-    /// Get raw value of Virtual_2_Offset_Y
+    /// Get raw value of 'Virtual_2_Offset_Y'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -24371,7 +24371,7 @@ impl RtSbInsVpt2Offset {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Virtual_2_Offset_Y
+    /// Set value of 'Virtual_2_Offset_Y'
     #[inline(always)]
     pub fn set_virtual_2_offset_y(&mut self, value: f32) -> Result<(), CanError> {
         if value < -32.768_f32 || 32.767_f32 < value {
@@ -24386,7 +24386,7 @@ impl RtSbInsVpt2Offset {
         self.raw.view_bits_mut::<Lsb0>()[16..32].store_le(value);
         Ok(())
     }
-    /// Virtual_2_Offset_X
+    /// Get value of 'Virtual_2_Offset_X'
     ///
     /// X offset of the virtual point in the vehicle body frame.
     ///
@@ -24398,7 +24398,7 @@ impl RtSbInsVpt2Offset {
     pub fn virtual_2_offset_x(&self) -> f32 {
         self.virtual_2_offset_x_raw()
     }
-    /// Get raw value of Virtual_2_Offset_X
+    /// Get raw value of 'Virtual_2_Offset_X'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -24413,7 +24413,7 @@ impl RtSbInsVpt2Offset {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Virtual_2_Offset_X
+    /// Set value of 'Virtual_2_Offset_X'
     #[inline(always)]
     pub fn set_virtual_2_offset_x(&mut self, value: f32) -> Result<(), CanError> {
         if value < -32.768_f32 || 32.767_f32 < value {
@@ -24495,7 +24495,7 @@ impl RtSbInsVpt1VelNed2 {
     pub const VIRTUAL_1_HEADING_MAX: f32 = 180_f32;
     pub const VIRTUAL_1_VEL_NED_D_MIN: f32 = -838_f32;
     pub const VIRTUAL_1_VEL_NED_D_MAX: f32 = 838_f32;
-    /// Construct new RT_SB_INS_Vpt_1_Vel_NED_2 from values
+    /// Construct new 'RT_SB_INS_Vpt_1_Vel_NED_2' from values
     pub fn new(
         virtual_1_slip: f32,
         virtual_1_heading: f32,
@@ -24511,7 +24511,7 @@ impl RtSbInsVpt1VelNed2 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// Virtual_1_Slip
+    /// Get value of 'Virtual_1_Slip'
     ///
     /// Slip is defined as the difference between yaw and heading.
     ///
@@ -24523,7 +24523,7 @@ impl RtSbInsVpt1VelNed2 {
     pub fn virtual_1_slip(&self) -> f32 {
         self.virtual_1_slip_raw()
     }
-    /// Get raw value of Virtual_1_Slip
+    /// Get raw value of 'Virtual_1_Slip'
     ///
     /// - Start bit: 48
     /// - Signal size: 16 bits
@@ -24538,7 +24538,7 @@ impl RtSbInsVpt1VelNed2 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Virtual_1_Slip
+    /// Set value of 'Virtual_1_Slip'
     #[inline(always)]
     pub fn set_virtual_1_slip(&mut self, value: f32) -> Result<(), CanError> {
         if value < -180_f32 || 180_f32 < value {
@@ -24553,7 +24553,7 @@ impl RtSbInsVpt1VelNed2 {
         self.raw.view_bits_mut::<Lsb0>()[48..64].store_le(value);
         Ok(())
     }
-    /// Virtual_1_Heading
+    /// Get value of 'Virtual_1_Heading'
     ///
     /// This is GPS heading, the direction that the vehicle is travelling in the local horizontal plane.
     ///
@@ -24565,7 +24565,7 @@ impl RtSbInsVpt1VelNed2 {
     pub fn virtual_1_heading(&self) -> f32 {
         self.virtual_1_heading_raw()
     }
-    /// Get raw value of Virtual_1_Heading
+    /// Get raw value of 'Virtual_1_Heading'
     ///
     /// - Start bit: 32
     /// - Signal size: 16 bits
@@ -24580,7 +24580,7 @@ impl RtSbInsVpt1VelNed2 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Virtual_1_Heading
+    /// Set value of 'Virtual_1_Heading'
     #[inline(always)]
     pub fn set_virtual_1_heading(&mut self, value: f32) -> Result<(), CanError> {
         if value < -180_f32 || 180_f32 < value {
@@ -24595,7 +24595,7 @@ impl RtSbInsVpt1VelNed2 {
         self.raw.view_bits_mut::<Lsb0>()[32..48].store_le(value);
         Ok(())
     }
-    /// Virtual_1_Vel_NED_D
+    /// Get value of 'Virtual_1_Vel_NED_D'
     ///
     /// VELNED D velocity.  This is the velocity vector directly downwards towards the Earth centre at the current local Earth surface position.
     ///
@@ -24607,7 +24607,7 @@ impl RtSbInsVpt1VelNed2 {
     pub fn virtual_1_vel_ned_d(&self) -> f32 {
         self.virtual_1_vel_ned_d_raw()
     }
-    /// Get raw value of Virtual_1_Vel_NED_D
+    /// Get raw value of 'Virtual_1_Vel_NED_D'
     ///
     /// - Start bit: 0
     /// - Signal size: 24 bits
@@ -24622,7 +24622,7 @@ impl RtSbInsVpt1VelNed2 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Virtual_1_Vel_NED_D
+    /// Set value of 'Virtual_1_Vel_NED_D'
     #[inline(always)]
     pub fn set_virtual_1_vel_ned_d(&mut self, value: f32) -> Result<(), CanError> {
         if value < -838_f32 || 838_f32 < value {
@@ -24702,7 +24702,7 @@ impl RtSbInsVpt1VelNed1 {
     pub const VIRTUAL_1_VEL_NED_E_MAX: f32 = 838_f32;
     pub const VIRTUAL_1_VEL_NED_N_MIN: f32 = -838_f32;
     pub const VIRTUAL_1_VEL_NED_N_MAX: f32 = 838_f32;
-    /// Construct new RT_SB_INS_Vpt_1_Vel_NED_1 from values
+    /// Construct new 'RT_SB_INS_Vpt_1_Vel_NED_1' from values
     pub fn new(
         virtual_1_vel_ned_e: f32,
         virtual_1_vel_ned_n: f32,
@@ -24716,7 +24716,7 @@ impl RtSbInsVpt1VelNed1 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// Virtual_1_Vel_NED_E
+    /// Get value of 'Virtual_1_Vel_NED_E'
     ///
     /// VELNED E velocity.  This is the velocity vector directly East at the current local Earth surface position.
     ///
@@ -24728,7 +24728,7 @@ impl RtSbInsVpt1VelNed1 {
     pub fn virtual_1_vel_ned_e(&self) -> f32 {
         self.virtual_1_vel_ned_e_raw()
     }
-    /// Get raw value of Virtual_1_Vel_NED_E
+    /// Get raw value of 'Virtual_1_Vel_NED_E'
     ///
     /// - Start bit: 32
     /// - Signal size: 24 bits
@@ -24743,7 +24743,7 @@ impl RtSbInsVpt1VelNed1 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Virtual_1_Vel_NED_E
+    /// Set value of 'Virtual_1_Vel_NED_E'
     #[inline(always)]
     pub fn set_virtual_1_vel_ned_e(&mut self, value: f32) -> Result<(), CanError> {
         if value < -838_f32 || 838_f32 < value {
@@ -24758,7 +24758,7 @@ impl RtSbInsVpt1VelNed1 {
         self.raw.view_bits_mut::<Lsb0>()[32..56].store_le(value);
         Ok(())
     }
-    /// Virtual_1_Vel_NED_N
+    /// Get value of 'Virtual_1_Vel_NED_N'
     ///
     /// VELNED N velocity.  This is the velocity vector directly North at the current local Earth surface position.
     ///
@@ -24770,7 +24770,7 @@ impl RtSbInsVpt1VelNed1 {
     pub fn virtual_1_vel_ned_n(&self) -> f32 {
         self.virtual_1_vel_ned_n_raw()
     }
-    /// Get raw value of Virtual_1_Vel_NED_N
+    /// Get raw value of 'Virtual_1_Vel_NED_N'
     ///
     /// - Start bit: 0
     /// - Signal size: 24 bits
@@ -24785,7 +24785,7 @@ impl RtSbInsVpt1VelNed1 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Virtual_1_Vel_NED_N
+    /// Set value of 'Virtual_1_Vel_NED_N'
     #[inline(always)]
     pub fn set_virtual_1_vel_ned_n(&mut self, value: f32) -> Result<(), CanError> {
         if value < -838_f32 || 838_f32 < value {
@@ -24867,7 +24867,7 @@ impl RtSbInsVpt1Offset {
     pub const VIRTUAL_1_OFFSET_Y_MAX: f32 = 32.767_f32;
     pub const VIRTUAL_1_OFFSET_X_MIN: f32 = -32.768_f32;
     pub const VIRTUAL_1_OFFSET_X_MAX: f32 = 32.767_f32;
-    /// Construct new RT_SB_INS_Vpt_1_Offset from values
+    /// Construct new 'RT_SB_INS_Vpt_1_Offset' from values
     pub fn new(
         virtual_1_offset_z: f32,
         virtual_1_offset_y: f32,
@@ -24883,7 +24883,7 @@ impl RtSbInsVpt1Offset {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// Virtual_1_Offset_Z
+    /// Get value of 'Virtual_1_Offset_Z'
     ///
     /// Z offset (+ve downwards) of the virtual point in the vehicle body frame.
     ///
@@ -24895,7 +24895,7 @@ impl RtSbInsVpt1Offset {
     pub fn virtual_1_offset_z(&self) -> f32 {
         self.virtual_1_offset_z_raw()
     }
-    /// Get raw value of Virtual_1_Offset_Z
+    /// Get raw value of 'Virtual_1_Offset_Z'
     ///
     /// - Start bit: 32
     /// - Signal size: 16 bits
@@ -24910,7 +24910,7 @@ impl RtSbInsVpt1Offset {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Virtual_1_Offset_Z
+    /// Set value of 'Virtual_1_Offset_Z'
     #[inline(always)]
     pub fn set_virtual_1_offset_z(&mut self, value: f32) -> Result<(), CanError> {
         if value < -32.768_f32 || 32.767_f32 < value {
@@ -24925,7 +24925,7 @@ impl RtSbInsVpt1Offset {
         self.raw.view_bits_mut::<Lsb0>()[32..48].store_le(value);
         Ok(())
     }
-    /// Virtual_1_Offset_Y
+    /// Get value of 'Virtual_1_Offset_Y'
     ///
     /// Y offset of the virtual point in the vehicle body frame.
     ///
@@ -24937,7 +24937,7 @@ impl RtSbInsVpt1Offset {
     pub fn virtual_1_offset_y(&self) -> f32 {
         self.virtual_1_offset_y_raw()
     }
-    /// Get raw value of Virtual_1_Offset_Y
+    /// Get raw value of 'Virtual_1_Offset_Y'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -24952,7 +24952,7 @@ impl RtSbInsVpt1Offset {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Virtual_1_Offset_Y
+    /// Set value of 'Virtual_1_Offset_Y'
     #[inline(always)]
     pub fn set_virtual_1_offset_y(&mut self, value: f32) -> Result<(), CanError> {
         if value < -32.768_f32 || 32.767_f32 < value {
@@ -24967,7 +24967,7 @@ impl RtSbInsVpt1Offset {
         self.raw.view_bits_mut::<Lsb0>()[16..32].store_le(value);
         Ok(())
     }
-    /// Virtual_1_Offset_X
+    /// Get value of 'Virtual_1_Offset_X'
     ///
     /// X offset of the virtual point in the vehicle body frame.
     ///
@@ -24979,7 +24979,7 @@ impl RtSbInsVpt1Offset {
     pub fn virtual_1_offset_x(&self) -> f32 {
         self.virtual_1_offset_x_raw()
     }
-    /// Get raw value of Virtual_1_Offset_X
+    /// Get raw value of 'Virtual_1_Offset_X'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -24994,7 +24994,7 @@ impl RtSbInsVpt1Offset {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Virtual_1_Offset_X
+    /// Set value of 'Virtual_1_Offset_X'
     #[inline(always)]
     pub fn set_virtual_1_offset_x(&mut self, value: f32) -> Result<(), CanError> {
         if value < -32.768_f32 || 32.767_f32 < value {
@@ -25078,7 +25078,7 @@ impl RtSbInsSlip {
     pub const INS_SLIP_MAX: f32 = 360_f32;
     pub const ACCURACY_INS_SLIP_MIN: u8 = 0_u8;
     pub const ACCURACY_INS_SLIP_MAX: u8 = 255_u8;
-    /// Construct new RT_SB_INS_Slip from values
+    /// Construct new 'RT_SB_INS_Slip' from values
     pub fn new(
         ins_squat: f32,
         accuracy_ins_squat: u8,
@@ -25100,7 +25100,7 @@ impl RtSbInsSlip {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// INS_Squat
+    /// Get value of 'INS_Squat'
     ///
     /// Squat is defined as the difference between pitch and gradient
     ///
@@ -25112,7 +25112,7 @@ impl RtSbInsSlip {
     pub fn ins_squat(&self) -> f32 {
         self.ins_squat_raw()
     }
-    /// Get raw value of INS_Squat
+    /// Get raw value of 'INS_Squat'
     ///
     /// - Start bit: 40
     /// - Signal size: 16 bits
@@ -25127,7 +25127,7 @@ impl RtSbInsSlip {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of INS_Squat
+    /// Set value of 'INS_Squat'
     #[inline(always)]
     pub fn set_ins_squat(&mut self, value: f32) -> Result<(), CanError> {
         if value < -360_f32 || 360_f32 < value {
@@ -25142,7 +25142,7 @@ impl RtSbInsSlip {
         self.raw.view_bits_mut::<Lsb0>()[40..56].store_le(value);
         Ok(())
     }
-    /// Accuracy_INS_Squat
+    /// Get value of 'Accuracy_INS_Squat'
     ///
     /// Dimensionless.  Lower values imply but do not guarantee better accuracy than higher values.
     ///
@@ -25154,7 +25154,7 @@ impl RtSbInsSlip {
     pub fn accuracy_ins_squat(&self) -> u8 {
         self.accuracy_ins_squat_raw()
     }
-    /// Get raw value of Accuracy_INS_Squat
+    /// Get raw value of 'Accuracy_INS_Squat'
     ///
     /// - Start bit: 32
     /// - Signal size: 8 bits
@@ -25168,7 +25168,7 @@ impl RtSbInsSlip {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Accuracy_INS_Squat
+    /// Set value of 'Accuracy_INS_Squat'
     #[inline(always)]
     pub fn set_accuracy_ins_squat(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 255_u8 < value {
@@ -25186,7 +25186,7 @@ impl RtSbInsSlip {
         self.raw.view_bits_mut::<Lsb0>()[32..40].store_le(value);
         Ok(())
     }
-    /// INS_Slip
+    /// Get value of 'INS_Slip'
     ///
     /// Slip is defined as the difference between yaw and heading
     ///
@@ -25198,7 +25198,7 @@ impl RtSbInsSlip {
     pub fn ins_slip(&self) -> f32 {
         self.ins_slip_raw()
     }
-    /// Get raw value of INS_Slip
+    /// Get raw value of 'INS_Slip'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -25213,7 +25213,7 @@ impl RtSbInsSlip {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of INS_Slip
+    /// Set value of 'INS_Slip'
     #[inline(always)]
     pub fn set_ins_slip(&mut self, value: f32) -> Result<(), CanError> {
         if value < -360_f32 || 360_f32 < value {
@@ -25228,7 +25228,7 @@ impl RtSbInsSlip {
         self.raw.view_bits_mut::<Lsb0>()[16..32].store_le(value);
         Ok(())
     }
-    /// Accuracy_INS_Slip
+    /// Get value of 'Accuracy_INS_Slip'
     ///
     /// Dimensionless.  Lower values imply but do not guarantee better accuracy than higher values.
     ///
@@ -25240,7 +25240,7 @@ impl RtSbInsSlip {
     pub fn accuracy_ins_slip(&self) -> u8 {
         self.accuracy_ins_slip_raw()
     }
-    /// Get raw value of Accuracy_INS_Slip
+    /// Get raw value of 'Accuracy_INS_Slip'
     ///
     /// - Start bit: 8
     /// - Signal size: 8 bits
@@ -25254,7 +25254,7 @@ impl RtSbInsSlip {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Accuracy_INS_Slip
+    /// Set value of 'Accuracy_INS_Slip'
     #[inline(always)]
     pub fn set_accuracy_ins_slip(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 255_u8 < value {
@@ -25272,7 +25272,7 @@ impl RtSbInsSlip {
         self.raw.view_bits_mut::<Lsb0>()[8..16].store_le(value);
         Ok(())
     }
-    /// Validity_INS_Squat
+    /// Get value of 'Validity_INS_Squat'
     ///
     /// - Min: 0
     /// - Max: 1
@@ -25282,7 +25282,7 @@ impl RtSbInsSlip {
     pub fn validity_ins_squat(&self) -> bool {
         self.validity_ins_squat_raw()
     }
-    /// Get raw value of Validity_INS_Squat
+    /// Get raw value of 'Validity_INS_Squat'
     ///
     /// - Start bit: 1
     /// - Signal size: 1 bits
@@ -25295,14 +25295,14 @@ impl RtSbInsSlip {
         let signal = self.raw.view_bits::<Lsb0>()[1..2].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_INS_Squat
+    /// Set value of 'Validity_INS_Squat'
     #[inline(always)]
     pub fn set_validity_ins_squat(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[1..2].store_le(value);
         Ok(())
     }
-    /// Validity_INS_Slip
+    /// Get value of 'Validity_INS_Slip'
     ///
     /// - Min: 0
     /// - Max: 1
@@ -25312,7 +25312,7 @@ impl RtSbInsSlip {
     pub fn validity_ins_slip(&self) -> bool {
         self.validity_ins_slip_raw()
     }
-    /// Get raw value of Validity_INS_Slip
+    /// Get raw value of 'Validity_INS_Slip'
     ///
     /// - Start bit: 0
     /// - Signal size: 1 bits
@@ -25325,7 +25325,7 @@ impl RtSbInsSlip {
         let signal = self.raw.view_bits::<Lsb0>()[0..1].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_INS_Slip
+    /// Set value of 'Validity_INS_Slip'
     #[inline(always)]
     pub fn set_validity_ins_slip(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
@@ -25397,7 +25397,7 @@ impl RtSbInsVelEcef2 {
     pub const INS_VEL_ECEF_Z_MAX: f32 = 838_f32;
     pub const INS_VEL_ECEF_Y_MIN: f32 = -838_f32;
     pub const INS_VEL_ECEF_Y_MAX: f32 = 838_f32;
-    /// Construct new RT_SB_INS_Vel_ECEF_2 from values
+    /// Construct new 'RT_SB_INS_Vel_ECEF_2' from values
     pub fn new(
         ins_vel_ecef_z: f32,
         ins_vel_ecef_y: f32,
@@ -25415,7 +25415,7 @@ impl RtSbInsVelEcef2 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// INS_Vel_ECEF_Z
+    /// Get value of 'INS_Vel_ECEF_Z'
     ///
     /// ECEF Z velocity.  The ECEF Z axis originates from the Earth centre, and the positive Z axis intersects the Earth surface at the North Pole.
     ///
@@ -25427,7 +25427,7 @@ impl RtSbInsVelEcef2 {
     pub fn ins_vel_ecef_z(&self) -> f32 {
         self.ins_vel_ecef_z_raw()
     }
-    /// Get raw value of INS_Vel_ECEF_Z
+    /// Get raw value of 'INS_Vel_ECEF_Z'
     ///
     /// - Start bit: 32
     /// - Signal size: 24 bits
@@ -25442,7 +25442,7 @@ impl RtSbInsVelEcef2 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of INS_Vel_ECEF_Z
+    /// Set value of 'INS_Vel_ECEF_Z'
     #[inline(always)]
     pub fn set_ins_vel_ecef_z(&mut self, value: f32) -> Result<(), CanError> {
         if value < -838_f32 || 838_f32 < value {
@@ -25457,7 +25457,7 @@ impl RtSbInsVelEcef2 {
         self.raw.view_bits_mut::<Lsb0>()[32..56].store_le(value);
         Ok(())
     }
-    /// INS_Vel_ECEF_Y
+    /// Get value of 'INS_Vel_ECEF_Y'
     ///
     /// ECEF Y velocity.  The ECEF Y axis originates from the Earth centre, and the positive Y axis intersects the Earth surface at zero degrees latittude and 90 degrees longitude.
     ///
@@ -25469,7 +25469,7 @@ impl RtSbInsVelEcef2 {
     pub fn ins_vel_ecef_y(&self) -> f32 {
         self.ins_vel_ecef_y_raw()
     }
-    /// Get raw value of INS_Vel_ECEF_Y
+    /// Get raw value of 'INS_Vel_ECEF_Y'
     ///
     /// - Start bit: 8
     /// - Signal size: 24 bits
@@ -25484,7 +25484,7 @@ impl RtSbInsVelEcef2 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of INS_Vel_ECEF_Y
+    /// Set value of 'INS_Vel_ECEF_Y'
     #[inline(always)]
     pub fn set_ins_vel_ecef_y(&mut self, value: f32) -> Result<(), CanError> {
         if value < -838_f32 || 838_f32 < value {
@@ -25499,7 +25499,7 @@ impl RtSbInsVelEcef2 {
         self.raw.view_bits_mut::<Lsb0>()[8..32].store_le(value);
         Ok(())
     }
-    /// Validity_INS_Vel_ECEF_Z
+    /// Get value of 'Validity_INS_Vel_ECEF_Z'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -25511,7 +25511,7 @@ impl RtSbInsVelEcef2 {
     pub fn validity_ins_vel_ecef_z(&self) -> bool {
         self.validity_ins_vel_ecef_z_raw()
     }
-    /// Get raw value of Validity_INS_Vel_ECEF_Z
+    /// Get raw value of 'Validity_INS_Vel_ECEF_Z'
     ///
     /// - Start bit: 1
     /// - Signal size: 1 bits
@@ -25524,14 +25524,14 @@ impl RtSbInsVelEcef2 {
         let signal = self.raw.view_bits::<Lsb0>()[1..2].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_INS_Vel_ECEF_Z
+    /// Set value of 'Validity_INS_Vel_ECEF_Z'
     #[inline(always)]
     pub fn set_validity_ins_vel_ecef_z(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[1..2].store_le(value);
         Ok(())
     }
-    /// Validity_INS_Vel_ECEF_Y
+    /// Get value of 'Validity_INS_Vel_ECEF_Y'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -25543,7 +25543,7 @@ impl RtSbInsVelEcef2 {
     pub fn validity_ins_vel_ecef_y(&self) -> bool {
         self.validity_ins_vel_ecef_y_raw()
     }
-    /// Get raw value of Validity_INS_Vel_ECEF_Y
+    /// Get raw value of 'Validity_INS_Vel_ECEF_Y'
     ///
     /// - Start bit: 0
     /// - Signal size: 1 bits
@@ -25556,7 +25556,7 @@ impl RtSbInsVelEcef2 {
         let signal = self.raw.view_bits::<Lsb0>()[0..1].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_INS_Vel_ECEF_Y
+    /// Set value of 'Validity_INS_Vel_ECEF_Y'
     #[inline(always)]
     pub fn set_validity_ins_vel_ecef_y(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
@@ -25632,7 +25632,7 @@ impl RtSbInsVelEcef1 {
     pub const ACCURACY_INS_VEL_ECEF_Y_MAX: u8 = 255_u8;
     pub const ACCURACY_INS_VEL_ECEF_X_MIN: u8 = 0_u8;
     pub const ACCURACY_INS_VEL_ECEF_X_MAX: u8 = 255_u8;
-    /// Construct new RT_SB_INS_Vel_ECEF_1 from values
+    /// Construct new 'RT_SB_INS_Vel_ECEF_1' from values
     pub fn new(
         ins_vel_ecef_x: f32,
         accuracy_ins_vel_ecef_z: u8,
@@ -25652,7 +25652,7 @@ impl RtSbInsVelEcef1 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// INS_Vel_ECEF_X
+    /// Get value of 'INS_Vel_ECEF_X'
     ///
     /// ECEF X velocity.  The ECEF X axis originates from the Earth centre, and the positive X axis intersects the Earth surface at zero degrees latittude and zero degrees longitude (the intersection of the equator and the prime meridian).
     ///
@@ -25664,7 +25664,7 @@ impl RtSbInsVelEcef1 {
     pub fn ins_vel_ecef_x(&self) -> f32 {
         self.ins_vel_ecef_x_raw()
     }
-    /// Get raw value of INS_Vel_ECEF_X
+    /// Get raw value of 'INS_Vel_ECEF_X'
     ///
     /// - Start bit: 32
     /// - Signal size: 24 bits
@@ -25679,7 +25679,7 @@ impl RtSbInsVelEcef1 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of INS_Vel_ECEF_X
+    /// Set value of 'INS_Vel_ECEF_X'
     #[inline(always)]
     pub fn set_ins_vel_ecef_x(&mut self, value: f32) -> Result<(), CanError> {
         if value < -838_f32 || 838_f32 < value {
@@ -25694,7 +25694,7 @@ impl RtSbInsVelEcef1 {
         self.raw.view_bits_mut::<Lsb0>()[32..56].store_le(value);
         Ok(())
     }
-    /// Accuracy_INS_Vel_ECEF_Z
+    /// Get value of 'Accuracy_INS_Vel_ECEF_Z'
     ///
     /// - Min: 0
     /// - Max: 255
@@ -25704,7 +25704,7 @@ impl RtSbInsVelEcef1 {
     pub fn accuracy_ins_vel_ecef_z(&self) -> u8 {
         self.accuracy_ins_vel_ecef_z_raw()
     }
-    /// Get raw value of Accuracy_INS_Vel_ECEF_Z
+    /// Get raw value of 'Accuracy_INS_Vel_ECEF_Z'
     ///
     /// - Start bit: 24
     /// - Signal size: 8 bits
@@ -25718,7 +25718,7 @@ impl RtSbInsVelEcef1 {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Accuracy_INS_Vel_ECEF_Z
+    /// Set value of 'Accuracy_INS_Vel_ECEF_Z'
     #[inline(always)]
     pub fn set_accuracy_ins_vel_ecef_z(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 255_u8 < value {
@@ -25736,7 +25736,7 @@ impl RtSbInsVelEcef1 {
         self.raw.view_bits_mut::<Lsb0>()[24..32].store_le(value);
         Ok(())
     }
-    /// Accuracy_INS_Vel_ECEF_Y
+    /// Get value of 'Accuracy_INS_Vel_ECEF_Y'
     ///
     /// - Min: 0
     /// - Max: 255
@@ -25746,7 +25746,7 @@ impl RtSbInsVelEcef1 {
     pub fn accuracy_ins_vel_ecef_y(&self) -> u8 {
         self.accuracy_ins_vel_ecef_y_raw()
     }
-    /// Get raw value of Accuracy_INS_Vel_ECEF_Y
+    /// Get raw value of 'Accuracy_INS_Vel_ECEF_Y'
     ///
     /// - Start bit: 16
     /// - Signal size: 8 bits
@@ -25760,7 +25760,7 @@ impl RtSbInsVelEcef1 {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Accuracy_INS_Vel_ECEF_Y
+    /// Set value of 'Accuracy_INS_Vel_ECEF_Y'
     #[inline(always)]
     pub fn set_accuracy_ins_vel_ecef_y(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 255_u8 < value {
@@ -25778,7 +25778,7 @@ impl RtSbInsVelEcef1 {
         self.raw.view_bits_mut::<Lsb0>()[16..24].store_le(value);
         Ok(())
     }
-    /// Accuracy_INS_Vel_ECEF_X
+    /// Get value of 'Accuracy_INS_Vel_ECEF_X'
     ///
     /// - Min: 0
     /// - Max: 255
@@ -25788,7 +25788,7 @@ impl RtSbInsVelEcef1 {
     pub fn accuracy_ins_vel_ecef_x(&self) -> u8 {
         self.accuracy_ins_vel_ecef_x_raw()
     }
-    /// Get raw value of Accuracy_INS_Vel_ECEF_X
+    /// Get raw value of 'Accuracy_INS_Vel_ECEF_X'
     ///
     /// - Start bit: 8
     /// - Signal size: 8 bits
@@ -25802,7 +25802,7 @@ impl RtSbInsVelEcef1 {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Accuracy_INS_Vel_ECEF_X
+    /// Set value of 'Accuracy_INS_Vel_ECEF_X'
     #[inline(always)]
     pub fn set_accuracy_ins_vel_ecef_x(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 255_u8 < value {
@@ -25820,7 +25820,7 @@ impl RtSbInsVelEcef1 {
         self.raw.view_bits_mut::<Lsb0>()[8..16].store_le(value);
         Ok(())
     }
-    /// Validity_INS_Vel_ECEF_X
+    /// Get value of 'Validity_INS_Vel_ECEF_X'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -25832,7 +25832,7 @@ impl RtSbInsVelEcef1 {
     pub fn validity_ins_vel_ecef_x(&self) -> bool {
         self.validity_ins_vel_ecef_x_raw()
     }
-    /// Get raw value of Validity_INS_Vel_ECEF_X
+    /// Get raw value of 'Validity_INS_Vel_ECEF_X'
     ///
     /// - Start bit: 0
     /// - Signal size: 1 bits
@@ -25845,7 +25845,7 @@ impl RtSbInsVelEcef1 {
         let signal = self.raw.view_bits::<Lsb0>()[0..1].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_INS_Vel_ECEF_X
+    /// Set value of 'Validity_INS_Vel_ECEF_X'
     #[inline(always)]
     pub fn set_validity_ins_vel_ecef_x(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
@@ -25917,7 +25917,7 @@ impl RtSbInsVelNed2 {
     pub const INS_VEL_NED_D_MAX: f32 = 838_f32;
     pub const ACCURACY_INS_VEL_D_MIN: u8 = 0_u8;
     pub const ACCURACY_INS_VEL_D_MAX: u8 = 255_u8;
-    /// Construct new RT_SB_INS_Vel_NED_2 from values
+    /// Construct new 'RT_SB_INS_Vel_NED_2' from values
     pub fn new(
         ins_vel_ned_d: f32,
         accuracy_ins_vel_d: u8,
@@ -25933,7 +25933,7 @@ impl RtSbInsVelNed2 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// INS_Vel_NED_D
+    /// Get value of 'INS_Vel_NED_D'
     ///
     /// VELNED D velocity.  This is the velocity vector directly downwards towards the Earth centre at the current local Earth surface position.
     ///
@@ -25945,7 +25945,7 @@ impl RtSbInsVelNed2 {
     pub fn ins_vel_ned_d(&self) -> f32 {
         self.ins_vel_ned_d_raw()
     }
-    /// Get raw value of INS_Vel_NED_D
+    /// Get raw value of 'INS_Vel_NED_D'
     ///
     /// - Start bit: 16
     /// - Signal size: 24 bits
@@ -25960,7 +25960,7 @@ impl RtSbInsVelNed2 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of INS_Vel_NED_D
+    /// Set value of 'INS_Vel_NED_D'
     #[inline(always)]
     pub fn set_ins_vel_ned_d(&mut self, value: f32) -> Result<(), CanError> {
         if value < -838_f32 || 838_f32 < value {
@@ -25975,7 +25975,7 @@ impl RtSbInsVelNed2 {
         self.raw.view_bits_mut::<Lsb0>()[16..40].store_le(value);
         Ok(())
     }
-    /// Accuracy_INS_Vel_D
+    /// Get value of 'Accuracy_INS_Vel_D'
     ///
     /// - Min: 0
     /// - Max: 255
@@ -25985,7 +25985,7 @@ impl RtSbInsVelNed2 {
     pub fn accuracy_ins_vel_d(&self) -> u8 {
         self.accuracy_ins_vel_d_raw()
     }
-    /// Get raw value of Accuracy_INS_Vel_D
+    /// Get raw value of 'Accuracy_INS_Vel_D'
     ///
     /// - Start bit: 8
     /// - Signal size: 8 bits
@@ -25999,7 +25999,7 @@ impl RtSbInsVelNed2 {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Accuracy_INS_Vel_D
+    /// Set value of 'Accuracy_INS_Vel_D'
     #[inline(always)]
     pub fn set_accuracy_ins_vel_d(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 255_u8 < value {
@@ -26017,7 +26017,7 @@ impl RtSbInsVelNed2 {
         self.raw.view_bits_mut::<Lsb0>()[8..16].store_le(value);
         Ok(())
     }
-    /// Validity_INS_Vel_NED_D
+    /// Get value of 'Validity_INS_Vel_NED_D'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -26029,7 +26029,7 @@ impl RtSbInsVelNed2 {
     pub fn validity_ins_vel_ned_d(&self) -> bool {
         self.validity_ins_vel_ned_d_raw()
     }
-    /// Get raw value of Validity_INS_Vel_NED_D
+    /// Get raw value of 'Validity_INS_Vel_NED_D'
     ///
     /// - Start bit: 0
     /// - Signal size: 1 bits
@@ -26042,7 +26042,7 @@ impl RtSbInsVelNed2 {
         let signal = self.raw.view_bits::<Lsb0>()[0..1].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_INS_Vel_NED_D
+    /// Set value of 'Validity_INS_Vel_NED_D'
     #[inline(always)]
     pub fn set_validity_ins_vel_ned_d(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
@@ -26116,7 +26116,7 @@ impl RtSbInsVelNed1 {
     pub const INS_VEL_NED_N_MAX: f32 = 838_f32;
     pub const ACCURACY_INS_VEL_NE_MIN: u8 = 0_u8;
     pub const ACCURACY_INS_VEL_NE_MAX: u8 = 255_u8;
-    /// Construct new RT_SB_INS_Vel_NED_1 from values
+    /// Construct new 'RT_SB_INS_Vel_NED_1' from values
     pub fn new(
         ins_vel_ned_e: f32,
         ins_vel_ned_n: f32,
@@ -26136,7 +26136,7 @@ impl RtSbInsVelNed1 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// INS_Vel_NED_E
+    /// Get value of 'INS_Vel_NED_E'
     ///
     /// VELNED E velocity.  This is the velocity vector directly East at the current local Earth surface position.
     ///
@@ -26148,7 +26148,7 @@ impl RtSbInsVelNed1 {
     pub fn ins_vel_ned_e(&self) -> f32 {
         self.ins_vel_ned_e_raw()
     }
-    /// Get raw value of INS_Vel_NED_E
+    /// Get raw value of 'INS_Vel_NED_E'
     ///
     /// - Start bit: 40
     /// - Signal size: 24 bits
@@ -26163,7 +26163,7 @@ impl RtSbInsVelNed1 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of INS_Vel_NED_E
+    /// Set value of 'INS_Vel_NED_E'
     #[inline(always)]
     pub fn set_ins_vel_ned_e(&mut self, value: f32) -> Result<(), CanError> {
         if value < -838_f32 || 838_f32 < value {
@@ -26178,7 +26178,7 @@ impl RtSbInsVelNed1 {
         self.raw.view_bits_mut::<Lsb0>()[40..64].store_le(value);
         Ok(())
     }
-    /// INS_Vel_NED_N
+    /// Get value of 'INS_Vel_NED_N'
     ///
     /// VELNED N velocity.  This is the velocity vector directly North at the current local Earth surface position.
     ///
@@ -26190,7 +26190,7 @@ impl RtSbInsVelNed1 {
     pub fn ins_vel_ned_n(&self) -> f32 {
         self.ins_vel_ned_n_raw()
     }
-    /// Get raw value of INS_Vel_NED_N
+    /// Get raw value of 'INS_Vel_NED_N'
     ///
     /// - Start bit: 16
     /// - Signal size: 24 bits
@@ -26205,7 +26205,7 @@ impl RtSbInsVelNed1 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of INS_Vel_NED_N
+    /// Set value of 'INS_Vel_NED_N'
     #[inline(always)]
     pub fn set_ins_vel_ned_n(&mut self, value: f32) -> Result<(), CanError> {
         if value < -838_f32 || 838_f32 < value {
@@ -26220,7 +26220,7 @@ impl RtSbInsVelNed1 {
         self.raw.view_bits_mut::<Lsb0>()[16..40].store_le(value);
         Ok(())
     }
-    /// Accuracy_INS_Vel_NE
+    /// Get value of 'Accuracy_INS_Vel_NE'
     ///
     /// - Min: 0
     /// - Max: 255
@@ -26230,7 +26230,7 @@ impl RtSbInsVelNed1 {
     pub fn accuracy_ins_vel_ne(&self) -> u8 {
         self.accuracy_ins_vel_ne_raw()
     }
-    /// Get raw value of Accuracy_INS_Vel_NE
+    /// Get raw value of 'Accuracy_INS_Vel_NE'
     ///
     /// - Start bit: 8
     /// - Signal size: 8 bits
@@ -26244,7 +26244,7 @@ impl RtSbInsVelNed1 {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Accuracy_INS_Vel_NE
+    /// Set value of 'Accuracy_INS_Vel_NE'
     #[inline(always)]
     pub fn set_accuracy_ins_vel_ne(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 255_u8 < value {
@@ -26262,7 +26262,7 @@ impl RtSbInsVelNed1 {
         self.raw.view_bits_mut::<Lsb0>()[8..16].store_le(value);
         Ok(())
     }
-    /// Validity_INS_Vel_NED_E
+    /// Get value of 'Validity_INS_Vel_NED_E'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -26274,7 +26274,7 @@ impl RtSbInsVelNed1 {
     pub fn validity_ins_vel_ned_e(&self) -> bool {
         self.validity_ins_vel_ned_e_raw()
     }
-    /// Get raw value of Validity_INS_Vel_NED_E
+    /// Get raw value of 'Validity_INS_Vel_NED_E'
     ///
     /// - Start bit: 1
     /// - Signal size: 1 bits
@@ -26287,14 +26287,14 @@ impl RtSbInsVelNed1 {
         let signal = self.raw.view_bits::<Lsb0>()[1..2].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_INS_Vel_NED_E
+    /// Set value of 'Validity_INS_Vel_NED_E'
     #[inline(always)]
     pub fn set_validity_ins_vel_ned_e(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[1..2].store_le(value);
         Ok(())
     }
-    /// Validity_INS_Vel_NED_N
+    /// Get value of 'Validity_INS_Vel_NED_N'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -26306,7 +26306,7 @@ impl RtSbInsVelNed1 {
     pub fn validity_ins_vel_ned_n(&self) -> bool {
         self.validity_ins_vel_ned_n_raw()
     }
-    /// Get raw value of Validity_INS_Vel_NED_N
+    /// Get raw value of 'Validity_INS_Vel_NED_N'
     ///
     /// - Start bit: 0
     /// - Signal size: 1 bits
@@ -26319,7 +26319,7 @@ impl RtSbInsVelNed1 {
         let signal = self.raw.view_bits::<Lsb0>()[0..1].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_INS_Vel_NED_N
+    /// Set value of 'Validity_INS_Vel_NED_N'
     #[inline(always)]
     pub fn set_validity_ins_vel_ned_n(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
@@ -26391,7 +26391,7 @@ impl RtSbInsPosEcef2 {
     pub const INS_POS_ECEF_Z_MAX: f32 = 10000000_f32;
     pub const INS_POS_ECEF_Y_MIN: f32 = -10000000_f32;
     pub const INS_POS_ECEF_Y_MAX: f32 = 10000000_f32;
-    /// Construct new RT_SB_INS_Pos_ECEF_2 from values
+    /// Construct new 'RT_SB_INS_Pos_ECEF_2' from values
     pub fn new(ins_pos_ecef_z: f32, ins_pos_ecef_y: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 8] };
         res.set_ins_pos_ecef_z(ins_pos_ecef_z)?;
@@ -26402,7 +26402,7 @@ impl RtSbInsPosEcef2 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// INS_Pos_ECEF_Z
+    /// Get value of 'INS_Pos_ECEF_Z'
     ///
     /// ECEF Z position.  The ECEF Z axis originates from the Earth centre, and the positive Z axis intersects the Earth surface at the North Pole.
     ///
@@ -26414,7 +26414,7 @@ impl RtSbInsPosEcef2 {
     pub fn ins_pos_ecef_z(&self) -> f32 {
         self.ins_pos_ecef_z_raw()
     }
-    /// Get raw value of INS_Pos_ECEF_Z
+    /// Get raw value of 'INS_Pos_ECEF_Z'
     ///
     /// - Start bit: 32
     /// - Signal size: 32 bits
@@ -26429,7 +26429,7 @@ impl RtSbInsPosEcef2 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of INS_Pos_ECEF_Z
+    /// Set value of 'INS_Pos_ECEF_Z'
     #[inline(always)]
     pub fn set_ins_pos_ecef_z(&mut self, value: f32) -> Result<(), CanError> {
         if value < -10000000_f32 || 10000000_f32 < value {
@@ -26444,7 +26444,7 @@ impl RtSbInsPosEcef2 {
         self.raw.view_bits_mut::<Lsb0>()[32..64].store_le(value);
         Ok(())
     }
-    /// INS_Pos_ECEF_Y
+    /// Get value of 'INS_Pos_ECEF_Y'
     ///
     /// ECEF Y position.  The ECEF Y axis originates from the Earth centre, and the positive Y axis intersects the Earth surface at zero degrees latittude and 90 degrees longitude.
     ///
@@ -26456,7 +26456,7 @@ impl RtSbInsPosEcef2 {
     pub fn ins_pos_ecef_y(&self) -> f32 {
         self.ins_pos_ecef_y_raw()
     }
-    /// Get raw value of INS_Pos_ECEF_Y
+    /// Get raw value of 'INS_Pos_ECEF_Y'
     ///
     /// - Start bit: 0
     /// - Signal size: 32 bits
@@ -26471,7 +26471,7 @@ impl RtSbInsPosEcef2 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of INS_Pos_ECEF_Y
+    /// Set value of 'INS_Pos_ECEF_Y'
     #[inline(always)]
     pub fn set_ins_pos_ecef_y(&mut self, value: f32) -> Result<(), CanError> {
         if value < -10000000_f32 || 10000000_f32 < value {
@@ -26555,7 +26555,7 @@ impl RtSbInsPosEcef1 {
     pub const ACCURACY_INS_POS_ECEF_Y_MAX: u8 = 255_u8;
     pub const ACCURACY_INS_POS_ECEF_X_MIN: u8 = 0_u8;
     pub const ACCURACY_INS_POS_ECEF_X_MAX: u8 = 255_u8;
-    /// Construct new RT_SB_INS_Pos_ECEF_1 from values
+    /// Construct new 'RT_SB_INS_Pos_ECEF_1' from values
     pub fn new(
         ins_pos_ecef_x: f32,
         accuracy_ins_pos_ecef_z: u8,
@@ -26579,7 +26579,7 @@ impl RtSbInsPosEcef1 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// INS_Pos_ECEF_X
+    /// Get value of 'INS_Pos_ECEF_X'
     ///
     /// ECEF X position.  The ECEF X axis originates from the Earth centre, and the positive X axis intersects the Earth surface at zero degrees latittude and zero degrees longitude (the intersection of the equator and the prime meridian).
     ///
@@ -26591,7 +26591,7 @@ impl RtSbInsPosEcef1 {
     pub fn ins_pos_ecef_x(&self) -> f32 {
         self.ins_pos_ecef_x_raw()
     }
-    /// Get raw value of INS_Pos_ECEF_X
+    /// Get raw value of 'INS_Pos_ECEF_X'
     ///
     /// - Start bit: 32
     /// - Signal size: 32 bits
@@ -26606,7 +26606,7 @@ impl RtSbInsPosEcef1 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of INS_Pos_ECEF_X
+    /// Set value of 'INS_Pos_ECEF_X'
     #[inline(always)]
     pub fn set_ins_pos_ecef_x(&mut self, value: f32) -> Result<(), CanError> {
         if value < -10000000_f32 || 10000000_f32 < value {
@@ -26621,7 +26621,7 @@ impl RtSbInsPosEcef1 {
         self.raw.view_bits_mut::<Lsb0>()[32..64].store_le(value);
         Ok(())
     }
-    /// Accuracy_INS_Pos_ECEF_Z
+    /// Get value of 'Accuracy_INS_Pos_ECEF_Z'
     ///
     /// Dimensionless.  Lower values imply but do not guarantee better accuracy than higher values.
     ///
@@ -26633,7 +26633,7 @@ impl RtSbInsPosEcef1 {
     pub fn accuracy_ins_pos_ecef_z(&self) -> u8 {
         self.accuracy_ins_pos_ecef_z_raw()
     }
-    /// Get raw value of Accuracy_INS_Pos_ECEF_Z
+    /// Get raw value of 'Accuracy_INS_Pos_ECEF_Z'
     ///
     /// - Start bit: 24
     /// - Signal size: 8 bits
@@ -26647,7 +26647,7 @@ impl RtSbInsPosEcef1 {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Accuracy_INS_Pos_ECEF_Z
+    /// Set value of 'Accuracy_INS_Pos_ECEF_Z'
     #[inline(always)]
     pub fn set_accuracy_ins_pos_ecef_z(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 255_u8 < value {
@@ -26665,7 +26665,7 @@ impl RtSbInsPosEcef1 {
         self.raw.view_bits_mut::<Lsb0>()[24..32].store_le(value);
         Ok(())
     }
-    /// Accuracy_INS_Pos_ECEF_Y
+    /// Get value of 'Accuracy_INS_Pos_ECEF_Y'
     ///
     /// Dimensionless.  Lower values imply but do not guarantee better accuracy than higher values.
     ///
@@ -26677,7 +26677,7 @@ impl RtSbInsPosEcef1 {
     pub fn accuracy_ins_pos_ecef_y(&self) -> u8 {
         self.accuracy_ins_pos_ecef_y_raw()
     }
-    /// Get raw value of Accuracy_INS_Pos_ECEF_Y
+    /// Get raw value of 'Accuracy_INS_Pos_ECEF_Y'
     ///
     /// - Start bit: 16
     /// - Signal size: 8 bits
@@ -26691,7 +26691,7 @@ impl RtSbInsPosEcef1 {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Accuracy_INS_Pos_ECEF_Y
+    /// Set value of 'Accuracy_INS_Pos_ECEF_Y'
     #[inline(always)]
     pub fn set_accuracy_ins_pos_ecef_y(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 255_u8 < value {
@@ -26709,7 +26709,7 @@ impl RtSbInsPosEcef1 {
         self.raw.view_bits_mut::<Lsb0>()[16..24].store_le(value);
         Ok(())
     }
-    /// Accuracy_INS_Pos_ECEF_X
+    /// Get value of 'Accuracy_INS_Pos_ECEF_X'
     ///
     /// Dimensionless.  Lower values imply but do not guarantee better accuracy than higher values.
     ///
@@ -26721,7 +26721,7 @@ impl RtSbInsPosEcef1 {
     pub fn accuracy_ins_pos_ecef_x(&self) -> u8 {
         self.accuracy_ins_pos_ecef_x_raw()
     }
-    /// Get raw value of Accuracy_INS_Pos_ECEF_X
+    /// Get raw value of 'Accuracy_INS_Pos_ECEF_X'
     ///
     /// - Start bit: 8
     /// - Signal size: 8 bits
@@ -26735,7 +26735,7 @@ impl RtSbInsPosEcef1 {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Accuracy_INS_Pos_ECEF_X
+    /// Set value of 'Accuracy_INS_Pos_ECEF_X'
     #[inline(always)]
     pub fn set_accuracy_ins_pos_ecef_x(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 255_u8 < value {
@@ -26753,7 +26753,7 @@ impl RtSbInsPosEcef1 {
         self.raw.view_bits_mut::<Lsb0>()[8..16].store_le(value);
         Ok(())
     }
-    /// Validity_INS_Pos_ECEF_Z
+    /// Get value of 'Validity_INS_Pos_ECEF_Z'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -26765,7 +26765,7 @@ impl RtSbInsPosEcef1 {
     pub fn validity_ins_pos_ecef_z(&self) -> bool {
         self.validity_ins_pos_ecef_z_raw()
     }
-    /// Get raw value of Validity_INS_Pos_ECEF_Z
+    /// Get raw value of 'Validity_INS_Pos_ECEF_Z'
     ///
     /// - Start bit: 2
     /// - Signal size: 1 bits
@@ -26778,14 +26778,14 @@ impl RtSbInsPosEcef1 {
         let signal = self.raw.view_bits::<Lsb0>()[2..3].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_INS_Pos_ECEF_Z
+    /// Set value of 'Validity_INS_Pos_ECEF_Z'
     #[inline(always)]
     pub fn set_validity_ins_pos_ecef_z(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[2..3].store_le(value);
         Ok(())
     }
-    /// Validity_INS_Pos_ECEF_Y
+    /// Get value of 'Validity_INS_Pos_ECEF_Y'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -26797,7 +26797,7 @@ impl RtSbInsPosEcef1 {
     pub fn validity_ins_pos_ecef_y(&self) -> bool {
         self.validity_ins_pos_ecef_y_raw()
     }
-    /// Get raw value of Validity_INS_Pos_ECEF_Y
+    /// Get raw value of 'Validity_INS_Pos_ECEF_Y'
     ///
     /// - Start bit: 1
     /// - Signal size: 1 bits
@@ -26810,14 +26810,14 @@ impl RtSbInsPosEcef1 {
         let signal = self.raw.view_bits::<Lsb0>()[1..2].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_INS_Pos_ECEF_Y
+    /// Set value of 'Validity_INS_Pos_ECEF_Y'
     #[inline(always)]
     pub fn set_validity_ins_pos_ecef_y(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[1..2].store_le(value);
         Ok(())
     }
-    /// Validity_INS_Pos_ECEF_X
+    /// Get value of 'Validity_INS_Pos_ECEF_X'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -26829,7 +26829,7 @@ impl RtSbInsPosEcef1 {
     pub fn validity_ins_pos_ecef_x(&self) -> bool {
         self.validity_ins_pos_ecef_x_raw()
     }
-    /// Get raw value of Validity_INS_Pos_ECEF_X
+    /// Get raw value of 'Validity_INS_Pos_ECEF_X'
     ///
     /// - Start bit: 0
     /// - Signal size: 1 bits
@@ -26842,7 +26842,7 @@ impl RtSbInsPosEcef1 {
         let signal = self.raw.view_bits::<Lsb0>()[0..1].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_INS_Pos_ECEF_X
+    /// Set value of 'Validity_INS_Pos_ECEF_X'
     #[inline(always)]
     pub fn set_validity_ins_pos_ecef_x(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
@@ -26914,7 +26914,7 @@ impl RtSbInsPosLlh2 {
     pub const INS_POS_LLH_ALTITUDE_MAX: f32 = 100000_f32;
     pub const INS_POS_LLH_LONGITUDE_MIN: f32 = -180_f32;
     pub const INS_POS_LLH_LONGITUDE_MAX: f32 = 180_f32;
-    /// Construct new RT_SB_INS_Pos_LLH_2 from values
+    /// Construct new 'RT_SB_INS_Pos_LLH_2' from values
     pub fn new(
         ins_pos_llh_altitude: f32,
         ins_pos_llh_longitude: f32,
@@ -26928,7 +26928,7 @@ impl RtSbInsPosLlh2 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// INS_Pos_LLH_Altitude
+    /// Get value of 'INS_Pos_LLH_Altitude'
     ///
     /// - Min: -1000
     /// - Max: 100000
@@ -26938,7 +26938,7 @@ impl RtSbInsPosLlh2 {
     pub fn ins_pos_llh_altitude(&self) -> f32 {
         self.ins_pos_llh_altitude_raw()
     }
-    /// Get raw value of INS_Pos_LLH_Altitude
+    /// Get raw value of 'INS_Pos_LLH_Altitude'
     ///
     /// - Start bit: 32
     /// - Signal size: 32 bits
@@ -26953,7 +26953,7 @@ impl RtSbInsPosLlh2 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of INS_Pos_LLH_Altitude
+    /// Set value of 'INS_Pos_LLH_Altitude'
     #[inline(always)]
     pub fn set_ins_pos_llh_altitude(&mut self, value: f32) -> Result<(), CanError> {
         if value < -1000_f32 || 100000_f32 < value {
@@ -26968,7 +26968,7 @@ impl RtSbInsPosLlh2 {
         self.raw.view_bits_mut::<Lsb0>()[32..64].store_le(value);
         Ok(())
     }
-    /// INS_Pos_LLH_Longitude
+    /// Get value of 'INS_Pos_LLH_Longitude'
     ///
     /// - Min: -180
     /// - Max: 180
@@ -26978,7 +26978,7 @@ impl RtSbInsPosLlh2 {
     pub fn ins_pos_llh_longitude(&self) -> f32 {
         self.ins_pos_llh_longitude_raw()
     }
-    /// Get raw value of INS_Pos_LLH_Longitude
+    /// Get raw value of 'INS_Pos_LLH_Longitude'
     ///
     /// - Start bit: 0
     /// - Signal size: 32 bits
@@ -26993,7 +26993,7 @@ impl RtSbInsPosLlh2 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of INS_Pos_LLH_Longitude
+    /// Set value of 'INS_Pos_LLH_Longitude'
     #[inline(always)]
     pub fn set_ins_pos_llh_longitude(&mut self, value: f32) -> Result<(), CanError> {
         if value < -180_f32 || 180_f32 < value {
@@ -27077,7 +27077,7 @@ impl RtSbInsPosLlh1 {
     pub const ACCURACY_INS_POS_LLH_LONGITUDE_MAX: u8 = 255_u8;
     pub const ACCURACY_INS_POS_LLH_LATITUDE_MIN: u8 = 0_u8;
     pub const ACCURACY_INS_POS_LLH_LATITUDE_MAX: u8 = 255_u8;
-    /// Construct new RT_SB_INS_Pos_LLH_1 from values
+    /// Construct new 'RT_SB_INS_Pos_LLH_1' from values
     pub fn new(
         ins_pos_llh_latitude: f32,
         accuracy_ins_pos_llh_altitude: u8,
@@ -27101,7 +27101,7 @@ impl RtSbInsPosLlh1 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// INS_Pos_LLH_Latitude
+    /// Get value of 'INS_Pos_LLH_Latitude'
     ///
     /// - Min: -90
     /// - Max: 90
@@ -27111,7 +27111,7 @@ impl RtSbInsPosLlh1 {
     pub fn ins_pos_llh_latitude(&self) -> f32 {
         self.ins_pos_llh_latitude_raw()
     }
-    /// Get raw value of INS_Pos_LLH_Latitude
+    /// Get raw value of 'INS_Pos_LLH_Latitude'
     ///
     /// - Start bit: 32
     /// - Signal size: 32 bits
@@ -27126,7 +27126,7 @@ impl RtSbInsPosLlh1 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of INS_Pos_LLH_Latitude
+    /// Set value of 'INS_Pos_LLH_Latitude'
     #[inline(always)]
     pub fn set_ins_pos_llh_latitude(&mut self, value: f32) -> Result<(), CanError> {
         if value < -90_f32 || 90_f32 < value {
@@ -27141,7 +27141,7 @@ impl RtSbInsPosLlh1 {
         self.raw.view_bits_mut::<Lsb0>()[32..64].store_le(value);
         Ok(())
     }
-    /// Accuracy_INS_Pos_LLH_Altitude
+    /// Get value of 'Accuracy_INS_Pos_LLH_Altitude'
     ///
     /// This accuracy value applies to both 2D and 3D GPS speed.
     ///
@@ -27153,7 +27153,7 @@ impl RtSbInsPosLlh1 {
     pub fn accuracy_ins_pos_llh_altitude(&self) -> u8 {
         self.accuracy_ins_pos_llh_altitude_raw()
     }
-    /// Get raw value of Accuracy_INS_Pos_LLH_Altitude
+    /// Get raw value of 'Accuracy_INS_Pos_LLH_Altitude'
     ///
     /// - Start bit: 24
     /// - Signal size: 8 bits
@@ -27167,7 +27167,7 @@ impl RtSbInsPosLlh1 {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Accuracy_INS_Pos_LLH_Altitude
+    /// Set value of 'Accuracy_INS_Pos_LLH_Altitude'
     #[inline(always)]
     pub fn set_accuracy_ins_pos_llh_altitude(
         &mut self,
@@ -27188,7 +27188,7 @@ impl RtSbInsPosLlh1 {
         self.raw.view_bits_mut::<Lsb0>()[24..32].store_le(value);
         Ok(())
     }
-    /// Accuracy_INS_Pos_LLH_Longitude
+    /// Get value of 'Accuracy_INS_Pos_LLH_Longitude'
     ///
     /// This accuracy value applies to both 2D and 3D GPS speed.
     ///
@@ -27200,7 +27200,7 @@ impl RtSbInsPosLlh1 {
     pub fn accuracy_ins_pos_llh_longitude(&self) -> u8 {
         self.accuracy_ins_pos_llh_longitude_raw()
     }
-    /// Get raw value of Accuracy_INS_Pos_LLH_Longitude
+    /// Get raw value of 'Accuracy_INS_Pos_LLH_Longitude'
     ///
     /// - Start bit: 16
     /// - Signal size: 8 bits
@@ -27214,7 +27214,7 @@ impl RtSbInsPosLlh1 {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Accuracy_INS_Pos_LLH_Longitude
+    /// Set value of 'Accuracy_INS_Pos_LLH_Longitude'
     #[inline(always)]
     pub fn set_accuracy_ins_pos_llh_longitude(
         &mut self,
@@ -27235,7 +27235,7 @@ impl RtSbInsPosLlh1 {
         self.raw.view_bits_mut::<Lsb0>()[16..24].store_le(value);
         Ok(())
     }
-    /// Accuracy_INS_Pos_LLH_Latitude
+    /// Get value of 'Accuracy_INS_Pos_LLH_Latitude'
     ///
     /// This accuracy value applies to both 2D and 3D GPS speed.
     ///
@@ -27247,7 +27247,7 @@ impl RtSbInsPosLlh1 {
     pub fn accuracy_ins_pos_llh_latitude(&self) -> u8 {
         self.accuracy_ins_pos_llh_latitude_raw()
     }
-    /// Get raw value of Accuracy_INS_Pos_LLH_Latitude
+    /// Get raw value of 'Accuracy_INS_Pos_LLH_Latitude'
     ///
     /// - Start bit: 8
     /// - Signal size: 8 bits
@@ -27261,7 +27261,7 @@ impl RtSbInsPosLlh1 {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Accuracy_INS_Pos_LLH_Latitude
+    /// Set value of 'Accuracy_INS_Pos_LLH_Latitude'
     #[inline(always)]
     pub fn set_accuracy_ins_pos_llh_latitude(
         &mut self,
@@ -27282,7 +27282,7 @@ impl RtSbInsPosLlh1 {
         self.raw.view_bits_mut::<Lsb0>()[8..16].store_le(value);
         Ok(())
     }
-    /// Validity_INS_Pos_LLH_Altitude
+    /// Get value of 'Validity_INS_Pos_LLH_Altitude'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -27294,7 +27294,7 @@ impl RtSbInsPosLlh1 {
     pub fn validity_ins_pos_llh_altitude(&self) -> bool {
         self.validity_ins_pos_llh_altitude_raw()
     }
-    /// Get raw value of Validity_INS_Pos_LLH_Altitude
+    /// Get raw value of 'Validity_INS_Pos_LLH_Altitude'
     ///
     /// - Start bit: 2
     /// - Signal size: 1 bits
@@ -27307,7 +27307,7 @@ impl RtSbInsPosLlh1 {
         let signal = self.raw.view_bits::<Lsb0>()[2..3].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_INS_Pos_LLH_Altitude
+    /// Set value of 'Validity_INS_Pos_LLH_Altitude'
     #[inline(always)]
     pub fn set_validity_ins_pos_llh_altitude(
         &mut self,
@@ -27317,7 +27317,7 @@ impl RtSbInsPosLlh1 {
         self.raw.view_bits_mut::<Lsb0>()[2..3].store_le(value);
         Ok(())
     }
-    /// Validity_INS_Pos_LLH_Longitude
+    /// Get value of 'Validity_INS_Pos_LLH_Longitude'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -27329,7 +27329,7 @@ impl RtSbInsPosLlh1 {
     pub fn validity_ins_pos_llh_longitude(&self) -> bool {
         self.validity_ins_pos_llh_longitude_raw()
     }
-    /// Get raw value of Validity_INS_Pos_LLH_Longitude
+    /// Get raw value of 'Validity_INS_Pos_LLH_Longitude'
     ///
     /// - Start bit: 1
     /// - Signal size: 1 bits
@@ -27342,7 +27342,7 @@ impl RtSbInsPosLlh1 {
         let signal = self.raw.view_bits::<Lsb0>()[1..2].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_INS_Pos_LLH_Longitude
+    /// Set value of 'Validity_INS_Pos_LLH_Longitude'
     #[inline(always)]
     pub fn set_validity_ins_pos_llh_longitude(
         &mut self,
@@ -27352,7 +27352,7 @@ impl RtSbInsPosLlh1 {
         self.raw.view_bits_mut::<Lsb0>()[1..2].store_le(value);
         Ok(())
     }
-    /// Validity_INS_Pos_LLH_Latitude
+    /// Get value of 'Validity_INS_Pos_LLH_Latitude'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -27364,7 +27364,7 @@ impl RtSbInsPosLlh1 {
     pub fn validity_ins_pos_llh_latitude(&self) -> bool {
         self.validity_ins_pos_llh_latitude_raw()
     }
-    /// Get raw value of Validity_INS_Pos_LLH_Latitude
+    /// Get raw value of 'Validity_INS_Pos_LLH_Latitude'
     ///
     /// - Start bit: 0
     /// - Signal size: 1 bits
@@ -27377,7 +27377,7 @@ impl RtSbInsPosLlh1 {
         let signal = self.raw.view_bits::<Lsb0>()[0..1].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_INS_Pos_LLH_Latitude
+    /// Set value of 'Validity_INS_Pos_LLH_Latitude'
     #[inline(always)]
     pub fn set_validity_ins_pos_llh_latitude(
         &mut self,
@@ -27456,7 +27456,7 @@ impl RtSbInsHeadingGradient2 {
     pub const INS_HEADING_2_MAX: f32 = 360_f32;
     pub const ACCURACY_INS_HEADING_MIN: u8 = 0_u8;
     pub const ACCURACY_INS_HEADING_MAX: u8 = 255_u8;
-    /// Construct new RT_SB_INS_Heading_Gradient_2 from values
+    /// Construct new 'RT_SB_INS_Heading_Gradient_2' from values
     pub fn new(
         ins_gradient: f32,
         accuracy_ins_gradient: u8,
@@ -27478,7 +27478,7 @@ impl RtSbInsHeadingGradient2 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// INS_Gradient
+    /// Get value of 'INS_Gradient'
     ///
     /// This is GPS gradient, i.e. the vertical direction that the vehicle is travelling, NOT pointing (pitch).
     ///
@@ -27490,7 +27490,7 @@ impl RtSbInsHeadingGradient2 {
     pub fn ins_gradient(&self) -> f32 {
         self.ins_gradient_raw()
     }
-    /// Get raw value of INS_Gradient
+    /// Get raw value of 'INS_Gradient'
     ///
     /// - Start bit: 40
     /// - Signal size: 16 bits
@@ -27505,7 +27505,7 @@ impl RtSbInsHeadingGradient2 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of INS_Gradient
+    /// Set value of 'INS_Gradient'
     #[inline(always)]
     pub fn set_ins_gradient(&mut self, value: f32) -> Result<(), CanError> {
         if value < -90_f32 || 90_f32 < value {
@@ -27520,7 +27520,7 @@ impl RtSbInsHeadingGradient2 {
         self.raw.view_bits_mut::<Lsb0>()[40..56].store_le(value);
         Ok(())
     }
-    /// Accuracy_INS_Gradient
+    /// Get value of 'Accuracy_INS_Gradient'
     ///
     /// Dimensionless.  Lower values imply but do not guarantee better accuracy than higher values.
     ///
@@ -27532,7 +27532,7 @@ impl RtSbInsHeadingGradient2 {
     pub fn accuracy_ins_gradient(&self) -> u8 {
         self.accuracy_ins_gradient_raw()
     }
-    /// Get raw value of Accuracy_INS_Gradient
+    /// Get raw value of 'Accuracy_INS_Gradient'
     ///
     /// - Start bit: 32
     /// - Signal size: 8 bits
@@ -27546,7 +27546,7 @@ impl RtSbInsHeadingGradient2 {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Accuracy_INS_Gradient
+    /// Set value of 'Accuracy_INS_Gradient'
     #[inline(always)]
     pub fn set_accuracy_ins_gradient(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 255_u8 < value {
@@ -27564,7 +27564,7 @@ impl RtSbInsHeadingGradient2 {
         self.raw.view_bits_mut::<Lsb0>()[32..40].store_le(value);
         Ok(())
     }
-    /// INS_Heading_2
+    /// Get value of 'INS_Heading_2'
     ///
     /// This is GPS heading in the range 0 - 360°, the direction that the vehicle is travelling in the local horizontal plane.
     ///
@@ -27576,7 +27576,7 @@ impl RtSbInsHeadingGradient2 {
     pub fn ins_heading_2(&self) -> f32 {
         self.ins_heading_2_raw()
     }
-    /// Get raw value of INS_Heading_2
+    /// Get raw value of 'INS_Heading_2'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -27591,7 +27591,7 @@ impl RtSbInsHeadingGradient2 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of INS_Heading_2
+    /// Set value of 'INS_Heading_2'
     #[inline(always)]
     pub fn set_ins_heading_2(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 360_f32 < value {
@@ -27605,7 +27605,7 @@ impl RtSbInsHeadingGradient2 {
         self.raw.view_bits_mut::<Lsb0>()[16..32].store_le(value);
         Ok(())
     }
-    /// Accuracy_INS_Heading
+    /// Get value of 'Accuracy_INS_Heading'
     ///
     /// Dimensionless.  Lower values imply but do not guarantee better accuracy than higher values.
     ///
@@ -27617,7 +27617,7 @@ impl RtSbInsHeadingGradient2 {
     pub fn accuracy_ins_heading(&self) -> u8 {
         self.accuracy_ins_heading_raw()
     }
-    /// Get raw value of Accuracy_INS_Heading
+    /// Get raw value of 'Accuracy_INS_Heading'
     ///
     /// - Start bit: 8
     /// - Signal size: 8 bits
@@ -27631,7 +27631,7 @@ impl RtSbInsHeadingGradient2 {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Accuracy_INS_Heading
+    /// Set value of 'Accuracy_INS_Heading'
     #[inline(always)]
     pub fn set_accuracy_ins_heading(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 255_u8 < value {
@@ -27649,7 +27649,7 @@ impl RtSbInsHeadingGradient2 {
         self.raw.view_bits_mut::<Lsb0>()[8..16].store_le(value);
         Ok(())
     }
-    /// Validity_INS_Gradient
+    /// Get value of 'Validity_INS_Gradient'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -27661,7 +27661,7 @@ impl RtSbInsHeadingGradient2 {
     pub fn validity_ins_gradient(&self) -> bool {
         self.validity_ins_gradient_raw()
     }
-    /// Get raw value of Validity_INS_Gradient
+    /// Get raw value of 'Validity_INS_Gradient'
     ///
     /// - Start bit: 1
     /// - Signal size: 1 bits
@@ -27674,14 +27674,14 @@ impl RtSbInsHeadingGradient2 {
         let signal = self.raw.view_bits::<Lsb0>()[1..2].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_INS_Gradient
+    /// Set value of 'Validity_INS_Gradient'
     #[inline(always)]
     pub fn set_validity_ins_gradient(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[1..2].store_le(value);
         Ok(())
     }
-    /// Validity_INS_Heading
+    /// Get value of 'Validity_INS_Heading'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -27693,7 +27693,7 @@ impl RtSbInsHeadingGradient2 {
     pub fn validity_ins_heading(&self) -> bool {
         self.validity_ins_heading_raw()
     }
-    /// Get raw value of Validity_INS_Heading
+    /// Get raw value of 'Validity_INS_Heading'
     ///
     /// - Start bit: 0
     /// - Signal size: 1 bits
@@ -27706,7 +27706,7 @@ impl RtSbInsHeadingGradient2 {
         let signal = self.raw.view_bits::<Lsb0>()[0..1].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_INS_Heading
+    /// Set value of 'Validity_INS_Heading'
     #[inline(always)]
     pub fn set_validity_ins_heading(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
@@ -27782,7 +27782,7 @@ impl RtSbInsHeadingGradient {
     pub const INS_HEADING_MAX: f32 = 180_f32;
     pub const ACCURACY_INS_HEADING_MIN: u8 = 0_u8;
     pub const ACCURACY_INS_HEADING_MAX: u8 = 255_u8;
-    /// Construct new RT_SB_INS_Heading_Gradient from values
+    /// Construct new 'RT_SB_INS_Heading_Gradient' from values
     pub fn new(
         ins_gradient: f32,
         accuracy_ins_gradient: u8,
@@ -27804,7 +27804,7 @@ impl RtSbInsHeadingGradient {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// INS_Gradient
+    /// Get value of 'INS_Gradient'
     ///
     /// This is GPS gradient, i.e. the vertical direction that the vehicle is travelling, NOT pointing (pitch).
     ///
@@ -27816,7 +27816,7 @@ impl RtSbInsHeadingGradient {
     pub fn ins_gradient(&self) -> f32 {
         self.ins_gradient_raw()
     }
-    /// Get raw value of INS_Gradient
+    /// Get raw value of 'INS_Gradient'
     ///
     /// - Start bit: 40
     /// - Signal size: 16 bits
@@ -27831,7 +27831,7 @@ impl RtSbInsHeadingGradient {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of INS_Gradient
+    /// Set value of 'INS_Gradient'
     #[inline(always)]
     pub fn set_ins_gradient(&mut self, value: f32) -> Result<(), CanError> {
         if value < -90_f32 || 90_f32 < value {
@@ -27846,7 +27846,7 @@ impl RtSbInsHeadingGradient {
         self.raw.view_bits_mut::<Lsb0>()[40..56].store_le(value);
         Ok(())
     }
-    /// Accuracy_INS_Gradient
+    /// Get value of 'Accuracy_INS_Gradient'
     ///
     /// Dimensionless.  Lower values imply but do not guarantee better accuracy than higher values.
     ///
@@ -27858,7 +27858,7 @@ impl RtSbInsHeadingGradient {
     pub fn accuracy_ins_gradient(&self) -> u8 {
         self.accuracy_ins_gradient_raw()
     }
-    /// Get raw value of Accuracy_INS_Gradient
+    /// Get raw value of 'Accuracy_INS_Gradient'
     ///
     /// - Start bit: 32
     /// - Signal size: 8 bits
@@ -27872,7 +27872,7 @@ impl RtSbInsHeadingGradient {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Accuracy_INS_Gradient
+    /// Set value of 'Accuracy_INS_Gradient'
     #[inline(always)]
     pub fn set_accuracy_ins_gradient(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 255_u8 < value {
@@ -27890,7 +27890,7 @@ impl RtSbInsHeadingGradient {
         self.raw.view_bits_mut::<Lsb0>()[32..40].store_le(value);
         Ok(())
     }
-    /// INS_Heading
+    /// Get value of 'INS_Heading'
     ///
     /// This is GPS heading, the direction that the vehicle is travelling in the local horizontal plane.
     ///
@@ -27902,7 +27902,7 @@ impl RtSbInsHeadingGradient {
     pub fn ins_heading(&self) -> f32 {
         self.ins_heading_raw()
     }
-    /// Get raw value of INS_Heading
+    /// Get raw value of 'INS_Heading'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -27917,7 +27917,7 @@ impl RtSbInsHeadingGradient {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of INS_Heading
+    /// Set value of 'INS_Heading'
     #[inline(always)]
     pub fn set_ins_heading(&mut self, value: f32) -> Result<(), CanError> {
         if value < -180_f32 || 180_f32 < value {
@@ -27932,7 +27932,7 @@ impl RtSbInsHeadingGradient {
         self.raw.view_bits_mut::<Lsb0>()[16..32].store_le(value);
         Ok(())
     }
-    /// Accuracy_INS_Heading
+    /// Get value of 'Accuracy_INS_Heading'
     ///
     /// Dimensionless.  Lower values imply but do not guarantee better accuracy than higher values.
     ///
@@ -27944,7 +27944,7 @@ impl RtSbInsHeadingGradient {
     pub fn accuracy_ins_heading(&self) -> u8 {
         self.accuracy_ins_heading_raw()
     }
-    /// Get raw value of Accuracy_INS_Heading
+    /// Get raw value of 'Accuracy_INS_Heading'
     ///
     /// - Start bit: 8
     /// - Signal size: 8 bits
@@ -27958,7 +27958,7 @@ impl RtSbInsHeadingGradient {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Accuracy_INS_Heading
+    /// Set value of 'Accuracy_INS_Heading'
     #[inline(always)]
     pub fn set_accuracy_ins_heading(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 255_u8 < value {
@@ -27976,7 +27976,7 @@ impl RtSbInsHeadingGradient {
         self.raw.view_bits_mut::<Lsb0>()[8..16].store_le(value);
         Ok(())
     }
-    /// Validity_INS_Gradient
+    /// Get value of 'Validity_INS_Gradient'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -27988,7 +27988,7 @@ impl RtSbInsHeadingGradient {
     pub fn validity_ins_gradient(&self) -> bool {
         self.validity_ins_gradient_raw()
     }
-    /// Get raw value of Validity_INS_Gradient
+    /// Get raw value of 'Validity_INS_Gradient'
     ///
     /// - Start bit: 1
     /// - Signal size: 1 bits
@@ -28001,14 +28001,14 @@ impl RtSbInsHeadingGradient {
         let signal = self.raw.view_bits::<Lsb0>()[1..2].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_INS_Gradient
+    /// Set value of 'Validity_INS_Gradient'
     #[inline(always)]
     pub fn set_validity_ins_gradient(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[1..2].store_le(value);
         Ok(())
     }
-    /// Validity_INS_Heading
+    /// Get value of 'Validity_INS_Heading'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -28020,7 +28020,7 @@ impl RtSbInsHeadingGradient {
     pub fn validity_ins_heading(&self) -> bool {
         self.validity_ins_heading_raw()
     }
-    /// Get raw value of Validity_INS_Heading
+    /// Get raw value of 'Validity_INS_Heading'
     ///
     /// - Start bit: 0
     /// - Signal size: 1 bits
@@ -28033,7 +28033,7 @@ impl RtSbInsHeadingGradient {
         let signal = self.raw.view_bits::<Lsb0>()[0..1].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_INS_Heading
+    /// Set value of 'Validity_INS_Heading'
     #[inline(always)]
     pub fn set_validity_ins_heading(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
@@ -28103,8 +28103,8 @@ impl RtSbInsStatus {
     pub const MESSAGE_SIZE: usize = 8;
     pub const INS_STATUS_MIN: u8 = 0_u8;
     pub const INS_STATUS_MAX: u8 = 255_u8;
-    /// Construct new RT_SB_INS_Status from values
-    pub fn new(ins_status: u8) -> Result<Self, CanError> {
+    /// Construct new 'RT_SB_INS_Status' from values
+    pub fn new(ins_status: RtSbInsStatusInsStatus) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 8] };
         res.set_ins_status(ins_status)?;
         Ok(res)
@@ -28113,7 +28113,7 @@ impl RtSbInsStatus {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// INS_Status
+    /// Get value of 'INS_Status'
     ///
     /// - Min: 0
     /// - Max: 255
@@ -28129,7 +28129,7 @@ impl RtSbInsStatus {
             _ => RtSbInsStatusInsStatus::_Other(self.ins_status_raw()),
         }
     }
-    /// Get raw value of INS_Status
+    /// Get raw value of 'INS_Status'
     ///
     /// - Start bit: 0
     /// - Signal size: 8 bits
@@ -28143,9 +28143,13 @@ impl RtSbInsStatus {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of INS_Status
+    /// Set value of 'INS_Status'
     #[inline(always)]
-    pub fn set_ins_status(&mut self, value: u8) -> Result<(), CanError> {
+    pub fn set_ins_status(
+        &mut self,
+        value: RtSbInsStatusInsStatus,
+    ) -> Result<(), CanError> {
+        let value = u8::from(value);
         if value < 0_u8 || 255_u8 < value {
             return Err(CanError::ParameterOutOfRange {
                 message_id: RtSbInsStatus::MESSAGE_ID,
@@ -28257,15 +28261,15 @@ impl RtSbInsAttitude {
     pub const ATTITUDE_YAW_MAX: f32 = 360_f32;
     pub const ACCURACY_ATTITUDE_MIN: u8 = 0_u8;
     pub const ACCURACY_ATTITUDE_MAX: u8 = 255_u8;
-    /// Construct new RT_SB_INS_Attitude from values
+    /// Construct new 'RT_SB_INS_Attitude' from values
     pub fn new(
         attitude_roll: f32,
         attitude_pitch: f32,
         attitude_yaw: f32,
         accuracy_attitude: u8,
-        validity_roll: bool,
-        validity_pitch: bool,
-        validity_yaw: bool,
+        validity_roll: RtSbInsAttitudeValidityRoll,
+        validity_pitch: RtSbInsAttitudeValidityPitch,
+        validity_yaw: RtSbInsAttitudeValidityYaw,
     ) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 8] };
         res.set_attitude_roll(attitude_roll)?;
@@ -28281,7 +28285,7 @@ impl RtSbInsAttitude {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// Attitude_Roll
+    /// Get value of 'Attitude_Roll'
     ///
     /// - Min: -360
     /// - Max: 360
@@ -28291,7 +28295,7 @@ impl RtSbInsAttitude {
     pub fn attitude_roll(&self) -> f32 {
         self.attitude_roll_raw()
     }
-    /// Get raw value of Attitude_Roll
+    /// Get raw value of 'Attitude_Roll'
     ///
     /// - Start bit: 48
     /// - Signal size: 16 bits
@@ -28306,7 +28310,7 @@ impl RtSbInsAttitude {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Attitude_Roll
+    /// Set value of 'Attitude_Roll'
     #[inline(always)]
     pub fn set_attitude_roll(&mut self, value: f32) -> Result<(), CanError> {
         if value < -360_f32 || 360_f32 < value {
@@ -28321,7 +28325,7 @@ impl RtSbInsAttitude {
         self.raw.view_bits_mut::<Lsb0>()[48..64].store_le(value);
         Ok(())
     }
-    /// Attitude_Pitch
+    /// Get value of 'Attitude_Pitch'
     ///
     /// - Min: -360
     /// - Max: 360
@@ -28331,7 +28335,7 @@ impl RtSbInsAttitude {
     pub fn attitude_pitch(&self) -> f32 {
         self.attitude_pitch_raw()
     }
-    /// Get raw value of Attitude_Pitch
+    /// Get raw value of 'Attitude_Pitch'
     ///
     /// - Start bit: 32
     /// - Signal size: 16 bits
@@ -28346,7 +28350,7 @@ impl RtSbInsAttitude {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Attitude_Pitch
+    /// Set value of 'Attitude_Pitch'
     #[inline(always)]
     pub fn set_attitude_pitch(&mut self, value: f32) -> Result<(), CanError> {
         if value < -360_f32 || 360_f32 < value {
@@ -28361,7 +28365,7 @@ impl RtSbInsAttitude {
         self.raw.view_bits_mut::<Lsb0>()[32..48].store_le(value);
         Ok(())
     }
-    /// Attitude_Yaw
+    /// Get value of 'Attitude_Yaw'
     ///
     /// - Min: -360
     /// - Max: 360
@@ -28371,7 +28375,7 @@ impl RtSbInsAttitude {
     pub fn attitude_yaw(&self) -> f32 {
         self.attitude_yaw_raw()
     }
-    /// Get raw value of Attitude_Yaw
+    /// Get raw value of 'Attitude_Yaw'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -28386,7 +28390,7 @@ impl RtSbInsAttitude {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Attitude_Yaw
+    /// Set value of 'Attitude_Yaw'
     #[inline(always)]
     pub fn set_attitude_yaw(&mut self, value: f32) -> Result<(), CanError> {
         if value < -360_f32 || 360_f32 < value {
@@ -28401,7 +28405,7 @@ impl RtSbInsAttitude {
         self.raw.view_bits_mut::<Lsb0>()[16..32].store_le(value);
         Ok(())
     }
-    /// Accuracy_Attitude
+    /// Get value of 'Accuracy_Attitude'
     ///
     /// - Min: 0
     /// - Max: 255
@@ -28411,7 +28415,7 @@ impl RtSbInsAttitude {
     pub fn accuracy_attitude(&self) -> u8 {
         self.accuracy_attitude_raw()
     }
-    /// Get raw value of Accuracy_Attitude
+    /// Get raw value of 'Accuracy_Attitude'
     ///
     /// - Start bit: 8
     /// - Signal size: 8 bits
@@ -28425,7 +28429,7 @@ impl RtSbInsAttitude {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Accuracy_Attitude
+    /// Set value of 'Accuracy_Attitude'
     #[inline(always)]
     pub fn set_accuracy_attitude(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 255_u8 < value {
@@ -28443,7 +28447,7 @@ impl RtSbInsAttitude {
         self.raw.view_bits_mut::<Lsb0>()[8..16].store_le(value);
         Ok(())
     }
-    /// Validity_Roll
+    /// Get value of 'Validity_Roll'
     ///
     /// - Min: 0
     /// - Max: 1
@@ -28458,7 +28462,7 @@ impl RtSbInsAttitude {
             _ => RtSbInsAttitudeValidityRoll::_Other(self.validity_roll_raw()),
         }
     }
-    /// Get raw value of Validity_Roll
+    /// Get raw value of 'Validity_Roll'
     ///
     /// - Start bit: 2
     /// - Signal size: 1 bits
@@ -28471,14 +28475,18 @@ impl RtSbInsAttitude {
         let signal = self.raw.view_bits::<Lsb0>()[2..3].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_Roll
+    /// Set value of 'Validity_Roll'
     #[inline(always)]
-    pub fn set_validity_roll(&mut self, value: bool) -> Result<(), CanError> {
+    pub fn set_validity_roll(
+        &mut self,
+        value: RtSbInsAttitudeValidityRoll,
+    ) -> Result<(), CanError> {
+        let value = bool::from(value);
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[2..3].store_le(value);
         Ok(())
     }
-    /// Validity_Pitch
+    /// Get value of 'Validity_Pitch'
     ///
     /// - Min: 0
     /// - Max: 1
@@ -28493,7 +28501,7 @@ impl RtSbInsAttitude {
             _ => RtSbInsAttitudeValidityPitch::_Other(self.validity_pitch_raw()),
         }
     }
-    /// Get raw value of Validity_Pitch
+    /// Get raw value of 'Validity_Pitch'
     ///
     /// - Start bit: 1
     /// - Signal size: 1 bits
@@ -28506,14 +28514,18 @@ impl RtSbInsAttitude {
         let signal = self.raw.view_bits::<Lsb0>()[1..2].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_Pitch
+    /// Set value of 'Validity_Pitch'
     #[inline(always)]
-    pub fn set_validity_pitch(&mut self, value: bool) -> Result<(), CanError> {
+    pub fn set_validity_pitch(
+        &mut self,
+        value: RtSbInsAttitudeValidityPitch,
+    ) -> Result<(), CanError> {
+        let value = bool::from(value);
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[1..2].store_le(value);
         Ok(())
     }
-    /// Validity_Yaw
+    /// Get value of 'Validity_Yaw'
     ///
     /// - Min: 0
     /// - Max: 1
@@ -28528,7 +28540,7 @@ impl RtSbInsAttitude {
             _ => RtSbInsAttitudeValidityYaw::_Other(self.validity_yaw_raw()),
         }
     }
-    /// Get raw value of Validity_Yaw
+    /// Get raw value of 'Validity_Yaw'
     ///
     /// - Start bit: 0
     /// - Signal size: 1 bits
@@ -28541,9 +28553,13 @@ impl RtSbInsAttitude {
         let signal = self.raw.view_bits::<Lsb0>()[0..1].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_Yaw
+    /// Set value of 'Validity_Yaw'
     #[inline(always)]
-    pub fn set_validity_yaw(&mut self, value: bool) -> Result<(), CanError> {
+    pub fn set_validity_yaw(
+        &mut self,
+        value: RtSbInsAttitudeValidityYaw,
+    ) -> Result<(), CanError> {
+        let value = bool::from(value);
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[0..1].store_le(value);
         Ok(())
@@ -28686,17 +28702,17 @@ impl RtSbOutputStatus {
     pub const MESSAGE_SIZE: usize = 8;
     pub const GPS_TIME_MIN: f32 = 0_f32;
     pub const GPS_TIME_MAX: f32 = 604800_f32;
-    /// Construct new RT_SB_Output_Status from values
+    /// Construct new 'RT_SB_Output_Status' from values
     pub fn new(
         gps_time: f32,
-        status_trigger: bool,
-        status_serial_output_2: bool,
-        status_serial_output_1: bool,
-        status_pulse_output: bool,
-        status_analogue_4: bool,
-        status_analogue_3: bool,
-        status_analogue_2: bool,
-        status_analogue_1: bool,
+        status_trigger: RtSbOutputStatusStatusTrigger,
+        status_serial_output_2: RtSbOutputStatusStatusSerialOutput2,
+        status_serial_output_1: RtSbOutputStatusStatusSerialOutput1,
+        status_pulse_output: RtSbOutputStatusStatusPulseOutput,
+        status_analogue_4: RtSbOutputStatusStatusAnalogue4,
+        status_analogue_3: RtSbOutputStatusStatusAnalogue3,
+        status_analogue_2: RtSbOutputStatusStatusAnalogue2,
+        status_analogue_1: RtSbOutputStatusStatusAnalogue1,
         validity_status_timestamp: bool,
     ) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 8] };
@@ -28716,7 +28732,7 @@ impl RtSbOutputStatus {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// GPS_Time
+    /// Get value of 'GPS_Time'
     ///
     /// GPS time is the time in seconds since midnight GMT on Saturday night.
     ///
@@ -28728,7 +28744,7 @@ impl RtSbOutputStatus {
     pub fn gps_time(&self) -> f32 {
         self.gps_time_raw()
     }
-    /// Get raw value of GPS_Time
+    /// Get raw value of 'GPS_Time'
     ///
     /// - Start bit: 32
     /// - Signal size: 32 bits
@@ -28743,7 +28759,7 @@ impl RtSbOutputStatus {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of GPS_Time
+    /// Set value of 'GPS_Time'
     #[inline(always)]
     pub fn set_gps_time(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 604800_f32 < value {
@@ -28757,7 +28773,7 @@ impl RtSbOutputStatus {
         self.raw.view_bits_mut::<Lsb0>()[32..64].store_le(value);
         Ok(())
     }
-    /// Status_Trigger
+    /// Get value of 'Status_Trigger'
     ///
     /// Status of the trigger input
     ///
@@ -28774,7 +28790,7 @@ impl RtSbOutputStatus {
             _ => RtSbOutputStatusStatusTrigger::_Other(self.status_trigger_raw()),
         }
     }
-    /// Get raw value of Status_Trigger
+    /// Get raw value of 'Status_Trigger'
     ///
     /// - Start bit: 15
     /// - Signal size: 1 bits
@@ -28787,14 +28803,18 @@ impl RtSbOutputStatus {
         let signal = self.raw.view_bits::<Lsb0>()[15..16].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Status_Trigger
+    /// Set value of 'Status_Trigger'
     #[inline(always)]
-    pub fn set_status_trigger(&mut self, value: bool) -> Result<(), CanError> {
+    pub fn set_status_trigger(
+        &mut self,
+        value: RtSbOutputStatusStatusTrigger,
+    ) -> Result<(), CanError> {
+        let value = bool::from(value);
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[15..16].store_le(value);
         Ok(())
     }
-    /// Status_Serial_Output_2
+    /// Get value of 'Status_Serial_Output_2'
     ///
     /// Status output of serial port 1
     ///
@@ -28815,7 +28835,7 @@ impl RtSbOutputStatus {
             }
         }
     }
-    /// Get raw value of Status_Serial_Output_2
+    /// Get raw value of 'Status_Serial_Output_2'
     ///
     /// - Start bit: 14
     /// - Signal size: 1 bits
@@ -28828,14 +28848,18 @@ impl RtSbOutputStatus {
         let signal = self.raw.view_bits::<Lsb0>()[14..15].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Status_Serial_Output_2
+    /// Set value of 'Status_Serial_Output_2'
     #[inline(always)]
-    pub fn set_status_serial_output_2(&mut self, value: bool) -> Result<(), CanError> {
+    pub fn set_status_serial_output_2(
+        &mut self,
+        value: RtSbOutputStatusStatusSerialOutput2,
+    ) -> Result<(), CanError> {
+        let value = bool::from(value);
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[14..15].store_le(value);
         Ok(())
     }
-    /// Status_Serial_Output_1
+    /// Get value of 'Status_Serial_Output_1'
     ///
     /// Status output of serial port 1
     ///
@@ -28856,7 +28880,7 @@ impl RtSbOutputStatus {
             }
         }
     }
-    /// Get raw value of Status_Serial_Output_1
+    /// Get raw value of 'Status_Serial_Output_1'
     ///
     /// - Start bit: 13
     /// - Signal size: 1 bits
@@ -28869,14 +28893,18 @@ impl RtSbOutputStatus {
         let signal = self.raw.view_bits::<Lsb0>()[13..14].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Status_Serial_Output_1
+    /// Set value of 'Status_Serial_Output_1'
     #[inline(always)]
-    pub fn set_status_serial_output_1(&mut self, value: bool) -> Result<(), CanError> {
+    pub fn set_status_serial_output_1(
+        &mut self,
+        value: RtSbOutputStatusStatusSerialOutput1,
+    ) -> Result<(), CanError> {
+        let value = bool::from(value);
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[13..14].store_le(value);
         Ok(())
     }
-    /// Status_Pulse_Output
+    /// Get value of 'Status_Pulse_Output'
     ///
     /// Pulse output activity status
     ///
@@ -28895,7 +28923,7 @@ impl RtSbOutputStatus {
             }
         }
     }
-    /// Get raw value of Status_Pulse_Output
+    /// Get raw value of 'Status_Pulse_Output'
     ///
     /// - Start bit: 12
     /// - Signal size: 1 bits
@@ -28908,14 +28936,18 @@ impl RtSbOutputStatus {
         let signal = self.raw.view_bits::<Lsb0>()[12..13].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Status_Pulse_Output
+    /// Set value of 'Status_Pulse_Output'
     #[inline(always)]
-    pub fn set_status_pulse_output(&mut self, value: bool) -> Result<(), CanError> {
+    pub fn set_status_pulse_output(
+        &mut self,
+        value: RtSbOutputStatusStatusPulseOutput,
+    ) -> Result<(), CanError> {
+        let value = bool::from(value);
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[12..13].store_le(value);
         Ok(())
     }
-    /// Status_Analogue_4
+    /// Get value of 'Status_Analogue_4'
     ///
     /// Analogue output status for channel 4.
     ///
@@ -28932,7 +28964,7 @@ impl RtSbOutputStatus {
             _ => RtSbOutputStatusStatusAnalogue4::_Other(self.status_analogue_4_raw()),
         }
     }
-    /// Get raw value of Status_Analogue_4
+    /// Get raw value of 'Status_Analogue_4'
     ///
     /// - Start bit: 11
     /// - Signal size: 1 bits
@@ -28945,14 +28977,18 @@ impl RtSbOutputStatus {
         let signal = self.raw.view_bits::<Lsb0>()[11..12].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Status_Analogue_4
+    /// Set value of 'Status_Analogue_4'
     #[inline(always)]
-    pub fn set_status_analogue_4(&mut self, value: bool) -> Result<(), CanError> {
+    pub fn set_status_analogue_4(
+        &mut self,
+        value: RtSbOutputStatusStatusAnalogue4,
+    ) -> Result<(), CanError> {
+        let value = bool::from(value);
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[11..12].store_le(value);
         Ok(())
     }
-    /// Status_Analogue_3
+    /// Get value of 'Status_Analogue_3'
     ///
     /// Analogue output status for channel 3.
     ///
@@ -28969,7 +29005,7 @@ impl RtSbOutputStatus {
             _ => RtSbOutputStatusStatusAnalogue3::_Other(self.status_analogue_3_raw()),
         }
     }
-    /// Get raw value of Status_Analogue_3
+    /// Get raw value of 'Status_Analogue_3'
     ///
     /// - Start bit: 10
     /// - Signal size: 1 bits
@@ -28982,14 +29018,18 @@ impl RtSbOutputStatus {
         let signal = self.raw.view_bits::<Lsb0>()[10..11].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Status_Analogue_3
+    /// Set value of 'Status_Analogue_3'
     #[inline(always)]
-    pub fn set_status_analogue_3(&mut self, value: bool) -> Result<(), CanError> {
+    pub fn set_status_analogue_3(
+        &mut self,
+        value: RtSbOutputStatusStatusAnalogue3,
+    ) -> Result<(), CanError> {
+        let value = bool::from(value);
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[10..11].store_le(value);
         Ok(())
     }
-    /// Status_Analogue_2
+    /// Get value of 'Status_Analogue_2'
     ///
     /// Analogue output status for channel 1.
     ///
@@ -29006,7 +29046,7 @@ impl RtSbOutputStatus {
             _ => RtSbOutputStatusStatusAnalogue2::_Other(self.status_analogue_2_raw()),
         }
     }
-    /// Get raw value of Status_Analogue_2
+    /// Get raw value of 'Status_Analogue_2'
     ///
     /// - Start bit: 9
     /// - Signal size: 1 bits
@@ -29019,14 +29059,18 @@ impl RtSbOutputStatus {
         let signal = self.raw.view_bits::<Lsb0>()[9..10].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Status_Analogue_2
+    /// Set value of 'Status_Analogue_2'
     #[inline(always)]
-    pub fn set_status_analogue_2(&mut self, value: bool) -> Result<(), CanError> {
+    pub fn set_status_analogue_2(
+        &mut self,
+        value: RtSbOutputStatusStatusAnalogue2,
+    ) -> Result<(), CanError> {
+        let value = bool::from(value);
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[9..10].store_le(value);
         Ok(())
     }
-    /// Status_Analogue_1
+    /// Get value of 'Status_Analogue_1'
     ///
     /// Analogue output status for channel 1.
     ///
@@ -29043,7 +29087,7 @@ impl RtSbOutputStatus {
             _ => RtSbOutputStatusStatusAnalogue1::_Other(self.status_analogue_1_raw()),
         }
     }
-    /// Get raw value of Status_Analogue_1
+    /// Get raw value of 'Status_Analogue_1'
     ///
     /// - Start bit: 8
     /// - Signal size: 1 bits
@@ -29056,14 +29100,18 @@ impl RtSbOutputStatus {
         let signal = self.raw.view_bits::<Lsb0>()[8..9].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Status_Analogue_1
+    /// Set value of 'Status_Analogue_1'
     #[inline(always)]
-    pub fn set_status_analogue_1(&mut self, value: bool) -> Result<(), CanError> {
+    pub fn set_status_analogue_1(
+        &mut self,
+        value: RtSbOutputStatusStatusAnalogue1,
+    ) -> Result<(), CanError> {
+        let value = bool::from(value);
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[8..9].store_le(value);
         Ok(())
     }
-    /// Validity_Status_Timestamp
+    /// Get value of 'Validity_Status_Timestamp'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -29075,7 +29123,7 @@ impl RtSbOutputStatus {
     pub fn validity_status_timestamp(&self) -> bool {
         self.validity_status_timestamp_raw()
     }
-    /// Get raw value of Validity_Status_Timestamp
+    /// Get raw value of 'Validity_Status_Timestamp'
     ///
     /// - Start bit: 0
     /// - Signal size: 1 bits
@@ -29088,7 +29136,7 @@ impl RtSbOutputStatus {
         let signal = self.raw.view_bits::<Lsb0>()[0..1].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_Status_Timestamp
+    /// Set value of 'Validity_Status_Timestamp'
     #[inline(always)]
     pub fn set_validity_status_timestamp(
         &mut self,
@@ -29367,7 +29415,7 @@ impl RtSbGpsHeadingGradient2 {
     pub const GPS_HEADING_2_MAX: f32 = 360_f32;
     pub const ACCURACY_GPS_HEADING_MIN: u8 = 0_u8;
     pub const ACCURACY_GPS_HEADING_MAX: u8 = 255_u8;
-    /// Construct new RT_SB_GPS_Heading_Gradient_2 from values
+    /// Construct new 'RT_SB_GPS_Heading_Gradient_2' from values
     pub fn new(
         gps_gradient: f32,
         accuracy_gps_gradient: u8,
@@ -29389,7 +29437,7 @@ impl RtSbGpsHeadingGradient2 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// GPS_Gradient
+    /// Get value of 'GPS_Gradient'
     ///
     /// This is GPS gradient, i.e. the vertical direction that the vehicle is travelling, NOT pointing (pitch).
     ///
@@ -29401,7 +29449,7 @@ impl RtSbGpsHeadingGradient2 {
     pub fn gps_gradient(&self) -> f32 {
         self.gps_gradient_raw()
     }
-    /// Get raw value of GPS_Gradient
+    /// Get raw value of 'GPS_Gradient'
     ///
     /// - Start bit: 40
     /// - Signal size: 16 bits
@@ -29416,7 +29464,7 @@ impl RtSbGpsHeadingGradient2 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of GPS_Gradient
+    /// Set value of 'GPS_Gradient'
     #[inline(always)]
     pub fn set_gps_gradient(&mut self, value: f32) -> Result<(), CanError> {
         if value < -90_f32 || 90_f32 < value {
@@ -29431,7 +29479,7 @@ impl RtSbGpsHeadingGradient2 {
         self.raw.view_bits_mut::<Lsb0>()[40..56].store_le(value);
         Ok(())
     }
-    /// Accuracy_GPS_Gradient
+    /// Get value of 'Accuracy_GPS_Gradient'
     ///
     /// Dimensionless.  Lower values imply but do not guarantee better accuracy than higher values.
     ///
@@ -29443,7 +29491,7 @@ impl RtSbGpsHeadingGradient2 {
     pub fn accuracy_gps_gradient(&self) -> u8 {
         self.accuracy_gps_gradient_raw()
     }
-    /// Get raw value of Accuracy_GPS_Gradient
+    /// Get raw value of 'Accuracy_GPS_Gradient'
     ///
     /// - Start bit: 32
     /// - Signal size: 8 bits
@@ -29457,7 +29505,7 @@ impl RtSbGpsHeadingGradient2 {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Accuracy_GPS_Gradient
+    /// Set value of 'Accuracy_GPS_Gradient'
     #[inline(always)]
     pub fn set_accuracy_gps_gradient(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 255_u8 < value {
@@ -29475,7 +29523,7 @@ impl RtSbGpsHeadingGradient2 {
         self.raw.view_bits_mut::<Lsb0>()[32..40].store_le(value);
         Ok(())
     }
-    /// GPS_Heading_2
+    /// Get value of 'GPS_Heading_2'
     ///
     /// This is GPS heading in the range 0 - 360°, the direction that the vehicle is travelling in the local horizontal plane.
     ///
@@ -29487,7 +29535,7 @@ impl RtSbGpsHeadingGradient2 {
     pub fn gps_heading_2(&self) -> f32 {
         self.gps_heading_2_raw()
     }
-    /// Get raw value of GPS_Heading_2
+    /// Get raw value of 'GPS_Heading_2'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -29502,7 +29550,7 @@ impl RtSbGpsHeadingGradient2 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of GPS_Heading_2
+    /// Set value of 'GPS_Heading_2'
     #[inline(always)]
     pub fn set_gps_heading_2(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 360_f32 < value {
@@ -29516,7 +29564,7 @@ impl RtSbGpsHeadingGradient2 {
         self.raw.view_bits_mut::<Lsb0>()[16..32].store_le(value);
         Ok(())
     }
-    /// Accuracy_GPS_Heading
+    /// Get value of 'Accuracy_GPS_Heading'
     ///
     /// Dimensionless.  Lower values imply but do not guarantee better accuracy than higher values.
     ///
@@ -29528,7 +29576,7 @@ impl RtSbGpsHeadingGradient2 {
     pub fn accuracy_gps_heading(&self) -> u8 {
         self.accuracy_gps_heading_raw()
     }
-    /// Get raw value of Accuracy_GPS_Heading
+    /// Get raw value of 'Accuracy_GPS_Heading'
     ///
     /// - Start bit: 8
     /// - Signal size: 8 bits
@@ -29542,7 +29590,7 @@ impl RtSbGpsHeadingGradient2 {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Accuracy_GPS_Heading
+    /// Set value of 'Accuracy_GPS_Heading'
     #[inline(always)]
     pub fn set_accuracy_gps_heading(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 255_u8 < value {
@@ -29560,7 +29608,7 @@ impl RtSbGpsHeadingGradient2 {
         self.raw.view_bits_mut::<Lsb0>()[8..16].store_le(value);
         Ok(())
     }
-    /// Validity_GPS_Gradient
+    /// Get value of 'Validity_GPS_Gradient'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -29572,7 +29620,7 @@ impl RtSbGpsHeadingGradient2 {
     pub fn validity_gps_gradient(&self) -> bool {
         self.validity_gps_gradient_raw()
     }
-    /// Get raw value of Validity_GPS_Gradient
+    /// Get raw value of 'Validity_GPS_Gradient'
     ///
     /// - Start bit: 1
     /// - Signal size: 1 bits
@@ -29585,14 +29633,14 @@ impl RtSbGpsHeadingGradient2 {
         let signal = self.raw.view_bits::<Lsb0>()[1..2].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_GPS_Gradient
+    /// Set value of 'Validity_GPS_Gradient'
     #[inline(always)]
     pub fn set_validity_gps_gradient(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[1..2].store_le(value);
         Ok(())
     }
-    /// Validity_GPS_Heading
+    /// Get value of 'Validity_GPS_Heading'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -29604,7 +29652,7 @@ impl RtSbGpsHeadingGradient2 {
     pub fn validity_gps_heading(&self) -> bool {
         self.validity_gps_heading_raw()
     }
-    /// Get raw value of Validity_GPS_Heading
+    /// Get raw value of 'Validity_GPS_Heading'
     ///
     /// - Start bit: 0
     /// - Signal size: 1 bits
@@ -29617,7 +29665,7 @@ impl RtSbGpsHeadingGradient2 {
         let signal = self.raw.view_bits::<Lsb0>()[0..1].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_GPS_Heading
+    /// Set value of 'Validity_GPS_Heading'
     #[inline(always)]
     pub fn set_validity_gps_heading(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
@@ -29691,7 +29739,7 @@ impl RtSbCumulativeDistance2 {
     pub const CUMULATIVE_DISTANCE_MAX: f32 = 4294967_f32;
     pub const CUMULATIVE_TIME_MIN: f32 = 0_f32;
     pub const CUMULATIVE_TIME_MAX: f32 = 167772_f32;
-    /// Construct new RT_SB_Cumulative_Distance_2 from values
+    /// Construct new 'RT_SB_Cumulative_Distance_2' from values
     pub fn new(
         cumulative_distance: f32,
         cumulative_time: f32,
@@ -29709,7 +29757,7 @@ impl RtSbCumulativeDistance2 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// Cumulative_Distance
+    /// Get value of 'Cumulative_Distance'
     ///
     /// - Min: 0
     /// - Max: 4294967
@@ -29719,7 +29767,7 @@ impl RtSbCumulativeDistance2 {
     pub fn cumulative_distance(&self) -> f32 {
         self.cumulative_distance_raw()
     }
-    /// Get raw value of Cumulative_Distance
+    /// Get raw value of 'Cumulative_Distance'
     ///
     /// - Start bit: 32
     /// - Signal size: 32 bits
@@ -29734,7 +29782,7 @@ impl RtSbCumulativeDistance2 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Cumulative_Distance
+    /// Set value of 'Cumulative_Distance'
     #[inline(always)]
     pub fn set_cumulative_distance(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 4294967_f32 < value {
@@ -29748,7 +29796,7 @@ impl RtSbCumulativeDistance2 {
         self.raw.view_bits_mut::<Lsb0>()[32..64].store_le(value);
         Ok(())
     }
-    /// Cumulative_Time
+    /// Get value of 'Cumulative_Time'
     ///
     /// - Min: 0
     /// - Max: 167772
@@ -29758,7 +29806,7 @@ impl RtSbCumulativeDistance2 {
     pub fn cumulative_time(&self) -> f32 {
         self.cumulative_time_raw()
     }
-    /// Get raw value of Cumulative_Time
+    /// Get raw value of 'Cumulative_Time'
     ///
     /// - Start bit: 8
     /// - Signal size: 24 bits
@@ -29773,7 +29821,7 @@ impl RtSbCumulativeDistance2 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Cumulative_Time
+    /// Set value of 'Cumulative_Time'
     #[inline(always)]
     pub fn set_cumulative_time(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 167772_f32 < value {
@@ -29787,7 +29835,7 @@ impl RtSbCumulativeDistance2 {
         self.raw.view_bits_mut::<Lsb0>()[8..32].store_le(value);
         Ok(())
     }
-    /// Validity_Cumulative_Distance
+    /// Get value of 'Validity_Cumulative_Distance'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -29799,7 +29847,7 @@ impl RtSbCumulativeDistance2 {
     pub fn validity_cumulative_distance(&self) -> bool {
         self.validity_cumulative_distance_raw()
     }
-    /// Get raw value of Validity_Cumulative_Distance
+    /// Get raw value of 'Validity_Cumulative_Distance'
     ///
     /// - Start bit: 1
     /// - Signal size: 1 bits
@@ -29812,7 +29860,7 @@ impl RtSbCumulativeDistance2 {
         let signal = self.raw.view_bits::<Lsb0>()[1..2].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_Cumulative_Distance
+    /// Set value of 'Validity_Cumulative_Distance'
     #[inline(always)]
     pub fn set_validity_cumulative_distance(
         &mut self,
@@ -29822,7 +29870,7 @@ impl RtSbCumulativeDistance2 {
         self.raw.view_bits_mut::<Lsb0>()[1..2].store_le(value);
         Ok(())
     }
-    /// Validity_Cumulative_Time
+    /// Get value of 'Validity_Cumulative_Time'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -29834,7 +29882,7 @@ impl RtSbCumulativeDistance2 {
     pub fn validity_cumulative_time(&self) -> bool {
         self.validity_cumulative_time_raw()
     }
-    /// Get raw value of Validity_Cumulative_Time
+    /// Get raw value of 'Validity_Cumulative_Time'
     ///
     /// - Start bit: 0
     /// - Signal size: 1 bits
@@ -29847,7 +29895,7 @@ impl RtSbCumulativeDistance2 {
         let signal = self.raw.view_bits::<Lsb0>()[0..1].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_Cumulative_Time
+    /// Set value of 'Validity_Cumulative_Time'
     #[inline(always)]
     pub fn set_validity_cumulative_time(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
@@ -29921,7 +29969,7 @@ impl RtSbCumulativeDistance1 {
     pub const CUMULATIVE_DISTANCE_MAX: f32 = 4294967_f32;
     pub const CUMULATIVE_TIME_MIN: f32 = 0_f32;
     pub const CUMULATIVE_TIME_MAX: f32 = 167772_f32;
-    /// Construct new RT_SB_Cumulative_Distance_1 from values
+    /// Construct new 'RT_SB_Cumulative_Distance_1' from values
     pub fn new(
         cumulative_distance: f32,
         cumulative_time: f32,
@@ -29939,7 +29987,7 @@ impl RtSbCumulativeDistance1 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// Cumulative_Distance
+    /// Get value of 'Cumulative_Distance'
     ///
     /// - Min: 0
     /// - Max: 4294967
@@ -29949,7 +29997,7 @@ impl RtSbCumulativeDistance1 {
     pub fn cumulative_distance(&self) -> f32 {
         self.cumulative_distance_raw()
     }
-    /// Get raw value of Cumulative_Distance
+    /// Get raw value of 'Cumulative_Distance'
     ///
     /// - Start bit: 32
     /// - Signal size: 32 bits
@@ -29964,7 +30012,7 @@ impl RtSbCumulativeDistance1 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Cumulative_Distance
+    /// Set value of 'Cumulative_Distance'
     #[inline(always)]
     pub fn set_cumulative_distance(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 4294967_f32 < value {
@@ -29978,7 +30026,7 @@ impl RtSbCumulativeDistance1 {
         self.raw.view_bits_mut::<Lsb0>()[32..64].store_le(value);
         Ok(())
     }
-    /// Cumulative_Time
+    /// Get value of 'Cumulative_Time'
     ///
     /// - Min: 0
     /// - Max: 167772
@@ -29988,7 +30036,7 @@ impl RtSbCumulativeDistance1 {
     pub fn cumulative_time(&self) -> f32 {
         self.cumulative_time_raw()
     }
-    /// Get raw value of Cumulative_Time
+    /// Get raw value of 'Cumulative_Time'
     ///
     /// - Start bit: 8
     /// - Signal size: 24 bits
@@ -30003,7 +30051,7 @@ impl RtSbCumulativeDistance1 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Cumulative_Time
+    /// Set value of 'Cumulative_Time'
     #[inline(always)]
     pub fn set_cumulative_time(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 167772_f32 < value {
@@ -30017,7 +30065,7 @@ impl RtSbCumulativeDistance1 {
         self.raw.view_bits_mut::<Lsb0>()[8..32].store_le(value);
         Ok(())
     }
-    /// Validity_Cumulative_Distance
+    /// Get value of 'Validity_Cumulative_Distance'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -30029,7 +30077,7 @@ impl RtSbCumulativeDistance1 {
     pub fn validity_cumulative_distance(&self) -> bool {
         self.validity_cumulative_distance_raw()
     }
-    /// Get raw value of Validity_Cumulative_Distance
+    /// Get raw value of 'Validity_Cumulative_Distance'
     ///
     /// - Start bit: 1
     /// - Signal size: 1 bits
@@ -30042,7 +30090,7 @@ impl RtSbCumulativeDistance1 {
         let signal = self.raw.view_bits::<Lsb0>()[1..2].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_Cumulative_Distance
+    /// Set value of 'Validity_Cumulative_Distance'
     #[inline(always)]
     pub fn set_validity_cumulative_distance(
         &mut self,
@@ -30052,7 +30100,7 @@ impl RtSbCumulativeDistance1 {
         self.raw.view_bits_mut::<Lsb0>()[1..2].store_le(value);
         Ok(())
     }
-    /// Validity_Cumulative_Time
+    /// Get value of 'Validity_Cumulative_Time'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -30064,7 +30112,7 @@ impl RtSbCumulativeDistance1 {
     pub fn validity_cumulative_time(&self) -> bool {
         self.validity_cumulative_time_raw()
     }
-    /// Get raw value of Validity_Cumulative_Time
+    /// Get raw value of 'Validity_Cumulative_Time'
     ///
     /// - Start bit: 0
     /// - Signal size: 1 bits
@@ -30077,7 +30125,7 @@ impl RtSbCumulativeDistance1 {
         let signal = self.raw.view_bits::<Lsb0>()[0..1].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_Cumulative_Time
+    /// Set value of 'Validity_Cumulative_Time'
     #[inline(always)]
     pub fn set_validity_cumulative_time(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
@@ -30151,10 +30199,10 @@ impl RtSbTriggerTimestamp {
     pub const TRIGGER_NUMBER_MAX: u8 = 128_u8;
     pub const ACCURACY_TRIGGER_TIMESTAMP_MIN: u8 = 0_u8;
     pub const ACCURACY_TRIGGER_TIMESTAMP_MAX: u8 = 255_u8;
-    /// Construct new RT_SB_Trigger_Timestamp from values
+    /// Construct new 'RT_SB_Trigger_Timestamp' from values
     pub fn new(
         gps_high_resolution_time: f32,
-        trigger_timestamp_type: bool,
+        trigger_timestamp_type: RtSbTriggerTimestampTriggerTimestampType,
         trigger_number: u8,
         accuracy_trigger_timestamp: u8,
         validity_trigger_timestamp: bool,
@@ -30171,7 +30219,7 @@ impl RtSbTriggerTimestamp {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// GPS_High_Resolution_Time
+    /// Get value of 'GPS_High_Resolution_Time'
     ///
     /// GPS time of week to micro-second resolution.
     ///
@@ -30183,7 +30231,7 @@ impl RtSbTriggerTimestamp {
     pub fn gps_high_resolution_time(&self) -> f32 {
         self.gps_high_resolution_time_raw()
     }
-    /// Get raw value of GPS_High_Resolution_Time
+    /// Get raw value of 'GPS_High_Resolution_Time'
     ///
     /// - Start bit: 24
     /// - Signal size: 40 bits
@@ -30198,7 +30246,7 @@ impl RtSbTriggerTimestamp {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of GPS_High_Resolution_Time
+    /// Set value of 'GPS_High_Resolution_Time'
     #[inline(always)]
     pub fn set_gps_high_resolution_time(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 604800_f32 < value {
@@ -30212,7 +30260,7 @@ impl RtSbTriggerTimestamp {
         self.raw.view_bits_mut::<Lsb0>()[24..64].store_le(value);
         Ok(())
     }
-    /// Trigger_Timestamp_Type
+    /// Get value of 'Trigger_Timestamp_Type'
     ///
     /// - Min: 0
     /// - Max: 1
@@ -30231,7 +30279,7 @@ impl RtSbTriggerTimestamp {
             }
         }
     }
-    /// Get raw value of Trigger_Timestamp_Type
+    /// Get raw value of 'Trigger_Timestamp_Type'
     ///
     /// - Start bit: 23
     /// - Signal size: 1 bits
@@ -30244,14 +30292,18 @@ impl RtSbTriggerTimestamp {
         let signal = self.raw.view_bits::<Lsb0>()[23..24].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Trigger_Timestamp_Type
+    /// Set value of 'Trigger_Timestamp_Type'
     #[inline(always)]
-    pub fn set_trigger_timestamp_type(&mut self, value: bool) -> Result<(), CanError> {
+    pub fn set_trigger_timestamp_type(
+        &mut self,
+        value: RtSbTriggerTimestampTriggerTimestampType,
+    ) -> Result<(), CanError> {
+        let value = bool::from(value);
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[23..24].store_le(value);
         Ok(())
     }
-    /// Trigger_Number
+    /// Get value of 'Trigger_Number'
     ///
     /// This is the ID of the trigger that generated the event, as marked on the case of the logger
     ///
@@ -30263,7 +30315,7 @@ impl RtSbTriggerTimestamp {
     pub fn trigger_number(&self) -> u8 {
         self.trigger_number_raw()
     }
-    /// Get raw value of Trigger_Number
+    /// Get raw value of 'Trigger_Number'
     ///
     /// - Start bit: 16
     /// - Signal size: 7 bits
@@ -30277,7 +30329,7 @@ impl RtSbTriggerTimestamp {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(1)
     }
-    /// Set value of Trigger_Number
+    /// Set value of 'Trigger_Number'
     #[inline(always)]
     pub fn set_trigger_number(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 128_u8 < value {
@@ -30295,7 +30347,7 @@ impl RtSbTriggerTimestamp {
         self.raw.view_bits_mut::<Lsb0>()[16..23].store_le(value);
         Ok(())
     }
-    /// Accuracy_Trigger_Timestamp
+    /// Get value of 'Accuracy_Trigger_Timestamp'
     ///
     /// Dimensionless.  Lower values imply but do not guarantee better accuracy than higher values.
     ///
@@ -30307,7 +30359,7 @@ impl RtSbTriggerTimestamp {
     pub fn accuracy_trigger_timestamp(&self) -> u8 {
         self.accuracy_trigger_timestamp_raw()
     }
-    /// Get raw value of Accuracy_Trigger_Timestamp
+    /// Get raw value of 'Accuracy_Trigger_Timestamp'
     ///
     /// - Start bit: 8
     /// - Signal size: 8 bits
@@ -30321,7 +30373,7 @@ impl RtSbTriggerTimestamp {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Accuracy_Trigger_Timestamp
+    /// Set value of 'Accuracy_Trigger_Timestamp'
     #[inline(always)]
     pub fn set_accuracy_trigger_timestamp(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 255_u8 < value {
@@ -30339,7 +30391,7 @@ impl RtSbTriggerTimestamp {
         self.raw.view_bits_mut::<Lsb0>()[8..16].store_le(value);
         Ok(())
     }
-    /// Validity_Trigger_Timestamp
+    /// Get value of 'Validity_Trigger_Timestamp'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -30351,7 +30403,7 @@ impl RtSbTriggerTimestamp {
     pub fn validity_trigger_timestamp(&self) -> bool {
         self.validity_trigger_timestamp_raw()
     }
-    /// Get raw value of Validity_Trigger_Timestamp
+    /// Get raw value of 'Validity_Trigger_Timestamp'
     ///
     /// - Start bit: 0
     /// - Signal size: 1 bits
@@ -30364,7 +30416,7 @@ impl RtSbTriggerTimestamp {
         let signal = self.raw.view_bits::<Lsb0>()[0..1].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_Trigger_Timestamp
+    /// Set value of 'Validity_Trigger_Timestamp'
     #[inline(always)]
     pub fn set_validity_trigger_timestamp(
         &mut self,
@@ -30468,7 +30520,7 @@ impl RtImu06GyroRates {
     pub const GYRO_RATE_YAW_MAX: f32 = 327_f32;
     pub const ACCURACY_GYRO_RATES_MIN: u8 = 0_u8;
     pub const ACCURACY_GYRO_RATES_MAX: u8 = 0_u8;
-    /// Construct new RT_IMU06_Gyro_Rates from values
+    /// Construct new 'RT_IMU06_Gyro_Rates' from values
     pub fn new(
         gyro_rate_roll: f32,
         gyro_rate_pitch: f32,
@@ -30492,7 +30544,7 @@ impl RtImu06GyroRates {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// Gyro_Rate_Roll
+    /// Get value of 'Gyro_Rate_Roll'
     ///
     /// Roll rate is positive for clockwise rotation when looking at the rear of the vehicle from behind the vehicle.
     ///
@@ -30504,7 +30556,7 @@ impl RtImu06GyroRates {
     pub fn gyro_rate_roll(&self) -> f32 {
         self.gyro_rate_roll_raw()
     }
-    /// Get raw value of Gyro_Rate_Roll
+    /// Get raw value of 'Gyro_Rate_Roll'
     ///
     /// - Start bit: 48
     /// - Signal size: 16 bits
@@ -30519,7 +30571,7 @@ impl RtImu06GyroRates {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Gyro_Rate_Roll
+    /// Set value of 'Gyro_Rate_Roll'
     #[inline(always)]
     pub fn set_gyro_rate_roll(&mut self, value: f32) -> Result<(), CanError> {
         if value < -327_f32 || 327_f32 < value {
@@ -30534,7 +30586,7 @@ impl RtImu06GyroRates {
         self.raw.view_bits_mut::<Lsb0>()[48..64].store_le(value);
         Ok(())
     }
-    /// Gyro_Rate_Pitch
+    /// Get value of 'Gyro_Rate_Pitch'
     ///
     /// Pitch rate is positive for clockwise rotation when looking at the left hand side of the vehicle from the left of the vehicle.
     ///
@@ -30546,7 +30598,7 @@ impl RtImu06GyroRates {
     pub fn gyro_rate_pitch(&self) -> f32 {
         self.gyro_rate_pitch_raw()
     }
-    /// Get raw value of Gyro_Rate_Pitch
+    /// Get raw value of 'Gyro_Rate_Pitch'
     ///
     /// - Start bit: 32
     /// - Signal size: 16 bits
@@ -30561,7 +30613,7 @@ impl RtImu06GyroRates {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Gyro_Rate_Pitch
+    /// Set value of 'Gyro_Rate_Pitch'
     #[inline(always)]
     pub fn set_gyro_rate_pitch(&mut self, value: f32) -> Result<(), CanError> {
         if value < -327_f32 || 327_f32 < value {
@@ -30576,7 +30628,7 @@ impl RtImu06GyroRates {
         self.raw.view_bits_mut::<Lsb0>()[32..48].store_le(value);
         Ok(())
     }
-    /// Gyro_Rate_Yaw
+    /// Get value of 'Gyro_Rate_Yaw'
     ///
     /// Yaw rate is positive for clockwise rotation when looking down on the vehicle from above.
     ///
@@ -30588,7 +30640,7 @@ impl RtImu06GyroRates {
     pub fn gyro_rate_yaw(&self) -> f32 {
         self.gyro_rate_yaw_raw()
     }
-    /// Get raw value of Gyro_Rate_Yaw
+    /// Get raw value of 'Gyro_Rate_Yaw'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -30603,7 +30655,7 @@ impl RtImu06GyroRates {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Gyro_Rate_Yaw
+    /// Set value of 'Gyro_Rate_Yaw'
     #[inline(always)]
     pub fn set_gyro_rate_yaw(&mut self, value: f32) -> Result<(), CanError> {
         if value < -327_f32 || 327_f32 < value {
@@ -30618,7 +30670,7 @@ impl RtImu06GyroRates {
         self.raw.view_bits_mut::<Lsb0>()[16..32].store_le(value);
         Ok(())
     }
-    /// Accuracy_Gyro_Rates
+    /// Get value of 'Accuracy_Gyro_Rates'
     ///
     /// Dimensionless.  Lower values imply but do not guarantee better accuracy than higher values.
     ///
@@ -30630,7 +30682,7 @@ impl RtImu06GyroRates {
     pub fn accuracy_gyro_rates(&self) -> u8 {
         self.accuracy_gyro_rates_raw()
     }
-    /// Get raw value of Accuracy_Gyro_Rates
+    /// Get raw value of 'Accuracy_Gyro_Rates'
     ///
     /// - Start bit: 8
     /// - Signal size: 8 bits
@@ -30644,7 +30696,7 @@ impl RtImu06GyroRates {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Accuracy_Gyro_Rates
+    /// Set value of 'Accuracy_Gyro_Rates'
     #[inline(always)]
     pub fn set_accuracy_gyro_rates(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 0_u8 < value {
@@ -30662,7 +30714,7 @@ impl RtImu06GyroRates {
         self.raw.view_bits_mut::<Lsb0>()[8..16].store_le(value);
         Ok(())
     }
-    /// Validity_Gyro_Rate_Roll
+    /// Get value of 'Validity_Gyro_Rate_Roll'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -30674,7 +30726,7 @@ impl RtImu06GyroRates {
     pub fn validity_gyro_rate_roll(&self) -> bool {
         self.validity_gyro_rate_roll_raw()
     }
-    /// Get raw value of Validity_Gyro_Rate_Roll
+    /// Get raw value of 'Validity_Gyro_Rate_Roll'
     ///
     /// - Start bit: 2
     /// - Signal size: 1 bits
@@ -30687,14 +30739,14 @@ impl RtImu06GyroRates {
         let signal = self.raw.view_bits::<Lsb0>()[2..3].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_Gyro_Rate_Roll
+    /// Set value of 'Validity_Gyro_Rate_Roll'
     #[inline(always)]
     pub fn set_validity_gyro_rate_roll(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[2..3].store_le(value);
         Ok(())
     }
-    /// Validity_Gyro_Rate_Pitch
+    /// Get value of 'Validity_Gyro_Rate_Pitch'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -30706,7 +30758,7 @@ impl RtImu06GyroRates {
     pub fn validity_gyro_rate_pitch(&self) -> bool {
         self.validity_gyro_rate_pitch_raw()
     }
-    /// Get raw value of Validity_Gyro_Rate_Pitch
+    /// Get raw value of 'Validity_Gyro_Rate_Pitch'
     ///
     /// - Start bit: 1
     /// - Signal size: 1 bits
@@ -30719,14 +30771,14 @@ impl RtImu06GyroRates {
         let signal = self.raw.view_bits::<Lsb0>()[1..2].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_Gyro_Rate_Pitch
+    /// Set value of 'Validity_Gyro_Rate_Pitch'
     #[inline(always)]
     pub fn set_validity_gyro_rate_pitch(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[1..2].store_le(value);
         Ok(())
     }
-    /// Validity_Gyro_Rate_Yaw
+    /// Get value of 'Validity_Gyro_Rate_Yaw'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -30738,7 +30790,7 @@ impl RtImu06GyroRates {
     pub fn validity_gyro_rate_yaw(&self) -> bool {
         self.validity_gyro_rate_yaw_raw()
     }
-    /// Get raw value of Validity_Gyro_Rate_Yaw
+    /// Get raw value of 'Validity_Gyro_Rate_Yaw'
     ///
     /// - Start bit: 0
     /// - Signal size: 1 bits
@@ -30751,7 +30803,7 @@ impl RtImu06GyroRates {
         let signal = self.raw.view_bits::<Lsb0>()[0..1].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_Gyro_Rate_Yaw
+    /// Set value of 'Validity_Gyro_Rate_Yaw'
     #[inline(always)]
     pub fn set_validity_gyro_rate_yaw(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
@@ -30827,7 +30879,7 @@ impl RtImu06Accel {
     pub const ACCEL_LONGITUDINAL_MAX: f32 = 65_f32;
     pub const ACCURACY_ACCEL_MIN: u8 = 0_u8;
     pub const ACCURACY_ACCEL_MAX: u8 = 255_u8;
-    /// Construct new RT_IMU06_Accel from values
+    /// Construct new 'RT_IMU06_Accel' from values
     pub fn new(
         accel_vertical: f32,
         accel_lateral: f32,
@@ -30851,7 +30903,7 @@ impl RtImu06Accel {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// Accel_Vertical
+    /// Get value of 'Accel_Vertical'
     ///
     /// Vertical acceleration.  This is positive when the vehicle accelerates in an upwards direction, e.g. when travelling through a dip.
     ///
@@ -30863,7 +30915,7 @@ impl RtImu06Accel {
     pub fn accel_vertical(&self) -> f32 {
         self.accel_vertical_raw()
     }
-    /// Get raw value of Accel_Vertical
+    /// Get raw value of 'Accel_Vertical'
     ///
     /// - Start bit: 48
     /// - Signal size: 16 bits
@@ -30878,7 +30930,7 @@ impl RtImu06Accel {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Accel_Vertical
+    /// Set value of 'Accel_Vertical'
     #[inline(always)]
     pub fn set_accel_vertical(&mut self, value: f32) -> Result<(), CanError> {
         if value < -65_f32 || 65_f32 < value {
@@ -30893,7 +30945,7 @@ impl RtImu06Accel {
         self.raw.view_bits_mut::<Lsb0>()[48..64].store_le(value);
         Ok(())
     }
-    /// Accel_Lateral
+    /// Get value of 'Accel_Lateral'
     ///
     /// Lateral acceleration.  This is positive when the vehicle accelerates towards the right, e.g. when cornering around a right-hand bend.
     ///
@@ -30905,7 +30957,7 @@ impl RtImu06Accel {
     pub fn accel_lateral(&self) -> f32 {
         self.accel_lateral_raw()
     }
-    /// Get raw value of Accel_Lateral
+    /// Get raw value of 'Accel_Lateral'
     ///
     /// - Start bit: 32
     /// - Signal size: 16 bits
@@ -30920,7 +30972,7 @@ impl RtImu06Accel {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Accel_Lateral
+    /// Set value of 'Accel_Lateral'
     #[inline(always)]
     pub fn set_accel_lateral(&mut self, value: f32) -> Result<(), CanError> {
         if value < -65_f32 || 65_f32 < value {
@@ -30935,7 +30987,7 @@ impl RtImu06Accel {
         self.raw.view_bits_mut::<Lsb0>()[32..48].store_le(value);
         Ok(())
     }
-    /// Accel_Longitudinal
+    /// Get value of 'Accel_Longitudinal'
     ///
     /// Longitudinal acceleration.  This is positive when the vehicle accelerates in a forwards direction.
     ///
@@ -30947,7 +30999,7 @@ impl RtImu06Accel {
     pub fn accel_longitudinal(&self) -> f32 {
         self.accel_longitudinal_raw()
     }
-    /// Get raw value of Accel_Longitudinal
+    /// Get raw value of 'Accel_Longitudinal'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -30962,7 +31014,7 @@ impl RtImu06Accel {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Accel_Longitudinal
+    /// Set value of 'Accel_Longitudinal'
     #[inline(always)]
     pub fn set_accel_longitudinal(&mut self, value: f32) -> Result<(), CanError> {
         if value < -65_f32 || 65_f32 < value {
@@ -30977,7 +31029,7 @@ impl RtImu06Accel {
         self.raw.view_bits_mut::<Lsb0>()[16..32].store_le(value);
         Ok(())
     }
-    /// Accuracy_Accel
+    /// Get value of 'Accuracy_Accel'
     ///
     /// Dimensionless.  Lower values imply but do not guarantee better accuracy than higher values.
     ///
@@ -30989,7 +31041,7 @@ impl RtImu06Accel {
     pub fn accuracy_accel(&self) -> u8 {
         self.accuracy_accel_raw()
     }
-    /// Get raw value of Accuracy_Accel
+    /// Get raw value of 'Accuracy_Accel'
     ///
     /// - Start bit: 8
     /// - Signal size: 8 bits
@@ -31003,7 +31055,7 @@ impl RtImu06Accel {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Accuracy_Accel
+    /// Set value of 'Accuracy_Accel'
     #[inline(always)]
     pub fn set_accuracy_accel(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 255_u8 < value {
@@ -31021,7 +31073,7 @@ impl RtImu06Accel {
         self.raw.view_bits_mut::<Lsb0>()[8..16].store_le(value);
         Ok(())
     }
-    /// Validity_Accel_Vertical
+    /// Get value of 'Validity_Accel_Vertical'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -31033,7 +31085,7 @@ impl RtImu06Accel {
     pub fn validity_accel_vertical(&self) -> bool {
         self.validity_accel_vertical_raw()
     }
-    /// Get raw value of Validity_Accel_Vertical
+    /// Get raw value of 'Validity_Accel_Vertical'
     ///
     /// - Start bit: 2
     /// - Signal size: 1 bits
@@ -31046,14 +31098,14 @@ impl RtImu06Accel {
         let signal = self.raw.view_bits::<Lsb0>()[2..3].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_Accel_Vertical
+    /// Set value of 'Validity_Accel_Vertical'
     #[inline(always)]
     pub fn set_validity_accel_vertical(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[2..3].store_le(value);
         Ok(())
     }
-    /// Validity_Accel_Lateral
+    /// Get value of 'Validity_Accel_Lateral'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -31065,7 +31117,7 @@ impl RtImu06Accel {
     pub fn validity_accel_lateral(&self) -> bool {
         self.validity_accel_lateral_raw()
     }
-    /// Get raw value of Validity_Accel_Lateral
+    /// Get raw value of 'Validity_Accel_Lateral'
     ///
     /// - Start bit: 1
     /// - Signal size: 1 bits
@@ -31078,14 +31130,14 @@ impl RtImu06Accel {
         let signal = self.raw.view_bits::<Lsb0>()[1..2].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_Accel_Lateral
+    /// Set value of 'Validity_Accel_Lateral'
     #[inline(always)]
     pub fn set_validity_accel_lateral(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[1..2].store_le(value);
         Ok(())
     }
-    /// Validity_Accel_Longitudinal
+    /// Get value of 'Validity_Accel_Longitudinal'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -31097,7 +31149,7 @@ impl RtImu06Accel {
     pub fn validity_accel_longitudinal(&self) -> bool {
         self.validity_accel_longitudinal_raw()
     }
-    /// Get raw value of Validity_Accel_Longitudinal
+    /// Get raw value of 'Validity_Accel_Longitudinal'
     ///
     /// - Start bit: 0
     /// - Signal size: 1 bits
@@ -31110,7 +31162,7 @@ impl RtImu06Accel {
         let signal = self.raw.view_bits::<Lsb0>()[0..1].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_Accel_Longitudinal
+    /// Set value of 'Validity_Accel_Longitudinal'
     #[inline(always)]
     pub fn set_validity_accel_longitudinal(
         &mut self,
@@ -31185,7 +31237,7 @@ impl RtSbSpeed {
     pub const SPEED_MAX: f32 = 20000_f32;
     pub const ACCURACY_SPEED_MIN: u8 = 0_u8;
     pub const ACCURACY_SPEED_MAX: u8 = 255_u8;
-    /// Construct new RT_SB_Speed from values
+    /// Construct new 'RT_SB_Speed' from values
     pub fn new(
         speed: f32,
         accuracy_speed: u8,
@@ -31201,7 +31253,7 @@ impl RtSbSpeed {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// Speed
+    /// Get value of 'Speed'
     ///
     /// - Min: -20000
     /// - Max: 20000
@@ -31211,7 +31263,7 @@ impl RtSbSpeed {
     pub fn speed(&self) -> f32 {
         self.speed_raw()
     }
-    /// Get raw value of Speed
+    /// Get raw value of 'Speed'
     ///
     /// - Start bit: 16
     /// - Signal size: 32 bits
@@ -31226,7 +31278,7 @@ impl RtSbSpeed {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Speed
+    /// Set value of 'Speed'
     #[inline(always)]
     pub fn set_speed(&mut self, value: f32) -> Result<(), CanError> {
         if value < -20000_f32 || 20000_f32 < value {
@@ -31241,7 +31293,7 @@ impl RtSbSpeed {
         self.raw.view_bits_mut::<Lsb0>()[16..48].store_le(value);
         Ok(())
     }
-    /// Accuracy_Speed
+    /// Get value of 'Accuracy_Speed'
     ///
     /// Dimensionless.  Lower values imply but do not guarantee better accuracy than higher values.
     ///
@@ -31253,7 +31305,7 @@ impl RtSbSpeed {
     pub fn accuracy_speed(&self) -> u8 {
         self.accuracy_speed_raw()
     }
-    /// Get raw value of Accuracy_Speed
+    /// Get raw value of 'Accuracy_Speed'
     ///
     /// - Start bit: 8
     /// - Signal size: 8 bits
@@ -31267,7 +31319,7 @@ impl RtSbSpeed {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Accuracy_Speed
+    /// Set value of 'Accuracy_Speed'
     #[inline(always)]
     pub fn set_accuracy_speed(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 255_u8 < value {
@@ -31285,7 +31337,7 @@ impl RtSbSpeed {
         self.raw.view_bits_mut::<Lsb0>()[8..16].store_le(value);
         Ok(())
     }
-    /// Validity_Speed
+    /// Get value of 'Validity_Speed'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -31297,7 +31349,7 @@ impl RtSbSpeed {
     pub fn validity_speed(&self) -> bool {
         self.validity_speed_raw()
     }
-    /// Get raw value of Validity_Speed
+    /// Get raw value of 'Validity_Speed'
     ///
     /// - Start bit: 0
     /// - Signal size: 1 bits
@@ -31310,7 +31362,7 @@ impl RtSbSpeed {
         let signal = self.raw.view_bits::<Lsb0>()[0..1].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_Speed
+    /// Set value of 'Validity_Speed'
     #[inline(always)]
     pub fn set_validity_speed(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
@@ -31386,7 +31438,7 @@ impl RtSbRtkSlip {
     pub const RTK_SLIP_MAX: f32 = 360_f32;
     pub const ACCURACY_RTK_BASELINE_MIN: u8 = 0_u8;
     pub const ACCURACY_RTK_BASELINE_MAX: u8 = 255_u8;
-    /// Construct new RT_SB_RTK_Slip from values
+    /// Construct new 'RT_SB_RTK_Slip' from values
     pub fn new(
         rtk_baseline: u16,
         rtk_squat: f32,
@@ -31410,7 +31462,7 @@ impl RtSbRtkSlip {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// RTK_Baseline
+    /// Get value of 'RTK_Baseline'
     ///
     /// This is the estimated baseline length calculated by the RTK solution.
     ///
@@ -31422,7 +31474,7 @@ impl RtSbRtkSlip {
     pub fn rtk_baseline(&self) -> u16 {
         self.rtk_baseline_raw()
     }
-    /// Get raw value of RTK_Baseline
+    /// Get raw value of 'RTK_Baseline'
     ///
     /// - Start bit: 48
     /// - Signal size: 16 bits
@@ -31436,7 +31488,7 @@ impl RtSbRtkSlip {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of RTK_Baseline
+    /// Set value of 'RTK_Baseline'
     #[inline(always)]
     pub fn set_rtk_baseline(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 65535_u16 < value {
@@ -31454,7 +31506,7 @@ impl RtSbRtkSlip {
         self.raw.view_bits_mut::<Lsb0>()[48..64].store_le(value);
         Ok(())
     }
-    /// RTK_Squat
+    /// Get value of 'RTK_Squat'
     ///
     /// Squat is defined as the difference between pitch and gradient.
     ///
@@ -31466,7 +31518,7 @@ impl RtSbRtkSlip {
     pub fn rtk_squat(&self) -> f32 {
         self.rtk_squat_raw()
     }
-    /// Get raw value of RTK_Squat
+    /// Get raw value of 'RTK_Squat'
     ///
     /// - Start bit: 32
     /// - Signal size: 16 bits
@@ -31481,7 +31533,7 @@ impl RtSbRtkSlip {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of RTK_Squat
+    /// Set value of 'RTK_Squat'
     #[inline(always)]
     pub fn set_rtk_squat(&mut self, value: f32) -> Result<(), CanError> {
         if value < -360_f32 || 360_f32 < value {
@@ -31496,7 +31548,7 @@ impl RtSbRtkSlip {
         self.raw.view_bits_mut::<Lsb0>()[32..48].store_le(value);
         Ok(())
     }
-    /// RTK_Slip
+    /// Get value of 'RTK_Slip'
     ///
     /// Slip is defined as the difference between yaw and heading.
     ///
@@ -31508,7 +31560,7 @@ impl RtSbRtkSlip {
     pub fn rtk_slip(&self) -> f32 {
         self.rtk_slip_raw()
     }
-    /// Get raw value of RTK_Slip
+    /// Get raw value of 'RTK_Slip'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -31523,7 +31575,7 @@ impl RtSbRtkSlip {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of RTK_Slip
+    /// Set value of 'RTK_Slip'
     #[inline(always)]
     pub fn set_rtk_slip(&mut self, value: f32) -> Result<(), CanError> {
         if value < -360_f32 || 360_f32 < value {
@@ -31538,7 +31590,7 @@ impl RtSbRtkSlip {
         self.raw.view_bits_mut::<Lsb0>()[16..32].store_le(value);
         Ok(())
     }
-    /// Accuracy_RTK_Baseline
+    /// Get value of 'Accuracy_RTK_Baseline'
     ///
     /// - Min: 0
     /// - Max: 255
@@ -31548,7 +31600,7 @@ impl RtSbRtkSlip {
     pub fn accuracy_rtk_baseline(&self) -> u8 {
         self.accuracy_rtk_baseline_raw()
     }
-    /// Get raw value of Accuracy_RTK_Baseline
+    /// Get raw value of 'Accuracy_RTK_Baseline'
     ///
     /// - Start bit: 8
     /// - Signal size: 8 bits
@@ -31562,7 +31614,7 @@ impl RtSbRtkSlip {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Accuracy_RTK_Baseline
+    /// Set value of 'Accuracy_RTK_Baseline'
     #[inline(always)]
     pub fn set_accuracy_rtk_baseline(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 255_u8 < value {
@@ -31580,7 +31632,7 @@ impl RtSbRtkSlip {
         self.raw.view_bits_mut::<Lsb0>()[8..16].store_le(value);
         Ok(())
     }
-    /// Validity_RTK_Baseline
+    /// Get value of 'Validity_RTK_Baseline'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -31592,7 +31644,7 @@ impl RtSbRtkSlip {
     pub fn validity_rtk_baseline(&self) -> bool {
         self.validity_rtk_baseline_raw()
     }
-    /// Get raw value of Validity_RTK_Baseline
+    /// Get raw value of 'Validity_RTK_Baseline'
     ///
     /// - Start bit: 2
     /// - Signal size: 1 bits
@@ -31605,14 +31657,14 @@ impl RtSbRtkSlip {
         let signal = self.raw.view_bits::<Lsb0>()[2..3].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_RTK_Baseline
+    /// Set value of 'Validity_RTK_Baseline'
     #[inline(always)]
     pub fn set_validity_rtk_baseline(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[2..3].store_le(value);
         Ok(())
     }
-    /// Validity_RTK_Squat
+    /// Get value of 'Validity_RTK_Squat'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -31624,7 +31676,7 @@ impl RtSbRtkSlip {
     pub fn validity_rtk_squat(&self) -> bool {
         self.validity_rtk_squat_raw()
     }
-    /// Get raw value of Validity_RTK_Squat
+    /// Get raw value of 'Validity_RTK_Squat'
     ///
     /// - Start bit: 1
     /// - Signal size: 1 bits
@@ -31637,14 +31689,14 @@ impl RtSbRtkSlip {
         let signal = self.raw.view_bits::<Lsb0>()[1..2].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_RTK_Squat
+    /// Set value of 'Validity_RTK_Squat'
     #[inline(always)]
     pub fn set_validity_rtk_squat(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[1..2].store_le(value);
         Ok(())
     }
-    /// Validity_RTK_Slip
+    /// Get value of 'Validity_RTK_Slip'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -31656,7 +31708,7 @@ impl RtSbRtkSlip {
     pub fn validity_rtk_slip(&self) -> bool {
         self.validity_rtk_slip_raw()
     }
-    /// Get raw value of Validity_RTK_Slip
+    /// Get raw value of 'Validity_RTK_Slip'
     ///
     /// - Start bit: 0
     /// - Signal size: 1 bits
@@ -31669,7 +31721,7 @@ impl RtSbRtkSlip {
         let signal = self.raw.view_bits::<Lsb0>()[0..1].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_RTK_Slip
+    /// Set value of 'Validity_RTK_Slip'
     #[inline(always)]
     pub fn set_validity_rtk_slip(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
@@ -31745,7 +31797,7 @@ impl RtSbRtkAttitude {
     pub const RTK_ATTITUDE_YAW_MAX: f32 = 360_f32;
     pub const ACCURACY_RTK_ATTITUDE_MIN: u8 = 0_u8;
     pub const ACCURACY_RTK_ATTITUDE_MAX: u8 = 255_u8;
-    /// Construct new RT_SB_RTK_Attitude from values
+    /// Construct new 'RT_SB_RTK_Attitude' from values
     pub fn new(
         rtk_attitude_roll: f32,
         rtk_attitude_pitch: f32,
@@ -31769,7 +31821,7 @@ impl RtSbRtkAttitude {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// RTK_Attitude_Roll
+    /// Get value of 'RTK_Attitude_Roll'
     ///
     /// RTK attitude is determined from the MB-RTK solution only.  Roll is positive for a clockwise rotational displacement relative to the local horizontal plane when looking at the vehicle from the rear of it.
     ///
@@ -31781,7 +31833,7 @@ impl RtSbRtkAttitude {
     pub fn rtk_attitude_roll(&self) -> f32 {
         self.rtk_attitude_roll_raw()
     }
-    /// Get raw value of RTK_Attitude_Roll
+    /// Get raw value of 'RTK_Attitude_Roll'
     ///
     /// - Start bit: 48
     /// - Signal size: 16 bits
@@ -31796,7 +31848,7 @@ impl RtSbRtkAttitude {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of RTK_Attitude_Roll
+    /// Set value of 'RTK_Attitude_Roll'
     #[inline(always)]
     pub fn set_rtk_attitude_roll(&mut self, value: f32) -> Result<(), CanError> {
         if value < -90_f32 || 90_f32 < value {
@@ -31811,7 +31863,7 @@ impl RtSbRtkAttitude {
         self.raw.view_bits_mut::<Lsb0>()[48..64].store_le(value);
         Ok(())
     }
-    /// RTK_Attitude_Pitch
+    /// Get value of 'RTK_Attitude_Pitch'
     ///
     /// RTK attitude is determined from the MB-RTK solution only.  Pitch is positive for a clockwise rotational displacement from the local horizontal plane when looking at the vehicle from the left hand side of it.
     ///
@@ -31823,7 +31875,7 @@ impl RtSbRtkAttitude {
     pub fn rtk_attitude_pitch(&self) -> f32 {
         self.rtk_attitude_pitch_raw()
     }
-    /// Get raw value of RTK_Attitude_Pitch
+    /// Get raw value of 'RTK_Attitude_Pitch'
     ///
     /// - Start bit: 32
     /// - Signal size: 16 bits
@@ -31838,7 +31890,7 @@ impl RtSbRtkAttitude {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of RTK_Attitude_Pitch
+    /// Set value of 'RTK_Attitude_Pitch'
     #[inline(always)]
     pub fn set_rtk_attitude_pitch(&mut self, value: f32) -> Result<(), CanError> {
         if value < -90_f32 || 90_f32 < value {
@@ -31853,7 +31905,7 @@ impl RtSbRtkAttitude {
         self.raw.view_bits_mut::<Lsb0>()[32..48].store_le(value);
         Ok(())
     }
-    /// RTK_Attitude_Yaw
+    /// Get value of 'RTK_Attitude_Yaw'
     ///
     /// RTK attitude is determined from the MB-RTK solution only.  Yaw is positive for a clockwise rotational displacement from due North, looking down on the vehicle from above.
     ///
@@ -31865,7 +31917,7 @@ impl RtSbRtkAttitude {
     pub fn rtk_attitude_yaw(&self) -> f32 {
         self.rtk_attitude_yaw_raw()
     }
-    /// Get raw value of RTK_Attitude_Yaw
+    /// Get raw value of 'RTK_Attitude_Yaw'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -31880,7 +31932,7 @@ impl RtSbRtkAttitude {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of RTK_Attitude_Yaw
+    /// Set value of 'RTK_Attitude_Yaw'
     #[inline(always)]
     pub fn set_rtk_attitude_yaw(&mut self, value: f32) -> Result<(), CanError> {
         if value < -360_f32 || 360_f32 < value {
@@ -31895,7 +31947,7 @@ impl RtSbRtkAttitude {
         self.raw.view_bits_mut::<Lsb0>()[16..32].store_le(value);
         Ok(())
     }
-    /// Accuracy_RTK_Attitude
+    /// Get value of 'Accuracy_RTK_Attitude'
     ///
     /// Note that RTK yaw is typically up to about 4 times more accurate than RTK pitch or roll.
     ///
@@ -31907,7 +31959,7 @@ impl RtSbRtkAttitude {
     pub fn accuracy_rtk_attitude(&self) -> u8 {
         self.accuracy_rtk_attitude_raw()
     }
-    /// Get raw value of Accuracy_RTK_Attitude
+    /// Get raw value of 'Accuracy_RTK_Attitude'
     ///
     /// - Start bit: 8
     /// - Signal size: 8 bits
@@ -31921,7 +31973,7 @@ impl RtSbRtkAttitude {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Accuracy_RTK_Attitude
+    /// Set value of 'Accuracy_RTK_Attitude'
     #[inline(always)]
     pub fn set_accuracy_rtk_attitude(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 255_u8 < value {
@@ -31939,7 +31991,7 @@ impl RtSbRtkAttitude {
         self.raw.view_bits_mut::<Lsb0>()[8..16].store_le(value);
         Ok(())
     }
-    /// Validity_RTK_Roll
+    /// Get value of 'Validity_RTK_Roll'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -31951,7 +32003,7 @@ impl RtSbRtkAttitude {
     pub fn validity_rtk_roll(&self) -> bool {
         self.validity_rtk_roll_raw()
     }
-    /// Get raw value of Validity_RTK_Roll
+    /// Get raw value of 'Validity_RTK_Roll'
     ///
     /// - Start bit: 2
     /// - Signal size: 1 bits
@@ -31964,14 +32016,14 @@ impl RtSbRtkAttitude {
         let signal = self.raw.view_bits::<Lsb0>()[2..3].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_RTK_Roll
+    /// Set value of 'Validity_RTK_Roll'
     #[inline(always)]
     pub fn set_validity_rtk_roll(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[2..3].store_le(value);
         Ok(())
     }
-    /// Validity_RTK_Pitch
+    /// Get value of 'Validity_RTK_Pitch'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -31983,7 +32035,7 @@ impl RtSbRtkAttitude {
     pub fn validity_rtk_pitch(&self) -> bool {
         self.validity_rtk_pitch_raw()
     }
-    /// Get raw value of Validity_RTK_Pitch
+    /// Get raw value of 'Validity_RTK_Pitch'
     ///
     /// - Start bit: 1
     /// - Signal size: 1 bits
@@ -31996,14 +32048,14 @@ impl RtSbRtkAttitude {
         let signal = self.raw.view_bits::<Lsb0>()[1..2].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_RTK_Pitch
+    /// Set value of 'Validity_RTK_Pitch'
     #[inline(always)]
     pub fn set_validity_rtk_pitch(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[1..2].store_le(value);
         Ok(())
     }
-    /// Validity_RTK_Yaw
+    /// Get value of 'Validity_RTK_Yaw'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -32015,7 +32067,7 @@ impl RtSbRtkAttitude {
     pub fn validity_rtk_yaw(&self) -> bool {
         self.validity_rtk_yaw_raw()
     }
-    /// Get raw value of Validity_RTK_Yaw
+    /// Get raw value of 'Validity_RTK_Yaw'
     ///
     /// - Start bit: 0
     /// - Signal size: 1 bits
@@ -32028,7 +32080,7 @@ impl RtSbRtkAttitude {
         let signal = self.raw.view_bits::<Lsb0>()[0..1].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_RTK_Yaw
+    /// Set value of 'Validity_RTK_Yaw'
     #[inline(always)]
     pub fn set_validity_rtk_yaw(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
@@ -32102,7 +32154,7 @@ impl RtSbGpsMcycleLean {
     pub const GPS_LATERAL_ACCEL_MAX: f32 = 65_f32;
     pub const ACCURACY_GPS_LATERAL_ACCEL_MIN: u8 = 0_u8;
     pub const ACCURACY_GPS_LATERAL_ACCEL_MAX: u8 = 255_u8;
-    /// Construct new RT_SB_GPS_Mcycle_Lean from values
+    /// Construct new 'RT_SB_GPS_Mcycle_Lean' from values
     pub fn new(
         gps_mcycle_lean_angle: f32,
         gps_lateral_accel: f32,
@@ -32122,7 +32174,7 @@ impl RtSbGpsMcycleLean {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// GPS_Mcycle_Lean_Angle
+    /// Get value of 'GPS_Mcycle_Lean_Angle'
     ///
     /// Motorcycle lean angle, derived from rate of change of heading from GPS.  This is the lean angle of the centre of mass of the combined bike + rider.
     ///
@@ -32134,7 +32186,7 @@ impl RtSbGpsMcycleLean {
     pub fn gps_mcycle_lean_angle(&self) -> f32 {
         self.gps_mcycle_lean_angle_raw()
     }
-    /// Get raw value of GPS_Mcycle_Lean_Angle
+    /// Get raw value of 'GPS_Mcycle_Lean_Angle'
     ///
     /// - Start bit: 32
     /// - Signal size: 16 bits
@@ -32149,7 +32201,7 @@ impl RtSbGpsMcycleLean {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of GPS_Mcycle_Lean_Angle
+    /// Set value of 'GPS_Mcycle_Lean_Angle'
     #[inline(always)]
     pub fn set_gps_mcycle_lean_angle(&mut self, value: f32) -> Result<(), CanError> {
         if value < -90_f32 || 90_f32 < value {
@@ -32164,7 +32216,7 @@ impl RtSbGpsMcycleLean {
         self.raw.view_bits_mut::<Lsb0>()[32..48].store_le(value);
         Ok(())
     }
-    /// GPS_Lateral_Accel
+    /// Get value of 'GPS_Lateral_Accel'
     ///
     /// GPS-derived lateral acceleration.  This is derived by differentiating GPS heading - it is much more noisy than lateral accel from the accelerometers, but useful for m/cycle applications.
     ///
@@ -32176,7 +32228,7 @@ impl RtSbGpsMcycleLean {
     pub fn gps_lateral_accel(&self) -> f32 {
         self.gps_lateral_accel_raw()
     }
-    /// Get raw value of GPS_Lateral_Accel
+    /// Get raw value of 'GPS_Lateral_Accel'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -32191,7 +32243,7 @@ impl RtSbGpsMcycleLean {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of GPS_Lateral_Accel
+    /// Set value of 'GPS_Lateral_Accel'
     #[inline(always)]
     pub fn set_gps_lateral_accel(&mut self, value: f32) -> Result<(), CanError> {
         if value < -65_f32 || 65_f32 < value {
@@ -32206,7 +32258,7 @@ impl RtSbGpsMcycleLean {
         self.raw.view_bits_mut::<Lsb0>()[16..32].store_le(value);
         Ok(())
     }
-    /// Accuracy_GPS_Lateral_Accel
+    /// Get value of 'Accuracy_GPS_Lateral_Accel'
     ///
     /// This accuracy value applies to both GPS-derived lateral acceleration and motorcycle lean angle, since both are derived from the rate of change of GPS heading.
     ///
@@ -32218,7 +32270,7 @@ impl RtSbGpsMcycleLean {
     pub fn accuracy_gps_lateral_accel(&self) -> u8 {
         self.accuracy_gps_lateral_accel_raw()
     }
-    /// Get raw value of Accuracy_GPS_Lateral_Accel
+    /// Get raw value of 'Accuracy_GPS_Lateral_Accel'
     ///
     /// - Start bit: 8
     /// - Signal size: 8 bits
@@ -32232,7 +32284,7 @@ impl RtSbGpsMcycleLean {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Accuracy_GPS_Lateral_Accel
+    /// Set value of 'Accuracy_GPS_Lateral_Accel'
     #[inline(always)]
     pub fn set_accuracy_gps_lateral_accel(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 255_u8 < value {
@@ -32250,7 +32302,7 @@ impl RtSbGpsMcycleLean {
         self.raw.view_bits_mut::<Lsb0>()[8..16].store_le(value);
         Ok(())
     }
-    /// Validity_GPS_Mcycle_Lean
+    /// Get value of 'Validity_GPS_Mcycle_Lean'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -32262,7 +32314,7 @@ impl RtSbGpsMcycleLean {
     pub fn validity_gps_mcycle_lean(&self) -> bool {
         self.validity_gps_mcycle_lean_raw()
     }
-    /// Get raw value of Validity_GPS_Mcycle_Lean
+    /// Get raw value of 'Validity_GPS_Mcycle_Lean'
     ///
     /// - Start bit: 1
     /// - Signal size: 1 bits
@@ -32275,14 +32327,14 @@ impl RtSbGpsMcycleLean {
         let signal = self.raw.view_bits::<Lsb0>()[1..2].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_GPS_Mcycle_Lean
+    /// Set value of 'Validity_GPS_Mcycle_Lean'
     #[inline(always)]
     pub fn set_validity_gps_mcycle_lean(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[1..2].store_le(value);
         Ok(())
     }
-    /// Validity_GPS_Lateral_Accel
+    /// Get value of 'Validity_GPS_Lateral_Accel'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -32294,7 +32346,7 @@ impl RtSbGpsMcycleLean {
     pub fn validity_gps_lateral_accel(&self) -> bool {
         self.validity_gps_lateral_accel_raw()
     }
-    /// Get raw value of Validity_GPS_Lateral_Accel
+    /// Get raw value of 'Validity_GPS_Lateral_Accel'
     ///
     /// - Start bit: 0
     /// - Signal size: 1 bits
@@ -32307,7 +32359,7 @@ impl RtSbGpsMcycleLean {
         let signal = self.raw.view_bits::<Lsb0>()[0..1].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_GPS_Lateral_Accel
+    /// Set value of 'Validity_GPS_Lateral_Accel'
     #[inline(always)]
     pub fn set_validity_gps_lateral_accel(
         &mut self,
@@ -32394,16 +32446,16 @@ impl RtSbGpsStatus {
     pub const FIRMWARE_VERSION_MAJOR_MAX: u8 = 255_u8;
     pub const GPS_STATUS_MIN: u8 = 0_u8;
     pub const GPS_STATUS_MAX: u8 = 255_u8;
-    /// Construct new RT_SB_GPS_Status from values
+    /// Construct new 'RT_SB_GPS_Status' from values
     pub fn new(
-        rtk_status: u8,
+        rtk_status: RtSbGpsStatusRtkStatus,
         gps_n_sv_rtk: u8,
         gps_n_sv_2: u8,
         gps_n_sv: u8,
         firmware_version_minor: u8,
         firmware_version_intermediate: u8,
         firmware_version_major: u8,
-        gps_status: u8,
+        gps_status: RtSbGpsStatusGpsStatus,
     ) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 8] };
         res.set_rtk_status(rtk_status)?;
@@ -32420,7 +32472,7 @@ impl RtSbGpsStatus {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// RTK_Status
+    /// Get value of 'RTK_Status'
     ///
     /// - Min: 0
     /// - Max: 255
@@ -32438,7 +32490,7 @@ impl RtSbGpsStatus {
             _ => RtSbGpsStatusRtkStatus::_Other(self.rtk_status_raw()),
         }
     }
-    /// Get raw value of RTK_Status
+    /// Get raw value of 'RTK_Status'
     ///
     /// - Start bit: 56
     /// - Signal size: 8 bits
@@ -32452,9 +32504,13 @@ impl RtSbGpsStatus {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of RTK_Status
+    /// Set value of 'RTK_Status'
     #[inline(always)]
-    pub fn set_rtk_status(&mut self, value: u8) -> Result<(), CanError> {
+    pub fn set_rtk_status(
+        &mut self,
+        value: RtSbGpsStatusRtkStatus,
+    ) -> Result<(), CanError> {
+        let value = u8::from(value);
         if value < 0_u8 || 255_u8 < value {
             return Err(CanError::ParameterOutOfRange {
                 message_id: RtSbGpsStatus::MESSAGE_ID,
@@ -32470,7 +32526,7 @@ impl RtSbGpsStatus {
         self.raw.view_bits_mut::<Lsb0>()[56..64].store_le(value);
         Ok(())
     }
-    /// GPS_nSv_RTK
+    /// Get value of 'GPS_nSv_RTK'
     ///
     /// Number of common satellites available to RTK solution
     ///
@@ -32482,7 +32538,7 @@ impl RtSbGpsStatus {
     pub fn gps_n_sv_rtk(&self) -> u8 {
         self.gps_n_sv_rtk_raw()
     }
-    /// Get raw value of GPS_nSv_RTK
+    /// Get raw value of 'GPS_nSv_RTK'
     ///
     /// - Start bit: 48
     /// - Signal size: 8 bits
@@ -32496,7 +32552,7 @@ impl RtSbGpsStatus {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of GPS_nSv_RTK
+    /// Set value of 'GPS_nSv_RTK'
     #[inline(always)]
     pub fn set_gps_n_sv_rtk(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 16_u8 < value {
@@ -32514,7 +32570,7 @@ impl RtSbGpsStatus {
         self.raw.view_bits_mut::<Lsb0>()[48..56].store_le(value);
         Ok(())
     }
-    /// GPS_nSv_2
+    /// Get value of 'GPS_nSv_2'
     ///
     /// Number of satellites used in GPS solution by module 2 on RTK units.
     ///
@@ -32526,7 +32582,7 @@ impl RtSbGpsStatus {
     pub fn gps_n_sv_2(&self) -> u8 {
         self.gps_n_sv_2_raw()
     }
-    /// Get raw value of GPS_nSv_2
+    /// Get raw value of 'GPS_nSv_2'
     ///
     /// - Start bit: 40
     /// - Signal size: 8 bits
@@ -32540,7 +32596,7 @@ impl RtSbGpsStatus {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of GPS_nSv_2
+    /// Set value of 'GPS_nSv_2'
     #[inline(always)]
     pub fn set_gps_n_sv_2(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 16_u8 < value {
@@ -32558,7 +32614,7 @@ impl RtSbGpsStatus {
         self.raw.view_bits_mut::<Lsb0>()[40..48].store_le(value);
         Ok(())
     }
-    /// GPS_nSv
+    /// Get value of 'GPS_nSv'
     ///
     /// Number of satellites used in GPS solution
     ///
@@ -32570,7 +32626,7 @@ impl RtSbGpsStatus {
     pub fn gps_n_sv(&self) -> u8 {
         self.gps_n_sv_raw()
     }
-    /// Get raw value of GPS_nSv
+    /// Get raw value of 'GPS_nSv'
     ///
     /// - Start bit: 32
     /// - Signal size: 8 bits
@@ -32584,7 +32640,7 @@ impl RtSbGpsStatus {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of GPS_nSv
+    /// Set value of 'GPS_nSv'
     #[inline(always)]
     pub fn set_gps_n_sv(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 16_u8 < value {
@@ -32602,7 +32658,7 @@ impl RtSbGpsStatus {
         self.raw.view_bits_mut::<Lsb0>()[32..40].store_le(value);
         Ok(())
     }
-    /// Firmware_Version_Minor
+    /// Get value of 'Firmware_Version_Minor'
     ///
     /// - Min: 0
     /// - Max: 255
@@ -32612,7 +32668,7 @@ impl RtSbGpsStatus {
     pub fn firmware_version_minor(&self) -> u8 {
         self.firmware_version_minor_raw()
     }
-    /// Get raw value of Firmware_Version_Minor
+    /// Get raw value of 'Firmware_Version_Minor'
     ///
     /// - Start bit: 24
     /// - Signal size: 8 bits
@@ -32626,7 +32682,7 @@ impl RtSbGpsStatus {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Firmware_Version_Minor
+    /// Set value of 'Firmware_Version_Minor'
     #[inline(always)]
     pub fn set_firmware_version_minor(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 255_u8 < value {
@@ -32644,7 +32700,7 @@ impl RtSbGpsStatus {
         self.raw.view_bits_mut::<Lsb0>()[24..32].store_le(value);
         Ok(())
     }
-    /// Firmware_Version_Intermediate
+    /// Get value of 'Firmware_Version_Intermediate'
     ///
     /// - Min: 0
     /// - Max: 255
@@ -32654,7 +32710,7 @@ impl RtSbGpsStatus {
     pub fn firmware_version_intermediate(&self) -> u8 {
         self.firmware_version_intermediate_raw()
     }
-    /// Get raw value of Firmware_Version_Intermediate
+    /// Get raw value of 'Firmware_Version_Intermediate'
     ///
     /// - Start bit: 16
     /// - Signal size: 8 bits
@@ -32668,7 +32724,7 @@ impl RtSbGpsStatus {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Firmware_Version_Intermediate
+    /// Set value of 'Firmware_Version_Intermediate'
     #[inline(always)]
     pub fn set_firmware_version_intermediate(
         &mut self,
@@ -32689,7 +32745,7 @@ impl RtSbGpsStatus {
         self.raw.view_bits_mut::<Lsb0>()[16..24].store_le(value);
         Ok(())
     }
-    /// Firmware_Version_Major
+    /// Get value of 'Firmware_Version_Major'
     ///
     /// - Min: 0
     /// - Max: 255
@@ -32699,7 +32755,7 @@ impl RtSbGpsStatus {
     pub fn firmware_version_major(&self) -> u8 {
         self.firmware_version_major_raw()
     }
-    /// Get raw value of Firmware_Version_Major
+    /// Get raw value of 'Firmware_Version_Major'
     ///
     /// - Start bit: 8
     /// - Signal size: 8 bits
@@ -32713,7 +32769,7 @@ impl RtSbGpsStatus {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Firmware_Version_Major
+    /// Set value of 'Firmware_Version_Major'
     #[inline(always)]
     pub fn set_firmware_version_major(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 255_u8 < value {
@@ -32731,7 +32787,7 @@ impl RtSbGpsStatus {
         self.raw.view_bits_mut::<Lsb0>()[8..16].store_le(value);
         Ok(())
     }
-    /// GPS_Status
+    /// Get value of 'GPS_Status'
     ///
     /// - Min: 0
     /// - Max: 255
@@ -32757,7 +32813,7 @@ impl RtSbGpsStatus {
             _ => RtSbGpsStatusGpsStatus::_Other(self.gps_status_raw()),
         }
     }
-    /// Get raw value of GPS_Status
+    /// Get raw value of 'GPS_Status'
     ///
     /// - Start bit: 0
     /// - Signal size: 8 bits
@@ -32771,9 +32827,13 @@ impl RtSbGpsStatus {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of GPS_Status
+    /// Set value of 'GPS_Status'
     #[inline(always)]
-    pub fn set_gps_status(&mut self, value: u8) -> Result<(), CanError> {
+    pub fn set_gps_status(
+        &mut self,
+        value: RtSbGpsStatusGpsStatus,
+    ) -> Result<(), CanError> {
+        let value = u8::from(value);
         if value < 0_u8 || 255_u8 < value {
             return Err(CanError::ParameterOutOfRange {
                 message_id: RtSbGpsStatus::MESSAGE_ID,
@@ -32926,7 +32986,7 @@ impl RtSbGpsPosEcef2 {
     pub const GPS_POS_ECEF_Z_MAX: f32 = 10000000_f32;
     pub const GPS_POS_ECEF_Y_MIN: f32 = -10000000_f32;
     pub const GPS_POS_ECEF_Y_MAX: f32 = 10000000_f32;
-    /// Construct new RT_SB_GPS_Pos_ECEF_2 from values
+    /// Construct new 'RT_SB_GPS_Pos_ECEF_2' from values
     pub fn new(gps_pos_ecef_z: f32, gps_pos_ecef_y: f32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 8] };
         res.set_gps_pos_ecef_z(gps_pos_ecef_z)?;
@@ -32937,7 +32997,7 @@ impl RtSbGpsPosEcef2 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// GPS_Pos_ECEF_Z
+    /// Get value of 'GPS_Pos_ECEF_Z'
     ///
     /// ECEF Z position.  The ECEF Z axis originates from the Earth centre, and the positive Z axis intersects the Earth surface at the North Pole.
     ///
@@ -32949,7 +33009,7 @@ impl RtSbGpsPosEcef2 {
     pub fn gps_pos_ecef_z(&self) -> f32 {
         self.gps_pos_ecef_z_raw()
     }
-    /// Get raw value of GPS_Pos_ECEF_Z
+    /// Get raw value of 'GPS_Pos_ECEF_Z'
     ///
     /// - Start bit: 32
     /// - Signal size: 32 bits
@@ -32964,7 +33024,7 @@ impl RtSbGpsPosEcef2 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of GPS_Pos_ECEF_Z
+    /// Set value of 'GPS_Pos_ECEF_Z'
     #[inline(always)]
     pub fn set_gps_pos_ecef_z(&mut self, value: f32) -> Result<(), CanError> {
         if value < -10000000_f32 || 10000000_f32 < value {
@@ -32979,7 +33039,7 @@ impl RtSbGpsPosEcef2 {
         self.raw.view_bits_mut::<Lsb0>()[32..64].store_le(value);
         Ok(())
     }
-    /// GPS_Pos_ECEF_Y
+    /// Get value of 'GPS_Pos_ECEF_Y'
     ///
     /// ECEF Y position.  The ECEF Y axis originates from the Earth centre, and the positive Y axis intersects the Earth surface at zero degrees latittude and 90 degrees longitude.
     ///
@@ -32991,7 +33051,7 @@ impl RtSbGpsPosEcef2 {
     pub fn gps_pos_ecef_y(&self) -> f32 {
         self.gps_pos_ecef_y_raw()
     }
-    /// Get raw value of GPS_Pos_ECEF_Y
+    /// Get raw value of 'GPS_Pos_ECEF_Y'
     ///
     /// - Start bit: 0
     /// - Signal size: 32 bits
@@ -33006,7 +33066,7 @@ impl RtSbGpsPosEcef2 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of GPS_Pos_ECEF_Y
+    /// Set value of 'GPS_Pos_ECEF_Y'
     #[inline(always)]
     pub fn set_gps_pos_ecef_y(&mut self, value: f32) -> Result<(), CanError> {
         if value < -10000000_f32 || 10000000_f32 < value {
@@ -33090,7 +33150,7 @@ impl RtSbGpsPosEcef1 {
     pub const ACCURACY_GPS_POS_ECEF_Y_MAX: u8 = 255_u8;
     pub const ACCURACY_GPS_POS_ECEF_X_MIN: u8 = 0_u8;
     pub const ACCURACY_GPS_POS_ECEF_X_MAX: u8 = 255_u8;
-    /// Construct new RT_SB_GPS_Pos_ECEF_1 from values
+    /// Construct new 'RT_SB_GPS_Pos_ECEF_1' from values
     pub fn new(
         gps_pos_ecef_x: f32,
         accuracy_gps_pos_ecef_z: u8,
@@ -33114,7 +33174,7 @@ impl RtSbGpsPosEcef1 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// GPS_Pos_ECEF_X
+    /// Get value of 'GPS_Pos_ECEF_X'
     ///
     /// ECEF X position.  The ECEF X axis originates from the Earth centre, and the positive X axis intersects the Earth surface at zero degrees latittude and zero degrees longitude (the intersection of the equator and the prime meridian).
     ///
@@ -33126,7 +33186,7 @@ impl RtSbGpsPosEcef1 {
     pub fn gps_pos_ecef_x(&self) -> f32 {
         self.gps_pos_ecef_x_raw()
     }
-    /// Get raw value of GPS_Pos_ECEF_X
+    /// Get raw value of 'GPS_Pos_ECEF_X'
     ///
     /// - Start bit: 32
     /// - Signal size: 32 bits
@@ -33141,7 +33201,7 @@ impl RtSbGpsPosEcef1 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of GPS_Pos_ECEF_X
+    /// Set value of 'GPS_Pos_ECEF_X'
     #[inline(always)]
     pub fn set_gps_pos_ecef_x(&mut self, value: f32) -> Result<(), CanError> {
         if value < -10000000_f32 || 10000000_f32 < value {
@@ -33156,7 +33216,7 @@ impl RtSbGpsPosEcef1 {
         self.raw.view_bits_mut::<Lsb0>()[32..64].store_le(value);
         Ok(())
     }
-    /// Accuracy_GPS_Pos_ECEF_Z
+    /// Get value of 'Accuracy_GPS_Pos_ECEF_Z'
     ///
     /// Dimensionless.  Lower values imply but do not guarantee better accuracy than higher values.
     ///
@@ -33168,7 +33228,7 @@ impl RtSbGpsPosEcef1 {
     pub fn accuracy_gps_pos_ecef_z(&self) -> u8 {
         self.accuracy_gps_pos_ecef_z_raw()
     }
-    /// Get raw value of Accuracy_GPS_Pos_ECEF_Z
+    /// Get raw value of 'Accuracy_GPS_Pos_ECEF_Z'
     ///
     /// - Start bit: 24
     /// - Signal size: 8 bits
@@ -33182,7 +33242,7 @@ impl RtSbGpsPosEcef1 {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Accuracy_GPS_Pos_ECEF_Z
+    /// Set value of 'Accuracy_GPS_Pos_ECEF_Z'
     #[inline(always)]
     pub fn set_accuracy_gps_pos_ecef_z(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 255_u8 < value {
@@ -33200,7 +33260,7 @@ impl RtSbGpsPosEcef1 {
         self.raw.view_bits_mut::<Lsb0>()[24..32].store_le(value);
         Ok(())
     }
-    /// Accuracy_GPS_Pos_ECEF_Y
+    /// Get value of 'Accuracy_GPS_Pos_ECEF_Y'
     ///
     /// Dimensionless.  Lower values imply but do not guarantee better accuracy than higher values.
     ///
@@ -33212,7 +33272,7 @@ impl RtSbGpsPosEcef1 {
     pub fn accuracy_gps_pos_ecef_y(&self) -> u8 {
         self.accuracy_gps_pos_ecef_y_raw()
     }
-    /// Get raw value of Accuracy_GPS_Pos_ECEF_Y
+    /// Get raw value of 'Accuracy_GPS_Pos_ECEF_Y'
     ///
     /// - Start bit: 16
     /// - Signal size: 8 bits
@@ -33226,7 +33286,7 @@ impl RtSbGpsPosEcef1 {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Accuracy_GPS_Pos_ECEF_Y
+    /// Set value of 'Accuracy_GPS_Pos_ECEF_Y'
     #[inline(always)]
     pub fn set_accuracy_gps_pos_ecef_y(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 255_u8 < value {
@@ -33244,7 +33304,7 @@ impl RtSbGpsPosEcef1 {
         self.raw.view_bits_mut::<Lsb0>()[16..24].store_le(value);
         Ok(())
     }
-    /// Accuracy_GPS_Pos_ECEF_X
+    /// Get value of 'Accuracy_GPS_Pos_ECEF_X'
     ///
     /// Dimensionless.  Lower values imply but do not guarantee better accuracy than higher values.
     ///
@@ -33256,7 +33316,7 @@ impl RtSbGpsPosEcef1 {
     pub fn accuracy_gps_pos_ecef_x(&self) -> u8 {
         self.accuracy_gps_pos_ecef_x_raw()
     }
-    /// Get raw value of Accuracy_GPS_Pos_ECEF_X
+    /// Get raw value of 'Accuracy_GPS_Pos_ECEF_X'
     ///
     /// - Start bit: 8
     /// - Signal size: 8 bits
@@ -33270,7 +33330,7 @@ impl RtSbGpsPosEcef1 {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Accuracy_GPS_Pos_ECEF_X
+    /// Set value of 'Accuracy_GPS_Pos_ECEF_X'
     #[inline(always)]
     pub fn set_accuracy_gps_pos_ecef_x(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 255_u8 < value {
@@ -33288,7 +33348,7 @@ impl RtSbGpsPosEcef1 {
         self.raw.view_bits_mut::<Lsb0>()[8..16].store_le(value);
         Ok(())
     }
-    /// Validity_GPS_Pos_ECEF_Z
+    /// Get value of 'Validity_GPS_Pos_ECEF_Z'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -33300,7 +33360,7 @@ impl RtSbGpsPosEcef1 {
     pub fn validity_gps_pos_ecef_z(&self) -> bool {
         self.validity_gps_pos_ecef_z_raw()
     }
-    /// Get raw value of Validity_GPS_Pos_ECEF_Z
+    /// Get raw value of 'Validity_GPS_Pos_ECEF_Z'
     ///
     /// - Start bit: 2
     /// - Signal size: 1 bits
@@ -33313,14 +33373,14 @@ impl RtSbGpsPosEcef1 {
         let signal = self.raw.view_bits::<Lsb0>()[2..3].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_GPS_Pos_ECEF_Z
+    /// Set value of 'Validity_GPS_Pos_ECEF_Z'
     #[inline(always)]
     pub fn set_validity_gps_pos_ecef_z(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[2..3].store_le(value);
         Ok(())
     }
-    /// Validity_GPS_Pos_ECEF_Y
+    /// Get value of 'Validity_GPS_Pos_ECEF_Y'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -33332,7 +33392,7 @@ impl RtSbGpsPosEcef1 {
     pub fn validity_gps_pos_ecef_y(&self) -> bool {
         self.validity_gps_pos_ecef_y_raw()
     }
-    /// Get raw value of Validity_GPS_Pos_ECEF_Y
+    /// Get raw value of 'Validity_GPS_Pos_ECEF_Y'
     ///
     /// - Start bit: 1
     /// - Signal size: 1 bits
@@ -33345,14 +33405,14 @@ impl RtSbGpsPosEcef1 {
         let signal = self.raw.view_bits::<Lsb0>()[1..2].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_GPS_Pos_ECEF_Y
+    /// Set value of 'Validity_GPS_Pos_ECEF_Y'
     #[inline(always)]
     pub fn set_validity_gps_pos_ecef_y(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[1..2].store_le(value);
         Ok(())
     }
-    /// Validity_GPS_Pos_ECEF_X
+    /// Get value of 'Validity_GPS_Pos_ECEF_X'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -33364,7 +33424,7 @@ impl RtSbGpsPosEcef1 {
     pub fn validity_gps_pos_ecef_x(&self) -> bool {
         self.validity_gps_pos_ecef_x_raw()
     }
-    /// Get raw value of Validity_GPS_Pos_ECEF_X
+    /// Get raw value of 'Validity_GPS_Pos_ECEF_X'
     ///
     /// - Start bit: 0
     /// - Signal size: 1 bits
@@ -33377,7 +33437,7 @@ impl RtSbGpsPosEcef1 {
         let signal = self.raw.view_bits::<Lsb0>()[0..1].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_GPS_Pos_ECEF_X
+    /// Set value of 'Validity_GPS_Pos_ECEF_X'
     #[inline(always)]
     pub fn set_validity_gps_pos_ecef_x(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
@@ -33449,7 +33509,7 @@ impl RtSbGpsPosLlh2 {
     pub const GPS_POS_LLH_ALTITUDE_MAX: f32 = 100000_f32;
     pub const GPS_POS_LLH_LONGITUDE_MIN: f32 = -180_f32;
     pub const GPS_POS_LLH_LONGITUDE_MAX: f32 = 180_f32;
-    /// Construct new RT_SB_GPS_Pos_LLH_2 from values
+    /// Construct new 'RT_SB_GPS_Pos_LLH_2' from values
     pub fn new(
         gps_pos_llh_altitude: f32,
         gps_pos_llh_longitude: f32,
@@ -33463,7 +33523,7 @@ impl RtSbGpsPosLlh2 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// GPS_Pos_LLH_Altitude
+    /// Get value of 'GPS_Pos_LLH_Altitude'
     ///
     /// - Min: -1000
     /// - Max: 100000
@@ -33473,7 +33533,7 @@ impl RtSbGpsPosLlh2 {
     pub fn gps_pos_llh_altitude(&self) -> f32 {
         self.gps_pos_llh_altitude_raw()
     }
-    /// Get raw value of GPS_Pos_LLH_Altitude
+    /// Get raw value of 'GPS_Pos_LLH_Altitude'
     ///
     /// - Start bit: 32
     /// - Signal size: 32 bits
@@ -33488,7 +33548,7 @@ impl RtSbGpsPosLlh2 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of GPS_Pos_LLH_Altitude
+    /// Set value of 'GPS_Pos_LLH_Altitude'
     #[inline(always)]
     pub fn set_gps_pos_llh_altitude(&mut self, value: f32) -> Result<(), CanError> {
         if value < -1000_f32 || 100000_f32 < value {
@@ -33503,7 +33563,7 @@ impl RtSbGpsPosLlh2 {
         self.raw.view_bits_mut::<Lsb0>()[32..64].store_le(value);
         Ok(())
     }
-    /// GPS_Pos_LLH_Longitude
+    /// Get value of 'GPS_Pos_LLH_Longitude'
     ///
     /// - Min: -180
     /// - Max: 180
@@ -33513,7 +33573,7 @@ impl RtSbGpsPosLlh2 {
     pub fn gps_pos_llh_longitude(&self) -> f32 {
         self.gps_pos_llh_longitude_raw()
     }
-    /// Get raw value of GPS_Pos_LLH_Longitude
+    /// Get raw value of 'GPS_Pos_LLH_Longitude'
     ///
     /// - Start bit: 0
     /// - Signal size: 32 bits
@@ -33528,7 +33588,7 @@ impl RtSbGpsPosLlh2 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of GPS_Pos_LLH_Longitude
+    /// Set value of 'GPS_Pos_LLH_Longitude'
     #[inline(always)]
     pub fn set_gps_pos_llh_longitude(&mut self, value: f32) -> Result<(), CanError> {
         if value < -180_f32 || 180_f32 < value {
@@ -33612,7 +33672,7 @@ impl RtSbGpsPosLlh1 {
     pub const ACCURACY_GPS_POS_LLH_LONGITUDE_MAX: u8 = 255_u8;
     pub const ACCURACY_GPS_POS_LLH_LATITUDE_MIN: u8 = 0_u8;
     pub const ACCURACY_GPS_POS_LLH_LATITUDE_MAX: u8 = 255_u8;
-    /// Construct new RT_SB_GPS_Pos_LLH_1 from values
+    /// Construct new 'RT_SB_GPS_Pos_LLH_1' from values
     pub fn new(
         gps_pos_llh_latitude: f32,
         accuracy_gps_pos_llh_altitude: u8,
@@ -33636,7 +33696,7 @@ impl RtSbGpsPosLlh1 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// GPS_Pos_LLH_Latitude
+    /// Get value of 'GPS_Pos_LLH_Latitude'
     ///
     /// - Min: -90
     /// - Max: 90
@@ -33646,7 +33706,7 @@ impl RtSbGpsPosLlh1 {
     pub fn gps_pos_llh_latitude(&self) -> f32 {
         self.gps_pos_llh_latitude_raw()
     }
-    /// Get raw value of GPS_Pos_LLH_Latitude
+    /// Get raw value of 'GPS_Pos_LLH_Latitude'
     ///
     /// - Start bit: 32
     /// - Signal size: 32 bits
@@ -33661,7 +33721,7 @@ impl RtSbGpsPosLlh1 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of GPS_Pos_LLH_Latitude
+    /// Set value of 'GPS_Pos_LLH_Latitude'
     #[inline(always)]
     pub fn set_gps_pos_llh_latitude(&mut self, value: f32) -> Result<(), CanError> {
         if value < -90_f32 || 90_f32 < value {
@@ -33676,7 +33736,7 @@ impl RtSbGpsPosLlh1 {
         self.raw.view_bits_mut::<Lsb0>()[32..64].store_le(value);
         Ok(())
     }
-    /// Accuracy_GPS_Pos_LLH_Altitude
+    /// Get value of 'Accuracy_GPS_Pos_LLH_Altitude'
     ///
     /// This accuracy value applies to both 2D and 3D GPS speed.
     ///
@@ -33688,7 +33748,7 @@ impl RtSbGpsPosLlh1 {
     pub fn accuracy_gps_pos_llh_altitude(&self) -> u8 {
         self.accuracy_gps_pos_llh_altitude_raw()
     }
-    /// Get raw value of Accuracy_GPS_Pos_LLH_Altitude
+    /// Get raw value of 'Accuracy_GPS_Pos_LLH_Altitude'
     ///
     /// - Start bit: 24
     /// - Signal size: 8 bits
@@ -33702,7 +33762,7 @@ impl RtSbGpsPosLlh1 {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Accuracy_GPS_Pos_LLH_Altitude
+    /// Set value of 'Accuracy_GPS_Pos_LLH_Altitude'
     #[inline(always)]
     pub fn set_accuracy_gps_pos_llh_altitude(
         &mut self,
@@ -33723,7 +33783,7 @@ impl RtSbGpsPosLlh1 {
         self.raw.view_bits_mut::<Lsb0>()[24..32].store_le(value);
         Ok(())
     }
-    /// Accuracy_GPS_Pos_LLH_Longitude
+    /// Get value of 'Accuracy_GPS_Pos_LLH_Longitude'
     ///
     /// This accuracy value applies to both 2D and 3D GPS speed.
     ///
@@ -33735,7 +33795,7 @@ impl RtSbGpsPosLlh1 {
     pub fn accuracy_gps_pos_llh_longitude(&self) -> u8 {
         self.accuracy_gps_pos_llh_longitude_raw()
     }
-    /// Get raw value of Accuracy_GPS_Pos_LLH_Longitude
+    /// Get raw value of 'Accuracy_GPS_Pos_LLH_Longitude'
     ///
     /// - Start bit: 16
     /// - Signal size: 8 bits
@@ -33749,7 +33809,7 @@ impl RtSbGpsPosLlh1 {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Accuracy_GPS_Pos_LLH_Longitude
+    /// Set value of 'Accuracy_GPS_Pos_LLH_Longitude'
     #[inline(always)]
     pub fn set_accuracy_gps_pos_llh_longitude(
         &mut self,
@@ -33770,7 +33830,7 @@ impl RtSbGpsPosLlh1 {
         self.raw.view_bits_mut::<Lsb0>()[16..24].store_le(value);
         Ok(())
     }
-    /// Accuracy_GPS_Pos_LLH_Latitude
+    /// Get value of 'Accuracy_GPS_Pos_LLH_Latitude'
     ///
     /// This accuracy value applies to both 2D and 3D GPS speed.
     ///
@@ -33782,7 +33842,7 @@ impl RtSbGpsPosLlh1 {
     pub fn accuracy_gps_pos_llh_latitude(&self) -> u8 {
         self.accuracy_gps_pos_llh_latitude_raw()
     }
-    /// Get raw value of Accuracy_GPS_Pos_LLH_Latitude
+    /// Get raw value of 'Accuracy_GPS_Pos_LLH_Latitude'
     ///
     /// - Start bit: 8
     /// - Signal size: 8 bits
@@ -33796,7 +33856,7 @@ impl RtSbGpsPosLlh1 {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Accuracy_GPS_Pos_LLH_Latitude
+    /// Set value of 'Accuracy_GPS_Pos_LLH_Latitude'
     #[inline(always)]
     pub fn set_accuracy_gps_pos_llh_latitude(
         &mut self,
@@ -33817,7 +33877,7 @@ impl RtSbGpsPosLlh1 {
         self.raw.view_bits_mut::<Lsb0>()[8..16].store_le(value);
         Ok(())
     }
-    /// Validity_GPS_Pos_LLH_Altitude
+    /// Get value of 'Validity_GPS_Pos_LLH_Altitude'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -33829,7 +33889,7 @@ impl RtSbGpsPosLlh1 {
     pub fn validity_gps_pos_llh_altitude(&self) -> bool {
         self.validity_gps_pos_llh_altitude_raw()
     }
-    /// Get raw value of Validity_GPS_Pos_LLH_Altitude
+    /// Get raw value of 'Validity_GPS_Pos_LLH_Altitude'
     ///
     /// - Start bit: 2
     /// - Signal size: 1 bits
@@ -33842,7 +33902,7 @@ impl RtSbGpsPosLlh1 {
         let signal = self.raw.view_bits::<Lsb0>()[2..3].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_GPS_Pos_LLH_Altitude
+    /// Set value of 'Validity_GPS_Pos_LLH_Altitude'
     #[inline(always)]
     pub fn set_validity_gps_pos_llh_altitude(
         &mut self,
@@ -33852,7 +33912,7 @@ impl RtSbGpsPosLlh1 {
         self.raw.view_bits_mut::<Lsb0>()[2..3].store_le(value);
         Ok(())
     }
-    /// Validity_GPS_Pos_LLH_Longitude
+    /// Get value of 'Validity_GPS_Pos_LLH_Longitude'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -33864,7 +33924,7 @@ impl RtSbGpsPosLlh1 {
     pub fn validity_gps_pos_llh_longitude(&self) -> bool {
         self.validity_gps_pos_llh_longitude_raw()
     }
-    /// Get raw value of Validity_GPS_Pos_LLH_Longitude
+    /// Get raw value of 'Validity_GPS_Pos_LLH_Longitude'
     ///
     /// - Start bit: 1
     /// - Signal size: 1 bits
@@ -33877,7 +33937,7 @@ impl RtSbGpsPosLlh1 {
         let signal = self.raw.view_bits::<Lsb0>()[1..2].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_GPS_Pos_LLH_Longitude
+    /// Set value of 'Validity_GPS_Pos_LLH_Longitude'
     #[inline(always)]
     pub fn set_validity_gps_pos_llh_longitude(
         &mut self,
@@ -33887,7 +33947,7 @@ impl RtSbGpsPosLlh1 {
         self.raw.view_bits_mut::<Lsb0>()[1..2].store_le(value);
         Ok(())
     }
-    /// Validity_GPS_Pos_LLH_Latitude
+    /// Get value of 'Validity_GPS_Pos_LLH_Latitude'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -33899,7 +33959,7 @@ impl RtSbGpsPosLlh1 {
     pub fn validity_gps_pos_llh_latitude(&self) -> bool {
         self.validity_gps_pos_llh_latitude_raw()
     }
-    /// Get raw value of Validity_GPS_Pos_LLH_Latitude
+    /// Get raw value of 'Validity_GPS_Pos_LLH_Latitude'
     ///
     /// - Start bit: 0
     /// - Signal size: 1 bits
@@ -33912,7 +33972,7 @@ impl RtSbGpsPosLlh1 {
         let signal = self.raw.view_bits::<Lsb0>()[0..1].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_GPS_Pos_LLH_Latitude
+    /// Set value of 'Validity_GPS_Pos_LLH_Latitude'
     #[inline(always)]
     pub fn set_validity_gps_pos_llh_latitude(
         &mut self,
@@ -33991,7 +34051,7 @@ impl RtSbGpsHeadingGradient {
     pub const GPS_HEADING_MAX: f32 = 180_f32;
     pub const ACCURACY_GPS_HEADING_MIN: u8 = 0_u8;
     pub const ACCURACY_GPS_HEADING_MAX: u8 = 255_u8;
-    /// Construct new RT_SB_GPS_Heading_Gradient from values
+    /// Construct new 'RT_SB_GPS_Heading_Gradient' from values
     pub fn new(
         gps_gradient: f32,
         accuracy_gps_gradient: u8,
@@ -34013,7 +34073,7 @@ impl RtSbGpsHeadingGradient {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// GPS_Gradient
+    /// Get value of 'GPS_Gradient'
     ///
     /// This is GPS gradient, i.e. the vertical direction that the vehicle is travelling, NOT pointing (pitch).
     ///
@@ -34025,7 +34085,7 @@ impl RtSbGpsHeadingGradient {
     pub fn gps_gradient(&self) -> f32 {
         self.gps_gradient_raw()
     }
-    /// Get raw value of GPS_Gradient
+    /// Get raw value of 'GPS_Gradient'
     ///
     /// - Start bit: 40
     /// - Signal size: 16 bits
@@ -34040,7 +34100,7 @@ impl RtSbGpsHeadingGradient {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of GPS_Gradient
+    /// Set value of 'GPS_Gradient'
     #[inline(always)]
     pub fn set_gps_gradient(&mut self, value: f32) -> Result<(), CanError> {
         if value < -90_f32 || 90_f32 < value {
@@ -34055,7 +34115,7 @@ impl RtSbGpsHeadingGradient {
         self.raw.view_bits_mut::<Lsb0>()[40..56].store_le(value);
         Ok(())
     }
-    /// Accuracy_GPS_Gradient
+    /// Get value of 'Accuracy_GPS_Gradient'
     ///
     /// Dimensionless.  Lower values imply but do not guarantee better accuracy than higher values.
     ///
@@ -34067,7 +34127,7 @@ impl RtSbGpsHeadingGradient {
     pub fn accuracy_gps_gradient(&self) -> u8 {
         self.accuracy_gps_gradient_raw()
     }
-    /// Get raw value of Accuracy_GPS_Gradient
+    /// Get raw value of 'Accuracy_GPS_Gradient'
     ///
     /// - Start bit: 32
     /// - Signal size: 8 bits
@@ -34081,7 +34141,7 @@ impl RtSbGpsHeadingGradient {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Accuracy_GPS_Gradient
+    /// Set value of 'Accuracy_GPS_Gradient'
     #[inline(always)]
     pub fn set_accuracy_gps_gradient(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 255_u8 < value {
@@ -34099,7 +34159,7 @@ impl RtSbGpsHeadingGradient {
         self.raw.view_bits_mut::<Lsb0>()[32..40].store_le(value);
         Ok(())
     }
-    /// GPS_Heading
+    /// Get value of 'GPS_Heading'
     ///
     /// This is GPS heading, the direction that the vehicle is travelling in the local horizontal plane.
     ///
@@ -34111,7 +34171,7 @@ impl RtSbGpsHeadingGradient {
     pub fn gps_heading(&self) -> f32 {
         self.gps_heading_raw()
     }
-    /// Get raw value of GPS_Heading
+    /// Get raw value of 'GPS_Heading'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -34126,7 +34186,7 @@ impl RtSbGpsHeadingGradient {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of GPS_Heading
+    /// Set value of 'GPS_Heading'
     #[inline(always)]
     pub fn set_gps_heading(&mut self, value: f32) -> Result<(), CanError> {
         if value < -180_f32 || 180_f32 < value {
@@ -34141,7 +34201,7 @@ impl RtSbGpsHeadingGradient {
         self.raw.view_bits_mut::<Lsb0>()[16..32].store_le(value);
         Ok(())
     }
-    /// Accuracy_GPS_Heading
+    /// Get value of 'Accuracy_GPS_Heading'
     ///
     /// Dimensionless.  Lower values imply but do not guarantee better accuracy than higher values.
     ///
@@ -34153,7 +34213,7 @@ impl RtSbGpsHeadingGradient {
     pub fn accuracy_gps_heading(&self) -> u8 {
         self.accuracy_gps_heading_raw()
     }
-    /// Get raw value of Accuracy_GPS_Heading
+    /// Get raw value of 'Accuracy_GPS_Heading'
     ///
     /// - Start bit: 8
     /// - Signal size: 8 bits
@@ -34167,7 +34227,7 @@ impl RtSbGpsHeadingGradient {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Accuracy_GPS_Heading
+    /// Set value of 'Accuracy_GPS_Heading'
     #[inline(always)]
     pub fn set_accuracy_gps_heading(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 255_u8 < value {
@@ -34185,7 +34245,7 @@ impl RtSbGpsHeadingGradient {
         self.raw.view_bits_mut::<Lsb0>()[8..16].store_le(value);
         Ok(())
     }
-    /// Validity_GPS_Gradient
+    /// Get value of 'Validity_GPS_Gradient'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -34197,7 +34257,7 @@ impl RtSbGpsHeadingGradient {
     pub fn validity_gps_gradient(&self) -> bool {
         self.validity_gps_gradient_raw()
     }
-    /// Get raw value of Validity_GPS_Gradient
+    /// Get raw value of 'Validity_GPS_Gradient'
     ///
     /// - Start bit: 1
     /// - Signal size: 1 bits
@@ -34210,14 +34270,14 @@ impl RtSbGpsHeadingGradient {
         let signal = self.raw.view_bits::<Lsb0>()[1..2].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_GPS_Gradient
+    /// Set value of 'Validity_GPS_Gradient'
     #[inline(always)]
     pub fn set_validity_gps_gradient(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[1..2].store_le(value);
         Ok(())
     }
-    /// Validity_GPS_Heading
+    /// Get value of 'Validity_GPS_Heading'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -34229,7 +34289,7 @@ impl RtSbGpsHeadingGradient {
     pub fn validity_gps_heading(&self) -> bool {
         self.validity_gps_heading_raw()
     }
-    /// Get raw value of Validity_GPS_Heading
+    /// Get raw value of 'Validity_GPS_Heading'
     ///
     /// - Start bit: 0
     /// - Signal size: 1 bits
@@ -34242,7 +34302,7 @@ impl RtSbGpsHeadingGradient {
         let signal = self.raw.view_bits::<Lsb0>()[0..1].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_GPS_Heading
+    /// Set value of 'Validity_GPS_Heading'
     #[inline(always)]
     pub fn set_validity_gps_heading(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
@@ -34314,7 +34374,7 @@ impl RtSbGpsVelEcef2 {
     pub const GPS_VEL_ECEF_Z_MAX: f32 = 838_f32;
     pub const GPS_VEL_ECEF_Y_MIN: f32 = -838_f32;
     pub const GPS_VEL_ECEF_Y_MAX: f32 = 838_f32;
-    /// Construct new RT_SB_GPS_Vel_ECEF_2 from values
+    /// Construct new 'RT_SB_GPS_Vel_ECEF_2' from values
     pub fn new(
         gps_vel_ecef_z: f32,
         gps_vel_ecef_y: f32,
@@ -34332,7 +34392,7 @@ impl RtSbGpsVelEcef2 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// GPS_Vel_ECEF_Z
+    /// Get value of 'GPS_Vel_ECEF_Z'
     ///
     /// ECEF Z velocity.  The ECEF Z axis originates from the Earth centre, and the positive Z axis intersects the Earth surface at the North Pole.
     ///
@@ -34344,7 +34404,7 @@ impl RtSbGpsVelEcef2 {
     pub fn gps_vel_ecef_z(&self) -> f32 {
         self.gps_vel_ecef_z_raw()
     }
-    /// Get raw value of GPS_Vel_ECEF_Z
+    /// Get raw value of 'GPS_Vel_ECEF_Z'
     ///
     /// - Start bit: 32
     /// - Signal size: 24 bits
@@ -34359,7 +34419,7 @@ impl RtSbGpsVelEcef2 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of GPS_Vel_ECEF_Z
+    /// Set value of 'GPS_Vel_ECEF_Z'
     #[inline(always)]
     pub fn set_gps_vel_ecef_z(&mut self, value: f32) -> Result<(), CanError> {
         if value < -838_f32 || 838_f32 < value {
@@ -34374,7 +34434,7 @@ impl RtSbGpsVelEcef2 {
         self.raw.view_bits_mut::<Lsb0>()[32..56].store_le(value);
         Ok(())
     }
-    /// GPS_Vel_ECEF_Y
+    /// Get value of 'GPS_Vel_ECEF_Y'
     ///
     /// ECEF Y velocity.  The ECEF Y axis originates from the Earth centre, and the positive Y axis intersects the Earth surface at zero degrees latittude and 90 degrees longitude.
     ///
@@ -34386,7 +34446,7 @@ impl RtSbGpsVelEcef2 {
     pub fn gps_vel_ecef_y(&self) -> f32 {
         self.gps_vel_ecef_y_raw()
     }
-    /// Get raw value of GPS_Vel_ECEF_Y
+    /// Get raw value of 'GPS_Vel_ECEF_Y'
     ///
     /// - Start bit: 8
     /// - Signal size: 24 bits
@@ -34401,7 +34461,7 @@ impl RtSbGpsVelEcef2 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of GPS_Vel_ECEF_Y
+    /// Set value of 'GPS_Vel_ECEF_Y'
     #[inline(always)]
     pub fn set_gps_vel_ecef_y(&mut self, value: f32) -> Result<(), CanError> {
         if value < -838_f32 || 838_f32 < value {
@@ -34416,7 +34476,7 @@ impl RtSbGpsVelEcef2 {
         self.raw.view_bits_mut::<Lsb0>()[8..32].store_le(value);
         Ok(())
     }
-    /// Validity_GPS_Vel_ECEF_Z
+    /// Get value of 'Validity_GPS_Vel_ECEF_Z'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -34428,7 +34488,7 @@ impl RtSbGpsVelEcef2 {
     pub fn validity_gps_vel_ecef_z(&self) -> bool {
         self.validity_gps_vel_ecef_z_raw()
     }
-    /// Get raw value of Validity_GPS_Vel_ECEF_Z
+    /// Get raw value of 'Validity_GPS_Vel_ECEF_Z'
     ///
     /// - Start bit: 1
     /// - Signal size: 1 bits
@@ -34441,14 +34501,14 @@ impl RtSbGpsVelEcef2 {
         let signal = self.raw.view_bits::<Lsb0>()[1..2].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_GPS_Vel_ECEF_Z
+    /// Set value of 'Validity_GPS_Vel_ECEF_Z'
     #[inline(always)]
     pub fn set_validity_gps_vel_ecef_z(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[1..2].store_le(value);
         Ok(())
     }
-    /// Validity_GPS_Vel_ECEF_Y
+    /// Get value of 'Validity_GPS_Vel_ECEF_Y'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -34460,7 +34520,7 @@ impl RtSbGpsVelEcef2 {
     pub fn validity_gps_vel_ecef_y(&self) -> bool {
         self.validity_gps_vel_ecef_y_raw()
     }
-    /// Get raw value of Validity_GPS_Vel_ECEF_Y
+    /// Get raw value of 'Validity_GPS_Vel_ECEF_Y'
     ///
     /// - Start bit: 0
     /// - Signal size: 1 bits
@@ -34473,7 +34533,7 @@ impl RtSbGpsVelEcef2 {
         let signal = self.raw.view_bits::<Lsb0>()[0..1].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_GPS_Vel_ECEF_Y
+    /// Set value of 'Validity_GPS_Vel_ECEF_Y'
     #[inline(always)]
     pub fn set_validity_gps_vel_ecef_y(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
@@ -34549,7 +34609,7 @@ impl RtSbGpsVelEcef1 {
     pub const ACCURACY_GPS_VEL_ECEF_Y_MAX: u8 = 255_u8;
     pub const ACCURACY_GPS_VEL_ECEF_X_MIN: u8 = 0_u8;
     pub const ACCURACY_GPS_VEL_ECEF_X_MAX: u8 = 255_u8;
-    /// Construct new RT_SB_GPS_Vel_ECEF_1 from values
+    /// Construct new 'RT_SB_GPS_Vel_ECEF_1' from values
     pub fn new(
         gps_vel_ecef_x: f32,
         accuracy_gps_vel_ecef_z: u8,
@@ -34569,7 +34629,7 @@ impl RtSbGpsVelEcef1 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// GPS_Vel_ECEF_X
+    /// Get value of 'GPS_Vel_ECEF_X'
     ///
     /// ECEF X velocity.  The ECEF X axis originates from the Earth centre, and the positive X axis intersects the Earth surface at zero degrees latittude and zero degrees longitude (the intersection of the equator and the prime meridian).
     ///
@@ -34581,7 +34641,7 @@ impl RtSbGpsVelEcef1 {
     pub fn gps_vel_ecef_x(&self) -> f32 {
         self.gps_vel_ecef_x_raw()
     }
-    /// Get raw value of GPS_Vel_ECEF_X
+    /// Get raw value of 'GPS_Vel_ECEF_X'
     ///
     /// - Start bit: 32
     /// - Signal size: 24 bits
@@ -34596,7 +34656,7 @@ impl RtSbGpsVelEcef1 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of GPS_Vel_ECEF_X
+    /// Set value of 'GPS_Vel_ECEF_X'
     #[inline(always)]
     pub fn set_gps_vel_ecef_x(&mut self, value: f32) -> Result<(), CanError> {
         if value < -838_f32 || 838_f32 < value {
@@ -34611,7 +34671,7 @@ impl RtSbGpsVelEcef1 {
         self.raw.view_bits_mut::<Lsb0>()[32..56].store_le(value);
         Ok(())
     }
-    /// Accuracy_GPS_Vel_ECEF_Z
+    /// Get value of 'Accuracy_GPS_Vel_ECEF_Z'
     ///
     /// - Min: 0
     /// - Max: 255
@@ -34621,7 +34681,7 @@ impl RtSbGpsVelEcef1 {
     pub fn accuracy_gps_vel_ecef_z(&self) -> u8 {
         self.accuracy_gps_vel_ecef_z_raw()
     }
-    /// Get raw value of Accuracy_GPS_Vel_ECEF_Z
+    /// Get raw value of 'Accuracy_GPS_Vel_ECEF_Z'
     ///
     /// - Start bit: 24
     /// - Signal size: 8 bits
@@ -34635,7 +34695,7 @@ impl RtSbGpsVelEcef1 {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Accuracy_GPS_Vel_ECEF_Z
+    /// Set value of 'Accuracy_GPS_Vel_ECEF_Z'
     #[inline(always)]
     pub fn set_accuracy_gps_vel_ecef_z(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 255_u8 < value {
@@ -34653,7 +34713,7 @@ impl RtSbGpsVelEcef1 {
         self.raw.view_bits_mut::<Lsb0>()[24..32].store_le(value);
         Ok(())
     }
-    /// Accuracy_GPS_Vel_ECEF_Y
+    /// Get value of 'Accuracy_GPS_Vel_ECEF_Y'
     ///
     /// - Min: 0
     /// - Max: 255
@@ -34663,7 +34723,7 @@ impl RtSbGpsVelEcef1 {
     pub fn accuracy_gps_vel_ecef_y(&self) -> u8 {
         self.accuracy_gps_vel_ecef_y_raw()
     }
-    /// Get raw value of Accuracy_GPS_Vel_ECEF_Y
+    /// Get raw value of 'Accuracy_GPS_Vel_ECEF_Y'
     ///
     /// - Start bit: 16
     /// - Signal size: 8 bits
@@ -34677,7 +34737,7 @@ impl RtSbGpsVelEcef1 {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Accuracy_GPS_Vel_ECEF_Y
+    /// Set value of 'Accuracy_GPS_Vel_ECEF_Y'
     #[inline(always)]
     pub fn set_accuracy_gps_vel_ecef_y(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 255_u8 < value {
@@ -34695,7 +34755,7 @@ impl RtSbGpsVelEcef1 {
         self.raw.view_bits_mut::<Lsb0>()[16..24].store_le(value);
         Ok(())
     }
-    /// Accuracy_GPS_Vel_ECEF_X
+    /// Get value of 'Accuracy_GPS_Vel_ECEF_X'
     ///
     /// - Min: 0
     /// - Max: 255
@@ -34705,7 +34765,7 @@ impl RtSbGpsVelEcef1 {
     pub fn accuracy_gps_vel_ecef_x(&self) -> u8 {
         self.accuracy_gps_vel_ecef_x_raw()
     }
-    /// Get raw value of Accuracy_GPS_Vel_ECEF_X
+    /// Get raw value of 'Accuracy_GPS_Vel_ECEF_X'
     ///
     /// - Start bit: 8
     /// - Signal size: 8 bits
@@ -34719,7 +34779,7 @@ impl RtSbGpsVelEcef1 {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Accuracy_GPS_Vel_ECEF_X
+    /// Set value of 'Accuracy_GPS_Vel_ECEF_X'
     #[inline(always)]
     pub fn set_accuracy_gps_vel_ecef_x(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 255_u8 < value {
@@ -34737,7 +34797,7 @@ impl RtSbGpsVelEcef1 {
         self.raw.view_bits_mut::<Lsb0>()[8..16].store_le(value);
         Ok(())
     }
-    /// Validity_GPS_Vel_ECEF_X
+    /// Get value of 'Validity_GPS_Vel_ECEF_X'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -34749,7 +34809,7 @@ impl RtSbGpsVelEcef1 {
     pub fn validity_gps_vel_ecef_x(&self) -> bool {
         self.validity_gps_vel_ecef_x_raw()
     }
-    /// Get raw value of Validity_GPS_Vel_ECEF_X
+    /// Get raw value of 'Validity_GPS_Vel_ECEF_X'
     ///
     /// - Start bit: 0
     /// - Signal size: 1 bits
@@ -34762,7 +34822,7 @@ impl RtSbGpsVelEcef1 {
         let signal = self.raw.view_bits::<Lsb0>()[0..1].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_GPS_Vel_ECEF_X
+    /// Set value of 'Validity_GPS_Vel_ECEF_X'
     #[inline(always)]
     pub fn set_validity_gps_vel_ecef_x(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
@@ -34834,7 +34894,7 @@ impl RtSbGpsVelNed2 {
     pub const GPS_VEL_NED_D_MAX: f32 = 838_f32;
     pub const ACCURACY_GPS_VEL_D_MIN: u8 = 0_u8;
     pub const ACCURACY_GPS_VEL_D_MAX: u8 = 255_u8;
-    /// Construct new RT_SB_GPS_Vel_NED_2 from values
+    /// Construct new 'RT_SB_GPS_Vel_NED_2' from values
     pub fn new(
         gps_vel_ned_d: f32,
         accuracy_gps_vel_d: u8,
@@ -34850,7 +34910,7 @@ impl RtSbGpsVelNed2 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// GPS_Vel_NED_D
+    /// Get value of 'GPS_Vel_NED_D'
     ///
     /// VELNED D velocity.  This is the velocity vector directly downwards towards the Earth centre at the current local Earth surface position.
     ///
@@ -34862,7 +34922,7 @@ impl RtSbGpsVelNed2 {
     pub fn gps_vel_ned_d(&self) -> f32 {
         self.gps_vel_ned_d_raw()
     }
-    /// Get raw value of GPS_Vel_NED_D
+    /// Get raw value of 'GPS_Vel_NED_D'
     ///
     /// - Start bit: 16
     /// - Signal size: 24 bits
@@ -34877,7 +34937,7 @@ impl RtSbGpsVelNed2 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of GPS_Vel_NED_D
+    /// Set value of 'GPS_Vel_NED_D'
     #[inline(always)]
     pub fn set_gps_vel_ned_d(&mut self, value: f32) -> Result<(), CanError> {
         if value < -838_f32 || 838_f32 < value {
@@ -34892,7 +34952,7 @@ impl RtSbGpsVelNed2 {
         self.raw.view_bits_mut::<Lsb0>()[16..40].store_le(value);
         Ok(())
     }
-    /// Accuracy_GPS_Vel_D
+    /// Get value of 'Accuracy_GPS_Vel_D'
     ///
     /// - Min: 0
     /// - Max: 255
@@ -34902,7 +34962,7 @@ impl RtSbGpsVelNed2 {
     pub fn accuracy_gps_vel_d(&self) -> u8 {
         self.accuracy_gps_vel_d_raw()
     }
-    /// Get raw value of Accuracy_GPS_Vel_D
+    /// Get raw value of 'Accuracy_GPS_Vel_D'
     ///
     /// - Start bit: 8
     /// - Signal size: 8 bits
@@ -34916,7 +34976,7 @@ impl RtSbGpsVelNed2 {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Accuracy_GPS_Vel_D
+    /// Set value of 'Accuracy_GPS_Vel_D'
     #[inline(always)]
     pub fn set_accuracy_gps_vel_d(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 255_u8 < value {
@@ -34934,7 +34994,7 @@ impl RtSbGpsVelNed2 {
         self.raw.view_bits_mut::<Lsb0>()[8..16].store_le(value);
         Ok(())
     }
-    /// Validity_GPS_Vel_NED_D
+    /// Get value of 'Validity_GPS_Vel_NED_D'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -34946,7 +35006,7 @@ impl RtSbGpsVelNed2 {
     pub fn validity_gps_vel_ned_d(&self) -> bool {
         self.validity_gps_vel_ned_d_raw()
     }
-    /// Get raw value of Validity_GPS_Vel_NED_D
+    /// Get raw value of 'Validity_GPS_Vel_NED_D'
     ///
     /// - Start bit: 0
     /// - Signal size: 1 bits
@@ -34959,7 +35019,7 @@ impl RtSbGpsVelNed2 {
         let signal = self.raw.view_bits::<Lsb0>()[0..1].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_GPS_Vel_NED_D
+    /// Set value of 'Validity_GPS_Vel_NED_D'
     #[inline(always)]
     pub fn set_validity_gps_vel_ned_d(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
@@ -35033,7 +35093,7 @@ impl RtSbGpsVelNed1 {
     pub const GPS_VEL_NED_N_MAX: f32 = 838_f32;
     pub const ACCURACY_GPS_VEL_NE_MIN: u8 = 0_u8;
     pub const ACCURACY_GPS_VEL_NE_MAX: u8 = 255_u8;
-    /// Construct new RT_SB_GPS_Vel_NED_1 from values
+    /// Construct new 'RT_SB_GPS_Vel_NED_1' from values
     pub fn new(
         gps_vel_ned_e: f32,
         gps_vel_ned_n: f32,
@@ -35053,7 +35113,7 @@ impl RtSbGpsVelNed1 {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// GPS_Vel_NED_E
+    /// Get value of 'GPS_Vel_NED_E'
     ///
     /// VELNED E velocity.  This is the velocity vector directly East at the current local Earth surface position.
     ///
@@ -35065,7 +35125,7 @@ impl RtSbGpsVelNed1 {
     pub fn gps_vel_ned_e(&self) -> f32 {
         self.gps_vel_ned_e_raw()
     }
-    /// Get raw value of GPS_Vel_NED_E
+    /// Get raw value of 'GPS_Vel_NED_E'
     ///
     /// - Start bit: 40
     /// - Signal size: 24 bits
@@ -35080,7 +35140,7 @@ impl RtSbGpsVelNed1 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of GPS_Vel_NED_E
+    /// Set value of 'GPS_Vel_NED_E'
     #[inline(always)]
     pub fn set_gps_vel_ned_e(&mut self, value: f32) -> Result<(), CanError> {
         if value < -838_f32 || 838_f32 < value {
@@ -35095,7 +35155,7 @@ impl RtSbGpsVelNed1 {
         self.raw.view_bits_mut::<Lsb0>()[40..64].store_le(value);
         Ok(())
     }
-    /// GPS_Vel_NED_N
+    /// Get value of 'GPS_Vel_NED_N'
     ///
     /// VELNED N velocity.  This is the velocity vector directly North at the current local Earth surface position.
     ///
@@ -35107,7 +35167,7 @@ impl RtSbGpsVelNed1 {
     pub fn gps_vel_ned_n(&self) -> f32 {
         self.gps_vel_ned_n_raw()
     }
-    /// Get raw value of GPS_Vel_NED_N
+    /// Get raw value of 'GPS_Vel_NED_N'
     ///
     /// - Start bit: 16
     /// - Signal size: 24 bits
@@ -35122,7 +35182,7 @@ impl RtSbGpsVelNed1 {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of GPS_Vel_NED_N
+    /// Set value of 'GPS_Vel_NED_N'
     #[inline(always)]
     pub fn set_gps_vel_ned_n(&mut self, value: f32) -> Result<(), CanError> {
         if value < -838_f32 || 838_f32 < value {
@@ -35137,7 +35197,7 @@ impl RtSbGpsVelNed1 {
         self.raw.view_bits_mut::<Lsb0>()[16..40].store_le(value);
         Ok(())
     }
-    /// Accuracy_GPS_Vel_NE
+    /// Get value of 'Accuracy_GPS_Vel_NE'
     ///
     /// - Min: 0
     /// - Max: 255
@@ -35147,7 +35207,7 @@ impl RtSbGpsVelNed1 {
     pub fn accuracy_gps_vel_ne(&self) -> u8 {
         self.accuracy_gps_vel_ne_raw()
     }
-    /// Get raw value of Accuracy_GPS_Vel_NE
+    /// Get raw value of 'Accuracy_GPS_Vel_NE'
     ///
     /// - Start bit: 8
     /// - Signal size: 8 bits
@@ -35161,7 +35221,7 @@ impl RtSbGpsVelNed1 {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Accuracy_GPS_Vel_NE
+    /// Set value of 'Accuracy_GPS_Vel_NE'
     #[inline(always)]
     pub fn set_accuracy_gps_vel_ne(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 255_u8 < value {
@@ -35179,7 +35239,7 @@ impl RtSbGpsVelNed1 {
         self.raw.view_bits_mut::<Lsb0>()[8..16].store_le(value);
         Ok(())
     }
-    /// Validity_GPS_Vel_NED_E
+    /// Get value of 'Validity_GPS_Vel_NED_E'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -35191,7 +35251,7 @@ impl RtSbGpsVelNed1 {
     pub fn validity_gps_vel_ned_e(&self) -> bool {
         self.validity_gps_vel_ned_e_raw()
     }
-    /// Get raw value of Validity_GPS_Vel_NED_E
+    /// Get raw value of 'Validity_GPS_Vel_NED_E'
     ///
     /// - Start bit: 1
     /// - Signal size: 1 bits
@@ -35204,14 +35264,14 @@ impl RtSbGpsVelNed1 {
         let signal = self.raw.view_bits::<Lsb0>()[1..2].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_GPS_Vel_NED_E
+    /// Set value of 'Validity_GPS_Vel_NED_E'
     #[inline(always)]
     pub fn set_validity_gps_vel_ned_e(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[1..2].store_le(value);
         Ok(())
     }
-    /// Validity_GPS_Vel_NED_N
+    /// Get value of 'Validity_GPS_Vel_NED_N'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -35223,7 +35283,7 @@ impl RtSbGpsVelNed1 {
     pub fn validity_gps_vel_ned_n(&self) -> bool {
         self.validity_gps_vel_ned_n_raw()
     }
-    /// Get raw value of Validity_GPS_Vel_NED_N
+    /// Get raw value of 'Validity_GPS_Vel_NED_N'
     ///
     /// - Start bit: 0
     /// - Signal size: 1 bits
@@ -35236,7 +35296,7 @@ impl RtSbGpsVelNed1 {
         let signal = self.raw.view_bits::<Lsb0>()[0..1].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_GPS_Vel_NED_N
+    /// Set value of 'Validity_GPS_Vel_NED_N'
     #[inline(always)]
     pub fn set_validity_gps_vel_ned_n(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
@@ -35310,7 +35370,7 @@ impl RtSbGpsSpeed {
     pub const GPS_SPEED_2D_MAX: f32 = 1675_f32;
     pub const ACCURACY_GPS_SPEED_MIN: u8 = 0_u8;
     pub const ACCURACY_GPS_SPEED_MAX: u8 = 255_u8;
-    /// Construct new RT_SB_GPS_Speed from values
+    /// Construct new 'RT_SB_GPS_Speed' from values
     pub fn new(
         gps_speed_3d: f32,
         gps_speed_2d: f32,
@@ -35330,7 +35390,7 @@ impl RtSbGpsSpeed {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// GPS_Speed_3D
+    /// Get value of 'GPS_Speed_3D'
     ///
     /// This is GPS scalar 3D speed - scalar speed with the local Z axis component included.
     ///
@@ -35342,7 +35402,7 @@ impl RtSbGpsSpeed {
     pub fn gps_speed_3d(&self) -> f32 {
         self.gps_speed_3d_raw()
     }
-    /// Get raw value of GPS_Speed_3D
+    /// Get raw value of 'GPS_Speed_3D'
     ///
     /// - Start bit: 40
     /// - Signal size: 24 bits
@@ -35357,7 +35417,7 @@ impl RtSbGpsSpeed {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of GPS_Speed_3D
+    /// Set value of 'GPS_Speed_3D'
     #[inline(always)]
     pub fn set_gps_speed_3d(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 1675_f32 < value {
@@ -35371,7 +35431,7 @@ impl RtSbGpsSpeed {
         self.raw.view_bits_mut::<Lsb0>()[40..64].store_le(value);
         Ok(())
     }
-    /// GPS_Speed_2D
+    /// Get value of 'GPS_Speed_2D'
     ///
     /// This is GPS scalar 2D speed - scalar speed with no local Z axis component included.
     ///
@@ -35383,7 +35443,7 @@ impl RtSbGpsSpeed {
     pub fn gps_speed_2d(&self) -> f32 {
         self.gps_speed_2d_raw()
     }
-    /// Get raw value of GPS_Speed_2D
+    /// Get raw value of 'GPS_Speed_2D'
     ///
     /// - Start bit: 16
     /// - Signal size: 24 bits
@@ -35398,7 +35458,7 @@ impl RtSbGpsSpeed {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of GPS_Speed_2D
+    /// Set value of 'GPS_Speed_2D'
     #[inline(always)]
     pub fn set_gps_speed_2d(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 1675_f32 < value {
@@ -35412,7 +35472,7 @@ impl RtSbGpsSpeed {
         self.raw.view_bits_mut::<Lsb0>()[16..40].store_le(value);
         Ok(())
     }
-    /// Accuracy_GPS_Speed
+    /// Get value of 'Accuracy_GPS_Speed'
     ///
     /// This accuracy value applies to both 2D and 3D GPS speed.
     ///
@@ -35424,7 +35484,7 @@ impl RtSbGpsSpeed {
     pub fn accuracy_gps_speed(&self) -> u8 {
         self.accuracy_gps_speed_raw()
     }
-    /// Get raw value of Accuracy_GPS_Speed
+    /// Get raw value of 'Accuracy_GPS_Speed'
     ///
     /// - Start bit: 8
     /// - Signal size: 8 bits
@@ -35438,7 +35498,7 @@ impl RtSbGpsSpeed {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Accuracy_GPS_Speed
+    /// Set value of 'Accuracy_GPS_Speed'
     #[inline(always)]
     pub fn set_accuracy_gps_speed(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 255_u8 < value {
@@ -35456,7 +35516,7 @@ impl RtSbGpsSpeed {
         self.raw.view_bits_mut::<Lsb0>()[8..16].store_le(value);
         Ok(())
     }
-    /// Validity_GPS_Speed_3D
+    /// Get value of 'Validity_GPS_Speed_3D'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -35468,7 +35528,7 @@ impl RtSbGpsSpeed {
     pub fn validity_gps_speed_3d(&self) -> bool {
         self.validity_gps_speed_3d_raw()
     }
-    /// Get raw value of Validity_GPS_Speed_3D
+    /// Get raw value of 'Validity_GPS_Speed_3D'
     ///
     /// - Start bit: 1
     /// - Signal size: 1 bits
@@ -35481,14 +35541,14 @@ impl RtSbGpsSpeed {
         let signal = self.raw.view_bits::<Lsb0>()[1..2].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_GPS_Speed_3D
+    /// Set value of 'Validity_GPS_Speed_3D'
     #[inline(always)]
     pub fn set_validity_gps_speed_3d(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[1..2].store_le(value);
         Ok(())
     }
-    /// Validity_GPS_Speed_2D
+    /// Get value of 'Validity_GPS_Speed_2D'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -35500,7 +35560,7 @@ impl RtSbGpsSpeed {
     pub fn validity_gps_speed_2d(&self) -> bool {
         self.validity_gps_speed_2d_raw()
     }
-    /// Get raw value of Validity_GPS_Speed_2D
+    /// Get raw value of 'Validity_GPS_Speed_2D'
     ///
     /// - Start bit: 0
     /// - Signal size: 1 bits
@@ -35513,7 +35573,7 @@ impl RtSbGpsSpeed {
         let signal = self.raw.view_bits::<Lsb0>()[0..1].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_GPS_Speed_2D
+    /// Set value of 'Validity_GPS_Speed_2D'
     #[inline(always)]
     pub fn set_validity_gps_speed_2d(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
@@ -35587,7 +35647,7 @@ impl RtSbGpsTime {
     pub const GPS_TIME_MAX: f32 = 604800_f32;
     pub const ACCURACY_GPS_TIME_MIN: u8 = 0_u8;
     pub const ACCURACY_GPS_TIME_MAX: u8 = 255_u8;
-    /// Construct new RT_SB_GPS_Time from values
+    /// Construct new 'RT_SB_GPS_Time' from values
     pub fn new(
         gps_week: u16,
         gps_time: f32,
@@ -35607,7 +35667,7 @@ impl RtSbGpsTime {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// GPS_Week
+    /// Get value of 'GPS_Week'
     ///
     /// - Min: 0
     /// - Max: 65535
@@ -35617,7 +35677,7 @@ impl RtSbGpsTime {
     pub fn gps_week(&self) -> u16 {
         self.gps_week_raw()
     }
-    /// Get raw value of GPS_Week
+    /// Get raw value of 'GPS_Week'
     ///
     /// - Start bit: 48
     /// - Signal size: 16 bits
@@ -35631,7 +35691,7 @@ impl RtSbGpsTime {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of GPS_Week
+    /// Set value of 'GPS_Week'
     #[inline(always)]
     pub fn set_gps_week(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 65535_u16 < value {
@@ -35649,7 +35709,7 @@ impl RtSbGpsTime {
         self.raw.view_bits_mut::<Lsb0>()[48..64].store_le(value);
         Ok(())
     }
-    /// GPS_Time
+    /// Get value of 'GPS_Time'
     ///
     /// GPS time is the time in seconds since midnight GMT on Saturday night.
     ///
@@ -35661,7 +35721,7 @@ impl RtSbGpsTime {
     pub fn gps_time(&self) -> f32 {
         self.gps_time_raw()
     }
-    /// Get raw value of GPS_Time
+    /// Get raw value of 'GPS_Time'
     ///
     /// - Start bit: 16
     /// - Signal size: 32 bits
@@ -35676,7 +35736,7 @@ impl RtSbGpsTime {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of GPS_Time
+    /// Set value of 'GPS_Time'
     #[inline(always)]
     pub fn set_gps_time(&mut self, value: f32) -> Result<(), CanError> {
         if value < 0_f32 || 604800_f32 < value {
@@ -35690,7 +35750,7 @@ impl RtSbGpsTime {
         self.raw.view_bits_mut::<Lsb0>()[16..48].store_le(value);
         Ok(())
     }
-    /// Accuracy_GPS_Time
+    /// Get value of 'Accuracy_GPS_Time'
     ///
     /// - Min: 0
     /// - Max: 255
@@ -35700,7 +35760,7 @@ impl RtSbGpsTime {
     pub fn accuracy_gps_time(&self) -> u8 {
         self.accuracy_gps_time_raw()
     }
-    /// Get raw value of Accuracy_GPS_Time
+    /// Get raw value of 'Accuracy_GPS_Time'
     ///
     /// - Start bit: 8
     /// - Signal size: 8 bits
@@ -35714,7 +35774,7 @@ impl RtSbGpsTime {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Accuracy_GPS_Time
+    /// Set value of 'Accuracy_GPS_Time'
     #[inline(always)]
     pub fn set_accuracy_gps_time(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 255_u8 < value {
@@ -35732,7 +35792,7 @@ impl RtSbGpsTime {
         self.raw.view_bits_mut::<Lsb0>()[8..16].store_le(value);
         Ok(())
     }
-    /// Validity_GPS_Week
+    /// Get value of 'Validity_GPS_Week'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -35744,7 +35804,7 @@ impl RtSbGpsTime {
     pub fn validity_gps_week(&self) -> bool {
         self.validity_gps_week_raw()
     }
-    /// Get raw value of Validity_GPS_Week
+    /// Get raw value of 'Validity_GPS_Week'
     ///
     /// - Start bit: 1
     /// - Signal size: 1 bits
@@ -35757,14 +35817,14 @@ impl RtSbGpsTime {
         let signal = self.raw.view_bits::<Lsb0>()[1..2].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_GPS_Week
+    /// Set value of 'Validity_GPS_Week'
     #[inline(always)]
     pub fn set_validity_gps_week(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[1..2].store_le(value);
         Ok(())
     }
-    /// Validity_GPS_Time
+    /// Get value of 'Validity_GPS_Time'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -35776,7 +35836,7 @@ impl RtSbGpsTime {
     pub fn validity_gps_time(&self) -> bool {
         self.validity_gps_time_raw()
     }
-    /// Get raw value of Validity_GPS_Time
+    /// Get raw value of 'Validity_GPS_Time'
     ///
     /// - Start bit: 0
     /// - Signal size: 1 bits
@@ -35789,7 +35849,7 @@ impl RtSbGpsTime {
         let signal = self.raw.view_bits::<Lsb0>()[0..1].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_GPS_Time
+    /// Set value of 'Validity_GPS_Time'
     #[inline(always)]
     pub fn set_validity_gps_time(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
@@ -35865,7 +35925,7 @@ impl RtSbAccel {
     pub const ACCEL_LONGITUDINAL_MAX: f32 = 65_f32;
     pub const ACCURACY_ACCEL_MIN: u8 = 0_u8;
     pub const ACCURACY_ACCEL_MAX: u8 = 255_u8;
-    /// Construct new RT_SB_Accel from values
+    /// Construct new 'RT_SB_Accel' from values
     pub fn new(
         accel_vertical: f32,
         accel_lateral: f32,
@@ -35889,7 +35949,7 @@ impl RtSbAccel {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// Accel_Vertical
+    /// Get value of 'Accel_Vertical'
     ///
     /// Vertical acceleration.  This is positive when the vehicle accelerates in an upwards direction, e.g. when travelling through a dip.
     ///
@@ -35901,7 +35961,7 @@ impl RtSbAccel {
     pub fn accel_vertical(&self) -> f32 {
         self.accel_vertical_raw()
     }
-    /// Get raw value of Accel_Vertical
+    /// Get raw value of 'Accel_Vertical'
     ///
     /// - Start bit: 48
     /// - Signal size: 16 bits
@@ -35916,7 +35976,7 @@ impl RtSbAccel {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Accel_Vertical
+    /// Set value of 'Accel_Vertical'
     #[inline(always)]
     pub fn set_accel_vertical(&mut self, value: f32) -> Result<(), CanError> {
         if value < -65_f32 || 65_f32 < value {
@@ -35931,7 +35991,7 @@ impl RtSbAccel {
         self.raw.view_bits_mut::<Lsb0>()[48..64].store_le(value);
         Ok(())
     }
-    /// Accel_Lateral
+    /// Get value of 'Accel_Lateral'
     ///
     /// Lateral acceleration.  This is positive when the vehicle accelerates towards the right, e.g. when cornering around a right-hand bend.
     ///
@@ -35943,7 +36003,7 @@ impl RtSbAccel {
     pub fn accel_lateral(&self) -> f32 {
         self.accel_lateral_raw()
     }
-    /// Get raw value of Accel_Lateral
+    /// Get raw value of 'Accel_Lateral'
     ///
     /// - Start bit: 32
     /// - Signal size: 16 bits
@@ -35958,7 +36018,7 @@ impl RtSbAccel {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Accel_Lateral
+    /// Set value of 'Accel_Lateral'
     #[inline(always)]
     pub fn set_accel_lateral(&mut self, value: f32) -> Result<(), CanError> {
         if value < -65_f32 || 65_f32 < value {
@@ -35973,7 +36033,7 @@ impl RtSbAccel {
         self.raw.view_bits_mut::<Lsb0>()[32..48].store_le(value);
         Ok(())
     }
-    /// Accel_Longitudinal
+    /// Get value of 'Accel_Longitudinal'
     ///
     /// Longitudinal acceleration.  This is positive when the vehicle accelerates in a forwards direction.
     ///
@@ -35985,7 +36045,7 @@ impl RtSbAccel {
     pub fn accel_longitudinal(&self) -> f32 {
         self.accel_longitudinal_raw()
     }
-    /// Get raw value of Accel_Longitudinal
+    /// Get raw value of 'Accel_Longitudinal'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -36000,7 +36060,7 @@ impl RtSbAccel {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Accel_Longitudinal
+    /// Set value of 'Accel_Longitudinal'
     #[inline(always)]
     pub fn set_accel_longitudinal(&mut self, value: f32) -> Result<(), CanError> {
         if value < -65_f32 || 65_f32 < value {
@@ -36015,7 +36075,7 @@ impl RtSbAccel {
         self.raw.view_bits_mut::<Lsb0>()[16..32].store_le(value);
         Ok(())
     }
-    /// Accuracy_Accel
+    /// Get value of 'Accuracy_Accel'
     ///
     /// Dimensionless.  Lower values imply but do not guarantee better accuracy than higher values.
     ///
@@ -36027,7 +36087,7 @@ impl RtSbAccel {
     pub fn accuracy_accel(&self) -> u8 {
         self.accuracy_accel_raw()
     }
-    /// Get raw value of Accuracy_Accel
+    /// Get raw value of 'Accuracy_Accel'
     ///
     /// - Start bit: 8
     /// - Signal size: 8 bits
@@ -36041,7 +36101,7 @@ impl RtSbAccel {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Accuracy_Accel
+    /// Set value of 'Accuracy_Accel'
     #[inline(always)]
     pub fn set_accuracy_accel(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 255_u8 < value {
@@ -36059,7 +36119,7 @@ impl RtSbAccel {
         self.raw.view_bits_mut::<Lsb0>()[8..16].store_le(value);
         Ok(())
     }
-    /// Validity_Accel_Vertical
+    /// Get value of 'Validity_Accel_Vertical'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -36071,7 +36131,7 @@ impl RtSbAccel {
     pub fn validity_accel_vertical(&self) -> bool {
         self.validity_accel_vertical_raw()
     }
-    /// Get raw value of Validity_Accel_Vertical
+    /// Get raw value of 'Validity_Accel_Vertical'
     ///
     /// - Start bit: 2
     /// - Signal size: 1 bits
@@ -36084,14 +36144,14 @@ impl RtSbAccel {
         let signal = self.raw.view_bits::<Lsb0>()[2..3].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_Accel_Vertical
+    /// Set value of 'Validity_Accel_Vertical'
     #[inline(always)]
     pub fn set_validity_accel_vertical(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[2..3].store_le(value);
         Ok(())
     }
-    /// Validity_Accel_Lateral
+    /// Get value of 'Validity_Accel_Lateral'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -36103,7 +36163,7 @@ impl RtSbAccel {
     pub fn validity_accel_lateral(&self) -> bool {
         self.validity_accel_lateral_raw()
     }
-    /// Get raw value of Validity_Accel_Lateral
+    /// Get raw value of 'Validity_Accel_Lateral'
     ///
     /// - Start bit: 1
     /// - Signal size: 1 bits
@@ -36116,14 +36176,14 @@ impl RtSbAccel {
         let signal = self.raw.view_bits::<Lsb0>()[1..2].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_Accel_Lateral
+    /// Set value of 'Validity_Accel_Lateral'
     #[inline(always)]
     pub fn set_validity_accel_lateral(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[1..2].store_le(value);
         Ok(())
     }
-    /// Validity_Accel_Longitudinal
+    /// Get value of 'Validity_Accel_Longitudinal'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -36135,7 +36195,7 @@ impl RtSbAccel {
     pub fn validity_accel_longitudinal(&self) -> bool {
         self.validity_accel_longitudinal_raw()
     }
-    /// Get raw value of Validity_Accel_Longitudinal
+    /// Get raw value of 'Validity_Accel_Longitudinal'
     ///
     /// - Start bit: 0
     /// - Signal size: 1 bits
@@ -36148,7 +36208,7 @@ impl RtSbAccel {
         let signal = self.raw.view_bits::<Lsb0>()[0..1].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_Accel_Longitudinal
+    /// Set value of 'Validity_Accel_Longitudinal'
     #[inline(always)]
     pub fn set_validity_accel_longitudinal(
         &mut self,
@@ -36227,7 +36287,7 @@ impl RtSbGyroRates {
     pub const GYRO_RATE_YAW_MAX: f32 = 327_f32;
     pub const ACCURACY_GYRO_RATES_MIN: u8 = 0_u8;
     pub const ACCURACY_GYRO_RATES_MAX: u8 = 0_u8;
-    /// Construct new RT_SB_Gyro_Rates from values
+    /// Construct new 'RT_SB_Gyro_Rates' from values
     pub fn new(
         gyro_rate_roll: f32,
         gyro_rate_pitch: f32,
@@ -36251,7 +36311,7 @@ impl RtSbGyroRates {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// Gyro_Rate_Roll
+    /// Get value of 'Gyro_Rate_Roll'
     ///
     /// Roll rate is positive for clockwise rotation when looking at the rear of the vehicle from behind the vehicle.
     ///
@@ -36263,7 +36323,7 @@ impl RtSbGyroRates {
     pub fn gyro_rate_roll(&self) -> f32 {
         self.gyro_rate_roll_raw()
     }
-    /// Get raw value of Gyro_Rate_Roll
+    /// Get raw value of 'Gyro_Rate_Roll'
     ///
     /// - Start bit: 48
     /// - Signal size: 16 bits
@@ -36278,7 +36338,7 @@ impl RtSbGyroRates {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Gyro_Rate_Roll
+    /// Set value of 'Gyro_Rate_Roll'
     #[inline(always)]
     pub fn set_gyro_rate_roll(&mut self, value: f32) -> Result<(), CanError> {
         if value < -327_f32 || 327_f32 < value {
@@ -36293,7 +36353,7 @@ impl RtSbGyroRates {
         self.raw.view_bits_mut::<Lsb0>()[48..64].store_le(value);
         Ok(())
     }
-    /// Gyro_Rate_Pitch
+    /// Get value of 'Gyro_Rate_Pitch'
     ///
     /// Pitch rate is positive for clockwise rotation when looking at the left hand side of the vehicle from the left of the vehicle.
     ///
@@ -36305,7 +36365,7 @@ impl RtSbGyroRates {
     pub fn gyro_rate_pitch(&self) -> f32 {
         self.gyro_rate_pitch_raw()
     }
-    /// Get raw value of Gyro_Rate_Pitch
+    /// Get raw value of 'Gyro_Rate_Pitch'
     ///
     /// - Start bit: 32
     /// - Signal size: 16 bits
@@ -36320,7 +36380,7 @@ impl RtSbGyroRates {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Gyro_Rate_Pitch
+    /// Set value of 'Gyro_Rate_Pitch'
     #[inline(always)]
     pub fn set_gyro_rate_pitch(&mut self, value: f32) -> Result<(), CanError> {
         if value < -327_f32 || 327_f32 < value {
@@ -36335,7 +36395,7 @@ impl RtSbGyroRates {
         self.raw.view_bits_mut::<Lsb0>()[32..48].store_le(value);
         Ok(())
     }
-    /// Gyro_Rate_Yaw
+    /// Get value of 'Gyro_Rate_Yaw'
     ///
     /// Yaw rate is positive for clockwise rotation when looking down on the vehicle from above.
     ///
@@ -36347,7 +36407,7 @@ impl RtSbGyroRates {
     pub fn gyro_rate_yaw(&self) -> f32 {
         self.gyro_rate_yaw_raw()
     }
-    /// Get raw value of Gyro_Rate_Yaw
+    /// Get raw value of 'Gyro_Rate_Yaw'
     ///
     /// - Start bit: 16
     /// - Signal size: 16 bits
@@ -36362,7 +36422,7 @@ impl RtSbGyroRates {
         let offset = 0_f32;
         (signal as f32) * factor + offset
     }
-    /// Set value of Gyro_Rate_Yaw
+    /// Set value of 'Gyro_Rate_Yaw'
     #[inline(always)]
     pub fn set_gyro_rate_yaw(&mut self, value: f32) -> Result<(), CanError> {
         if value < -327_f32 || 327_f32 < value {
@@ -36377,7 +36437,7 @@ impl RtSbGyroRates {
         self.raw.view_bits_mut::<Lsb0>()[16..32].store_le(value);
         Ok(())
     }
-    /// Accuracy_Gyro_Rates
+    /// Get value of 'Accuracy_Gyro_Rates'
     ///
     /// Dimensionless.  Lower values imply but do not guarantee better accuracy than higher values.
     ///
@@ -36389,7 +36449,7 @@ impl RtSbGyroRates {
     pub fn accuracy_gyro_rates(&self) -> u8 {
         self.accuracy_gyro_rates_raw()
     }
-    /// Get raw value of Accuracy_Gyro_Rates
+    /// Get raw value of 'Accuracy_Gyro_Rates'
     ///
     /// - Start bit: 8
     /// - Signal size: 8 bits
@@ -36403,7 +36463,7 @@ impl RtSbGyroRates {
         let factor = 1;
         u8::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Accuracy_Gyro_Rates
+    /// Set value of 'Accuracy_Gyro_Rates'
     #[inline(always)]
     pub fn set_accuracy_gyro_rates(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 0_u8 < value {
@@ -36421,7 +36481,7 @@ impl RtSbGyroRates {
         self.raw.view_bits_mut::<Lsb0>()[8..16].store_le(value);
         Ok(())
     }
-    /// Validity_Gyro_Rate_Roll
+    /// Get value of 'Validity_Gyro_Rate_Roll'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -36433,7 +36493,7 @@ impl RtSbGyroRates {
     pub fn validity_gyro_rate_roll(&self) -> bool {
         self.validity_gyro_rate_roll_raw()
     }
-    /// Get raw value of Validity_Gyro_Rate_Roll
+    /// Get raw value of 'Validity_Gyro_Rate_Roll'
     ///
     /// - Start bit: 2
     /// - Signal size: 1 bits
@@ -36446,14 +36506,14 @@ impl RtSbGyroRates {
         let signal = self.raw.view_bits::<Lsb0>()[2..3].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_Gyro_Rate_Roll
+    /// Set value of 'Validity_Gyro_Rate_Roll'
     #[inline(always)]
     pub fn set_validity_gyro_rate_roll(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[2..3].store_le(value);
         Ok(())
     }
-    /// Validity_Gyro_Rate_Pitch
+    /// Get value of 'Validity_Gyro_Rate_Pitch'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -36465,7 +36525,7 @@ impl RtSbGyroRates {
     pub fn validity_gyro_rate_pitch(&self) -> bool {
         self.validity_gyro_rate_pitch_raw()
     }
-    /// Get raw value of Validity_Gyro_Rate_Pitch
+    /// Get raw value of 'Validity_Gyro_Rate_Pitch'
     ///
     /// - Start bit: 1
     /// - Signal size: 1 bits
@@ -36478,14 +36538,14 @@ impl RtSbGyroRates {
         let signal = self.raw.view_bits::<Lsb0>()[1..2].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_Gyro_Rate_Pitch
+    /// Set value of 'Validity_Gyro_Rate_Pitch'
     #[inline(always)]
     pub fn set_validity_gyro_rate_pitch(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;
         self.raw.view_bits_mut::<Lsb0>()[1..2].store_le(value);
         Ok(())
     }
-    /// Validity_Gyro_Rate_Yaw
+    /// Get value of 'Validity_Gyro_Rate_Yaw'
     ///
     /// Valid when bit is set, invalid when bit is clear.
     ///
@@ -36497,7 +36557,7 @@ impl RtSbGyroRates {
     pub fn validity_gyro_rate_yaw(&self) -> bool {
         self.validity_gyro_rate_yaw_raw()
     }
-    /// Get raw value of Validity_Gyro_Rate_Yaw
+    /// Get raw value of 'Validity_Gyro_Rate_Yaw'
     ///
     /// - Start bit: 0
     /// - Signal size: 1 bits
@@ -36510,7 +36570,7 @@ impl RtSbGyroRates {
         let signal = self.raw.view_bits::<Lsb0>()[0..1].load_le::<u8>();
         signal == 1
     }
-    /// Set value of Validity_Gyro_Rate_Yaw
+    /// Set value of 'Validity_Gyro_Rate_Yaw'
     #[inline(always)]
     pub fn set_validity_gyro_rate_yaw(&mut self, value: bool) -> Result<(), CanError> {
         let value = value as u8;

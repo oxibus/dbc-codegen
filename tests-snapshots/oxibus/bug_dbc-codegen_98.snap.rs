@@ -82,7 +82,7 @@ impl TestInput {
     pub const VAR3_MAX: u16 = 65535_u16;
     pub const VAR4_MIN: u16 = 0_u16;
     pub const VAR4_MAX: u16 = 65535_u16;
-    /// Construct new Test_input from values
+    /// Construct new 'Test_input' from values
     pub fn new(test_input_mux: u8) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 8] };
         res.set_test_input_mux(test_input_mux)?;
@@ -92,7 +92,7 @@ impl TestInput {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// Get raw value of Test_input_Mux
+    /// Get raw value of 'Test_input_Mux'
     ///
     /// - Start bit: 56
     /// - Signal size: 4 bits
@@ -144,7 +144,7 @@ impl TestInput {
             }
         }
     }
-    /// Set value of Test_input_Mux
+    /// Set value of 'Test_input_Mux'
     #[inline(always)]
     fn set_test_input_mux(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 0_u8 < value {
@@ -162,7 +162,7 @@ impl TestInput {
         self.raw.view_bits_mut::<Lsb0>()[56..60].store_le(value);
         Ok(())
     }
-    /// Set value of Test_input_Mux
+    /// Set value of 'Test_input_Mux'
     #[inline(always)]
     pub fn set_m0(&mut self, value: TestInputTestInputMuxM0) -> Result<(), CanError> {
         let b0 = BitArray::<_, LocalBits>::new(self.raw);
@@ -171,7 +171,7 @@ impl TestInput {
         self.set_test_input_mux(0)?;
         Ok(())
     }
-    /// Set value of Test_input_Mux
+    /// Set value of 'Test_input_Mux'
     #[inline(always)]
     pub fn set_m1(&mut self, value: TestInputTestInputMuxM1) -> Result<(), CanError> {
         let b0 = BitArray::<_, LocalBits>::new(self.raw);
@@ -180,7 +180,7 @@ impl TestInput {
         self.set_test_input_mux(1)?;
         Ok(())
     }
-    /// Set value of Test_input_Mux
+    /// Set value of 'Test_input_Mux'
     #[inline(always)]
     pub fn set_m2(&mut self, value: TestInputTestInputMuxM2) -> Result<(), CanError> {
         let b0 = BitArray::<_, LocalBits>::new(self.raw);
@@ -189,7 +189,7 @@ impl TestInput {
         self.set_test_input_mux(2)?;
         Ok(())
     }
-    /// Set value of Test_input_Mux
+    /// Set value of 'Test_input_Mux'
     #[inline(always)]
     pub fn set_m3(&mut self, value: TestInputTestInputMuxM3) -> Result<(), CanError> {
         let b0 = BitArray::<_, LocalBits>::new(self.raw);
@@ -308,7 +308,7 @@ impl TestInputTestInputMuxM0 {
     pub fn new() -> Self {
         Self { raw: [0u8; 8] }
     }
-    /// Var1
+    /// Get value of 'Var1'
     ///
     /// - Min: 0
     /// - Max: 65535
@@ -318,7 +318,7 @@ impl TestInputTestInputMuxM0 {
     pub fn var1(&self) -> u16 {
         self.var1_raw()
     }
-    /// Get raw value of Var1
+    /// Get raw value of 'Var1'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -332,7 +332,7 @@ impl TestInputTestInputMuxM0 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Var1
+    /// Set value of 'Var1'
     #[inline(always)]
     pub fn set_var1(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 65535_u16 < value {
@@ -377,7 +377,7 @@ impl TestInputTestInputMuxM1 {
     pub fn new() -> Self {
         Self { raw: [0u8; 8] }
     }
-    /// Var2
+    /// Get value of 'Var2'
     ///
     /// - Min: 0
     /// - Max: 65535
@@ -387,7 +387,7 @@ impl TestInputTestInputMuxM1 {
     pub fn var2(&self) -> u16 {
         self.var2_raw()
     }
-    /// Get raw value of Var2
+    /// Get raw value of 'Var2'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -401,7 +401,7 @@ impl TestInputTestInputMuxM1 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Var2
+    /// Set value of 'Var2'
     #[inline(always)]
     pub fn set_var2(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 65535_u16 < value {
@@ -446,7 +446,7 @@ impl TestInputTestInputMuxM2 {
     pub fn new() -> Self {
         Self { raw: [0u8; 8] }
     }
-    /// Var3
+    /// Get value of 'Var3'
     ///
     /// - Min: 0
     /// - Max: 65535
@@ -456,7 +456,7 @@ impl TestInputTestInputMuxM2 {
     pub fn var3(&self) -> u16 {
         self.var3_raw()
     }
-    /// Get raw value of Var3
+    /// Get raw value of 'Var3'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -470,7 +470,7 @@ impl TestInputTestInputMuxM2 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Var3
+    /// Set value of 'Var3'
     #[inline(always)]
     pub fn set_var3(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 65535_u16 < value {
@@ -515,7 +515,7 @@ impl TestInputTestInputMuxM3 {
     pub fn new() -> Self {
         Self { raw: [0u8; 8] }
     }
-    /// Var4
+    /// Get value of 'Var4'
     ///
     /// - Min: 0
     /// - Max: 65535
@@ -525,7 +525,7 @@ impl TestInputTestInputMuxM3 {
     pub fn var4(&self) -> u16 {
         self.var4_raw()
     }
-    /// Get raw value of Var4
+    /// Get raw value of 'Var4'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -539,7 +539,7 @@ impl TestInputTestInputMuxM3 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Var4
+    /// Set value of 'Var4'
     #[inline(always)]
     pub fn set_var4(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 65535_u16 < value {
@@ -590,7 +590,7 @@ impl TestOutput {
     pub const VAR7_MAX: u16 = 65535_u16;
     pub const VAR8_MIN: u16 = 0_u16;
     pub const VAR8_MAX: u16 = 65535_u16;
-    /// Construct new Test_output from values
+    /// Construct new 'Test_output' from values
     pub fn new(test_output_mux: u8) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 8] };
         res.set_test_output_mux(test_output_mux)?;
@@ -600,7 +600,7 @@ impl TestOutput {
     pub fn raw(&self) -> &[u8; 8] {
         &self.raw
     }
-    /// Get raw value of Test_output_Mux
+    /// Get raw value of 'Test_output_Mux'
     ///
     /// - Start bit: 56
     /// - Signal size: 4 bits
@@ -652,7 +652,7 @@ impl TestOutput {
             }
         }
     }
-    /// Set value of Test_output_Mux
+    /// Set value of 'Test_output_Mux'
     #[inline(always)]
     fn set_test_output_mux(&mut self, value: u8) -> Result<(), CanError> {
         if value < 0_u8 || 0_u8 < value {
@@ -670,7 +670,7 @@ impl TestOutput {
         self.raw.view_bits_mut::<Lsb0>()[56..60].store_le(value);
         Ok(())
     }
-    /// Set value of Test_output_Mux
+    /// Set value of 'Test_output_Mux'
     #[inline(always)]
     pub fn set_m0(&mut self, value: TestOutputTestOutputMuxM0) -> Result<(), CanError> {
         let b0 = BitArray::<_, LocalBits>::new(self.raw);
@@ -679,7 +679,7 @@ impl TestOutput {
         self.set_test_output_mux(0)?;
         Ok(())
     }
-    /// Set value of Test_output_Mux
+    /// Set value of 'Test_output_Mux'
     #[inline(always)]
     pub fn set_m1(&mut self, value: TestOutputTestOutputMuxM1) -> Result<(), CanError> {
         let b0 = BitArray::<_, LocalBits>::new(self.raw);
@@ -688,7 +688,7 @@ impl TestOutput {
         self.set_test_output_mux(1)?;
         Ok(())
     }
-    /// Set value of Test_output_Mux
+    /// Set value of 'Test_output_Mux'
     #[inline(always)]
     pub fn set_m2(&mut self, value: TestOutputTestOutputMuxM2) -> Result<(), CanError> {
         let b0 = BitArray::<_, LocalBits>::new(self.raw);
@@ -697,7 +697,7 @@ impl TestOutput {
         self.set_test_output_mux(2)?;
         Ok(())
     }
-    /// Set value of Test_output_Mux
+    /// Set value of 'Test_output_Mux'
     #[inline(always)]
     pub fn set_m3(&mut self, value: TestOutputTestOutputMuxM3) -> Result<(), CanError> {
         let b0 = BitArray::<_, LocalBits>::new(self.raw);
@@ -816,7 +816,7 @@ impl TestOutputTestOutputMuxM0 {
     pub fn new() -> Self {
         Self { raw: [0u8; 8] }
     }
-    /// Var5
+    /// Get value of 'Var5'
     ///
     /// - Min: 0
     /// - Max: 65535
@@ -826,7 +826,7 @@ impl TestOutputTestOutputMuxM0 {
     pub fn var5(&self) -> u16 {
         self.var5_raw()
     }
-    /// Get raw value of Var5
+    /// Get raw value of 'Var5'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -840,7 +840,7 @@ impl TestOutputTestOutputMuxM0 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Var5
+    /// Set value of 'Var5'
     #[inline(always)]
     pub fn set_var5(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 65535_u16 < value {
@@ -885,7 +885,7 @@ impl TestOutputTestOutputMuxM1 {
     pub fn new() -> Self {
         Self { raw: [0u8; 8] }
     }
-    /// Var6
+    /// Get value of 'Var6'
     ///
     /// - Min: 0
     /// - Max: 65535
@@ -895,7 +895,7 @@ impl TestOutputTestOutputMuxM1 {
     pub fn var6(&self) -> u16 {
         self.var6_raw()
     }
-    /// Get raw value of Var6
+    /// Get raw value of 'Var6'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -909,7 +909,7 @@ impl TestOutputTestOutputMuxM1 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Var6
+    /// Set value of 'Var6'
     #[inline(always)]
     pub fn set_var6(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 65535_u16 < value {
@@ -954,7 +954,7 @@ impl TestOutputTestOutputMuxM2 {
     pub fn new() -> Self {
         Self { raw: [0u8; 8] }
     }
-    /// Var7
+    /// Get value of 'Var7'
     ///
     /// - Min: 0
     /// - Max: 65535
@@ -964,7 +964,7 @@ impl TestOutputTestOutputMuxM2 {
     pub fn var7(&self) -> u16 {
         self.var7_raw()
     }
-    /// Get raw value of Var7
+    /// Get raw value of 'Var7'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -978,7 +978,7 @@ impl TestOutputTestOutputMuxM2 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Var7
+    /// Set value of 'Var7'
     #[inline(always)]
     pub fn set_var7(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 65535_u16 < value {
@@ -1023,7 +1023,7 @@ impl TestOutputTestOutputMuxM3 {
     pub fn new() -> Self {
         Self { raw: [0u8; 8] }
     }
-    /// Var8
+    /// Get value of 'Var8'
     ///
     /// - Min: 0
     /// - Max: 65535
@@ -1033,7 +1033,7 @@ impl TestOutputTestOutputMuxM3 {
     pub fn var8(&self) -> u16 {
         self.var8_raw()
     }
-    /// Get raw value of Var8
+    /// Get raw value of 'Var8'
     ///
     /// - Start bit: 0
     /// - Signal size: 16 bits
@@ -1047,7 +1047,7 @@ impl TestOutputTestOutputMuxM3 {
         let factor = 1;
         u16::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Var8
+    /// Set value of 'Var8'
     #[inline(always)]
     pub fn set_var8(&mut self, value: u16) -> Result<(), CanError> {
         if value < 0_u16 || 65535_u16 < value {

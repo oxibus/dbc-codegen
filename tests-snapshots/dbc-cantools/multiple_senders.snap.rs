@@ -70,7 +70,7 @@ impl Bar {
     pub const MESSAGE_SIZE: usize = 4;
     pub const BINARY32_MIN: i32 = 0_i32;
     pub const BINARY32_MAX: i32 = 0_i32;
-    /// Construct new Bar from values
+    /// Construct new 'Bar' from values
     pub fn new(binary32: i32) -> Result<Self, CanError> {
         let mut res = Self { raw: [0x00; 4] };
         res.set_binary32(binary32)?;
@@ -80,7 +80,7 @@ impl Bar {
     pub fn raw(&self) -> &[u8; 4] {
         &self.raw
     }
-    /// Binary32
+    /// Get value of 'Binary32'
     ///
     /// - Min: 0
     /// - Max: 0
@@ -90,7 +90,7 @@ impl Bar {
     pub fn binary32(&self) -> i32 {
         self.binary32_raw()
     }
-    /// Get raw value of Binary32
+    /// Get raw value of 'Binary32'
     ///
     /// - Start bit: 0
     /// - Signal size: 32 bits
@@ -105,7 +105,7 @@ impl Bar {
         let signal = signal as i32;
         i32::from(signal).saturating_mul(factor).saturating_add(0)
     }
-    /// Set value of Binary32
+    /// Set value of 'Binary32'
     #[inline(always)]
     pub fn set_binary32(&mut self, value: i32) -> Result<(), CanError> {
         if value < 0_i32 || 0_i32 < value {
