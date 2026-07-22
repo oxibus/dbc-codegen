@@ -27,9 +27,9 @@ anyhow = "1.0.101"
 can-dbc = "10.0.0"
 embedded-can = "0.4.1"
 heck = "0.5.0"
-prettyplease = "0.2.37"
+prettyplease = "0.3.0"
 quote = "1.0.45"
-syn = "2.0.117"
+syn = "3.0.3"
 typed-builder = "0.23.0"
 
 [dev-dependencies]
