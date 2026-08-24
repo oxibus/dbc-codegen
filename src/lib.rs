@@ -25,8 +25,8 @@ use can_dbc::MultiplexIndicator::{
 };
 use can_dbc::ValueType::Signed;
 use can_dbc::{
-    AttributeValue, AttributeValueForRelationType, Dbc, Message, MessageId, Signal,
-    ValDescription, ValueDescription,
+    AttributeValue, AttributeValueForRelationType, Dbc, Message, MessageId, Signal, ValDescription,
+    ValueDescription,
 };
 use heck::ToSnakeCase;
 use quote::ToTokens;
@@ -541,8 +541,10 @@ impl Config<'_> {
                 spec.const_name
             );
 
-            let has_signal =
-                matches!(spec.scope, AttributeScope::Signal | AttributeScope::NodeSignal);
+            let has_signal = matches!(
+                spec.scope,
+                AttributeScope::Signal | AttributeScope::NodeSignal
+            );
             let has_node = matches!(
                 spec.scope,
                 AttributeScope::NodeSignal | AttributeScope::NodeMessage
@@ -719,14 +721,15 @@ impl Config<'_> {
 
         let mut fields = Vec::with_capacity(spec.fields.len());
         for field in spec.fields {
-            let lit = resolve_field_source(&field.source, msg, dbc, signal, node).ok_or_else(|| {
-                anyhow!(
+            let lit =
+                resolve_field_source(&field.source, msg, dbc, signal, node).ok_or_else(|| {
+                    anyhow!(
                     "attribute_structs: const '{const_name}' field {:?} has no value in the DBC \
                      and no default (source: {:?})",
                     field.name,
                     field.source
                 )
-            })?;
+                })?;
             fields.push((field.name, lit));
         }
 
