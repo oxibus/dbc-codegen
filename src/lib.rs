@@ -181,6 +181,14 @@ pub enum FieldSource<'a> {
     NodeName,
 }
 
+/// Message/signal/node context used to resolve an [`AttributeStruct`]'s fields.
+struct AttrTarget<'a> {
+    msg: &'a Message,
+    dbc: &'a Dbc,
+    signal: Option<&'a Signal>,
+    node: Option<&'a str>,
+}
+
 impl Config<'_> {
     /// Write Rust structs matching DBC input description to `out` buffer
     fn codegen(&self, out: impl Write) -> Result<()> {
@@ -618,10 +626,12 @@ impl Config<'_> {
                         w,
                         spec,
                         spec.const_name,
-                        msg,
-                        dbc,
-                        None,
-                        None,
+                        &AttrTarget {
+                            msg,
+                            dbc,
+                            signal: None,
+                            node: None,
+                        },
                         &mut used,
                     )?;
                 }
@@ -639,10 +649,12 @@ impl Config<'_> {
                             w,
                             spec,
                             &name,
-                            msg,
-                            dbc,
-                            Some(signal),
-                            None,
+                            &AttrTarget {
+                                msg,
+                                dbc,
+                                signal: Some(signal),
+                                node: None,
+                            },
                             &mut used,
                         )?;
                     }
@@ -658,19 +670,20 @@ impl Config<'_> {
                             let node_ident =
                                 sanitize_name(node, "x", ToSnakeCase::to_snake_case).to_uppercase();
                             let name = format!(
-                                "{}_{}_{}",
+                                "{}_{node_ident}_{}",
                                 signal.field_name().to_uppercase(),
-                                node_ident,
                                 spec.const_name
                             );
                             Self::render_attribute_struct(
                                 w,
                                 spec,
                                 &name,
-                                msg,
-                                dbc,
-                                Some(signal),
-                                Some(node),
+                                &AttrTarget {
+                                    msg,
+                                    dbc,
+                                    signal: Some(signal),
+                                    node: Some(node),
+                                },
                                 &mut used,
                             )?;
                         }
@@ -688,10 +701,12 @@ impl Config<'_> {
                             w,
                             spec,
                             &name,
-                            msg,
-                            dbc,
-                            None,
-                            Some(&node.0),
+                            &AttrTarget {
+                                msg,
+                                dbc,
+                                signal: None,
+                                node: Some(&node.0),
+                            },
                             &mut used,
                         )?;
                     }
@@ -706,30 +721,26 @@ impl Config<'_> {
         w: &mut impl Write,
         spec: &AttributeStruct<'_>,
         const_name: &str,
-        msg: &Message,
-        dbc: &Dbc,
-        signal: Option<&Signal>,
-        node: Option<&str>,
+        target: &AttrTarget<'_>,
         used: &mut BTreeSet<String>,
     ) -> Result<()> {
         ensure!(
             used.insert(const_name.to_string()),
             "attribute_structs: generated const '{const_name}' on message {:?} collides with \
              another const. Use a distinct 'const_name'.",
-            msg.name
+            target.msg.name
         );
 
         let mut fields = Vec::with_capacity(spec.fields.len());
         for field in spec.fields {
-            let lit =
-                resolve_field_source(&field.source, msg, dbc, signal, node).ok_or_else(|| {
-                    anyhow!(
+            let lit = resolve_field_source(&field.source, target).ok_or_else(|| {
+                anyhow!(
                     "attribute_structs: const '{const_name}' field {:?} has no value in the DBC \
                      and no default (source: {:?})",
                     field.name,
                     field.source
                 )
-                })?;
+            })?;
             fields.push((field.name, lit));
         }
 
@@ -1715,13 +1726,13 @@ fn message_ignored(message: &Message) -> bool {
 }
 
 /// Resolve a [`FieldSource`] to a Rust literal.
-fn resolve_field_source(
-    source: &FieldSource<'_>,
-    msg: &Message,
-    dbc: &Dbc,
-    signal: Option<&Signal>,
-    node: Option<&str>,
-) -> Option<String> {
+fn resolve_field_source(source: &FieldSource<'_>, target: &AttrTarget<'_>) -> Option<String> {
+    let AttrTarget {
+        msg,
+        dbc,
+        signal,
+        node,
+    } = *target;
     match source {
         FieldSource::Attr(name) => match (signal, node) {
             (Some(s), None) => dbc.resolved_signal_attribute(msg.id, &s.name, name),
