@@ -696,7 +696,11 @@ impl Config<'_> {
                                 continue;
                             }
                             let name = if spec.for_node.is_some() {
-                                format!("{}_{}", signal.field_name().to_uppercase(), spec.const_name)
+                                format!(
+                                    "{}_{}",
+                                    signal.field_name().to_uppercase(),
+                                    spec.const_name
+                                )
                             } else {
                                 let node_ident = node_field_name(node).to_uppercase();
                                 format!(
