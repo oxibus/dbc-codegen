@@ -738,7 +738,11 @@ fn node_signal_scope_with_for_node_drops_node_suffix() {
     assert!(!out.contains("ECU2_SIG_TIMEOUT"), "{out}");
     assert!(out.contains(r#"node: "ECU2""#), "{out}");
     assert!(out.contains("timeout_ms: 60"), "{out}");
-    assert_eq!(out.matches("pub const REL_SIG_SIG_TIMEOUT").count(), 1, "{out}");
+    assert_eq!(
+        out.matches("pub const REL_SIG_SIG_TIMEOUT").count(),
+        1,
+        "{out}"
+    );
 }
 
 #[test]
@@ -790,10 +794,7 @@ fn for_node_with_message_scope_is_rejected() {
         .build()
         .generate()
         .unwrap_err();
-    assert!(
-        format!("{err:#}").contains("no associated node"),
-        "{err:#}"
-    );
+    assert!(format!("{err:#}").contains("no associated node"), "{err:#}");
 }
 
 #[test]

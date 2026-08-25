@@ -695,20 +695,15 @@ impl Config<'_> {
                             {
                                 continue;
                             }
-                            let name = match spec.for_node {
-                                Some(_) => format!(
-                                    "{}_{}",
+                            let name = if spec.for_node.is_some() {
+                                format!("{}_{}", signal.field_name().to_uppercase(), spec.const_name)
+                            } else {
+                                let node_ident = node_field_name(node).to_uppercase();
+                                format!(
+                                    "{}_{node_ident}_{}",
                                     signal.field_name().to_uppercase(),
                                     spec.const_name
-                                ),
-                                None => {
-                                    let node_ident = node_field_name(node).to_uppercase();
-                                    format!(
-                                        "{}_{node_ident}_{}",
-                                        signal.field_name().to_uppercase(),
-                                        spec.const_name
-                                    )
-                                }
+                                )
                             };
                             Self::render_attribute_struct(
                                 w,
@@ -735,11 +730,14 @@ impl Config<'_> {
                         {
                             continue;
                         }
-                        let name = match spec.for_node {
-                            Some(_) => spec.const_name.to_string(),
-                            None => {
-                                format!("{}_{}", node_field_name(&node.0).to_uppercase(), spec.const_name)
-                            }
+                        let name = if spec.for_node.is_some() {
+                            spec.const_name.to_string()
+                        } else {
+                            format!(
+                                "{}_{}",
+                                node_field_name(&node.0).to_uppercase(),
+                                spec.const_name
+                            )
                         };
                         Self::render_attribute_struct(
                             w,
