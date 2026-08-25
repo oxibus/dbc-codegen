@@ -132,6 +132,7 @@ let e2e = AttributeStruct {
         AttributeField { name: "start_byte",  source: FieldSource::StartByte },
         AttributeField { name: "width_bit",   source: FieldSource::Attr("E2EDataLength") },
     ],
+    for_node: None,
 };
 
 let dbc_file = "";
@@ -168,6 +169,7 @@ let sig_timeout = AttributeStruct {
         AttributeField { name: "node",       source: FieldSource::NodeName },
         AttributeField { name: "timeout_ms", source: FieldSource::Attr("GenSigTimeoutTime") },
     ],
+    for_node: None,
 };
 
 let dbc_file = "";
@@ -185,6 +187,40 @@ For every signal and receiving node pair that carries a `GenSigTimeoutTime` rela
 ```rust,ignore
 impl SomeMessage {
     pub const SOME_SIGNAL_ECU2_SIG_TIMEOUT: relation::SigTimeoutInfo =
+        relation::SigTimeoutInfo { node: "ECU2", timeout_ms: 60 };
+}
+```
+
+If you're generating code for a single node/ECU, you can set `for_node` to the node name to generates constants only for relation attributes that are relevant to the specific node. This also removes the node name from the constant names, making the generated code node/ECU name-agnostic.
+
+```rust,no_run
+use dbc_codegen::{AttributeField, AttributeScope, AttributeStruct, Config, FieldSource};
+
+let sig_timeout_for_ecu2 = AttributeStruct {
+    type_path: "relation::SigTimeoutInfo",
+    const_name: "SIG_TIMEOUT",
+    scope: AttributeScope::NodeSignal,
+    require: "GenSigTimeoutTime",
+    fields: &[
+        AttributeField { name: "node",       source: FieldSource::NodeName },
+        AttributeField { name: "timeout_ms", source: FieldSource::Attr("GenSigTimeoutTime") },
+    ],
+    for_node: Some("ECU2"),
+};
+
+let dbc_file = "";
+Config::builder()
+    .dbc_name("example.dbc")
+    .dbc_content(dbc_file)
+    .attribute_structs(&[sig_timeout_for_ecu2])
+    .build()
+    .generate()
+    .unwrap();
+```
+
+```rust,ignore
+impl SomeMessage {
+    pub const SOME_SIGNAL_SIG_TIMEOUT: relation::SigTimeoutInfo =
         relation::SigTimeoutInfo { node: "ECU2", timeout_ms: 60 };
 }
 ```

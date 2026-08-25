@@ -44,6 +44,7 @@ fn main() {
             field("width_bit", FieldSource::Attr("E2EDataLength")),
             field("profile", FieldSource::Attr("E2EProfile")),
         ],
+        for_node: None,
     };
     let secoc = AttributeStruct {
         type_path: "data_protection::SecOcInfo",
@@ -54,6 +55,7 @@ fn main() {
             "freshness_id",
             FieldSource::Attr("SCP_FreshnessValueId"),
         )],
+        for_node: None,
     };
 
     let code = Config::builder()

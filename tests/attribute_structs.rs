@@ -84,6 +84,7 @@ const E2E: AttributeStruct = AttributeStruct {
             source: FieldSource::Attr("E2EProfile"),
         },
     ],
+    for_node: None,
 };
 
 /// Message-scoped attributes
@@ -102,6 +103,7 @@ const SEC_OC: AttributeStruct = AttributeStruct {
             source: FieldSource::Attr("SC_Message"),
         },
     ],
+    for_node: None,
 };
 
 /// Non-attribute sources
@@ -140,6 +142,7 @@ const LAYOUT: AttributeStruct = AttributeStruct {
             source: FieldSource::Str("hello"),
         },
     ],
+    for_node: None,
 };
 
 /// Node-signal relation attributes
@@ -166,6 +169,7 @@ const SIG_TIMEOUT: AttributeStruct = AttributeStruct {
             source: FieldSource::StartByte,
         },
     ],
+    for_node: None,
 };
 
 /// Node-message relation attributes
@@ -184,6 +188,19 @@ const MSG_PROJECT: AttributeStruct = AttributeStruct {
             source: FieldSource::Attr("MsgProject"),
         },
     ],
+    for_node: None,
+};
+
+/// Node-signal relation attributes, filtered to one node
+const SIG_TIMEOUT_FOR_ECU2: AttributeStruct = AttributeStruct {
+    for_node: Some("ECU2"),
+    ..SIG_TIMEOUT
+};
+
+/// Node-message relation attributes, filtered to one node
+const MSG_PROJECT_FOR_ECU1: AttributeStruct = AttributeStruct {
+    for_node: Some("ECU1"),
+    ..MSG_PROJECT
 };
 
 #[test]
@@ -310,6 +327,7 @@ fn message_scope_with_signal_source_is_rejected() {
             name: "x",
             source: FieldSource::StartByte,
         }],
+        for_node: None,
     };
     let err = Config::builder()
         .dbc_name("test")
@@ -332,6 +350,7 @@ fn missing_field_value_is_an_error() {
             name: "x",
             source: FieldSource::Attr("NoSuchAttr"),
         }],
+        for_node: None,
     };
     let err = Config::builder()
         .dbc_name("test")
@@ -354,6 +373,7 @@ fn duplicate_const_name_is_an_error() {
             name: "freshness_id",
             source: FieldSource::Attr("SCP_FreshnessValueId"),
         }],
+        for_node: None,
     };
     let err = Config::builder()
         .dbc_name("test")
@@ -377,6 +397,7 @@ fn non_screaming_snake_case_const_name_is_rejected() {
                 name: "x",
                 source: FieldSource::Attr("SCP_FreshnessValueId"),
             }],
+            for_node: None,
         };
         let err = Config::builder()
             .dbc_name("test")
@@ -403,6 +424,7 @@ fn const_name_colliding_with_reserved_const_is_rejected() {
             name: "x",
             source: FieldSource::Attr("SCP_FreshnessValueId"),
         }],
+        for_node: None,
     };
     let err = Config::builder()
         .dbc_name("test")
@@ -425,6 +447,7 @@ fn invalid_type_path_is_rejected() {
             name: "x",
             source: FieldSource::Attr("SCP_FreshnessValueId"),
         }],
+        for_node: None,
     };
     let err = Config::builder()
         .dbc_name("test")
@@ -450,6 +473,7 @@ fn invalid_field_name_is_rejected() {
             name: "1x", // not a valid identifier
             source: FieldSource::Attr("SCP_FreshnessValueId"),
         }],
+        for_node: None,
     };
     let err = Config::builder()
         .dbc_name("test")
@@ -478,6 +502,7 @@ fn duplicate_field_names_are_rejected() {
                 source: FieldSource::Int(1),
             },
         ],
+        for_node: None,
     };
     let err = Config::builder()
         .dbc_name("test")
@@ -514,6 +539,7 @@ fn fixture_message_scope_resolves_hex_float_enum_and_size() {
                 source: FieldSource::MessageSize,
             },
         ],
+        for_node: None,
     };
     let bytes = std::fs::read(FIXTURE).unwrap();
     let dbc = can_dbc::decode_cp1252(&bytes).unwrap();
@@ -556,6 +582,7 @@ fn fixture_signal_scope_resolves_string_enum_and_layout() {
                 source: FieldSource::BitWidth,
             },
         ],
+        for_node: None,
     };
     let bytes = std::fs::read(FIXTURE).unwrap();
     let dbc = can_dbc::decode_cp1252(&bytes).unwrap();
@@ -585,6 +612,7 @@ fn fixture_absent_attribute_falls_back_to_default() {
             name: "label",
             source: FieldSource::Attr("TheSignalStringAttribute"),
         }],
+        for_node: None,
     };
     let bytes = std::fs::read(FIXTURE).unwrap();
     let dbc = can_dbc::decode_cp1252(&bytes).unwrap();
@@ -611,6 +639,7 @@ fn fixture_enum_attribute_is_index_not_label() {
             name: "send_type",
             source: FieldSource::Attr("GenMsgSendType"),
         }],
+        for_node: None,
     };
     let bytes = std::fs::read(FIXTURE).unwrap();
     let dbc = can_dbc::decode_cp1252(&bytes).unwrap();
@@ -636,6 +665,7 @@ fn fixture_definition_without_default_is_an_error() {
             name: "x",
             source: FieldSource::Attr("TheUnusedAttributeDefinitionWithoutDefault"),
         }],
+        for_node: None,
     };
     let bytes = std::fs::read(FIXTURE).unwrap();
     let dbc = can_dbc::decode_cp1252(&bytes).unwrap();
@@ -693,6 +723,99 @@ fn node_message_scope_emits_const_per_related_node() {
 }
 
 #[test]
+fn node_signal_scope_with_for_node_drops_node_suffix() {
+    let out = Config::builder()
+        .dbc_name("test")
+        .dbc_content(DBC)
+        .attribute_structs(&[SIG_TIMEOUT_FOR_ECU2])
+        .build()
+        .generate()
+        .unwrap();
+    assert!(
+        out.contains("pub const REL_SIG_SIG_TIMEOUT: relation::SigTimeoutInfo"),
+        "{out}"
+    );
+    assert!(!out.contains("ECU2_SIG_TIMEOUT"), "{out}");
+    assert!(out.contains(r#"node: "ECU2""#), "{out}");
+    assert!(out.contains("timeout_ms: 60"), "{out}");
+    assert_eq!(out.matches("pub const REL_SIG_SIG_TIMEOUT").count(), 1, "{out}");
+}
+
+#[test]
+fn node_message_scope_with_for_node_drops_node_suffix() {
+    let out = Config::builder()
+        .dbc_name("test")
+        .dbc_content(DBC)
+        .attribute_structs(&[MSG_PROJECT_FOR_ECU1])
+        .build()
+        .generate()
+        .unwrap();
+    assert!(
+        out.contains("pub const MSG_PROJECT: relation::MsgProjectInfo"),
+        "{out}"
+    );
+    assert!(!out.contains("ECU1_MSG_PROJECT"), "{out}");
+    assert!(!out.contains("ECU2_MSG_PROJECT"), "{out}");
+    assert!(out.contains(r#"node: "ECU1""#), "{out}");
+    assert!(out.contains("project: 0"), "{out}");
+    assert_eq!(out.matches("pub const MSG_PROJECT").count(), 1, "{out}");
+}
+
+#[test]
+fn for_node_targeting_absent_node_emits_nothing() {
+    let spec = AttributeStruct {
+        for_node: Some("ECU1"), // ECU1 is not a receiver of RelSig and has no GenSigTimeoutTime
+        ..SIG_TIMEOUT
+    };
+    let out = Config::builder()
+        .dbc_name("test")
+        .dbc_content(DBC)
+        .attribute_structs(&[spec])
+        .build()
+        .generate()
+        .unwrap();
+    assert!(!out.contains("SIG_TIMEOUT"), "{out}");
+}
+
+#[test]
+fn for_node_with_message_scope_is_rejected() {
+    let bad = AttributeStruct {
+        for_node: Some("ECU1"),
+        ..SEC_OC
+    };
+    let err = Config::builder()
+        .dbc_name("test")
+        .dbc_content(DBC)
+        .attribute_structs(&[bad])
+        .build()
+        .generate()
+        .unwrap_err();
+    assert!(
+        format!("{err:#}").contains("no associated node"),
+        "{err:#}"
+    );
+}
+
+#[test]
+fn empty_for_node_is_rejected() {
+    let bad = AttributeStruct {
+        for_node: Some(""),
+        ..SIG_TIMEOUT
+    };
+    let err = Config::builder()
+        .dbc_name("test")
+        .dbc_content(DBC)
+        .attribute_structs(&[bad])
+        .build()
+        .generate()
+        .unwrap_err();
+    assert!(
+        format!("{err:#}").contains("'for_node' must not be empty"),
+        "{err:#}"
+    );
+}
+
+#[test]
 fn node_name_source_is_rejected_outside_node_scopes() {
     let bad = AttributeStruct {
         type_path: "foo::Bar",
@@ -703,6 +826,7 @@ fn node_name_source_is_rejected_outside_node_scopes() {
             name: "node",
             source: FieldSource::NodeName,
         }],
+        for_node: None,
     };
     let err = Config::builder()
         .dbc_name("test")
@@ -725,6 +849,7 @@ fn node_message_scope_with_signal_source_is_rejected() {
             name: "x",
             source: FieldSource::StartByte,
         }],
+        for_node: None,
     };
     let err = Config::builder()
         .dbc_name("test")

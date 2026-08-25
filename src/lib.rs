@@ -129,6 +129,12 @@ pub struct AttributeStruct<'a> {
 
     /// The struct fields, written in this order.
     pub fields: &'a [AttributeField<'a>],
+
+    /// Restrict [`AttributeScope::NodeSignal`]/[`AttributeScope::NodeMessage`]
+    /// emission to this one node and remove the node name from the generated
+    /// const. Set to `None` to keep the default behavior (one constant per
+    /// matching node).
+    pub for_node: Option<&'a str>,
 }
 
 /// Whether an [`AttributeStruct`] is emitted once per message or once per signal.
@@ -557,6 +563,19 @@ impl Config<'_> {
                 spec.scope,
                 AttributeScope::NodeSignal | AttributeScope::NodeMessage
             );
+            if let Some(for_node) = spec.for_node {
+                ensure!(
+                    !for_node.is_empty(),
+                    "attribute_structs: 'for_node' must not be empty for {:?}",
+                    spec.const_name
+                );
+                ensure!(
+                    has_node,
+                    "attribute_structs: {:?} sets 'for_node' but its scope has no associated \
+                     node (scope must be NodeSignal or NodeMessage)",
+                    spec.const_name
+                );
+            }
             let mut seen = BTreeSet::new();
             for field in spec.fields {
                 ensure!(
@@ -662,6 +681,9 @@ impl Config<'_> {
                 AttributeScope::NodeSignal => {
                     for signal in &msg.signals {
                         for node in &signal.receivers {
+                            if spec.for_node.is_some_and(|target| node != target) {
+                                continue;
+                            }
                             if node_relation_attribute(
                                 dbc,
                                 node,
@@ -673,12 +695,21 @@ impl Config<'_> {
                             {
                                 continue;
                             }
-                            let node_ident = node_field_name(node).to_uppercase();
-                            let name = format!(
-                                "{}_{node_ident}_{}",
-                                signal.field_name().to_uppercase(),
-                                spec.const_name
-                            );
+                            let name = match spec.for_node {
+                                Some(_) => format!(
+                                    "{}_{}",
+                                    signal.field_name().to_uppercase(),
+                                    spec.const_name
+                                ),
+                                None => {
+                                    let node_ident = node_field_name(node).to_uppercase();
+                                    format!(
+                                        "{}_{node_ident}_{}",
+                                        signal.field_name().to_uppercase(),
+                                        spec.const_name
+                                    )
+                                }
+                            };
                             Self::render_attribute_struct(
                                 w,
                                 spec,
@@ -696,13 +727,20 @@ impl Config<'_> {
                 }
                 AttributeScope::NodeMessage => {
                     for node in &dbc.nodes {
+                        if spec.for_node.is_some_and(|target| node.0 != target) {
+                            continue;
+                        }
                         if node_relation_attribute(dbc, &node.0, msg.id, None, spec.require)
                             .is_none()
                         {
                             continue;
                         }
-                        let node_ident = node_field_name(&node.0).to_uppercase();
-                        let name = format!("{node_ident}_{}", spec.const_name);
+                        let name = match spec.for_node {
+                            Some(_) => spec.const_name.to_string(),
+                            None => {
+                                format!("{}_{}", node_field_name(&node.0).to_uppercase(), spec.const_name)
+                            }
+                        };
                         Self::render_attribute_struct(
                             w,
                             spec,
