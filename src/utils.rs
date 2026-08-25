@@ -69,6 +69,10 @@ impl MessageExt for Message {
     }
 }
 
+pub fn node_field_name(name: &str) -> String {
+    sanitize_name(name, "x", ToSnakeCase::to_snake_case)
+}
+
 pub fn sanitize_name(x: &str, prefix: &str, to_case: fn(&str) -> String) -> String {
     if keywords::is_keyword(x) || !x.starts_with(|c: char| c.is_ascii_alphabetic()) {
         format!("{prefix}{}", to_case(x))

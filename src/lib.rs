@@ -38,7 +38,7 @@ use crate::signal_type::{IntSize, ValType};
 use crate::utils::{
     enum_name, enum_variant_name, is_screaming_snake_case, is_valid_ident, is_valid_type_path,
     multiplex_enum_name, multiplexed_enum_variant_name, multiplexed_enum_variant_wrapper_name,
-    sanitize_name, MessageExt as _, SignalExt as _,
+    node_field_name, MessageExt as _, SignalExt as _,
 };
 
 static ALLOW_DEADCODE: &str = "#[allow(dead_code)]";
@@ -662,13 +662,18 @@ impl Config<'_> {
                 AttributeScope::NodeSignal => {
                     for signal in &msg.signals {
                         for node in &signal.receivers {
-                            if node_signal_attribute(dbc, node, msg.id, &signal.name, spec.require)
-                                .is_none()
+                            if node_relation_attribute(
+                                dbc,
+                                node,
+                                msg.id,
+                                Some(&signal.name),
+                                spec.require,
+                            )
+                            .is_none()
                             {
                                 continue;
                             }
-                            let node_ident =
-                                sanitize_name(node, "x", ToSnakeCase::to_snake_case).to_uppercase();
+                            let node_ident = node_field_name(node).to_uppercase();
                             let name = format!(
                                 "{}_{node_ident}_{}",
                                 signal.field_name().to_uppercase(),
@@ -691,11 +696,12 @@ impl Config<'_> {
                 }
                 AttributeScope::NodeMessage => {
                     for node in &dbc.nodes {
-                        if node_message_attribute(dbc, &node.0, msg.id, spec.require).is_none() {
+                        if node_relation_attribute(dbc, &node.0, msg.id, None, spec.require)
+                            .is_none()
+                        {
                             continue;
                         }
-                        let node_ident =
-                            sanitize_name(&node.0, "x", ToSnakeCase::to_snake_case).to_uppercase();
+                        let node_ident = node_field_name(&node.0).to_uppercase();
                         let name = format!("{node_ident}_{}", spec.const_name);
                         Self::render_attribute_struct(
                             w,
@@ -1737,8 +1743,10 @@ fn resolve_field_source(source: &FieldSource<'_>, target: &AttrTarget<'_>) -> Op
         FieldSource::Attr(name) => match (signal, node) {
             (Some(s), None) => dbc.resolved_signal_attribute(msg.id, &s.name, name),
             (None, None) => dbc.resolved_message_attribute(msg.id, name),
-            (Some(s), Some(n)) => resolved_node_signal_attribute(dbc, n, msg.id, &s.name, name),
-            (None, Some(n)) => resolved_node_message_attribute(dbc, n, msg.id, name),
+            (Some(s), Some(n)) => {
+                resolved_node_relation_attribute(dbc, n, msg.id, Some(&s.name), name)
+            }
+            (None, Some(n)) => resolved_node_relation_attribute(dbc, n, msg.id, None, name),
         }
         .map(attr_value_literal),
         FieldSource::MessageAttr(name) => dbc
@@ -1754,78 +1762,53 @@ fn resolve_field_source(source: &FieldSource<'_>, target: &AttrTarget<'_>) -> Op
     }
 }
 
-/// Lookup an assigned node-to-signal relation attribute value (`BA_REL_ ... BU_SG_REL_`).
-fn node_signal_attribute<'a>(
+/// Lookup an assigned node relation attribute value. This can be either
+/// node-to-signal (`BA_REL_ ... BU_SG_REL_`, `signal_name: Some`) or
+/// node-to-message (`BA_REL_ ... BU_BO_REL_`, `signal_name: None`).
+fn node_relation_attribute<'a>(
     dbc: &'a Dbc,
     node_name: &str,
     message_id: MessageId,
-    signal_name: &str,
+    signal_name: Option<&str>,
     name: &str,
 ) -> Option<&'a AttributeValue> {
     dbc.relation_attribute_values.iter().find_map(|rel| {
         if rel.name != name {
             return None;
         }
-        match &rel.details {
-            AttributeValueForRelationType::NodeToSignal {
-                node_name: n,
-                message_id: mid,
-                signal_name: sig,
-                value,
-            } if n == node_name && *mid == message_id && sig == signal_name => Some(value),
+        match (&rel.details, signal_name) {
+            (
+                AttributeValueForRelationType::NodeToSignal {
+                    node_name: n,
+                    message_id: mid,
+                    signal_name: sig,
+                    value,
+                },
+                Some(want_sig),
+            ) if n == node_name && *mid == message_id && sig == want_sig => Some(value),
+            (
+                AttributeValueForRelationType::NodeToMessage {
+                    node_name: n,
+                    message_id: mid,
+                    value,
+                },
+                None,
+            ) if n == node_name && *mid == message_id => Some(value),
             _ => None,
         }
     })
 }
 
-/// Lookup a node-to-signal relation attribute value.
+/// Lookup a node relation attribute value.
 /// Uses the default (`BA_DEF_DEF_REL_`) if a value is not assigned.
-fn resolved_node_signal_attribute<'a>(
+fn resolved_node_relation_attribute<'a>(
     dbc: &'a Dbc,
     node_name: &str,
     message_id: MessageId,
-    signal_name: &str,
+    signal_name: Option<&str>,
     name: &str,
 ) -> Option<&'a AttributeValue> {
-    node_signal_attribute(dbc, node_name, message_id, signal_name, name).or_else(|| {
-        dbc.relation_attribute_defaults
-            .iter()
-            .find(|d| d.name == name)
-            .map(|d| &d.value)
-    })
-}
-
-/// Lookup an assigned node-to-message relation attribute value (`BA_REL_ ... BU_BO_REL_`).
-fn node_message_attribute<'a>(
-    dbc: &'a Dbc,
-    node_name: &str,
-    message_id: MessageId,
-    name: &str,
-) -> Option<&'a AttributeValue> {
-    dbc.relation_attribute_values.iter().find_map(|rel| {
-        if rel.name != name {
-            return None;
-        }
-        match &rel.details {
-            AttributeValueForRelationType::NodeToMessage {
-                node_name: n,
-                message_id: mid,
-                value,
-            } if n == node_name && *mid == message_id => Some(value),
-            _ => None,
-        }
-    })
-}
-
-/// Lookup a node-to-message relation attribute value.
-/// Uses the default (`BA_DEF_DEF_REL_`) if a value is not assigned.
-fn resolved_node_message_attribute<'a>(
-    dbc: &'a Dbc,
-    node_name: &str,
-    message_id: MessageId,
-    name: &str,
-) -> Option<&'a AttributeValue> {
-    node_message_attribute(dbc, node_name, message_id, name).or_else(|| {
+    node_relation_attribute(dbc, node_name, message_id, signal_name, name).or_else(|| {
         dbc.relation_attribute_defaults
             .iter()
             .find(|d| d.name == name)
