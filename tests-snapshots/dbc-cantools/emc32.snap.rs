@@ -64,9 +64,9 @@ pub struct EmvStati {
     unused_variables,
 )]
 impl EmvStati {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x222)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(
+        StandardId::new(0x222).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     /// Constructs a new `EMV_Stati` message from values.
     pub fn new(

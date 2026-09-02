@@ -1163,9 +1163,9 @@ pub struct RtSbInsVelBodyAxes {
     unused_variables,
 )]
 impl RtSbInsVelBodyAxes {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9588322)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9588322).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const INS_VEL_SIDEWAYS_2D_MIN: f32 = -838_f32;
     pub const INS_VEL_SIDEWAYS_2D_MAX: f32 = 838_f32;
@@ -1464,9 +1464,9 @@ pub struct RtDl1mk3Speed {
     unused_variables,
 )]
 impl RtDl1mk3Speed {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x94a7c24)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x94a7c24).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const SPEED_MIN: f32 = -20000_f32;
     pub const SPEED_MAX: f32 = 20000_f32;
@@ -1667,9 +1667,9 @@ pub struct RtDl1mk3GpsTime {
     unused_variables,
 )]
 impl RtDl1mk3GpsTime {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9566d24)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9566d24).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const GPS_WEEK_MIN: u16 = 0_u16;
     pub const GPS_WEEK_MAX: u16 = 65535_u16;
@@ -1948,9 +1948,9 @@ pub struct RtDl1mk3GpsPosLlh2 {
     unused_variables,
 )]
 impl RtDl1mk3GpsPosLlh2 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9566f24)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9566f24).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const GPS_POS_LLH_ALTITUDE_MIN: f32 = -1000_f32;
     pub const GPS_POS_LLH_ALTITUDE_MAX: f32 = 100000_f32;
@@ -2119,9 +2119,9 @@ pub struct RtDl1mk3GpsPosLlh1 {
     unused_variables,
 )]
 impl RtDl1mk3GpsPosLlh1 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9566e24)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9566e24).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const GPS_POS_LLH_LATITUDE_MIN: f32 = -90_f32;
     pub const GPS_POS_LLH_LATITUDE_MAX: f32 = 90_f32;
@@ -2504,9 +2504,9 @@ pub struct RtDl1mk3GpsSpeed {
     unused_variables,
 )]
 impl RtDl1mk3GpsSpeed {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9567c24)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9567c24).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const GPS_SPEED_3D_MIN: f32 = 0_f32;
     pub const GPS_SPEED_3D_MAX: f32 = 1675_f32;
@@ -2795,9 +2795,9 @@ pub struct RtIrTempTemp7 {
     unused_variables,
 )]
 impl RtIrTempTemp7 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95b7325)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95b7325).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_7_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_7_MAX: f32 = 0_f32;
@@ -2914,9 +2914,9 @@ pub struct RtIrTempTempRr2 {
     unused_variables,
 )]
 impl RtIrTempTempRr2 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9627425)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9627425).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const IR_TEMPERATURE_32_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_32_MAX: f32 = 0_f32;
@@ -3185,9 +3185,9 @@ pub struct RtIrTempTempRl2 {
     unused_variables,
 )]
 impl RtIrTempTempRl2 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9627225)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9627225).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const IR_TEMPERATURE_24_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_24_MAX: f32 = 0_f32;
@@ -3456,9 +3456,9 @@ pub struct RtIrTempTempFr2 {
     unused_variables,
 )]
 impl RtIrTempTempFr2 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9627025)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9627025).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const IR_TEMPERATURE_16_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_16_MAX: f32 = 0_f32;
@@ -3727,9 +3727,9 @@ pub struct RtIrTempTempFl2 {
     unused_variables,
 )]
 impl RtIrTempTempFl2 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9626e25)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9626e25).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const IR_TEMPERATURE_8_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_8_MAX: f32 = 0_f32;
@@ -3998,9 +3998,9 @@ pub struct RtIrTempTempRr1 {
     unused_variables,
 )]
 impl RtIrTempTempRr1 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9627325)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9627325).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const IR_TEMPERATURE_28_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_28_MAX: f32 = 0_f32;
@@ -4269,9 +4269,9 @@ pub struct RtIrTempTempRl1 {
     unused_variables,
 )]
 impl RtIrTempTempRl1 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9627125)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9627125).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const IR_TEMPERATURE_20_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_20_MAX: f32 = 0_f32;
@@ -4540,9 +4540,9 @@ pub struct RtIrTempTempFr1 {
     unused_variables,
 )]
 impl RtIrTempTempFr1 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9626f25)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9626f25).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const IR_TEMPERATURE_12_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_12_MAX: f32 = 0_f32;
@@ -4811,9 +4811,9 @@ pub struct RtIrTempTempFl1 {
     unused_variables,
 )]
 impl RtIrTempTempFl1 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9626d25)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9626d25).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const IR_TEMPERATURE_4_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_4_MAX: f32 = 0_f32;
@@ -5082,9 +5082,9 @@ pub struct RtIrTempTemp32 {
     unused_variables,
 )]
 impl RtIrTempTemp32 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95b8c25)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95b8c25).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_32_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_32_MAX: f32 = 0_f32;
@@ -5201,9 +5201,9 @@ pub struct RtIrTempTemp31 {
     unused_variables,
 )]
 impl RtIrTempTemp31 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95b8b25)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95b8b25).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_31_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_31_MAX: f32 = 0_f32;
@@ -5320,9 +5320,9 @@ pub struct RtIrTempTemp30 {
     unused_variables,
 )]
 impl RtIrTempTemp30 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95b8a25)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95b8a25).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_30_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_30_MAX: f32 = 0_f32;
@@ -5439,9 +5439,9 @@ pub struct RtIrTempTemp29 {
     unused_variables,
 )]
 impl RtIrTempTemp29 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95b8925)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95b8925).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_29_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_29_MAX: f32 = 0_f32;
@@ -5558,9 +5558,9 @@ pub struct RtIrTempTemp28 {
     unused_variables,
 )]
 impl RtIrTempTemp28 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95b8825)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95b8825).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_28_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_28_MAX: f32 = 0_f32;
@@ -5677,9 +5677,9 @@ pub struct RtIrTempTemp27 {
     unused_variables,
 )]
 impl RtIrTempTemp27 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95b8725)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95b8725).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_27_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_27_MAX: f32 = 0_f32;
@@ -5796,9 +5796,9 @@ pub struct RtIrTempTemp26 {
     unused_variables,
 )]
 impl RtIrTempTemp26 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95b8625)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95b8625).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_26_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_26_MAX: f32 = 0_f32;
@@ -5915,9 +5915,9 @@ pub struct RtIrTempTemp25 {
     unused_variables,
 )]
 impl RtIrTempTemp25 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95b8525)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95b8525).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_25_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_25_MAX: f32 = 0_f32;
@@ -6034,9 +6034,9 @@ pub struct RtIrTempTemp24 {
     unused_variables,
 )]
 impl RtIrTempTemp24 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95b8425)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95b8425).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_24_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_24_MAX: f32 = 0_f32;
@@ -6153,9 +6153,9 @@ pub struct RtIrTempTemp22 {
     unused_variables,
 )]
 impl RtIrTempTemp22 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95b8225)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95b8225).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_22_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_22_MAX: f32 = 0_f32;
@@ -6272,9 +6272,9 @@ pub struct RtIrTempTemp23 {
     unused_variables,
 )]
 impl RtIrTempTemp23 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95b8325)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95b8325).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_23_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_23_MAX: f32 = 0_f32;
@@ -6391,9 +6391,9 @@ pub struct RtIrTempTemp21 {
     unused_variables,
 )]
 impl RtIrTempTemp21 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95b8125)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95b8125).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_21_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_21_MAX: f32 = 0_f32;
@@ -6510,9 +6510,9 @@ pub struct RtIrTempTemp20 {
     unused_variables,
 )]
 impl RtIrTempTemp20 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95b8025)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95b8025).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_20_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_20_MAX: f32 = 0_f32;
@@ -6629,9 +6629,9 @@ pub struct RtIrTempTemp19 {
     unused_variables,
 )]
 impl RtIrTempTemp19 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95b7f25)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95b7f25).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_19_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_19_MAX: f32 = 0_f32;
@@ -6748,9 +6748,9 @@ pub struct RtIrTempTemp18 {
     unused_variables,
 )]
 impl RtIrTempTemp18 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95b7e25)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95b7e25).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_18_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_18_MAX: f32 = 0_f32;
@@ -6867,9 +6867,9 @@ pub struct RtIrTempTemp16 {
     unused_variables,
 )]
 impl RtIrTempTemp16 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95b7c25)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95b7c25).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_16_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_16_MAX: f32 = 0_f32;
@@ -6986,9 +6986,9 @@ pub struct RtIrTempTemp15 {
     unused_variables,
 )]
 impl RtIrTempTemp15 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95b7b25)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95b7b25).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_15_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_15_MAX: f32 = 0_f32;
@@ -7105,9 +7105,9 @@ pub struct RtIrTempTemp14 {
     unused_variables,
 )]
 impl RtIrTempTemp14 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95b7a25)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95b7a25).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_14_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_14_MAX: f32 = 0_f32;
@@ -7224,9 +7224,9 @@ pub struct RtIrTempTemp13 {
     unused_variables,
 )]
 impl RtIrTempTemp13 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95b7925)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95b7925).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_13_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_13_MAX: f32 = 0_f32;
@@ -7343,9 +7343,9 @@ pub struct RtIrTempTemp12 {
     unused_variables,
 )]
 impl RtIrTempTemp12 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95b7825)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95b7825).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_12_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_12_MAX: f32 = 0_f32;
@@ -7462,9 +7462,9 @@ pub struct RtIrTempTemp11 {
     unused_variables,
 )]
 impl RtIrTempTemp11 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95b7725)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95b7725).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_11_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_11_MAX: f32 = 0_f32;
@@ -7581,9 +7581,9 @@ pub struct RtIrTempTemp10 {
     unused_variables,
 )]
 impl RtIrTempTemp10 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95b7625)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95b7625).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_10_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_10_MAX: f32 = 0_f32;
@@ -7700,9 +7700,9 @@ pub struct RtIrTempTemp8 {
     unused_variables,
 )]
 impl RtIrTempTemp8 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95b7425)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95b7425).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_8_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_8_MAX: f32 = 0_f32;
@@ -7819,9 +7819,9 @@ pub struct RtIrTempTemp9 {
     unused_variables,
 )]
 impl RtIrTempTemp9 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95b7525)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95b7525).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_9_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_9_MAX: f32 = 0_f32;
@@ -7938,9 +7938,9 @@ pub struct RtIrTempTemp17 {
     unused_variables,
 )]
 impl RtIrTempTemp17 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95b7d25)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95b7d25).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_17_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_17_MAX: f32 = 0_f32;
@@ -8057,9 +8057,9 @@ pub struct RtIrTempTemp6 {
     unused_variables,
 )]
 impl RtIrTempTemp6 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95b7225)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95b7225).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_6_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_6_MAX: f32 = 0_f32;
@@ -8176,9 +8176,9 @@ pub struct RtIrTempTemp5 {
     unused_variables,
 )]
 impl RtIrTempTemp5 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95b7125)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95b7125).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_5_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_5_MAX: f32 = 0_f32;
@@ -8295,9 +8295,9 @@ pub struct RtIrTempTemp4 {
     unused_variables,
 )]
 impl RtIrTempTemp4 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95b7025)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95b7025).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_4_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_4_MAX: f32 = 0_f32;
@@ -8414,9 +8414,9 @@ pub struct RtIrTempTemp3 {
     unused_variables,
 )]
 impl RtIrTempTemp3 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95b6f25)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95b6f25).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_3_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_3_MAX: f32 = 0_f32;
@@ -8533,9 +8533,9 @@ pub struct RtIrTempTemp2 {
     unused_variables,
 )]
 impl RtIrTempTemp2 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95b6e25)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95b6e25).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_2_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_2_MAX: f32 = 0_f32;
@@ -8652,9 +8652,9 @@ pub struct RtIrTempTemp1 {
     unused_variables,
 )]
 impl RtIrTempTemp1 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95b6d25)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95b6d25).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const IR_TEMPERATURE_1_MIN: f32 = 0_f32;
     pub const IR_TEMPERATURE_1_MAX: f32 = 0_f32;
@@ -8771,9 +8771,9 @@ pub struct RtSbTrigFinalCondition {
     unused_variables,
 )]
 impl RtSbTrigFinalCondition {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9577322)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9577322).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const FINAL_SPEED_MIN: f32 = 0_f32;
     pub const FINAL_SPEED_MAX: f32 = 1675_f32;
@@ -8927,9 +8927,9 @@ pub struct RtSbTrigInitialCondition {
     unused_variables,
 )]
 impl RtSbTrigInitialCondition {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9577222)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9577222).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const MFDD_END_THRESHOLD_MIN: u8 = 0_u8;
     pub const MFDD_END_THRESHOLD_MAX: u8 = 100_u8;
@@ -9260,9 +9260,9 @@ pub struct RtSbTrigDirectDist {
     unused_variables,
 )]
 impl RtSbTrigDirectDist {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9577122)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9577122).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const PATH_DISTANCE_2D_MIN: f32 = 0_f32;
     pub const PATH_DISTANCE_2D_MAX: f32 = 4294967_f32;
@@ -9428,9 +9428,9 @@ pub struct RtSbTrigForwardDist {
     unused_variables,
 )]
 impl RtSbTrigForwardDist {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9577022)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9577022).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const DEVIATION_DISTANCE_MIN: f32 = -2147483.648_f32;
     pub const DEVIATION_DISTANCE_MAX: f32 = 2147483.647_f32;
@@ -9603,9 +9603,9 @@ pub struct RtSbTrigPathDist {
     unused_variables,
 )]
 impl RtSbTrigPathDist {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9576f22)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9576f22).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const PATH_DISTANCE_3D_MIN: f32 = 0_f32;
     pub const PATH_DISTANCE_3D_MAX: f32 = 4294967_f32;
@@ -9722,9 +9722,9 @@ pub struct RtSbTrigAccel {
     unused_variables,
 )]
 impl RtSbTrigAccel {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9576e22)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9576e22).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const TRIGGERED_TIME_MIN: f32 = 0_f32;
     pub const TRIGGERED_TIME_MAX: f32 = 167772_f32;
@@ -10061,9 +10061,9 @@ pub struct RtDl1mk3MeasureTime12 {
     unused_variables,
 )]
 impl RtDl1mk3MeasureTime12 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9607824)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9607824).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 3;
     pub const MEASURED_TIME_12_MIN: u32 = 0_u32;
     pub const MEASURED_TIME_12_MAX: u32 = 0_u32;
@@ -10172,9 +10172,9 @@ pub struct RtDl1mk3MeasureTime11 {
     unused_variables,
 )]
 impl RtDl1mk3MeasureTime11 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9607724)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9607724).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 3;
     pub const MEASURED_TIME_11_MIN: u32 = 0_u32;
     pub const MEASURED_TIME_11_MAX: u32 = 0_u32;
@@ -10283,9 +10283,9 @@ pub struct RtDl1mk3MeasureTime10 {
     unused_variables,
 )]
 impl RtDl1mk3MeasureTime10 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9607624)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9607624).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 3;
     pub const MEASURED_TIME_10_MIN: u32 = 0_u32;
     pub const MEASURED_TIME_10_MAX: u32 = 0_u32;
@@ -10394,9 +10394,9 @@ pub struct RtDl1mk3MeasureTime9 {
     unused_variables,
 )]
 impl RtDl1mk3MeasureTime9 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9607524)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9607524).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 3;
     pub const MEASURED_TIME_9_MIN: u32 = 0_u32;
     pub const MEASURED_TIME_9_MAX: u32 = 0_u32;
@@ -10505,9 +10505,9 @@ pub struct RtDl1mk3MeasureTime8 {
     unused_variables,
 )]
 impl RtDl1mk3MeasureTime8 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9607424)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9607424).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 3;
     pub const MEASURED_TIME_8_MIN: u32 = 0_u32;
     pub const MEASURED_TIME_8_MAX: u32 = 0_u32;
@@ -10616,9 +10616,9 @@ pub struct RtDl1mk3MeasureTime7 {
     unused_variables,
 )]
 impl RtDl1mk3MeasureTime7 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9607324)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9607324).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 3;
     pub const MEASURED_TIME_7_MIN: u32 = 0_u32;
     pub const MEASURED_TIME_7_MAX: u32 = 0_u32;
@@ -10727,9 +10727,9 @@ pub struct RtDl1mk3MeasureTime6 {
     unused_variables,
 )]
 impl RtDl1mk3MeasureTime6 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9607224)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9607224).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 3;
     pub const MEASURED_TIME_6_MIN: u32 = 0_u32;
     pub const MEASURED_TIME_6_MAX: u32 = 0_u32;
@@ -10838,9 +10838,9 @@ pub struct RtDl1mk3MeasureTime5 {
     unused_variables,
 )]
 impl RtDl1mk3MeasureTime5 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9607124)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9607124).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 3;
     pub const MEASURED_TIME_5_MIN: u32 = 0_u32;
     pub const MEASURED_TIME_5_MAX: u32 = 0_u32;
@@ -10949,9 +10949,9 @@ pub struct RtDl1mk3MeasureTime4 {
     unused_variables,
 )]
 impl RtDl1mk3MeasureTime4 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9607024)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9607024).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 3;
     pub const MEASURED_TIME_4_MIN: u32 = 0_u32;
     pub const MEASURED_TIME_4_MAX: u32 = 0_u32;
@@ -11060,9 +11060,9 @@ pub struct RtDl1mk3MeasureTime3 {
     unused_variables,
 )]
 impl RtDl1mk3MeasureTime3 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9606f24)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9606f24).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 3;
     pub const MEASURED_TIME_3_MIN: u32 = 0_u32;
     pub const MEASURED_TIME_3_MAX: u32 = 0_u32;
@@ -11171,9 +11171,9 @@ pub struct RtDl1mk3MeasureTime2 {
     unused_variables,
 )]
 impl RtDl1mk3MeasureTime2 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9606e24)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9606e24).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 3;
     pub const MEASURED_TIME_2_MIN: u32 = 0_u32;
     pub const MEASURED_TIME_2_MAX: u32 = 0_u32;
@@ -11282,9 +11282,9 @@ pub struct RtDl1mk3MeasureTime1 {
     unused_variables,
 )]
 impl RtDl1mk3MeasureTime1 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9606d24)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9606d24).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 3;
     pub const MEASURED_TIME_1_MIN: u32 = 0_u32;
     pub const MEASURED_TIME_1_MAX: u32 = 0_u32;
@@ -11393,9 +11393,9 @@ pub struct RtDl1mk3Rpm {
     unused_variables,
 )]
 impl RtDl1mk3Rpm {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95f7824)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95f7824).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const RPM_MIN: u16 = 0_u16;
     pub const RPM_MAX: u16 = 0_u16;
@@ -11504,9 +11504,9 @@ pub struct RtDl1mk3Freq4 {
     unused_variables,
 )]
 impl RtDl1mk3Freq4 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95f7724)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95f7724).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const FREQUENCY_4_MIN: f32 = 0_f32;
     pub const FREQUENCY_4_MAX: f32 = 0_f32;
@@ -11621,9 +11621,9 @@ pub struct RtDl1mk3Freq3 {
     unused_variables,
 )]
 impl RtDl1mk3Freq3 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95f7624)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95f7624).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const FREQUENCY_3_MIN: f32 = 0_f32;
     pub const FREQUENCY_3_MAX: f32 = 0_f32;
@@ -11738,9 +11738,9 @@ pub struct RtDl1mk3Freq2 {
     unused_variables,
 )]
 impl RtDl1mk3Freq2 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95f7524)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95f7524).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const FREQUENCY_2_MIN: f32 = 0_f32;
     pub const FREQUENCY_2_MAX: f32 = 0_f32;
@@ -11855,9 +11855,9 @@ pub struct RtDl1mk3Misc3 {
     unused_variables,
 )]
 impl RtDl1mk3Misc3 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9616f24)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9616f24).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const MISC_3_MIN: f32 = 0_f32;
     pub const MISC_3_MAX: f32 = 0_f32;
@@ -11972,9 +11972,9 @@ pub struct RtDl1mk3Misc2 {
     unused_variables,
 )]
 impl RtDl1mk3Misc2 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9616e24)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9616e24).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const MISC_2_MIN: f32 = 0_f32;
     pub const MISC_2_MAX: f32 = 0_f32;
@@ -12089,9 +12089,9 @@ pub struct RtDl1mk3Misc1 {
     unused_variables,
 )]
 impl RtDl1mk3Misc1 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9616d24)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9616d24).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const MISC_1_MIN: f32 = 0_f32;
     pub const MISC_1_MAX: f32 = 0_f32;
@@ -12206,9 +12206,9 @@ pub struct RtDl1mk3Aux31 {
     unused_variables,
 )]
 impl RtDl1mk3Aux31 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95e8b24)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95e8b24).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_31_MIN: f32 = 0_f32;
     pub const AUX_31_MAX: f32 = 0_f32;
@@ -12323,9 +12323,9 @@ pub struct RtDl1mk3Aux30 {
     unused_variables,
 )]
 impl RtDl1mk3Aux30 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95e8a24)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95e8a24).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_30_MIN: f32 = 0_f32;
     pub const AUX_30_MAX: f32 = 0_f32;
@@ -12440,9 +12440,9 @@ pub struct RtDl1mk3Aux29 {
     unused_variables,
 )]
 impl RtDl1mk3Aux29 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95e8924)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95e8924).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_29_MIN: f32 = 0_f32;
     pub const AUX_29_MAX: f32 = 0_f32;
@@ -12557,9 +12557,9 @@ pub struct RtDl1mk3Aux28 {
     unused_variables,
 )]
 impl RtDl1mk3Aux28 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95e8824)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95e8824).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_28_MIN: f32 = 0_f32;
     pub const AUX_28_MAX: f32 = 0_f32;
@@ -12674,9 +12674,9 @@ pub struct RtDl1mk3Aux27 {
     unused_variables,
 )]
 impl RtDl1mk3Aux27 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95e8724)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95e8724).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_27_MIN: f32 = 0_f32;
     pub const AUX_27_MAX: f32 = 0_f32;
@@ -12791,9 +12791,9 @@ pub struct RtDl1mk3Aux26 {
     unused_variables,
 )]
 impl RtDl1mk3Aux26 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95e8624)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95e8624).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_26_MIN: f32 = 0_f32;
     pub const AUX_26_MAX: f32 = 0_f32;
@@ -12908,9 +12908,9 @@ pub struct RtDl1mk3Aux25 {
     unused_variables,
 )]
 impl RtDl1mk3Aux25 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95e8524)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95e8524).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_25_MIN: f32 = 0_f32;
     pub const AUX_25_MAX: f32 = 0_f32;
@@ -13025,9 +13025,9 @@ pub struct RtDl1mk3Aux24 {
     unused_variables,
 )]
 impl RtDl1mk3Aux24 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95e8424)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95e8424).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_24_MIN: f32 = 0_f32;
     pub const AUX_24_MAX: f32 = 0_f32;
@@ -13142,9 +13142,9 @@ pub struct RtDl1mk3Aux23 {
     unused_variables,
 )]
 impl RtDl1mk3Aux23 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95e8324)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95e8324).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_23_MIN: f32 = 0_f32;
     pub const AUX_23_MAX: f32 = 0_f32;
@@ -13259,9 +13259,9 @@ pub struct RtDl1mk3Aux22 {
     unused_variables,
 )]
 impl RtDl1mk3Aux22 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95e8224)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95e8224).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_22_MIN: u32 = 0_u32;
     pub const AUX_22_MAX: u32 = 0_u32;
@@ -13379,9 +13379,9 @@ pub struct RtDl1mk3Aux21 {
     unused_variables,
 )]
 impl RtDl1mk3Aux21 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95e8124)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95e8124).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_21_MIN: f32 = 0_f32;
     pub const AUX_21_MAX: f32 = 0_f32;
@@ -13496,9 +13496,9 @@ pub struct RtDl1mk3Aux20 {
     unused_variables,
 )]
 impl RtDl1mk3Aux20 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95e8024)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95e8024).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_20_MIN: f32 = 0_f32;
     pub const AUX_20_MAX: f32 = 0_f32;
@@ -13613,9 +13613,9 @@ pub struct RtDl1mk3Aux19 {
     unused_variables,
 )]
 impl RtDl1mk3Aux19 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95e7f24)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95e7f24).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_19_MIN: f32 = 0_f32;
     pub const AUX_19_MAX: f32 = 0_f32;
@@ -13730,9 +13730,9 @@ pub struct RtDl1mk3Aux18 {
     unused_variables,
 )]
 impl RtDl1mk3Aux18 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95e7e24)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95e7e24).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_18_MIN: f32 = 0_f32;
     pub const AUX_18_MAX: f32 = 0_f32;
@@ -13847,9 +13847,9 @@ pub struct RtDl1mk3Aux17 {
     unused_variables,
 )]
 impl RtDl1mk3Aux17 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95e7d24)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95e7d24).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_17_MIN: f32 = 0_f32;
     pub const AUX_17_MAX: f32 = 0_f32;
@@ -13964,9 +13964,9 @@ pub struct RtDl1mk3Aux16 {
     unused_variables,
 )]
 impl RtDl1mk3Aux16 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95e7c24)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95e7c24).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_16_MIN: f32 = 0_f32;
     pub const AUX_16_MAX: f32 = 0_f32;
@@ -14081,9 +14081,9 @@ pub struct RtDl1mk3Aux15 {
     unused_variables,
 )]
 impl RtDl1mk3Aux15 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95e7b24)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95e7b24).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_15_MIN: f32 = 0_f32;
     pub const AUX_15_MAX: f32 = 0_f32;
@@ -14198,9 +14198,9 @@ pub struct RtDl1mk3Aux14 {
     unused_variables,
 )]
 impl RtDl1mk3Aux14 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95e7a24)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95e7a24).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_14_MIN: f32 = 0_f32;
     pub const AUX_14_MAX: f32 = 0_f32;
@@ -14315,9 +14315,9 @@ pub struct RtDl1mk3Aux13 {
     unused_variables,
 )]
 impl RtDl1mk3Aux13 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95e7924)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95e7924).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_13_MIN: f32 = 0_f32;
     pub const AUX_13_MAX: f32 = 0_f32;
@@ -14432,9 +14432,9 @@ pub struct RtDl1mk3Aux12 {
     unused_variables,
 )]
 impl RtDl1mk3Aux12 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95e7824)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95e7824).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_12_MIN: f32 = 0_f32;
     pub const AUX_12_MAX: f32 = 0_f32;
@@ -14549,9 +14549,9 @@ pub struct RtDl1mk3Aux11 {
     unused_variables,
 )]
 impl RtDl1mk3Aux11 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95e7724)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95e7724).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_11_MIN: f32 = 0_f32;
     pub const AUX_11_MAX: f32 = 0_f32;
@@ -14666,9 +14666,9 @@ pub struct RtDl1mk3Aux9 {
     unused_variables,
 )]
 impl RtDl1mk3Aux9 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95e7524)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95e7524).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_9_MIN: f32 = 0_f32;
     pub const AUX_9_MAX: f32 = 0_f32;
@@ -14783,9 +14783,9 @@ pub struct RtDl1mk3Aux10 {
     unused_variables,
 )]
 impl RtDl1mk3Aux10 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95e7624)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95e7624).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_10_MIN: f32 = 0_f32;
     pub const AUX_10_MAX: f32 = 0_f32;
@@ -14900,9 +14900,9 @@ pub struct RtDl1mk3Aux8 {
     unused_variables,
 )]
 impl RtDl1mk3Aux8 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95e7424)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95e7424).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_8_MIN: f32 = 0_f32;
     pub const AUX_8_MAX: f32 = 0_f32;
@@ -15017,9 +15017,9 @@ pub struct RtDl1mk3Aux7 {
     unused_variables,
 )]
 impl RtDl1mk3Aux7 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95e7324)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95e7324).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_7_MIN: f32 = 0_f32;
     pub const AUX_7_MAX: f32 = 0_f32;
@@ -15134,9 +15134,9 @@ pub struct RtDl1mk3Aux6 {
     unused_variables,
 )]
 impl RtDl1mk3Aux6 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95e7224)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95e7224).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_6_MIN: f32 = 0_f32;
     pub const AUX_6_MAX: f32 = 0_f32;
@@ -15251,9 +15251,9 @@ pub struct RtDl1mk3Aux5 {
     unused_variables,
 )]
 impl RtDl1mk3Aux5 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95e7124)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95e7124).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_5_MIN: f32 = 0_f32;
     pub const AUX_5_MAX: f32 = 0_f32;
@@ -15368,9 +15368,9 @@ pub struct RtDl1mk3Aux4 {
     unused_variables,
 )]
 impl RtDl1mk3Aux4 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95e7024)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95e7024).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_4_MIN: f32 = 0_f32;
     pub const AUX_4_MAX: f32 = 0_f32;
@@ -15485,9 +15485,9 @@ pub struct RtDl1mk3Aux3 {
     unused_variables,
 )]
 impl RtDl1mk3Aux3 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95e6f24)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95e6f24).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_3_MIN: f32 = 0_f32;
     pub const AUX_3_MAX: f32 = 0_f32;
@@ -15602,9 +15602,9 @@ pub struct RtDl1mk3Aux2 {
     unused_variables,
 )]
 impl RtDl1mk3Aux2 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95e6e24)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95e6e24).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_2_MIN: f32 = 0_f32;
     pub const AUX_2_MAX: f32 = 0_f32;
@@ -15719,9 +15719,9 @@ pub struct RtDl1mk3Aux1 {
     unused_variables,
 )]
 impl RtDl1mk3Aux1 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95e6d24)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95e6d24).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const AUX_1_MIN: f32 = 0_f32;
     pub const AUX_1_MAX: f32 = 0_f32;
@@ -15836,9 +15836,9 @@ pub struct RtDl1mk3Pressure5 {
     unused_variables,
 )]
 impl RtDl1mk3Pressure5 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95a7124)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95a7124).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 3;
     pub const PRESSURE_5_MIN: f32 = 0_f32;
     pub const PRESSURE_5_MAX: f32 = 0_f32;
@@ -15953,9 +15953,9 @@ pub struct RtDl1mk3Pressure4 {
     unused_variables,
 )]
 impl RtDl1mk3Pressure4 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95a7024)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95a7024).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 3;
     pub const PRESSURE_4_MIN: f32 = 0_f32;
     pub const PRESSURE_4_MAX: f32 = 0_f32;
@@ -16070,9 +16070,9 @@ pub struct RtDl1mk3Pressure3 {
     unused_variables,
 )]
 impl RtDl1mk3Pressure3 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95a6f24)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95a6f24).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 3;
     pub const PRESSURE_3_MIN: f32 = 0_f32;
     pub const PRESSURE_3_MAX: f32 = 0_f32;
@@ -16187,9 +16187,9 @@ pub struct RtDl1mk3Pressure2 {
     unused_variables,
 )]
 impl RtDl1mk3Pressure2 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95a6e24)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95a6e24).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 3;
     pub const PRESSURE_2_MIN: f32 = 0_f32;
     pub const PRESSURE_2_MAX: f32 = 0_f32;
@@ -16304,9 +16304,9 @@ pub struct RtDl1mk3Pressure1 {
     unused_variables,
 )]
 impl RtDl1mk3Pressure1 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95a6d24)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95a6d24).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 3;
     pub const PRESSURE_1_MIN: f32 = 0_f32;
     pub const PRESSURE_1_MAX: f32 = 0_f32;
@@ -16421,9 +16421,9 @@ pub struct RtDl1mk3Angle3 {
     unused_variables,
 )]
 impl RtDl1mk3Angle3 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95c6f24)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95c6f24).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANGLE_3_MIN: f32 = 0_f32;
     pub const ANGLE_3_MAX: f32 = 0_f32;
@@ -16540,9 +16540,9 @@ pub struct RtDl1mk3Angle2 {
     unused_variables,
 )]
 impl RtDl1mk3Angle2 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95c6e24)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95c6e24).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANGLE_2_MIN: f32 = 0_f32;
     pub const ANGLE_2_MAX: f32 = 0_f32;
@@ -16659,9 +16659,9 @@ pub struct RtDl1mk3Angle1 {
     unused_variables,
 )]
 impl RtDl1mk3Angle1 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95c6d24)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95c6d24).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANGLE_1_MIN: f32 = 0_f32;
     pub const ANGLE_1_MAX: f32 = 0_f32;
@@ -16778,9 +16778,9 @@ pub struct RtDl1mk3Temp25 {
     unused_variables,
 )]
 impl RtDl1mk3Temp25 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95b8524)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95b8524).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_25_MIN: f32 = 0_f32;
     pub const TEMPERATURE_25_MAX: f32 = 0_f32;
@@ -16897,9 +16897,9 @@ pub struct RtDl1mk3Temp24 {
     unused_variables,
 )]
 impl RtDl1mk3Temp24 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95b8424)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95b8424).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_24_MIN: f32 = 0_f32;
     pub const TEMPERATURE_24_MAX: f32 = 0_f32;
@@ -17016,9 +17016,9 @@ pub struct RtDl1mk3Temp23 {
     unused_variables,
 )]
 impl RtDl1mk3Temp23 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95b8324)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95b8324).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_23_MIN: f32 = 0_f32;
     pub const TEMPERATURE_23_MAX: f32 = 0_f32;
@@ -17135,9 +17135,9 @@ pub struct RtDl1mk3Temp22 {
     unused_variables,
 )]
 impl RtDl1mk3Temp22 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95b8224)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95b8224).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_22_MIN: f32 = 0_f32;
     pub const TEMPERATURE_22_MAX: f32 = 0_f32;
@@ -17254,9 +17254,9 @@ pub struct RtDl1mk3Temp21 {
     unused_variables,
 )]
 impl RtDl1mk3Temp21 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95b8124)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95b8124).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_21_MIN: f32 = 0_f32;
     pub const TEMPERATURE_21_MAX: f32 = 0_f32;
@@ -17373,9 +17373,9 @@ pub struct RtDl1mk3Temp20 {
     unused_variables,
 )]
 impl RtDl1mk3Temp20 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95b8024)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95b8024).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_20_MIN: f32 = 0_f32;
     pub const TEMPERATURE_20_MAX: f32 = 0_f32;
@@ -17492,9 +17492,9 @@ pub struct RtDl1mk3Temp19 {
     unused_variables,
 )]
 impl RtDl1mk3Temp19 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95b7f24)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95b7f24).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_19_MIN: f32 = 0_f32;
     pub const TEMPERATURE_19_MAX: f32 = 0_f32;
@@ -17611,9 +17611,9 @@ pub struct RtDl1mk3Temp18 {
     unused_variables,
 )]
 impl RtDl1mk3Temp18 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95b7e24)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95b7e24).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_18_MIN: f32 = 0_f32;
     pub const TEMPERATURE_18_MAX: f32 = 0_f32;
@@ -17730,9 +17730,9 @@ pub struct RtDl1mk3Temp17 {
     unused_variables,
 )]
 impl RtDl1mk3Temp17 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95b7d24)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95b7d24).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_17_MIN: f32 = 0_f32;
     pub const TEMPERATURE_17_MAX: f32 = 0_f32;
@@ -17849,9 +17849,9 @@ pub struct RtDl1mk3Temp16 {
     unused_variables,
 )]
 impl RtDl1mk3Temp16 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95b7c24)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95b7c24).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_16_MIN: f32 = 0_f32;
     pub const TEMPERATURE_16_MAX: f32 = 0_f32;
@@ -17968,9 +17968,9 @@ pub struct RtDl1mk3Temp15 {
     unused_variables,
 )]
 impl RtDl1mk3Temp15 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95b7b24)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95b7b24).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_15_MIN: f32 = 0_f32;
     pub const TEMPERATURE_15_MAX: f32 = 0_f32;
@@ -18087,9 +18087,9 @@ pub struct RtDl1mk3Temp14 {
     unused_variables,
 )]
 impl RtDl1mk3Temp14 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95b7a24)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95b7a24).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_14_MIN: f32 = 0_f32;
     pub const TEMPERATURE_14_MAX: f32 = 0_f32;
@@ -18206,9 +18206,9 @@ pub struct RtDl1mk3Temp13 {
     unused_variables,
 )]
 impl RtDl1mk3Temp13 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95b7924)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95b7924).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_13_MIN: f32 = 0_f32;
     pub const TEMPERATURE_13_MAX: f32 = 0_f32;
@@ -18325,9 +18325,9 @@ pub struct RtDl1mk3Temp12 {
     unused_variables,
 )]
 impl RtDl1mk3Temp12 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95b7824)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95b7824).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_12_MIN: f32 = 0_f32;
     pub const TEMPERATURE_12_MAX: f32 = 0_f32;
@@ -18444,9 +18444,9 @@ pub struct RtDl1mk3Temp11 {
     unused_variables,
 )]
 impl RtDl1mk3Temp11 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95b7724)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95b7724).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_11_MIN: f32 = 0_f32;
     pub const TEMPERATURE_11_MAX: f32 = 0_f32;
@@ -18563,9 +18563,9 @@ pub struct RtDl1mk3Temp10 {
     unused_variables,
 )]
 impl RtDl1mk3Temp10 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95b7624)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95b7624).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_10_MIN: f32 = 0_f32;
     pub const TEMPERATURE_10_MAX: f32 = 0_f32;
@@ -18682,9 +18682,9 @@ pub struct RtDl1mk3Temp9 {
     unused_variables,
 )]
 impl RtDl1mk3Temp9 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95b7524)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95b7524).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_9_MIN: f32 = 0_f32;
     pub const TEMPERATURE_9_MAX: f32 = 0_f32;
@@ -18801,9 +18801,9 @@ pub struct RtDl1mk3Temp8 {
     unused_variables,
 )]
 impl RtDl1mk3Temp8 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95b7424)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95b7424).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_8_MIN: f32 = 0_f32;
     pub const TEMPERATURE_8_MAX: f32 = 0_f32;
@@ -18920,9 +18920,9 @@ pub struct RtDl1mk3Temp7 {
     unused_variables,
 )]
 impl RtDl1mk3Temp7 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95b7324)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95b7324).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_7_MIN: f32 = 0_f32;
     pub const TEMPERATURE_7_MAX: f32 = 0_f32;
@@ -19039,9 +19039,9 @@ pub struct RtDl1mk3Temp6 {
     unused_variables,
 )]
 impl RtDl1mk3Temp6 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95b7224)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95b7224).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_6_MIN: f32 = 0_f32;
     pub const TEMPERATURE_6_MAX: f32 = 0_f32;
@@ -19158,9 +19158,9 @@ pub struct RtDl1mk3Temp5 {
     unused_variables,
 )]
 impl RtDl1mk3Temp5 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95b7124)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95b7124).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_5_MIN: f32 = 0_f32;
     pub const TEMPERATURE_5_MAX: f32 = 0_f32;
@@ -19277,9 +19277,9 @@ pub struct RtDl1mk3Temp4 {
     unused_variables,
 )]
 impl RtDl1mk3Temp4 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95b7024)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95b7024).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_4_MIN: f32 = 0_f32;
     pub const TEMPERATURE_4_MAX: f32 = 0_f32;
@@ -19396,9 +19396,9 @@ pub struct RtDl1mk3Temp3 {
     unused_variables,
 )]
 impl RtDl1mk3Temp3 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95b6f24)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95b6f24).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_3_MIN: f32 = 0_f32;
     pub const TEMPERATURE_3_MAX: f32 = 0_f32;
@@ -19515,9 +19515,9 @@ pub struct RtDl1mk3Temp2 {
     unused_variables,
 )]
 impl RtDl1mk3Temp2 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95b6e24)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95b6e24).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_2_MIN: f32 = 0_f32;
     pub const TEMPERATURE_2_MAX: f32 = 0_f32;
@@ -19634,9 +19634,9 @@ pub struct RtDl1mk3Temp1 {
     unused_variables,
 )]
 impl RtDl1mk3Temp1 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x95b6d24)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x95b6d24).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const TEMPERATURE_1_MIN: f32 = 0_f32;
     pub const TEMPERATURE_1_MAX: f32 = 0_f32;
@@ -19753,9 +19753,9 @@ pub struct RtDl1mk3Analog32 {
     unused_variables,
 )]
 impl RtDl1mk3Analog32 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x94c8b24)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x94c8b24).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_32_MIN: f32 = 0_f32;
     pub const ANALOG_32_MAX: f32 = 0_f32;
@@ -19870,9 +19870,9 @@ pub struct RtDl1mk3Analog31 {
     unused_variables,
 )]
 impl RtDl1mk3Analog31 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x94c8a24)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x94c8a24).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_31_MIN: f32 = 0_f32;
     pub const ANALOG_31_MAX: f32 = 0_f32;
@@ -19987,9 +19987,9 @@ pub struct RtDl1mk3Analog30 {
     unused_variables,
 )]
 impl RtDl1mk3Analog30 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x94c8924)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x94c8924).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_30_MIN: f32 = 0_f32;
     pub const ANALOG_30_MAX: f32 = 0_f32;
@@ -20104,9 +20104,9 @@ pub struct RtDl1mk3Analog29 {
     unused_variables,
 )]
 impl RtDl1mk3Analog29 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x94c8824)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x94c8824).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_29_MIN: f32 = 0_f32;
     pub const ANALOG_29_MAX: f32 = 0_f32;
@@ -20221,9 +20221,9 @@ pub struct RtDl1mk3Analog28 {
     unused_variables,
 )]
 impl RtDl1mk3Analog28 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x94c8724)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x94c8724).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_28_MIN: f32 = 0_f32;
     pub const ANALOG_28_MAX: f32 = 0_f32;
@@ -20338,9 +20338,9 @@ pub struct RtDl1mk3Analog27 {
     unused_variables,
 )]
 impl RtDl1mk3Analog27 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x94c8624)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x94c8624).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_27_MIN: f32 = 0_f32;
     pub const ANALOG_27_MAX: f32 = 0_f32;
@@ -20455,9 +20455,9 @@ pub struct RtDl1mk3Analog26 {
     unused_variables,
 )]
 impl RtDl1mk3Analog26 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x94c8524)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x94c8524).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_26_MIN: f32 = 0_f32;
     pub const ANALOG_26_MAX: f32 = 0_f32;
@@ -20572,9 +20572,9 @@ pub struct RtDl1mk3Analog25 {
     unused_variables,
 )]
 impl RtDl1mk3Analog25 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x94c8424)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x94c8424).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_25_MIN: f32 = 0_f32;
     pub const ANALOG_25_MAX: f32 = 0_f32;
@@ -20689,9 +20689,9 @@ pub struct RtDl1mk3Analog15 {
     unused_variables,
 )]
 impl RtDl1mk3Analog15 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x94c7a24)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x94c7a24).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_15_MIN: f32 = 0_f32;
     pub const ANALOG_15_MAX: f32 = 0_f32;
@@ -20806,9 +20806,9 @@ pub struct RtDl1mk3Analog14 {
     unused_variables,
 )]
 impl RtDl1mk3Analog14 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x94c7924)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x94c7924).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_14_MIN: f32 = 0_f32;
     pub const ANALOG_14_MAX: f32 = 0_f32;
@@ -20923,9 +20923,9 @@ pub struct RtDl1mk3Analog17 {
     unused_variables,
 )]
 impl RtDl1mk3Analog17 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x94c7c24)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x94c7c24).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_17_MIN: f32 = 0_f32;
     pub const ANALOG_17_MAX: f32 = 0_f32;
@@ -21040,9 +21040,9 @@ pub struct RtDl1mk3Analog24 {
     unused_variables,
 )]
 impl RtDl1mk3Analog24 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x94c8324)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x94c8324).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_24_MIN: f32 = 0_f32;
     pub const ANALOG_24_MAX: f32 = 0_f32;
@@ -21157,9 +21157,9 @@ pub struct RtDl1mk3Analog23 {
     unused_variables,
 )]
 impl RtDl1mk3Analog23 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x94c8224)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x94c8224).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_23_MIN: f32 = 0_f32;
     pub const ANALOG_23_MAX: f32 = 0_f32;
@@ -21274,9 +21274,9 @@ pub struct RtDl1mk3Analog22 {
     unused_variables,
 )]
 impl RtDl1mk3Analog22 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x94c8124)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x94c8124).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_22_MIN: f32 = 0_f32;
     pub const ANALOG_22_MAX: f32 = 0_f32;
@@ -21391,9 +21391,9 @@ pub struct RtDl1mk3Analog21 {
     unused_variables,
 )]
 impl RtDl1mk3Analog21 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x94c8024)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x94c8024).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_21_MIN: f32 = 0_f32;
     pub const ANALOG_21_MAX: f32 = 0_f32;
@@ -21508,9 +21508,9 @@ pub struct RtDl1mk3Analog20 {
     unused_variables,
 )]
 impl RtDl1mk3Analog20 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x94c7f24)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x94c7f24).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_20_MIN: f32 = 0_f32;
     pub const ANALOG_20_MAX: f32 = 0_f32;
@@ -21625,9 +21625,9 @@ pub struct RtDl1mk3Analog19 {
     unused_variables,
 )]
 impl RtDl1mk3Analog19 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x94c7e24)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x94c7e24).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_19_MIN: f32 = 0_f32;
     pub const ANALOG_19_MAX: f32 = 0_f32;
@@ -21742,9 +21742,9 @@ pub struct RtDl1mk3Analog16 {
     unused_variables,
 )]
 impl RtDl1mk3Analog16 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x94c7b24)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x94c7b24).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_16_MIN: f32 = 0_f32;
     pub const ANALOG_16_MAX: f32 = 0_f32;
@@ -21859,9 +21859,9 @@ pub struct RtDl1mk3Analog18 {
     unused_variables,
 )]
 impl RtDl1mk3Analog18 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x94c7d24)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x94c7d24).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_18_MIN: f32 = 0_f32;
     pub const ANALOG_18_MAX: f32 = 0_f32;
@@ -21976,9 +21976,9 @@ pub struct RtDl1mk3Analog12 {
     unused_variables,
 )]
 impl RtDl1mk3Analog12 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x94c7724)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x94c7724).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_12_MIN: f32 = 0_f32;
     pub const ANALOG_12_MAX: f32 = 0_f32;
@@ -22093,9 +22093,9 @@ pub struct RtDl1mk3Analog11 {
     unused_variables,
 )]
 impl RtDl1mk3Analog11 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x94c7624)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x94c7624).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_11_MIN: f32 = 0_f32;
     pub const ANALOG_11_MAX: f32 = 0_f32;
@@ -22210,9 +22210,9 @@ pub struct RtDl1mk3Analog10 {
     unused_variables,
 )]
 impl RtDl1mk3Analog10 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x94c7524)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x94c7524).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_10_MIN: f32 = 0_f32;
     pub const ANALOG_10_MAX: f32 = 0_f32;
@@ -22327,9 +22327,9 @@ pub struct RtDl1mk3Analog9 {
     unused_variables,
 )]
 impl RtDl1mk3Analog9 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x94c7424)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x94c7424).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_9_MIN: f32 = 0_f32;
     pub const ANALOG_9_MAX: f32 = 0_f32;
@@ -22444,9 +22444,9 @@ pub struct RtDl1mk3Analog8 {
     unused_variables,
 )]
 impl RtDl1mk3Analog8 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x94c7324)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x94c7324).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_8_MIN: f32 = 0_f32;
     pub const ANALOG_8_MAX: f32 = 0_f32;
@@ -22561,9 +22561,9 @@ pub struct RtDl1mk3Analog7 {
     unused_variables,
 )]
 impl RtDl1mk3Analog7 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x94c7224)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x94c7224).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_7_MIN: f32 = 0_f32;
     pub const ANALOG_7_MAX: f32 = 0_f32;
@@ -22678,9 +22678,9 @@ pub struct RtDl1mk3Analog6 {
     unused_variables,
 )]
 impl RtDl1mk3Analog6 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x94c7124)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x94c7124).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_6_MIN: f32 = 0_f32;
     pub const ANALOG_6_MAX: f32 = 0_f32;
@@ -22795,9 +22795,9 @@ pub struct RtDl1mk3Analog5 {
     unused_variables,
 )]
 impl RtDl1mk3Analog5 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x94c7024)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x94c7024).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_5_MIN: f32 = 0_f32;
     pub const ANALOG_5_MAX: f32 = 0_f32;
@@ -22912,9 +22912,9 @@ pub struct RtDl1mk3Analog4 {
     unused_variables,
 )]
 impl RtDl1mk3Analog4 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x94c6f24)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x94c6f24).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_4_MIN: f32 = 0_f32;
     pub const ANALOG_4_MAX: f32 = 0_f32;
@@ -23029,9 +23029,9 @@ pub struct RtDl1mk3Analog3 {
     unused_variables,
 )]
 impl RtDl1mk3Analog3 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x94c6e24)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x94c6e24).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_3_MIN: f32 = 0_f32;
     pub const ANALOG_3_MAX: f32 = 0_f32;
@@ -23146,9 +23146,9 @@ pub struct RtDl1mk3Analog2 {
     unused_variables,
 )]
 impl RtDl1mk3Analog2 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x94c6d24)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x94c6d24).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_2_MIN: f32 = 0_f32;
     pub const ANALOG_2_MAX: f32 = 0_f32;
@@ -23263,9 +23263,9 @@ pub struct RtDl1mk3Analog1 {
     unused_variables,
 )]
 impl RtDl1mk3Analog1 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x94c6c24)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x94c6c24).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const ANALOG_1_MIN: f32 = 0_f32;
     pub const ANALOG_1_MAX: f32 = 0_f32;
@@ -23380,9 +23380,9 @@ pub struct RtDl1mk3Accel {
     unused_variables,
 )]
 impl RtDl1mk3Accel {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x94a6c24)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x94a6c24).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const ACCEL_VERTICAL_MIN: f32 = -65_f32;
     pub const ACCEL_VERTICAL_MAX: f32 = 65_f32;
@@ -23768,9 +23768,9 @@ pub struct RtSbInsVpt4VelNed2 {
     unused_variables,
 )]
 impl RtSbInsVpt4VelNed2 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9599e22)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9599e22).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const VIRTUAL_4_SLIP_MIN: f32 = -180_f32;
     pub const VIRTUAL_4_SLIP_MAX: f32 = 180_f32;
@@ -23995,9 +23995,9 @@ pub struct RtSbInsVpt4VelNed1 {
     unused_variables,
 )]
 impl RtSbInsVpt4VelNed1 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9599d22)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9599d22).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const VIRTUAL_4_VEL_NED_E_MIN: f32 = -838_f32;
     pub const VIRTUAL_4_VEL_NED_E_MAX: f32 = 838_f32;
@@ -24170,9 +24170,9 @@ pub struct RtSbInsVpt4Offset {
     unused_variables,
 )]
 impl RtSbInsVpt4Offset {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9599c22)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9599c22).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const VIRTUAL_4_OFFSET_Z_MIN: f32 = -32.768_f32;
     pub const VIRTUAL_4_OFFSET_Z_MAX: f32 = 32.767_f32;
@@ -24397,9 +24397,9 @@ pub struct RtSbInsVpt3VelNed2 {
     unused_variables,
 )]
 impl RtSbInsVpt3VelNed2 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9598e22)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9598e22).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const VIRTUAL_3_SLIP_MIN: f32 = -180_f32;
     pub const VIRTUAL_3_SLIP_MAX: f32 = 180_f32;
@@ -24624,9 +24624,9 @@ pub struct RtSbInsVpt3VelNed1 {
     unused_variables,
 )]
 impl RtSbInsVpt3VelNed1 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9598d22)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9598d22).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const VIRTUAL_3_VEL_NED_E_MIN: f32 = -838_f32;
     pub const VIRTUAL_3_VEL_NED_E_MAX: f32 = 838_f32;
@@ -24799,9 +24799,9 @@ pub struct RtSbInsVpt3Offset {
     unused_variables,
 )]
 impl RtSbInsVpt3Offset {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9598c22)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9598c22).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const VIRTUAL_3_OFFSET_Z_MIN: f32 = -32.768_f32;
     pub const VIRTUAL_3_OFFSET_Z_MAX: f32 = 32.767_f32;
@@ -25026,9 +25026,9 @@ pub struct RtSbInsVpt2VelNed2 {
     unused_variables,
 )]
 impl RtSbInsVpt2VelNed2 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9597e22)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9597e22).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const VIRTUAL_2_SLIP_MIN: f32 = -180_f32;
     pub const VIRTUAL_2_SLIP_MAX: f32 = 180_f32;
@@ -25253,9 +25253,9 @@ pub struct RtSbInsVpt2VelNed1 {
     unused_variables,
 )]
 impl RtSbInsVpt2VelNed1 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9597d22)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9597d22).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const VIRTUAL_2_VEL_NED_E_MIN: f32 = -838_f32;
     pub const VIRTUAL_2_VEL_NED_E_MAX: f32 = 838_f32;
@@ -25428,9 +25428,9 @@ pub struct RtSbInsVpt2Offset {
     unused_variables,
 )]
 impl RtSbInsVpt2Offset {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9597c22)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9597c22).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const VIRTUAL_2_OFFSET_Z_MIN: f32 = -32.768_f32;
     pub const VIRTUAL_2_OFFSET_Z_MAX: f32 = 32.767_f32;
@@ -25655,9 +25655,9 @@ pub struct RtSbInsVpt1VelNed2 {
     unused_variables,
 )]
 impl RtSbInsVpt1VelNed2 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9596e22)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9596e22).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const VIRTUAL_1_SLIP_MIN: f32 = -180_f32;
     pub const VIRTUAL_1_SLIP_MAX: f32 = 180_f32;
@@ -25882,9 +25882,9 @@ pub struct RtSbInsVpt1VelNed1 {
     unused_variables,
 )]
 impl RtSbInsVpt1VelNed1 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9596d22)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9596d22).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const VIRTUAL_1_VEL_NED_E_MIN: f32 = -838_f32;
     pub const VIRTUAL_1_VEL_NED_E_MAX: f32 = 838_f32;
@@ -26057,9 +26057,9 @@ pub struct RtSbInsVpt1Offset {
     unused_variables,
 )]
 impl RtSbInsVpt1Offset {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9596c22)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9596c22).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const VIRTUAL_1_OFFSET_Z_MIN: f32 = -32.768_f32;
     pub const VIRTUAL_1_OFFSET_Z_MAX: f32 = 32.767_f32;
@@ -26284,9 +26284,9 @@ pub struct RtSbInsSlip {
     unused_variables,
 )]
 impl RtSbInsSlip {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9588222)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9588222).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const INS_SQUAT_MIN: f32 = -360_f32;
     pub const INS_SQUAT_MAX: f32 = 360_f32;
@@ -26619,9 +26619,9 @@ pub struct RtSbInsVelEcef2 {
     unused_variables,
 )]
 impl RtSbInsVelEcef2 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9587f22)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9587f22).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const INS_VEL_ECEF_Z_MIN: f32 = -838_f32;
     pub const INS_VEL_ECEF_Z_MAX: f32 = 838_f32;
@@ -26870,9 +26870,9 @@ pub struct RtSbInsVelEcef1 {
     unused_variables,
 )]
 impl RtSbInsVelEcef1 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9587e22)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9587e22).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const INS_VEL_ECEF_X_MIN: f32 = -838_f32;
     pub const INS_VEL_ECEF_X_MAX: f32 = 838_f32;
@@ -27157,9 +27157,9 @@ pub struct RtSbInsVelNed2 {
     unused_variables,
 )]
 impl RtSbInsVelNed2 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9587d22)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9587d22).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const INS_VEL_NED_D_MIN: f32 = -838_f32;
     pub const INS_VEL_NED_D_MAX: f32 = 838_f32;
@@ -27360,9 +27360,9 @@ pub struct RtSbInsVelNed1 {
     unused_variables,
 )]
 impl RtSbInsVelNed1 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9587c22)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9587c22).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const INS_VEL_NED_E_MIN: f32 = -838_f32;
     pub const INS_VEL_NED_E_MAX: f32 = 838_f32;
@@ -27653,9 +27653,9 @@ pub struct RtSbInsPosEcef2 {
     unused_variables,
 )]
 impl RtSbInsPosEcef2 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9587122)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9587122).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const INS_POS_ECEF_Z_MIN: f32 = -10000000_f32;
     pub const INS_POS_ECEF_Z_MAX: f32 = 10000000_f32;
@@ -27825,9 +27825,9 @@ pub struct RtSbInsPosEcef1 {
     unused_variables,
 )]
 impl RtSbInsPosEcef1 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9587022)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9587022).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const INS_POS_ECEF_X_MIN: f32 = -10000000_f32;
     pub const INS_POS_ECEF_X_MAX: f32 = 10000000_f32;
@@ -28194,9 +28194,9 @@ pub struct RtSbInsPosLlh2 {
     unused_variables,
 )]
 impl RtSbInsPosLlh2 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9586f22)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9586f22).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const INS_POS_LLH_ALTITUDE_MIN: f32 = -1000_f32;
     pub const INS_POS_LLH_ALTITUDE_MAX: f32 = 100000_f32;
@@ -28365,9 +28365,9 @@ pub struct RtSbInsPosLlh1 {
     unused_variables,
 )]
 impl RtSbInsPosLlh1 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9586e22)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9586e22).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const INS_POS_LLH_LATITUDE_MIN: f32 = -90_f32;
     pub const INS_POS_LLH_LATITUDE_MAX: f32 = 90_f32;
@@ -28750,9 +28750,9 @@ pub struct RtSbInsHeadingGradient2 {
     unused_variables,
 )]
 impl RtSbInsHeadingGradient2 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9588122)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9588122).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const INS_GRADIENT_MIN: f32 = -90_f32;
     pub const INS_GRADIENT_MAX: f32 = 90_f32;
@@ -29087,9 +29087,9 @@ pub struct RtSbInsHeadingGradient {
     unused_variables,
 )]
 impl RtSbInsHeadingGradient {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9588022)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9588022).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const INS_GRADIENT_MIN: f32 = -90_f32;
     pub const INS_GRADIENT_MAX: f32 = 90_f32;
@@ -29426,9 +29426,9 @@ pub struct RtSbInsStatus {
     unused_variables,
 )]
 impl RtSbInsStatus {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9586c22)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9586c22).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const INS_STATUS_MIN: u8 = 0_u8;
     pub const INS_STATUS_MAX: u8 = 255_u8;
@@ -29576,9 +29576,9 @@ pub struct RtSbInsAttitude {
     unused_variables,
 )]
 impl RtSbInsAttitude {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9586d22)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9586d22).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const ATTITUDE_ROLL_MIN: f32 = -360_f32;
     pub const ATTITUDE_ROLL_MAX: f32 = 360_f32;
@@ -30055,9 +30055,9 @@ pub struct RtSbOutputStatus {
     unused_variables,
 )]
 impl RtSbOutputStatus {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9576d22)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9576d22).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const GPS_TIME_MIN: f32 = 0_f32;
     pub const GPS_TIME_MAX: f32 = 604800_f32;
@@ -30837,9 +30837,9 @@ pub struct RtSbGpsHeadingGradient2 {
     unused_variables,
 )]
 impl RtSbGpsHeadingGradient2 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9568222)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9568222).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const GPS_GRADIENT_MIN: f32 = -90_f32;
     pub const GPS_GRADIENT_MAX: f32 = 90_f32;
@@ -31176,9 +31176,9 @@ pub struct RtSbCumulativeDistance2 {
     unused_variables,
 )]
 impl RtSbCumulativeDistance2 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x94a8d22)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x94a8d22).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const CUMULATIVE_DISTANCE_MIN: f32 = 0_f32;
     pub const CUMULATIVE_DISTANCE_MAX: f32 = 4294967_f32;
@@ -31424,9 +31424,9 @@ pub struct RtSbCumulativeDistance1 {
     unused_variables,
 )]
 impl RtSbCumulativeDistance1 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x94a8c22)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x94a8c22).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const CUMULATIVE_DISTANCE_MIN: f32 = 0_f32;
     pub const CUMULATIVE_DISTANCE_MAX: f32 = 4294967_f32;
@@ -31670,9 +31670,9 @@ pub struct RtSbTriggerTimestamp {
     unused_variables,
 )]
 impl RtSbTriggerTimestamp {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9576c22)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9576c22).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const GPS_HIGH_RESOLUTION_TIME_MIN: f32 = 0_f32;
     pub const GPS_HIGH_RESOLUTION_TIME_MAX: f32 = 604800_f32;
@@ -32005,9 +32005,9 @@ pub struct RtImu06GyroRates {
     unused_variables,
 )]
 impl RtImu06GyroRates {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x94a6d21)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x94a6d21).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const GYRO_RATE_ROLL_MIN: f32 = -327_f32;
     pub const GYRO_RATE_ROLL_MAX: f32 = 327_f32;
@@ -32390,9 +32390,9 @@ pub struct RtImu06Accel {
     unused_variables,
 )]
 impl RtImu06Accel {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x94a6c21)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x94a6c21).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const ACCEL_VERTICAL_MIN: f32 = -65_f32;
     pub const ACCEL_VERTICAL_MAX: f32 = 65_f32;
@@ -32778,9 +32778,9 @@ pub struct RtSbSpeed {
     unused_variables,
 )]
 impl RtSbSpeed {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x94a7c22)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x94a7c22).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const SPEED_MIN: f32 = -20000_f32;
     pub const SPEED_MAX: f32 = 20000_f32;
@@ -32981,9 +32981,9 @@ pub struct RtSbRtkSlip {
     unused_variables,
 )]
 impl RtSbRtkSlip {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9568d22)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9568d22).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const RTK_BASELINE_MIN: u16 = 0_u16;
     pub const RTK_BASELINE_MAX: u16 = 65535_u16;
@@ -33356,9 +33356,9 @@ pub struct RtSbRtkAttitude {
     unused_variables,
 )]
 impl RtSbRtkAttitude {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9568c22)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9568c22).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const RTK_ATTITUDE_ROLL_MIN: f32 = -90_f32;
     pub const RTK_ATTITUDE_ROLL_MAX: f32 = 90_f32;
@@ -33741,9 +33741,9 @@ pub struct RtSbGpsMcycleLean {
     unused_variables,
 )]
 impl RtSbGpsMcycleLean {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9569c22)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9569c22).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const GPS_MCYCLE_LEAN_ANGLE_MIN: f32 = -90_f32;
     pub const GPS_MCYCLE_LEAN_ANGLE_MAX: f32 = 90_f32;
@@ -34039,9 +34039,9 @@ pub struct RtSbGpsStatus {
     unused_variables,
 )]
 impl RtSbGpsStatus {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9566c22)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9566c22).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const RTK_STATUS_MIN: u8 = 0_u8;
     pub const RTK_STATUS_MAX: u8 = 255_u8;
@@ -34563,9 +34563,9 @@ pub struct RtSbGpsPosEcef2 {
     unused_variables,
 )]
 impl RtSbGpsPosEcef2 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9567122)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9567122).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const GPS_POS_ECEF_Z_MIN: f32 = -10000000_f32;
     pub const GPS_POS_ECEF_Z_MAX: f32 = 10000000_f32;
@@ -34735,9 +34735,9 @@ pub struct RtSbGpsPosEcef1 {
     unused_variables,
 )]
 impl RtSbGpsPosEcef1 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9567022)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9567022).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const GPS_POS_ECEF_X_MIN: f32 = -10000000_f32;
     pub const GPS_POS_ECEF_X_MAX: f32 = 10000000_f32;
@@ -35104,9 +35104,9 @@ pub struct RtSbGpsPosLlh2 {
     unused_variables,
 )]
 impl RtSbGpsPosLlh2 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9566f22)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9566f22).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const GPS_POS_LLH_ALTITUDE_MIN: f32 = -1000_f32;
     pub const GPS_POS_LLH_ALTITUDE_MAX: f32 = 100000_f32;
@@ -35275,9 +35275,9 @@ pub struct RtSbGpsPosLlh1 {
     unused_variables,
 )]
 impl RtSbGpsPosLlh1 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9566e22)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9566e22).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const GPS_POS_LLH_LATITUDE_MIN: f32 = -90_f32;
     pub const GPS_POS_LLH_LATITUDE_MAX: f32 = 90_f32;
@@ -35660,9 +35660,9 @@ pub struct RtSbGpsHeadingGradient {
     unused_variables,
 )]
 impl RtSbGpsHeadingGradient {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9568122)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9568122).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const GPS_GRADIENT_MIN: f32 = -90_f32;
     pub const GPS_GRADIENT_MAX: f32 = 90_f32;
@@ -35999,9 +35999,9 @@ pub struct RtSbGpsVelEcef2 {
     unused_variables,
 )]
 impl RtSbGpsVelEcef2 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9568022)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9568022).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const GPS_VEL_ECEF_Z_MIN: f32 = -838_f32;
     pub const GPS_VEL_ECEF_Z_MAX: f32 = 838_f32;
@@ -36250,9 +36250,9 @@ pub struct RtSbGpsVelEcef1 {
     unused_variables,
 )]
 impl RtSbGpsVelEcef1 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9567f22)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9567f22).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const GPS_VEL_ECEF_X_MIN: f32 = -838_f32;
     pub const GPS_VEL_ECEF_X_MAX: f32 = 838_f32;
@@ -36537,9 +36537,9 @@ pub struct RtSbGpsVelNed2 {
     unused_variables,
 )]
 impl RtSbGpsVelNed2 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9567e22)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9567e22).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const GPS_VEL_NED_D_MIN: f32 = -838_f32;
     pub const GPS_VEL_NED_D_MAX: f32 = 838_f32;
@@ -36740,9 +36740,9 @@ pub struct RtSbGpsVelNed1 {
     unused_variables,
 )]
 impl RtSbGpsVelNed1 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9567d22)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9567d22).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const GPS_VEL_NED_E_MIN: f32 = -838_f32;
     pub const GPS_VEL_NED_E_MAX: f32 = 838_f32;
@@ -37033,9 +37033,9 @@ pub struct RtSbGpsSpeed {
     unused_variables,
 )]
 impl RtSbGpsSpeed {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9567c22)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9567c22).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const GPS_SPEED_3D_MIN: f32 = 0_f32;
     pub const GPS_SPEED_3D_MAX: f32 = 1675_f32;
@@ -37324,9 +37324,9 @@ pub struct RtSbGpsTime {
     unused_variables,
 )]
 impl RtSbGpsTime {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x9566d22)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x9566d22).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const GPS_WEEK_MIN: u16 = 0_u16;
     pub const GPS_WEEK_MAX: u16 = 65535_u16;
@@ -37605,9 +37605,9 @@ pub struct RtSbAccel {
     unused_variables,
 )]
 impl RtSbAccel {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x94a6c22)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x94a6c22).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const ACCEL_VERTICAL_MIN: f32 = -65_f32;
     pub const ACCEL_VERTICAL_MAX: f32 = 65_f32;
@@ -37993,9 +37993,9 @@ pub struct RtSbGyroRates {
     unused_variables,
 )]
 impl RtSbGyroRates {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x94a6d22)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x94a6d22).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const GYRO_RATE_ROLL_MIN: f32 = -327_f32;
     pub const GYRO_RATE_ROLL_MAX: f32 = 327_f32;

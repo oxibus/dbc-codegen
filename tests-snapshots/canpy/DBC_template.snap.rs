@@ -73,9 +73,9 @@ pub struct CanMultiplexed {
     unused_variables,
 )]
 impl CanMultiplexed {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x10e1)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x10e1).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 2;
     pub const VALUE1_MIN: u8 = 0_u8;
     pub const VALUE1_MAX: u8 = 0_u8;
@@ -448,9 +448,9 @@ pub struct CanMessage {
     unused_variables,
 )]
 impl CanMessage {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x4d2)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(
+        StandardId::new(0x4d2).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const SIGNAL1_MIN: u64 = 0_u64;
     pub const SIGNAL1_MAX: u64 = 100_u64;

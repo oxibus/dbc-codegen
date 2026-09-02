@@ -64,9 +64,7 @@ pub struct Bar {
     unused_variables,
 )]
 impl Bar {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x1)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(StandardId::new(0x1).unwrap());
     pub const MESSAGE_SIZE: usize = 4;
     pub const BINARY32_MIN: i32 = 0_i32;
     pub const BINARY32_MAX: i32 = 0_i32;

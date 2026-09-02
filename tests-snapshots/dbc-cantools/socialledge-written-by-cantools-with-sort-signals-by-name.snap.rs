@@ -84,9 +84,9 @@ pub struct DriverHeartbeat {
     unused_variables,
 )]
 impl DriverHeartbeat {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x64)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(
+        StandardId::new(0x64).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 1;
     pub const MESSAGE_CYCLE_TIME_MS: u32 = 1000;
     pub const DRIVER_HEARTBEAT_CMD_MIN: u8 = 0_u8;
@@ -242,9 +242,9 @@ pub struct IoDebug {
     unused_variables,
 )]
 impl IoDebug {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x1f4)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(
+        StandardId::new(0x1f4).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 4;
     pub const MESSAGE_CYCLE_TIME_MS: u32 = 100;
     pub const IO_DEBUG_TEST_ENUM_MIN: u8 = 0_u8;
@@ -527,9 +527,9 @@ pub struct MotorCmd {
     unused_variables,
 )]
 impl MotorCmd {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x65)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(
+        StandardId::new(0x65).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 1;
     pub const MESSAGE_CYCLE_TIME_MS: u32 = 100;
     pub const MOTOR_CMD_DRIVE_MIN: u8 = 0_u8;
@@ -693,9 +693,9 @@ pub struct MotorStatus {
     unused_variables,
 )]
 impl MotorStatus {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x190)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(
+        StandardId::new(0x190).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 3;
     pub const MESSAGE_CYCLE_TIME_MS: u32 = 100;
     pub const MOTOR_STATUS_SPEED_KPH_MIN: f32 = 0_f32;
@@ -850,9 +850,9 @@ pub struct SensorSonars {
     unused_variables,
 )]
 impl SensorSonars {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0xc8)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(
+        StandardId::new(0xc8).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const MESSAGE_CYCLE_TIME_MS: u32 = 100;
     pub const SENSOR_SONARS_ERR_COUNT_MIN: u16 = 0_u16;

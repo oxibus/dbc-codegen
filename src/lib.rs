@@ -368,11 +368,10 @@ impl Config<'_> {
                 w,
                 "pub const MESSAGE_ID: embedded_can::Id = {};",
                 match msg.id {
-                    // use StandardId::new().unwrap() once const_option is stable
                     MessageId::Standard(id) =>
-                        format!("Id::Standard(unsafe {{ StandardId::new_unchecked({id:#x})}})"),
+                        format!("Id::Standard(StandardId::new({id:#x}).unwrap())"),
                     MessageId::Extended(id) =>
-                        format!("Id::Extended(unsafe {{ ExtendedId::new_unchecked({id:#x})}})"),
+                        format!("Id::Extended(ExtendedId::new({id:#x}).unwrap())"),
                 }
             )?;
             writeln!(w)?;

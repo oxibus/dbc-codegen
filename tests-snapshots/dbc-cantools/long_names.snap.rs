@@ -130,9 +130,7 @@ pub struct Ss123456789012345678901234587890 {
     unused_variables,
 )]
 impl Ss123456789012345678901234587890 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x9)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(StandardId::new(0x9).unwrap());
     pub const MESSAGE_SIZE: usize = 8;
     /// Constructs a new `SS123456789012345678901234587890` message from values.
     pub fn new() -> Result<Self, CanError> {
@@ -200,9 +198,7 @@ pub struct Ss12345678901234567890123450000 {
     unused_variables,
 )]
 impl Ss12345678901234567890123450000 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x8)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(StandardId::new(0x8).unwrap());
     pub const MESSAGE_SIZE: usize = 8;
     /// Constructs a new `SS1234567890123456789012345_0000` message from values.
     pub fn new() -> Result<Self, CanError> {
@@ -270,9 +266,7 @@ pub struct Ss12345678901234567890123450001 {
     unused_variables,
 )]
 impl Ss12345678901234567890123450001 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x7)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(StandardId::new(0x7).unwrap());
     pub const MESSAGE_SIZE: usize = 8;
     /// Constructs a new `SS1234567890123456789012345_0001` message from values.
     pub fn new() -> Result<Self, CanError> {
@@ -340,9 +334,7 @@ pub struct Ss123456789012345678901234577890 {
     unused_variables,
 )]
 impl Ss123456789012345678901234577890 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x6)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(StandardId::new(0x6).unwrap());
     pub const MESSAGE_SIZE: usize = 8;
     /// Constructs a new `SS123456789012345678901234577890` message from values.
     pub fn new() -> Result<Self, CanError> {
@@ -410,9 +402,7 @@ pub struct Ss123456789012345678901234567890 {
     unused_variables,
 )]
 impl Ss123456789012345678901234567890 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x5)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(StandardId::new(0x5).unwrap());
     pub const MESSAGE_SIZE: usize = 8;
     /// Constructs a new `SS123456789012345678901234567890` message from values.
     pub fn new() -> Result<Self, CanError> {
@@ -480,9 +470,7 @@ pub struct S1234567890123456789012345678901 {
     unused_variables,
 )]
 impl S1234567890123456789012345678901 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x4)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(StandardId::new(0x4).unwrap());
     pub const MESSAGE_SIZE: usize = 8;
     pub const SS123456789012345678901234567890_MIN: i8 = 0_i8;
     pub const SS123456789012345678901234567890_MAX: i8 = 0_i8;
@@ -596,9 +584,7 @@ pub struct M123456789012345678901234560000 {
     unused_variables,
 )]
 impl M123456789012345678901234560000 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x0)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(StandardId::new(0x0).unwrap());
     pub const MESSAGE_SIZE: usize = 8;
     pub const SSS12345678901234567890123456789_MIN: i8 = 0_i8;
     pub const SSS12345678901234567890123456789_MAX: i8 = 0_i8;
@@ -713,9 +699,7 @@ pub struct M1234567890123456789012345678901 {
     unused_variables,
 )]
 impl M1234567890123456789012345678901 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x1)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(StandardId::new(0x1).unwrap());
     pub const MESSAGE_SIZE: usize = 8;
     pub const SS1234567890123456789012345_0000_MIN: i8 = 0_i8;
     pub const SS1234567890123456789012345_0000_MAX: i8 = 0_i8;
@@ -1020,9 +1004,7 @@ pub struct M123456789012345678901234560001 {
     unused_variables,
 )]
 impl M123456789012345678901234560001 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x2)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(StandardId::new(0x2).unwrap());
     pub const MESSAGE_SIZE: usize = 8;
     pub const SS1234567890123456789012345_0003_MIN: i8 = 0_i8;
     pub const SS1234567890123456789012345_0003_MAX: i8 = 0_i8;
@@ -1279,9 +1261,7 @@ pub struct Mm123456789012345678901234567890 {
     unused_variables,
 )]
 impl Mm123456789012345678901234567890 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x3)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(StandardId::new(0x3).unwrap());
     pub const MESSAGE_SIZE: usize = 8;
     pub const SSS123456789012345678901234_0000_MIN: i8 = 0_i8;
     pub const SSS123456789012345678901234_0000_MAX: i8 = 0_i8;

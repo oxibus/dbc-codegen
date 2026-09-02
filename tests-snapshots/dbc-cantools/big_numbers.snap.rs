@@ -70,9 +70,9 @@ pub struct TheMessage {
     unused_variables,
 )]
 impl TheMessage {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x39)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x39).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const MESSAGE_CYCLE_TIME_MS: u32 = 1000;
     pub const THE_SIGNAL_MIN: i8 = 0_i8;
@@ -184,9 +184,9 @@ pub struct TheOtherMessage {
     unused_variables,
 )]
 impl TheOtherMessage {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x2a)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(
+        StandardId::new(0x2a).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const THE_SIGNAL_MIN: i8 = 0_i8;
     pub const THE_SIGNAL_MAX: i8 = 0_i8;

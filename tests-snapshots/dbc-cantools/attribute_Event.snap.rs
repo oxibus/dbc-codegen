@@ -66,9 +66,9 @@ pub struct Inv2EventMsg1 {
     unused_variables,
 )]
 impl Inv2EventMsg1 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x4d2)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(
+        StandardId::new(0x4d2).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const MESSAGE_CYCLE_TIME_MS: u32 = 0;
     pub const THE_SIGNAL_MIN: i8 = 0_i8;

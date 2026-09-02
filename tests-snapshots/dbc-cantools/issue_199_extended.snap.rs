@@ -114,9 +114,9 @@ pub struct DriverDoorStatus {
     unused_variables,
 )]
 impl DriverDoorStatus {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x1fffffff)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x1fffffff).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 1;
     /// Constructs a new `DriverDoorStatus` message from values.
     pub fn new(
@@ -262,9 +262,7 @@ pub struct Chime {
     unused_variables,
 )]
 impl Chime {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x0)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(StandardId::new(0x0).unwrap());
     pub const MESSAGE_SIZE: usize = 5;
     pub const CHIME_TYPE_MIN: u8 = 0_u8;
     pub const CHIME_TYPE_MAX: u8 = 0_u8;
@@ -544,9 +542,9 @@ pub struct BlinkerStatus {
     unused_variables,
 )]
 impl BlinkerStatus {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0xc000)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(
+        StandardId::new(0xc000).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 5;
     /// Constructs a new `BlinkerStatus` message from values.
     pub fn new(
@@ -832,9 +830,7 @@ pub struct SteeringWheelAngle {
     unused_variables,
 )]
 impl SteeringWheelAngle {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x0)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(StandardId::new(0x0).unwrap());
     pub const MESSAGE_SIZE: usize = 8;
     pub const STEERING_WHEEL_ANGLE_MIN: f32 = -540_f32;
     pub const STEERING_WHEEL_ANGLE_MAX: f32 = 540_f32;
@@ -952,9 +948,9 @@ pub struct GearShifter {
     unused_variables,
 )]
 impl GearShifter {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0xc000)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(
+        StandardId::new(0xc000).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const GEAR_SHIFTER_MIN: u8 = 0_u8;
     pub const GEAR_SHIFTER_MAX: u8 = 3_u8;
@@ -1150,9 +1146,9 @@ pub struct GasPedalRegenCruise {
     unused_variables,
 )]
 impl GasPedalRegenCruise {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0xa000)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(
+        StandardId::new(0xa000).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const GAS_PEDAL_MIN: u8 = 0_u8;
     pub const GAS_PEDAL_MAX: u8 = 254_u8;
@@ -1418,9 +1414,7 @@ pub struct BrakePedal {
     unused_variables,
 )]
 impl BrakePedal {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x0)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(StandardId::new(0x0).unwrap());
     pub const MESSAGE_SIZE: usize = 2;
     pub const BRAKE_LEVEL_MIN: u8 = 0_u8;
     pub const BRAKE_LEVEL_MAX: u8 = 3_u8;
@@ -1571,9 +1565,9 @@ pub struct WheelSpeed {
     unused_variables,
 )]
 impl WheelSpeed {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x8000)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(
+        StandardId::new(0x8000).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const WHEEL_SPEED_FL_MIN: f32 = 0_f32;
     pub const WHEEL_SPEED_FL_MAX: f32 = 70_f32;
@@ -1835,9 +1829,7 @@ pub struct VehicleSpeed {
     unused_variables,
 )]
 impl VehicleSpeed {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x0)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(StandardId::new(0x0).unwrap());
     pub const MESSAGE_SIZE: usize = 8;
     pub const VEHICLE_SPEED1_MIN: f32 = 0_f32;
     pub const VEHICLE_SPEED1_MAX: f32 = 100_f32;
@@ -2000,9 +1992,9 @@ pub struct CruiseButtons {
     unused_variables,
 )]
 impl CruiseButtons {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x8000)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(
+        StandardId::new(0x8000).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 3;
     pub const CRUISE_BUTTONS_MIN: u8 = 0_u8;
     pub const CRUISE_BUTTONS_MAX: u8 = 12_u8;
@@ -2126,9 +2118,9 @@ pub struct CruiseButtons2 {
     unused_variables,
 )]
 impl CruiseButtons2 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x6000)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(
+        StandardId::new(0x6000).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 1;
     pub const LKA_GAP_BUTTON_MIN: u8 = 0_u8;
     pub const LKA_GAP_BUTTON_MAX: u8 = 2_u8;

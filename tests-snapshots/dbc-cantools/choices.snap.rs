@@ -63,9 +63,7 @@ pub struct Foo {
     unused_variables,
 )]
 impl Foo {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x0)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(StandardId::new(0x0).unwrap());
     pub const MESSAGE_SIZE: usize = 8;
     pub const FOO_MIN: i8 = -128_i8;
     pub const FOO_MAX: i8 = 127_i8;

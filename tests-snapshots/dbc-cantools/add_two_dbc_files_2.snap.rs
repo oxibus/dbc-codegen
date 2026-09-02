@@ -64,9 +64,7 @@ pub struct M1 {
     unused_variables,
 )]
 impl M1 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x2)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(StandardId::new(0x2).unwrap());
     pub const MESSAGE_SIZE: usize = 8;
     /// Constructs a new `M1` message from values.
     pub fn new() -> Result<Self, CanError> {

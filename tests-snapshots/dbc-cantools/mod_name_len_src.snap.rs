@@ -68,9 +68,7 @@ pub struct MsgWillBeShortened345678912 {
     unused_variables,
 )]
 impl MsgWillBeShortened345678912 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x1)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(StandardId::new(0x1).unwrap());
     pub const MESSAGE_SIZE: usize = 8;
     pub const SIG_WILL_BE_SHORTENED_3456789_12_MIN: u8 = 0_u8;
     pub const SIG_WILL_BE_SHORTENED_3456789_12_MAX: u8 = 0_u8;

@@ -1,7 +1,7 @@
 error: literal out of range for `i64`
-    --> tests-snapshots/dbc-cantools/signed.snap.rs:1328:30
+    --> tests-snapshots/dbc-cantools/signed.snap.rs:1310:30
      |
-1328 |     pub const S64_MIN: i64 = -9223372036854780000_i64;
+1310 |     pub const S64_MIN: i64 = -9223372036854780000_i64;
      |                              ^^^^^^^^^^^^^^^^^^^^^^^^
      |
      = note: the literal `-9223372036854780000_i64` does not fit into the type `i64` whose range is `-9223372036854775808..=9223372036854775807`
@@ -9,27 +9,27 @@ error: literal out of range for `i64`
      = note: `#[deny(overflowing_literals)]` on by default
 
 error: literal out of range for `i64`
-    --> tests-snapshots/dbc-cantools/signed.snap.rs:1329:30
+    --> tests-snapshots/dbc-cantools/signed.snap.rs:1311:30
      |
-1329 |     pub const S64_MAX: i64 = 9223372036854780000_i64;
+1311 |     pub const S64_MAX: i64 = 9223372036854780000_i64;
      |                              ^^^^^^^^^^^^^^^^^^^^^^^
      |
      = note: the literal `9223372036854780000_i64` does not fit into the type `i64` whose range is `-9223372036854775808..=9223372036854775807`
      = help: consider using the type `u64` instead
 
 error: literal out of range for `i64`
-    --> tests-snapshots/dbc-cantools/signed.snap.rs:1371:20
+    --> tests-snapshots/dbc-cantools/signed.snap.rs:1353:20
      |
-1371 |         if value < -9223372036854780000_i64 || 9223372036854780000_i64 < value {
+1353 |         if value < -9223372036854780000_i64 || 9223372036854780000_i64 < value {
      |                    ^^^^^^^^^^^^^^^^^^^^^^^^
      |
      = note: the literal `-9223372036854780000_i64` does not fit into the type `i64` whose range is `-9223372036854775808..=9223372036854775807`
      = help: consider using the type `i128` instead
 
 error: literal out of range for `i64`
-    --> tests-snapshots/dbc-cantools/signed.snap.rs:1371:48
+    --> tests-snapshots/dbc-cantools/signed.snap.rs:1353:48
      |
-1371 |         if value < -9223372036854780000_i64 || 9223372036854780000_i64 < value {
+1353 |         if value < -9223372036854780000_i64 || 9223372036854780000_i64 < value {
      |                                                ^^^^^^^^^^^^^^^^^^^^^^^
      |
      = note: the literal `9223372036854780000_i64` does not fit into the type `i64` whose range is `-9223372036854775808..=9223372036854775807`

@@ -65,9 +65,9 @@ pub struct TestMessage {
     unused_variables,
 )]
 impl TestMessage {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x90000)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x90000).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 1;
     /// Constructs a new `TestMessage` message from values.
     pub fn new(

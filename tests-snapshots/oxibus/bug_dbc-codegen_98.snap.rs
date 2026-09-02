@@ -68,9 +68,7 @@ pub struct TestInput {
     unused_variables,
 )]
 impl TestInput {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x0)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(StandardId::new(0x0).unwrap());
     pub const MESSAGE_SIZE: usize = 8;
     pub const TEST_INPUT_MUX_MIN: u8 = 0_u8;
     pub const TEST_INPUT_MUX_MAX: u8 = 0_u8;
@@ -558,9 +556,7 @@ pub struct TestOutput {
     unused_variables,
 )]
 impl TestOutput {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x1)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(StandardId::new(0x1).unwrap());
     pub const MESSAGE_SIZE: usize = 8;
     pub const TEST_OUTPUT_MUX_MIN: u8 = 0_u8;
     pub const TEST_OUTPUT_MUX_MAX: u8 = 0_u8;

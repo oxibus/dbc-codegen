@@ -71,9 +71,9 @@ pub struct TestMessage1 {
     unused_variables,
 )]
 impl TestMessage1 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0xff0100)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0xff0100).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 3;
     pub const SIGNAL1_MIN: u8 = 0_u8;
     pub const SIGNAL1_MAX: u8 = 0_u8;
@@ -265,9 +265,9 @@ pub struct TestMessage2 {
     unused_variables,
 )]
 impl TestMessage2 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0xff0200)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0xff0200).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 10;
     pub const SIGNAL4_MIN: u16 = 0_u16;
     pub const SIGNAL4_MAX: u16 = 0_u16;

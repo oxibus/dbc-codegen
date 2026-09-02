@@ -115,9 +115,9 @@ pub struct Bremse33 {
     unused_variables,
 )]
 impl Bremse33 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x343)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(
+        StandardId::new(0x343).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const WHLSPEED_FL_MIN: f32 = 0_f32;
     pub const WHLSPEED_FL_MAX: f32 = 100_f32;
@@ -387,9 +387,9 @@ pub struct Bremse10 {
     unused_variables,
 )]
 impl Bremse10 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x140)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(
+        StandardId::new(0x140).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     /// Constructs a new `BREMSE_10` message from values.
     pub fn new() -> Result<Self, CanError> {
@@ -458,9 +458,9 @@ pub struct Bremse11 {
     unused_variables,
 )]
 impl Bremse11 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x141)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(
+        StandardId::new(0x141).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     /// Constructs a new `BREMSE_11` message from values.
     pub fn new() -> Result<Self, CanError> {
@@ -529,9 +529,9 @@ pub struct Bremse12 {
     unused_variables,
 )]
 impl Bremse12 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x142)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(
+        StandardId::new(0x142).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     /// Constructs a new `BREMSE_12` message from values.
     pub fn new() -> Result<Self, CanError> {
@@ -600,9 +600,9 @@ pub struct Bremse13 {
     unused_variables,
 )]
 impl Bremse13 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x143)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(
+        StandardId::new(0x143).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     /// Constructs a new `BREMSE_13` message from values.
     pub fn new() -> Result<Self, CanError> {
@@ -671,9 +671,9 @@ pub struct DrsRxId0 {
     unused_variables,
 )]
 impl DrsRxId0 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x75)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(
+        StandardId::new(0x75).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     /// Constructs a new `DRS_RX_ID0` message from values.
     pub fn new() -> Result<Self, CanError> {
@@ -742,9 +742,9 @@ pub struct Mm510Tx1 {
     unused_variables,
 )]
 impl Mm510Tx1 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x70)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(
+        StandardId::new(0x70).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const YAW_RATE_MIN: f32 = -163.84_f32;
     pub const YAW_RATE_MAX: f32 = 163.83_f32;
@@ -911,9 +911,9 @@ pub struct Mm510Tx2 {
     unused_variables,
 )]
 impl Mm510Tx2 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x80)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(
+        StandardId::new(0x80).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const ROLL_RATE_MIN: f32 = -163.84_f32;
     pub const ROLL_RATE_MAX: f32 = 163.835_f32;
@@ -1080,9 +1080,9 @@ pub struct Mm510Tx3 {
     unused_variables,
 )]
 impl Mm510Tx3 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x576)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(
+        StandardId::new(0x576).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const AZ_MIN: f32 = -4.1768_f32;
     pub const AZ_MAX: f32 = 4.1765_f32;
@@ -1200,9 +1200,9 @@ pub struct Bremse2 {
     unused_variables,
 )]
 impl Bremse2 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x24a)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(
+        StandardId::new(0x24a).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const WHLSPEED_FL_BREMSE2_MIN: f32 = 0_f32;
     pub const WHLSPEED_FL_BREMSE2_MAX: f32 = 100_f32;
@@ -1471,9 +1471,9 @@ pub struct AbsSwitch {
     unused_variables,
 )]
 impl AbsSwitch {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x24c)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(
+        StandardId::new(0x24c).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const ABS_SWITCHPOSITION_MIN: u8 = 0_u8;
     pub const ABS_SWITCHPOSITION_MAX: u8 = 11_u8;
@@ -1585,9 +1585,9 @@ pub struct Bremse30 {
     unused_variables,
 )]
 impl Bremse30 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x340)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(
+        StandardId::new(0x340).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     /// Constructs a new `BREMSE_30` message from values.
     pub fn new() -> Result<Self, CanError> {
@@ -1656,9 +1656,9 @@ pub struct Bremse31 {
     unused_variables,
 )]
 impl Bremse31 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x341)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(
+        StandardId::new(0x341).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const IDLE_TIME_MIN: u16 = 0_u16;
     pub const IDLE_TIME_MAX: u16 = 0_u16;
@@ -1768,9 +1768,9 @@ pub struct Bremse32 {
     unused_variables,
 )]
 impl Bremse32 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x342)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(
+        StandardId::new(0x342).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const ACC_FA_MIN: f32 = 0_f32;
     pub const ACC_FA_MAX: f32 = 10_f32;
@@ -2148,9 +2148,9 @@ pub struct Bremse51 {
     unused_variables,
 )]
 impl Bremse51 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x541)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(
+        StandardId::new(0x541).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const AX1_ABS_INT_MIN: f32 = -4.1768_f32;
     pub const AX1_ABS_INT_MAX: f32 = 4.1736697_f32;
@@ -2452,9 +2452,9 @@ pub struct Bremse52 {
     unused_variables,
 )]
 impl Bremse52 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x542)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(
+        StandardId::new(0x542).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const MPLX_SW_INFO_MIN: u8 = 0_u8;
     pub const MPLX_SW_INFO_MAX: u8 = 255_u8;
@@ -4430,9 +4430,9 @@ pub struct Bremse50 {
     unused_variables,
 )]
 impl Bremse50 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x560)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(
+        StandardId::new(0x560).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const BRAKE_BAL_AT50_MIN: f32 = 0_f32;
     pub const BRAKE_BAL_AT50_MAX: f32 = 100_f32;
@@ -4690,9 +4690,9 @@ pub struct Bremse53 {
     unused_variables,
 )]
 impl Bremse53 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x5c0)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(
+        StandardId::new(0x5c0).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const SWITCH_POSITION_MIN: u8 = 1_u8;
     pub const SWITCH_POSITION_MAX: u8 = 12_u8;

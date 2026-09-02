@@ -57,10 +57,10 @@ BO_ 1338 LargerIntsWithOffsets: 8 Sit
 
 BO_ 513 MsgWithoutSignals: 8 Ipsum
 
-BO_ 9001 TruncatedBeSignal: 8 Ipsum
+BO_ 809 TruncatedBeSignal: 8 Ipsum
   SG_ Foo : 0|12@0- (1,0) [-100|100] "" Vector__XXX
 
-BO_ 9002 TruncatedLeSignal: 8 Ipsum
+BO_ 810 TruncatedLeSignal: 8 Ipsum
   SG_ Foo : 0|12@1- (1,0) [-100|100] "" Vector__XXX
 
 BO_ 2147488308 MsgExtendedId: 8 Sit

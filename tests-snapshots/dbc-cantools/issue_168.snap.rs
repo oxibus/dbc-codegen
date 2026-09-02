@@ -78,9 +78,9 @@ pub struct Foo {
     unused_variables,
 )]
 impl Foo {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x12330)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x12330).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const FOO_MIN: f32 = 229.53_f32;
     pub const FOO_MAX: f32 = 270.47_f32;
@@ -249,9 +249,9 @@ pub struct Fum {
     unused_variables,
 )]
 impl Fum {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x12331)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x12331).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 5;
     pub const MESSAGE_CYCLE_TIME_MS: u32 = 1;
     pub const FUM_MIN: i16 = 0_i16;
@@ -440,9 +440,9 @@ pub struct Bar {
     unused_variables,
 )]
 impl Bar {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x12332)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x12332).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 4;
     pub const BINARY32_MIN: i32 = 0_i32;
     pub const BINARY32_MAX: i32 = 0_i32;
@@ -554,9 +554,9 @@ pub struct CanFd {
     unused_variables,
 )]
 impl CanFd {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x12333)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x12333).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 64;
     pub const FIE_MIN: u64 = 0_u64;
     pub const FIE_MAX: u64 = 0_u64;
@@ -707,9 +707,9 @@ pub struct Foobar {
     unused_variables,
 )]
 impl Foobar {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x30c)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(
+        StandardId::new(0x30c).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const ACC_02_CRC_MIN: i16 = 0_i16;
     pub const ACC_02_CRC_MAX: i16 = 1_i16;

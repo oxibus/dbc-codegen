@@ -76,9 +76,7 @@ pub struct Msg0 {
     unused_variables,
 )]
 impl Msg0 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x1)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(StandardId::new(0x1).unwrap());
     pub const MESSAGE_SIZE: usize = 8;
     pub const A_MIN: u16 = 0_u16;
     pub const A_MAX: u16 = 32767_u16;
@@ -299,9 +297,7 @@ pub struct Msg1 {
     unused_variables,
 )]
 impl Msg1 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x2)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(StandardId::new(0x2).unwrap());
     pub const MESSAGE_SIZE: usize = 8;
     pub const F_MIN: u16 = 0_u16;
     pub const F_MAX: u16 = 32767_u16;
@@ -522,9 +518,7 @@ pub struct Msg2 {
     unused_variables,
 )]
 impl Msg2 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x3)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(StandardId::new(0x3).unwrap());
     pub const MESSAGE_SIZE: usize = 8;
     pub const I_MIN: u8 = 0_u8;
     pub const I_MAX: u8 = 15_u8;
@@ -716,9 +710,7 @@ pub struct Msg3 {
     unused_variables,
 )]
 impl Msg3 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x4)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(StandardId::new(0x4).unwrap());
     pub const MESSAGE_SIZE: usize = 8;
     pub const L_MIN: u64 = 0_u64;
     pub const L_MAX: u64 = 18446744073709551615_u64;
@@ -828,9 +820,7 @@ pub struct Msg4 {
     unused_variables,
 )]
 impl Msg4 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x5)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(StandardId::new(0x5).unwrap());
     pub const MESSAGE_SIZE: usize = 8;
     pub const M_MIN: u64 = 0_u64;
     pub const M_MAX: u64 = 18446744073709551615_u64;

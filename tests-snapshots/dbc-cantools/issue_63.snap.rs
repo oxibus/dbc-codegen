@@ -63,9 +63,9 @@ pub struct Aft1psi2 {
     unused_variables,
 )]
 impl Aft1psi2 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x18fc8bfe)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(
+        ExtendedId::new(0x18fc8bfe).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const HTR_RES_MIN: f32 = 0_f32;
     pub const HTR_RES_MAX: f32 = 6425.5_f32;

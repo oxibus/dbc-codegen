@@ -1,245 +1,311 @@
 error[E0425]: cannot find type `GearShifterGearShifter` in this scope
-    --> tests-snapshots/dbc-cantools/issue_199_extended.snap.rs:962:30
+    --> tests-snapshots/dbc-cantools/issue_199_extended.snap.rs:958:30
      |
- 962 |     pub fn new(gear_shifter: GearShifterGearShifter) -> Result<Self, CanError> {
+ 958 |     pub fn new(gear_shifter: GearShifterGearShifter) -> Result<Self, CanError> {
      |                              ^^^^^^^^^^^^^^^^^^^^^^
 ...
-1095 | pub enum GearShifterLeftBlinker {
+1091 | pub enum GearShifterLeftBlinker {
      | ------------------------------- similarly named enum `GearShifterLeftBlinker` defined here
      |
 help: an enum with a similar name exists
      |
- 962 -     pub fn new(gear_shifter: GearShifterGearShifter) -> Result<Self, CanError> {
- 962 +     pub fn new(gear_shifter: GearShifterLeftBlinker) -> Result<Self, CanError> {
+ 958 -     pub fn new(gear_shifter: GearShifterGearShifter) -> Result<Self, CanError> {
+ 958 +     pub fn new(gear_shifter: GearShifterLeftBlinker) -> Result<Self, CanError> {
      |
 
 error[E0425]: cannot find type `GearShifterGearShifter` in this scope
-    --> tests-snapshots/dbc-cantools/issue_199_extended.snap.rs:978:35
+    --> tests-snapshots/dbc-cantools/issue_199_extended.snap.rs:974:35
      |
- 978 |     pub fn gear_shifter(&self) -> GearShifterGearShifter {
+ 974 |     pub fn gear_shifter(&self) -> GearShifterGearShifter {
      |                                   ^^^^^^^^^^^^^^^^^^^^^^
 ...
-1095 | pub enum GearShifterLeftBlinker {
+1091 | pub enum GearShifterLeftBlinker {
      | ------------------------------- similarly named enum `GearShifterLeftBlinker` defined here
      |
 help: an enum with a similar name exists
      |
- 978 -     pub fn gear_shifter(&self) -> GearShifterGearShifter {
- 978 +     pub fn gear_shifter(&self) -> GearShifterLeftBlinker {
+ 974 -     pub fn gear_shifter(&self) -> GearShifterGearShifter {
+ 974 +     pub fn gear_shifter(&self) -> GearShifterLeftBlinker {
      |
 
 error[E0425]: cannot find type `GearShifterGearShifter` in this scope
-    --> tests-snapshots/dbc-cantools/issue_199_extended.snap.rs:1009:16
+    --> tests-snapshots/dbc-cantools/issue_199_extended.snap.rs:1005:16
      |
-1009 |         value: GearShifterGearShifter,
+1005 |         value: GearShifterGearShifter,
      |                ^^^^^^^^^^^^^^^^^^^^^^
 ...
-1095 | pub enum GearShifterLeftBlinker {
+1091 | pub enum GearShifterLeftBlinker {
      | ------------------------------- similarly named enum `GearShifterLeftBlinker` defined here
      |
 help: an enum with a similar name exists
      |
-1009 -         value: GearShifterGearShifter,
-1009 +         value: GearShifterLeftBlinker,
+1005 -         value: GearShifterGearShifter,
+1005 +         value: GearShifterLeftBlinker,
      |
 
 error[E0425]: cannot find type `CruiseButtonsCruiseButtons` in this scope
-    --> tests-snapshots/dbc-cantools/issue_199_extended.snap.rs:2010:32
+    --> tests-snapshots/dbc-cantools/issue_199_extended.snap.rs:2002:32
      |
-2010 |     pub fn new(cruise_buttons: CruiseButtonsCruiseButtons) -> Result<Self, CanError> {
+2002 |     pub fn new(cruise_buttons: CruiseButtonsCruiseButtons) -> Result<Self, CanError> {
      |                                ^^^^^^^^^^^^^^^^^^^^^^^^^^
 ...
-2245 | pub enum CruiseButtons2LkaGapButton {
+2237 | pub enum CruiseButtons2LkaGapButton {
      | ----------------------------------- similarly named enum `CruiseButtons2LkaGapButton` defined here
      |
 help: an enum with a similar name exists
      |
-2010 -     pub fn new(cruise_buttons: CruiseButtonsCruiseButtons) -> Result<Self, CanError> {
-2010 +     pub fn new(cruise_buttons: CruiseButtons2LkaGapButton) -> Result<Self, CanError> {
+2002 -     pub fn new(cruise_buttons: CruiseButtonsCruiseButtons) -> Result<Self, CanError> {
+2002 +     pub fn new(cruise_buttons: CruiseButtons2LkaGapButton) -> Result<Self, CanError> {
      |
 
 error[E0425]: cannot find type `CruiseButtonsCruiseButtons` in this scope
-    --> tests-snapshots/dbc-cantools/issue_199_extended.snap.rs:2026:37
+    --> tests-snapshots/dbc-cantools/issue_199_extended.snap.rs:2018:37
      |
-2026 |     pub fn cruise_buttons(&self) -> CruiseButtonsCruiseButtons {
+2018 |     pub fn cruise_buttons(&self) -> CruiseButtonsCruiseButtons {
      |                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^
 ...
-2245 | pub enum CruiseButtons2LkaGapButton {
+2237 | pub enum CruiseButtons2LkaGapButton {
      | ----------------------------------- similarly named enum `CruiseButtons2LkaGapButton` defined here
      |
 help: an enum with a similar name exists
      |
-2026 -     pub fn cruise_buttons(&self) -> CruiseButtonsCruiseButtons {
-2026 +     pub fn cruise_buttons(&self) -> CruiseButtons2LkaGapButton {
+2018 -     pub fn cruise_buttons(&self) -> CruiseButtonsCruiseButtons {
+2018 +     pub fn cruise_buttons(&self) -> CruiseButtons2LkaGapButton {
      |
 
 error[E0425]: cannot find type `CruiseButtonsCruiseButtons` in this scope
-    --> tests-snapshots/dbc-cantools/issue_199_extended.snap.rs:2060:16
+    --> tests-snapshots/dbc-cantools/issue_199_extended.snap.rs:2052:16
      |
-2060 |         value: CruiseButtonsCruiseButtons,
+2052 |         value: CruiseButtonsCruiseButtons,
      |                ^^^^^^^^^^^^^^^^^^^^^^^^^^
 ...
-2245 | pub enum CruiseButtons2LkaGapButton {
+2237 | pub enum CruiseButtons2LkaGapButton {
      | ----------------------------------- similarly named enum `CruiseButtons2LkaGapButton` defined here
      |
 help: an enum with a similar name exists
      |
-2060 -         value: CruiseButtonsCruiseButtons,
-2060 +         value: CruiseButtons2LkaGapButton,
+2052 -         value: CruiseButtonsCruiseButtons,
+2052 +         value: CruiseButtons2LkaGapButton,
      |
 
 error[E0433]: cannot find type `GearShifterGearShifter` in this scope
-   --> tests-snapshots/dbc-cantools/issue_199_extended.snap.rs:981:18
+   --> tests-snapshots/dbc-cantools/issue_199_extended.snap.rs:977:18
     |
-981 |             3 => GearShifterGearShifter::Park,
+977 |             3 => GearShifterGearShifter::Park,
     |                  ^^^^^^^^^^^^^^^^^^^^^^ use of undeclared type `GearShifterGearShifter`
     |
 help: an enum with a similar name exists
     |
-981 -             3 => GearShifterGearShifter::Park,
-981 +             3 => GearShifterLeftBlinker::Park,
+977 -             3 => GearShifterGearShifter::Park,
+977 +             3 => GearShifterLeftBlinker::Park,
     |
 
 error[E0433]: cannot find type `GearShifterGearShifter` in this scope
-   --> tests-snapshots/dbc-cantools/issue_199_extended.snap.rs:982:18
+   --> tests-snapshots/dbc-cantools/issue_199_extended.snap.rs:978:18
     |
-982 |             0 => GearShifterGearShifter::DriveLow,
+978 |             0 => GearShifterGearShifter::DriveLow,
     |                  ^^^^^^^^^^^^^^^^^^^^^^ use of undeclared type `GearShifterGearShifter`
     |
 help: an enum with a similar name exists
     |
-982 -             0 => GearShifterGearShifter::DriveLow,
-982 +             0 => GearShifterLeftBlinker::DriveLow,
+978 -             0 => GearShifterGearShifter::DriveLow,
+978 +             0 => GearShifterLeftBlinker::DriveLow,
     |
 
 error[E0433]: cannot find type `GearShifterGearShifter` in this scope
-   --> tests-snapshots/dbc-cantools/issue_199_extended.snap.rs:983:18
+   --> tests-snapshots/dbc-cantools/issue_199_extended.snap.rs:979:18
     |
-983 |             _ => GearShifterGearShifter::_Other(self.gear_shifter_phys_val()),
+979 |             _ => GearShifterGearShifter::_Other(self.gear_shifter_phys_val()),
     |                  ^^^^^^^^^^^^^^^^^^^^^^ use of undeclared type `GearShifterGearShifter`
     |
 help: an enum with a similar name exists
     |
-983 -             _ => GearShifterGearShifter::_Other(self.gear_shifter_phys_val()),
-983 +             _ => GearShifterLeftBlinker::_Other(self.gear_shifter_phys_val()),
+979 -             _ => GearShifterGearShifter::_Other(self.gear_shifter_phys_val()),
+979 +             _ => GearShifterLeftBlinker::_Other(self.gear_shifter_phys_val()),
     |
 
 error[E0433]: cannot find type `CruiseButtonsCruiseButtons` in this scope
-    --> tests-snapshots/dbc-cantools/issue_199_extended.snap.rs:2029:18
+    --> tests-snapshots/dbc-cantools/issue_199_extended.snap.rs:2021:18
      |
-2029 |             6 => CruiseButtonsCruiseButtons::Cancel,
+2021 |             6 => CruiseButtonsCruiseButtons::Cancel,
      |                  ^^^^^^^^^^^^^^^^^^^^^^^^^^ use of undeclared type `CruiseButtonsCruiseButtons`
      |
 help: an enum with a similar name exists
      |
-2029 -             6 => CruiseButtonsCruiseButtons::Cancel,
-2029 +             6 => CruiseButtons2LkaGapButton::Cancel,
+2021 -             6 => CruiseButtonsCruiseButtons::Cancel,
+2021 +             6 => CruiseButtons2LkaGapButton::Cancel,
      |
 
 error[E0433]: cannot find type `CruiseButtonsCruiseButtons` in this scope
-    --> tests-snapshots/dbc-cantools/issue_199_extended.snap.rs:2030:18
+    --> tests-snapshots/dbc-cantools/issue_199_extended.snap.rs:2022:18
      |
-2030 |             5 => CruiseButtonsCruiseButtons::Main,
+2022 |             5 => CruiseButtonsCruiseButtons::Main,
      |                  ^^^^^^^^^^^^^^^^^^^^^^^^^^ use of undeclared type `CruiseButtonsCruiseButtons`
      |
 help: an enum with a similar name exists
      |
-2030 -             5 => CruiseButtonsCruiseButtons::Main,
-2030 +             5 => CruiseButtons2LkaGapButton::Main,
+2022 -             5 => CruiseButtonsCruiseButtons::Main,
+2022 +             5 => CruiseButtons2LkaGapButton::Main,
      |
 
 error[E0433]: cannot find type `CruiseButtonsCruiseButtons` in this scope
-    --> tests-snapshots/dbc-cantools/issue_199_extended.snap.rs:2031:18
+    --> tests-snapshots/dbc-cantools/issue_199_extended.snap.rs:2023:18
      |
-2031 |             3 => CruiseButtonsCruiseButtons::Set,
+2023 |             3 => CruiseButtonsCruiseButtons::Set,
      |                  ^^^^^^^^^^^^^^^^^^^^^^^^^^ use of undeclared type `CruiseButtonsCruiseButtons`
      |
 help: an enum with a similar name exists
      |
-2031 -             3 => CruiseButtonsCruiseButtons::Set,
-2031 +             3 => CruiseButtons2LkaGapButton::Set,
+2023 -             3 => CruiseButtonsCruiseButtons::Set,
+2023 +             3 => CruiseButtons2LkaGapButton::Set,
      |
 
 error[E0433]: cannot find type `CruiseButtonsCruiseButtons` in this scope
-    --> tests-snapshots/dbc-cantools/issue_199_extended.snap.rs:2032:18
+    --> tests-snapshots/dbc-cantools/issue_199_extended.snap.rs:2024:18
      |
-2032 |             2 => CruiseButtonsCruiseButtons::Resume,
+2024 |             2 => CruiseButtonsCruiseButtons::Resume,
      |                  ^^^^^^^^^^^^^^^^^^^^^^^^^^ use of undeclared type `CruiseButtonsCruiseButtons`
      |
 help: an enum with a similar name exists
      |
-2032 -             2 => CruiseButtonsCruiseButtons::Resume,
-2032 +             2 => CruiseButtons2LkaGapButton::Resume,
+2024 -             2 => CruiseButtonsCruiseButtons::Resume,
+2024 +             2 => CruiseButtons2LkaGapButton::Resume,
      |
 
 error[E0433]: cannot find type `CruiseButtonsCruiseButtons` in this scope
-    --> tests-snapshots/dbc-cantools/issue_199_extended.snap.rs:2033:18
+    --> tests-snapshots/dbc-cantools/issue_199_extended.snap.rs:2025:18
      |
-2033 |             1 => CruiseButtonsCruiseButtons::None,
+2025 |             1 => CruiseButtonsCruiseButtons::None,
      |                  ^^^^^^^^^^^^^^^^^^^^^^^^^^ use of undeclared type `CruiseButtonsCruiseButtons`
      |
 help: an enum with a similar name exists
      |
-2033 -             1 => CruiseButtonsCruiseButtons::None,
-2033 +             1 => CruiseButtons2LkaGapButton::None,
+2025 -             1 => CruiseButtonsCruiseButtons::None,
+2025 +             1 => CruiseButtons2LkaGapButton::None,
      |
 
 error[E0433]: cannot find type `CruiseButtonsCruiseButtons` in this scope
-    --> tests-snapshots/dbc-cantools/issue_199_extended.snap.rs:2034:18
+    --> tests-snapshots/dbc-cantools/issue_199_extended.snap.rs:2026:18
      |
-2034 |             _ => CruiseButtonsCruiseButtons::_Other(self.cruise_buttons_phys_val()),
+2026 |             _ => CruiseButtonsCruiseButtons::_Other(self.cruise_buttons_phys_val()),
      |                  ^^^^^^^^^^^^^^^^^^^^^^^^^^ use of undeclared type `CruiseButtonsCruiseButtons`
      |
 help: an enum with a similar name exists
      |
-2034 -             _ => CruiseButtonsCruiseButtons::_Other(self.cruise_buttons_phys_val()),
-2034 +             _ => CruiseButtons2LkaGapButton::_Other(self.cruise_buttons_phys_val()),
+2026 -             _ => CruiseButtonsCruiseButtons::_Other(self.cruise_buttons_phys_val()),
+2026 +             _ => CruiseButtons2LkaGapButton::_Other(self.cruise_buttons_phys_val()),
      |
 
-error: unreachable pattern
-  --> tests-snapshots/dbc-cantools/issue_199_extended.snap.rs:69:13
-   |
-65 |             Chime::MESSAGE_ID => Messages::Chime(Chime::try_from(payload)?),
-   |             ----------------- matches all the relevant values
-...
-69 |             SteeringWheelAngle::MESSAGE_ID => {
-   |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ no value can reach this
-   |
-   = note: `-D unreachable-patterns` implied by `-D warnings`
-   = help: to override `-D warnings` add `#[allow(unreachable_patterns)]`
+error[E0080]: evaluation panicked: called `Option::unwrap()` on a `None` value
+   --> tests-snapshots/dbc-cantools/issue_199_extended.snap.rs:546:9
+    |
+546 |         StandardId::new(0xc000).unwrap(),
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ evaluation of `BlinkerStatus::MESSAGE_ID` failed here
 
-error: unreachable pattern
-  --> tests-snapshots/dbc-cantools/issue_199_extended.snap.rs:72:13
-   |
-66 |             BlinkerStatus::MESSAGE_ID => {
-   |             ------------------------- matches all the relevant values
-...
-72 |             GearShifter::MESSAGE_ID => {
-   |             ^^^^^^^^^^^^^^^^^^^^^^^ no value can reach this
+error[E0080]: evaluation panicked: called `Option::unwrap()` on a `None` value
+   --> tests-snapshots/dbc-cantools/issue_199_extended.snap.rs:952:9
+    |
+952 |         StandardId::new(0xc000).unwrap(),
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ evaluation of `GearShifter::MESSAGE_ID` failed here
 
-error: unreachable pattern
-  --> tests-snapshots/dbc-cantools/issue_199_extended.snap.rs:78:13
-   |
-65 |             Chime::MESSAGE_ID => Messages::Chime(Chime::try_from(payload)?),
-   |             ----------------- matches all the relevant values
-...
-78 |             BrakePedal::MESSAGE_ID => {
-   |             ^^^^^^^^^^^^^^^^^^^^^^ no value can reach this
+error[E0080]: evaluation panicked: called `Option::unwrap()` on a `None` value
+    --> tests-snapshots/dbc-cantools/issue_199_extended.snap.rs:1150:9
+     |
+1150 |         StandardId::new(0xa000).unwrap(),
+     |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ evaluation of `GasPedalRegenCruise::MESSAGE_ID` failed here
 
-error: unreachable pattern
-  --> tests-snapshots/dbc-cantools/issue_199_extended.snap.rs:84:13
-   |
-65 |             Chime::MESSAGE_ID => Messages::Chime(Chime::try_from(payload)?),
-   |             ----------------- matches all the relevant values
-...
-84 |             VehicleSpeed::MESSAGE_ID => {
-   |             ^^^^^^^^^^^^^^^^^^^^^^^^ no value can reach this
+error[E0080]: evaluation panicked: called `Option::unwrap()` on a `None` value
+    --> tests-snapshots/dbc-cantools/issue_199_extended.snap.rs:1569:9
+     |
+1569 |         StandardId::new(0x8000).unwrap(),
+     |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ evaluation of `WheelSpeed::MESSAGE_ID` failed here
 
-error: unreachable pattern
-  --> tests-snapshots/dbc-cantools/issue_199_extended.snap.rs:87:13
-   |
-81 |             WheelSpeed::MESSAGE_ID => {
-   |             ---------------------- matches all the relevant values
-...
-87 |             CruiseButtons::MESSAGE_ID => {
-   |             ^^^^^^^^^^^^^^^^^^^^^^^^^ no value can reach this
+error[E0080]: evaluation panicked: called `Option::unwrap()` on a `None` value
+    --> tests-snapshots/dbc-cantools/issue_199_extended.snap.rs:1996:9
+     |
+1996 |         StandardId::new(0x8000).unwrap(),
+     |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ evaluation of `CruiseButtons::MESSAGE_ID` failed here
+
+error[E0080]: evaluation panicked: called `Option::unwrap()` on a `None` value
+    --> tests-snapshots/dbc-cantools/issue_199_extended.snap.rs:2122:9
+     |
+2122 |         StandardId::new(0x6000).unwrap(),
+     |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ evaluation of `CruiseButtons2::MESSAGE_ID` failed here
+
+note: erroneous constant encountered
+   --> tests-snapshots/dbc-cantools/issue_199_extended.snap.rs:730:9
+    |
+730 |         Self::MESSAGE_ID
+    |         ^^^^^^^^^^^^^^^^
+
+note: erroneous constant encountered
+    --> tests-snapshots/dbc-cantools/issue_199_extended.snap.rs:1046:9
+     |
+1046 |         Self::MESSAGE_ID
+     |         ^^^^^^^^^^^^^^^^
+
+note: erroneous constant encountered
+    --> tests-snapshots/dbc-cantools/issue_199_extended.snap.rs:1290:29
+     |
+1290 |                 message_id: GasPedalRegenCruise::MESSAGE_ID,
+     |                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+note: erroneous constant encountered
+    --> tests-snapshots/dbc-cantools/issue_199_extended.snap.rs:1328:29
+     |
+1328 |                 message_id: GasPedalRegenCruise::MESSAGE_ID,
+     |                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+note: erroneous constant encountered
+    --> tests-snapshots/dbc-cantools/issue_199_extended.snap.rs:1364:9
+     |
+1364 |         Self::MESSAGE_ID
+     |         ^^^^^^^^^^^^^^^^
+
+note: erroneous constant encountered
+    --> tests-snapshots/dbc-cantools/issue_199_extended.snap.rs:1633:29
+     |
+1633 |                 message_id: WheelSpeed::MESSAGE_ID,
+     |                             ^^^^^^^^^^^^^^^^^^^^^^
+
+note: erroneous constant encountered
+    --> tests-snapshots/dbc-cantools/issue_199_extended.snap.rs:1677:29
+     |
+1677 |                 message_id: WheelSpeed::MESSAGE_ID,
+     |                             ^^^^^^^^^^^^^^^^^^^^^^
+
+note: erroneous constant encountered
+    --> tests-snapshots/dbc-cantools/issue_199_extended.snap.rs:1721:29
+     |
+1721 |                 message_id: WheelSpeed::MESSAGE_ID,
+     |                             ^^^^^^^^^^^^^^^^^^^^^^
+
+note: erroneous constant encountered
+    --> tests-snapshots/dbc-cantools/issue_199_extended.snap.rs:1765:29
+     |
+1765 |                 message_id: WheelSpeed::MESSAGE_ID,
+     |                             ^^^^^^^^^^^^^^^^^^^^^^
+
+note: erroneous constant encountered
+    --> tests-snapshots/dbc-cantools/issue_199_extended.snap.rs:1804:9
+     |
+1804 |         Self::MESSAGE_ID
+     |         ^^^^^^^^^^^^^^^^
+
+note: erroneous constant encountered
+    --> tests-snapshots/dbc-cantools/issue_199_extended.snap.rs:2093:9
+     |
+2093 |         Self::MESSAGE_ID
+     |         ^^^^^^^^^^^^^^^^
+
+note: erroneous constant encountered
+    --> tests-snapshots/dbc-cantools/issue_199_extended.snap.rs:2181:29
+     |
+2181 |                 message_id: CruiseButtons2::MESSAGE_ID,
+     |                             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+note: erroneous constant encountered
+    --> tests-snapshots/dbc-cantools/issue_199_extended.snap.rs:2217:9
+     |
+2217 |         Self::MESSAGE_ID
+     |         ^^^^^^^^^^^^^^^^

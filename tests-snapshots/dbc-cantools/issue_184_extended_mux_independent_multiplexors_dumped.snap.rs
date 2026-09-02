@@ -67,9 +67,7 @@ pub struct ExtMuxIndepMultiplexors {
     unused_variables,
 )]
 impl ExtMuxIndepMultiplexors {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x2)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(ExtendedId::new(0x2).unwrap());
     pub const MESSAGE_SIZE: usize = 8;
     pub const MUXED_B_1_MIN: i8 = 0_i8;
     pub const MUXED_B_1_MAX: i8 = 0_i8;

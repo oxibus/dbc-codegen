@@ -65,9 +65,7 @@ pub struct ExtMuxCascaded {
     unused_variables,
 )]
 impl ExtMuxCascaded {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(unsafe {
-        ExtendedId::new_unchecked(0x1)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Extended(ExtendedId::new(0x1).unwrap());
     pub const MESSAGE_SIZE: usize = 8;
     pub const MUXED_B_1_MIN: i8 = 0_i8;
     pub const MUXED_B_1_MAX: i8 = 0_i8;

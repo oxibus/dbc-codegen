@@ -104,9 +104,9 @@ pub struct MsgLongName5678912345678912 {
     unused_variables,
 )]
 impl MsgLongName5678912345678912 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x55)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(
+        StandardId::new(0x55).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const RX_TWICE_SHORT_MIN: i32 = 0_i32;
     pub const RX_TWICE_SHORT_MAX: i32 = 0_i32;
@@ -314,9 +314,7 @@ pub struct TxTwice {
     unused_variables,
 )]
 impl TxTwice {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x6)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(StandardId::new(0x6).unwrap());
     pub const MESSAGE_SIZE: usize = 2;
     pub const RX_TWICE_LONG_YYYYYYYYYYYYYYYYYY_MIN: i8 = 0_i8;
     pub const RX_TWICE_LONG_YYYYYYYYYYYYYYYYYY_MAX: i8 = 0_i8;
@@ -477,9 +475,7 @@ pub struct RxTx1 {
     unused_variables,
 )]
 impl RxTx1 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x5)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(StandardId::new(0x5).unwrap());
     pub const MESSAGE_SIZE: usize = 8;
     pub const SIG_USED_TWICE_EFGH_ABCDEFG_0000_MIN: i16 = 0_i16;
     pub const SIG_USED_TWICE_EFGH_ABCDEFG_0000_MAX: i16 = 0_i16;
@@ -593,9 +589,7 @@ pub struct MsgCaseTest {
     unused_variables,
 )]
 impl MsgCaseTest {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x4)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(StandardId::new(0x4).unwrap());
     pub const MESSAGE_SIZE: usize = 8;
     /// Constructs a new `MSG_CASE_TEST` message from values.
     pub fn new() -> Result<Self, CanError> {
@@ -663,9 +657,7 @@ pub struct MsgCaseTest {
     unused_variables,
 )]
 impl MsgCaseTest {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x3)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(StandardId::new(0x3).unwrap());
     pub const MESSAGE_SIZE: usize = 8;
     /// Constructs a new `msg_case_test` message from values.
     pub fn new() -> Result<Self, CanError> {
@@ -733,9 +725,7 @@ pub struct MsgWithValueTableSigs {
     unused_variables,
 )]
 impl MsgWithValueTableSigs {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x2)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(StandardId::new(0x2).unwrap());
     pub const MESSAGE_SIZE: usize = 3;
     pub const SIG_WITH_SHORT_VAL_TABLE_MIN: i8 = 0_i8;
     pub const SIG_WITH_SHORT_VAL_TABLE_MAX: i8 = 0_i8;
@@ -1110,9 +1100,7 @@ pub struct MsgLongName5678912345670000 {
     unused_variables,
 )]
 impl MsgLongName5678912345670000 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x1)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(StandardId::new(0x1).unwrap());
     pub const MESSAGE_SIZE: usize = 8;
     pub const RX_TWICE_11111111111111111111111_MIN: i8 = 0_i8;
     pub const RX_TWICE_11111111111111111111111_MAX: i8 = 0_i8;
@@ -1275,9 +1263,7 @@ pub struct MsgLongName5678912345670001 {
     unused_variables,
 )]
 impl MsgLongName5678912345670001 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x0)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(StandardId::new(0x0).unwrap());
     pub const MESSAGE_SIZE: usize = 8;
     pub const RX_TWICE_SHORT_MIN: i8 = 0_i8;
     pub const RX_TWICE_SHORT_MAX: i8 = 0_i8;

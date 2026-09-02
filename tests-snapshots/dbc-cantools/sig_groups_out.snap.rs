@@ -73,9 +73,7 @@ pub struct Test {
     unused_variables,
 )]
 impl Test {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x3)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(StandardId::new(0x3).unwrap());
     pub const MESSAGE_SIZE: usize = 8;
     pub const TEST_SIG_MIN: i8 = 0_i8;
     pub const TEST_SIG_MAX: i8 = 0_i8;
@@ -186,9 +184,7 @@ pub struct SgMsgM {
     unused_variables,
 )]
 impl SgMsgM {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x2)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(StandardId::new(0x2).unwrap());
     pub const MESSAGE_SIZE: usize = 8;
     pub const DUPSIG_MIN: i8 = 0_i8;
     pub const DUPSIG_MAX: i8 = 0_i8;
@@ -433,9 +429,7 @@ pub struct SgMsg {
     unused_variables,
 )]
 impl SgMsg {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x1)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(StandardId::new(0x1).unwrap());
     pub const MESSAGE_SIZE: usize = 8;
     pub const DUPSIG_MIN: i8 = 0_i8;
     pub const DUPSIG_MAX: i8 = 0_i8;
@@ -632,9 +626,7 @@ pub struct NormalMsg {
     unused_variables,
 )]
 impl NormalMsg {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x0)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(StandardId::new(0x0).unwrap());
     pub const MESSAGE_SIZE: usize = 8;
     pub const SIG_2_MIN: i8 = 0_i8;
     pub const SIG_2_MAX: i8 = 0_i8;

@@ -65,9 +65,9 @@ pub struct MuxedFrame {
     unused_variables,
 )]
 impl MuxedFrame {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x100)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(
+        StandardId::new(0x100).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 8;
     pub const UNMULTIPLEXED_SIG_MIN: i8 = 0_i8;
     pub const UNMULTIPLEXED_SIG_MAX: i8 = 0_i8;

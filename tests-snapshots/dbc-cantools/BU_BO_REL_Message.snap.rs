@@ -64,9 +64,7 @@ pub struct Message1 {
     unused_variables,
 )]
 impl Message1 {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x1)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(StandardId::new(0x1).unwrap());
     pub const MESSAGE_SIZE: usize = 7;
     pub const SIGNAL_1_MIN: u8 = 0_u8;
     pub const SIGNAL_1_MAX: u8 = 100_u8;

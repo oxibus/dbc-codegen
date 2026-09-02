@@ -84,9 +84,9 @@ pub struct ControlCmd {
     unused_variables,
 )]
 impl ControlCmd {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0xfa)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(
+        StandardId::new(0xfa).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 7;
     pub const CRC8_CMD1_MIN: u8 = 0_u8;
     pub const CRC8_CMD1_MAX: u8 = 255_u8;
@@ -531,9 +531,9 @@ pub struct LimitsCmd {
     unused_variables,
 )]
 impl LimitsCmd {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0xfb)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(
+        StandardId::new(0xfb).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 6;
     pub const CRC8_CMD2_MIN: u8 = 0_u8;
     pub const CRC8_CMD2_MAX: u8 = 255_u8;
@@ -771,9 +771,9 @@ pub struct ControlStatus {
     unused_variables,
 )]
 impl ControlStatus {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0xfc)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(
+        StandardId::new(0xfc).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 4;
     pub const CRC8_STAT1_MIN: u8 = 0_u8;
     pub const CRC8_STAT1_MAX: u8 = 255_u8;
@@ -1025,9 +1025,9 @@ pub struct SystemStatus {
     unused_variables,
 )]
 impl SystemStatus {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0xfd)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(
+        StandardId::new(0xfd).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 3;
     pub const CRC8_STAT2_MIN: u8 = 0_u8;
     pub const CRC8_STAT2_MAX: u8 = 255_u8;
@@ -1232,9 +1232,9 @@ pub struct TorqueSensorData {
     unused_variables,
 )]
 impl TorqueSensorData {
-    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(unsafe {
-        StandardId::new_unchecked(0x71)
-    });
+    pub const MESSAGE_ID: embedded_can::Id = Id::Standard(
+        StandardId::new(0x71).unwrap(),
+    );
     pub const MESSAGE_SIZE: usize = 3;
     pub const CRC8_DATA1_MIN: u8 = 0_u8;
     pub const CRC8_DATA1_MAX: u8 = 255_u8;
