@@ -8,11 +8,11 @@ authors = [
     "Andres Vahter <andres@vahter.me>",
 ]
 repository = "https://github.com/oxibus/dbc-codegen"
-edition = "2021"
+edition = "2024"
 exclude = ["fuzz/*", "testing/*", "tests/*", "tests-snapshots/*"]
 license = "MIT OR Apache-2.0"
 keywords = ["dbc", "can", "automotive", "codegen", "embedded"]
-categories = ["embedded", "code-generation", "automotive"]
+categories = ["embedded", "automotive", "network-programming"]
 rust-version = "1.88"
 
 [package.metadata.docs.rs]
@@ -25,17 +25,16 @@ std = []
 [dependencies]
 anyhow = "1.0.101"
 can-dbc = "10.0.0"
-embedded-can = "0.4.1"
 heck = "0.5.0"
-prettyplease = "0.2.37"
+prettyplease = "0.3.0"
 quote = "1.0.45"
-syn = "2.0.117"
+syn = "3.0.6"
 typed-builder = "0.23.0"
 
 [dev-dependencies]
-bitvec = "1.0.1"
+bitvec = "1.1.1"
 embedded-can = "0.4.1"
-insta = "1.47.2"
+insta = "1.48.0"
 test_each_file = "0.3.6"
 trybuild = "1.0.115"
 walkdir = "2.5.0"
@@ -56,6 +55,7 @@ pedantic = { level = "warn", priority = -1 }
 cast_possible_truncation = "allow"
 cast_precision_loss = "allow"
 missing_errors_doc = "allow"
+multiple_crate_versions = "allow"
 too_many_lines = "allow"
 
 [workspace]

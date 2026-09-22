@@ -15,6 +15,12 @@ ci_mode := if env('CI', '') != '' {'1'} else {''}
 export CARGO_BUILD_WARNINGS := env('CARGO_BUILD_WARNINGS', if ci_mode == '1' {'deny'} else {'warn'})
 export RUST_BACKTRACE := env('RUST_BACKTRACE', if ci_mode == '1' {'1'} else {'0'})
 
+# Environment for the trybuild-based compile tests. Trybuild spawns a nested `cargo`
+# that inherits this environment, so it must not see any rust flags set here or by
+# other tools (e.g. cargo-llvm-cov), and the generated code must compile warning-free.
+# Note that setting CARGO_BUILD_WARNINGS does not invalidate the build cache, unlike RUSTFLAGS.
+compile_test_env := 'env -u RUSTFLAGS -u RUSTDOCFLAGS -u CARGO_ENCODED_RUSTFLAGS -u CARGO_ENCODED_RUSTDOCFLAGS -u RUST_BACKTRACE CARGO_BUILD_WARNINGS=deny'
+
 @_default:
     {{just}} --list
 
@@ -23,7 +29,7 @@ bless: bless-generate bless-compile
 
 # Compile generated code tests and save its output as the new expected output
 bless-compile:
-    TRYBUILD=overwrite cargo test --all-features -- --test compile_test
+    {{compile_test_env}} TRYBUILD=overwrite cargo test --all-features --test snapshots -- --exact compile_test
 
 # Run code generation tests and save its output as the new expected output
 bless-generate:  (cargo-install 'cargo-insta')
@@ -87,10 +93,12 @@ clippy *args:
 # Generate and open the HTML coverage report
 coverage:  (_coverage '--open')
 
+# compile_test is skipped below: it only measures the nested cargo started by trybuild,
+# and that cargo would inherit the coverage instrumentation flags set by llvm-cov.
 # Clean, collect, and aggregate coverage using the requested report arguments
 _coverage *report_args:  (cargo-install 'cargo-llvm-cov')
     cargo llvm-cov clean --workspace
-    cargo llvm-cov --no-report --workspace --all-features --all-targets
+    cargo llvm-cov --no-report --workspace --all-features --all-targets -- --skip compile_test
     cargo llvm-cov report --include-build-script {{report_args}}
 
 deny *args='check': (cargo-install 'cargo-deny')
@@ -162,9 +170,13 @@ semver *args:  (cargo-install 'cargo-semver-checks')
     cargo semver-checks --all-features {{args}}
 
 # Run all tests
-test:
-    cargo test --workspace --all-features --all-targets
+test: test-compile
+    cargo test --workspace --all-features --all-targets -- --skip compile_test
     cargo test --doc --workspace --all-features
+
+# Compile the generated code snapshots with trybuild
+test-compile:
+    {{compile_test_env}} cargo test --all-features --test snapshots -- --exact compile_test
 
 # Run all tests with insta forced mode - generating ignored snapshots
 test-all:
@@ -179,7 +191,7 @@ test-fmt: && (fmt-toml '--check' '--check-format')
 
 # Run single manual test, usually used for debugging
 test-manual:
-    cargo test --all-features -- --ignored single_file_manual_test
+    {{compile_test_env}} cargo test --all-features -- --ignored single_file_manual_test
 
 # Find unused dependencies. Uses `cargo-udeps`
 udeps:  (cargo-install 'cargo-udeps')

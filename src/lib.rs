@@ -18,7 +18,7 @@ use std::fs::OpenOptions;
 use std::io::{BufWriter, Write};
 use std::path::Path;
 
-use anyhow::{anyhow, ensure, Context, Error, Result};
+use anyhow::{Context, Error, Result, anyhow, ensure};
 use can_dbc::ByteOrder::{BigEndian, LittleEndian};
 use can_dbc::MultiplexIndicator::{
     MultiplexedSignal, Multiplexor, MultiplexorAndMultiplexedSignal, Plain,
@@ -36,9 +36,9 @@ pub use crate::feature_config::FeatureConfig;
 use crate::pad::PadAdapter;
 use crate::signal_type::{IntSize, ValType};
 use crate::utils::{
-    enum_name, enum_variant_name, is_screaming_snake_case, is_valid_ident, is_valid_type_path,
-    multiplex_enum_name, multiplexed_enum_variant_name, multiplexed_enum_variant_wrapper_name,
-    node_field_name, MessageExt as _, SignalExt as _,
+    MessageExt as _, SignalExt as _, enum_name, enum_variant_name, is_screaming_snake_case,
+    is_valid_ident, is_valid_type_path, multiplex_enum_name, multiplexed_enum_variant_name,
+    multiplexed_enum_variant_wrapper_name, node_field_name,
 };
 
 static ALLOW_DEADCODE: &str = "#[allow(dead_code)]";

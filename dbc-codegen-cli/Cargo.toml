@@ -7,8 +7,8 @@ authors = [
     "Marcel Buesing <buesing.marcel@googlemail.com>",
     "Andres Vahter <andres@vahter.me>",
 ]
-categories = ["embedded", "code-generation", "automotive"]
-edition = "2021"
+categories = ["embedded", "automotive", "network-programming"]
+edition = "2024"
 keywords = ["dbc", "can", "automotive", "codegen", "embedded"]
 license = "MIT OR Apache-2.0"
 readme = "../README.md"
