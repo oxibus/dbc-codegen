@@ -1,4 +1,4 @@
-use anyhow::{ensure, Result};
+use anyhow::{Result, ensure};
 use can_dbc::MultiplexIndicator::Multiplexor;
 use can_dbc::{Message, Signal};
 use heck::{ToPascalCase, ToSnakeCase};

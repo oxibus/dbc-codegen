@@ -1,10 +1,10 @@
 use std::cmp::{max, min};
 use std::fmt::Display;
 
+use IntSize::{Size8, Size16, Size32, Size64, Size128};
+use ValType::{Bool, F32, SignedInt, UnsignedInt};
 use can_dbc::Signal;
 use can_dbc::ValueType::{Signed, Unsigned};
-use IntSize::{Size128, Size16, Size32, Size64, Size8};
-use ValType::{Bool, SignedInt, UnsignedInt, F32};
 
 use crate::utils::is_integer;
 

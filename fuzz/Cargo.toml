@@ -2,7 +2,7 @@
 name = "dbc-codegen-fuzz"
 version = "0.0.0"
 authors = ["Automatically generated"]
-edition = "2021"
+edition = "2024"
 publish = false
 
 [package.metadata]

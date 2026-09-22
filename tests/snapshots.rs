@@ -236,13 +236,11 @@ static BAD_TESTS: &[&str] = &[
     /* generator/toyota */ "toyota_secoc_pt.snap.rs",
 ];
 
+// Trybuild spawns a nested `cargo` that inherits this process' environment, so
+// the flags it must (not) see are set by the `test-compile` justfile recipe.
+// Run this test with `just test-compile` or `just bless-compile`.
 #[test]
 fn compile_test() {
-    // Clear any rust flags possibly set in the justfile
-    env::remove_var("RUSTFLAGS");
-    env::remove_var("RUSTDOCFLAGS");
-    env::remove_var("RUST_BACKTRACE");
-    env::set_var("CARGO_ENCODED_RUSTFLAGS", "--deny=warnings");
     let t = trybuild::TestCases::new();
 
     // Once all tests are fixed, switch to this:
@@ -276,7 +274,6 @@ fn single_file_manual_test() {
     fs::create_dir_all(out_path.parent().unwrap()).unwrap();
     fs::write(&out_path, result).unwrap();
 
-    env::set_var("CARGO_ENCODED_RUSTFLAGS", "--deny=warnings");
     let t = trybuild::TestCases::new();
     t.pass(out_path);
 }
