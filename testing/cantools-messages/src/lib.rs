@@ -1,7 +1,5 @@
 #![allow(non_upper_case_globals)]
 #![allow(non_camel_case_types)]
-#![allow(non_snake_case)]
-#![allow(clippy::unreadable_literal)]
 
 #[cfg(any(test, feature = "fuzz"))]
 #[allow(dead_code)]
@@ -11,12 +9,11 @@ mod msg_bindings {
     include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
 }
 
-#[cfg(all(test, not(feature = "fuzz")))]
-use msg_bindings::*;
-
 // Re-export for fuzzing
 #[cfg(feature = "fuzz")]
 pub use msg_bindings::*;
+#[cfg(all(test, not(feature = "fuzz")))]
+use msg_bindings::*;
 
 #[test]
 fn pack_message() {

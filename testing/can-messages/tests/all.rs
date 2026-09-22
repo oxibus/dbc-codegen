@@ -1,4 +1,4 @@
-#![allow(
+#![expect(
     clippy::float_cmp,
     clippy::excessive_precision,
     clippy::unreadable_literal
