@@ -1,6 +1,6 @@
 [package]
 name = "dbc-codegen-cli"
-version = "0.4.0"
+version = "0.4.1"
 description = "CLI for CAN DBC codegen"
 authors = [
     "Pascal Hertleif <pascal@technocreatives.com>",
